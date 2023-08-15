@@ -1,0 +1,13 @@
+<h1 mat-dialog-title class="m-3  standard-font-family text-dark"><i class="fa fa-save px-2"></i>Save File Name</h1>
+<hr>
+<div mat-dialog-content class="mx-2 mt-2 standard-font-family">
+    <div class="mb-3">
+        <label for="filename" class="form-label">Project Name :</label>
+        <input type="text" class="form-control standard-font-family" id="filename"  [(ngModel)]="utilService.ProjectName">
+      </div>
+    
+</div>
+<div mat-dialog-actions class=" justify-content-between mx-4 ">
+    <button mat-button (click)="onNoClick()" class="standard-font-family">Cancel</button>
+    <button mat-button [mat-dialog-close]="utilService.ProjectName" class="standard-font-family" cdkFocusInitial>Save</button>
+</div>

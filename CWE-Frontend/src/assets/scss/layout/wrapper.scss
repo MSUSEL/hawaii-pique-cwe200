@@ -1,0 +1,106 @@
+.wrapper{
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    perspective: 1500px;
+    font-family: Cairo;
+    overflow-x: hidden; /* Add this line */
+
+}
+
+.left-sidebar{
+    min-width: 320px;
+    max-width: 320px;
+
+    background:$card-bg-color ;
+    border-right: 2px solid $card-border-color;
+    color:$standard-fontcolor;
+    transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665);
+    transform-origin: bottom right;
+
+    &.active {
+        margin-left: -320px;
+        width: 0px !important;
+    }
+    .close-sidebar-button{
+        display: none;
+    }
+
+}
+
+.right-sidebar{
+    min-width: 400px;
+    max-width: 400px;
+
+    background:$card-bg-color ;
+    border-left: 2px solid $card-border-color;
+    color:$standard-fontcolor;
+    transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665);
+    transform-origin: top left;
+    &.active {
+        margin-right: -400px;
+        width: 0px !important;
+    }
+
+    .close-sidebar-button{
+        display: none;
+    }
+    .right-tab{
+        margin-top: 0 !important;
+        margin-bottom: 5px !important;
+        height: 46px !important;
+        line-height: 46px !important;
+        .active{
+            color:$danger !important;
+            border-radius: 25px !important;
+            
+            border: 1px solid $card-border-color;
+            background:  darken($light, 5%);;
+        }
+        .nav-item{
+
+
+            .nav-link{
+                position: absolute;
+                font-size: 17px;
+                color:$standard-fontcolor;
+                min-width: 150px;
+                top: 0px !important;
+                padding-top: 0;
+                margin: 5px;
+                font-family: 'Times New Roman', Times, serif;
+                height: 35px  !important;
+                line-height: 35px !important;
+                
+                i{
+                   
+                    margin-right:20px;
+                    left:20px;
+                    top:0px;
+                  
+                }
+            }
+
+        }
+
+    }
+}
+
+
+
+.contents{
+    width: 100%;
+    min-height: 87vh;
+    transition: all 0.1s;
+    padding-bottom: 100px;
+    padding-left: 0px;
+    padding-right: 0px;
+    overflow: hidden !important;
+}
+
+.threshold{
+    position: absolute;
+    right:10px;
+    top:10px;
+}
+

@@ -4,8 +4,12 @@
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
 # Node artifact files
-node_modules/
-dist/
+/codeql
+/CWE-Frontend/dist
+/CWE-Frontend/node_modules
+/cwe-backend/dist
+/cwe-backend/Files
+/cwe-backend/node_modules
 
 # Compiled Java class files
 *.class

@@ -1,0 +1,97 @@
+$light: #f8f9fa;
+$bg-header: darken($light, 2%);
+.bg-header{
+    background: $bg-header;
+}
+.logo{
+    height: 150px !important;
+    width: 180px !important;
+}
+.nav-item{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    i{
+        position: relative ;
+        top: 3px;
+    }
+    :hover{
+        color:$secondary
+    }
+}
+
+.app-title{
+    font-family: 'Times New Roman', Times, serif;
+
+    font-size: 24px;
+    font-weight:bold;
+}
+
+
+.page-header-info {
+    margin: 1px 0px;
+    padding: 0px 0px;
+    line-height: 45px !important;
+    height: 45px !important;
+    background-color: $card-bg-color;
+    border-bottom: 1px darken($card-border-color, 5%) solid;
+    border-radius: 0px 0px 0px 0px;
+
+    h4 {
+        line-height: 45px !important;
+        height: 45px !important;
+        margin: 0px;
+        font-weight: 500;
+        font-size: 18px !important;
+        font-family: 'Libre Baskerville', serif;
+        color:$secondary !important;
+       
+        
+        
+    }
+    .btn i {
+        &:hover {
+            color: $active-standard-fontcolor !important;
+            font-size: 20px;
+            transition: linear 0.1s;
+        }
+    }
+}
+
+
+
+.searchbox {
+   
+    font-size: 16px;
+    color: $bg-color;
+    position: relative;
+    line-height: 46px !important;
+    width:100% !important ;
+    padding-left: 40px !important;
+    
+
+    margin-right: 20px;
+
+
+
+    input {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 18px !important;
+        height: 45.5px !important;
+        color: $secondary;
+        background:none;
+        
+        border-radius: 0px;
+
+        &::placeholder {
+            color: $gray;
+        }
+    }
+
+    i {
+        position: absolute;
+        left: 10px;
+        top: 17px;
+        color: gray;
+    }
+}
+

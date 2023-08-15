@@ -1,0 +1,56 @@
+<input class="d-none" type="file" (change)="this.utilService.importFromJson($event,fileInput)" #fileInput>
+<header class="bg-header topheader border-bottom">
+    <nav class="navbar navbar-expand-lg border-top py-0 ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown ">
+                    <a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">File Menu
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <button class="dropdown-item btn" (click)="this.utilService.newCVE();"> <i
+                                class="fa fa-file px-2"></i>New </button>
+                        <button class="dropdown-item btn" (click)="fileInput.click();"> <i
+                                class=" fa fa-file-import pl-1 pr-2"></i>Import</button>
+                    </div>
+                </li>
+            </ul>
+            <div>
+                <button class="nav-item btn hover-green" (click)="openDialog()" [disabled]="true">
+                    Export <i class="fa fa-file-export px-2"></i>
+                </button>
+
+            </div>
+        </div>
+    </nav>
+
+</header>
+
+<div class="wrapper">
+    <div class="left-sidebar ">
+        <nav id="bugs-list" class="sticky">
+            <div class="searchbox border-bottom">
+                <i class="fa fa-search fa-lg"></i>
+                <input type="text" class="form-control pl-5 border-0" placeholder="search" [(ngModel)]="SearchTerm">
+            </div>
+            <div class="" style="border-top:1px solid white;">
+                <directory-tree [treeData]="utilService.directoryFilesTree"></directory-tree>
+            </div>
+        </nav>
+    </div>
+    <div class="contents">
+        <app-page-header></app-page-header>
+        <div class="content-container  h-100 " id="weaknesses">
+            <app-code-editor></app-code-editor>
+        </div>
+    </div>
+    <div class="right-sidebar" id="bugs-list">
+        <div class="sticky ">
+            <app-code-ql></app-code-ql>
+        </div>
+    </div>
+</div>

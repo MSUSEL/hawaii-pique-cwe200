@@ -1,0 +1,21 @@
+<div class="my-1">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl"  class="bg-transparent" >
+        <!-- This is the tree node template for leaf nodes -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20" class="custom-tree-node value"> 
+            <!-- use a disabled button to provide padding for tree leaf -->
+            <div class="d-flex lighten-font-color hover-green">
+                <i class="fa fa-file-code pr-1 text-danger"></i>
+                <span   style="font-size: 15px !important;" [ngClass]="{'active':node.fullPath==editorService.activeFile.fullPath}" (click)="getFileContents(node)">{{node.name}}</span>
+            </div>  
+        </mat-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  matTreeNodePaddingIndent="15" class="custom-tree-node value">
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                <i class="fa fa-folder" style="color:  rgb(238, 200, 102);" *ngIf="!treeControl.isExpanded(node)"></i>
+                <i class="fa fa-folder-open"  style="color: rgb(238, 200, 102);"  *ngIf="treeControl.isExpanded(node)"></i>
+            </button>
+            <span class="nowrap" >{{node.name}}</span> 
+            
+        </mat-tree-node>
+    </mat-tree>
+</div>

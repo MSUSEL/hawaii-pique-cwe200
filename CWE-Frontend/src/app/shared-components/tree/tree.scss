@@ -1,0 +1,12 @@
+$blue: #0062bd;
+@media screen and (max-width: 768px) {
+    .mat-tree-node {
+      padding: 0 !important;
+
+    }
+}
+
+.active{
+  color: $blue !important;
+  background-color: transparent !important;
+}

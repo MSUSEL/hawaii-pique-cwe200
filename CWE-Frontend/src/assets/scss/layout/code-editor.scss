@@ -1,0 +1,48 @@
+.my-code-editor {
+    padding: 0 !important;
+    height: 700px;
+    .editor-container {
+        height: 700px;
+        max-height: 700px !important;
+        padding: 0 !important;
+    }
+}
+
+.radius-25{
+    border-radius: 20px !important;
+}
+
+.level-warning{
+    border:2px solid gold !important;
+}
+.level-error{
+    border:2px solid $danger !important;
+}
+
+.tab-hover{
+    position: relative;
+    padding-right: 20px !important;
+    .close-button{
+        display: none;
+    }
+
+    &:hover{
+        .close-button{
+            position: absolute;
+            display: block !important;
+            right:10px;
+            top:0px;
+            i{
+                &:hover{
+                    color:red !important;
+                }
+            }
+        }
+    }
+}
+
+.code-header{
+    height:40px !important;
+    line-height: 40px !important;
+    border-bottom: 1px solid $card-border-color;
+}

@@ -1,0 +1,140 @@
+.mat-step-header {
+    background-image: linear-gradient($card-bg-color, darken($light, 6%));
+    padding-bottom: 1px !important;
+    border-bottom: 1px solid $card-border-color;
+    width: 100% !important;
+    padding-left: 10px !important;
+    padding-right: 4px !important;
+    height: 50px !important;
+}
+.mat-step-header .mat-step-icon {
+    background-color: $secondary;
+}
+.mat-step-header .mat-step-icon-selected {
+    background-color: $active-standard-fontcolor;
+}
+
+.mat-stepper-horizontal {
+    background: $card-bg-color;
+}
+.mat-stepper-horizontal-line {
+    display: none !important;
+}
+.mat-step-header .mat-step-label-selected {
+    color: $active-standard-fontcolor !important;
+    width: 150px !important;
+    height: 100% !important;
+    line-height: 50px !important;
+}
+.mat-step-header .mat-step-icon-state-done {
+    background-color: $active-standard-fontcolor;
+}
+.mat-step-header .mat-step-icon-state-error {
+    color: $danger !important;
+    background: none !important;
+}
+.steper-body {
+    min-height: 200px;
+}
+
+.step-next-previous {
+    background-image: linear-gradient($card-bg-color, darken($light, 5%));
+    padding: 0px 20px !important;
+    padding-left: auto !important;
+    margin: 0px;
+    height: 32px !important;
+    min-width: 200px;
+    line-height: 30px;
+    border: 2px solid $card-border-color !important;
+    border-radius: 20px !important;
+    &:hover {
+        color: $active-standard-fontcolor;
+        border-color: $active-standard-fontcolor !important;
+    }
+}
+
+.aquo {
+    font-size: 22px !important;
+
+    height: 15px !important;
+    margin: 0px !important;
+}
+
+.mat-tree-node {
+    min-height: 27px !important;
+    height: 27px;
+    cursor: pointer !important;
+    font-family: "Libre Baskerville", serif;
+    font-size: 17px;
+
+    .nowrap{
+        white-space: nowrap !important;
+        overflow: hidden;
+    }
+
+    .leaf{
+        white-space: nowrap !important;
+        overflow: hidden;
+    }
+
+    .leaf:hover {
+        color: $active-standard-fontcolor !important;
+    }
+    .selected {
+        
+        color: $active-standard-fontcolor !important;
+
+    }
+}
+
+.mat-form-field {
+    width: 100% !important;
+    
+    .mat-input-element {
+        color: $secondary;
+        padding: 0 !important;
+        font-size: 16px !important;
+        font-family: "Libre Baskerville", serif;
+        margin: 0px !important;
+        min-height: 40px !important;
+    }
+}
+
+
+
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.2em;
+    padding-top: 8px;
+    color:$secondary !important;
+}
+
+
+
+
+.mat-form-field-label,.mat-focused .mat-form-field-label {
+    font-size: 20px !important;
+    min-width: 200px !important;
+    background: transparent;
+    color:lighten($secondary,0%) !important;
+    
+   padding-left: 20px !important;
+   padding-right: 20px!important;
+
+   font-family: "Libre Baskerville", serif !important;
+   font-weight: 500 !important;
+}
+.mat-focused     .mat-form-field-outline{
+    color: $active-standard-fontcolor !important;
+}
+
+
+.mat-dialog-container {
+    padding: 0px !important;
+}
+
+
+
+
+
+

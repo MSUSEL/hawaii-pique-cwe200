@@ -1,0 +1,173 @@
+
+
+    .card {
+        border: 0px transparent;
+        margin-bottom: 50px;
+        cursor: move !important;
+        .card-header {
+            font-size: 20px;
+            height: 44px;
+            line-height: 48px !important;
+            background: white;
+            padding: 0px !important;
+            border: 0px;
+            display: flex;
+            justify-content: space-between;
+            h5 {
+                color: $secondary;
+                font-size: 18px;
+                height: 44px !important;
+                background-color: $card-bg-color;
+                margin: 0px !important;
+                position: relative;
+                width: fit-content;
+                min-width: 220px;
+                padding-top: 10px;
+                padding-right: 10px;
+                padding-left: 10px;
+                border-top: 2px solid $card-border-color;
+                border-left: 2px solid $card-border-color;
+                
+                .fa{
+                    color: $secondary;
+                    padding-left: 10px;
+
+                }
+            }
+            h5::after {
+                content: "";
+                float: right;
+                position: absolute;
+                top: -2px;
+                right: -44px;
+                width: 0;
+                height: 0;
+                border-color:   transparent   transparent  transparent $card-bg-color ;
+                border-style: solid;
+                border-width: 44px 0px  0px 44px;
+            }
+            button{
+                margin-top: 5px;
+                padding-left: 2px;
+                i{
+                    color:$gray;
+                    font-size:20px;
+                    &:hover{
+                        color:green !important;
+                    }
+                }
+           
+            } 
+            .fa-times:hover{
+                color:$danger !important;
+            }  
+            
+            .type{
+                font-family: 'Libre Baskerville', serif;
+
+                font-size: 18px;
+
+                color:$secondary;
+                border: 2px solid $card-border-color;
+                height: 35px !important;
+                line-height: 35px;
+                padding: 0px 50px;
+                border-radius: 20px;
+                background-image: linear-gradient($card-bg-color, darken($light, 4%));
+
+            }
+            
+        }
+        .card-block{
+            border: 2px solid $card-border-color;
+            background-image: linear-gradient($card-bg-color, darken($light, 2%));
+            padding: 30px 0px;
+        }
+        .card-body {
+            padding: 20px 0px;
+            border: 2px solid $card-border-color;
+            background-image: linear-gradient($card-bg-color, darken($light, 2%));
+            cursor:default !important;
+            .row {
+                margin-bottom: 10px;
+                padding: 0px 20px;
+            }
+            p{
+                text-align: justify;
+                text-justify: inter-word;
+                font-size: 15px;
+            }
+            label{
+                font-weight: 600;
+                width: 90%;
+                font-size: 14px;
+            }
+            .colon-bold{
+                font-weight: 600;
+            }
+
+            button{
+                padding-left: 2px;
+                i{
+                    color:$gray;
+                    font-size:20px;
+                    &:hover{
+                        font-size: 22px;
+                        color:green !important;
+                    }
+                }
+           
+            } 
+        }
+
+        .card-footer{
+            background: $card-bg-color;
+            
+            border-radius: 0px 0px 5px 5px;
+            border:  2px solid $card-border-color;
+            border-top: 0px;
+
+            .previous-next-error{
+                line-height: 40px !important;
+                font-size: 17px;
+                font-family: 'Libre Baskerville', serif;
+                .titile{
+                    color:$dark;
+                }
+                .description{
+                    color:$secondary;
+                }
+            }
+        }
+    
+    }
+
+
+.btn-success {
+    background: seagreen;
+    &:hover{
+        background: $gray-2;
+    }
+}
+
+
+.section-title{
+    color: $secondary;
+    height: 48px !important;
+    background-color: $card-bg-color;
+    position: relative;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border: 2px solid $card-border-color;
+}
+
+.bg-creamy{
+    background-image: linear-gradient($card-bg-color, darken($light, 2%));
+}
+.ref{
+    p{
+        text-align: justify !important;
+        font-family:Georgia, 'Times New Roman', Times, serif
+    }
+}

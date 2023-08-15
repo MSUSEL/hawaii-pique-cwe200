@@ -1,0 +1,31 @@
+<div class="mt-2">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl"  class="bg-transparent" >
+        <!-- This is the tree node template for leaf nodes -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="27" class="custom-tree-node value"> 
+            <!-- use a disabled button to provide padding for tree leaf -->
+            <div class="d-flex">
+                <i class="fa fa-file-code pr-1 text-secondary mr-1"></i>
+                
+                <div  class="text-secondary hover-green" 
+                        [ngClass]="{'active':node.fullPath==editorService.activeFile.fullPath}" 
+                        [title]="node.message"  (click)="findFile(node);"
+                        style="font-size: 14px !important;"  >
+                        <span class="snippet-region px-1">{{node.region.startLine}}</span>
+                        {{node.name}}
+                </div>
+            </div>  
+        </mat-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  matTreeNodePaddingIndent="25" class="custom-tree-node value position-relative">
+                <mat-icon class="mat-icon-rtl-mirror"  matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+            <span class="nowrap rule-tree-node-title {{node.type}}"  [title]="node.message" >
+                {{node.name}}
+                
+            </span> 
+            <span class="count px-0"> {{node.size}}</span>   
+                
+        </mat-tree-node>
+    </mat-tree>
+</div>
