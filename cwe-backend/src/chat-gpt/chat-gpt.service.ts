@@ -38,7 +38,7 @@ export class ChatGptService {
 
     async createGpt(fileContents: string) {
         var prompt = this.createQuery(fileContents);
-        var response= await this.createGptFourCompletion(prompt);
+        var response= await this.createGptCompletion(prompt);
         this.extractVariableNames(response.message);
         return response;
 
