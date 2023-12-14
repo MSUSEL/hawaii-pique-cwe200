@@ -14,9 +14,6 @@ export class ChatGptController {
     constructor(private readonly chatGptService: ChatGptService) {}
     @Post()
     async chatGptQuery(@Body() createChatGptDto: any) {
-        if(createChatGptDto.model=='gpt')
-            return await this.chatGptService.createGpt(createChatGptDto.filecontents);
-        else
-            return await  this.chatGptService.createDavinci(createChatGptDto.filecontents); 
+        return await this.chatGptService.getFileGptResponse(createChatGptDto.filePath)
     }
 }

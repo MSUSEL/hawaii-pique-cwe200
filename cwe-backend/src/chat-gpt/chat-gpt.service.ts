@@ -2,11 +2,14 @@ import { Injectable } from '@nestjs/common';
 import * as OpenAI from 'openai';
 import { ConfigService } from '@nestjs/config';
 import { FileUtilService } from 'src/files/fileUtilService';
+import { EventsGateway } from 'src/events/events.gateway';
+import * as path from 'path';
 @Injectable()
 export class ChatGptService {
     openai: OpenAI.OpenAIApi = null;
     constructor(
         private configService: ConfigService,
+        private eventsGateway: EventsGateway,
         private fileService: FileUtilService,
     ) {
         var api_key = this.configService.get('API_KEY');
@@ -18,27 +21,32 @@ export class ChatGptService {
 
     async openAiGetSensitiveVariables(files: string[]) {
         var variables = [];
+        var fileList: any[] = [];
         for (var file of files) {
             var fileContents = await this.fileService.readFileAsync(file);
             var response = await this.createGpt(fileContents);
+            fileList.push({
+                key: file,
+                value: response.message
+            })
+            this.eventsGateway.emitDataToClients("data", file + ":");
+            this.eventsGateway.emitDataToClients("data", response.message)
             var fileVariablesList = this.extractVariableNames(response.message);
             variables = variables.concat(fileVariablesList);
         }
-        console.log(variables);
-        return variables;
+        return { variables, fileList };
     }
 
     async createDavinci(fileContents: string) {
         var prompt = this.createQuery(fileContents);
         var response = await this.createDavinciCompletion(prompt);
-        //var response=await this.createGptCompletion(prompt);
         this.extractVariableNames(response.message)
         return response;
     }
 
     async createGpt(fileContents: string) {
         var prompt = this.createQuery(fileContents);
-        var response= await this.createGptCompletion(prompt);
+        var response = await this.createGptFourCompletion(prompt);
         this.extractVariableNames(response.message);
         return response;
 
@@ -62,10 +70,7 @@ export class ChatGptService {
               }
             ]
         }
-            
-
         ${code}`;
-
         return message;
     }
 
@@ -94,21 +99,37 @@ export class ChatGptService {
             temperature: 0.2,
             messages: [{ role: 'user', content: prompt }],
         });
-        console.log(completion.data.choices[0].message.content )
+        console.log(completion.data.choices[0].message.content)
         return { message: completion.data.choices[0].message.content };
     }
 
 
-    extractVariableNames(text:string): string[] {
-        var variables=[];
-        try{
-            var json=JSON.parse(text)
-            variables= json["sensitiveVariables"].map(variable => `\"${variable.name}\"`);
+    extractVariableNames(text: string): string[] {
+        var variables = [];
+        try {
+            var json = JSON.parse(text)
+            variables = json["sensitiveVariables"].map(variable => `\"${variable.name}\"`);
             return variables;
 
-        }catch(e){
+        } catch (e) {
             console.log(text);
             return variables;
+        }
+    }
+
+
+    async getFileGptResponse(filePath: String) {
+        var directories = filePath.split("\\");
+        var jsonFilePath = path.join(directories[0], directories[1], "data.json");
+        try{
+            var jsonArray = await this.fileService.readJsonFile(jsonFilePath);
+            for (const obj of jsonArray) {
+                if (obj.key === filePath) {
+                    return obj;
+                }
+            }
+        }catch(e){
+            return {value: "no data found for this file yet. please re run your project to get the results"}
         }
 
     }

@@ -7,6 +7,7 @@ import * as fs from 'fs';
 import { ConfigService } from '@nestjs/config';
 import { ChatGptService } from 'src/chat-gpt/chat-gpt.service';
 import { SensitiveVariablesContents } from './data';
+import { EventsGateway } from 'src/events/events.gateway';
 @Injectable()
 export class CodeQlService {
     projectsPath: string;
@@ -14,6 +15,7 @@ export class CodeQlService {
     constructor(
         private configService: ConfigService,
         private parserService: CodeQlParserService,
+        private eventsGateway: EventsGateway,
         private fileService: FileUtilService,
         private gptService:ChatGptService
     ) {
@@ -29,11 +31,10 @@ export class CodeQlService {
     async runCodeQl(createCodeQlDto: any) {
         var sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
         var javaFiles=await this.fileService.getJavaFilesInDirectory(sourcePath);
-        
-        const variables=await this.gptService.openAiGetSensitiveVariables(javaFiles);
-        const fileContents=SensitiveVariablesContents.replace("======",variables.join(',')) ;
+        const data=await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        const fileContents=SensitiveVariablesContents.replace("======",data.variables.join(',')) ;
         this.writeVariablesToFile(fileContents)
-       
+        this.writeFilesGptResponseToJson(data.fileList,sourcePath);
         var Db = path.join(sourcePath, createCodeQlDto.project + 'Db');
         await this.fileService.removeDir(Db);
         var createDbCommand = `database create ${Db} --language=java --source-root=${sourcePath}`;
@@ -52,14 +53,17 @@ export class CodeQlService {
             let childProcess = spawn('codeql', commands);
             childProcess.stdout.on('data', (data) => {
                 console.log(data.toString());
+                this.eventsGateway.emitDataToClients('data',data.toString())
             });
-            childProcess.stderr.on('data', function (data) {
+            childProcess.stderr.on('data', (data) => {
                 console.log(data.toString());
+                this.eventsGateway.emitDataToClients('data',data.toString())
             });
-
+            const self = this;
             childProcess.on('exit', function (code, signal) {
-                const result = `process CodeQl exited with code ${code} and signal ${signal}`;
+                const result = "process CodeQl exited with code "+code+" and signal "+signal;
                 console.log(result);
+                self.eventsGateway.emitDataToClients('data',result.toString())
                 resolve();
             });
 
@@ -73,5 +77,11 @@ export class CodeQlService {
     async writeVariablesToFile(variables:string){
         var filePath="../codeql/ql/java/ql/lib/semmle/code/java/security/SensitiveVariables.qll";
         await this.fileService.writeToFile(filePath,variables) 
+    }
+
+    async writeFilesGptResponseToJson(fileList:any[],sourcePath:string){
+        var jsonPath=path.join(sourcePath,"data.json");
+        var data=JSON.stringify(fileList);
+        await this.fileService.writeToFile(jsonPath,data)
     }
 }

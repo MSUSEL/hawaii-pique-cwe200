@@ -5,6 +5,8 @@ import { FilesModule } from './files/files.module';
 import { ChatGptModule } from './chat-gpt/chat-gpt.module';
 import { ConfigModule } from '@nestjs/config';
 import { CodeQlModule } from './code-ql/code-ql.module';
+import { EventsGateway } from './events/events.gateway';
+import { EventsModule } from './events/events.module';
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -12,6 +14,7 @@ import { CodeQlModule } from './code-ql/code-ql.module';
             isGlobal: true,
         }),
         FilesModule,
+        EventsModule,
         ChatGptModule,
         CodeQlModule,
     ],

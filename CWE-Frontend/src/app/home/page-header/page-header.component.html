@@ -21,14 +21,15 @@
                 (click)="runCodeQl();">
                 <i class="fa fa-play text-secondary"></i>
             </button>
-            <div class="pt-1" >
-                <div class="fa-2x" *ngIf="isLoading">
+            <div class="pt-1 " >
+                <div class="fa-2x d-inline" *ngIf="isLoading">
                     <i class="fas fa-spinner fa-pulse text-success"></i>
                   </div>
-            </div>
-
-            
+            </div>  
         </div>
+        <button id="terminal-collapse"  class="btn print-button"  title="Backend Terminal" >
+            <i class="fas fa-terminal"></i>
+        </button>
 
     </div>
     <div class="col-md-1">

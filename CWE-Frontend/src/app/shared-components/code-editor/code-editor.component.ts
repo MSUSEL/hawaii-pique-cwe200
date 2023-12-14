@@ -1,15 +1,16 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { EditorService, SourceFile } from '../editor-service';
 
 import * as MEditor from 'monaco-editor';
 import { ChatGptService } from 'src/app/Services/chatgpt.service';
+import { SocketService } from 'src/app/Services/socket-service.service';
 declare const monaco: any;
 @Component({
     selector: 'app-code-editor',
     templateUrl: './code-editor.component.html',
     styleUrls: ['./code-editor.component.scss'],
 })
-export class CodeEditorComponent {
+export class CodeEditorComponent  implements OnInit{
     view: string = 'code';
     decorations: string[] = [];
     monacoEditor: MEditor.editor.ICodeEditor = null;
@@ -28,7 +29,8 @@ export class CodeEditorComponent {
     chatGptResponse: string = '';
     constructor(
         public editorService: EditorService,
-        private chatGptService: ChatGptService
+        private chatGptService: ChatGptService,
+        private socketService:SocketService
     ) {
         this.editorService.activeFileChange.subscribe((file) => {
             if (file) {
@@ -37,6 +39,9 @@ export class CodeEditorComponent {
                 this.chatGptResponse = '';
             }
         });
+    }
+    ngOnInit(): void {
+
     }
 
     getFileDecorations() {
@@ -153,10 +158,28 @@ export class CodeEditorComponent {
         this.chatGptService
             .queryChatGpt({
                 model: model,
-                filecontents: this.editorService.activeFile.code,
+                filePath: this.editorService.activeFile.fullPath,
             })
             .subscribe((response) => {
-                this.chatGptResponse = response.message;
+                this.chatGptResponse = response.value;
             });
+    }
+}
+
+
+@Component({
+    selector: 'app-editor-terminal',
+    templateUrl: './terminal.component.html',
+  
+})
+export class TerminalComponent implements OnInit {
+    mode:boolean=true;
+    counter=0;
+    constructor(
+        public socketService:SocketService
+    ){}
+    @ViewChild('term', { static: true }) terminal: ElementRef;
+    ngOnInit(){
+
     }
 }

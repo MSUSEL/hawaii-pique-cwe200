@@ -1,3 +1,4 @@
+
 <ul class="nav nav-tabs border-bottom bg-creamy" id="myTab" role="tablist" *ngIf="editorService.openedFiles.length">
     <li class="nav-item tab-hover" role="presentation" *ngFor="let item of editorService.openedFiles;let i=index;">
         <button class="nav-link" 
@@ -20,7 +21,7 @@
                 </div>
                 <div class="toolbar" >
                     <button class="btn "
-                        (click)="this.view='gpt'" 
+                        (click)="this.view='gpt';gerChatGptResponse('gpt');" 
                         title="Extract Sensitive Information from ChatGpt">
                         <i class="fa fa-list text-secondary hover-green"></i>
                     </button>
@@ -42,18 +43,13 @@
                     <span class="text-secondary">{{editorService.activeFile.name}} Sensitive Information</span>
                 </div>
                 <div class="toolbar" >
-                    <button class="btn hover-green" title="Source Code" (click)="this.view='code'">
-                        <i class="fa fa-code text-secondary hover-green"></i>
-                    </button>
                     <button class="btn hover-green "
                         (click)="gerChatGptResponse('gpt');" 
                         title="Extract Sensitive Information from ChatGpt">
                         <i class="fa fa-list text-secondary hover-green"></i> Gpt Model
                     </button>
-                    <button class="btn  hover-green"
-                        (click)="gerChatGptResponse('davinci');" 
-                        title="Extract Sensitive Information from ChatGpt">
-                        <i class="fa fa-list text-secondary hover-green"></i> Davinci Model
+                    <button class="btn hover-green" title="Source Code" (click)="this.view='code'">
+                        <i class="fa fa-code text-secondary hover-green"></i>
                     </button>
                 </div>
             </div>

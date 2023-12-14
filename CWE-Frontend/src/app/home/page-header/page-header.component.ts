@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CodeQlService } from 'src/app/Services/codeql-service';
 import { FilesService } from 'src/app/Services/fileService';
+import { SocketService } from 'src/app/Services/socket-service.service';
 import { CVEUtilService } from 'src/app/attack-surface/cwe-util.service';
 import { EditorService } from 'src/app/shared-components/editor-service';
 declare var $: any;
@@ -12,6 +13,7 @@ export class PageHeaderComponent implements OnInit {
     isLoading:boolean=false;
     constructor(
         public utilService: CVEUtilService,
+        private socketService:SocketService,
         private fileService: FilesService,
         private codeQlService:CodeQlService,
         private editorService:EditorService
@@ -30,6 +32,10 @@ export class PageHeaderComponent implements OnInit {
                 $('.left-sidebar').toggleClass('active');
                 $('#left-sidebar-collapse i').toggleClass('fa-flip-horizontal');
             });
+            
+            $('#terminal-collapse,#terminal-dismiss').on('click', function () {
+                $('#terminal').toggleClass('d-none');
+            });
         });
     }
 
@@ -44,12 +50,15 @@ export class PageHeaderComponent implements OnInit {
     }
 
 
-    runCodeQl(){
+    async runCodeQl(){
+        this.socketService.clearOutput();
+        await this.socketService.socketConnect();
         this.isLoading=true;
         this.codeQlService.runCodeQl({project:this.utilService.ProjectName}).subscribe((response)=>{
             this.editorService.rulesTree=response.rulesTree;
             this.editorService.locationsTree=response.locationsTree;
             this.isLoading=false;
+            this.socketService.socketDisconnect();
         })
     }
 

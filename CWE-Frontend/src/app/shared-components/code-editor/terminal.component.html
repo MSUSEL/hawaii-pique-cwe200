@@ -1,0 +1,31 @@
+<div #term  >
+    <div style="position: sticky;top:0;" class="bg-creamy px-2">
+        <div class="w-100 d-flex justify-content-between" style="line-height: 35px;">
+            <h4 class="text-secondary pt-2 ">Backend Terminal Output</h4>
+            <button class="btn btn-print text-secondary" 
+                title="Start Streaming Terminal Output" 
+                *ngIf="this.socketService.TerminalStreamingMode==false" 
+                (click)="this.socketService.TerminalStreamingMode=true">
+                <i class="fas fa-lg fa-play-circle "></i>
+            </button>
+            <button class="btn btn-print hover-danger text-secondary" 
+                title="Stop Streaming Terminal Output" 
+                *ngIf="this.socketService.TerminalStreamingMode==true" 
+                (click)="this.socketService.TerminalStreamingMode=false">
+                <i class="fas fa-lg fa-pause-circle font-size-25"></i>
+            </button>
+
+            <button  (click)="this.socketService.clearOutput()" class="btn btn-print text-secondary">
+                <i class="fas fa-eraser px-1 pt-1 fa-lg "></i> Clear
+            </button>
+            <button id="terminal-dismiss" class="btn btn-print text-secondary">
+                <i class="fas  fa-arrow-down fa-lg" ></i>
+            </button>
+
+        </div>
+    </div>
+    <div *ngFor="let item of socketService.socketOutput ;let i=index;" >
+        <samp [innerHTML]="item.data" class="text-white" [ngClass]="{'text-danger':item.type=='error'}"></samp><br>
+    </div>
+    
+</div>
