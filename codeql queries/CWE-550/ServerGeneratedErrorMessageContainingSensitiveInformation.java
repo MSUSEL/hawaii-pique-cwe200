@@ -1,4 +1,3 @@
-package snippets;
 import java.io.IOException;
 import java.net.InetAddress;
 
@@ -8,18 +7,19 @@ While error messages in and of themselves are not dangerous, per se, it is what 
 */
 public class ServerGeneratedErrorMessageContainingSensitiveInformation {
     private static void checkNetworkConnection() throws IOException {
-        // Simulate a network-related operation (e.g., checking connectivity to a server)
+        // Simulate a network-related operation (e.g., checking connectivity to a
+        // server)
 
-        // Here we simulate a network failure, by trying to connect to a server that doesn't exist.
+        // Here we simulate a network failure, by trying to connect to a server that
+        // doesn't exist.
         InetAddress serverAddress = InetAddress.getByName("CWEProject.com");
         try {
             if (!serverAddress.isReachable(5000)) {
                 throw new IOException("Network connection failed. Unable to reach the server.");
-            }
-            else{
+            } else {
                 System.out.println("Connected to sever.");
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             // The error message is exposed
             System.out.println("Error: " + e.getMessage() + serverAddress);
         }

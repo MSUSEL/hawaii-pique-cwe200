@@ -1,5 +1,3 @@
-package snippets;
-
 public class JavaRuntimeErrorMessageContainingSensitiveInformation {
     public static void main(String[] args) {
         try {
