@@ -1,17 +1,48 @@
 import java
 
 // Find servlet methods that potentially expose sensitive error information
-from Class servletClass, Method servletMethod, CatchClause cc, MethodAccess printlnOrLogCall
+from Class servletClass, Method servletMethod, CatchClause cc, MethodAccess printlnCall, MethodAccess exceptionExposureCall, 
+Expr printlnArg, AddExpr concatExpr
+
+
 where
+  // Look for classes that inherit from HttpServlet
   servletClass.getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
   servletMethod.getDeclaringType() = servletClass and
-  (servletMethod.hasName("doGet") or servletMethod.hasName("doPost")) and
+  // (servletMethod.hasName("doGet") or servletMethod.hasName("doPost")) and
   cc.getEnclosingCallable() = servletMethod and
-  printlnOrLogCall.getEnclosingCallable() = cc.getEnclosingCallable() and
   (
-    printlnOrLogCall.getMethod().hasName("println") or
-    printlnOrLogCall.getMethod().hasName("getMessage") or
-    printlnOrLogCall.getMethod().hasName("getStackTrace")
+    cc.getACaughtType().hasName("Exception") 
+  ) 
+  and 
+
+  // Check if the sensitive informaiton is exposed via a print statement
+  (
+    printlnCall.getMethod().hasName("println") and
+    printlnCall.getEnclosingCallable() = cc.getEnclosingCallable() and
+    printlnCall.getEnclosingStmt() = cc.getBlock().getAChild*() and
+    printlnArg = printlnCall.getAnArgument() and
+    (
+        // Direct call to Exposure
+        (
+            exceptionExposureCall = printlnArg and
+            exceptionExposureCall instanceof MethodAccess and
+            exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
+            exceptionExposureCall.getQualifier() instanceof VarAccess and
+            exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
+            exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
+        ) or
+        // Concatenation involving Exposure
+        (
+            printlnArg instanceof AddExpr and
+            concatExpr = printlnArg and
+            exceptionExposureCall = concatExpr.getAnOperand() and
+            exceptionExposureCall instanceof MethodAccess and
+            exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
+            exceptionExposureCall.getQualifier() instanceof VarAccess and
+            exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
+            exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
+        )
+    )
   )
-select servletMethod.getBody(),
-  "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information"
+ select exceptionExposureCall, "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information"
