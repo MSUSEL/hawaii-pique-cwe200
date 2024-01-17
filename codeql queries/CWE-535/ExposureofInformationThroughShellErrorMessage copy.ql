@@ -20,8 +20,14 @@ where
   expr instanceof MethodAccess and
   // Ensure that expression is in the same method as the exec call
   expr.getEnclosingCallable() = execCall.getEnclosingCallable() and
-  // Find calls to getMessage() on an Exception
-  expr.(MethodAccess).getMethod().hasName("getMessage") and
+  // Find calls to an Exception that exposes information
+  (
+  expr.(MethodAccess).getMethod().hasName("getMessage") or
+  expr.(MethodAccess).getMethod().hasName("getStackTrace") or
+  expr.(MethodAccess).getMethod().hasName("getStackTraceAsString") or
+  expr.(MethodAccess).getMethod().hasName("printStackTrace")
+
+  ) and
   expr.(MethodAccess).getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
   expr.(MethodAccess).getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
 select expr, "Potential CWE-535: Exposure of information through shell error message"
