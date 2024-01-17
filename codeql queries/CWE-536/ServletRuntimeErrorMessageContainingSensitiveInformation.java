@@ -10,7 +10,8 @@ https://cwe.mitre.org/data/definitions/536.html
 */
 
 public class ServletRuntimeErrorMessageContainingSensitiveInformation extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    // Example 1 - Insecure code
+    protected void doGetInsecure(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             int result = 10 / 0; // This will throw an ArithmeticException
@@ -20,4 +21,19 @@ public class ServletRuntimeErrorMessageContainingSensitiveInformation extends Ht
             response.getWriter().println("Error: " + e.getMessage());
         }
     }
+
+    // Example 2 - Secure code
+    protected void doGetSecure(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            int result = 10 / 0; // This will still throw an ArithmeticException
+            response.getWriter().println("Result: " + result);
+        } catch (Exception e) {
+
+            // Send a generic error response to the client
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    "Internal server error. Please contact the system administrator.");
+        }
+    }
+
 }

@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+// Example 1 - Insecure code
 public class ExposureofInformationThroughShellErrorMessage {
     // This method attempts to execute a shell command with user input
     public static String insecureCommandExecution(String userInput) {
@@ -27,6 +28,24 @@ public class ExposureofInformationThroughShellErrorMessage {
             // Catching the exception and exposing the error message
             return "Error: " + e.getMessage();
 
+        }
+    }
+
+    // Example 2 - Secure code
+    public static String secureCommandExecution(String userInput) {
+        try {
+            Process process = Runtime.getRuntime().exec(userInput);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+            process.waitFor();
+            return output.toString();
+        } catch (IOException | InterruptedException e) {
+            // Return a generic error message
+            return "An internal error occurred. Please contact the system administrator.";
         }
     }
 
