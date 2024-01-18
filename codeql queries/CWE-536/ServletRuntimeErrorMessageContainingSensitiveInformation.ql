@@ -9,7 +9,6 @@ where
   // Look for classes that inherit from HttpServlet
   servletClass.getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
   servletMethod.getDeclaringType() = servletClass and
-  // (servletMethod.hasName("doGet") or servletMethod.hasName("doPost")) and
   cc.getEnclosingCallable() = servletMethod and
   (
     cc.getACaughtType().hasName("Exception") 
@@ -27,10 +26,7 @@ where
         (
             exceptionExposureCall = printlnArg and
             exceptionExposureCall instanceof MethodAccess and
-            exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
-            exceptionExposureCall.getQualifier() instanceof VarAccess and
-            exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
-            exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
+            exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])
         ) or
         // Concatenation involving Exposure
         (
@@ -38,11 +34,11 @@ where
             concatExpr = printlnArg and
             exceptionExposureCall = concatExpr.getAnOperand() and
             exceptionExposureCall instanceof MethodAccess and
-            exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
-            exceptionExposureCall.getQualifier() instanceof VarAccess and
-            exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
-            exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
-        )
+            exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])
+        ) and
+        exceptionExposureCall.getQualifier() instanceof VarAccess and
+        exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
+        exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
     )
   )
  select exceptionExposureCall, "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information"

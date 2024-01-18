@@ -23,7 +23,7 @@ public class ServerGeneratedErrorMessageContainingSensitiveInformation {
             }
         } catch (IOException e) {
             // The error message is exposed
-            System.out.println("Error: " + e.getMessage() + serverAddress);
+            System.out.println("Error: " + e.getMessage());
         }
     }
 

@@ -17,10 +17,7 @@ where
           (
               exceptionExposureCall = printlnArg and
               exceptionExposureCall instanceof MethodAccess and
-              exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
-              exceptionExposureCall.getQualifier() instanceof VarAccess and
-              exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
-              exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
+              exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])
           ) or
           // Concatenation involving Exposure
           (
@@ -28,11 +25,12 @@ where
               concatExpr = printlnArg and
               exceptionExposureCall = concatExpr.getAnOperand() and
               exceptionExposureCall instanceof MethodAccess and
-              exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
-              exceptionExposureCall.getQualifier() instanceof VarAccess and
-              exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
-              exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
-          )
+              exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])
+          ) and
+          // Check that the method call is on an Exception
+          exceptionExposureCall.getQualifier() instanceof VarAccess and
+          exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
+          exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
       )
     )
     

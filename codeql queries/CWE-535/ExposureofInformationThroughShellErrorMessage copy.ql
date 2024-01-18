@@ -22,11 +22,7 @@ where
   expr.getEnclosingCallable() = execCall.getEnclosingCallable() and
   // Find calls to an Exception that exposes information
   (
-  expr.(MethodAccess).getMethod().hasName("getMessage") or
-  expr.(MethodAccess).getMethod().hasName("getStackTrace") or
-  expr.(MethodAccess).getMethod().hasName("getStackTraceAsString") or
-  expr.(MethodAccess).getMethod().hasName("printStackTrace")
-
+  expr.(MethodAccess).getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])
   ) and
   expr.(MethodAccess).getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
   expr.(MethodAccess).getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
