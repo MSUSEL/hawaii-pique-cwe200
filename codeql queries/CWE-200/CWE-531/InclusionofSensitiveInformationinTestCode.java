@@ -1,3 +1,4 @@
+package snippets;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -15,6 +16,7 @@ public class InclusionofSensitiveInformationinTestCode extends TestCase {
         // Hardcoded credentials (highly sensitive)
         String username = "admin";
         String password = "admin123";
+        String dontexpose = "myCWEtoken";
 
         // Simulated test of a network connection
         HttpURLConnection connection = (HttpURLConnection) new URL(sensitiveUrl).openConnection();

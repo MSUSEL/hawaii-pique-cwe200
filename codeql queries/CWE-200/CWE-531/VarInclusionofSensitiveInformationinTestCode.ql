@@ -29,6 +29,8 @@ where
         // Find local variable declarations within these methods
         localVarDecl = any(LocalVariableDeclStmt lv | lv.getEnclosingCallable() = m) and
         localVarDecl.getAVariable().getName().toLowerCase().matches(["%username%", "%password%", "%secret%", "%key%", "%token%"])
+        // Ensure the localVarDelc is assigned to a string literal
+        and localVarDecl.getAVariable().getAChildExpr() instanceof StringLiteral
     ) 
 
 
