@@ -14,7 +14,7 @@ class JUnit4Or5TestClass extends Class {
     }
 }
 
-from Class testClass, Method m, StringLiteral sl, LocalVariableDeclStmt localVarDecl
+from Class testClass, Method m, StringLiteral sl
 where
     // Look for classes that are likely test classes
     (
@@ -27,9 +27,9 @@ where
     (
         (
             sl.getEnclosingCallable() = m and 
-            sl.getValue().matches(["%username%", "%password%", "%secret%", "%key%", "%token%"]) and
+            sl.getValue().toLowerCase().matches(["%username%", "%password%", "%secret%", "%key%", "%token%", "%api%"]) and
             // Exclude literals used from config files   
-            not sl.getValue().regexpMatch([".*\\.username.*", ".*\\.password.*", ".*\\.secret.*", ".*\\.key.*", ".*\\.token.*"])
+            not sl.getValue().regexpMatch([".*\\.username.*", ".*\\.password.*", ".*\\.secret.*", ".*\\.key.*", ".*\\.token.*", ".*\\.api.*"])
         ) 
     ) 
 
