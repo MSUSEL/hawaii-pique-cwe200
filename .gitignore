@@ -52,3 +52,5 @@ Thumbs.db
 *.mov
 *.wmv
 
+.vscode/launch.json
+.vscode/tasks.json

@@ -3,6 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import * as AdmZip from 'adm-zip';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as readline from "readline";
+
 @Global()
 @Injectable()
 export class FileUtilService {
@@ -18,16 +20,16 @@ export class FileUtilService {
     async getJavaFilesInDirectory(directoryPath) {
         const files = fs.readdirSync(directoryPath);
         let javaFiles = [];
-        for(var file of files){
+        for (var file of files) {
             const filePath = path.join(directoryPath, file);
             const fileStats = fs.statSync(filePath);
             if (fileStats.isDirectory()) {
-                var newFiles= await this.getJavaFilesInDirectory(filePath)
+                var newFiles = await this.getJavaFilesInDirectory(filePath);
                 javaFiles = javaFiles.concat(newFiles);
             } else if (fileStats.isFile() && file.endsWith('.java')) {
                 javaFiles.push(filePath);
             }
-        };
+        }
         return javaFiles;
     }
 
@@ -95,7 +97,88 @@ export class FileUtilService {
         return filePath.substring(index + 1);
     }
 
-    async  writeToFile(filePath:string,content:string) {
-        fs.writeFileSync(filePath,content, 'utf-8');
+    async writeToFile(filePath: string, content: string) {
+        fs.writeFileSync(filePath, content, 'utf-8');
+    }
+
+    // Preprocesses files by removing comments and imports, and concatenating multiple of them into a single string
+    async preprocessFiles(
+        files: string[],
+        batchSize: number = 10,
+    ): Promise<string[]> {
+        let concatnatedBatch: string = '';
+        let output: string[] = [];
+
+        for (let i = 0; i < files.length; i += batchSize) {
+            const batch = files.slice(i, i + batchSize);
+            const batchResults = await this.processFilesInBatch(batch);
+
+            batchResults.forEach((result, index) => {
+                concatnatedBatch +=
+                    '---------------' +
+                    batch[index] +
+                    '---------------' +
+                    result;
+            });
+
+            output.push(concatnatedBatch);
+            console.log(concatnatedBatch);
+        }
+
+        return output;
+    }
+
+    async processFilesInBatch(filePaths: string[]): Promise<string[][]> {
+        return Promise.all(
+            filePaths.map((filePath) => this.processJavaFile(filePath)),
+        );
+    }
+
+    //   getFilesPaths(directory: string): string[] {
+    //     const files = fs.readdirSync(directory);
+    //     let filePaths: string[] = [];
+
+    //     files.forEach((file) => {
+    //       const filePath = path.join(directory, file);
+    //       const stats = fs.statSync(filePath);
+
+    //       if (stats.isDirectory()) {
+    //         filePaths = filePaths.concat(getFilesPaths(filePath));
+    //       } else if (path.extname(file) === ".java") {
+    //         filePaths.push(filePath);
+    //       }
+    //     });
+
+    //     return filePaths;
+    //   }
+
+    async processJavaFile(filePath: string): Promise<string[]> {
+        const fileStream = fs.createReadStream(filePath);
+        // We have to read the file line by line because the we want to exclude certain lines
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity,
+        });
+
+        const processedFile: string[] = [];
+        let inMultilineComment = false;
+
+        for await (const line of rl) {
+            let trimmedLine = line.trim();
+            if (trimmedLine.startsWith('/*')) {
+                inMultilineComment = true;
+            } else if (trimmedLine.endsWith('*/')) {
+                inMultilineComment = false;
+            } else if (
+                !inMultilineComment &&
+                !trimmedLine.startsWith('//') &&
+                trimmedLine !== '' &&
+                !trimmedLine.startsWith('import')
+            ) {
+                processedFile.push(trimmedLine);
+            }
+        }
+
+        return processedFile;
     }
 }
