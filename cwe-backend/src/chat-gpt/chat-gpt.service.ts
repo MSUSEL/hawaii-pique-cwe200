@@ -22,6 +22,35 @@ export class ChatGptService {
     async openAiGetSensitiveVariables(files: string[]) {
         var variables = [];
         var fileList: any[] = [];
+
+        // New Code for preprocessing
+        let batchSize = 10;
+        for (let i = 0; i < files.length; i += batchSize) {
+            const batch = files.slice(i, i + batchSize);
+            let processedFiles = await this.fileService.preprocessFiles(batch).catch((e) => console.error(e));
+            if (typeof processedFiles === 'string') {
+                // TODO: Update prompt to account for containing multiple files in each batch
+                var response = await this.createGpt(processedFiles);
+                // TODO: Create a way to split the response into individual responses
+                // let individualResponses = this.splitBatchResponse(batchResponse, batch.length);
+
+                // batch.forEach((file, index) => {
+                //     let responseForFile = individualResponses[index];
+                //     fileList.push({
+                //         key: file,
+                //         value: responseForFile
+                //     });
+                //     this.eventsGateway.emitDataToClients("data", file + ":");
+                //     this.eventsGateway.emitDataToClients("data", responseForFile);
+    
+                //     var fileVariablesList = this.extractVariableNames(responseForFile);
+                //     variables = variables.concat(fileVariablesList);
+                // });
+
+            }
+        }
+        
+        // Previous Code
         for (var file of files) {
             var fileContents = await this.fileService.readFileAsync(file);
             var response = await this.createGpt(fileContents);
@@ -70,6 +99,44 @@ export class ChatGptService {
               }
             ]
         }
+
+
+        // New Prompt
+        // You are a security analyst tasked with identifying sensitive variables related to system configurations, database connections, and credentials in multiple source code files. Your goal is to identify variables that, if exposed to external users or hackers, could lead to security vulnerabilities or breaches. Please analyze the provided source code files and list down any sensitive variables related to system configurations, database connections, or credentials that fit the criteria mentioned above for each file separately. The beginning of each file is marked by "-----BEGIN FILE: [FileName]-----", and the end is marked by "-----END FILE: [FileName]-----". Please provide the names of the sensitive variables only, without disclosing any specific values, and format your response in JSON. Your analysis will help in securing the application and preventing potential data leaks or unauthorized access.
+
+        // Please structure your response in the following JSON format for each file:
+
+        // {
+        // "files": [
+        //     {
+        //     "fileName": "FileName1.java",
+        //     "sensitiveVariables": [
+        //         {
+        //         "name": "variableName1",
+        //         "description": "variableDescription1"
+        //         },
+        //         {
+        //         "name": "variableName2",
+        //         "description": "variableDescription2"
+        //         }
+        //     ]
+        //     },
+        //     {
+        //         "fileName": "FileName2.java",
+        //         "sensitiveVariables": [
+        //         {
+        //             "name": "variableName1",
+        //             "description": "variableDescription1"
+        //         },
+        //         {
+        //             "name": "variableName2",
+        //             "description": "variableDescription2"
+        //         }
+        //         ]
+        //     }
+        // ]
+        // }
+
         ${code}`;
         return message;
     }

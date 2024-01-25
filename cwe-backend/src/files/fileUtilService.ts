@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import * as AdmZip from 'adm-zip';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as readline from "readline";
+import * as readline from 'readline';
 
 @Global()
 @Injectable()
@@ -102,65 +102,34 @@ export class FileUtilService {
     }
 
     // Preprocesses files by removing comments and imports, and concatenating multiple of them into a single string
-    async preprocessFiles(
-        files: string[],
-        batchSize: number = 10,
-    ): Promise<string[]> {
+    async preprocessFiles(batch: string[]) {
         let concatnatedBatch: string = '';
-        let output: string[] = [];
 
-        for (let i = 0; i < files.length; i += batchSize) {
-            const batch = files.slice(i, i + batchSize);
-            const batchResults = await this.processFilesInBatch(batch);
+        const batchResults = await this.processFilesInBatch(batch);
 
-            batchResults.forEach((result, index) => {
-                concatnatedBatch +=
-                    '---------------' +
-                    batch[index] +
-                    '---------------' +
-                    result;
-            });
+        batchResults.forEach((result) => {
+            concatnatedBatch += result;
+        });
 
-            output.push(concatnatedBatch);
-            console.log(concatnatedBatch);
-        }
-
-        return output;
+        console.log(concatnatedBatch);
+        return concatnatedBatch;
     }
 
-    async processFilesInBatch(filePaths: string[]): Promise<string[][]> {
+    async processFilesInBatch(filePaths: string[]): Promise<string[]> {
         return Promise.all(
             filePaths.map((filePath) => this.processJavaFile(filePath)),
         );
     }
 
-    //   getFilesPaths(directory: string): string[] {
-    //     const files = fs.readdirSync(directory);
-    //     let filePaths: string[] = [];
-
-    //     files.forEach((file) => {
-    //       const filePath = path.join(directory, file);
-    //       const stats = fs.statSync(filePath);
-
-    //       if (stats.isDirectory()) {
-    //         filePaths = filePaths.concat(getFilesPaths(filePath));
-    //       } else if (path.extname(file) === ".java") {
-    //         filePaths.push(filePath);
-    //       }
-    //     });
-
-    //     return filePaths;
-    //   }
-
-    async processJavaFile(filePath: string): Promise<string[]> {
+    async processJavaFile(filePath: string): Promise<string> {
         const fileStream = fs.createReadStream(filePath);
-        // We have to read the file line by line because the we want to exclude certain lines
         const rl = readline.createInterface({
             input: fileStream,
             crlfDelay: Infinity,
         });
 
-        const processedFile: string[] = [];
+        let processedFile: string = '';
+        processedFile += '-----BEGIN FILE: [' + filePath + ']-----';
         let inMultilineComment = false;
 
         for await (const line of rl) {
@@ -175,10 +144,10 @@ export class FileUtilService {
                 trimmedLine !== '' &&
                 !trimmedLine.startsWith('import')
             ) {
-                processedFile.push(trimmedLine);
+                processedFile += trimmedLine;
             }
         }
-
+        processedFile += '-----END FILE: [' + filePath + ']-----';
         return processedFile;
     }
 }
