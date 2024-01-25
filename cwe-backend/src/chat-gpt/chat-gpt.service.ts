@@ -29,26 +29,31 @@ export class ChatGptService {
             const batch = files.slice(i, i + batchSize);
             let processedFiles = await this.fileService.preprocessFiles(batch).catch((e) => console.error(e));
             if (typeof processedFiles === 'string') {
-                // TODO: Update prompt to account for containing multiple files in each batch
                 var response = await this.createGpt(processedFiles);
-                // TODO: Create a way to split the response into individual responses
-                // let individualResponses = this.splitBatchResponse(batchResponse, batch.length);
+                
+                // The response is a String that contains the sensitive variables for each file in JSON format
+                const json = JSON.parse(response.message);
+                json.files.forEach((file: any) => {
+                    
+                    // Extract the senstaive variables for each file
+                    let fileName = file.fileName;
+                    let sensitiveVariables = file.sensitiveVariables;
+                    
+                    fileList.push({
+                        key: fileName,
+                        value: sensitiveVariables,
+                    });
 
-                // batch.forEach((file, index) => {
-                //     let responseForFile = individualResponses[index];
-                //     fileList.push({
-                //         key: file,
-                //         value: responseForFile
-                //     });
-                //     this.eventsGateway.emitDataToClients("data", file + ":");
-                //     this.eventsGateway.emitDataToClients("data", responseForFile);
-    
-                //     var fileVariablesList = this.extractVariableNames(responseForFile);
-                //     variables = variables.concat(fileVariablesList);
-                // });
+                    this.eventsGateway.emitDataToClients('data', fileName + ':');
+                    this.eventsGateway.emitDataToClients('data', sensitiveVariables);
 
-            }
+                    var fileVariablesList = this.extractVariableNames(sensitiveVariables);
+                    variables = variables.concat(fileVariablesList);
+                });
+            } 
         }
+        return { variables, fileList };
+
         
         // Previous Code
         for (var file of files) {
@@ -106,36 +111,36 @@ export class ChatGptService {
 
         // Please structure your response in the following JSON format for each file:
 
-        // {
-        // "files": [
-        //     {
-        //     "fileName": "FileName1.java",
-        //     "sensitiveVariables": [
-        //         {
-        //         "name": "variableName1",
-        //         "description": "variableDescription1"
-        //         },
-        //         {
-        //         "name": "variableName2",
-        //         "description": "variableDescription2"
-        //         }
-        //     ]
-        //     },
-        //     {
-        //         "fileName": "FileName2.java",
-        //         "sensitiveVariables": [
-        //         {
-        //             "name": "variableName1",
-        //             "description": "variableDescription1"
-        //         },
-        //         {
-        //             "name": "variableName2",
-        //             "description": "variableDescription2"
-        //         }
-        //         ]
-        //     }
-        // ]
-        // }
+        {
+        "files": [
+            {
+                "fileName": "FileName1.java",
+                "sensitiveVariables": [
+                {
+                    "name": "variableName1",
+                    "description": "variableDescription1"
+                },
+                {
+                    "name": "variableName2",
+                    "description": "variableDescription2"
+                }
+                ]
+            },
+            {
+                "fileName": "FileName2.java",
+                "sensitiveVariables": [
+                {
+                    "name": "variableName1",
+                    "description": "variableDescription1"
+                },
+                {
+                    "name": "variableName2",
+                    "description": "variableDescription2"
+                }
+                ]
+            }
+        ]
+        }
 
         ${code}`;
         return message;
