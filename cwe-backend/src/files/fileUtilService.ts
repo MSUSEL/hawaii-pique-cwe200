@@ -103,16 +103,12 @@ export class FileUtilService {
 
     // Preprocesses files by removing comments and imports, and concatenating multiple of them into a single string
     async preprocessFiles(batch: string[]) {
-        let concatnatedBatch: string = '';
 
         const batchResults = await this.processFilesInBatch(batch);
-
-        batchResults.forEach((result) => {
-            concatnatedBatch += result;
-        });
+        const concatenatedBatch = batchResults.join('');
 
         // console.log(concatnatedBatch);
-        return concatnatedBatch;
+        return concatenatedBatch;
     }
 
     async processFilesInBatch(filePaths: string[]): Promise<string[]> {
@@ -127,11 +123,11 @@ export class FileUtilService {
             input: fileStream,
             crlfDelay: Infinity,
         });
-
-        let processedFile: string = '';
-        processedFile += '-----BEGIN FILE: [' + filePath + ']-----';
+    
+        let processedLines: string[] = [];
+        processedLines.push('-----BEGIN FILE: [' + filePath + ']-----');
         let inMultilineComment = false;
-
+    
         for await (const line of rl) {
             let trimmedLine = line.trim();
             if (trimmedLine.startsWith('/*')) {
@@ -144,10 +140,12 @@ export class FileUtilService {
                 trimmedLine !== '' &&
                 !trimmedLine.startsWith('import')
             ) {
-                processedFile += trimmedLine;
+                processedLines.push(trimmedLine);
             }
         }
-        processedFile += '-----END FILE: [' + filePath + ']-----';
-        return processedFile;
+        processedLines.push('-----END FILE: [' + filePath + ']-----');
+    
+        return processedLines.join('');
     }
+    
 }
