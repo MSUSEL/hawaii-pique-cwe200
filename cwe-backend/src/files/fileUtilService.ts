@@ -111,7 +111,7 @@ export class FileUtilService {
             concatnatedBatch += result;
         });
 
-        console.log(concatnatedBatch);
+        // console.log(concatnatedBatch);
         return concatnatedBatch;
     }
 

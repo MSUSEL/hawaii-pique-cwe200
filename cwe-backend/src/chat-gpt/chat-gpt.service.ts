@@ -47,14 +47,14 @@ export class ChatGptService {
                     this.eventsGateway.emitDataToClients('data', fileName + ':');
                     this.eventsGateway.emitDataToClients('data', sensitiveVariables);
 
-                    var fileVariablesList = this.extractVariableNames(sensitiveVariables);
+                    var fileVariablesList = this.extractVariableNamesMultiple(sensitiveVariables);
                     variables = variables.concat(fileVariablesList);
                 });
             } 
         }
         return { variables, fileList };
 
-        
+
         // Previous Code
         for (var file of files) {
             var fileContents = await this.fileService.readFileAsync(file);
@@ -81,35 +81,38 @@ export class ChatGptService {
     async createGpt(fileContents: string) {
         var prompt = this.createQuery(fileContents);
         var response = await this.createGptFourCompletion(prompt);
-        this.extractVariableNames(response.message);
+        // this.extractVariableNames(response.message);
         return response;
 
     }
 
     createQuery(code: string) {
-        const message = `You are a security analyst tasked with identifying sensitive variables related to system configurations, database connections, and credentials, which could potentially have security issues in a given source code. Your goal is to identify variables that, if exposed to external users or hackers, could lead to security vulnerabilities or breaches. Please analyze the provided source code and list down any sensitive variables related to system configurations, database connections, or credentials that fit the criteria mentioned above. Please provide the names of the sensitive variables only, without disclosing any specific values. Your analysis will help in securing the application and preventing potential data leaks or unauthorized access.please I want your response in json format like 
-        {
-            "sensitiveVariables": [
-              {
-                "name": "variableName1",
-                "description": "variableDescription"
-              },
-              {
-                "name": "variableName2",
-                "description": "variableDescription"
-              },
-              {
-                "name": "variableNameN",
-                "description": "variableDescription"
-              }
-            ]
-        }
-
-
+        
+        
+        // `You are a security analyst tasked with identifying sensitive variables related to system configurations, database connections, and credentials, which could potentially have security issues in a given source code. Your goal is to identify variables that, if exposed to external users or hackers, could lead to security vulnerabilities or breaches. Please analyze the provided source code and list down any sensitive variables related to system configurations, database connections, or credentials that fit the criteria mentioned above. Please provide the names of the sensitive variables only, without disclosing any specific values. Your analysis will help in securing the application and preventing potential data leaks or unauthorized access.please I want your response in json format like 
+        // {
+        //     "sensitiveVariables": [
+        //       {
+        //         "name": "variableName1",
+        //         "description": "variableDescription"
+        //       },
+        //       {
+        //         "name": "variableName2",
+        //         "description": "variableDescription"
+        //       },
+        //       {
+        //         "name": "variableNameN",
+        //         "description": "variableDescription"
+        //       }
+        //     ]
+        // }
+        
         // New Prompt
-        // You are a security analyst tasked with identifying sensitive variables related to system configurations, database connections, and credentials in multiple source code files. Your goal is to identify variables that, if exposed to external users or hackers, could lead to security vulnerabilities or breaches. Please analyze the provided source code files and list down any sensitive variables related to system configurations, database connections, or credentials that fit the criteria mentioned above for each file separately. The beginning of each file is marked by "-----BEGIN FILE: [FileName]-----", and the end is marked by "-----END FILE: [FileName]-----". Please provide the names of the sensitive variables only, without disclosing any specific values, and format your response in JSON. Your analysis will help in securing the application and preventing potential data leaks or unauthorized access.
 
-        // Please structure your response in the following JSON format for each file:
+        const message = `
+        You are a security analyst tasked with identifying sensitive variables related to system configurations, database connections, and credentials in multiple source code files. Your goal is to identify variables that, if exposed to external users or hackers, could lead to security vulnerabilities or breaches. Please analyze the provided source code files and list down any sensitive variables related to system configurations, database connections, or credentials that fit the criteria mentioned above for each file separately. The beginning of each file is marked by "-----BEGIN FILE: [FileName]-----", and the end is marked by "-----END FILE: [FileName]-----". Please provide the names of the sensitive variables only, without disclosing any specific values, and format your response in JSON. Your analysis will help in securing the application and preventing potential data leaks or unauthorized access. I only want the JSON response not anything else. Also, give me all the sensative variables for a specifc file before moving to the next file.
+
+        Please structure your response in the following JSON format for each file:
 
         {
         "files": [
@@ -175,6 +178,20 @@ export class ChatGptService {
         return { message: completion.data.choices[0].message.content };
     }
 
+    extractVariableNamesMultiple(text: SensitiveVariables[]): string[] {
+        
+        
+        var variables = [];
+        try {
+            variables = text.map(variable => `\"${variable.name}\"`); 
+            return variables;
+
+        } catch (e) {
+            console.log(text);
+            return variables;
+        }
+        return variables;
+    }
 
     extractVariableNames(text: string): string[] {
         var variables = [];
@@ -205,4 +222,9 @@ export class ChatGptService {
         }
 
     }
+}
+
+interface SensitiveVariables {
+    name: string;
+    description: string;
 }
