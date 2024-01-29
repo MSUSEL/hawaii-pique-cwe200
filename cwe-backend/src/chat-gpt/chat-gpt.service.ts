@@ -24,7 +24,7 @@ export class ChatGptService {
         var fileList: any[] = [];
 
         // New Code for preprocessing
-        let batchSize = 3;
+        let batchSize = 5;
         for (let i = 0; i < files.length; i += batchSize) {
             const batch = files.slice(i, i + batchSize);
 
@@ -35,7 +35,10 @@ export class ChatGptService {
 
                 if (typeof processedFiles === 'string') {
                     try {
-                        var response = await this.createGptWithBackoff(processedFiles);
+                        var response = await this.createGptWithBackoff(
+                            processedFiles,
+                        );
+                        console.log(response.message);
 
                         // Assuming response.message is a JSON string
                         const json = JSON.parse(response.message);
@@ -107,20 +110,33 @@ export class ChatGptService {
     }
 
     async delay(milliseconds) {
-        return new Promise(resolve => setTimeout(resolve, milliseconds));
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
     }
-    
+
     async createGptWithBackoff(fileContents, retries = 10, delayMs = 1000) {
         for (let i = 0; i < retries; i++) {
-            try { 
+            try {
                 var response = await this.createGpt(fileContents);
                 return response;
             } catch (error) {
-                console.log(`Attempt ${i+1}: Error caught in createGptWithBackoff`);
-                const isRateLimitError = error.response && error.response.status === 429;
+                console.log(
+                    `Attempt ${i + 1}: Error caught in createGptWithBackoff`,
+                );
+                const isRateLimitError =
+                    error.response && error.response.status === 429;
                 if (isRateLimitError && i < retries - 1) {
-                    console.log(`Rate limit hit. Retrying in ${delayMs * Math.pow(2, i)} ms`);
-                    await this.delay(delayMs * Math.pow(2, i)); // Exponential backoff
+                    // console.log(
+                    //     `Rate limit hit. Retrying in ${
+                    //         delayMs * Math.pow(2, i)
+                    //     } ms`,
+                    // );
+                    // await this.delay(delayMs * Math.pow(2, i)); // Exponential backoff
+                    
+                    // Instead of exponential backoff, use the time specified in the header
+                    let timeOut = parseFloat(error.response.headers['x-ratelimit-reset-tokens'].replace('s',''));
+                    console.log(`Rate limit hit. Retrying in ${timeOut} seconds`)
+                    await this.delay(timeOut * 1000);
+                    
                 } else {
                     throw error; // Re-throw the error if it's not a 429 or if max retries exceeded
                 }
@@ -128,8 +144,6 @@ export class ChatGptService {
         }
         throw new Error('createGptWithBackoff: Max retries exceeded');
     }
-    
-    
 
     createQuery(code: string) {
         // `You are a security analyst tasked with identifying sensitive variables related to system configurations, database connections, and credentials, which could potentially have security issues in a given source code. Your goal is to identify variables that, if exposed to external users or hackers, could lead to security vulnerabilities or breaches. Please analyze the provided source code and list down any sensitive variables related to system configurations, database connections, or credentials that fit the criteria mentioned above. Please provide the names of the sensitive variables only, without disclosing any specific values. Your analysis will help in securing the application and preventing potential data leaks or unauthorized access.please I want your response in json format like
@@ -218,13 +232,18 @@ export class ChatGptService {
                 temperature: 0.2,
                 messages: [{ role: 'user', content: prompt }],
             });
+
             return { message: completion.data.choices[0].message.content };
         } catch (error) {
-            console.error('Error in createGptCompletion:', error);
+            // const headers = error.response ? error.response.headers : null;
+            // const limits = {
+            //     requests: headers['x-ratelimit-reset-requests'],
+            //     tokens: headers['x-ratelimit-reset-tokens'],
+            // };
+            // console.error('Error in createGptCompletion:', error);
             throw error; // Rethrow the error
         }
     }
-    
 
     extractVariableNamesMultiple(text: SensitiveVariables[]): string[] {
         var variables = [];

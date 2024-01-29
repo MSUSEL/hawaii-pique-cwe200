@@ -32,20 +32,20 @@ export class CodeQlService {
         var sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
         var javaFiles=await this.fileService.getJavaFilesInDirectory(sourcePath);
 
-        // Code used for testing Chat GTP Calls with preprocessing
-        // for(let i = 0; i < 10; i++) {
-        //     let slice = javaFiles.slice(0, (i + 1) * 10);  
-        //     let start = performance.now();
-        //     const data=await this.gptService.openAiGetSensitiveVariables(slice);
-        //     let end = performance.now();
-        //     console.log(`Slice of ${slice.length} took ${end - start} milliseconds`);
-        //     if(i == 0){
-        //         fs.writeFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
-        //     }
-        //     else{
-        //         fs.appendFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
-        //     }
-        // }
+        // Code used for testing Chat GPT Calls with preprocessing
+        for(let i = 0; i < 10; i++) {
+            let slice = javaFiles.slice(0, (i + 1) * 10);  
+            let start = performance.now();
+            const data=await this.gptService.openAiGetSensitiveVariables(slice);
+            let end = performance.now();
+            console.log(`Slice of ${slice.length} took ${end - start} milliseconds`);
+            if(i == 0){
+                fs.writeFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
+            }
+            else{
+                fs.appendFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
+            }
+        }
 
         const data=await this.gptService.openAiGetSensitiveVariables(javaFiles);
         const fileContents=SensitiveVariablesContents.replace("======",data.variables.join(',')) ;
