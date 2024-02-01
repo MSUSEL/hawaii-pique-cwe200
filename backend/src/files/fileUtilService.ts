@@ -127,25 +127,33 @@ export class FileUtilService {
         let processedLines: string[] = [];
         processedLines.push('-----BEGIN FILE: [' + filePath + ']-----');
         let inMultilineComment = false;
+        const sensitiveKeywords = [
+            "copyright"
+        ];
     
         for await (const line of rl) {
             let trimmedLine = line.trim();
             if (trimmedLine.startsWith('/*')) {
                 inMultilineComment = true;
-            } else if (trimmedLine.endsWith('*/')) {
-                inMultilineComment = false;
-            } else if (
-                !inMultilineComment &&
-                !trimmedLine.startsWith('//') &&
-                trimmedLine !== '' &&
-                !trimmedLine.startsWith('import')
-            ) {
+            }
+    
+            if (inMultilineComment || trimmedLine.startsWith('//')) {
+                // If the line is a comment, check if it contains a sensitive keyword
+                if (sensitiveKeywords.some(keyword => trimmedLine.toLowerCase().includes(keyword))) {
+                    processedLines.push(trimmedLine);
+                }
+            } else if (trimmedLine) {
                 processedLines.push(trimmedLine);
+            }
+    
+            if (trimmedLine.endsWith('*/')) {
+                inMultilineComment = false;
             }
         }
         processedLines.push('-----END FILE: [' + filePath + ']-----');
     
-        return processedLines.join('');
+        return processedLines.join('\n');
     }
+    
     
 }

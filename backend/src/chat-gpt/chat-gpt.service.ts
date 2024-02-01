@@ -235,13 +235,7 @@ export class ChatGptService {
 
             return { message: completion.data.choices[0].message.content };
         } catch (error) {
-            // const headers = error.response ? error.response.headers : null;
-            // const limits = {
-            //     requests: headers['x-ratelimit-reset-requests'],
-            //     tokens: headers['x-ratelimit-reset-tokens'],
-            // };
-            // console.error('Error in createGptCompletion:', error);
-            throw error; // Rethrow the error
+            throw error;
         }
     }
 
