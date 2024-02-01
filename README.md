@@ -1,6 +1,6 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+CWE 200 query repo and web app
 
 ### What is this repository for? ###
 
@@ -10,12 +10,25 @@ This README would normally document whatever steps are necessary to get your app
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+**In root directory**
+1. Install dependencies
+```bash 
+npm run ci
+```
+2. Build backend and frontend
+```bash
+npm run build
+```
+3a. To launch backend:
+```bash
+npm run start-backend
+```
+3b. To launch frontend:
+```bash
+npm run start-frontend
+```
+
+**Note: ** 3a and 3b may be need to run in separate shells / consoles
 
 ### Contribution guidelines ###
 
