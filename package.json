@@ -1,0 +1,27 @@
+{
+  "name": "cwe200",
+  "version": "0.0.0",
+  "description": "CWE 200 Project",
+  "contributors": [
+    "Ibrahim Idn",
+    "Kyler Katz",
+    "Derek Garcia"
+  ],
+  "scripts": {
+    "build-frontend": "cd frontend && npm run build",
+    "build-backend": "cd backend && npm run build",
+    "start-frontend": "cd frontend && npm run start",
+    "start-backend": "cd backend && npm run start",
+    "build": "npm run build-backend && npm run build-frontend"
+  },
+  "dependencies": {
+    "backend": "file:./backend",
+    "frontend": "file:./frontend"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.6.0",
+    "@commitlint/config-conventional": "^18.6.0",
+    "husky": "^8.0.3",
+    "standard-version": "^9.5.0"
+  }
+}

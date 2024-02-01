@@ -3,14 +3,6 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
-# Node artifact files
-/codeql
-/CWE-Frontend/dist
-/CWE-Frontend/node_modules
-/cwe-backend/dist
-/cwe-backend/Files
-/cwe-backend/node_modules
-
 # Compiled Java class files
 *.class
 
@@ -58,9 +50,7 @@ Thumbs.db
 .vscode/launch.json
 .vscode/tasks.json
 
-# Conventional Commit in root dir ( may need to uncomment later )
-/package.json
-/package-lock.json
+# Conventional Commit in root dir
 /commitlint.config.js
 /.husky
 node_modules
