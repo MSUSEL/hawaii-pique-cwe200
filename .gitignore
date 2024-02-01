@@ -17,7 +17,7 @@
 
 # Maven
 target/
-dist/
+dist
 
 # JetBrains IDE
 .idea/
@@ -52,7 +52,7 @@ Thumbs.db
 
 # Conventional Commit in root dir
 /commitlint.config.js
-/.husky
+.husky
 node_modules
 
 # Angular
