@@ -29,6 +29,7 @@ dist/
 
 # JetBrains IDE
 .idea/
+*.iml
 
 # Unit test reports
 TEST*.xml
@@ -52,5 +53,7 @@ Thumbs.db
 *.mov
 *.wmv
 
+# VSCode
+.vscode/
 .vscode/launch.json
 .vscode/tasks.json
