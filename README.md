@@ -11,9 +11,10 @@ CWE 200 query repo and web app
 ### How do I get set up? ###
 
 **In root directory**
+
 1. Install dependencies
 ```bash 
-npm run ci
+npm ci
 ```
 2. Build backend and frontend
 ```bash
