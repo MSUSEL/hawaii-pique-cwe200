@@ -54,3 +54,4 @@ Thumbs.db
 
 .vscode/launch.json
 .vscode/tasks.json
+cwe-backend/src/files/fileUtilService.ts
