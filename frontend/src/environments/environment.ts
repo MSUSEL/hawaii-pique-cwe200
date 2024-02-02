@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     // apiUrl: 'http://www.sain.info:5400',
     // apiUrl: 'http://129.21.128.6:5400',
-    apiUrl: 'http://loacalhost:5400',
+    apiUrl: 'http://localhost:5400',
 
 };
 
