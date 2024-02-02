@@ -49,7 +49,6 @@ Thumbs.db
 .vscode/
 .vscode/launch.json
 .vscode/tasks.json
-cwe-backend/src/files/fileUtilService.ts
 
 # Conventional Commit in root dir
 /commitlint.config.js
