@@ -3,14 +3,6 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
-# Node artifact files
-/codeql
-/CWE-Frontend/dist
-/CWE-Frontend/node_modules
-/cwe-backend/dist
-/cwe-backend/Files
-/cwe-backend/node_modules
-
 # Compiled Java class files
 *.class
 
@@ -25,10 +17,11 @@
 
 # Maven
 target/
-dist/
+dist
 
 # JetBrains IDE
 .idea/
+*.iml
 
 # Unit test reports
 TEST*.xml
@@ -52,6 +45,15 @@ Thumbs.db
 *.mov
 *.wmv
 
+# VSCode
+.vscode/
 .vscode/launch.json
 .vscode/tasks.json
-cwe-backend/src/files/fileUtilService.ts
+
+# Conventional Commit in root dir
+/commitlint.config.js
+.husky
+node_modules
+
+# Angular
+.angular
