@@ -54,6 +54,10 @@ Thumbs.db
 /commitlint.config.js
 .husky
 node_modules
+/codeql
+backend/Files
+
 
 # Angular
 .angular
+
