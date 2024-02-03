@@ -14,12 +14,26 @@ export class FilesService {
         private fileUtilService:FileUtilService){
             this.projectsPath=this.configService.get<string>('CODEQL_PROJECTS_DIR')
         }
+
+    /**
+     * Create a directory tree for a given file
+     *
+     * @param file Zip binary containing Java Code
+     */
     async create(file: Express.Multer.File) {
+        // Save file contents to file
         await this.fileUtilService.writeZipFile(file);
         this.eventsGateway.emitDataToClients('data','file uploaded successfully')
-        
-        var uploadedProjectDir=path.join(this.projectsPath,file.originalname,'src')
-        var javaFiles=await this.fileUtilService.getJavaFilesInDirectory(uploadedProjectDir);
+
+        // commenting because unsure if specifically done this way
+        // const uploadedProjectDir = path.join(this.projectsPath, file.originalname, 'src');
+        const uploadedProjectDir = path.join(this.projectsPath);
+
+        // Get list of java files
+        // todo purpose?
+        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(uploadedProjectDir);
+
+        // Return mapped directory tree
         return this.fileUtilService.getDirectoryTree(uploadedProjectDir)
     }
 

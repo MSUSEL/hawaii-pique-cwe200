@@ -27,7 +27,7 @@ export class FileUtilService {
         // Extract code to project directory
         zip.extractAllTo(
             this.configService.get<string>('CODEQL_PROJECTS_DIR'),
-            true,
+            true    // overwrite
         );
     }
 
