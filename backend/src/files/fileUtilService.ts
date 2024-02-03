@@ -9,8 +9,22 @@ import * as readline from 'readline';
 @Injectable()
 export class FileUtilService {
     constructor(private configService: ConfigService) {}
+
+    /**
+     * Extract Zip contents to file
+     *
+     * @param file Zip binary containing Java Code
+     */
     async writeZipFile(file: Express.Multer.File) {
-        var zip = new AdmZip(file.buffer);
+        // Create new unzipper
+        const zip = new AdmZip(file.buffer);
+
+        // Create new project directory if DNE
+        // TODO create if DNE during launch?
+        if (!fs.existsSync(this.configService.get<string>('CODEQL_PROJECTS_DIR')))
+            fs.mkdirSync(this.configService.get<string>('CODEQL_PROJECTS_DIR'));
+
+        // Extract code to project directory
         zip.extractAllTo(
             this.configService.get<string>('CODEQL_PROJECTS_DIR'),
             true,
