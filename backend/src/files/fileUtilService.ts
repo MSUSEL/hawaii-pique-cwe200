@@ -47,13 +47,24 @@ export class FileUtilService {
         return javaFiles;
     }
 
+
+    /**
+     * Recursively build a list of files in a given directory
+     *
+     * @param dirPath Root to build tree from
+     */
     async getDirectoryTree(dirPath: string) {
         const result = [];
-        const items = fs.readdirSync(dirPath);
-        for (const item of items) {
+
+        // Iterate over each item in
+        for (const item of fs.readdirSync(dirPath)) {
+
+            // Get file details
             const fullPath = path.join(dirPath, item);
             const stat = fs.lstatSync(fullPath);
-            if (stat.isDirectory()) {
+
+            // If directory, get children and add
+            if (stat.isDirectory() ) {
                 let children = await this.getDirectoryTree(fullPath);
                 result.push({
                     name: item,
@@ -61,6 +72,7 @@ export class FileUtilService {
                     fullPath,
                     children: children,
                 });
+            // Else push the file
             } else {
                 result.push({
                     name: item,
