@@ -54,7 +54,7 @@ Thumbs.db
 /commitlint.config.js
 .husky
 node_modules
-/codeql
+codeql
 backend/Files
 
 
