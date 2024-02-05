@@ -9,11 +9,25 @@ import * as readline from 'readline';
 @Injectable()
 export class FileUtilService {
     constructor(private configService: ConfigService) {}
+
+    /**
+     * Extract Zip contents to file
+     *
+     * @param file Zip binary containing Java Code
+     */
     async writeZipFile(file: Express.Multer.File) {
-        var zip = new AdmZip(file.buffer);
+        // Create new unzipper
+        const zip = new AdmZip(file.buffer);
+
+        // Create new project directory if DNE
+        // TODO create if DNE during launch?
+        if (!fs.existsSync(this.configService.get<string>('CODEQL_PROJECTS_DIR')))
+            fs.mkdirSync(this.configService.get<string>('CODEQL_PROJECTS_DIR'));
+
+        // Extract code to project directory
         zip.extractAllTo(
-            this.configService.get<string>('CODEQL_PROJECTS_DIR'),
-            true,
+            this.configService.get<string>('CODEQL_PROJECTS_DIR') + "/" + file.originalname.split(".")[0],  // extract name
+            true    // overwrite
         );
     }
 
@@ -33,13 +47,24 @@ export class FileUtilService {
         return javaFiles;
     }
 
+
+    /**
+     * Recursively build a list of files in a given directory
+     *
+     * @param dirPath Root to build tree from
+     */
     async getDirectoryTree(dirPath: string) {
         const result = [];
-        const items = fs.readdirSync(dirPath);
-        for (const item of items) {
+
+        // Iterate over each item in
+        for (const item of fs.readdirSync(dirPath)) {
+
+            // Get file details
             const fullPath = path.join(dirPath, item);
             const stat = fs.lstatSync(fullPath);
-            if (stat.isDirectory()) {
+
+            // If directory, get children and add
+            if (stat.isDirectory() ) {
                 let children = await this.getDirectoryTree(fullPath);
                 result.push({
                     name: item,
@@ -47,6 +72,7 @@ export class FileUtilService {
                     fullPath,
                     children: children,
                 });
+            // Else push the file
             } else {
                 result.push({
                     name: item,

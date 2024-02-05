@@ -15,6 +15,7 @@
     "build": "npm run build-backend && npm run build-frontend"
   },
   "dependencies": {
+    "@angular/forms": "^17.1.2",
     "backend": "file:./backend",
     "frontend": "file:./frontend"
   },

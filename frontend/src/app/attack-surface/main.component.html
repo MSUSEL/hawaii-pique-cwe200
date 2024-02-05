@@ -1,4 +1,6 @@
 <input class="d-none" type="file" (change)="this.utilService.importFromJson($event,fileInput)" #fileInput>
+<!-- <input class="d-none" type="file" (change)="this.utilService.newCVE($event,fileInput)" #fileInput> -->
+
 <header class="bg-header topheader border-bottom">
     <nav class="navbar navbar-expand-lg border-top py-0 ">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -12,10 +14,10 @@
                         aria-haspopup="true" aria-expanded="false">File Menu
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <button class="dropdown-item btn" (click)="this.utilService.newCVE();"> <i
+                        <button class="dropdown-item btn" title="Reset project state" (click)="this.utilService.newCVE();"> <i
                                 class="fa fa-file px-2"></i>New </button>
-                        <button class="dropdown-item btn" (click)="fileInput.click();"> <i
-                                class=" fa fa-file-import pl-1 pr-2"></i>Import</button>
+                        <button class="dropdown-item btn" title="Choose a zip file with your code to start analysis" (click)="fileInput.click();"> <i
+                                class=" fa fa-file-import pl-1 pr-2" ></i>Import Code</button>
                     </div>
                 </li>
             </ul>
