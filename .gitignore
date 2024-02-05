@@ -55,7 +55,8 @@ Thumbs.db
 .husky
 node_modules
 /codeql
-backend/Files
+backend/files/*/
+!files/*.gitkeep
 
 
 # Angular
