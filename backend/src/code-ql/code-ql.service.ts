@@ -23,9 +23,10 @@ export class CodeQlService {
             'CODEQL_PROJECTS_DIR',
         );
 
-        this.queryPath = path.join('../',
+        this.queryPath = path.join(
+            // '../',
             this.configService.get<string>('QUERY_DIR'),
-            // 'codeql-custom-queries-java',
+            'codeql-custom-queries-java',
         );
     }
     async runCodeQl(createCodeQlDto: any) {
@@ -47,16 +48,17 @@ export class CodeQlService {
         //     }
         // }
         
+        // Waiting to hear back with the correct path for the queries
         // this.copyQueries('../codeql queries/', this.queryPath);
 
-        // const data=await this.gptService.openAiGetSensitiveVariables(javaFiles);
-        // const fileContents=SensitiveVariablesContents.replace("======",data.variables.join(',')) ;
-        // this.writeVariablesToFile(fileContents)
-        // this.writeFilesGptResponseToJson(data.fileList,sourcePath);
+        const data=await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        const fileContents=SensitiveVariablesContents.replace("======",data.variables.join(',')) ;
+        this.writeVariablesToFile(fileContents)
+        this.writeFilesGptResponseToJson(data.fileList,sourcePath);
         var Db = path.join(sourcePath, createCodeQlDto.project + 'Db');
-        // await this.fileService.removeDir(Db);
-        // var createDbCommand = `database create ${Db} --language=java --source-root=${sourcePath}`;
-        // await this.runChildProcess(createDbCommand);
+        await this.fileService.removeDir(Db);
+        var createDbCommand = `database create ${Db} --language=java --source-root=${sourcePath}`;
+        await this.runChildProcess(createDbCommand);
         var outputPath = path.join(sourcePath, 'result.sarif');
         var analyzeDbCommand = `database analyze ${Db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
         await this.runChildProcess(analyzeDbCommand);
