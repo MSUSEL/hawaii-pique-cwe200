@@ -1,5 +1,5 @@
-import { Global, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import {Global, Injectable} from '@nestjs/common';
+import {ConfigService} from '@nestjs/config';
 import * as AdmZip from 'adm-zip';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -141,36 +141,53 @@ export class FileUtilService {
         fs.writeFileSync(filePath, content, 'utf-8');
     }
 
-    // Preprocesses files by removing comments and imports, and concatenating multiple of them into a single string
+
+    /**
+     * Preprocesses files by removing comments and imports, and concatenating multiple of them into a single string
+     *
+     * @param batch list of files to process
+     */
     async preprocessFiles(batch: string[]) {
-
         const batchResults = await this.processFilesInBatch(batch);
-        const concatenatedBatch = batchResults.join('');
-
         // console.log(concatnatedBatch);
-        return concatenatedBatch;
+        return batchResults.join('');
     }
 
+    /**
+     * Preprocesses a batch of files by removing comments and imports, and
+     * concatenating multiple of them into a single string
+     *
+     * @param filePaths list of files to process
+     */
     async processFilesInBatch(filePaths: string[]): Promise<string[]> {
         return Promise.all(
             filePaths.map((filePath) => this.processJavaFile(filePath)),
         );
     }
 
+    /**
+     * Process single java file by removing comments and imports, and
+     * concatenating multiple of them into a single string
+     *
+     * @param filePath Path to java file to process
+     */
     async processJavaFile(filePath: string): Promise<string> {
+        // Read file contents
         const fileStream = fs.createReadStream(filePath);
         const rl = readline.createInterface({
             input: fileStream,
             crlfDelay: Infinity,
         });
-    
+
+        // init new processed file
         let processedLines: string[] = [];
         processedLines.push('-----BEGIN FILE: [' + filePath + ']-----');
         let inMultilineComment = false;
         const sensitiveKeywords = [
             "copyright"
         ];
-    
+
+        // remove comments and imports
         for await (const line of rl) {
             let trimmedLine = line.trim();
             if (trimmedLine.startsWith('/*')) {
@@ -191,7 +208,8 @@ export class FileUtilService {
             }
         }
         processedLines.push('-----END FILE: [' + filePath + ']-----');
-    
+
+        // return processed file
         return processedLines.join('\n');
     }
     
