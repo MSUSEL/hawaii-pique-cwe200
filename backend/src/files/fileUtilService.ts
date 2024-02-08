@@ -123,10 +123,14 @@ export class FileUtilService {
         }
     }
 
+    /**
+     * Remove directory and contents if it exists
+     *
+     * @param dirPath path to directory to delete
+     */
     async removeDir(dirPath: string) {
-        if (fs.existsSync(dirPath)) {
+        if (fs.existsSync(dirPath))
             fs.rmSync(dirPath, { recursive: true });
-        }
     }
 
     processFilePath(sourcePath: string, filePath: string) {
@@ -137,6 +141,12 @@ export class FileUtilService {
         return filePath.substring(index + 1);
     }
 
+    /**
+     * Write to path with utf-8 encoding
+     *
+     * @param filePath path to write to
+     * @param content content of file
+     */
     async writeToFile(filePath: string, content: string) {
         fs.writeFileSync(filePath, content, 'utf-8');
     }
