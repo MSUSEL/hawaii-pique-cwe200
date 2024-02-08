@@ -28,6 +28,12 @@ export class CodeQlService {
             'codeql-custom-queries-java',
         );
     }
+
+    /**
+     * Run codeql query against a target project
+     *
+     * @param createCodeQlDto Data transfer object with project name
+     */
     async runCodeQl(createCodeQlDto: any) {
         var sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
         var javaFiles=await this.fileService.getJavaFilesInDirectory(sourcePath);
