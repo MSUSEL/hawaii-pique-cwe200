@@ -61,7 +61,7 @@ export class CodeQlService {
         const fileContents= SensitiveVariablesContents.replace("======", data.variables.join(',')) ;
 
         // Write response to file
-        await this.writeVariablesToFile(fileContents)
+        // await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
         await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
 
         // Remove previous database if it exists
@@ -142,7 +142,7 @@ export class CodeQlService {
      */
     async writeFilesGptResponseToJson(fileList:any[], sourcePath:string){
         const jsonPath = path.join(sourcePath, "data.json");
-        const data = JSON.stringify(fileList);
+        const data = JSON.stringify(fileList,null,'\t');    // additional args for pretty printing
         await this.fileUtilService.writeToFile(jsonPath,data)
     }
 }
