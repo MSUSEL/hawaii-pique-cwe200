@@ -31,19 +31,33 @@ export class FileUtilService {
         );
     }
 
+    /**
+     * Recursively find all files with a .java extension in a given directory
+     *
+     * @param directoryPath Path to root directory to search for files
+     */
     async getJavaFilesInDirectory(directoryPath) {
+        // Get all files/dir in pwd
         const files = fs.readdirSync(directoryPath);
         let javaFiles = [];
-        for (var file of files) {
+
+        // Iterate through directory contents
+        for (const file of files) {
+
+            // Get file details
             const filePath = path.join(directoryPath, file);
             const fileStats = fs.statSync(filePath);
+
+            // If directory, open
             if (fileStats.isDirectory()) {
-                var newFiles = await this.getJavaFilesInDirectory(filePath);
+                const newFiles = await this.getJavaFilesInDirectory(filePath);
                 javaFiles = javaFiles.concat(newFiles);
+            // else get file information
             } else if (fileStats.isFile() && file.endsWith('.java')) {
                 javaFiles.push(filePath);
             }
         }
+        // Return list of java files
         return javaFiles;
     }
 
