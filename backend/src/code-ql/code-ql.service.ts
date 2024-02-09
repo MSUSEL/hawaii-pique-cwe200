@@ -24,6 +24,7 @@ export class CodeQlService {
         );
 
         this.queryPath = path.join(
+            // '../',
             this.configService.get<string>('QUERY_DIR'),
             'codeql-custom-queries-java',
         );
@@ -53,6 +54,9 @@ export class CodeQlService {
         //         fs.appendFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
         //     }
         // }
+        
+        // Waiting to hear back with the correct path for the queries
+        // this.copyQueries('../codeql queries/', this.queryPath);
 
         // Get Sensitive variables from gpt
         const data= await this.gptService.openAiGetSensitiveVariables(javaFiles);
@@ -144,5 +148,29 @@ export class CodeQlService {
         const jsonPath = path.join(sourcePath, "data.json");
         const data = JSON.stringify(fileList,null,'\t');    // additional args for pretty printing
         await this.fileUtilService.writeToFile(jsonPath,data)
+    }
+
+    copyQueries(srcDir: string, destDir: string) {
+
+    fs.readdir(srcDir, { withFileTypes: true }, (err, entries) => {
+        if (err) throw err;
+
+        entries.forEach(entry => {
+            const srcPath = path.join(srcDir, entry.name);
+            const destPath = path.join(destDir, entry.name);
+
+            if (entry.isDirectory()) {
+                fs.mkdir(destPath, { recursive: true }, (err) => {
+                    if (err) throw err;
+                    console.log(`Directory created: ${destPath}`);
+                    this.copyQueries(srcPath, destPath); // Recursive call to copy directory contents
+                });
+            }
+        });
+    });
+
+
+
+
     }
 }
