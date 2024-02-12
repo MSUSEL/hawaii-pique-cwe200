@@ -54,7 +54,7 @@ Thumbs.db
 /commitlint.config.js
 .husky
 node_modules
-/codeql
+codeql
 backend/files/*/
 !files/*.gitkeep
 
@@ -62,3 +62,4 @@ backend/files/*/
 # Angular
 .angular
 
+codeql-pack.lock.yml

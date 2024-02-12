@@ -16,7 +16,7 @@ export class CodeQlService {
         private configService: ConfigService,
         private parserService: CodeQlParserService,
         private eventsGateway: EventsGateway,
-        private fileService: FileUtilService,
+        private fileUtilService: FileUtilService,
         private gptService:ChatGptService
     ) {
         this.projectsPath = this.configService.get<string>(
@@ -29,9 +29,16 @@ export class CodeQlService {
             'codeql-custom-queries-java',
         );
     }
+
+    /**
+     * Run codeql query against a target project
+     *
+     * @param createCodeQlDto Data transfer object with project name
+     */
     async runCodeQl(createCodeQlDto: any) {
-        var sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
-        var javaFiles=await this.fileService.getJavaFilesInDirectory(sourcePath);
+        // Get all java files in project
+        const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
+        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
 
         // Code used for testing Chat GPT Calls with preprocessing
         // for(let i = 0; i < 10; i++) {
@@ -51,42 +58,68 @@ export class CodeQlService {
         // Waiting to hear back with the correct path for the queries
         // this.copyQueries('../codeql queries/', this.queryPath);
 
-        const data=await this.gptService.openAiGetSensitiveVariables(javaFiles);
-        const fileContents=SensitiveVariablesContents.replace("======",data.variables.join(',')) ;
-        this.writeVariablesToFile(fileContents)
-        this.writeFilesGptResponseToJson(data.fileList,sourcePath);
-        var Db = path.join(sourcePath, createCodeQlDto.project + 'Db');
-        await this.fileService.removeDir(Db);
-        var createDbCommand = `database create ${Db} --language=java --source-root=${sourcePath}`;
+        // Get Sensitive variables from gpt
+        const data= await this.gptService.openAiGetSensitiveVariables(javaFiles);
+
+        // Replace String with findings?
+        const fileContents= SensitiveVariablesContents.replace("======", data.variables.join(',')) ;
+
+        // Write response to file
+        // await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
+        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+
+        // Remove previous database if it exists
+        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+        await this.fileUtilService.removeDir(db);
+
+        // Create new database with codeql
+        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
         await this.runChildProcess(createDbCommand);
-        var outputPath = path.join(sourcePath, 'result.sarif');
-        var analyzeDbCommand = `database analyze ${Db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
+
+        // todo try catch if failed to make db? Can run analyze if no db
+
+        // Analyze with codeql
+        const outputPath = path.join(sourcePath, 'result.sarif');
+        const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
         await this.runChildProcess(analyzeDbCommand);
         
         return await this.parserService.getSarifResults(sourcePath);
         
     }
 
+    /**
+     * Execute command string using codeql
+     *
+     * @param codeQlCommand formatted codeql arguments
+     */
     runChildProcess(codeQlCommand: string): Promise<void> {
-        var commands = codeQlCommand.split(' ');
+        const commands = codeQlCommand.split(' ');
         return new Promise((resolve, reject) => {
+            // create new codeql process
             let childProcess = spawn('codeql', commands);
+
+            // report stdout
             childProcess.stdout.on('data', (data) => {
                 console.log(data.toString());
                 this.eventsGateway.emitDataToClients('data',data.toString())
             });
+
+            // report stderr
             childProcess.stderr.on('data', (data) => {
                 console.log(data.toString());
                 this.eventsGateway.emitDataToClients('data',data.toString())
             });
+
+            // report results after finishing
             const self = this;
             childProcess.on('exit', function (code, signal) {
-                const result = "process CodeQl exited with code "+code+" and signal "+signal;
+                const result = "process CodeQl exited with code " + code + " and signal " + signal;
                 console.log(result);
                 self.eventsGateway.emitDataToClients('data',result.toString())
                 resolve();
             });
 
+            // report errors
             childProcess.on('error', (error) => {
                 console.log(error);
                 reject(error);
@@ -94,15 +127,27 @@ export class CodeQlService {
         });
     }
 
+    /**
+     * Write variables to file
+     *
+     * @param variables variables to write
+     */
     async writeVariablesToFile(variables:string){
-        var filePath="../codeql/ql/java/ql/lib/semmle/code/java/security/SensitiveVariables.qll";
-        await this.fileService.writeToFile(filePath,variables) 
+        // todo why is this a constant path? Can be moved to config or other?
+        const filePath = "../codeql/ql/java/ql/lib/semmle/code/java/security/SensitiveVariables.qll";
+        await this.fileUtilService.writeToFile(filePath,variables)
     }
 
-    async writeFilesGptResponseToJson(fileList:any[],sourcePath:string){
-        var jsonPath=path.join(sourcePath,"data.json");
-        var data=JSON.stringify(fileList);
-        await this.fileService.writeToFile(jsonPath,data)
+    /**
+     * Write JSON string of GPT response to project root
+     *
+     * @param fileList list of files to include in the json report
+     * @param sourcePath path of project root
+     */
+    async writeFilesGptResponseToJson(fileList:any[], sourcePath:string){
+        const jsonPath = path.join(sourcePath, "data.json");
+        const data = JSON.stringify(fileList,null,'\t');    // additional args for pretty printing
+        await this.fileUtilService.writeToFile(jsonPath,data)
     }
 
     copyQueries(srcDir: string, destDir: string) {

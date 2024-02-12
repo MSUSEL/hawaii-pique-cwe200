@@ -1,5 +1,5 @@
-import { Global, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import {Global, Injectable} from '@nestjs/common';
+import {ConfigService} from '@nestjs/config';
 import * as AdmZip from 'adm-zip';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -31,19 +31,33 @@ export class FileUtilService {
         );
     }
 
+    /**
+     * Recursively find all files with a .java extension in a given directory
+     *
+     * @param directoryPath Path to root directory to search for files
+     */
     async getJavaFilesInDirectory(directoryPath) {
+        // Get all files/dir in pwd
         const files = fs.readdirSync(directoryPath);
         let javaFiles = [];
-        for (var file of files) {
+
+        // Iterate through directory contents
+        for (const file of files) {
+
+            // Get file details
             const filePath = path.join(directoryPath, file);
             const fileStats = fs.statSync(filePath);
+
+            // If directory, open
             if (fileStats.isDirectory()) {
-                var newFiles = await this.getJavaFilesInDirectory(filePath);
+                const newFiles = await this.getJavaFilesInDirectory(filePath);
                 javaFiles = javaFiles.concat(newFiles);
+            // else get file information
             } else if (fileStats.isFile() && file.endsWith('.java')) {
                 javaFiles.push(filePath);
             }
         }
+        // Return list of java files
         return javaFiles;
     }
 
@@ -109,10 +123,14 @@ export class FileUtilService {
         }
     }
 
+    /**
+     * Remove directory and contents if it exists
+     *
+     * @param dirPath path to directory to delete
+     */
     async removeDir(dirPath: string) {
-        if (fs.existsSync(dirPath)) {
+        if (fs.existsSync(dirPath))
             fs.rmSync(dirPath, { recursive: true });
-        }
     }
 
     processFilePath(sourcePath: string, filePath: string) {
@@ -123,40 +141,63 @@ export class FileUtilService {
         return filePath.substring(index + 1);
     }
 
+    /**
+     * Write to path with utf-8 encoding
+     *
+     * @param filePath path to write to
+     * @param content content of file
+     */
     async writeToFile(filePath: string, content: string) {
         fs.writeFileSync(filePath, content, 'utf-8');
     }
 
-    // Preprocesses files by removing comments and imports, and concatenating multiple of them into a single string
+
+    /**
+     * Preprocesses files by removing comments and imports, and concatenating multiple of them into a single string
+     *
+     * @param batch list of files to process
+     */
     async preprocessFiles(batch: string[]) {
-
         const batchResults = await this.processFilesInBatch(batch);
-        const concatenatedBatch = batchResults.join('');
-
         // console.log(concatnatedBatch);
-        return concatenatedBatch;
+        return batchResults.join('');
     }
 
+    /**
+     * Preprocesses a batch of files by removing comments and imports, and
+     * concatenating multiple of them into a single string
+     *
+     * @param filePaths list of files to process
+     */
     async processFilesInBatch(filePaths: string[]): Promise<string[]> {
         return Promise.all(
             filePaths.map((filePath) => this.processJavaFile(filePath)),
         );
     }
 
+    /**
+     * Process single java file by removing comments and imports, and
+     * concatenating multiple of them into a single string
+     *
+     * @param filePath Path to java file to process
+     */
     async processJavaFile(filePath: string): Promise<string> {
+        // Read file contents
         const fileStream = fs.createReadStream(filePath);
         const rl = readline.createInterface({
             input: fileStream,
             crlfDelay: Infinity,
         });
-    
+
+        // init new processed file
         let processedLines: string[] = [];
         processedLines.push('-----BEGIN FILE: [' + filePath + ']-----');
         let inMultilineComment = false;
         const sensitiveKeywords = [
             "copyright"
         ];
-    
+
+        // remove comments and imports
         for await (const line of rl) {
             let trimmedLine = line.trim();
             if (trimmedLine.startsWith('/*')) {
@@ -177,7 +218,8 @@ export class FileUtilService {
             }
         }
         processedLines.push('-----END FILE: [' + filePath + ']-----');
-    
+
+        // return processed file
         return processedLines.join('\n');
     }
     
