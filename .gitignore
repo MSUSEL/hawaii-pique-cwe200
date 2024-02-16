@@ -55,8 +55,11 @@ Thumbs.db
 .husky
 node_modules
 codeql
-backend/files/*/
+backend/Files/*
+!backend/Files/CWEToyDataset
+
 !files/*.gitkeep
+
 
 
 # Angular
