@@ -1,44 +1,52 @@
 import java
+import semmle.code.java.dataflow.TaintTracking
+import semmle.code.java.frameworks.Servlets
 
-// Find servlet methods that potentially expose sensitive error information
-from Class servletClass, Method servletMethod, CatchClause cc, MethodAccess printlnCall, MethodAccess exceptionExposureCall, 
-Expr printlnArg, AddExpr concatExpr
+/** 
+ * @name Exposure of sensitive information in servlet responses
+ * @description Writing sensitive information from exceptions or sensitive file paths to HTTP responses can leak details to users.
+ * @kind path-problem
+ * @problem.severity warning
+ * @id java/sensitive-info-leak-servlet
+ * @tags security
+ *       external/cwe/cwe-536
+ */
+class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
+  SensitiveInfoLeakServletConfig() { this = "SensitiveInfoLeakServletConfig" }
 
-
-where
-  // Look for classes that inherit from HttpServlet
-  servletClass.getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
-  servletMethod.getDeclaringType() = servletClass and
-  cc.getEnclosingCallable() = servletMethod and
-  (
-    cc.getACaughtType().hasName("Exception") 
-  ) 
-  and 
-
-  // Check if the sensitive informaiton is exposed via a print statement
-  (
-    printlnCall.getMethod().hasName("println") and
-    printlnCall.getEnclosingCallable() = cc.getEnclosingCallable() and
-    printlnCall.getEnclosingStmt() = cc.getBlock().getAChild*() and
-    printlnArg = printlnCall.getAnArgument() and
-    (
-        // Direct call to Exposure
-        (
-            exceptionExposureCall = printlnArg and
-            exceptionExposureCall instanceof MethodAccess and
-            exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])
-        ) or
-        // Concatenation involving Exposure
-        (
-            printlnArg instanceof AddExpr and
-            concatExpr = printlnArg and
-            exceptionExposureCall = concatExpr.getAnOperand() and
-            exceptionExposureCall instanceof MethodAccess and
-            exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])
-        ) and
-        exceptionExposureCall.getQualifier() instanceof VarAccess and
-        exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
-        exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
+  override predicate isSource(DataFlow::Node source) {
+    exists(MethodAccess ma |
+      // Sources from exceptions
+      ma.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+      (ma.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])) and
+      source.asExpr() = ma
     )
-  )
- select exceptionExposureCall, "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information"
+    or
+    exists(MethodAccess ma |
+      // Additional sources: Sensitive file paths
+      ma.getMethod().hasName("getAbsolutePath") and
+      ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "File") and
+      source.asExpr() = ma
+    )
+  }
+
+  override predicate isSink(DataFlow::Node sink) {
+    exists(MethodAccess ma |
+      // Sinks to the servlet response
+      ma.getMethod().hasName("write") and
+      ma.getQualifier().(MethodAccess).getMethod().hasName("getWriter") and
+      ma.getQualifier().(MethodAccess).getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
+      sink.asExpr() = ma.getAnArgument()
+    ) or
+    exists(MethodAccess ma |
+      // Sinks using PrintWriter
+      ma.getMethod().hasName("println") and
+      ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
+      sink.asExpr() = ma.getAnArgument()
+    )
+  }
+}
+
+from SensitiveInfoLeakServletConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
+where config.hasFlowPath(source, sink)
+select sink, source, sink, "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information."
