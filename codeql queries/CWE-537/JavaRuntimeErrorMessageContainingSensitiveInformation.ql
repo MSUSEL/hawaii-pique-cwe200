@@ -1,62 +1,63 @@
 import java
+import semmle.code.java.dataflow.TaintTracking
+import semmle.code.java.dataflow.FlowSources
 
-from CatchClause cc, MethodAccess ma, MethodAccess printlnCall, ReturnStmt returnStmt, 
-     Expr printlnArg, AddExpr concatExpr, MethodAccess exceptionExposureCall, Stmt stmt,  Expr expr
-     
-where
-    ma.getEnclosingCallable() = cc.getEnclosingCallable() and
-    
-    // Check if the sensitive informaiton is exposed via a print statement
-    (
-      printlnCall.getMethod().hasName("println") and
-      printlnCall.getEnclosingCallable() = cc.getEnclosingCallable() and
-      printlnCall.getEnclosingStmt() = cc.getBlock().getAChild*() and
-      printlnArg = printlnCall.getAnArgument() and
-      (
-          // Direct call to Exposure
-          (
-              exceptionExposureCall = printlnArg and
-              exceptionExposureCall instanceof MethodAccess and
-              exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])
-          ) or
-          // Concatenation involving Exposure
-          (
-              printlnArg instanceof AddExpr and
-              concatExpr = printlnArg and
-              exceptionExposureCall = concatExpr.getAnOperand() and
-              exceptionExposureCall instanceof MethodAccess and
-              exceptionExposureCall.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])
-          ) and
-          // Check that the method call is on an Exception
-          exceptionExposureCall.getQualifier() instanceof VarAccess and
-          exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
-          exceptionExposureCall.getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
-      )
+/**
+ * @name Exposure of sensitive information in runtime error messages
+ * @description Logging or printing sensitive information or detailed error messages can lead to information disclosure.
+ * @kind path-problem
+ * @problem.severity warning
+ * @id java/runtime-sensitive-info-exposure
+ * @tags security
+ *       external/cwe/cwe-537
+ */
+class RuntimeSensitiveInfoExposureConfig extends TaintTracking::Configuration {
+  RuntimeSensitiveInfoExposureConfig() { this = "RuntimeSensitiveInfoExposureConfig" }
+
+  override predicate isSource(DataFlow::Node source) {
+    exists(MethodAccess ma |
+      // Sources from exceptions
+      ma.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+      (ma.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])) and
+      source.asExpr() = ma
     )
-    
-    /* Still need to determine if return statements should be checked,
-      and if so, should it be done in a sperate query or in this one?
-    */
+  }
 
-  //   or
-  // Check if the sensitive informaiton is exposed via a return statement
-  //   (
-  //     // Iterate through statements in the catch block
-  //     stmt = cc.getBlock().getAChild*() and
-  //     stmt instanceof ReturnStmt and
-  //     returnStmt = stmt and
-  //     // Now iterate through the return statement's children
-  //     stmt = returnStmt.getAChild*().(Stmt) and
-  //     expr instanceof MethodAccess and
-  //     // Ensure that expression is in the same method as the exec call
-  //     expr.getEnclosingCallable() = ma.getEnclosingCallable() and
-  //     // Find calls to an Exception that exposes information
-  //     (
-  //       expr.(MethodAccess).getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])
-  //     ) and
-  //     expr.(MethodAccess).getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
-  //     expr.(MethodAccess).getQualifier().(VarAccess).getVariable().getType().(RefType).hasQualifiedName("java.lang", "Exception")
-  // )
+  override predicate isSink(DataFlow::Node sink) {
+    exists(MethodAccess ma |
+      ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintStream") and
+      ma.getMethod().hasName("println") and
+      sink.asExpr() = ma.getAnArgument()
+    )
+    or
+    exists(MethodAccess ma |
+      // Sinks using PrintWriter
+      ma.getMethod().hasName("println") and
+      ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
+      sink.asExpr() = ma.getAnArgument()
+    )
+    or
+    exists(MethodAccess ma |
+      ma.getMethod().hasName("printStackTrace") and
+      sink.asExpr() = ma
+    )
+    or
+    exists(MethodAccess log |
+      log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
+      log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
+      sink.asExpr() = log.getAnArgument()
+    )
+    or
+    exists(MethodAccess log |
+      log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
+      log.getMethod().hasName(["error", "warn", "info", "debug"]) and
+      sink.asExpr() = log.getAnArgument()
+    )
 
-select exceptionExposureCall, "Potential CWE-537: Java runtime error message containing sensitive information"
+  }
   
+}
+
+from RuntimeSensitiveInfoExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
+where config.hasFlowPath(source, sink)
+select sink, source, sink, "Potential CWE-537: Java runtime error message containing sensitive information"
