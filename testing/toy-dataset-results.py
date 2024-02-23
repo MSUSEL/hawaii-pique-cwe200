@@ -1,6 +1,8 @@
 import json
 import os
 from collections import defaultdict
+# from matplotlib import pyplot as plt
+
 PROJECT = "CWEToyDataset"
 CHATGPTPATH = f"Files\\{PROJECT}\\data.json"
 CODEQLPATH = f"Files\\{PROJECT}\\results.sarif"
@@ -15,8 +17,10 @@ def main():
         chatgpt_results = read_data(CHATGPTPATH)
         cwes = get_directories_in_dir(CWESPATH)
 
-        analyze_chatgpt_results(chatgpt_results, java_files)
+        chatgpt_results = analyze_chatgpt_results(chatgpt_results, java_files)
 
+
+# Need to get all codeQL queries working before continuing, since we don't have an output file yet 
         # codeql_results = read_data(CODEQLPATH)
         
         
@@ -25,12 +29,7 @@ def main():
 
 def read_data(path):
     with open(path, "r") as file:
-        
-        if path.endswith(".json"):
-            return json.load(file)
-        
-        if path.endswith(".sarif"):
-            return json.read()
+        return json.load(file)
 
 def get_java_files(path):
     java_files = []
@@ -43,7 +42,6 @@ def get_java_files(path):
 def get_directories_in_dir(directory_path):
     directories = [d for d in os.listdir(directory_path) if os.path.isdir(os.path.join(directory_path, d))]
     return directories
-
 
 def analyze_chatgpt_results(chatgpt_results, java_files):
     true_positives = 0
@@ -68,19 +66,19 @@ def analyze_chatgpt_results(chatgpt_results, java_files):
                     cwe_specific_results[cwe]["true_positives"].append(file_name)
                     print(f"True positive on {file_name} with CWE {cwe}")
                 
-                # Check that get a false positive on a non-vulnerable file
+                # Check that we get a false positive on a non-vulnerable file
                 elif file_name.startswith("GOOD") and has_vulnerability(val):
                     false_positives += 1
                     cwe_specific_results[cwe]["false_positives"].append(file_name)
                     print(f"False positive on {file_name} with CWE {cwe}")
                 
-                # Check that if we get a false negative on an expected vulnerabal file
+                # Check to see if we get a false negative on an expected vulnerabal file
                 elif file_name.startswith("BAD") and not has_vulnerability(val):
                     false_negatives += 1
                     cwe_specific_results[cwe]["false_negatives"].append(file_name)
                     print(f"False negative on {file_name} with CWE {cwe}")
 
-                # Check that if we get a true negative on an expected non-vulnerabal file
+                # Check to see if we get a true negative on a non-vulnerabal file
                 elif file_name.startswith("GOOD") and not has_vulnerability(val):
                     true_negatives += 1
                     cwe_specific_results[cwe]["true_negatives"].append(file_name)
