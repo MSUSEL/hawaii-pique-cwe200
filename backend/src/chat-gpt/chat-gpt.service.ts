@@ -1,8 +1,8 @@
-import {Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as OpenAI from 'openai';
-import {ConfigService} from '@nestjs/config';
-import {FileUtilService} from 'src/files/fileUtilService';
-import {EventsGateway} from 'src/events/events.gateway';
+import { ConfigService } from '@nestjs/config';
+import { FileUtilService } from 'src/files/fileUtilService';
+import { EventsGateway } from 'src/events/events.gateway';
 import * as path from 'path';
 
 @Injectable()
@@ -47,7 +47,7 @@ export class ChatGptService {
                         const response = await this.createGptWithBackoff(
                             processedFiles,
                         );
-                        // console.log(response.message);
+                        console.log(response.message);
 
                         // Assuming response.message is a JSON string, parse response
                         const json = JSON.parse(response.message);
@@ -157,12 +157,12 @@ export class ChatGptService {
                     //     } ms`,
                     // );
                     // await this.delay(delayMs * Math.pow(2, i)); // Exponential backoff
-                    
+
                     // Instead of exponential backoff, use the time specified in the header
-                    let timeOut = parseFloat(error.response.headers['x-ratelimit-reset-tokens'].replace('s',''));
+                    let timeOut = parseFloat(error.response.headers['x-ratelimit-reset-tokens'].replace('s', ''));
                     console.log(`Rate limit hit. Retrying in ${timeOut} seconds`)
                     await this.delay(timeOut * 1000);
-                    
+
                 } else {
                     throw error; // Re-throw the error if it's not a 429 or if max retries exceeded
                 }
@@ -267,7 +267,7 @@ export class ChatGptService {
             const completion = await this.openai.createChatCompletion({
                 model: 'gpt-4',
                 temperature: 0.2,
-                messages: [{role: 'user', content: prompt}],
+                messages: [{ role: 'user', content: prompt }],
             });
 
             return { message: completion.data.choices[0].message.content };
