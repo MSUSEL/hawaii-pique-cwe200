@@ -17,7 +17,7 @@ export class CodeQlService {
         private parserService: CodeQlParserService,
         private eventsGateway: EventsGateway,
         private fileUtilService: FileUtilService,
-        private gptService:ChatGptService
+        private gptService: ChatGptService
     ) {
         this.projectsPath = this.configService.get<string>(
             'CODEQL_PROJECTS_DIR',
@@ -54,15 +54,15 @@ export class CodeQlService {
         //         fs.appendFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
         //     }
         // }
-        
+
         // Waiting to hear back with the correct path for the queries
         // this.copyQueries('../codeql queries/', this.queryPath);
 
         // Get Sensitive variables from gpt
-        const data= await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Replace String with findings?
-        const fileContents= SensitiveVariablesContents.replace("======", data.variables.join(',')) ;
+        // const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
 
         // Write response to file
         await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
@@ -82,9 +82,9 @@ export class CodeQlService {
         const outputPath = path.join(sourcePath, 'result.sarif');
         const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
         await this.runChildProcess(analyzeDbCommand);
-        
+
         return await this.parserService.getSarifResults(sourcePath);
-        
+
     }
 
     /**
@@ -101,13 +101,13 @@ export class CodeQlService {
             // report stdout
             childProcess.stdout.on('data', (data) => {
                 console.log(data.toString());
-                this.eventsGateway.emitDataToClients('data',data.toString())
+                this.eventsGateway.emitDataToClients('data', data.toString())
             });
 
             // report stderr
             childProcess.stderr.on('data', (data) => {
                 console.log(data.toString());
-                this.eventsGateway.emitDataToClients('data',data.toString())
+                this.eventsGateway.emitDataToClients('data', data.toString())
             });
 
             // report results after finishing
@@ -115,7 +115,7 @@ export class CodeQlService {
             childProcess.on('exit', function (code, signal) {
                 const result = "process CodeQl exited with code " + code + " and signal " + signal;
                 console.log(result);
-                self.eventsGateway.emitDataToClients('data',result.toString())
+                self.eventsGateway.emitDataToClients('data', result.toString())
                 resolve();
             });
 
@@ -132,10 +132,10 @@ export class CodeQlService {
      *
      * @param variables variables to write
      */
-    async writeVariablesToFile(variables:string){
+    async writeVariablesToFile(variables: string) {
         // todo why is this a constant path? Can be moved to config or other?
         const filePath = "../codeql/ql/java/ql/lib/semmle/code/java/security/SensitiveVariables.qll";
-        await this.fileUtilService.writeToFile(filePath,variables)
+        await this.fileUtilService.writeToFile(filePath, variables)
     }
 
     /**
@@ -144,30 +144,30 @@ export class CodeQlService {
      * @param fileList list of files to include in the json report
      * @param sourcePath path of project root
      */
-    async writeFilesGptResponseToJson(fileList:any[], sourcePath:string){
+    async writeFilesGptResponseToJson(fileList: any[], sourcePath: string) {
         const jsonPath = path.join(sourcePath, "data.json");
-        const data = JSON.stringify(fileList,null,'\t');    // additional args for pretty printing
-        await this.fileUtilService.writeToFile(jsonPath,data)
+        const data = JSON.stringify(fileList, null, '\t');    // additional args for pretty printing
+        await this.fileUtilService.writeToFile(jsonPath, data)
     }
 
     copyQueries(srcDir: string, destDir: string) {
 
-    fs.readdir(srcDir, { withFileTypes: true }, (err, entries) => {
-        if (err) throw err;
+        fs.readdir(srcDir, { withFileTypes: true }, (err, entries) => {
+            if (err) throw err;
 
-        entries.forEach(entry => {
-            const srcPath = path.join(srcDir, entry.name);
-            const destPath = path.join(destDir, entry.name);
+            entries.forEach(entry => {
+                const srcPath = path.join(srcDir, entry.name);
+                const destPath = path.join(destDir, entry.name);
 
-            if (entry.isDirectory()) {
-                fs.mkdir(destPath, { recursive: true }, (err) => {
-                    if (err) throw err;
-                    console.log(`Directory created: ${destPath}`);
-                    this.copyQueries(srcPath, destPath); // Recursive call to copy directory contents
-                });
-            }
+                if (entry.isDirectory()) {
+                    fs.mkdir(destPath, { recursive: true }, (err) => {
+                        if (err) throw err;
+                        console.log(`Directory created: ${destPath}`);
+                        this.copyQueries(srcPath, destPath); // Recursive call to copy directory contents
+                    });
+                }
+            });
         });
-    });
 
 
 
