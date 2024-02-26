@@ -65,7 +65,7 @@ export class CodeQlService {
         const fileContents= SensitiveVariablesContents.replace("======", data.variables.join(',')) ;
 
         // Write response to file
-        // await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
+        await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
         await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
 
         // Remove previous database if it exists

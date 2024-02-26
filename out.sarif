@@ -1,0 +1,1188 @@
+{
+  "$schema" : "https://json.schemastore.org/sarif-2.1.0.json",
+  "version" : "2.1.0",
+  "runs" : [ {
+    "tool" : {
+      "driver" : {
+        "name" : "CodeQL",
+        "organization" : "GitHub",
+        "semanticVersion" : "2.16.1",
+        "notifications" : [ {
+          "id" : "java/baseline/expected-extracted-files",
+          "name" : "java/baseline/expected-extracted-files",
+          "shortDescription" : {
+            "text" : "Expected extracted files"
+          },
+          "fullDescription" : {
+            "text" : "Files appearing in the source archive that are expected to be extracted."
+          },
+          "defaultConfiguration" : {
+            "enabled" : true
+          },
+          "properties" : {
+            "tags" : [ "expected-extracted-files", "telemetry" ]
+          }
+        }, {
+          "id" : "cli/database/analyze",
+          "name" : "cli/database/analyze",
+          "shortDescription" : {
+            "text" : "CodeQL CLI: database analyze"
+          },
+          "fullDescription" : {
+            "text" : "CodeQL CLI: database analyze"
+          },
+          "defaultConfiguration" : {
+            "enabled" : true
+          }
+        } ],
+        "rules" : [ {
+          "id" : "java/local-temp-file-or-directory-information-disclosure",
+          "name" : "java/local-temp-file-or-directory-information-disclosure",
+          "shortDescription" : {
+            "text" : "Local information disclosure in a temporary directory"
+          },
+          "fullDescription" : {
+            "text" : "Writing information without explicit permissions to a shared temporary directory may disclose it to other users."
+          },
+          "defaultConfiguration" : {
+            "enabled" : true,
+            "level" : "warning"
+          },
+          "properties" : {
+            "tags" : [ "security", "external/cwe/cwe-200", "external/cwe/cwe-732" ],
+            "description" : "Writing information without explicit permissions to a shared temporary directory may disclose it to other users.",
+            "id" : "java/local-temp-file-or-directory-information-disclosure",
+            "kind" : "path-problem",
+            "name" : "Local information disclosure in a temporary directory",
+            "precision" : "medium",
+            "problem.severity" : "warning",
+            "security-severity" : "6.5"
+          }
+        } ]
+      },
+      "extensions" : [ {
+        "name" : "custom-codeql-queries",
+        "semanticVersion" : "0.0.1+9a25ed7931d57e0c8803108a0108ccfedc777f60",
+        "locations" : [ {
+          "uri" : "file:///C:/Users/Kyler-Laptop/Documents/Work/CWE/cwe200/codeql%20queries/",
+          "description" : {
+            "text" : "The QL pack root directory."
+          }
+        }, {
+          "uri" : "file:///C:/Users/Kyler-Laptop/Documents/Work/CWE/cwe200/codeql%20queries/qlpack.yml",
+          "description" : {
+            "text" : "The QL pack definition file."
+          }
+        } ]
+      } ]
+    },
+    "invocations" : [ {
+      "toolExecutionNotifications" : [ {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/MathOperations.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 1
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 0
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/snippets/ServerGeneratedErrorMessageContainingSensitiveInformation.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 2
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/snippets/ExposureofInformationThroughShellErrorMessage.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 3
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/SensitiveInfoExpouser.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 4
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/StackTraceExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 5
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/snippets/ServletRuntimeErrorMessageContainingSensitiveInformation.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 6
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/UserAuthentication.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 7
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/App.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 8
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/test/java/com/example/AppTest.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 9
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/snippets/TimingAttackAgainstHeader.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 10
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/snippets/JavaRuntimeErrorMessageContainingSensitiveInformation.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 11
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/ExecuteSqlCommand.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 12
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/snippets/TestJava.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 13
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/SQLInjectionExample.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 14
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/SensitiveGetQuery.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 15
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/XSS.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 16
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/example/UnsafeLoginSystem.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 17
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "message" : {
+          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\Kyler-Laptop\\Documents\\Work\\CWE\\cwe200\\codeql queries\\CWE-535\\ExposureofInformationThroughShellErrorMessage copy.ql.\r\nError was: Cannot process query metadata for a query without the '@kind' metadata property. To learn more, see https://codeql.github.com/docs/writing-codeql-queries/metadata-for-codeql-queries/ [NO_KIND_SPECIFIED]"
+        },
+        "level" : "error",
+        "timeUtc" : "2024-02-23T20:16:31.555+00:00",
+        "descriptor" : {
+          "id" : "cli/database/analyze",
+          "index" : 1
+        },
+        "properties" : {
+          "attributes" : {
+            "exitCode" : 2
+          },
+          "visibility" : {
+            "telemetry" : false
+          }
+        }
+      }, {
+        "message" : {
+          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\Kyler-Laptop\\Documents\\Work\\CWE\\cwe200\\codeql queries\\CWE-535\\ExposureofInformationThroughShellErrorMessage copy.ql.\r\nError was: Expected result pattern(s) are not present for path-problem query: Expected at least two result patterns. These should include at least an 'edges' result set (see https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/). [INVALID_RESULT_PATTERNS]"
+        },
+        "level" : "error",
+        "timeUtc" : "2024-02-24T08:52:31.646+00:00",
+        "descriptor" : {
+          "id" : "cli/database/analyze",
+          "index" : 1
+        },
+        "properties" : {
+          "attributes" : {
+            "exitCode" : 2
+          },
+          "visibility" : {
+            "telemetry" : false
+          }
+        }
+      }, {
+        "message" : {
+          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\Kyler-Laptop\\Documents\\Work\\CWE\\cwe200\\codeql queries\\CWE-535\\ExposureofInformationThroughShellErrorMessage copy.ql.\r\nError was: Expected result pattern(s) are not present for path-problem query: Expected at least two result patterns. These should include at least an 'edges' result set (see https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/). [INVALID_RESULT_PATTERNS]"
+        },
+        "level" : "error",
+        "timeUtc" : "2024-02-24T08:55:03.682+00:00",
+        "descriptor" : {
+          "id" : "cli/database/analyze",
+          "index" : 1
+        },
+        "properties" : {
+          "attributes" : {
+            "exitCode" : 2
+          },
+          "visibility" : {
+            "telemetry" : false
+          }
+        }
+      }, {
+        "message" : {
+          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\Kyler-Laptop\\Documents\\Work\\CWE\\cwe200\\codeql queries\\CWE-535\\ExposureofInformationThroughShellErrorMessage copy.ql.\r\nError was: Expected result pattern(s) are not present for path-problem query: Expected at least two result patterns. These should include at least an 'edges' result set (see https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/). [INVALID_RESULT_PATTERNS]"
+        },
+        "level" : "error",
+        "timeUtc" : "2024-02-24T09:00:09.019+00:00",
+        "descriptor" : {
+          "id" : "cli/database/analyze",
+          "index" : 1
+        },
+        "properties" : {
+          "attributes" : {
+            "exitCode" : 2
+          },
+          "visibility" : {
+            "telemetry" : false
+          }
+        }
+      }, {
+        "message" : {
+          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\Kyler-Laptop\\Documents\\Work\\CWE\\cwe200\\codeql queries\\CWE-535\\ExposureofInformationThroughShellErrorMessage copy.ql.\r\nError was: Expected result pattern(s) are not present for path-problem query: Expected at least two result patterns. These should include at least an 'edges' result set (see https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/). [INVALID_RESULT_PATTERNS]"
+        },
+        "level" : "error",
+        "timeUtc" : "2024-02-24T09:03:24.570+00:00",
+        "descriptor" : {
+          "id" : "cli/database/analyze",
+          "index" : 1
+        },
+        "properties" : {
+          "attributes" : {
+            "exitCode" : 2
+          },
+          "visibility" : {
+            "telemetry" : false
+          }
+        }
+      }, {
+        "message" : {
+          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\Kyler-Laptop\\Documents\\Work\\CWE\\cwe200\\codeql queries\\CWE-535\\ExposureofInformationThroughShellErrorMessage copy.ql.\r\nError was: Expected result pattern(s) are not present for path-problem query: Expected at least two result patterns. These should include at least an 'edges' result set (see https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/). [INVALID_RESULT_PATTERNS]"
+        },
+        "level" : "error",
+        "timeUtc" : "2024-02-24T09:08:47.629+00:00",
+        "descriptor" : {
+          "id" : "cli/database/analyze",
+          "index" : 1
+        },
+        "properties" : {
+          "attributes" : {
+            "exitCode" : 2
+          },
+          "visibility" : {
+            "telemetry" : false
+          }
+        }
+      } ],
+      "executionSuccessful" : true
+    } ],
+    "artifacts" : [ {
+      "location" : {
+        "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 0
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/example/MathOperations.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 1
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/snippets/ServerGeneratedErrorMessageContainingSensitiveInformation.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 2
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/snippets/ExposureofInformationThroughShellErrorMessage.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 3
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/example/SensitiveInfoExpouser.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 4
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/example/StackTraceExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 5
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/snippets/ServletRuntimeErrorMessageContainingSensitiveInformation.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 6
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/example/UserAuthentication.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 7
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/example/App.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 8
+      }
+    }, {
+      "location" : {
+        "uri" : "src/test/java/com/example/AppTest.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 9
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/snippets/TimingAttackAgainstHeader.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 10
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/snippets/JavaRuntimeErrorMessageContainingSensitiveInformation.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 11
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/example/ExecuteSqlCommand.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 12
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/snippets/TestJava.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 13
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/example/SQLInjectionExample.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 14
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/example/SensitiveGetQuery.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 15
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/example/XSS.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 16
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/example/UnsafeLoginSystem.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 17
+      }
+    } ],
+    "results" : [ {
+      "ruleId" : "java/local-temp-file-or-directory-information-disclosure",
+      "ruleIndex" : 0,
+      "rule" : {
+        "id" : "java/local-temp-file-or-directory-information-disclosure",
+        "index" : 0
+      },
+      "message" : {
+        "text" : "Local information disclosure vulnerability due to use of file readable by other local users."
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 8,
+            "startColumn" : 22,
+            "endColumn" : 59
+          }
+        }
+      } ],
+      "partialFingerprints" : {
+        "primaryLocationLineHash" : "cf23acf8f3d59b18:1",
+        "primaryLocationStartColumnFingerprint" : "13"
+      }
+    }, {
+      "ruleId" : "java/local-temp-file-or-directory-information-disclosure",
+      "ruleIndex" : 0,
+      "rule" : {
+        "id" : "java/local-temp-file-or-directory-information-disclosure",
+        "index" : 0
+      },
+      "message" : {
+        "text" : "Local information disclosure vulnerability due to use of file readable by other local users."
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 10,
+            "startColumn" : 22,
+            "endColumn" : 65
+          }
+        }
+      } ],
+      "partialFingerprints" : {
+        "primaryLocationLineHash" : "2f53ac21a2d38f4:1",
+        "primaryLocationStartColumnFingerprint" : "13"
+      }
+    }, {
+      "ruleId" : "java/local-temp-file-or-directory-information-disclosure",
+      "ruleIndex" : 0,
+      "rule" : {
+        "id" : "java/local-temp-file-or-directory-information-disclosure",
+        "index" : 0
+      },
+      "message" : {
+        "text" : "Local information disclosure vulnerability from [system temp directory](1) due to use of file or directory readable by other local users."
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 12,
+            "startColumn" : 39,
+            "endColumn" : 75
+          }
+        }
+      } ],
+      "partialFingerprints" : {
+        "primaryLocationLineHash" : "62b5cf60459d63a3:1",
+        "primaryLocationStartColumnFingerprint" : "30"
+      },
+      "codeFlows" : [ {
+        "threadFlows" : [ {
+          "locations" : [ {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 12,
+                  "startColumn" : 39,
+                  "endColumn" : 75
+                }
+              },
+              "message" : {
+                "text" : "getProperty(...) : String"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 12,
+                  "startColumn" : 30,
+                  "endColumn" : 76
+                }
+              },
+              "message" : {
+                "text" : "new File(...) : File"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 13,
+                  "startColumn" : 60,
+                  "endColumn" : 73
+                }
+              },
+              "message" : {
+                "text" : "systemTempDir"
+              }
+            }
+          } ]
+        } ]
+      } ],
+      "relatedLocations" : [ {
+        "id" : 1,
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 12,
+            "startColumn" : 39,
+            "endColumn" : 75
+          }
+        },
+        "message" : {
+          "text" : "system temp directory"
+        }
+      } ]
+    }, {
+      "ruleId" : "java/local-temp-file-or-directory-information-disclosure",
+      "ruleIndex" : 0,
+      "rule" : {
+        "id" : "java/local-temp-file-or-directory-information-disclosure",
+        "index" : 0
+      },
+      "message" : {
+        "text" : "Local information disclosure vulnerability due to use of directory readable by other local users."
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 15,
+            "startColumn" : 24,
+            "endColumn" : 66
+          }
+        }
+      } ],
+      "partialFingerprints" : {
+        "primaryLocationLineHash" : "41517d9dad95aee0:1",
+        "primaryLocationStartColumnFingerprint" : "15"
+      }
+    }, {
+      "ruleId" : "java/local-temp-file-or-directory-information-disclosure",
+      "ruleIndex" : 0,
+      "rule" : {
+        "id" : "java/local-temp-file-or-directory-information-disclosure",
+        "index" : 0
+      },
+      "message" : {
+        "text" : "Local information disclosure vulnerability from [system temp directory](1) due to use of file or directory readable by other local users."
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 23,
+            "startColumn" : 41,
+            "endColumn" : 77
+          }
+        }
+      } ],
+      "partialFingerprints" : {
+        "primaryLocationLineHash" : "fc1b5462114856fa:1",
+        "primaryLocationStartColumnFingerprint" : "32"
+      },
+      "codeFlows" : [ {
+        "threadFlows" : [ {
+          "locations" : [ {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 23,
+                  "startColumn" : 41,
+                  "endColumn" : 77
+                }
+              },
+              "message" : {
+                "text" : "getProperty(...) : String"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 23,
+                  "startColumn" : 32,
+                  "endColumn" : 92
+                }
+              },
+              "message" : {
+                "text" : "new File(...) : File"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 24,
+                  "startColumn" : 9,
+                  "endColumn" : 24
+                }
+              },
+              "message" : {
+                "text" : "tempDirChildDir"
+              }
+            }
+          } ]
+        } ]
+      } ],
+      "relatedLocations" : [ {
+        "id" : 1,
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 23,
+            "startColumn" : 41,
+            "endColumn" : 77
+          }
+        },
+        "message" : {
+          "text" : "system temp directory"
+        }
+      } ]
+    }, {
+      "ruleId" : "java/local-temp-file-or-directory-information-disclosure",
+      "ruleIndex" : 0,
+      "rule" : {
+        "id" : "java/local-temp-file-or-directory-information-disclosure",
+        "index" : 0
+      },
+      "message" : {
+        "text" : "Local information disclosure vulnerability from [system temp directory](1) due to use of file or directory readable by other local users."
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 17,
+            "startColumn" : 18,
+            "endColumn" : 54
+          }
+        }
+      } ],
+      "partialFingerprints" : {
+        "primaryLocationLineHash" : "4357626c1c6ed11d:1",
+        "primaryLocationStartColumnFingerprint" : "9"
+      },
+      "codeFlows" : [ {
+        "threadFlows" : [ {
+          "locations" : [ {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 17,
+                  "startColumn" : 18,
+                  "endColumn" : 54
+                }
+              },
+              "message" : {
+                "text" : "getProperty(...) : String"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 17,
+                  "startColumn" : 9,
+                  "endColumn" : 65
+                }
+              },
+              "message" : {
+                "text" : "new File(...)"
+              }
+            }
+          } ]
+        } ]
+      } ],
+      "relatedLocations" : [ {
+        "id" : 1,
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 17,
+            "startColumn" : 18,
+            "endColumn" : 54
+          }
+        },
+        "message" : {
+          "text" : "system temp directory"
+        }
+      } ]
+    }, {
+      "ruleId" : "java/local-temp-file-or-directory-information-disclosure",
+      "ruleIndex" : 0,
+      "rule" : {
+        "id" : "java/local-temp-file-or-directory-information-disclosure",
+        "index" : 0
+      },
+      "message" : {
+        "text" : "Local information disclosure vulnerability from [system temp directory](1) due to use of file or directory readable by other local users."
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 19,
+            "startColumn" : 18,
+            "endColumn" : 54
+          }
+        }
+      } ],
+      "partialFingerprints" : {
+        "primaryLocationLineHash" : "4357626c1c6ed11d:2",
+        "primaryLocationStartColumnFingerprint" : "9"
+      },
+      "codeFlows" : [ {
+        "threadFlows" : [ {
+          "locations" : [ {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 19,
+                  "startColumn" : 18,
+                  "endColumn" : 54
+                }
+              },
+              "message" : {
+                "text" : "getProperty(...) : String"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 19,
+                  "startColumn" : 9,
+                  "endColumn" : 65
+                }
+              },
+              "message" : {
+                "text" : "new File(...)"
+              }
+            }
+          } ]
+        } ]
+      } ],
+      "relatedLocations" : [ {
+        "id" : 1,
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uriBaseId" : "%SRCROOT%",
+            "index" : 0
+          },
+          "region" : {
+            "startLine" : 19,
+            "startColumn" : 18,
+            "endColumn" : 54
+          }
+        },
+        "message" : {
+          "text" : "system temp directory"
+        }
+      } ]
+    } ],
+    "columnKind" : "utf16CodeUnits",
+    "properties" : {
+      "semmle.formatSpecifier" : "sarifv2.1.0"
+    }
+  } ]
+}
