@@ -55,14 +55,12 @@ export class CodeQlService {
         //     }
         // }
 
-        // Waiting to hear back with the correct path for the queries
-        // this.copyQueries('../codeql queries/', this.queryPath);
 
         // Get Sensitive variables from gpt
-        // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Replace String with findings?
-        // const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+        const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
 
         // Write response to file
         await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
