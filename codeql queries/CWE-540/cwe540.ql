@@ -7,13 +7,13 @@
  * @precision low
  * @id java/hardcoded-sensitive-field
  * @tags security
- * 		   external/cwe/cwe-540
+ * 		 external/cwe/cwe-540
  *       external/cwe/cwe-798
  */
 
  import java
  import semmle.code.java.security.HardcodedPasswordField
  
- from SensitiveVariable f, CompileTimeConstantExpr e
- where passwordFieldAssignedHardcodedValue(f, e)
+ from Variable f, CompileTimeConstantExpr e
+ where (f instanceof PasswordVariable or f instanceof UsernameVariable) and passwordFieldAssignedHardcodedValue(f, e)
  select f, "Sensitive field is assigned a hard-coded $@.", e, "value"

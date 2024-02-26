@@ -37,12 +37,12 @@ class DoGetServletMethod extends Method {
 }
 
 /** Holds if `ma` is (perhaps indirectly) called from the `doGet` method of `HttpServlet`. */
-predicate isReachableFromServletDoGet(MethodCall ma) {
+predicate isReachableFromServletDoGet(Call ma) {
   ma.getEnclosingCallable() instanceof DoGetServletMethod
   or
-  exists(Method pm, MethodCall pma |
+  exists(Method pm, Call pma |
     ma.getEnclosingCallable() = pm and
-    pma.getMethod() = pm and
+    pma.getCallee() = pm and
     isReachableFromServletDoGet(pma)
   )
 }
@@ -50,7 +50,7 @@ predicate isReachableFromServletDoGet(MethodCall ma) {
 /** Source of GET servlet requests. */
 class RequestGetParamSource extends DataFlow::ExprNode {
   RequestGetParamSource() {
-    exists(MethodCall ma |
+    exists(Call ma |
       isRequestGetParamMethod(ma) and
       ma = this.asExpr() and
       isReachableFromServletDoGet(ma)
@@ -62,7 +62,7 @@ class RequestGetParamSource extends DataFlow::ExprNode {
 module SensitiveGetQueryConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source) { source instanceof RequestGetParamSource }
 
-  predicate isSink(DataFlow::Node sink) { sink.asExpr() instanceof SensitiveInfoExpr }
+  predicate isSink(DataFlow::Node sink) { sink.asExpr() instanceof SensitiveInfoExpr or sink.asExpr() instanceof SensitiveVarAccess }
 
   /** Holds if the node is in a servlet method other than `doGet`. */
   predicate isBarrier(DataFlow::Node node) {
