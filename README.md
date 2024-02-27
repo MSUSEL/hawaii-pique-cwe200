@@ -16,15 +16,23 @@ CWE 200 query repo and web app
 ```bash 
 npm ci
 ```
+
 2. Build backend and frontend
 ```bash
 npm run build
 ```
-3a. To launch backend:
+
+3. Setup Codeql dependencies 
+```bash
+npm run codeql-setup
+```
+
+4. To launch backend:
 ```bash
 npm run start-backend
 ```
-3b. To launch frontend:
+
+5. To launch frontend:
 ```bash
 npm run start-frontend
 ```
