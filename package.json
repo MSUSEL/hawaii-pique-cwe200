@@ -12,7 +12,9 @@
     "build-backend": "cd backend && npm run build",
     "start-frontend": "cd frontend && npm run start",
     "start-backend": "cd backend && npm run start",
-    "build": "npm run build-backend && npm run build-frontend"
+    "build": "npm run build-backend && npm run build-frontend",
+    "codeql-setup": "ts-node backend/codeql_setup/run-platform-specific-setup.ts",
+    "t": ""
   },
   "dependencies": {
     "@angular/forms": "^17.1.2",

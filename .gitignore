@@ -57,6 +57,7 @@ node_modules
 codeql
 backend/Files/*
 !backend/Files/CWEToyDataset
+backend/Files/CWEToyDataset/CWEToyDatasetdb
 
 !files/*.gitkeep
 
