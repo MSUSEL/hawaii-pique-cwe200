@@ -9,6 +9,8 @@ Sensitive information may be inadvertently exposed through various methods, incl
 or printing usernames and passwords, among others. Given the complexity and subtlety of these exposures, our tool offers a comprehensive scanning solution. 
 Users can upload their Java projects for a thorough analysis, ensuring all instances of such vulnerabilities are identified.
 
+### Coverage ###
+
 - CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
 - CWE-201: Insertion of Sensitive Information Into Sent Data
 - CWE-204: Observable Response Discrepancy
