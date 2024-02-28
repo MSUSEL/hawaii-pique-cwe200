@@ -14,6 +14,7 @@ import semmle.code.java.frameworks.Servlets
 class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
   SensitiveInfoLeakServletConfig() { this = "SensitiveInfoLeakServletConfig" }
 
+
   override predicate isSource(DataFlow::Node source) {
     exists(MethodAccess ma |
       // Sources from exceptions
