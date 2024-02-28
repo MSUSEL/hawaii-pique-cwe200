@@ -16,19 +16,10 @@ def main():
     # Read in data from CHatGPTPath as a JSON
         os.chdir("backend/")
         java_files = get_java_files(SRCCODEPATH)
-        chatgpt_data = read_data(CHATGPTPATH)
         codeql_data = read_data(CODEQLPATH)
 
         codeql_results = analyze_codeql_results(codeql_data, java_files)
-
-
-        cwes = get_directories_in_dir(CWESPATH)
-
-
-# Need to get all codeQL queries working before continuing, since we don't have an output file yet 
-        # codeql_results = read_data(CODEQLPATH)
-        
-        
+        # cwes = get_directories_in_dir(CWESPATH)
         print(1)
         
 
