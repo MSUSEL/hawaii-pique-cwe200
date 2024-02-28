@@ -1,0 +1,3170 @@
+{
+  "$schema" : "https://json.schemastore.org/sarif-2.1.0.json",
+  "version" : "2.1.0",
+  "runs" : [ {
+    "tool" : {
+      "driver" : {
+        "name" : "CodeQL",
+        "organization" : "GitHub",
+        "semanticVersion" : "2.15.4",
+        "notifications" : [ {
+          "id" : "java/baseline/expected-extracted-files",
+          "name" : "java/baseline/expected-extracted-files",
+          "shortDescription" : {
+            "text" : "Expected extracted files"
+          },
+          "fullDescription" : {
+            "text" : "Files appearing in the source archive that are expected to be extracted."
+          },
+          "defaultConfiguration" : {
+            "enabled" : true
+          },
+          "properties" : {
+            "tags" : [ "expected-extracted-files", "telemetry" ]
+          }
+        }, {
+          "id" : "cli/database/analyze",
+          "name" : "cli/database/analyze",
+          "shortDescription" : {
+            "text" : "CodeQL CLI: database analyze"
+          },
+          "fullDescription" : {
+            "text" : "CodeQL CLI: database analyze"
+          },
+          "defaultConfiguration" : {
+            "enabled" : true
+          }
+        } ],
+        "rules" : [ {
+          "id" : "java/timing-attack-against-headers-value",
+          "name" : "java/timing-attack-against-headers-value",
+          "shortDescription" : {
+            "text" : "Timing attack against header value"
+          },
+          "fullDescription" : {
+            "text" : "Use of a non-constant-time verification routine to check the value of an HTTP header, possibly allowing a timing attack to infer the header's expected value."
+          },
+          "defaultConfiguration" : {
+            "enabled" : true,
+            "level" : "error"
+          },
+          "properties" : {
+            "tags" : [ "security", "experimental", "external/cwe/cwe-208" ],
+            "description" : "Use of a non-constant-time verification routine to check the value of an HTTP header,\n              possibly allowing a timing attack to infer the header's expected value.",
+            "id" : "java/timing-attack-against-headers-value",
+            "kind" : "path-problem",
+            "name" : "Timing attack against header value",
+            "precision" : "high",
+            "problem.severity" : "error"
+          }
+        } ]
+      },
+      "extensions" : [ {
+        "name" : "getting-started/codeql-extra-queries-java",
+        "semanticVersion" : "0.0.0+d9363cb855cf72cdb024902ae525e91e171d114e",
+        "locations" : [ {
+          "uri" : "file:///C:/Users/Kyler/Documents/Work/cwe200/codeql/codeql-custom-queries-java/",
+          "description" : {
+            "text" : "The QL pack root directory."
+          }
+        }, {
+          "uri" : "file:///C:/Users/Kyler/Documents/Work/cwe200/codeql/codeql-custom-queries-java/qlpack.yml",
+          "description" : {
+            "text" : "The QL pack definition file."
+          }
+        } ]
+      } ]
+    },
+    "invocations" : [ {
+      "toolExecutionNotifications" : [ {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_DebugLoggingSensitiveInfo.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 0
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-204/GOOD_UniformLoginResponse.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 1
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_AuthenticationTiming.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 2
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-205/GOOD_UniformErrorResponses.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 3
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-213/GOOD_ExplicitUserConsent.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 4
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_VerboseErrorMessages.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 5
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_ConditionalContentDelivery.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 6
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_UserDetailsExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 7
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_ExposedExceptionDetailsAPI.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 8
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-531/GOOD_EnvironmentVariablesForSensitiveDataTest.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 9
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-536/GOOD_SecureFileAccessServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 10
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_VerboseLibraryExceptionHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 11
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_ConfigurationPathException.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 12
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_DebugOutputWithCredentials.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 13
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-532/GOOD_FilterSensitiveInfoFromLogs.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 14
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_EmbeddedSensitiveDataInTests.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 15
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_LoggingCredentials.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 16
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_ExternalServiceErrorServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 17
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-201/GOOD_UseHttpsForSensitiveData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 18
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_LoggingSensitiveInformation.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 19
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-540/GOOD_UseEnvVarsForCredentials.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 20
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_ExcessiveDatabaseExceptionDetails.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 21
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_HardcodedCredentialsTest.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 22
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_DetailedErrorServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 23
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-497/GOOD_RedactedLogging.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 24
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_InsecureDebugMode.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 25
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-531/GOOD_ExternalizedSensitiveInfoConfigTest.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 26
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-213/GOOD_SanitizeLogs.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 27
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_DatabaseSchemaExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 28
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_ConditionalProcessingTiming.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 29
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_NetworkConfigError.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 30
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_HardcodedSecretInConfig.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 31
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-532/GOOD_SecureLoggingPractices.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 32
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_EarlyReturnPasswordCheck.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 33
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_SensitivePathDisclosureInErrors.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 34
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-537/GOOD_SecureErrorLogging.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 35
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_SystemPropertiesLog.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 36
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_FileReadSensitiveError.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 37
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_StoreDbConnectionInfo.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 38
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-550/GOOD_GenericErrorHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 39
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_DetailedDatabaseErrorExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 40
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_CompilationErrorExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 41
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_UserEnumerationLogin.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 42
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-208/GOOD_FixedResponseTimeDBQuery.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 43
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_HardcodedCredentialsInComments.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 44
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-538/GOOD_SecureConfigStorage.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 45
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_ApiKeyEmbedded.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 46
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogPaymentInformation.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 47
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_LoginResponseDiscrepancy.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 48
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_DatabaseConnectionError.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 49
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_WebServiceExceptionExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 50
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_ProcessInvocationWithArgs.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 51
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-540/GOOD_ExternalizeSensitiveConfig.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 52
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_LogSensitiveInfoBeforeSending.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 53
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_CommandLineToolSensitiveData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 54
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-215/GOOD_EnhancedDebugWithoutSensitiveData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 55
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-215/GOOD_SecureDebuggingPractices.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 56
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_ConditionalErrorHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 57
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-537/GOOD_ApiErrorResponseHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 58
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-200/GOOD_GenericErrorMessages.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 59
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_WriteEncryptedData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 60
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-210/GOOD_SanitizeErrorOutput.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 61
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_ShellCommandExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 62
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_VerboseSQLException.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 63
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_SendSensitiveInfoInGetRequest.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 64
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_DataAggregationServiceExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 65
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-209/GOOD_GenericDatabaseErrorHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 66
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_FileReadErrorServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 67
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-209/GOOD_GeneralizedAuthenticationFeedback.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 68
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_DetailedRuntimeExceptionServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 69
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-535/GOOD_SecureShellCommandHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 70
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_LoggingSensitiveUserInfo.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 71
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_ApiKeyExposureTestConfig.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 72
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_FileAccessErrorExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 73
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-615/GOOD_SecureKeyManagement.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 74
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-200/GOOD_MinimalDataLogging.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 75
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_EnvVarExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 76
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_HardcodedCredentials.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 77
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-210/GOOD_SecureLoggingWithCodes.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 78
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-615/GOOD_SecureCommentPractices.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 79
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-204/GOOD_ConsistentAuthenticationTiming.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 80
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_DbConnectionErrorServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 81
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-208/GOOD_ConstantTimePasswordCheck.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 82
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-211/GOOD_GenericExternalErrorHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 83
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-538/GOOD_SecureLogging.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 84
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-535/GOOD_EncapsulatedSecurityContext.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 85
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_MisconfiguredPermissions.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 86
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-205/GOOD_FixedResponseTiming.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 87
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_ApiKeyInComments.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 88
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-211/GOOD_SecureLibraryExceptionHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 89
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-550/GOOD_SecureErrorLogging2.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 90
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-214/GOOD_SecureSubprocessCommunication.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 91
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-201/GOOD_EncryptDataBeforeTransmission.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 92
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_VerboseAuthenticationFailure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 93
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_ExceptionDebuggingWithSensitiveData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 94
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogUserCredentials.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 95
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_EncryptionKeyInComments.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 96
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_DifferentialErrorHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 97
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_VariableResponseTimeDBQuery.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 98
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-497/GOOD_SafeErrorHandlingServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 99
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-536/GOOD_GenericErrorWithLoggingServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 100
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogDbConnectionDetails.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 101
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_VerboseDatabaseErrorMessage.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 102
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-214/GOOD_SecureStorageForSensitiveInfo.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 103
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_SendSensitiveDataViaEmail.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 104
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "message" : {
+          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\Kyler\\Documents\\Work\\cwe200\\codeql\\codeql-custom-queries-java\\cwe201.ql.\r\nError was: Expected result pattern(s) are not present for path-problem query: Expected at least two result patterns. These should include at least an 'edges' result set (see https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/). [INVALID_RESULT_PATTERNS]"
+        },
+        "level" : "error",
+        "timeUtc" : "2024-02-27T05:27:34.207+00:00",
+        "descriptor" : {
+          "id" : "cli/database/analyze",
+          "index" : 1
+        },
+        "properties" : {
+          "attributes" : {
+            "exitCode" : 2
+          },
+          "visibility" : {
+            "telemetry" : false
+          }
+        }
+      }, {
+        "message" : {
+          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\Kyler\\Documents\\Work\\cwe200\\codeql\\codeql-custom-queries-java\\cwe204.ql.\r\nError was: Cannot process query metadata for a query without the '@kind' metadata property. To learn more, see https://codeql.github.com/docs/writing-codeql-queries/metadata-for-codeql-queries/ [NO_KIND_SPECIFIED]"
+        },
+        "level" : "error",
+        "timeUtc" : "2024-02-27T05:28:27.694+00:00",
+        "descriptor" : {
+          "id" : "cli/database/analyze",
+          "index" : 1
+        },
+        "properties" : {
+          "attributes" : {
+            "exitCode" : 2
+          },
+          "visibility" : {
+            "telemetry" : false
+          }
+        }
+      } ],
+      "executionSuccessful" : true
+    } ],
+    "artifacts" : [ {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_DebugLoggingSensitiveInfo.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 0
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-204/GOOD_UniformLoginResponse.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 1
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_AuthenticationTiming.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 2
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-205/GOOD_UniformErrorResponses.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 3
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-213/GOOD_ExplicitUserConsent.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 4
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_VerboseErrorMessages.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 5
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_ConditionalContentDelivery.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 6
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_UserDetailsExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 7
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_ExposedExceptionDetailsAPI.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 8
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-531/GOOD_EnvironmentVariablesForSensitiveDataTest.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 9
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-536/GOOD_SecureFileAccessServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 10
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_VerboseLibraryExceptionHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 11
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_ConfigurationPathException.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 12
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_DebugOutputWithCredentials.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 13
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-532/GOOD_FilterSensitiveInfoFromLogs.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 14
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_EmbeddedSensitiveDataInTests.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 15
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_LoggingCredentials.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 16
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_ExternalServiceErrorServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 17
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-201/GOOD_UseHttpsForSensitiveData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 18
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_LoggingSensitiveInformation.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 19
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-540/GOOD_UseEnvVarsForCredentials.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 20
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_ExcessiveDatabaseExceptionDetails.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 21
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_HardcodedCredentialsTest.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 22
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_DetailedErrorServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 23
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-497/GOOD_RedactedLogging.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 24
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_InsecureDebugMode.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 25
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-531/GOOD_ExternalizedSensitiveInfoConfigTest.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 26
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-213/GOOD_SanitizeLogs.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 27
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_DatabaseSchemaExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 28
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_ConditionalProcessingTiming.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 29
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_NetworkConfigError.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 30
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_HardcodedSecretInConfig.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 31
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-532/GOOD_SecureLoggingPractices.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 32
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_EarlyReturnPasswordCheck.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 33
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_SensitivePathDisclosureInErrors.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 34
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-537/GOOD_SecureErrorLogging.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 35
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_SystemPropertiesLog.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 36
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_FileReadSensitiveError.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 37
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_StoreDbConnectionInfo.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 38
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-550/GOOD_GenericErrorHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 39
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_DetailedDatabaseErrorExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 40
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_CompilationErrorExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 41
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_UserEnumerationLogin.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 42
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-208/GOOD_FixedResponseTimeDBQuery.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 43
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_HardcodedCredentialsInComments.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 44
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-538/GOOD_SecureConfigStorage.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 45
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_ApiKeyEmbedded.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 46
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogPaymentInformation.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 47
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_LoginResponseDiscrepancy.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 48
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_DatabaseConnectionError.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 49
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_WebServiceExceptionExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 50
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_ProcessInvocationWithArgs.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 51
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-540/GOOD_ExternalizeSensitiveConfig.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 52
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_LogSensitiveInfoBeforeSending.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 53
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_CommandLineToolSensitiveData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 54
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-215/GOOD_EnhancedDebugWithoutSensitiveData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 55
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-215/GOOD_SecureDebuggingPractices.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 56
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_ConditionalErrorHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 57
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-537/GOOD_ApiErrorResponseHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 58
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-200/GOOD_GenericErrorMessages.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 59
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_WriteEncryptedData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 60
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-210/GOOD_SanitizeErrorOutput.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 61
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_ShellCommandExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 62
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_VerboseSQLException.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 63
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_SendSensitiveInfoInGetRequest.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 64
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_DataAggregationServiceExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 65
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-209/GOOD_GenericDatabaseErrorHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 66
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_FileReadErrorServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 67
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-209/GOOD_GeneralizedAuthenticationFeedback.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 68
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_DetailedRuntimeExceptionServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 69
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-535/GOOD_SecureShellCommandHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 70
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_LoggingSensitiveUserInfo.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 71
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_ApiKeyExposureTestConfig.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 72
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_FileAccessErrorExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 73
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-615/GOOD_SecureKeyManagement.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 74
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-200/GOOD_MinimalDataLogging.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 75
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_EnvVarExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 76
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_HardcodedCredentials.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 77
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-210/GOOD_SecureLoggingWithCodes.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 78
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-615/GOOD_SecureCommentPractices.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 79
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-204/GOOD_ConsistentAuthenticationTiming.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 80
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_DbConnectionErrorServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 81
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-208/GOOD_ConstantTimePasswordCheck.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 82
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-211/GOOD_GenericExternalErrorHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 83
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-538/GOOD_SecureLogging.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 84
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-535/GOOD_EncapsulatedSecurityContext.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 85
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_MisconfiguredPermissions.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 86
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-205/GOOD_FixedResponseTiming.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 87
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_ApiKeyInComments.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 88
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-211/GOOD_SecureLibraryExceptionHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 89
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-550/GOOD_SecureErrorLogging2.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 90
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-214/GOOD_SecureSubprocessCommunication.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 91
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-201/GOOD_EncryptDataBeforeTransmission.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 92
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_VerboseAuthenticationFailure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 93
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_ExceptionDebuggingWithSensitiveData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 94
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogUserCredentials.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 95
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_EncryptionKeyInComments.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 96
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_DifferentialErrorHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 97
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_VariableResponseTimeDBQuery.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 98
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-497/GOOD_SafeErrorHandlingServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 99
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-536/GOOD_GenericErrorWithLoggingServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 100
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogDbConnectionDetails.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 101
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_VerboseDatabaseErrorMessage.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 102
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-214/GOOD_SecureStorageForSensitiveInfo.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 103
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_SendSensitiveDataViaEmail.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 104
+      }
+    } ],
+    "results" : [ ],
+    "columnKind" : "utf16CodeUnits",
+    "properties" : {
+      "semmle.formatSpecifier" : "sarifv2.1.0"
+    }
+  } ]
+}
