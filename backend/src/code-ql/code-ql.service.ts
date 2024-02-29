@@ -38,7 +38,6 @@ export class CodeQlService {
     async runCodeQl(createCodeQlDto: any) {
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
-        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
 
         // Code used for testing Chat GPT Calls with preprocessing
         // for(let i = 0; i < 10; i++) {
@@ -55,16 +54,7 @@ export class CodeQlService {
         //     }
         // }
 
-
-        // Get Sensitive variables from gpt
-        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
-
-        // Replace String with findings?
-        const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
-
-        // Write response to file
-        await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
-        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+        // this.runChatGPT(sourcePath);
 
         // Remove previous database if it exists
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
@@ -83,6 +73,20 @@ export class CodeQlService {
 
         return await this.parserService.getSarifResults(sourcePath);
 
+    }
+
+    async runChatGPT(sourcePath){
+        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+
+        // Get Sensitive variables from gpt
+        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+
+        // Replace String with findings?
+        const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+
+        // Write response to file
+        await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
+        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
     }
 
     /**
