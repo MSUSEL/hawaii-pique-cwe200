@@ -8,6 +8,7 @@
  * @id java/sensitive-data-transmission
  * @tags security
  *       external/cwe/cwe-201
+ * @cwe CWE-201
  */
 
  import java

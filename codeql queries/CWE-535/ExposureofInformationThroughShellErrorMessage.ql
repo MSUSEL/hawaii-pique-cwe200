@@ -1,6 +1,3 @@
-import java
-import semmle.code.java.dataflow.TaintTracking
-
 /**
  * @name Exposure of information through shell error message
  * @description Exposing error messages from shell commands can lead to information disclosure.
@@ -9,7 +6,12 @@ import semmle.code.java.dataflow.TaintTracking
  * @id java/shell-error-exposure
  * @tags security
  *       external/cwe/cwe-535
+ * @cwe CWE-535
  */
+
+import java
+import semmle.code.java.dataflow.TaintTracking
+
 class ShellErrorExposureConfig extends TaintTracking::Configuration {
   ShellErrorExposureConfig() { this = "ShellErrorExposureConfig" }
 

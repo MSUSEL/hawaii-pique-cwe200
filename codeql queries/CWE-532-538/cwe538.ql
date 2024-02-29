@@ -9,6 +9,7 @@
  * @id java/sensitive-log
  * @tags security
  *       external/cwe/cwe-538
+ * @cwe CWE-538
  */
 
  import java

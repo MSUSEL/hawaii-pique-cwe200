@@ -1,7 +1,3 @@
-import java
-import semmle.code.java.dataflow.TaintTracking
-import semmle.code.java.dataflow.FlowSources
-
 /**
  * @name Exposure of sensitive information in runtime error messages
  * @description Logging or printing sensitive information or detailed error messages can lead to information disclosure.
@@ -12,6 +8,11 @@ import semmle.code.java.dataflow.FlowSources
  *       external/cwe/cwe-537
  * @cwe CWE-537
  */
+
+import java
+import semmle.code.java.dataflow.TaintTracking
+import semmle.code.java.dataflow.FlowSources
+
 class RuntimeSensitiveInfoExposureConfig extends TaintTracking::Configuration {
   RuntimeSensitiveInfoExposureConfig() { this = "RuntimeSensitiveInfoExposureConfig" }
 

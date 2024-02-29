@@ -1,7 +1,3 @@
-import java
-import semmle.code.java.dataflow.TaintTracking
-import semmle.code.java.frameworks.Servlets
-
 /** 
  * @name Exposure of sensitive information in servlet responses
  * @description Writing sensitive information from exceptions or sensitive file paths to HTTP responses can leak details to users.
@@ -12,6 +8,11 @@ import semmle.code.java.frameworks.Servlets
  *       external/cwe/cwe-536
  * @cwe CWE-536
  */
+
+import java
+import semmle.code.java.dataflow.TaintTracking
+import semmle.code.java.frameworks.Servlets
+
 class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
   SensitiveInfoLeakServletConfig() { this = "SensitiveInfoLeakServletConfig" }
 
