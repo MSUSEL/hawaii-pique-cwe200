@@ -8,6 +8,7 @@
  * @tags security
  *       experimental
  *       external/cwe/cwe-598
+ * @cwe CWE-598
  */
 
 import java

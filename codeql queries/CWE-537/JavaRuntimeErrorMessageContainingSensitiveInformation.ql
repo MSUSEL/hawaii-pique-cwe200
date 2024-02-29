@@ -10,6 +10,7 @@ import semmle.code.java.dataflow.FlowSources
  * @id java/runtime-sensitive-info-exposure
  * @tags security
  *       external/cwe/cwe-537
+ * @cwe CWE-537
  */
 class RuntimeSensitiveInfoExposureConfig extends TaintTracking::Configuration {
   RuntimeSensitiveInfoExposureConfig() { this = "RuntimeSensitiveInfoExposureConfig" }

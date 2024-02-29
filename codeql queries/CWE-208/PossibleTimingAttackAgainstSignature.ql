@@ -11,6 +11,7 @@
  * @tags security
  *       experimental
  *       external/cwe/cwe-208
+ * @cwe CWE-208
  */
 
 import java

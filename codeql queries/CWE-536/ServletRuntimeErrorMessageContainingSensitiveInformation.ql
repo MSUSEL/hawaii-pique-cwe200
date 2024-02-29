@@ -10,6 +10,7 @@ import semmle.code.java.frameworks.Servlets
  * @id java/sensitive-info-leak-servlet
  * @tags security
  *       external/cwe/cwe-536
+ * @cwe CWE-536
  */
 class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
   SensitiveInfoLeakServletConfig() { this = "SensitiveInfoLeakServletConfig" }

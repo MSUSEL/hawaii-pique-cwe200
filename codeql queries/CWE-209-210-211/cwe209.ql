@@ -11,6 +11,7 @@
  * @tags security
  *       external/cwe/cwe-209
  *       external/cwe/cwe-497
+ * @cwe CWE-209
  */
 
 import java

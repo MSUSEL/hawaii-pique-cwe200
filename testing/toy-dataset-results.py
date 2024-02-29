@@ -50,38 +50,49 @@ def analyze_codeql_results(codeql_results, java_files):
     false_negatives = 0
 
     cwe_specific_results = defaultdict(lambda: defaultdict(list))
-    num_results = len(codeql_results['runs'][0]['results'])
+    results = codeql_results['runs'][0]['results']
+    # This tells us all the CWEs that were queried in the codeql analysis
+    cwes_queries = [c['properties']['cwe'] for c in codeql_results['runs'][0]['tool']['driver']['rules']]
 
-    for res in codeql_results['runs'][0]['results']:
-        directory = res['locations'][0]['physicalLocation']['artifactLocation']['uri']
-        split = directory.split("/")
-        cwe = split[-1] # TODO
-        file_name = split[-1]
-        message = res['message']
+    num_results = len(results)
 
-         # Check that we get a true positive on an expected vulnerabal file
-        if file_name.startswith("BAD") and has_vulnerability(message):
-            true_positives += 1
-            cwe_specific_results[cwe]["true_positives"].append(file_name)
-            print(f"True positive on {file_name} with CWE {cwe}")
-        
-        # Check that we get a false positive on a non-vulnerable file
-        elif file_name.startswith("GOOD") and has_vulnerability(message):
-            false_positives += 1
-            cwe_specific_results[cwe]["false_positives"].append(file_name)
-            print(f"False positive on {file_name} with CWE {cwe}")
-        
-        # Check to see if we get a false negative on an expected vulnerabal file
-        elif file_name.startswith("BAD") and not has_vulnerability(message):
-            false_negatives += 1
-            cwe_specific_results[cwe]["false_negatives"].append(file_name)
-            print(f"False negative on {file_name} with CWE {cwe}")
+    # Match a specific CWE query to a result so that we can track the results for each CWE
+    for cwe_query in cwes_queries:
+        for res in results:
+            directory = res['locations'][0]['physicalLocation']['artifactLocation']['uri']
+            split = directory.split("/")
+            cwe = split[-2]
+            file_name = split[-1]
 
-        # Check to see if we get a true negative on a non-vulnerabal file
-        elif file_name.startswith("GOOD") and not has_vulnerability(message):
-            true_negatives += 1
-            cwe_specific_results[cwe]["true_negatives"].append(file_name)
-            print(f"True negative on {file_name} with CWE {cwe}")
+            # Match the CWE query to the CWE of the result. 
+            # It is possible that the result will be a different CWE since we have overlapping CWEs, 
+            # however, for testing purposes, we only care about the CWE query matching the result 
+            # Since that is how we could them.
+            if cwe_query == cwe:
+                message = res['message']
+                # Check that we get a true positive on an expected vulnerabal file
+                if file_name.startswith("BAD") and has_vulnerability(message):
+                    true_positives += 1
+                    cwe_specific_results[cwe]["true_positives"].append(file_name)
+                    print(f"True positive on {file_name} with CWE {cwe}")
+                
+                # Check that we get a false positive on a non-vulnerable file
+                elif file_name.startswith("GOOD") and has_vulnerability(message):
+                    false_positives += 1
+                    cwe_specific_results[cwe]["false_positives"].append(file_name)
+                    print(f"False positive on {file_name} with CWE {cwe}")
+                
+                # Check to see if we get a false negative on an expected vulnerabal file
+                elif file_name.startswith("BAD") and not has_vulnerability(message):
+                    false_negatives += 1
+                    cwe_specific_results[cwe]["false_negatives"].append(file_name)
+                    print(f"False negative on {file_name} with CWE {cwe}")
+
+                # Check to see if we get a true negative on a non-vulnerabal file
+                elif file_name.startswith("GOOD") and not has_vulnerability(message):
+                    true_negatives += 1
+                    cwe_specific_results[cwe]["true_negatives"].append(file_name)
+                    print(f"True negative on {file_name} with CWE {cwe}")
 
     print(true_positives, false_positives)
 

@@ -9,6 +9,7 @@
  * @tags security
  * 		 external/cwe/cwe-540
  *       external/cwe/cwe-798
+ * @cwe CWE-540
  */
 
  import java
