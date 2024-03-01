@@ -39,21 +39,7 @@ export class CodeQlService {
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
 
-        // Code used for testing Chat GPT Calls with preprocessing
-        // for(let i = 0; i < 10; i++) {
-        //     let slice = javaFiles.slice(0, (i + 1) * 10);  
-        //     let start = performance.now();
-        //     const data=await this.gptService.openAiGetSensitiveVariables(slice);
-        //     let end = performance.now();
-        //     console.log(`Slice of ${slice.length} took ${end - start} milliseconds`);
-        //     if(i == 0){
-        //         fs.writeFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
-        //     }
-        //     else{
-        //         fs.appendFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
-        //     }
-        // }
-
+        // this.debugChatGPT(sourcePath);
         // this.runChatGPT(sourcePath);
 
         // Remove previous database if it exists
@@ -87,6 +73,24 @@ export class CodeQlService {
         // Write response to file
         await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
         await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+    }
+
+    async debugChatGPT(sourcePath){
+        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+        // Code used for testing Chat GPT Calls with preprocessing
+        for(let i = 0; i < 10; i++) {
+            let slice = javaFiles.slice(0, (i + 1) * 10);  
+            let start = performance.now();
+            const data=await this.gptService.openAiGetSensitiveVariables(slice);
+            let end = performance.now();
+            console.log(`Slice of ${slice.length} took ${end - start} milliseconds`);
+            if(i == 0){
+                fs.writeFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
+            }
+            else{
+                fs.appendFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
+            }
+        }
     }
 
     /**
