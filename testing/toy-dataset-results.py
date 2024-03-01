@@ -40,8 +40,8 @@ def get_directories_in_dir(directory_path):
     return directories
 
 
-def has_vulnerability(chatgpt_results):
-    return True if len(chatgpt_results) > 0 else False
+def has_vulnerability(results):
+    return True if len(results) > 0 else False
 
 def analyze_codeql_results(codeql_results, java_files):
     true_positives = 0
