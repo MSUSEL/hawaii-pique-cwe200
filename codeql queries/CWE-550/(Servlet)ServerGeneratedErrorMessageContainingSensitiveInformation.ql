@@ -35,7 +35,10 @@ class HttpServletExceptionSourceConfig extends TaintTracking::Configuration {
          ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "File")) or
         // Considers environment variables and system properties as potential sources
         (ma.getMethod().hasName(["getenv", "getProperty"]) and
-         ma.getMethod().getDeclaringType().hasQualifiedName("java.lang", "System"))
+         ma.getMethod().getDeclaringType().hasQualifiedName("java.lang", "System")) or
+        // Include user input as a potential source
+        (ma.getMethod().getDeclaringType().hasQualifiedName("javax.servlet", "ServletRequest") and
+        ma.getMethod().hasName(["getParameter", "getAttribute"]))
       ) and
       // The call must occur within the servlet method
       ma.getEnclosingCallable() = m and
