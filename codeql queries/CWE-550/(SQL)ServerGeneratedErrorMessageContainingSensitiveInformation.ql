@@ -1,3 +1,17 @@
+/**
+ * @name Exposure of sensitive SQL exception information
+ * @description Detects potential exposure of sensitive information from SQLExceptions through console output, logging frameworks, or web application responses.
+ * @kind path-problem
+ * @problem.severity warning
+ * @id java/exposure-sql-exception-info
+ * @tags security
+ *       external/cwe/cwe-209
+ *       external/cwe/cwe-215
+ *       external/cwe/cwe-532
+ *       external/cwe/cwe-550
+ * @cwe CWE-550
+ */
+
 import java
 import semmle.code.java.dataflow.TaintTracking
 

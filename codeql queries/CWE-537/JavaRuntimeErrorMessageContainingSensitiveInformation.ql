@@ -9,57 +9,63 @@
  * @cwe CWE-537
  */
 
-import java
-import semmle.code.java.dataflow.TaintTracking
-import semmle.code.java.dataflow.FlowSources
+ import java
+ import semmle.code.java.dataflow.TaintTracking
+ import semmle.code.java.dataflow.FlowSources
+ import semmle.code.java.security.SensitiveVariables
 
-class RuntimeSensitiveInfoExposureConfig extends TaintTracking::Configuration {
-  RuntimeSensitiveInfoExposureConfig() { this = "RuntimeSensitiveInfoExposureConfig" }
-
-  override predicate isSource(DataFlow::Node source) {
-    exists(MethodAccess ma |
-      // Sources from exceptions
-      ma.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-      (ma.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])) and
-      source.asExpr() = ma
+ 
+ class RuntimeSensitiveInfoExposureConfig extends TaintTracking::Configuration {
+   RuntimeSensitiveInfoExposureConfig() { this = "RuntimeSensitiveInfoExposureConfig" }
+ 
+   override predicate isSource(DataFlow::Node source) {
+     exists(MethodAccess ma |
+       // Sources from exceptions
+       ma.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+       (ma.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])) and
+       source.asExpr() = ma
+     )
+     or
+     exists(SensitiveVariableExpr sve |
+      source.asExpr() = sve
     )
-  }
-
-  override predicate isSink(DataFlow::Node sink) {
-    exists(MethodAccess ma |
-      ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintStream") and
-      ma.getMethod().hasName("println") and
-      sink.asExpr() = ma.getAnArgument()
-    )
-    or
-    exists(MethodAccess ma |
-      // Sinks using PrintWriter
-      ma.getMethod().hasName("println") and
-      ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
-      sink.asExpr() = ma.getAnArgument()
-    )
-    or
-    exists(MethodAccess ma |
-      ma.getMethod().hasName("printStackTrace") and
-      sink.asExpr() = ma
-    )
-    or
-    exists(MethodAccess log |
-      log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
-      log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
-      sink.asExpr() = log.getAnArgument()
-    )
-    or
-    exists(MethodAccess log |
-      log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
-      log.getMethod().hasName(["error", "warn", "info", "debug"]) and
-      sink.asExpr() = log.getAnArgument()
-    )
-
-  }
-  
-}
-
-from RuntimeSensitiveInfoExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
-where config.hasFlowPath(source, sink)
-select sink, source, sink, "Potential CWE-537: Java runtime error message containing sensitive information"
+   }
+ 
+   override predicate isSink(DataFlow::Node sink) {
+     exists(MethodAccess ma |
+       ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintStream") and
+       ma.getMethod().hasName("println") and
+       sink.asExpr() = ma.getAnArgument()
+     )
+     or
+     exists(MethodAccess ma |
+       // Sinks using PrintWriter
+       ma.getMethod().hasName("println") and
+       ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
+       sink.asExpr() = ma.getAnArgument()
+     )
+     or
+     exists(MethodAccess ma |
+       ma.getMethod().hasName("printStackTrace") and
+       sink.asExpr() = ma
+     )
+     or
+     exists(MethodAccess log |
+       log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
+       log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
+       sink.asExpr() = log.getAnArgument()
+     )
+     or
+     exists(MethodAccess log |
+       log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
+       log.getMethod().hasName(["error", "warn", "info", "debug"]) and
+       sink.asExpr() = log.getAnArgument()
+     )
+ 
+   }
+   
+ }
+ 
+ from RuntimeSensitiveInfoExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
+ where config.hasFlowPath(source, sink)
+ select sink, source, sink, "Potential CWE-537: Java runtime error message containing sensitive information"
