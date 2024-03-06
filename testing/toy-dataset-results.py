@@ -19,10 +19,9 @@ def main():
         codeql_data = read_data(CODEQLPATH)
 
         codeql_results = analyze_codeql_results(codeql_data, java_files)
-        save_results(codeql_results['cwe_specific_results'], "../testing/codeql_results.json")
-        # save_results(codeql_results['cwe_extra_results'], "../testing/codeql_results.json")
+        complete_codeql_results = check_missed(codeql_results['cwe_specific_results'], java_files)
+        save_results(complete_codeql_results, "../testing/codeql_results.json")
 
-        # cwes = get_directories_in_dir(CWESPATH)
         print(1)
         
 
@@ -39,8 +38,7 @@ def get_java_files(path):
     return java_files
 
 def get_directories_in_dir(directory_path):
-    directories = [d for d in os.listdir(directory_path) if os.path.isdir(os.path.join(directory_path, d))]
-    return directories
+    return [d for d in os.listdir(directory_path) if os.path.isdir(os.path.join(directory_path, d))]
 
 
 def has_vulnerability(results):
@@ -59,6 +57,24 @@ def save_results(results, path):
     data = dict_to_json(results)
     with open(path, "w") as file:
         json.dump(data, file, indent=4)
+
+def check_missed(codeql_results, java_files):
+    for cwe in codeql_results:
+        cwe_related_files = set()
+        for java_file in java_files:
+            if cwe in java_file:
+                cwe_related_files.add(java_file)
+        for file in cwe_related_files:
+            file = file.split("\\")[-1]
+            if (file not in codeql_results[cwe]["true_positives"] and 
+                file not in codeql_results[cwe]["true_negatives"] and 
+                file not in codeql_results[cwe]["false_positives"] and 
+                file not in codeql_results[cwe]["false_negatives"]):
+                    if file.startswith("BAD"):
+                        codeql_results[cwe]["false_negatives"].add(file)
+                    else:
+                        codeql_results[cwe]["true_negatives"].add(file)
+    return codeql_results        
 
 def analyze_codeql_results(codeql_results, java_files):
     true_positives = 0
