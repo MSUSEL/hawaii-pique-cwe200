@@ -20,9 +20,10 @@ def main():
 
         codeql_results = analyze_codeql_results(codeql_data, java_files)
         complete_codeql_results = check_missed(codeql_results['cwe_specific_results'], java_files)
+        calculate_accuracy(complete_codeql_results)
         save_results(complete_codeql_results, "../testing/codeql_results.json")
 
-        print(1)
+        print("Analysis complete, results saved to codeql_results.json")
         
 
 def read_data(path):
@@ -76,11 +77,36 @@ def check_missed(codeql_results, java_files):
                         codeql_results[cwe]["true_negatives"].add(file)
     return codeql_results        
 
+def calculate_accuracy(data):
+    total_true_positives = 0
+    total_true_negatives = 0
+    total_samples = 0
+
+    for cwe in data:
+        true_positives = len(data[cwe]["true_positives"])
+        false_positives = len(data[cwe]["false_positives"])
+        true_negatives = len(data[cwe]["true_negatives"])
+        false_negatives = len(data[cwe]["false_negatives"])
+
+        total = true_positives + false_positives + true_negatives + false_negatives
+        
+        total_samples += total
+        total_true_positives += true_positives
+        total_true_negatives += true_negatives
+        accuracy = ((true_positives + true_negatives) / total) * 100
+        precision = true_positives / (true_positives + false_positives)
+        recall = true_positives / (true_positives + false_negatives)
+        f1 = 2 * ((precision * recall) / (precision + recall))
+        print(f"Accuracy of {cwe} query: {accuracy}%")
+        # print(f"Precision for {cwe}: {precision}")
+        # print(f"Recall for {cwe}: {recall}")
+        # print(f"F1 for {cwe}: {f1}")
+        # print("\n")
+    print("\n")
+    print(f"Total accuracy: {((total_true_positives + total_true_negatives) / total_samples)*100}%")
+
+
 def analyze_codeql_results(codeql_results, java_files):
-    true_positives = 0
-    false_positives = 0
-    true_negatives = 0
-    false_negatives = 0
 
     cwe_specific_results = defaultdict(lambda: defaultdict(set))
     cwe_extra_results = defaultdict(lambda: defaultdict(set))
@@ -107,36 +133,28 @@ def analyze_codeql_results(codeql_results, java_files):
                 message = res['message']
                 # Check that we get a true positive on an expected vulnerabal file
                 if file_name.startswith("BAD") and has_vulnerability(message):
-                    true_positives += 1
                     cwe_specific_results[cwe]["true_positives"].add(file_name)
-                    print(f"True positive on {file_name} with CWE {cwe}")
+                    # print(f"True positive on {file_name} with CWE {cwe}")
                 
                 # Check that we get a false positive on a non-vulnerable file
                 elif file_name.startswith("GOOD") and has_vulnerability(message):
-                    false_positives += 1
                     cwe_specific_results[cwe]["false_positives"].add(file_name)
-                    print(f"False positive on {file_name} with CWE {cwe}")
+                    # print(f"False positive on {file_name} with CWE {cwe}")
                 
                 # Check to see if we get a false negative on an expected vulnerabal file
                 elif file_name.startswith("BAD") and not has_vulnerability(message):
-                    false_negatives += 1
                     cwe_specific_results[cwe]["false_negatives"].add(file_name)
-                    print(f"False negative on {file_name} with CWE {cwe}")
+                    # print(f"False negative on {file_name} with CWE {cwe}")
 
                 # Check to see if we get a true negative on a non-vulnerabal file
                 elif file_name.startswith("GOOD") and not has_vulnerability(message):
-                    true_negatives += 1
                     cwe_specific_results[cwe]["true_negatives"].add(file_name)
-                    print(f"True negative on {file_name} with CWE {cwe}")
+                    # print(f"True negative on {file_name} with CWE {cwe}")
             
             else:
                 cwe_extra_results[cwe_query + " query results"][cwe].add(file_name)
 
-    print(true_positives, false_positives)
-
     return {
-    'true_positives': true_positives,
-    'false_positives': false_positives,
     'cwe_specific_results': cwe_specific_results,
     'cwe_extra_results': cwe_extra_results 
 }
