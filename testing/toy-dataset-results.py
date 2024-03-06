@@ -108,7 +108,7 @@ def calculate_accuracy(data):
         if total != 0: accuracy = ((true_positives + true_negatives) / total) * 100
         else: accuracy = 0
         cwe_results_dic[cwe] = accuracy
-        print(f"Accuracy of {cwe} query: {accuracy}")
+        print(f"Accuracy of {cwe} query: {accuracy}%")
         
     print("\n")
     # Calculate the total accuracy of all codeql queries
