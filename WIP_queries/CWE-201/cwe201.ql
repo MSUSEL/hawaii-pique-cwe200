@@ -1,25 +1,22 @@
 /**
  * @name Information exposure through transmitted data
  * @description Transmitting sensitive information to the user is a potential security risk.
- * @kind path-problem
+ * @kind problem
  * @problem.severity error
  * @security-severity 4.3
  * @precision high
  * @id java/sensitive-data-transmission
  * @tags security
  *       external/cwe/cwe-201
- * @cwe CWE-201
  */
 
  import java
  import semmle.code.java.security.SensitiveActions
- import semmle.code.java.security.SensitiveVariables
  import semmle.code.java.dataflow.FlowSources
  import semmle.code.java.dataflow.TaintTracking
- import semmle.code.java.security.SensitiveActions
  import semmle.code.java.dataflow.DataFlow
  private import semmle.code.java.security.InformationLeak
-
+ import SensitiveInfoModules
 
 private class GetMessageFlowSource extends DataFlow::Node {
   GetMessageFlowSource() {
@@ -45,6 +42,5 @@ private class GetMessageFlowSource extends DataFlow::Node {
  
  from ExposureInTransmittedData::PathNode source, ExposureInTransmittedData::PathNode sink
  where ExposureInTransmittedData::flowPath(source, sink)
- select sink.getNode(), source, sink, "This data transmitted to the user depends on $@.",
-   source.getNode(), "sensitive information"
+ select sink.getNode(), "Sensitive information might be exposed here."
  

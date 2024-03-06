@@ -5,7 +5,7 @@
  * @problem.severity warning
  * @security-severity 6.5
  * @precision medium
- * @id java/local-temp-file-or-directory-information-disclosure
+ * @id CWE-208
  * @tags security
  *       external/cwe/cwe-200
  *       external/cwe/cwe-732

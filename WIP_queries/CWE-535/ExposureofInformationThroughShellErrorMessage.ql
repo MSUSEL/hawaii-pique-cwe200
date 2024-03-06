@@ -16,7 +16,7 @@ class ShellErrorExposureConfig extends TaintTracking::Configuration {
   ShellErrorExposureConfig() { this = "ShellErrorExposureConfig" }
 
   override predicate isSource(DataFlow::Node source) {
-    exists(MethodAccess ma |
+    exists(MethodCall ma |
       // Captures getting the error stream from a process
       ma.getMethod().hasName("getErrorStream") and
       // Ensure the Process is the result of exec or start, indicating command execution
@@ -57,9 +57,7 @@ class ShellErrorExposureConfig extends TaintTracking::Configuration {
 
 from ShellErrorExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select source, sink, source.getNode(), "->", sink.getNode(), 
-  "Potential information exposure through shell error message.", 
-  source, sink, "This flow exposes sensitive information through shell error messages."
+select source, sink
 
 
 

@@ -4,10 +4,11 @@
  * @kind problem
  * @problem.severity medium
  * @precision medium
- * @id java/information-exposure-test-code
+ * @id CWE-531
  * @tags security
  *       cwe-531
  *       java
+ * @cwe CWE-531
  */
 
 import java

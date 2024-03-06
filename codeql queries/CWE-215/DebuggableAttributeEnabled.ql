@@ -4,10 +4,11 @@
  * @kind problem
  * @problem.severity warning
  * @security-severity 7.2
- * @id java/android/debuggable-attribute-enabled
+ * @id CWE-215
  * @tags security
  *       external/cwe/cwe-489
  * @precision very-high
+ * @cwe CWE-215
  */
 
 import java

@@ -4,10 +4,11 @@
  * @kind path-problem
  * @problem.severity warning
  * @security-severity 7.2
- * @id java/android/webview-debugging-enabled
+ * @id CWE-215
  * @tags security
  *       external/cwe/cwe-489
  * @precision high
+ * @cwe CWE-215
  */
 
 import java

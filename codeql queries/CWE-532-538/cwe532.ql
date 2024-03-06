@@ -6,7 +6,7 @@
  * @problem.severity warning
  * @security-severity 7.5
  * @precision medium
- * @id java/sensitive-log
+ * @id CWE-532
  * @tags security
  *       external/cwe/cwe-532
  * @cwe CWE-532
