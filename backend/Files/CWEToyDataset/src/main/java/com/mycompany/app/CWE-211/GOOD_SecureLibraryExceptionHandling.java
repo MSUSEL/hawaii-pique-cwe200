@@ -11,7 +11,7 @@ public class GOOD_SecureLibraryExceptionHandling {
             // Secure practice: Capture the exception and provide a generic error message.
             System.out.println("An error occurred processing your request. Please contact support.");
             // Optionally log the error internally without exposing details to the user.
-            logError(e.getMessage());
+            logError("An error has occurred.");
         }
     }
 

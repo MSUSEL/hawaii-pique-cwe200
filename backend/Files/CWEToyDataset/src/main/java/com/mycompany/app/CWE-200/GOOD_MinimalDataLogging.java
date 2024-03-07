@@ -8,7 +8,7 @@ public class GOOD_MinimalDataLogging{
         String username = "admin";
         // Secure: Avoid logging sensitive information. Log actions without specific details.
 
-        LOGGER.info("Attempting login for username: " + username);
+        LOGGER.info("There was an error during login.");
         // Note: The password or other sensitive information is not logged
     }
 }

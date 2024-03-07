@@ -13,7 +13,7 @@ public class GOOD_UseHttpsForSensitiveData {
             connection.getOutputStream().write(data.getBytes());
             System.out.println("Securely transmitted data. Response Code: " + connection.getResponseCode());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("An error has occurred.");
         }
     }
 

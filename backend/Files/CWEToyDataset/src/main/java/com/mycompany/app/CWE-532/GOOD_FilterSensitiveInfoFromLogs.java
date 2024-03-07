@@ -6,7 +6,7 @@ public class GOOD_FilterSensitiveInfoFromLogs {
 
     public void loginUser(String username) {
         // Secure logging without sensitive information
-        logger.info("Attempting login for username: " + username);
+        logger.info("Attempting login");
 
         // Authentication logic...
     }

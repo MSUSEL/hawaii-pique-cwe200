@@ -13,7 +13,7 @@ public class GOOD_FixedResponseTiming {
                 Thread.sleep(delay / 1000000L, (int) (delay % 1000000L));
             }
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            System.err.println("An error has occurred.");
         }
         return result;
     }

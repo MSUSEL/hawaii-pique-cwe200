@@ -18,7 +18,7 @@ public class GOOD_ExternalizeSensitiveConfig {
             System.out.println("Database URL: " + databaseUrl);
             // Further processing...
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("An error occurred.");
         }
     }
 }

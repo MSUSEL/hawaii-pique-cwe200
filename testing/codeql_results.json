@@ -1,0 +1,107 @@
+{
+    "CWE-200": {
+        "true_positives": [],
+        "false_positives": [],
+        "true_negatives": [
+            "GOOD_MinimalDataLogging.java",
+            "GOOD_GenericErrorMessages.java"
+        ],
+        "false_negatives": [
+            "BAD_UserDetailsExposure.java",
+            "BAD_VerboseErrorMessages.java",
+            "BAD_LoggingSensitiveInformation.java"
+        ]
+    },
+    "CWE-208": {
+        "true_positives": [],
+        "false_positives": [],
+        "true_negatives": [
+            "GOOD_FixedResponseTimeDBQuery.java",
+            "GOOD_ConstantTimePasswordCheck.java"
+        ],
+        "false_negatives": [
+            "BAD_VariableResponseTimeDBQuery.java",
+            "BAD_ConditionalProcessingTiming.java",
+            "BAD_EarlyReturnPasswordCheck.java"
+        ]
+    },
+    "CWE-209": {
+        "true_positives": [],
+        "false_positives": [],
+        "true_negatives": [
+            "GOOD_GenericDatabaseErrorHandling.java",
+            "GOOD_GeneralizedAuthenticationFeedback.java"
+        ],
+        "false_negatives": [
+            "BAD_DetailedDatabaseErrorExposure.java",
+            "BAD_VerboseAuthenticationFailure.java",
+            "BAD_SensitivePathDisclosureInErrors.java"
+        ]
+    },
+    "CWE-215": {
+        "true_positives": [],
+        "false_positives": [],
+        "true_negatives": [
+            "GOOD_EnhancedDebugWithoutSensitiveData.java",
+            "GOOD_SecureDebuggingPractices.java"
+        ],
+        "false_negatives": [
+            "BAD_ExceptionDebuggingWithSensitiveData.java",
+            "BAD_DebugOutputWithCredentials.java",
+            "BAD_DebugLoggingSensitiveInfo.java"
+        ]
+    },
+    "CWE-531": {
+        "true_positives": [],
+        "false_positives": [],
+        "true_negatives": [
+            "GOOD_ExternalizedSensitiveInfoConfigTest.java",
+            "GOOD_EnvironmentVariablesForSensitiveDataTest.java"
+        ],
+        "false_negatives": [
+            "BAD_ApiKeyExposureTestConfig.java",
+            "BAD_EmbeddedSensitiveDataInTests.java",
+            "BAD_HardcodedCredentialsTest.java"
+        ]
+    },
+    "CWE-532": {
+        "true_positives": [
+            "BAD_LogUserCredentials.java",
+            "BAD_LogDbConnectionDetails.java"
+        ],
+        "true_negatives": [
+            "GOOD_SecureLoggingPractices.java",
+            "GOOD_FilterSensitiveInfoFromLogs.java"
+        ],
+        "false_positives": [],
+        "false_negatives": [
+            "BAD_LogPaymentInformation.java"
+        ]
+    },
+    "CWE-538": {
+        "true_positives": [],
+        "false_positives": [],
+        "true_negatives": [
+            "GOOD_SecureLogging.java",
+            "GOOD_SecureConfigStorage.java"
+        ],
+        "false_negatives": [
+            "BAD_StoreDbConnectionInfo.java",
+            "BAD_LoggingCredentials.java",
+            "BAD_WriteEncryptedData.java"
+        ]
+    },
+    "CWE-540": {
+        "true_positives": [],
+        "false_positives": [],
+        "true_negatives": [
+            "GOOD_UseEnvVarsForCredentials.java",
+            "GOOD_ExternalizeSensitiveConfig.java"
+        ],
+        "false_negatives": [
+            "BAD_ApiKeyEmbedded.java",
+            "BAD_HardcodedSecretInConfig.java",
+            "BAD_HardcodedCredentials.java"
+        ]
+    }
+}

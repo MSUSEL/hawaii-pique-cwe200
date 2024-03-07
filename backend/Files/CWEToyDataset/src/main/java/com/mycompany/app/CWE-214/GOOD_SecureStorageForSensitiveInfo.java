@@ -13,7 +13,7 @@ public class GOOD_SecureStorageForSensitiveInfo {
             process.getOutputStream().write((secretPassword + "\n").getBytes());
             System.out.println("Process invoked without exposing sensitive information.");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("An error has occurred.");
         }
     }
 

@@ -9,7 +9,7 @@ public class GOOD_SecureLogging {
             // Secure: Logging without including sensitive information
             logWriter.write("User login attempt: " + username + "\n");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("An error occurred.");
         }
     }
 }

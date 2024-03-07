@@ -17,7 +17,7 @@ public class GOOD_SecureSubprocessCommunication {
             }
             System.out.println("Securely communicated with subprocess without exposing sensitive information.");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("An error has occurred.");
         }
     }
 }

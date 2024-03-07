@@ -11,7 +11,7 @@ public class GOOD_SecureConfigStorage {
             // Secure: Storing configuration details without sensitive information in a secure location
             prop.store(output, "Secure Database connection details");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("An error occurred.");
         }
     }
 }

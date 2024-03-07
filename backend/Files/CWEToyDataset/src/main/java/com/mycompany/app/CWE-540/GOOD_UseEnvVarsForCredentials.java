@@ -19,7 +19,7 @@ public class GOOD_UseEnvVarsForCredentials {
             System.out.println("Connected to the database successfully.");
             // Proceed with database operations...
         } catch (SQLException e) {
-            System.err.println("Database connection failed: " + e.getMessage());
+            System.err.println("Database connection failed.");
         }
     }
 }

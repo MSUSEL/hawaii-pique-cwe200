@@ -11,7 +11,7 @@ public class GOOD_ApiErrorResponseHandling {
                 return secureDataFetch();
             } catch (Exception e) {
                 // Secure: Only log the specific error and return a generic error message to the client
-                System.err.println("Error fetching secure data: " + e.toString());
+                System.err.println("Error fetching secure data: ");
                 response.status(500);
                 return "Unable to process the request due to a server error.";
             }

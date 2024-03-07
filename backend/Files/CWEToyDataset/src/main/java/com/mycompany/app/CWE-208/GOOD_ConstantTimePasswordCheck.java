@@ -14,9 +14,6 @@ public class GOOD_ConstantTimePasswordCheck {
     }
 
     public static void main(String[] args) {
-        long startTime = System.nanoTime();
         constantTimeCompare("inputPass", "secretPass");
-        long endTime = System.nanoTime();
-        System.out.println("Password comparison took: " + (endTime - startTime) + "ns");
     }
 }

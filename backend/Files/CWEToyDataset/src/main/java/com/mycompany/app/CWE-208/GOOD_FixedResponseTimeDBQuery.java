@@ -14,7 +14,7 @@ public class GOOD_FixedResponseTimeDBQuery {
         try {
             Thread.sleep(100); // Fixed delay to mask execution time variability
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            System.err.println("An error has occurred.");
         }
     }
 }

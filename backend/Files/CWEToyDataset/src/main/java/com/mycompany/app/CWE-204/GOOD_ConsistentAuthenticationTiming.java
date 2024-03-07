@@ -17,6 +17,5 @@ public class GOOD_ConsistentAuthenticationTiming {
         long startTime = System.currentTimeMillis();
         consistentAuthenticate("validUser", "wrongPassword");
         long endTime = System.currentTimeMillis();
-        System.out.println("Authentication took: " + (endTime - startTime) + "ms");
     }
 }

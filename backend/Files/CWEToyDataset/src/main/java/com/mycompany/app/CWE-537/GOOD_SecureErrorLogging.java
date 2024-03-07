@@ -10,7 +10,7 @@ public class GOOD_SecureErrorLogging {
             performSensitiveOperation();
         } catch (Exception e) {
             // Secure: Log the detailed error for internal diagnosis and provide a generic error message externally
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, "An error occurred.");
             System.err.println("An error occurred. Please contact technical support.");
         }
     }

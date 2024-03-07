@@ -21,7 +21,7 @@ public class GOOD_EncryptDataBeforeTransmission {
             // Now send the encryptedData instead of plain sensitiveData
             System.out.println("Encrypted Data: " + encryptedData);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("An error has occurred.");
         }
     }
 }
