@@ -16,7 +16,7 @@ class ShellErrorExposureConfig extends TaintTracking::Configuration {
   ShellErrorExposureConfig() { this = "ShellErrorExposureConfig" }
 
   override predicate isSource(DataFlow::Node source) {
-    exists(MethodCall ma |
+    exists(MethodAccess ma |
       // Captures getting the error stream from a process
       ma.getMethod().hasName("getErrorStream") and
       // Ensure the Process is the result of exec or start, indicating command execution
@@ -40,12 +40,8 @@ class ShellErrorExposureConfig extends TaintTracking::Configuration {
       println.getMethod().hasName("println") and
       println.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
       ((RefType)println.getQualifier().(VarAccess).getVariable().getType()).hasQualifiedName("java.io", "PrintStream") and
-      sink.asExpr() = println.getAnArgument())
-      and 
-    not exists(MethodAccess sanitizeErrorOutput |
-      sanitizeErrorOutput.getMethod().hasName("sanitizeErrorOutput") and
-      sink.asExpr() = sanitizeErrorOutput.getAnArgument()
-    ))
+      sink.asExpr() = println.getAnArgument()) 
+    )
     or
     exists(MethodAccess getMessage |
       getMessage.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
@@ -53,7 +49,21 @@ class ShellErrorExposureConfig extends TaintTracking::Configuration {
       sink.asExpr() = getMessage
     )
   }
+
+  override predicate isSanitizer(DataFlow::Node node) {
+    exists(MethodAccess ma |
+      // Use regex matching to check if the method name contains 'sanitize', case-insensitive
+      ma.getMethod().getName().toLowerCase().matches("%sanitize%") or
+      ma.getMethod().getName().toLowerCase().matches("%encrypt%")
+      and
+      node.asExpr() = ma.getAnArgument()
+    )
+  }  
 }
+
+
+
+
 
 from ShellErrorExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)

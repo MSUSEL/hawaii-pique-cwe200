@@ -40,7 +40,21 @@ export class CodeQlService {
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
 
         // this.debugChatGPT(sourcePath);
-        // this.runChatGPT(sourcePath);
+        // await this.runChatGPT(sourcePath);
+
+        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+
+        // Get Sensitive variables from gpt
+        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+
+        // Replace String with findings?
+        const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+
+        // Write response to file
+        await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
+        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+
+
 
         // Remove previous database if it exists
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database

@@ -32,37 +32,63 @@
    }
  
    override predicate isSink(DataFlow::Node sink) {
-     exists(MethodAccess ma |
-       ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintStream") and
-       ma.getMethod().hasName("println") and
-       sink.asExpr() = ma.getAnArgument()
-     )
+    exists(MethodAccess ma |
+      // Target method accesses that are calls to println on PrintStream
+      ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintStream") and
+      ma.getMethod().hasName("println") and
+      isWithinCatchBlock(ma) and
+      sink.asExpr() = ma.getAnArgument()
+    )
      or
      exists(MethodAccess ma |
        // Sinks using PrintWriter
+       ma.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
        ma.getMethod().hasName("println") and
        ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
+       isWithinCatchBlock(ma) and
        sink.asExpr() = ma.getAnArgument()
      )
      or
      exists(MethodAccess ma |
-       ma.getMethod().hasName("printStackTrace") and
-       sink.asExpr() = ma
-     )
+      ma.getMethod().hasName("printStackTrace") and
+      sink.asExpr() = ma // Directly mark the method call as the sink
+      )
      or
      exists(MethodAccess log |
        log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
        log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
+       isWithinCatchBlock(log) and
        sink.asExpr() = log.getAnArgument()
-     )
+    )
      or
      exists(MethodAccess log |
        log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
        log.getMethod().hasName(["error", "warn", "info", "debug"]) and
+       isWithinCatchBlock(log) and
        sink.asExpr() = log.getAnArgument()
      )
- 
    }
+
+   override predicate isSanitizer(DataFlow::Node node) {
+    exists(MethodAccess ma |
+      // Use regex matching to check if the method name contains 'sanitize', case-insensitive
+      (ma.getMethod().getName().toLowerCase().matches("%sanitize%") or
+      ma.getMethod().getName().toLowerCase().matches("%encrypt%") 
+      )
+      and
+      node.asExpr() = ma.getAnArgument()
+    )
+  }  
+
+  /**
+ * Checks if the given MethodAccess is within a CatchClause. This is important because we only want to consider error messages for this CWE.
+ */
+predicate isWithinCatchBlock(MethodAccess ma) {
+  exists(CatchClause cc |
+    ma.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock()
+  )
+}
+
    
  }
  
