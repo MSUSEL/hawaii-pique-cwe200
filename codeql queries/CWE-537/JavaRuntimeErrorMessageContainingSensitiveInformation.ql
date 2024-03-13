@@ -3,7 +3,7 @@
  * @description Logging or printing sensitive information or detailed error messages can lead to information disclosure.
  * @kind path-problem
  * @problem.severity warning
- * @id java/runtime-sensitive-info-exposure
+ * @id CWE-537
  * @tags security
  *       external/cwe/cwe-537
  * @cwe CWE-537

@@ -7,7 +7,7 @@ public class BAD_VerboseAuthenticationFailure {
 
         if (!authenticate(username, password)) {
             // Insecure: Revealing the reason for authentication failure might expose user existence or password correctness.
-            System.out.println("Authentication failed: User does not exist or password is incorrect.");
+            System.out.println("Authentication failed: " + username + " does not exist or password is incorrect.");
         }
     }
 

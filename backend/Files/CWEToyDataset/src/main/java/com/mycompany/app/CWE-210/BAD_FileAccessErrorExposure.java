@@ -12,7 +12,7 @@ public class BAD_FileAccessErrorExposure {
             // Insecure: Error message directly exposes attempted file path, revealing system structure or existence of specific files.
             System.err.println("File not found exception: " + e.getMessage());
         } catch (Exception e) {
-            // Generic catch block for other exceptions
+            // Insecure: Generic catch block for other exceptions
             System.err.println("An error occurred while reading the file: " + filePath);
             e.printStackTrace();
         }

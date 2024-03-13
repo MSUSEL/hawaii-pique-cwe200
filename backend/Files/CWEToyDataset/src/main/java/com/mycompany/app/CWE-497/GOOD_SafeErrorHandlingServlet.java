@@ -13,7 +13,7 @@ public class GOOD_SafeErrorHandlingServlet extends HttpServlet {
             processRequest(req);
         } catch (Exception e) {
             // Secure: Log the error internally and provide a generic response
-            logError("A processing error occurred, refer to application logs for details.", e);
+            logError("A processing error occurred, refer to application logs for details.");
             resp.setContentType("text/plain");
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.getWriter().write("Internal server error. Please contact support.");
@@ -24,7 +24,7 @@ public class GOOD_SafeErrorHandlingServlet extends HttpServlet {
         // Request processing logic
     }
 
-    private void logError(String message, Exception e) {
+    private void logError(String message) {
         // Internal logging mechanism
     }
 }

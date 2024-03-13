@@ -7,7 +7,6 @@ public class GOOD_GenericExternalErrorHandling {
             // Placeholder for database operation that might fail
         } catch (Exception e) {
             // Secure: Logging the error internally while displaying a generic message externally.
-            logError("Database operation failed", e);
             System.out.println("An internal error occurred. Please try again later.");
         }
     }

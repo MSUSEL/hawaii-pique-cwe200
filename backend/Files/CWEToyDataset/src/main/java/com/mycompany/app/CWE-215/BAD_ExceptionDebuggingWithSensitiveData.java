@@ -1,7 +1,9 @@
 public class BAD_ExceptionDebuggingWithSensitiveData {
     // This example demonstrates the risky practice of including sensitive data within exception handling for debugging purposes.
+    private static final boolean DEBUG = false; // Debugging flag, should be false in production
 
     public static void processPayment(String creditCardNumber, double amount) {
+
         try {
             // Simulate payment processing that might fail
             if (amount <= 0) {
@@ -11,7 +13,9 @@ public class BAD_ExceptionDebuggingWithSensitiveData {
             // Further processing logic...
         } catch (Exception e) {
             // Insecure: Logging sensitive information during exception handling
-            System.out.println("DEBUG: Failed to process payment with card " + creditCardNumber + ": " + e.getMessage());
+            if (DEBUG){
+                System.out.println("DEBUG: Failed to process payment with card " + creditCardNumber + ": " + e.getMessage());
+            }
         }
     }
 

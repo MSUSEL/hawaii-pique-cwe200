@@ -4,7 +4,7 @@ public class GOOD_EnhancedDebugWithoutSensitiveData {
     private static final boolean DEBUG_ENABLED = System.getenv("DEBUG_MODE").equals("true");
 
     public static void main(String[] args) {
-        String userId = "user123";
+        String userId = System.getProperty("username", "defaultUser");
         performAction(userId);
     }
 
