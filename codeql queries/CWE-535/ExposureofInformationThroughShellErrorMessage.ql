@@ -53,8 +53,8 @@ class ShellErrorExposureConfig extends TaintTracking::Configuration {
   override predicate isSanitizer(DataFlow::Node node) {
     exists(MethodAccess ma |
       // Use regex matching to check if the method name contains 'sanitize', case-insensitive
-      ma.getMethod().getName().toLowerCase().matches("%sanitize%") or
-      ma.getMethod().getName().toLowerCase().matches("%encrypt%")
+      (ma.getMethod().getName().toLowerCase().matches("%sanitize%") or
+      ma.getMethod().getName().toLowerCase().matches("%encrypt%"))
       and
       node.asExpr() = ma.getAnArgument()
     )
