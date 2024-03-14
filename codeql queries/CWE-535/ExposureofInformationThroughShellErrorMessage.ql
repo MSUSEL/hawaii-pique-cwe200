@@ -48,6 +48,18 @@ class ShellErrorExposureConfig extends TaintTracking::Configuration {
       getMessage.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
       sink.asExpr() = getMessage
     )
+    or
+    exists(MethodAccess log |
+      log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
+      log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
+      sink.asExpr() = log.getAnArgument()
+   )
+    or
+    exists(MethodAccess log |
+      log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
+      log.getMethod().hasName(["error", "warn", "info", "debug"]) and
+      sink.asExpr() = log.getAnArgument()
+    )
   }
 
   override predicate isSanitizer(DataFlow::Node node) {
@@ -63,4 +75,4 @@ class ShellErrorExposureConfig extends TaintTracking::Configuration {
 
 from ShellErrorExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "Potential CWE-535: Exposure of information through shell error message"
+select sink.getNode(), source, sink, "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information"

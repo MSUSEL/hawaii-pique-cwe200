@@ -13,7 +13,6 @@ import java
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.frameworks.Servlets
 import semmle.code.java.dataflow.FlowSources
-import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.security.SensitiveVariables
 
@@ -56,6 +55,18 @@ class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
       // Additional context checks might be added here to more directly associate with servlets
       sink.asExpr() = ma.getAnArgument()
     )
+    or
+    exists(MethodAccess log |
+      log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
+      log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
+      sink.asExpr() = log.getAnArgument()
+   )
+    or
+    exists(MethodAccess log |
+      log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
+      log.getMethod().hasName(["error", "warn", "info", "debug"]) and
+      sink.asExpr() = log.getAnArgument()
+    )
   }
 }
 
@@ -83,23 +94,27 @@ select sink, source, sink, "Potential CWE-536: Servlet Runtime Error Message Con
 //       ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "File") and
 //       source.asExpr() = ma
 //     )
+//     or
+//     exists(SensitiveVariableExpr sve |
+//       source.asExpr() = sve
+//     )
 //    }
 //   predicate isSink(DataFlow::Node sink) { 
 //     exists(MethodAccess ma |
-//       // Sinks to the servlet response
+//       // Ensuring write is called on servlet response
 //       ma.getMethod().hasName("write") and
 //       ma.getQualifier().(MethodAccess).getMethod().hasName("getWriter") and
 //       ma.getQualifier().(MethodAccess).getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
 //       sink.asExpr() = ma.getAnArgument()
 //     ) or
 //     exists(MethodAccess ma |
-//       // Sinks using PrintWriter
+//       // Inferring println on PrintWriter obtained from servlet response, assuming context
 //       ma.getMethod().hasName("println") and
 //       ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
+//       // Additional context checks might be added here to more directly associate with servlets
 //       sink.asExpr() = ma.getAnArgument()
-//     ) 
+//     )
 //   }
-
 // }
 
 
