@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+// This example simulates a program that responds differently if a user exists or not within a servlet. 
 @WebServlet("/login")
 public class BAD_LoginResponseDiscrepancy extends HttpServlet {
     @Override

@@ -2,6 +2,10 @@ public class GOOD_FixedResponseTimeDBQuery {
     // Mitigation: Introduce artificial delay or perform operations that ensure the query response time is consistent,
     // masking any timing discrepancies that could be exploited to infer information about the database contents.
 
+    public static void main(String[] args) {
+        fixedTimeQuery("SELECT * FROM users WHERE username = 'admin'");
+    }
+
     public static void fixedTimeQuery(String query) {
         long startTime = System.nanoTime();
         // Execute the query (omitted for brevity)

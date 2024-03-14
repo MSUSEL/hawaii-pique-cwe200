@@ -4,7 +4,7 @@ public class GOOD_FixedResponseTiming {
 
     public static boolean login(String username, String password) {
         long start = System.nanoTime();
-        boolean result = "admin".equals(username) && "password".equals(password);
+        boolean result = System.getenv("VALID_USERNAME").equals(username) && System.getenv("VALID_PASSWORD").equals(password);
         // Ensure the method takes a consistent amount of time to return, regardless of the outcome.
         try {
             long elapsed = System.nanoTime() - start;
@@ -19,6 +19,6 @@ public class GOOD_FixedResponseTiming {
     }
 
     public static void main(String[] args) {
-        System.out.println(login("admin", "wrongpassword")); // Timing analysis will not reveal if the username is correct.
+        System.out.println(login(System.getenv("UseRnAme"), System.getenv("PaSs"))); // Timing analysis will not reveal if the username is correct.
     }
 }

@@ -20,7 +20,7 @@ public class BAD_VariableResponseTimeDBQuery {
                 System.out.println("User not found, query took " + (endTime - startTime) + "ns");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("An error has occurred.");
         }
     }
 }

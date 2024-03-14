@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+// This example uses the same error message if the username or password is incorrect. 
 @WebServlet("/secure-login")
 public class GOOD_UniformLoginResponse extends HttpServlet {
     @Override

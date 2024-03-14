@@ -1,6 +1,8 @@
 import java.util.HashMap;
 import java.util.Map;
 
+// This example simulates a program that responds differently if a user exists or not using a hashmap. 
+
 public class BAD_ConditionalErrorHandling {
     private static Map<String, String> userData = new HashMap<>();
 

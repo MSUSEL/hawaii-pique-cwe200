@@ -14,6 +14,6 @@ public class GOOD_ConstantTimePasswordCheck {
     }
 
     public static void main(String[] args) {
-        constantTimeCompare("inputPass", "secretPass");
+        constantTimeCompare(System.getenv("user"), System.getenv("pass"));
     }
 }

@@ -4,7 +4,7 @@ public class GOOD_UniformErrorResponses {
 
     public static String authenticate(String username, String password) {
         // Regardless of the authentication outcome, return a generic error message.
-        if (!"admin".equals(username) || !"password".equals(password)) {
+        if (!System.getenv("VALID_USERNAME").equals(username) || !System.getenv("VALID_PASSWORD").equals(password)) {
             return "Authentication failed. Please try again."; // Uniform message hides the specific reason.
         }
         return "Login successful.";

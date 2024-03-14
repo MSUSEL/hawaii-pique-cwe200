@@ -5,8 +5,8 @@ public class BAD_LoggingSensitiveInformation {
     // Demonstrates an insecure practice of logging sensitive information.
 
     public static void main(String[] args) {
-        String username = "admin";
-        String password = "adminPass"; // Sensitive information
+        String username = System.getenv("username");
+        String password = System.getenv("password");
 
         // Insecure: Logging sensitive information that could be exposed in log files
         LOGGER.info("Attempting login with username: " + username + " and password: " + password);
