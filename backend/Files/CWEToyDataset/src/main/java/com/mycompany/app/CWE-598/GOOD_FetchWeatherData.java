@@ -14,7 +14,7 @@ public class GOOD_FetchWeatherData {
             System.out.println("Sending 'GET' request to URL : " + url);
             System.out.println("Response Code : " + connection.getResponseCode());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred while fetching weather data.");
         }
     }
     
