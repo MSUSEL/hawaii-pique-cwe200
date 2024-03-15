@@ -4,11 +4,11 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "User's login username"
+				"description": "The username for the system"
 			},
 			{
 				"name": "password",
-				"description": "User's login password"
+				"description": "The password for the system"
 			}
 		]
 	},
@@ -17,11 +17,11 @@
 		"value": [
 			{
 				"name": "userId",
-				"description": "User's unique identifier"
+				"description": "The user ID from the request parameter"
 			},
 			{
 				"name": "userDetails",
-				"description": "User's personal details"
+				"description": "The user's detailed information"
 			}
 		]
 	},
@@ -29,21 +29,46 @@
 		"key": "BAD_VerboseErrorMessages.java",
 		"value": [
 			{
-				"name": "Exception message",
-				"description": "Verbose error message revealing sensitive database connection details"
+				"name": "username",
+				"description": "The username for the system"
+			},
+			{
+				"name": "password",
+				"description": "The password for the system"
 			}
 		]
 	},
 	{
 		"key": "GOOD_GenericErrorMessages.java",
-		"value": []
+		"value": [
+			{
+				"name": "dbUrl",
+				"description": "The database URL from the properties file"
+			},
+			{
+				"name": "dbUser",
+				"description": "The database user from the properties file"
+			},
+			{
+				"name": "dbPassword",
+				"description": "The database password from the properties file"
+			}
+		]
 	},
 	{
 		"key": "GOOD_MinimalDataLogging.java",
 		"value": [
 			{
-				"name": "username",
-				"description": "User's login username"
+				"name": "DB_USER",
+				"description": "The database user from the environment variable"
+			},
+			{
+				"name": "DB_PASSWORD",
+				"description": "The database password from the environment variable"
+			},
+			{
+				"name": "DB_URL",
+				"description": "The database URL from the environment variable"
 			}
 		]
 	},
@@ -52,7 +77,15 @@
 		"value": [
 			{
 				"name": "creditCardNumber",
-				"description": "This variable holds the credit card number which is sensitive information."
+				"description": "Credit card number that is being sent over the network"
+			},
+			{
+				"name": "payload",
+				"description": "Payload containing sensitive credit card information"
+			},
+			{
+				"name": "prop",
+				"description": "Properties object that may contain sensitive configuration data"
 			}
 		]
 	},
@@ -61,15 +94,23 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "This variable holds the email username which is sensitive information."
+				"description": "Email username used for sending sensitive content"
 			},
 			{
 				"name": "password",
-				"description": "This variable holds the email password which is sensitive information."
+				"description": "Email password used for sending sensitive content"
+			},
+			{
+				"name": "smtpHost",
+				"description": "SMTP host used for sending sensitive content"
+			},
+			{
+				"name": "smtpPort",
+				"description": "SMTP port used for sending sensitive content"
 			},
 			{
 				"name": "sensitiveContent",
-				"description": "This variable holds the sensitive content that is being sent via email."
+				"description": "Sensitive content that is being sent via email"
 			}
 		]
 	},
@@ -78,11 +119,11 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "This variable holds the username which is sensitive information."
+				"description": "Username sent in GET request"
 			},
 			{
 				"name": "password",
-				"description": "This variable holds the password which is sensitive information."
+				"description": "Password sent in GET request"
 			}
 		]
 	},
@@ -91,11 +132,11 @@
 		"value": [
 			{
 				"name": "KEY",
-				"description": "This variable holds the encryption key which is sensitive information."
+				"description": "Key used for encryption"
 			},
 			{
-				"name": "data",
-				"description": "This variable holds the data to be encrypted which could be sensitive information."
+				"name": "APIKey",
+				"description": "API key that is being encrypted before transmission"
 			}
 		]
 	},
@@ -103,8 +144,8 @@
 		"key": "GOOD_UseHttpsForSensitiveData.java",
 		"value": [
 			{
-				"name": "data",
-				"description": "This variable holds the data to be transmitted securely which could be sensitive information."
+				"name": "sensitiveData",
+				"description": "Sensitive data that is being transmitted over HTTPS"
 			}
 		]
 	},
@@ -112,12 +153,16 @@
 		"key": "BAD_AuthenticationTiming.java",
 		"value": [
 			{
-				"name": "username",
-				"description": "This variable holds the username for authentication."
+				"name": "validUsername",
+				"description": "This variable holds the valid username for the system, which is sensitive information."
 			},
 			{
-				"name": "password",
-				"description": "This variable holds the password for authentication."
+				"name": "VALID_USER",
+				"description": "This environment variable holds the valid username for the system, which is sensitive information."
+			},
+			{
+				"name": "USER_PASSWORD",
+				"description": "This environment variable holds the valid password for the system, which is sensitive information."
 			}
 		]
 	},
@@ -127,10 +172,6 @@
 			{
 				"name": "userData",
 				"description": "This variable holds user data including sensitive information."
-			},
-			{
-				"name": "username",
-				"description": "This variable holds the username for fetching user data."
 			}
 		]
 	},
@@ -139,11 +180,11 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "This variable holds the username for login."
+				"description": "This variable holds the username provided by the user, which is sensitive information."
 			},
 			{
 				"name": "password",
-				"description": "This variable holds the password for login."
+				"description": "This variable holds the password provided by the user, which is sensitive information."
 			}
 		]
 	},
@@ -151,12 +192,20 @@
 		"key": "GOOD_ConsistentAuthenticationTiming.java",
 		"value": [
 			{
-				"name": "username",
-				"description": "This variable holds the username for authentication."
+				"name": "VALID_USERNAME",
+				"description": "This environment variable holds the valid username for the system, which is sensitive information."
 			},
 			{
-				"name": "password",
-				"description": "This variable holds the password for authentication."
+				"name": "VALID_PASSWORD",
+				"description": "This environment variable holds the valid password for the system, which is sensitive information."
+			},
+			{
+				"name": "ATTEMPT_USERNAME",
+				"description": "This environment variable holds the attempted username for the system, which is sensitive information."
+			},
+			{
+				"name": "ATTEMPT_PASSWORD",
+				"description": "This environment variable holds the attempted password for the system, which is sensitive information."
 			}
 		]
 	},
@@ -165,42 +214,32 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "This variable holds the username for login."
+				"description": "This variable holds the username provided by the user, which is sensitive information."
 			},
 			{
 				"name": "password",
-				"description": "This variable holds the password for login."
+				"description": "This variable holds the password provided by the user, which is sensitive information."
 			}
 		]
 	},
 	{
 		"key": "BAD_ConditionalContentDelivery.java",
-		"value": [
-			{
-				"name": "userRole",
-				"description": "This variable holds the role of the user. If exposed, it could allow unauthorized users to gain access to admin-specific content."
-			}
-		]
+		"value": []
 	},
 	{
 		"key": "BAD_DifferentialErrorHandling.java",
-		"value": [
-			{
-				"name": "data",
-				"description": "This variable holds the data to be processed. If exposed, it could reveal the data validation process and potentially lead to injection attacks."
-			}
-		]
+		"value": []
 	},
 	{
 		"key": "BAD_UserEnumerationLogin.java",
 		"value": [
 			{
-				"name": "username",
-				"description": "This variable holds the username for login. If exposed, it could lead to user enumeration attacks."
+				"name": "validUsername",
+				"description": "Environment variable for valid username"
 			},
 			{
-				"name": "password",
-				"description": "This variable holds the password for login. If exposed, it could lead to unauthorized access."
+				"name": "validPassword",
+				"description": "Environment variable for valid password"
 			}
 		]
 	},
@@ -208,12 +247,12 @@
 		"key": "GOOD_FixedResponseTiming.java",
 		"value": [
 			{
-				"name": "username",
-				"description": "This variable holds the username for login. If exposed, it could lead to user enumeration attacks."
+				"name": "VALID_USERNAME",
+				"description": "Environment variable for valid username"
 			},
 			{
-				"name": "password",
-				"description": "This variable holds the password for login. If exposed, it could lead to unauthorized access."
+				"name": "VALID_PASSWORD",
+				"description": "Environment variable for valid password"
 			}
 		]
 	},
@@ -221,12 +260,12 @@
 		"key": "GOOD_UniformErrorResponses.java",
 		"value": [
 			{
-				"name": "username",
-				"description": "This variable holds the username for login. If exposed, it could lead to user enumeration attacks."
+				"name": "VALID_USERNAME",
+				"description": "Environment variable for valid username"
 			},
 			{
-				"name": "password",
-				"description": "This variable holds the password for login. If exposed, it could lead to unauthorized access."
+				"name": "VALID_PASSWORD",
+				"description": "Environment variable for valid password"
 			}
 		]
 	},
@@ -235,7 +274,7 @@
 		"value": [
 			{
 				"name": "SECRET_TOKEN",
-				"description": "A secret token used for user verification."
+				"description": "This variable holds a secret token which could be used for authentication or encryption purposes."
 			}
 		]
 	},
@@ -244,11 +283,11 @@
 		"value": [
 			{
 				"name": "inputPassword",
-				"description": "The input password from the user."
+				"description": "This variable holds the input password which could be used for authentication purposes."
 			},
 			{
 				"name": "actualPassword",
-				"description": "The actual password stored in the system."
+				"description": "This variable holds the actual password which could be used for authentication purposes."
 			}
 		]
 	},
@@ -257,11 +296,11 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "The username used in the database query."
+				"description": "This variable holds the username which could be used for authentication purposes."
 			},
 			{
 				"name": "connection",
-				"description": "The database connection object containing the database URL, username, and password."
+				"description": "This variable holds the database connection details which could be used to access the database."
 			}
 		]
 	},
@@ -270,11 +309,11 @@
 		"value": [
 			{
 				"name": "inputPassword",
-				"description": "The input password from the user."
+				"description": "This variable holds the input password which could be used for authentication purposes."
 			},
 			{
 				"name": "actualPassword",
-				"description": "The actual password stored in the system."
+				"description": "This variable holds the actual password which could be used for authentication purposes."
 			}
 		]
 	},
@@ -283,7 +322,7 @@
 		"value": [
 			{
 				"name": "query",
-				"description": "The database query string."
+				"description": "This variable holds the database query which could be used to access sensitive data from the database."
 			}
 		]
 	},
@@ -292,7 +331,7 @@
 		"value": [
 			{
 				"name": "query",
-				"description": "This variable contains the SQL query which is being executed on the database. Exposure of this variable can lead to SQL injection attacks."
+				"description": "This variable contains the SQL query which might include sensitive table or column names."
 			}
 		]
 	},
@@ -301,7 +340,7 @@
 		"value": [
 			{
 				"name": "filePath",
-				"description": "This variable contains the path to a sensitive file. Exposure of this variable can lead to unauthorized file access."
+				"description": "This variable contains the path to a sensitive file."
 			}
 		]
 	},
@@ -310,11 +349,11 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "This variable contains the username for authentication. Exposure of this variable can lead to unauthorized access."
+				"description": "This variable contains the username for authentication."
 			},
 			{
 				"name": "password",
-				"description": "This variable contains the password for authentication. Exposure of this variable can lead to unauthorized access."
+				"description": "This variable contains the password for authentication."
 			}
 		]
 	},
@@ -323,11 +362,11 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "This variable contains the username for authentication. Exposure of this variable can lead to unauthorized access."
+				"description": "This variable contains the username for authentication."
 			},
 			{
 				"name": "password",
-				"description": "This variable contains the password for authentication. Exposure of this variable can lead to unauthorized access."
+				"description": "This variable contains the password for authentication."
 			}
 		]
 	},
@@ -336,7 +375,7 @@
 		"value": [
 			{
 				"name": "query",
-				"description": "This variable contains the SQL query which is being executed on the database. Exposure of this variable can lead to SQL injection attacks."
+				"description": "This variable contains the SQL query which might include sensitive table or column names."
 			}
 		]
 	},
@@ -363,7 +402,7 @@
 		"value": [
 			{
 				"name": "connection",
-				"description": "Database connection object containing sensitive database credentials"
+				"description": "Database connection object containing credentials"
 			}
 		]
 	},
@@ -385,7 +424,7 @@
 			},
 			{
 				"name": "uniqueErrorCode",
-				"description": "Unique error code generated for internal logging"
+				"description": "Unique error code generated during error logging"
 			}
 		]
 	},
@@ -394,24 +433,33 @@
 		"value": [
 			{
 				"name": "conn",
-				"description": "This variable is used to establish a connection to the database. It contains sensitive information such as the database URL, username, and password."
+				"description": "This variable holds the database connection details."
+			},
+			{
+				"name": "username",
+				"description": "This variable holds the username for the database connection."
 			}
 		]
 	},
 	{
 		"key": "BAD_VerboseLibraryExceptionHandling.java",
-		"value": []
+		"value": [
+			{
+				"name": "FileUtils.readFileToString",
+				"description": "This method reads a file to a string, potentially exposing sensitive information in the file."
+			}
+		]
 	},
 	{
 		"key": "BAD_WebServiceExceptionExposure.java",
 		"value": [
 			{
-				"name": "url",
-				"description": "This variable contains the URL of an external service. If exposed, it could lead to unauthorized access to the service."
+				"name": "endpointUrl",
+				"description": "This variable holds the URL for the external service, which could be sensitive."
 			},
 			{
 				"name": "conn",
-				"description": "This variable is used to open a connection to the URL. If exposed, it could lead to unauthorized access to the service."
+				"description": "This variable holds the HTTP connection details."
 			}
 		]
 	},
@@ -421,7 +469,12 @@
 	},
 	{
 		"key": "GOOD_SecureLibraryExceptionHandling.java",
-		"value": []
+		"value": [
+			{
+				"name": "FileUtils.readFileToString",
+				"description": "This method reads a file to a string, potentially exposing sensitive information in the file."
+			}
+		]
 	},
 	{
 		"key": "BAD_DataAggregationServiceExposure.java",
@@ -437,7 +490,7 @@
 		"value": [
 			{
 				"name": "connection",
-				"description": "This variable contains the database connection details, including the database URL, username, and password."
+				"description": "This variable contains the database connection details including the URL, username, and password."
 			}
 		]
 	},
@@ -446,11 +499,11 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "This variable contains the username used for authentication."
+				"description": "This variable contains the username for user authentication."
 			},
 			{
 				"name": "password",
-				"description": "This variable contains the password used for authentication."
+				"description": "This variable contains the password for user authentication."
 			}
 		]
 	},
@@ -468,7 +521,7 @@
 		"value": [
 			{
 				"name": "userInput",
-				"description": "This variable contains the user's input, which could potentially be sensitive."
+				"description": "This variable contains sensitive user input that needs to be sanitized before logging."
 			}
 		]
 	},
@@ -486,7 +539,7 @@
 		"value": [
 			{
 				"name": "API_KEY",
-				"description": "API key stored in environment variable"
+				"description": "API key used in environment variable"
 			}
 		]
 	},
@@ -494,8 +547,8 @@
 		"key": "BAD_ProcessInvocationWithArgs.java",
 		"value": [
 			{
-				"name": "command",
-				"description": "Command line argument containing sensitive password"
+				"name": "pass",
+				"description": "Password used in command-line arguments"
 			}
 		]
 	},
@@ -504,7 +557,7 @@
 		"value": [
 			{
 				"name": "secretPassword",
-				"description": "Password fetched from secure storage"
+				"description": "Password fetched from secret manager"
 			}
 		]
 	},
@@ -552,11 +605,7 @@
 		"value": [
 			{
 				"name": "userId",
-				"description": "User's unique identifier"
-			},
-			{
-				"name": "DEBUG_ENABLED",
-				"description": "System debug mode status"
+				"description": "User's unique identification"
 			}
 		]
 	},
@@ -570,10 +619,6 @@
 			{
 				"name": "password",
 				"description": "User's login password"
-			},
-			{
-				"name": "DEBUG_ENABLED",
-				"description": "System debug mode status"
 			}
 		]
 	},
@@ -582,11 +627,11 @@
 		"value": [
 			{
 				"name": "req",
-				"description": "HttpServletRequest object that could contain sensitive user information"
+				"description": "HttpServletRequest object that could contain sensitive user data"
 			},
 			{
 				"name": "resp",
-				"description": "HttpServletResponse object that could contain sensitive server information"
+				"description": "HttpServletResponse object that could contain sensitive server data"
 			}
 		]
 	},
@@ -595,7 +640,7 @@
 		"value": [
 			{
 				"name": "DEBUG_MODE",
-				"description": "Flag that controls debug mode, which could expose sensitive information if set to true"
+				"description": "Debug mode flag that could expose sensitive debug information if set to true"
 			},
 			{
 				"name": "logger",
@@ -607,12 +652,8 @@
 		"key": "BAD_SystemPropertiesLog.java",
 		"value": [
 			{
-				"name": "prop",
-				"description": "System properties that could contain sensitive system configuration information"
-			},
-			{
 				"name": "logger",
-				"description": "Logger object that could log sensitive system properties"
+				"description": "Logger object that logs system properties which could contain sensitive information"
 			}
 		]
 	},
@@ -621,7 +662,7 @@
 		"value": [
 			{
 				"name": "sensitiveInfo",
-				"description": "String that contains sensitive information"
+				"description": "String variable that contains sensitive information"
 			},
 			{
 				"name": "logger",
@@ -634,11 +675,11 @@
 		"value": [
 			{
 				"name": "req",
-				"description": "HttpServletRequest object that could contain sensitive user information"
+				"description": "HttpServletRequest object that could contain sensitive user data"
 			},
 			{
 				"name": "resp",
-				"description": "HttpServletResponse object that could contain sensitive server information"
+				"description": "HttpServletResponse object that could contain sensitive server data"
 			}
 		]
 	},
@@ -695,7 +736,7 @@
 		"value": [
 			{
 				"name": "apiKey",
-				"description": "Sensitive API key fetched from environment variables"
+				"description": "Sensitive information fetched from environment variables"
 			}
 		]
 	},
@@ -704,7 +745,7 @@
 		"value": [
 			{
 				"name": "dbUrl",
-				"description": "Database URL"
+				"description": "Database connection URL"
 			},
 			{
 				"name": "user",
@@ -748,14 +789,23 @@
 	},
 	{
 		"key": "GOOD_FilterSensitiveInfoFromLogs.java",
-		"value": []
+		"value": [
+			{
+				"name": "username",
+				"description": "User's username"
+			},
+			{
+				"name": "password",
+				"description": "User's password"
+			}
+		]
 	},
 	{
 		"key": "GOOD_SecureLoggingPractices.java",
 		"value": [
 			{
 				"name": "operationDetails",
-				"description": "Details of sensitive operations"
+				"description": "Details of the operation being performed"
 			}
 		]
 	},
@@ -773,7 +823,7 @@
 		"value": [
 			{
 				"name": "command",
-				"description": "Command containing sensitive password"
+				"description": "Shell command containing sensitive password"
 			}
 		]
 	},
@@ -782,7 +832,7 @@
 		"value": [
 			{
 				"name": "command",
-				"description": "Command containing path to a sensitive file"
+				"description": "Shell command exposing sensitive file path"
 			}
 		]
 	},
@@ -791,11 +841,7 @@
 		"value": [
 			{
 				"name": "command",
-				"description": "Command to execute a script"
-			},
-			{
-				"name": "errorOutput",
-				"description": "Output that may contain sensitive error information"
+				"description": "Shell command potentially exposing sensitive information"
 			}
 		]
 	},
@@ -804,7 +850,7 @@
 		"value": [
 			{
 				"name": "command",
-				"description": "Command containing path to a sensitive file"
+				"description": "Shell command potentially exposing sensitive file path"
 			}
 		]
 	},
@@ -813,7 +859,7 @@
 		"value": [
 			{
 				"name": "conn",
-				"description": "This variable is used to establish a connection to the database. It contains sensitive information such as the database URL, username, and password."
+				"description": "This variable holds the database connection object, which includes the database URL, username, and password."
 			}
 		]
 	},
@@ -822,11 +868,11 @@
 		"value": [
 			{
 				"name": "url",
-				"description": "This variable contains the URL of an external service. If exposed, it could allow unauthorized access to the service."
+				"description": "This variable holds the URL of an external service, which could be sensitive if it includes any API keys or other credentials."
 			},
 			{
 				"name": "connection",
-				"description": "This variable is used to open a connection to the external service. If exposed, it could allow unauthorized access to the service."
+				"description": "This variable holds the HttpsURLConnection object, which could contain sensitive information about the connection to the external service."
 			}
 		]
 	},
@@ -835,11 +881,11 @@
 		"value": [
 			{
 				"name": "filename",
-				"description": "This variable contains the name of a file to be read. If exposed, it could lead to unauthorized file access."
+				"description": "This variable holds the name of a file to be read, which could be sensitive if it includes a path traversal attack."
 			},
 			{
 				"name": "file",
-				"description": "This variable represents a file object. If exposed, it could lead to unauthorized file access."
+				"description": "This variable holds the File object, which includes the full path to the file to be read. This could be sensitive if it reveals the structure of the server's file system."
 			}
 		]
 	},
@@ -852,11 +898,11 @@
 		"value": [
 			{
 				"name": "filename",
-				"description": "This variable contains the name of a file to be accessed. If exposed, it could lead to unauthorized file access."
+				"description": "This variable holds the name of a file to be accessed, which could be sensitive if it includes a path traversal attack."
 			},
 			{
 				"name": "file",
-				"description": "This variable represents a file object. If exposed, it could lead to unauthorized file access."
+				"description": "This variable holds the File object, which includes the full path to the file to be accessed. This could be sensitive if it reveals the structure of the server's file system."
 			}
 		]
 	},
@@ -908,11 +954,28 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "Username for user login"
+				"description": "Username for login"
 			},
 			{
 				"name": "password",
-				"description": "Password for user login"
+				"description": "Password for login"
+			}
+		]
+	},
+	{
+		"key": "BAD_LogPaymentTransactions.java",
+		"value": [
+			{
+				"name": "TRANSACTION_LOG_FILE",
+				"description": "Path to the transaction log file"
+			},
+			{
+				"name": "fullName",
+				"description": "Full name of the user"
+			},
+			{
+				"name": "creditCardNumber",
+				"description": "Credit card number of the user"
 			}
 		]
 	},
@@ -921,7 +984,7 @@
 		"value": [
 			{
 				"name": "dbUrl",
-				"description": "Database URL"
+				"description": "Database connection URL"
 			},
 			{
 				"name": "dbUser",
@@ -934,20 +997,11 @@
 		]
 	},
 	{
-		"key": "BAD_WriteEncryptedData.java",
-		"value": [
-			{
-				"name": "encryptedData",
-				"description": "Encrypted sensitive data"
-			}
-		]
-	},
-	{
 		"key": "GOOD_SecureConfigStorage.java",
 		"value": [
 			{
 				"name": "dbUrl",
-				"description": "Database URL"
+				"description": "Database connection URL"
 			}
 		]
 	},
@@ -956,7 +1010,7 @@
 		"value": [
 			{
 				"name": "username",
-				"description": "Username for user login"
+				"description": "Username for login"
 			}
 		]
 	},
@@ -995,7 +1049,7 @@
 			},
 			{
 				"name": "encryptionKey",
-				"description": "Encryption key for data"
+				"description": "Encryption key for data encryption"
 			}
 		]
 	},
@@ -1003,15 +1057,15 @@
 		"key": "GOOD_ExternalizeSensitiveConfig.java",
 		"value": [
 			{
-				"name": "db.url",
+				"name": "databaseUrl",
 				"description": "Database connection URL"
 			},
 			{
-				"name": "db.user",
+				"name": "databaseUser",
 				"description": "Database username"
 			},
 			{
-				"name": "db.password",
+				"name": "databasePassword",
 				"description": "Database password"
 			}
 		]
@@ -1020,16 +1074,69 @@
 		"key": "GOOD_UseEnvVarsForCredentials.java",
 		"value": [
 			{
-				"name": "DB_URL",
+				"name": "databaseUrl",
 				"description": "Database connection URL"
 			},
 			{
-				"name": "DB_USER",
+				"name": "databaseUser",
 				"description": "Database username"
 			},
 			{
-				"name": "DB_PASSWORD",
+				"name": "databasePassword",
 				"description": "Database password"
+			}
+		]
+	},
+	{
+		"key": "BAD_DocumentDirectoryListingServlet.java",
+		"value": [
+			{
+				"name": "documentPath",
+				"description": "This variable holds the path to the directory where documents are uploaded. If exposed, it could allow unauthorized access to the uploaded documents."
+			}
+		]
+	},
+	{
+		"key": "BAD_InsecureDirectoryListingServlet.java",
+		"value": [
+			{
+				"name": "path",
+				"description": "This variable holds the path to the directory where files are uploaded. If exposed, it could allow unauthorized access to the uploaded files."
+			}
+		]
+	},
+	{
+		"key": "BAD_LogDirectoryPaths.java",
+		"value": [
+			{
+				"name": "directoryPath",
+				"description": "This variable holds the path to a directory. If exposed, it could allow unauthorized access to the files in the directory."
+			}
+		]
+	},
+	{
+		"key": "GOOD_DocumentAccessServlet.java",
+		"value": [
+			{
+				"name": "requestedFileName",
+				"description": "This variable holds the name of a requested file. If exposed, it could allow unauthorized access to the file."
+			},
+			{
+				"name": "fileDirectory",
+				"description": "This variable holds the path to the directory where documents are uploaded. If exposed, it could allow unauthorized access to the uploaded documents."
+			},
+			{
+				"name": "filePath",
+				"description": "This variable holds the path to a specific file. If exposed, it could allow unauthorized access to the file."
+			}
+		]
+	},
+	{
+		"key": "GOOD_SecureBackendFileProcessingServlet.java",
+		"value": [
+			{
+				"name": "tempFilesPath",
+				"description": "This variable holds the path to the directory where temporary files are stored. If exposed, it could allow unauthorized access to the temporary files."
 			}
 		]
 	},
@@ -1042,7 +1149,7 @@
 		"value": [
 			{
 				"name": "e",
-				"description": "Exception variable that might contain sensitive error details"
+				"description": "Exception variable that can expose sensitive error details"
 			}
 		]
 	},
@@ -1051,11 +1158,11 @@
 		"value": [
 			{
 				"name": "connection",
-				"description": "Database connection object that might contain sensitive connection details"
+				"description": "Database connection variable that can expose sensitive database details"
 			},
 			{
 				"name": "e",
-				"description": "SQLException variable that might contain sensitive error details"
+				"description": "SQLException variable that can expose sensitive error details"
 			}
 		]
 	},
@@ -1064,7 +1171,7 @@
 		"value": [
 			{
 				"name": "e",
-				"description": "Exception variable that might contain sensitive error details"
+				"description": "Exception variable that can expose sensitive error details"
 			}
 		]
 	},
@@ -1073,9 +1180,68 @@
 		"value": [
 			{
 				"name": "e",
-				"description": "Exception variable that might contain sensitive error details"
+				"description": "Exception variable that can expose sensitive error details"
 			}
 		]
+	},
+	{
+		"key": "BAD_CreditCardSubmissionGET.java",
+		"value": [
+			{
+				"name": "cardNumber",
+				"description": "Credit card number used for payment submission"
+			},
+			{
+				"name": "expiryDate",
+				"description": "Expiry date of the credit card used for payment submission"
+			},
+			{
+				"name": "cvv",
+				"description": "CVV of the credit card used for payment submission"
+			}
+		]
+	},
+	{
+		"key": "BAD_HealthInfoSubmissionGET.java",
+		"value": [
+			{
+				"name": "patientId",
+				"description": "Patient's unique identification number"
+			},
+			{
+				"name": "symptoms",
+				"description": "Patient's health symptoms"
+			},
+			{
+				"name": "doctorId",
+				"description": "Doctor's unique identification number"
+			}
+		]
+	},
+	{
+		"key": "BAD_PasswordChangeGET.java",
+		"value": [
+			{
+				"name": "username",
+				"description": "User's unique username"
+			},
+			{
+				"name": "oldPassword",
+				"description": "User's old password"
+			},
+			{
+				"name": "newPassword",
+				"description": "User's new password"
+			}
+		]
+	},
+	{
+		"key": "GOOD_FetchPublicData.java",
+		"value": []
+	},
+	{
+		"key": "GOOD_FetchWeatherData.java",
+		"value": []
 	},
 	{
 		"key": "BAD_ApiKeyInComments.java",
@@ -1098,7 +1264,7 @@
 		"value": [
 			{
 				"name": "encryptionKey",
-				"description": "This variable holds the encryption key fetched from the environment variables. If exposed, it could lead to unauthorized decryption of user data."
+				"description": "This variable is used to store the encryption key fetched from the environment variables. If exposed, it could lead to unauthorized decryption of user data."
 			}
 		]
 	}
