@@ -6,6 +6,7 @@
  * @id CWE-204
  * @tags security
  *       external/cwe/cwe-204
+ * @cwe CWE-204
  */
 
  import java

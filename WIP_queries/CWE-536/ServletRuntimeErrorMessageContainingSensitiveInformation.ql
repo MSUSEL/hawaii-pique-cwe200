@@ -47,26 +47,27 @@ class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
       ma.getQualifier().(MethodAccess).getMethod().hasName("getWriter") and
       ma.getQualifier().(MethodAccess).getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
       sink.asExpr() = ma.getAnArgument()
-    ) or
-    exists(MethodAccess ma |
-      // Inferring println on PrintWriter obtained from servlet response, assuming context
-      ma.getMethod().hasName("println") and
-      ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
-      // Additional context checks might be added here to more directly associate with servlets
-      sink.asExpr() = ma.getAnArgument()
-    )
-    or
-    exists(MethodAccess log |
-      log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
-      log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
-      sink.asExpr() = log.getAnArgument()
-   )
-    or
-    exists(MethodAccess log |
-      log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
-      log.getMethod().hasName(["error", "warn", "info", "debug"]) and
-      sink.asExpr() = log.getAnArgument()
-    )
+    ) 
+    // or
+  //   exists(MethodAccess ma |
+  //     // Inferring println on PrintWriter obtained from servlet response, assuming context
+  //     ma.getMethod().hasName("println") and
+  //     ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
+  //     // Additional context checks might be added here to more directly associate with servlets
+  //     sink.asExpr() = ma.getAnArgument()
+  //   )
+  //   or
+  //   exists(MethodAccess log |
+  //     log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
+  //     log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
+  //     sink.asExpr() = log.getAnArgument()
+  //  )
+  //   or
+  //   exists(MethodAccess log |
+  //     log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
+  //     log.getMethod().hasName(["error", "warn", "info", "debug"]) and
+  //     sink.asExpr() = log.getAnArgument()
+  //   )
   }
 }
 
