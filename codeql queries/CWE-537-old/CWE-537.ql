@@ -1,3 +1,16 @@
+/**
+ * @name Potential CWE-537: Java runtime error message containing sensitive information
+ * @description Identifies potential exposure of sensitive information through error messages in catch blocks, which might be printed or logged, potentially leading to information disclosure.
+ * @kind problem
+ * @problem.severity warning
+ * @id java/runtime-sensitive-info-exposure
+ * @tags security
+ *       external/cwe/cwe-537
+ * @precision medium
+ * 
+ * @qlpack ql/java-all
+ */
+
 import java
 
 from CatchClause cc, MethodAccess ma, MethodAccess printlnCall, ReturnStmt returnStmt, 

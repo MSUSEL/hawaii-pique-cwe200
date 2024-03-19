@@ -1,3 +1,16 @@
+/**
+ * @name Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information
+ * @description Identifies instances in servlets where sensitive error information might be exposed to the client, potentially leading to information disclosure.
+ * @kind problem
+ * @problem.severity warning
+ * @id java/servlet-sensitive-error-exposure
+ * @tags security
+ *       external/cwe/cwe-536
+ * @precision medium
+ * 
+ * @qlpack ql/java-all
+ */
+
 import java
 
 // Find servlet methods that potentially expose sensitive error information

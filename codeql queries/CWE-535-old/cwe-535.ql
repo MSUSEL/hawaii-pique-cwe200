@@ -1,3 +1,16 @@
+/**
+ * @name Potential CWE-535: Exposure of information through shell error message
+ * @description Identifies potential exposure of sensitive information through error messages resulting from executing shell commands and capturing their output or errors in Java applications.
+ * @kind problem
+ * @problem.severity warning
+ * @id java/potential-cwe-535-shell-error-exposure
+ * @tags security
+ *       external/cwe/cwe-535
+ * @precision medium
+ * 
+ * @qlpack ql/java-all
+ */
+
 import java
 
 from MethodAccess execCall, CatchClause cc, Stmt stmt, ReturnStmt returnStmt, Expr expr

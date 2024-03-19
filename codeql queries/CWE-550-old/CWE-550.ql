@@ -1,3 +1,16 @@
+/**
+ * @name Potential CWE-550: Server Generated Error Message Containing Sensitive Information
+ * @description Identifies potential exposure of sensitive information through server-generated error messages that might be printed or logged within catch blocks during network operations, potentially leading to information disclosure.
+ * @kind problem
+ * @problem.severity warning
+ * @id java/server-generated-sensitive-info-exposure
+ * @tags security
+ *       external/cwe/cwe-550
+ * @precision medium
+ * 
+ * @qlpack ql/java-all
+ */
+
 import java
 
 from
