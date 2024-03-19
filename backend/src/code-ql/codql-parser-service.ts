@@ -35,14 +35,15 @@ export class CodeQlParserService {
                     region: file.locations[0]?.physicalLocation.region,
                 }));
 
-            rulesList.push({
-                name: rule.shortDescription.text,
-                type: rule.defaultConfiguration.level,
-                message: rule.fullDescription
-                    ? rule.fullDescription.text
-                    : rule.shortDescription.text,
-                files: files,
-            });
+                var object={
+                    name: rule.shortDescription.text,
+                    type: rule.defaultConfiguration.level,
+                    message: rule.fullDescription
+                        ? rule.fullDescription.text
+                        : rule.shortDescription.text,
+                    files: files,
+                }
+                if(object.files.length) rulesList.push(object);
         }
         return rulesList;
     }
