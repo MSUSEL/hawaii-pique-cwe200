@@ -36,317 +36,13 @@
           }
         } ],
         "rules" : [ {
-          "id" : "CWE-208",
-          "name" : "CWE-208",
+          "id" : "CWE-535",
+          "name" : "CWE-535",
           "shortDescription" : {
-            "text" : "Local information disclosure in a temporary directory"
+            "text" : "Exposure of information through shell error message"
           },
           "fullDescription" : {
-            "text" : "Writing information without explicit permissions to a shared temporary directory may disclose it to other users."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-200", "external/cwe/cwe-732" ],
-            "cwe" : "CWE-200",
-            "description" : "Writing information without explicit permissions to a shared temporary directory may disclose it to other users.",
-            "id" : "CWE-208",
-            "kind" : "path-problem",
-            "name" : "Local information disclosure in a temporary directory",
-            "precision" : "medium",
-            "problem.severity" : "warning",
-            "security-severity" : "6.5"
-          }
-        }, {
-          "id" : "java/sensitive-data-transmission",
-          "name" : "java/sensitive-data-transmission",
-          "shortDescription" : {
-            "text" : "Information exposure through transmitted data"
-          },
-          "fullDescription" : {
-            "text" : "Transmitting sensitive information to the user is a potential security risk."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "error"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-201" ],
-            "description" : "Transmitting sensitive information to the user is a potential security risk.",
-            "id" : "java/sensitive-data-transmission",
-            "kind" : "problem",
-            "name" : "Information exposure through transmitted data",
-            "precision" : "high",
-            "problem.severity" : "error",
-            "security-severity" : "4.3"
-          }
-        }, {
-          "id" : "CWE-204",
-          "name" : "CWE-204",
-          "shortDescription" : {
-            "text" : "Observable discrepancies in sensitive error messages"
-          },
-          "fullDescription" : {
-            "text" : "Detects if statements within sensitive contexts that produce different error messages based on conditional branches, which could lead to observable discrepancies."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-204" ],
-            "cwe" : "CWE-204",
-            "description" : "Detects if statements within sensitive contexts that produce different error messages based on conditional branches, which could lead to observable discrepancies.",
-            "id" : "CWE-204",
-            "kind" : "problem",
-            "name" : "Observable discrepancies in sensitive error messages",
-            "problem.severity" : "warning"
-          }
-        }, {
-          "id" : "CWE-208",
-          "name" : "CWE-208",
-          "shortDescription" : {
-            "text" : "Possible timing attack against signature validation"
-          },
-          "fullDescription" : {
-            "text" : "When checking a signature over a message, a constant-time algorithm should be used. Otherwise, there is a risk of a timing attack that allows an attacker to forge a valid signature for an arbitrary message. For a successful attack, the attacker has to be able to send to the validation procedure both the message and the signature."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "experimental", "external/cwe/cwe-208" ],
-            "cwe" : "CWE-208",
-            "description" : "When checking a signature over a message, a constant-time algorithm should be used.\n              Otherwise, there is a risk of a timing attack that allows an attacker\n              to forge a valid signature for an arbitrary message. For a successful attack,\n              the attacker has to be able to send to the validation procedure both the message and the signature.",
-            "id" : "CWE-208",
-            "kind" : "path-problem",
-            "name" : "Possible timing attack against signature validation",
-            "precision" : "medium",
-            "problem.severity" : "warning"
-          }
-        }, {
-          "id" : "CWE-208",
-          "name" : "CWE-208",
-          "shortDescription" : {
-            "text" : "Timing attack against header value"
-          },
-          "fullDescription" : {
-            "text" : "Use of a non-constant-time verification routine to check the value of an HTTP header, possibly allowing a timing attack to infer the header's expected value."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "error"
-          },
-          "properties" : {
-            "tags" : [ "security", "experimental", "external/cwe/cwe-208" ],
-            "cwe" : "CWE-208",
-            "description" : "Use of a non-constant-time verification routine to check the value of an HTTP header,\n              possibly allowing a timing attack to infer the header's expected value.",
-            "id" : "CWE-208",
-            "kind" : "path-problem",
-            "name" : "Timing attack against header value",
-            "precision" : "high",
-            "problem.severity" : "error"
-          }
-        }, {
-          "id" : "CWE-208",
-          "name" : "CWE-208",
-          "shortDescription" : {
-            "text" : "Timing attack against signature validation"
-          },
-          "fullDescription" : {
-            "text" : "When checking a signature over a message, a constant-time algorithm should be used. Otherwise, an attacker may be able to forge a valid signature for an arbitrary message by running a timing attack if they can send to the validation procedure both the message and the signature. A successful attack can result in authentication bypass."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "error"
-          },
-          "properties" : {
-            "tags" : [ "security", "experimental", "external/cwe/cwe-208" ],
-            "cwe" : "CWE-208",
-            "description" : "When checking a signature over a message, a constant-time algorithm should be used.\n              Otherwise, an attacker may be able to forge a valid signature for an arbitrary message\n              by running a timing attack if they can send to the validation procedure\n              both the message and the signature.\n              A successful attack can result in authentication bypass.",
-            "id" : "CWE-208",
-            "kind" : "path-problem",
-            "name" : "Timing attack against signature validation",
-            "precision" : "high",
-            "problem.severity" : "error"
-          }
-        }, {
-          "id" : "CWE-209",
-          "name" : "CWE-209",
-          "shortDescription" : {
-            "text" : "Information exposure through a stack trace"
-          },
-          "fullDescription" : {
-            "text" : "Information from a stack trace propagates to an external user. Stack traces can unintentionally reveal implementation details that are useful to an attacker for developing a subsequent exploit."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "error"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-209", "external/cwe/cwe-497" ],
-            "cwe" : "CWE-209",
-            "description" : "Information from a stack trace propagates to an external user.\n              Stack traces can unintentionally reveal implementation details\n              that are useful to an attacker for developing a subsequent exploit.",
-            "id" : "CWE-209",
-            "kind" : "problem",
-            "name" : "Information exposure through a stack trace",
-            "precision" : "high",
-            "problem.severity" : "error",
-            "security-severity" : "5.4"
-          }
-        }, {
-          "id" : "CWE-215",
-          "name" : "CWE-215",
-          "shortDescription" : {
-            "text" : "Android debuggable attribute enabled"
-          },
-          "fullDescription" : {
-            "text" : "An enabled debugger can allow for entry points in the application or reveal sensitive information."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-489" ],
-            "cwe" : "CWE-215",
-            "description" : "An enabled debugger can allow for entry points in the application or reveal sensitive information.",
-            "id" : "CWE-215",
-            "kind" : "problem",
-            "name" : "Android debuggable attribute enabled",
-            "precision" : "very-high",
-            "problem.severity" : "warning",
-            "security-severity" : "7.2"
-          }
-        }, {
-          "id" : "CWE-215",
-          "name" : "CWE-215",
-          "shortDescription" : {
-            "text" : "Android Webview debugging enabled"
-          },
-          "fullDescription" : {
-            "text" : "Enabling Webview debugging in production builds can expose entry points or leak sensitive information."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-489" ],
-            "cwe" : "CWE-215",
-            "description" : "Enabling Webview debugging in production builds can expose entry points or leak sensitive information.",
-            "id" : "CWE-215",
-            "kind" : "path-problem",
-            "name" : "Android Webview debugging enabled",
-            "precision" : "high",
-            "problem.severity" : "warning",
-            "security-severity" : "7.2"
-          }
-        }, {
-          "id" : "CWE-531",
-          "name" : "CWE-531",
-          "shortDescription" : {
-            "text" : "CWE-531: Information Exposure Through Variable in Java Test Code"
-          },
-          "fullDescription" : {
-            "text" : "Detects potential information exposure through string literals in Java test code."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "cwe-531", "java" ],
-            "cwe" : "CWE-531",
-            "description" : "Detects potential information exposure through string literals in Java test code.",
-            "id" : "CWE-531",
-            "kind" : "problem",
-            "name" : "CWE-531: Information Exposure Through Variable in Java Test Code",
-            "precision" : "medium",
-            "problem.severity" : "medium"
-          }
-        }, {
-          "id" : "CWE-531",
-          "name" : "CWE-531",
-          "shortDescription" : {
-            "text" : "CWE-531: Information Exposure Through Sensitive Variables in Java Test Code"
-          },
-          "fullDescription" : {
-            "text" : "Detects potential information exposure through sensitive variables in Java test code."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "cwe-531", "java" ],
-            "cwe" : "CWE-531",
-            "description" : "Detects potential information exposure through sensitive variables in Java test code.",
-            "id" : "CWE-531",
-            "kind" : "problem",
-            "name" : "CWE-531: Information Exposure Through Sensitive Variables in Java Test Code",
-            "precision" : "medium",
-            "problem.severity" : "medium"
-          }
-        }, {
-          "id" : "CWE-532",
-          "name" : "CWE-532",
-          "shortDescription" : {
-            "text" : "Log-Senistive-Information"
-          },
-          "fullDescription" : {
-            "text" : "Writing sensitive information to log files can allow that information to be leaked to an attacker more easily."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-532" ],
-            "cwe" : "CWE-532",
-            "description" : "Writing sensitive information to log files can allow that\n              information to be leaked to an attacker more easily.",
-            "id" : "CWE-532",
-            "kind" : "path-problem",
-            "name" : "Log-Senistive-Information",
-            "precision" : "medium",
-            "problem.severity" : "warning",
-            "security-severity" : "7.5"
-          }
-        }, {
-          "id" : "CWE-538",
-          "name" : "CWE-538",
-          "shortDescription" : {
-            "text" : "Insertion of Sensitive Information into Externally-Accessible File"
-          },
-          "fullDescription" : {
-            "text" : "Writing sensitive information to log files can allow that information to be leaked to an attacker more easily."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-538" ],
-            "cwe" : "CWE-538",
-            "description" : "Writing sensitive information to log files can allow that\n              information to be leaked to an attacker more easily.",
-            "id" : "CWE-538",
-            "kind" : "path-problem",
-            "name" : "Insertion of Sensitive Information into Externally-Accessible File",
-            "precision" : "medium",
-            "problem.severity" : "warning",
-            "security-severity" : "7.5"
-          }
-        }, {
-          "id" : "java/potential-cwe-535-shell-error-exposure",
-          "name" : "java/potential-cwe-535-shell-error-exposure",
-          "shortDescription" : {
-            "text" : "Potential CWE-535: Exposure of information through shell error message"
-          },
-          "fullDescription" : {
-            "text" : "Identifies potential exposure of sensitive information through error messages resulting from executing shell commands and capturing their output or errors in Java applications."
+            "text" : "Exposing error messages from shell commands can lead to information disclosure."
           },
           "defaultConfiguration" : {
             "enabled" : true,
@@ -354,151 +50,11 @@
           },
           "properties" : {
             "tags" : [ "security", "external/cwe/cwe-535" ],
-            "description" : "Identifies potential exposure of sensitive information through error messages resulting from executing shell commands and capturing their output or errors in Java applications.",
-            "id" : "java/potential-cwe-535-shell-error-exposure",
-            "kind" : "problem",
-            "name" : "Potential CWE-535: Exposure of information through shell error message",
-            "precision" : "medium",
-            "problem.severity" : "warning",
-            "qlpack" : "ql/java-all"
-          }
-        }, {
-          "id" : "java/servlet-sensitive-error-exposure",
-          "name" : "java/servlet-sensitive-error-exposure",
-          "shortDescription" : {
-            "text" : "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information"
-          },
-          "fullDescription" : {
-            "text" : "Identifies instances in servlets where sensitive error information might be exposed to the client, potentially leading to information disclosure."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-536" ],
-            "description" : "Identifies instances in servlets where sensitive error information might be exposed to the client, potentially leading to information disclosure.",
-            "id" : "java/servlet-sensitive-error-exposure",
-            "kind" : "problem",
-            "name" : "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information",
-            "precision" : "medium",
-            "problem.severity" : "warning",
-            "qlpack" : "ql/java-all"
-          }
-        }, {
-          "id" : "java/runtime-sensitive-info-exposure",
-          "name" : "java/runtime-sensitive-info-exposure",
-          "shortDescription" : {
-            "text" : "Potential CWE-537: Java runtime error message containing sensitive information"
-          },
-          "fullDescription" : {
-            "text" : "Identifies potential exposure of sensitive information through error messages in catch blocks, which might be printed or logged, potentially leading to information disclosure."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-537" ],
-            "description" : "Identifies potential exposure of sensitive information through error messages in catch blocks, which might be printed or logged, potentially leading to information disclosure.",
-            "id" : "java/runtime-sensitive-info-exposure",
-            "kind" : "problem",
-            "name" : "Potential CWE-537: Java runtime error message containing sensitive information",
-            "precision" : "medium",
-            "problem.severity" : "warning",
-            "qlpack" : "ql/java-all"
-          }
-        }, {
-          "id" : "CWE-540",
-          "name" : "CWE-540",
-          "shortDescription" : {
-            "text" : "Hard-coded sensitive field"
-          },
-          "fullDescription" : {
-            "text" : "Hard-coding a sensitive string may compromise security."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "error"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-540", "external/cwe/cwe-798" ],
-            "cwe" : "CWE-540",
-            "description" : "Hard-coding a sensitive string may compromise security.",
-            "id" : "CWE-540",
-            "kind" : "problem",
-            "name" : "Hard-coded sensitive field",
-            "precision" : "low",
-            "problem.severity" : "error",
-            "security-severity" : "9.8"
-          }
-        }, {
-          "id" : "CWE-548",
-          "name" : "CWE-548",
-          "shortDescription" : {
-            "text" : "Directories and files exposure"
-          },
-          "fullDescription" : {
-            "text" : "A directory listing provides an attacker with the complete index of all the resources located inside of the complete web directory, which could yield files containing sensitive information like source code and credentials to the attacker."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "experimental", "external/cwe/cwe-548" ],
-            "cwe" : "CWE-548",
-            "description" : "A directory listing provides an attacker with the complete\n              index of all the resources located inside of the complete web\n              directory, which could yield files containing sensitive\n              information like source code and credentials to the attacker.",
-            "id" : "CWE-548",
-            "kind" : "problem",
-            "name" : "Directories and files exposure",
-            "precision" : "medium",
-            "problem.severity" : "warning"
-          }
-        }, {
-          "id" : "java/server-generated-sensitive-info-exposure",
-          "name" : "java/server-generated-sensitive-info-exposure",
-          "shortDescription" : {
-            "text" : "Potential CWE-550: Server Generated Error Message Containing Sensitive Information"
-          },
-          "fullDescription" : {
-            "text" : "Identifies potential exposure of sensitive information through server-generated error messages that might be printed or logged within catch blocks during network operations, potentially leading to information disclosure."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "external/cwe/cwe-550" ],
-            "description" : "Identifies potential exposure of sensitive information through server-generated error messages that might be printed or logged within catch blocks during network operations, potentially leading to information disclosure.",
-            "id" : "java/server-generated-sensitive-info-exposure",
-            "kind" : "problem",
-            "name" : "Potential CWE-550: Server Generated Error Message Containing Sensitive Information",
-            "precision" : "medium",
-            "problem.severity" : "warning",
-            "qlpack" : "ql/java-all"
-          }
-        }, {
-          "id" : "CWE-598",
-          "name" : "CWE-598",
-          "shortDescription" : {
-            "text" : "Sensitive GET Query"
-          },
-          "fullDescription" : {
-            "text" : "Use of GET request method with sensitive query strings."
-          },
-          "defaultConfiguration" : {
-            "enabled" : true,
-            "level" : "warning"
-          },
-          "properties" : {
-            "tags" : [ "security", "experimental", "external/cwe/cwe-598" ],
-            "cwe" : "CWE-598",
-            "description" : "Use of GET request method with sensitive query strings.",
-            "id" : "CWE-598",
+            "cwe" : "CWE-535",
+            "description" : "Exposing error messages from shell commands can lead to information disclosure.",
+            "id" : "CWE-535",
             "kind" : "path-problem",
-            "name" : "Sensitive GET Query",
-            "precision" : "medium",
+            "name" : "Exposure of information through shell error message",
             "problem.severity" : "warning"
           }
         } ]
@@ -524,329 +80,7 @@
         "locations" : [ {
           "physicalLocation" : {
             "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/CWE535ExposureofInformationThroughShellErrorMessage.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 6
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/CWE536ServletRuntimeErrorMessageContainingSensitiveInformation.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 1
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/CWE537JavaRuntimeErrorMessageContainingSensitiveInformation.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 7
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/CWE550ServerGeneratedErrorMessageContainingSensitiveInformation.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 8
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/test/java/com/example/AppTest.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 10
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/MathOperations.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 11
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/App.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 12
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/UserAuthentication.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 2
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveGetQuery.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 9
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 0
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/UnsafeLoginSystem.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 13
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/SQLInjectionExample.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 14
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 5
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/ExecuteSqlCommand.java",
-              "uriBaseId" : "%SRCROOT%",
-              "index" : 15
-            }
-          }
-        } ],
-        "message" : {
-          "text" : ""
-        },
-        "level" : "none",
-        "descriptor" : {
-          "id" : "java/baseline/expected-extracted-files",
-          "index" : 0
-        },
-        "properties" : {
-          "formattedMessage" : {
-            "text" : ""
-          }
-        }
-      }, {
-        "locations" : [ {
-          "physicalLocation" : {
-            "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/StackTraceExposure.java",
+              "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_ExposedExceptionDetailsAPI.java",
               "uriBaseId" : "%SRCROOT%",
               "index" : 3
             }
@@ -869,7 +103,283 @@
         "locations" : [ {
           "physicalLocation" : {
             "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/XSS.java",
+              "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_VerboseLibraryExceptionHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 4
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_ConditionalContentDelivery.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 5
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_VariableResponseTimeDBQuery.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 6
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_SendSensitiveDataViaEmail.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 7
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-531/GOOD_EnvironmentVariablesForSensitiveDataTest.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 8
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_EarlyReturnPasswordCheck.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 9
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-214/GOOD_SecureStorageForSensitiveInfo.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 10
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_ConditionalErrorHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 11
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-210/GOOD_SecureLoggingWithCodes.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 12
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-532/GOOD_SecureLoggingPractices.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 13
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_AuthenticationTiming.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 14
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_FileReadSensitiveError.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 15
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_HardcodedSecretInConfig.java",
               "uriBaseId" : "%SRCROOT%",
               "index" : 16
             }
@@ -892,9 +402,2309 @@
         "locations" : [ {
           "physicalLocation" : {
             "artifactLocation" : {
-              "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
+              "uri" : "src/main/java/com/mycompany/app/CWE-200/GOOD_GenericErrorMessages.java",
               "uriBaseId" : "%SRCROOT%",
-              "index" : 4
+              "index" : 17
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_EnvVarExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 18
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_VerboseSQLException.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 19
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-598/BAD_HealthInfoSubmissionGET.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 20
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-213/GOOD_ExplicitUserConsent.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 21
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_NetworkConfigError.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 22
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-536/GOOD_SecureFileAccessServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 23
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_ConditionalProcessingTiming.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 24
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-548/BAD_DocumentDirectoryListingServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 25
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_WebServiceExceptionExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 26
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-200/GOOD_MinimalDataLogging.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 27
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_VerboseDatabaseErrorMessage.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 28
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-598/GOOD_FetchWeatherData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 29
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_DatabaseSchemaExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 30
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_ConfigurationPathException.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 31
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_EncryptionKeyInComments.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 32
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-538/GOOD_SecureConfigStorage.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 33
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_ProcessInvocationWithArgs.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 34
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-598/BAD_PasswordChangeGET.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 35
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_ExternalServiceErrorServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 36
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-550/GOOD_SecureErrorLogging2.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 37
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-537/GOOD_SecureErrorLogging.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 38
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-205/GOOD_UniformErrorResponses.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 39
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-215/GOOD_SecureDebuggingPractices.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 40
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_EmbeddedSensitiveDataInTests.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 41
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-548/GOOD_SecureBackendFileProcessingServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 42
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-205/GOOD_FixedResponseTiming.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 43
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-598/BAD_CreditCardSubmissionGET.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 44
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-535/GOOD_EncapsulatedSecurityContext.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 45
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_InsecureDebugMode.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 46
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-536/GOOD_GenericErrorWithLoggingServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 47
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_HardcodedCredentials.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 48
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-201/GOOD_EncryptDataBeforeTransmission.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 49
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_DetailedDatabaseErrorExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 50
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_MisconfiguredPermissions.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 0
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-201/GOOD_UseHttpsForSensitiveData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 51
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_SystemPropertiesLog.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 52
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_LoggingSensitiveInformation.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 53
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-548/BAD_InsecureDirectoryListingServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 54
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_ExcessiveDatabaseExceptionDetails.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 55
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-214/GOOD_SecureSubprocessCommunication.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 56
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_LogSensitiveInfoBeforeSending.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 57
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_ExceptionDebuggingWithSensitiveData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 58
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_DataAggregationServiceExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 59
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_DebugLoggingSensitiveInfo.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 60
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-210/GOOD_SanitizeErrorOutput.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 61
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-615/GOOD_SecureCommentPractices.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 62
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-540/GOOD_ExternalizeSensitiveConfig.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 63
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-550/GOOD_GenericErrorHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 64
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_FileReadErrorServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 65
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_DetailedRuntimeExceptionServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 66
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_LoggingCredentials.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 67
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_UserDetailsExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 68
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_VerboseAuthenticationFailure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 69
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_ApiKeyExposureTestConfig.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 70
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-615/GOOD_SecureKeyManagement.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 71
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_ShellCommandExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 2
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_LogPaymentTransactions.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 72
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_CommandLineToolSensitiveData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 73
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_SendSensitiveInfoInGetRequest.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 74
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-204/GOOD_UniformLoginResponse.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 75
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-537/GOOD_ApiErrorResponseHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 76
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_DifferentialErrorHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 77
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_HardcodedCredentialsTest.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 78
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-211/GOOD_SecureLibraryExceptionHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 79
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_DbConnectionErrorServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 80
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-548/BAD_LogDirectoryPaths.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 81
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-209/GOOD_GenericDatabaseErrorHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 82
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-497/GOOD_RedactedLogging.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 83
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_SensitivePathDisclosureInErrors.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 84
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-204/GOOD_ConsistentAuthenticationTiming.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 85
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-531/GOOD_ExternalizedSensitiveInfoConfigTest.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 86
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_ApiKeyEmbedded.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 87
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-211/GOOD_GenericExternalErrorHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 88
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-208/GOOD_FixedResponseTimeDBQuery.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 89
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_DatabaseConnectionError.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 90
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogUserCredentials.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 91
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-497/GOOD_SafeErrorHandlingServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 92
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-535/GOOD_SecureShellCommandHandling.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 93
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-532/GOOD_FilterSensitiveInfoFromLogs.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 94
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_StoreDbConnectionInfo.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 95
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_LoggingSensitiveUserInfo.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 96
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-209/GOOD_GeneralizedAuthenticationFeedback.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 97
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-540/GOOD_UseEnvVarsForCredentials.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 98
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-538/GOOD_SecureLogging.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 99
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_UserEnumerationLogin.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 100
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-213/GOOD_SanitizeLogs.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 101
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-548/GOOD_DocumentAccessServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 102
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogPaymentInformation.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 103
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_LoginResponseDiscrepancy.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 104
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_VerboseErrorMessages.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 105
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_FileAccessErrorExposure.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 106
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-598/GOOD_FetchPublicData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 107
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_ApiKeyInComments.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 108
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_HardcodedCredentialsInComments.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 109
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_DebugOutputWithCredentials.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 110
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_SensitiveInfoExposureViaShellError.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 1
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-208/GOOD_ConstantTimePasswordCheck.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 111
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogDbConnectionDetails.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 112
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_DetailedErrorServlet.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 113
+            }
+          }
+        } ],
+        "message" : {
+          "text" : ""
+        },
+        "level" : "none",
+        "descriptor" : {
+          "id" : "java/baseline/expected-extracted-files",
+          "index" : 0
+        },
+        "properties" : {
+          "formattedMessage" : {
+            "text" : ""
+          }
+        }
+      }, {
+        "locations" : [ {
+          "physicalLocation" : {
+            "artifactLocation" : {
+              "uri" : "src/main/java/com/mycompany/app/CWE-215/GOOD_EnhancedDebugWithoutSensitiveData.java",
+              "uriBaseId" : "%SRCROOT%",
+              "index" : 114
             }
           }
         } ],
@@ -913,10 +2723,10 @@
         }
       }, {
         "message" : {
-          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\kyler\\OneDrive\\Documents\\Work\\cwe200\\codeql\\codeql-custom-queries-java\\CWE-535-old\\cwe-535.ql.\r\nError was: Cannot process query metadata for a query without the '@kind' metadata property. To learn more, see https://codeql.github.com/docs/writing-codeql-queries/metadata-for-codeql-queries/ [NO_KIND_SPECIFIED]"
+          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\kyler\\OneDrive\\Documents\\Work\\cwe200\\codeql\\codeql-custom-queries-java\\CWE-215\\DebugCheck.ql.\r\nError was: Expected result pattern(s) are not present for path-problem query: Expected at least two result patterns. These should include at least an 'edges' result set (see https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/). [INVALID_RESULT_PATTERNS]"
         },
         "level" : "error",
-        "timeUtc" : "2024-03-19T01:42:08.259+00:00",
+        "timeUtc" : "2024-03-22T00:47:25.407+00:00",
         "descriptor" : {
           "id" : "cli/database/analyze",
           "index" : 1
@@ -931,28 +2741,10 @@
         }
       }, {
         "message" : {
-          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\kyler\\OneDrive\\Documents\\Work\\cwe200\\codeql\\codeql-custom-queries-java\\CWE-535-old\\cwe-535.ql.\r\nError was: Cannot process query metadata for a query without the '@kind' metadata property. To learn more, see https://codeql.github.com/docs/writing-codeql-queries/metadata-for-codeql-queries/ [NO_KIND_SPECIFIED]"
+          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\kyler\\OneDrive\\Documents\\Work\\cwe200\\codeql\\codeql-custom-queries-java\\CWE-215\\DebugCheck.ql.\r\nError was: Expected result pattern(s) are not present for path-problem query: Expected at least two result patterns. These should include at least an 'edges' result set (see https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/). [INVALID_RESULT_PATTERNS]"
         },
         "level" : "error",
-        "timeUtc" : "2024-03-19T01:50:03.510+00:00",
-        "descriptor" : {
-          "id" : "cli/database/analyze",
-          "index" : 1
-        },
-        "properties" : {
-          "attributes" : {
-            "exitCode" : 2
-          },
-          "visibility" : {
-            "telemetry" : false
-          }
-        }
-      }, {
-        "message" : {
-          "text" : "A fatal error occurred: Could not process query metadata for C:\\Users\\kyler\\OneDrive\\Documents\\Work\\cwe200\\codeql\\codeql-custom-queries-java\\CWE-535-old\\cwe-535.ql.\r\nError was: Cannot process query metadata for a query without the '@kind' metadata property. To learn more, see https://codeql.github.com/docs/writing-codeql-queries/metadata-for-codeql-queries/ [NO_KIND_SPECIFIED]"
-        },
-        "level" : "error",
-        "timeUtc" : "2024-03-19T01:50:53.142+00:00",
+        "timeUtc" : "2024-03-22T00:49:48.391+00:00",
         "descriptor" : {
           "id" : "cli/database/analyze",
           "index" : 1
@@ -970,190 +2762,722 @@
     } ],
     "artifacts" : [ {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_MisconfiguredPermissions.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 0
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/CWE536ServletRuntimeErrorMessageContainingSensitiveInformation.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_SensitiveInfoExposureViaShellError.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 1
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/UserAuthentication.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_ShellCommandExposure.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 2
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/StackTraceExposure.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_ExposedExceptionDetailsAPI.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 3
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_VerboseLibraryExceptionHandling.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 4
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_ConditionalContentDelivery.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 5
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/CWE535ExposureofInformationThroughShellErrorMessage.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_VariableResponseTimeDBQuery.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 6
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/CWE537JavaRuntimeErrorMessageContainingSensitiveInformation.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_SendSensitiveDataViaEmail.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 7
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/CWE550ServerGeneratedErrorMessageContainingSensitiveInformation.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-531/GOOD_EnvironmentVariablesForSensitiveDataTest.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 8
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveGetQuery.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_EarlyReturnPasswordCheck.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 9
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/test/java/com/example/AppTest.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-214/GOOD_SecureStorageForSensitiveInfo.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 10
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/MathOperations.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_ConditionalErrorHandling.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 11
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/App.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-210/GOOD_SecureLoggingWithCodes.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 12
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/UnsafeLoginSystem.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-532/GOOD_SecureLoggingPractices.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 13
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/SQLInjectionExample.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_AuthenticationTiming.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 14
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/ExecuteSqlCommand.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_FileReadSensitiveError.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 15
       }
     }, {
       "location" : {
-        "uri" : "UpdatedDemo/src/main/java/com/example/XSS.java",
+        "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_HardcodedSecretInConfig.java",
         "uriBaseId" : "%SRCROOT%",
         "index" : 16
       }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-200/GOOD_GenericErrorMessages.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 17
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_EnvVarExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 18
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_VerboseSQLException.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 19
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-598/BAD_HealthInfoSubmissionGET.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 20
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-213/GOOD_ExplicitUserConsent.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 21
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_NetworkConfigError.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 22
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-536/GOOD_SecureFileAccessServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 23
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-208/BAD_ConditionalProcessingTiming.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 24
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-548/BAD_DocumentDirectoryListingServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 25
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_WebServiceExceptionExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 26
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-200/GOOD_MinimalDataLogging.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 27
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_VerboseDatabaseErrorMessage.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 28
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-598/GOOD_FetchWeatherData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 29
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_DatabaseSchemaExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 30
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_ConfigurationPathException.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 31
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_EncryptionKeyInComments.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 32
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-538/GOOD_SecureConfigStorage.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 33
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_ProcessInvocationWithArgs.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 34
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-598/BAD_PasswordChangeGET.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 35
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_ExternalServiceErrorServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 36
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-550/GOOD_SecureErrorLogging2.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 37
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-537/GOOD_SecureErrorLogging.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 38
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-205/GOOD_UniformErrorResponses.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 39
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-215/GOOD_SecureDebuggingPractices.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 40
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_EmbeddedSensitiveDataInTests.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 41
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-548/GOOD_SecureBackendFileProcessingServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 42
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-205/GOOD_FixedResponseTiming.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 43
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-598/BAD_CreditCardSubmissionGET.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 44
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-535/GOOD_EncapsulatedSecurityContext.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 45
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_InsecureDebugMode.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 46
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-536/GOOD_GenericErrorWithLoggingServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 47
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_HardcodedCredentials.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 48
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-201/GOOD_EncryptDataBeforeTransmission.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 49
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_DetailedDatabaseErrorExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 50
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-201/GOOD_UseHttpsForSensitiveData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 51
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_SystemPropertiesLog.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 52
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_LoggingSensitiveInformation.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 53
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-548/BAD_InsecureDirectoryListingServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 54
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-211/BAD_ExcessiveDatabaseExceptionDetails.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 55
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-214/GOOD_SecureSubprocessCommunication.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 56
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_LogSensitiveInfoBeforeSending.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 57
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_ExceptionDebuggingWithSensitiveData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 58
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_DataAggregationServiceExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 59
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_DebugLoggingSensitiveInfo.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 60
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-210/GOOD_SanitizeErrorOutput.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 61
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-615/GOOD_SecureCommentPractices.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 62
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-540/GOOD_ExternalizeSensitiveConfig.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 63
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-550/GOOD_GenericErrorHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 64
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_FileReadErrorServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 65
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-550/BAD_DetailedRuntimeExceptionServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 66
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_LoggingCredentials.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 67
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_UserDetailsExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 68
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_VerboseAuthenticationFailure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 69
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_ApiKeyExposureTestConfig.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 70
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-615/GOOD_SecureKeyManagement.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 71
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_LogPaymentTransactions.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 72
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-214/BAD_CommandLineToolSensitiveData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 73
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-201/BAD_SendSensitiveInfoInGetRequest.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 74
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-204/GOOD_UniformLoginResponse.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 75
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-537/GOOD_ApiErrorResponseHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 76
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_DifferentialErrorHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 77
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-531/BAD_HardcodedCredentialsTest.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 78
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-211/GOOD_SecureLibraryExceptionHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 79
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-536/BAD_DbConnectionErrorServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 80
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-548/BAD_LogDirectoryPaths.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 81
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-209/GOOD_GenericDatabaseErrorHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 82
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-497/GOOD_RedactedLogging.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 83
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-209/BAD_SensitivePathDisclosureInErrors.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 84
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-204/GOOD_ConsistentAuthenticationTiming.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 85
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-531/GOOD_ExternalizedSensitiveInfoConfigTest.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 86
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-540/BAD_ApiKeyEmbedded.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 87
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-211/GOOD_GenericExternalErrorHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 88
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-208/GOOD_FixedResponseTimeDBQuery.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 89
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-537/BAD_DatabaseConnectionError.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 90
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogUserCredentials.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 91
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-497/GOOD_SafeErrorHandlingServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 92
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-535/GOOD_SecureShellCommandHandling.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 93
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-532/GOOD_FilterSensitiveInfoFromLogs.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 94
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-538/BAD_StoreDbConnectionInfo.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 95
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-213/BAD_LoggingSensitiveUserInfo.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 96
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-209/GOOD_GeneralizedAuthenticationFeedback.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 97
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-540/GOOD_UseEnvVarsForCredentials.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 98
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-538/GOOD_SecureLogging.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 99
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-205/BAD_UserEnumerationLogin.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 100
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-213/GOOD_SanitizeLogs.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 101
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-548/GOOD_DocumentAccessServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 102
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogPaymentInformation.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 103
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-204/BAD_LoginResponseDiscrepancy.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 104
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-200/BAD_VerboseErrorMessages.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 105
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-210/BAD_FileAccessErrorExposure.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 106
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-598/GOOD_FetchPublicData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 107
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_ApiKeyInComments.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 108
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-615/BAD_HardcodedCredentialsInComments.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 109
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-215/BAD_DebugOutputWithCredentials.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 110
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-208/GOOD_ConstantTimePasswordCheck.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 111
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-532/BAD_LogDbConnectionDetails.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 112
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-497/BAD_DetailedErrorServlet.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 113
+      }
+    }, {
+      "location" : {
+        "uri" : "src/main/java/com/mycompany/app/CWE-215/GOOD_EnhancedDebugWithoutSensitiveData.java",
+        "uriBaseId" : "%SRCROOT%",
+        "index" : 114
+      }
     } ],
     "results" : [ {
-      "ruleId" : "CWE-208",
+      "ruleId" : "CWE-535",
       "ruleIndex" : 0,
       "rule" : {
-        "id" : "CWE-208",
+        "id" : "CWE-535",
         "index" : 0
       },
       "message" : {
-        "text" : "Local information disclosure vulnerability due to use of file readable by other local users."
+        "text" : "Potential CWE-535: Exposure of Information Through Shell Error Message"
       },
       "locations" : [ {
         "physicalLocation" : {
           "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
+            "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_MisconfiguredPermissions.java",
             "uriBaseId" : "%SRCROOT%",
             "index" : 0
           },
           "region" : {
-            "startLine" : 8,
-            "startColumn" : 22,
-            "endColumn" : 59
+            "startLine" : 13,
+            "startColumn" : 32,
+            "endColumn" : 102
           }
         }
       } ],
       "partialFingerprints" : {
-        "primaryLocationLineHash" : "cf23acf8f3d59b18:1",
-        "primaryLocationStartColumnFingerprint" : "13"
-      }
-    }, {
-      "ruleId" : "CWE-208",
-      "ruleIndex" : 0,
-      "rule" : {
-        "id" : "CWE-208",
-        "index" : 0
-      },
-      "message" : {
-        "text" : "Local information disclosure vulnerability due to use of file readable by other local users."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 0
-          },
-          "region" : {
-            "startLine" : 10,
-            "startColumn" : 22,
-            "endColumn" : 65
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "2f53ac21a2d38f4:1",
-        "primaryLocationStartColumnFingerprint" : "13"
-      }
-    }, {
-      "ruleId" : "CWE-208",
-      "ruleIndex" : 0,
-      "rule" : {
-        "id" : "CWE-208",
-        "index" : 0
-      },
-      "message" : {
-        "text" : "Local information disclosure vulnerability from [system temp directory](1) due to use of file or directory readable by other local users."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 0
-          },
-          "region" : {
-            "startLine" : 12,
-            "startColumn" : 39,
-            "endColumn" : 75
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "62b5cf60459d63a3:1",
-        "primaryLocationStartColumnFingerprint" : "30"
+        "primaryLocationLineHash" : "a6b4c7fc19cb8338:1",
+        "primaryLocationStartColumnFingerprint" : "19"
       },
       "codeFlows" : [ {
         "threadFlows" : [ {
@@ -1161,1470 +3485,245 @@
             "location" : {
               "physicalLocation" : {
                 "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 0
-                },
-                "region" : {
-                  "startLine" : 12,
-                  "startColumn" : 39,
-                  "endColumn" : 75
-                }
-              },
-              "message" : {
-                "text" : "getProperty(...) : String"
-              }
-            }
-          }, {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 0
-                },
-                "region" : {
-                  "startLine" : 12,
-                  "startColumn" : 30,
-                  "endColumn" : 76
-                }
-              },
-              "message" : {
-                "text" : "new File(...) : File"
-              }
-            }
-          }, {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_MisconfiguredPermissions.java",
                   "uriBaseId" : "%SRCROOT%",
                   "index" : 0
                 },
                 "region" : {
                   "startLine" : 13,
-                  "startColumn" : 60,
-                  "endColumn" : 73
+                  "startColumn" : 62,
+                  "endColumn" : 86
                 }
               },
               "message" : {
-                "text" : "systemTempDir"
-              }
-            }
-          } ]
-        } ]
-      } ],
-      "relatedLocations" : [ {
-        "id" : 1,
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 0
-          },
-          "region" : {
-            "startLine" : 12,
-            "startColumn" : 39,
-            "endColumn" : 75
-          }
-        },
-        "message" : {
-          "text" : "system temp directory"
-        }
-      } ]
-    }, {
-      "ruleId" : "CWE-208",
-      "ruleIndex" : 0,
-      "rule" : {
-        "id" : "CWE-208",
-        "index" : 0
-      },
-      "message" : {
-        "text" : "Local information disclosure vulnerability due to use of directory readable by other local users."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 0
-          },
-          "region" : {
-            "startLine" : 15,
-            "startColumn" : 24,
-            "endColumn" : 66
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "41517d9dad95aee0:1",
-        "primaryLocationStartColumnFingerprint" : "15"
-      }
-    }, {
-      "ruleId" : "CWE-208",
-      "ruleIndex" : 0,
-      "rule" : {
-        "id" : "CWE-208",
-        "index" : 0
-      },
-      "message" : {
-        "text" : "Local information disclosure vulnerability from [system temp directory](1) due to use of file or directory readable by other local users."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 0
-          },
-          "region" : {
-            "startLine" : 23,
-            "startColumn" : 41,
-            "endColumn" : 77
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "fc1b5462114856fa:1",
-        "primaryLocationStartColumnFingerprint" : "32"
-      },
-      "codeFlows" : [ {
-        "threadFlows" : [ {
-          "locations" : [ {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 0
-                },
-                "region" : {
-                  "startLine" : 23,
-                  "startColumn" : 41,
-                  "endColumn" : 77
-                }
-              },
-              "message" : {
-                "text" : "getProperty(...) : String"
+                "text" : "getErrorStream(...) : InputStream"
               }
             }
           }, {
             "location" : {
               "physicalLocation" : {
                 "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_MisconfiguredPermissions.java",
                   "uriBaseId" : "%SRCROOT%",
                   "index" : 0
                 },
                 "region" : {
-                  "startLine" : 23,
+                  "startLine" : 13,
+                  "startColumn" : 62,
+                  "endColumn" : 101
+                }
+              },
+              "message" : {
+                "text" : "readAllBytes(...) : byte[]"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_MisconfiguredPermissions.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 13,
+                  "startColumn" : 51,
+                  "endColumn" : 102
+                }
+              },
+              "message" : {
+                "text" : "new String(...) : String"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_MisconfiguredPermissions.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 0
+                },
+                "region" : {
+                  "startLine" : 13,
                   "startColumn" : 32,
-                  "endColumn" : 92
+                  "endColumn" : 102
                 }
               },
               "message" : {
-                "text" : "new File(...) : File"
-              }
-            }
-          }, {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 0
-                },
-                "region" : {
-                  "startLine" : 24,
-                  "startColumn" : 9,
-                  "endColumn" : 24
-                }
-              },
-              "message" : {
-                "text" : "tempDirChildDir"
+                "text" : "... + ..."
               }
             }
           } ]
         } ]
-      } ],
-      "relatedLocations" : [ {
-        "id" : 1,
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 0
-          },
-          "region" : {
-            "startLine" : 23,
-            "startColumn" : 41,
-            "endColumn" : 77
-          }
-        },
-        "message" : {
-          "text" : "system temp directory"
-        }
       } ]
     }, {
-      "ruleId" : "CWE-208",
+      "ruleId" : "CWE-535",
       "ruleIndex" : 0,
       "rule" : {
-        "id" : "CWE-208",
+        "id" : "CWE-535",
         "index" : 0
       },
       "message" : {
-        "text" : "Local information disclosure vulnerability from [system temp directory](1) due to use of file or directory readable by other local users."
+        "text" : "Potential CWE-535: Exposure of Information Through Shell Error Message"
       },
       "locations" : [ {
         "physicalLocation" : {
           "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 0
-          },
-          "region" : {
-            "startLine" : 17,
-            "startColumn" : 18,
-            "endColumn" : 54
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "4357626c1c6ed11d:1",
-        "primaryLocationStartColumnFingerprint" : "9"
-      },
-      "codeFlows" : [ {
-        "threadFlows" : [ {
-          "locations" : [ {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 0
-                },
-                "region" : {
-                  "startLine" : 17,
-                  "startColumn" : 18,
-                  "endColumn" : 54
-                }
-              },
-              "message" : {
-                "text" : "getProperty(...) : String"
-              }
-            }
-          }, {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 0
-                },
-                "region" : {
-                  "startLine" : 17,
-                  "startColumn" : 9,
-                  "endColumn" : 65
-                }
-              },
-              "message" : {
-                "text" : "new File(...)"
-              }
-            }
-          } ]
-        } ]
-      } ],
-      "relatedLocations" : [ {
-        "id" : 1,
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 0
-          },
-          "region" : {
-            "startLine" : 17,
-            "startColumn" : 18,
-            "endColumn" : 54
-          }
-        },
-        "message" : {
-          "text" : "system temp directory"
-        }
-      } ]
-    }, {
-      "ruleId" : "CWE-208",
-      "ruleIndex" : 0,
-      "rule" : {
-        "id" : "CWE-208",
-        "index" : 0
-      },
-      "message" : {
-        "text" : "Local information disclosure vulnerability from [system temp directory](1) due to use of file or directory readable by other local users."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 0
-          },
-          "region" : {
-            "startLine" : 19,
-            "startColumn" : 18,
-            "endColumn" : 54
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "4357626c1c6ed11d:2",
-        "primaryLocationStartColumnFingerprint" : "9"
-      },
-      "codeFlows" : [ {
-        "threadFlows" : [ {
-          "locations" : [ {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 0
-                },
-                "region" : {
-                  "startLine" : 19,
-                  "startColumn" : 18,
-                  "endColumn" : 54
-                }
-              },
-              "message" : {
-                "text" : "getProperty(...) : String"
-              }
-            }
-          }, {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 0
-                },
-                "region" : {
-                  "startLine" : 19,
-                  "startColumn" : 9,
-                  "endColumn" : 65
-                }
-              },
-              "message" : {
-                "text" : "new File(...)"
-              }
-            }
-          } ]
-        } ]
-      } ],
-      "relatedLocations" : [ {
-        "id" : 1,
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/TempDirUsageVulnerable.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 0
-          },
-          "region" : {
-            "startLine" : 19,
-            "startColumn" : 18,
-            "endColumn" : 54
-          }
-        },
-        "message" : {
-          "text" : "system temp directory"
-        }
-      } ]
-    }, {
-      "ruleId" : "java/sensitive-data-transmission",
-      "ruleIndex" : 1,
-      "rule" : {
-        "id" : "java/sensitive-data-transmission",
-        "index" : 1
-      },
-      "message" : {
-        "text" : "Sensitive information might be exposed here."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE536ServletRuntimeErrorMessageContainingSensitiveInformation.java",
+            "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_SensitiveInfoExposureViaShellError.java",
             "uriBaseId" : "%SRCROOT%",
             "index" : 1
           },
           "region" : {
-            "startLine" : 23,
-            "startColumn" : 42,
-            "endColumn" : 68
+            "startLine" : 17,
+            "startColumn" : 36,
+            "endColumn" : 40
           }
         }
       } ],
       "partialFingerprints" : {
-        "primaryLocationLineHash" : "202838915c0470ea:1",
-        "primaryLocationStartColumnFingerprint" : "29"
-      }
+        "primaryLocationLineHash" : "cffac7cba4fb8772:1",
+        "primaryLocationStartColumnFingerprint" : "19"
+      },
+      "codeFlows" : [ {
+        "threadFlows" : [ {
+          "locations" : [ {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_SensitiveInfoExposureViaShellError.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 1
+                },
+                "region" : {
+                  "startLine" : 13,
+                  "startColumn" : 78,
+                  "endColumn" : 102
+                }
+              },
+              "message" : {
+                "text" : "getErrorStream(...) : InputStream"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_SensitiveInfoExposureViaShellError.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 1
+                },
+                "region" : {
+                  "startLine" : 13,
+                  "startColumn" : 56,
+                  "endColumn" : 103
+                }
+              },
+              "message" : {
+                "text" : "new InputStreamReader(...) : InputStreamReader"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_SensitiveInfoExposureViaShellError.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 1
+                },
+                "region" : {
+                  "startLine" : 13,
+                  "startColumn" : 37,
+                  "endColumn" : 104
+                }
+              },
+              "message" : {
+                "text" : "new BufferedReader(...) : BufferedReader"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_SensitiveInfoExposureViaShellError.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 1
+                },
+                "region" : {
+                  "startLine" : 15,
+                  "startColumn" : 28,
+                  "endColumn" : 34
+                }
+              },
+              "message" : {
+                "text" : "reader : BufferedReader"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_SensitiveInfoExposureViaShellError.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 1
+                },
+                "region" : {
+                  "startLine" : 15,
+                  "startColumn" : 28,
+                  "endColumn" : 45
+                }
+              },
+              "message" : {
+                "text" : "readLine(...) : String"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_SensitiveInfoExposureViaShellError.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 1
+                },
+                "region" : {
+                  "startLine" : 17,
+                  "startColumn" : 36,
+                  "endColumn" : 40
+                }
+              },
+              "message" : {
+                "text" : "line"
+              }
+            }
+          } ]
+        } ]
+      } ]
     }, {
-      "ruleId" : "CWE-204",
-      "ruleIndex" : 2,
+      "ruleId" : "CWE-535",
+      "ruleIndex" : 0,
       "rule" : {
-        "id" : "CWE-204",
-        "index" : 2
+        "id" : "CWE-535",
+        "index" : 0
       },
       "message" : {
-        "text" : "This 'if' statement in a sensitive method has different messages in its branches, potentially indicating observable discrepancies (CWE-204)."
+        "text" : "Potential CWE-535: Exposure of Information Through Shell Error Message"
       },
       "locations" : [ {
         "physicalLocation" : {
           "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/UserAuthentication.java",
+            "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_ShellCommandExposure.java",
             "uriBaseId" : "%SRCROOT%",
             "index" : 2
           },
           "region" : {
-            "startLine" : 5,
-            "startColumn" : 44,
-            "endLine" : 19,
-            "endColumn" : 6
+            "startLine" : 12,
+            "startColumn" : 36,
+            "endColumn" : 108
           }
         }
       } ],
       "partialFingerprints" : {
-        "primaryLocationLineHash" : "47fb693c7d740314:1",
-        "primaryLocationStartColumnFingerprint" : "39"
-      }
-    }, {
-      "ruleId" : "CWE-209",
-      "ruleIndex" : 6,
-      "rule" : {
-        "id" : "CWE-209",
-        "index" : 6
-      },
-      "message" : {
-        "text" : "[Error information](1) can be exposed to an external user."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE536ServletRuntimeErrorMessageContainingSensitiveInformation.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 1
-          },
-          "region" : {
-            "startLine" : 23,
-            "startColumn" : 42,
-            "endColumn" : 68
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "202838915c0470ea:1",
-        "primaryLocationStartColumnFingerprint" : "29"
-      },
-      "relatedLocations" : [ {
-        "id" : 1,
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE536ServletRuntimeErrorMessageContainingSensitiveInformation.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 1
-          },
-          "region" : {
-            "startLine" : 23,
-            "startColumn" : 54,
-            "endColumn" : 68
-          }
-        },
-        "message" : {
-          "text" : "Error information"
-        }
-      } ]
-    }, {
-      "ruleId" : "CWE-209",
-      "ruleIndex" : 6,
-      "rule" : {
-        "id" : "CWE-209",
-        "index" : 6
-      },
-      "message" : {
-        "text" : "[Error information](1) can be exposed to an external user."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/StackTraceExposure.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 3
-          },
-          "region" : {
-            "startLine" : 15,
-            "startColumn" : 13,
-            "endColumn" : 53
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "4b60cf2a6e9c3720:1",
-        "primaryLocationStartColumnFingerprint" : "0"
-      },
-      "relatedLocations" : [ {
-        "id" : 1,
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/StackTraceExposure.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 3
-          },
-          "region" : {
-            "startLine" : 15,
-            "startColumn" : 13,
-            "endColumn" : 15
-          }
-        },
-        "message" : {
-          "text" : "Error information"
-        }
-      } ]
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 9,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 9
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Variable Inclusion of Sensitive Information in Test Code via string literal"
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 13,
-            "startColumn" : 31,
-            "endColumn" : 72
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "c978db6478d3413b:1",
-        "primaryLocationStartColumnFingerprint" : "22"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 9,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 9
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Variable Inclusion of Sensitive Information in Test Code via string literal"
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 18,
-            "startColumn" : 29,
-            "endColumn" : 41
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "d1038955146264aa:1",
-        "primaryLocationStartColumnFingerprint" : "20"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 21,
-            "startColumn" : 68,
-            "endColumn" : 80
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "a0e6c60bbd4e15ff:1",
-        "primaryLocationStartColumnFingerprint" : "59"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 22,
-            "startColumn" : 9,
-            "endColumn" : 19
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "65734aa7d00a95ea:1",
-        "primaryLocationStartColumnFingerprint" : "0"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 23,
-            "startColumn" : 9,
-            "endColumn" : 19
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "1bd74437b1967433:1",
-        "primaryLocationStartColumnFingerprint" : "0"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 24,
-            "startColumn" : 9,
-            "endColumn" : 19
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "17ae0d3cf0f4ef20:1",
-        "primaryLocationStartColumnFingerprint" : "0"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 24,
-            "startColumn" : 85,
-            "endColumn" : 93
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "17ae0d3cf0f4ef20:1",
-        "primaryLocationStartColumnFingerprint" : "76"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 24,
-            "startColumn" : 95,
-            "endColumn" : 103
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "17ae0d3cf0f4ef20:1",
-        "primaryLocationStartColumnFingerprint" : "86"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 27,
-            "startColumn" : 16,
-            "endColumn" : 26
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "1f834e80d28f7ac0:1",
-        "primaryLocationStartColumnFingerprint" : "7"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 33,
-            "startColumn" : 82,
-            "endColumn" : 90
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "923168e490ff500d:1",
-        "primaryLocationStartColumnFingerprint" : "73"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 33,
-            "startColumn" : 65,
-            "endColumn" : 73
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "923168e490ff500d:1",
-        "primaryLocationStartColumnFingerprint" : "56"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 48,
-            "startColumn" : 68,
-            "endColumn" : 80
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "a0e6c60bbd4e15ff:2",
-        "primaryLocationStartColumnFingerprint" : "59"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 49,
-            "startColumn" : 9,
-            "endColumn" : 19
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "65734aa7d00a95ea:2",
-        "primaryLocationStartColumnFingerprint" : "0"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 50,
-            "startColumn" : 9,
-            "endColumn" : 19
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "1bd74437b1967433:2",
-        "primaryLocationStartColumnFingerprint" : "0"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 51,
-            "startColumn" : 9,
-            "endColumn" : 19
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "17ae0d3cf0f4ef20:2",
-        "primaryLocationStartColumnFingerprint" : "0"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 51,
-            "startColumn" : 85,
-            "endColumn" : 93
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "17ae0d3cf0f4ef20:2",
-        "primaryLocationStartColumnFingerprint" : "76"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 51,
-            "startColumn" : 95,
-            "endColumn" : 103
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "17ae0d3cf0f4ef20:2",
-        "primaryLocationStartColumnFingerprint" : "86"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 54,
-            "startColumn" : 16,
-            "endColumn" : 26
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "1f834e80d28f7ac0:2",
-        "primaryLocationStartColumnFingerprint" : "7"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 59,
-            "startColumn" : 82,
-            "endColumn" : 90
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "923168e636c655d9:1",
-        "primaryLocationStartColumnFingerprint" : "73"
-      }
-    }, {
-      "ruleId" : "CWE-531",
-      "ruleIndex" : 10,
-      "rule" : {
-        "id" : "CWE-531",
-        "index" : 10
-      },
-      "message" : {
-        "text" : "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE531InclusionofSensitiveInformationinTestCode.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 4
-          },
-          "region" : {
-            "startLine" : 59,
-            "startColumn" : 65,
-            "endColumn" : 73
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "923168e636c655d9:1",
-        "primaryLocationStartColumnFingerprint" : "56"
-      }
-    }, {
-      "ruleId" : "CWE-532",
-      "ruleIndex" : 11,
-      "rule" : {
-        "id" : "CWE-532",
-        "index" : 11
-      },
-      "message" : {
-        "text" : "This [potentially sensitive information](1) is written to a log file."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 5
-          },
-          "region" : {
-            "startLine" : 26,
-            "startColumn" : 21,
-            "endColumn" : 44
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "4c2f875793eeb525:1",
-        "primaryLocationStartColumnFingerprint" : "12"
-      },
-      "codeFlows" : [ {
-        "threadFlows" : [ {
-          "locations" : [ {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 5
-                },
-                "region" : {
-                  "startLine" : 22,
-                  "startColumn" : 18,
-                  "endColumn" : 26
-                }
-              },
-              "message" : {
-                "text" : "password : String"
-              }
-            }
-          }, {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 5
-                },
-                "region" : {
-                  "startLine" : 25,
-                  "startColumn" : 21,
-                  "endColumn" : 31
-                }
-              },
-              "message" : {
-                "text" : "str : String"
-              }
-            }
-          }, {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 5
-                },
-                "region" : {
-                  "startLine" : 26,
-                  "startColumn" : 21,
-                  "endColumn" : 44
-                }
-              },
-              "message" : {
-                "text" : "... + ..."
-              }
-            }
-          } ]
-        } ]
-      } ],
-      "relatedLocations" : [ {
-        "id" : 1,
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 5
-          },
-          "region" : {
-            "startLine" : 22,
-            "startColumn" : 18,
-            "endColumn" : 26
-          }
-        },
-        "message" : {
-          "text" : "potentially sensitive information"
-        }
-      } ]
-    }, {
-      "ruleId" : "CWE-538",
-      "ruleIndex" : 12,
-      "rule" : {
-        "id" : "CWE-538",
-        "index" : 12
-      },
-      "message" : {
-        "text" : "This [potentially sensitive information](1) is written to a log file."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 5
-          },
-          "region" : {
-            "startLine" : 26,
-            "startColumn" : 21,
-            "endColumn" : 44
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "4c2f875793eeb525:1",
-        "primaryLocationStartColumnFingerprint" : "12"
-      },
-      "codeFlows" : [ {
-        "threadFlows" : [ {
-          "locations" : [ {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 5
-                },
-                "region" : {
-                  "startLine" : 22,
-                  "startColumn" : 18,
-                  "endColumn" : 26
-                }
-              },
-              "message" : {
-                "text" : "password : String"
-              }
-            }
-          }, {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 5
-                },
-                "region" : {
-                  "startLine" : 25,
-                  "startColumn" : 21,
-                  "endColumn" : 31
-                }
-              },
-              "message" : {
-                "text" : "str : String"
-              }
-            }
-          }, {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 5
-                },
-                "region" : {
-                  "startLine" : 26,
-                  "startColumn" : 21,
-                  "endColumn" : 44
-                }
-              },
-              "message" : {
-                "text" : "... + ..."
-              }
-            }
-          } ]
-        } ]
-      } ],
-      "relatedLocations" : [ {
-        "id" : 1,
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveInfoExpouser.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 5
-          },
-          "region" : {
-            "startLine" : 22,
-            "startColumn" : 18,
-            "endColumn" : 26
-          }
-        },
-        "message" : {
-          "text" : "potentially sensitive information"
-        }
-      } ]
-    }, {
-      "ruleId" : "java/potential-cwe-535-shell-error-exposure",
-      "ruleIndex" : 13,
-      "rule" : {
-        "id" : "java/potential-cwe-535-shell-error-exposure",
-        "index" : 13
-      },
-      "message" : {
-        "text" : "Potential CWE-535: Exposure of information through shell error message"
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE535ExposureofInformationThroughShellErrorMessage.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 6
-          },
-          "region" : {
-            "startLine" : 30,
-            "startColumn" : 32,
-            "endColumn" : 46
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "29f60c784c986304:1",
+        "primaryLocationLineHash" : "3287facff7b18dc1:1",
         "primaryLocationStartColumnFingerprint" : "19"
-      }
-    }, {
-      "ruleId" : "java/servlet-sensitive-error-exposure",
-      "ruleIndex" : 14,
-      "rule" : {
-        "id" : "java/servlet-sensitive-error-exposure",
-        "index" : 14
-      },
-      "message" : {
-        "text" : "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information"
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE536ServletRuntimeErrorMessageContainingSensitiveInformation.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 1
-          },
-          "region" : {
-            "startLine" : 23,
-            "startColumn" : 54,
-            "endColumn" : 68
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "202838915c0470ea:1",
-        "primaryLocationStartColumnFingerprint" : "41"
-      }
-    }, {
-      "ruleId" : "java/runtime-sensitive-info-exposure",
-      "ruleIndex" : 15,
-      "rule" : {
-        "id" : "java/runtime-sensitive-info-exposure",
-        "index" : 15
-      },
-      "message" : {
-        "text" : "Potential CWE-537: Java runtime error message containing sensitive information"
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE536ServletRuntimeErrorMessageContainingSensitiveInformation.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 1
-          },
-          "region" : {
-            "startLine" : 23,
-            "startColumn" : 54,
-            "endColumn" : 68
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "202838915c0470ea:1",
-        "primaryLocationStartColumnFingerprint" : "41"
-      }
-    }, {
-      "ruleId" : "java/runtime-sensitive-info-exposure",
-      "ruleIndex" : 15,
-      "rule" : {
-        "id" : "java/runtime-sensitive-info-exposure",
-        "index" : 15
-      },
-      "message" : {
-        "text" : "Potential CWE-537: Java runtime error message containing sensitive information"
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE537JavaRuntimeErrorMessageContainingSensitiveInformation.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 7
-          },
-          "region" : {
-            "startLine" : 12,
-            "startColumn" : 44,
-            "endColumn" : 61
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "a1e6851376b97778:1",
-        "primaryLocationStartColumnFingerprint" : "31"
-      }
-    }, {
-      "ruleId" : "java/server-generated-sensitive-info-exposure",
-      "ruleIndex" : 18,
-      "rule" : {
-        "id" : "java/server-generated-sensitive-info-exposure",
-        "index" : 18
-      },
-      "message" : {
-        "text" : "Potential CWE-550: Server Generated Error Message Containing Sensitive Information"
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/CWE550ServerGeneratedErrorMessageContainingSensitiveInformation.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 8
-          },
-          "region" : {
-            "startLine" : 28,
-            "startColumn" : 44,
-            "endColumn" : 58
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "284ccb2f259e8e01:1",
-        "primaryLocationStartColumnFingerprint" : "31"
-      }
-    }, {
-      "ruleId" : "CWE-598",
-      "ruleIndex" : 19,
-      "rule" : {
-        "id" : "CWE-598",
-        "index" : 19
-      },
-      "message" : {
-        "text" : "[This request](1) uses the GET request method to transmit sensitive information."
-      },
-      "locations" : [ {
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveGetQuery.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 9
-          },
-          "region" : {
-            "startLine" : 12,
-            "startColumn" : 38,
-            "endColumn" : 46
-          }
-        }
-      } ],
-      "partialFingerprints" : {
-        "primaryLocationLineHash" : "7f9d4faac8c2b69b:1",
-        "primaryLocationStartColumnFingerprint" : "35"
       },
       "codeFlows" : [ {
         "threadFlows" : [ {
@@ -2632,58 +3731,76 @@
             "location" : {
               "physicalLocation" : {
                 "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveGetQuery.java",
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_ShellCommandExposure.java",
                   "uriBaseId" : "%SRCROOT%",
-                  "index" : 9
-                },
-                "region" : {
-                  "startLine" : 11,
-                  "startColumn" : 21,
-                  "endColumn" : 53
-                }
-              },
-              "message" : {
-                "text" : "getParameter(...) : String"
-              }
-            }
-          }, {
-            "location" : {
-              "physicalLocation" : {
-                "artifactLocation" : {
-                  "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveGetQuery.java",
-                  "uriBaseId" : "%SRCROOT%",
-                  "index" : 9
+                  "index" : 2
                 },
                 "region" : {
                   "startLine" : 12,
-                  "startColumn" : 38,
-                  "endColumn" : 46
+                  "startColumn" : 68,
+                  "endColumn" : 92
                 }
               },
               "message" : {
-                "text" : "password"
+                "text" : "getErrorStream(...) : InputStream"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_ShellCommandExposure.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 2
+                },
+                "region" : {
+                  "startLine" : 12,
+                  "startColumn" : 68,
+                  "endColumn" : 107
+                }
+              },
+              "message" : {
+                "text" : "readAllBytes(...) : byte[]"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_ShellCommandExposure.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 2
+                },
+                "region" : {
+                  "startLine" : 12,
+                  "startColumn" : 57,
+                  "endColumn" : 108
+                }
+              },
+              "message" : {
+                "text" : "new String(...) : String"
+              }
+            }
+          }, {
+            "location" : {
+              "physicalLocation" : {
+                "artifactLocation" : {
+                  "uri" : "src/main/java/com/mycompany/app/CWE-535/BAD_ShellCommandExposure.java",
+                  "uriBaseId" : "%SRCROOT%",
+                  "index" : 2
+                },
+                "region" : {
+                  "startLine" : 12,
+                  "startColumn" : 36,
+                  "endColumn" : 108
+                }
+              },
+              "message" : {
+                "text" : "... + ..."
               }
             }
           } ]
         } ]
-      } ],
-      "relatedLocations" : [ {
-        "id" : 1,
-        "physicalLocation" : {
-          "artifactLocation" : {
-            "uri" : "UpdatedDemo/src/main/java/com/example/SensitiveGetQuery.java",
-            "uriBaseId" : "%SRCROOT%",
-            "index" : 9
-          },
-          "region" : {
-            "startLine" : 11,
-            "startColumn" : 21,
-            "endColumn" : 53
-          }
-        },
-        "message" : {
-          "text" : "This request"
-        }
       } ]
     } ],
     "columnKind" : "utf16CodeUnits",

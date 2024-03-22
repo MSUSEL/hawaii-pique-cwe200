@@ -1,3 +1,15 @@
+/**
+ * @name Sensitive data exposure in debug code
+ * @description Identifies instances where sensitive variables are exposed in debug output without proper sanitization, which could lead to sensitive data leaks.
+ * @kind problem
+ * @problem.severity warning
+ * @id CWE-215
+ * @tags security
+ *      external/cwe/cwe-215
+ *      external/cwe/cwe-532
+ * @cwe CWE-215
+ */
+
 import java
 import semmle.code.java.security.SensitiveVariables
 

@@ -1,146 +1,15 @@
 {
-    "CWE-200": {
-        "true_positives": [],
-        "false_positives": [],
-        "true_negatives": [
-            "GOOD_MinimalDataLogging.java",
-            "GOOD_GenericErrorMessages.java"
-        ],
-        "false_negatives": [
-            "BAD_VerboseErrorMessages.java",
-            "BAD_LoggingSensitiveInformation.java",
-            "BAD_UserDetailsExposure.java"
-        ]
-    },
-    "CWE-204": {
-        "true_positives": [],
-        "false_positives": [],
-        "true_negatives": [
-            "GOOD_UniformLoginResponse.java",
-            "GOOD_ConsistentAuthenticationTiming.java"
-        ],
-        "false_negatives": [
-            "BAD_LoginResponseDiscrepancy.java",
-            "BAD_AuthenticationTiming.java",
-            "BAD_ConditionalErrorHandling.java"
-        ]
-    },
-    "CWE-208": {
-        "true_positives": [],
-        "false_positives": [],
-        "true_negatives": [
-            "GOOD_FixedResponseTimeDBQuery.java",
-            "GOOD_ConstantTimePasswordCheck.java"
-        ],
-        "false_negatives": [
-            "BAD_ConditionalProcessingTiming.java",
-            "BAD_VariableResponseTimeDBQuery.java",
-            "BAD_EarlyReturnPasswordCheck.java"
-        ]
-    },
-    "CWE-209": {
-        "true_positives": [],
-        "false_positives": [],
-        "true_negatives": [
-            "GOOD_GenericDatabaseErrorHandling.java",
-            "GOOD_GeneralizedAuthenticationFeedback.java"
-        ],
-        "false_negatives": [
-            "BAD_SensitivePathDisclosureInErrors.java",
-            "BAD_VerboseAuthenticationFailure.java",
-            "BAD_DetailedDatabaseErrorExposure.java"
-        ]
-    },
-    "CWE-215": {
-        "true_positives": [],
-        "false_positives": [],
-        "true_negatives": [
-            "GOOD_SecureDebuggingPractices.java",
-            "GOOD_EnhancedDebugWithoutSensitiveData.java"
-        ],
-        "false_negatives": [
-            "BAD_DebugOutputWithCredentials.java",
-            "BAD_ExceptionDebuggingWithSensitiveData.java",
-            "BAD_DebugLoggingSensitiveInfo.java"
-        ]
-    },
-    "CWE-531": {
+    "CWE-535": {
         "true_positives": [
-            "BAD_HardcodedCredentialsTest.java",
-            "BAD_ApiKeyExposureTestConfig.java",
-            "BAD_EmbeddedSensitiveDataInTests.java"
+            "BAD_MisconfiguredPermissions.java",
+            "BAD_SensitiveInfoExposureViaShellError.java",
+            "BAD_ShellCommandExposure.java"
         ],
-        "false_positives": [
-            "GOOD_EnvironmentVariablesForSensitiveDataTest.java",
-            "GOOD_ExternalizedSensitiveInfoConfigTest.java"
+        "true_negatives": [
+            "GOOD_SecureShellCommandHandling.java",
+            "GOOD_EncapsulatedSecurityContext.java"
         ],
-        "true_negatives": [],
+        "false_positives": [],
         "false_negatives": []
-    },
-    "CWE-532": {
-        "true_positives": [
-            "BAD_LogDbConnectionDetails.java",
-            "BAD_LogUserCredentials.java"
-        ],
-        "true_negatives": [
-            "GOOD_FilterSensitiveInfoFromLogs.java",
-            "GOOD_SecureLoggingPractices.java"
-        ],
-        "false_positives": [],
-        "false_negatives": [
-            "BAD_LogPaymentInformation.java"
-        ]
-    },
-    "CWE-538": {
-        "true_positives": [],
-        "false_positives": [],
-        "true_negatives": [
-            "GOOD_SecureConfigStorage.java",
-            "GOOD_SecureLogging.java"
-        ],
-        "false_negatives": [
-            "BAD_StoreDbConnectionInfo.java",
-            "BAD_LogPaymentTransactions.java",
-            "BAD_LoggingCredentials.java"
-        ]
-    },
-    "CWE-540": {
-        "true_positives": [],
-        "false_positives": [],
-        "true_negatives": [
-            "GOOD_UseEnvVarsForCredentials.java",
-            "GOOD_ExternalizeSensitiveConfig.java"
-        ],
-        "false_negatives": [
-            "BAD_ApiKeyEmbedded.java",
-            "BAD_HardcodedCredentials.java",
-            "BAD_HardcodedSecretInConfig.java"
-        ]
-    },
-    "CWE-548": {
-        "true_positives": [],
-        "false_positives": [],
-        "true_negatives": [
-            "GOOD_DocumentAccessServlet.java",
-            "GOOD_SecureBackendFileProcessingServlet.java"
-        ],
-        "false_negatives": [
-            "BAD_LogDirectoryPaths.java",
-            "BAD_DocumentDirectoryListingServlet.java",
-            "BAD_InsecureDirectoryListingServlet.java"
-        ]
-    },
-    "CWE-598": {
-        "true_positives": [],
-        "false_positives": [],
-        "true_negatives": [
-            "GOOD_FetchPublicData.java",
-            "GOOD_FetchWeatherData.java"
-        ],
-        "false_negatives": [
-            "BAD_HealthInfoSubmissionGET.java",
-            "BAD_PasswordChangeGET.java",
-            "BAD_CreditCardSubmissionGET.java"
-        ]
     }
 }

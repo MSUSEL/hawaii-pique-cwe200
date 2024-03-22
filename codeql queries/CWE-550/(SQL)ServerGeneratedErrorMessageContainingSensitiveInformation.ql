@@ -14,6 +14,8 @@
 
 import java
 import semmle.code.java.dataflow.TaintTracking
+import DataFlow::PathGraph
+
 
  // Configuration for tracking the flow of sensitive information from SQLExceptions to the console.
 class SqlExceptionToConsoleConfig extends TaintTracking::Configuration {

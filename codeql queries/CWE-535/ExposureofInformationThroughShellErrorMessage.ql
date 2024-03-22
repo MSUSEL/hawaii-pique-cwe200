@@ -11,6 +11,8 @@
  
 import java
 import semmle.code.java.dataflow.TaintTracking
+import DataFlow::PathGraph
+
 
 class ShellErrorExposureConfig extends TaintTracking::Configuration {
   ShellErrorExposureConfig() { this = "ShellErrorExposureConfig" }

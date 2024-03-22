@@ -14,6 +14,8 @@
 import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
+import DataFlow::PathGraph
+
 
 class SpringBootSensitiveInfoExposureConfig extends TaintTracking::Configuration {
   SpringBootSensitiveInfoExposureConfig() { this = "SpringBootSensitiveInfoExposureConfig" }
@@ -69,6 +71,6 @@ class SpringBootSensitiveInfoExposureConfig extends TaintTracking::Configuration
   }
 }
 
-from SpringBootSensitiveInfoExposureConfig config, DataFlow::Node source, DataFlow::Node sink
-where config.hasFlow(source, sink)
-select sink, "Sensitive information may be exposed to clients."
+from SpringBootSensitiveInfoExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
+where config.hasFlowPath(source, sink)
+select sink.getNode(), source, sink, "Sensitive information may be exposed to clients."

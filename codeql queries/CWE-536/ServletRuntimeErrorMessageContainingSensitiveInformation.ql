@@ -15,6 +15,8 @@ import semmle.code.java.frameworks.Servlets
 import semmle.code.java.dataflow.FlowSources
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.security.SensitiveVariables
+import DataFlow::PathGraph
+
 
 class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
   SensitiveInfoLeakServletConfig() { this = "SensitiveInfoLeakServletConfig" }
@@ -73,7 +75,7 @@ class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
 
 from SensitiveInfoLeakServletConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink, source, sink, "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information."
+select sink.getNode(), source, sink, "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information."
 
 
 

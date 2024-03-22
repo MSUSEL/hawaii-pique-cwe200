@@ -16,6 +16,8 @@
 import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
+import DataFlow::PathGraph
+
 
 // Defines a configuration for tracking the flow of sensitive information in HttpServlets
 class HttpServletExceptionSourceConfig extends TaintTracking::Configuration {
@@ -79,6 +81,6 @@ class HttpServletExceptionSourceConfig extends TaintTracking::Configuration {
 }
 
 // Executes the configuration to find data flows from identified sources to sinks
-from HttpServletExceptionSourceConfig config, DataFlow::Node source, DataFlow::Node sink
-where config.hasFlow(source, sink)
-select sink, "Sensitive information from an exception might be exposed to clients."
+from HttpServletExceptionSourceConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
+where config.hasFlowPath(source, sink)
+select sink.getNode(), source, sink, "Sensitive information from an exception might be exposed to clients."

@@ -13,6 +13,8 @@
  import semmle.code.java.dataflow.TaintTracking
  import semmle.code.java.dataflow.FlowSources
  import semmle.code.java.security.SensitiveVariables
+ import DataFlow::PathGraph
+
 
  
  class RuntimeSensitiveInfoExposureConfig extends TaintTracking::Configuration {
@@ -83,15 +85,13 @@
   /**
  * Checks if the given MethodAccess is within a CatchClause. This is important because we only want to consider error messages for this CWE.
  */
-predicate isWithinCatchBlock(MethodAccess ma) {
-  exists(CatchClause cc |
-    ma.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock()
-  )
+  predicate isWithinCatchBlock(MethodAccess ma) {
+    exists(CatchClause cc |
+      ma.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock()
+    )
+  }   
 }
-
-   
- }
  
  from RuntimeSensitiveInfoExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
  where config.hasFlowPath(source, sink)
- select sink, source, sink, "Potential CWE-537: Java runtime error message containing sensitive information"
+ select sink.getNode(), source, sink, "Potential CWE-537: Java runtime error message containing sensitive information"
