@@ -3,7 +3,7 @@
  * @description Detects potential exposure of sensitive information from SQLExceptions through console output, logging frameworks, or web application responses.
  * @kind path-problem
  * @problem.severity warning
- * @id java/exposure-sql-exception-info
+ * @id CWE-550
  * @tags security
  *       external/cwe/cwe-209
  *       external/cwe/cwe-215
@@ -62,4 +62,4 @@ class SqlExceptionToConsoleConfig extends TaintTracking::Configuration {
 
 from SqlExceptionToConsoleConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select source, sink, "Potential exposure of SQLException information to the console."
+select sink.getNode(), source, sink, "Potential CWE-550: (SQL) Server Generated Error Message Containing Sensitive Information."

@@ -15,7 +15,6 @@
  import semmle.code.java.security.SensitiveVariables
  import DataFlow::PathGraph
 
-
  
  class RuntimeSensitiveInfoExposureConfig extends TaintTracking::Configuration {
    RuntimeSensitiveInfoExposureConfig() { this = "RuntimeSensitiveInfoExposureConfig" }
@@ -82,9 +81,6 @@
     )
   }  
 
-  /**
- * Checks if the given MethodAccess is within a CatchClause. This is important because we only want to consider error messages for this CWE.
- */
   predicate isWithinCatchBlock(MethodAccess ma) {
     exists(CatchClause cc |
       ma.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock()

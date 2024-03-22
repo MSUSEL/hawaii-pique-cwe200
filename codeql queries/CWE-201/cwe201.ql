@@ -5,9 +5,10 @@
  * @problem.severity error
  * @security-severity 4.3
  * @precision high
- * @id java/sensitive-data-transmission
+ * @id CWE-201
  * @tags security
  *       external/cwe/cwe-201
+ * @cwe CWE-201
  */
 
  import java

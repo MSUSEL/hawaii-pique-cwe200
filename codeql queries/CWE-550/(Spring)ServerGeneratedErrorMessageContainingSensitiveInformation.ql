@@ -5,7 +5,7 @@
  *              information disclosure vulnerabilities.
  * @kind path-problem
  * @problem.severity warning
- * @id java/springboot-sensitive-info-exposure-enhanced
+ * @id CWE-550
  * @tags security
  *       external/cwe/cwe-550
  *       external/cwe/cwe-200
@@ -64,13 +64,9 @@ class SpringBootSensitiveInfoExposureConfig extends TaintTracking::Configuration
           logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.stereotype", "Component")
         )
       )
-      
-      
-      
-  
   }
 }
 
 from SpringBootSensitiveInfoExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "Sensitive information may be exposed to clients."
+select sink.getNode(), source, sink, "Potential CWE-550: (Spring) Server Generated Error Message Containing Sensitive Information."

@@ -5,7 +5,7 @@
  *              information disclosure vulnerabilities.
  * @kind path-problem
  * @problem.severity warning
- * @id java/http-servlet-sensitive-info-exposure
+ * @id CWE-550
  * @tags security
  *       external/cwe/cwe-550
  *       external/cwe/cwe-200
@@ -83,4 +83,4 @@ class HttpServletExceptionSourceConfig extends TaintTracking::Configuration {
 // Executes the configuration to find data flows from identified sources to sinks
 from HttpServletExceptionSourceConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "Sensitive information from an exception might be exposed to clients."
+select sink.getNode(), source, sink, "Potential CWE-550: (Servlet) Server-Generated Error Message Containing Sensitive Information."
