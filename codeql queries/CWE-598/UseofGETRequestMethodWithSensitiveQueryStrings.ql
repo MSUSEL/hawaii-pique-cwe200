@@ -8,9 +8,10 @@ import DataFlow::PathGraph
  * @description Using GET request with sensitive data in the query string can expose the information.
  * @kind path-problem
  * @problem.severity warning
- * @id java/cwe-598
+ * @id CWE-598
  * @tags security
  *       external/cwe/cwe-598
+ * @cwe CWE-598
  */
 class GetWithSensitiveDataQuery extends DataFlow::Configuration {
   GetWithSensitiveDataQuery() { this = "GetWithSensitiveDataQuery" }

@@ -1,6 +1,18 @@
+/**
+ * @name Exposure of Directory Listing Information Through HTTP Responses
+ * @description Detects potential exposure of directory listing information through HTTP responses in servlets, which could lead to sensitive information disclosure.
+ * @kind path-problem
+ * @problem.severity warning
+ * @id CWE-548
+ * @tags security
+ *      external/cwe/cwe-548
+ * @cwe CWE-548
+ */
+
 import java
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.frameworks.Servlets
+import DataFlow::PathGraph
 
 /** 
  * A configuration for tracking directory listing information exposure 
@@ -28,21 +40,12 @@ class DirectoryListingExposureConfig extends TaintTracking::Configuration {
     exists(MethodAccess ma |
       ma.getMethod().getDeclaringType().getAnAncestor().hasQualifiedName("org.apache.logging.log4j", "Logger") and
       ma.getMethod().getName().matches("info|debug|warn|error|logger") and
-      sink.asExpr() = ma
+      sink.asExpr() = ma.getArgument(0)
 
     )
-    // or
-    // exists(MethodAccess ma |
-    //   // Identify logging methods as sinks, focusing on debug logging
-    //   ma.getMethod().getDeclaringType().getAnAncestor().hasQualifiedName("org.apache.logging.log4j", "Logger") and
-    //   ma.getMethod().hasName("debug") and
-    //   // Check for a specific pattern in the logged message
-    //   ma.getArgument(0).(StringConcatenation).getAnOperand().(StringLiteral).getValue().matches("File size (bytes): %") and
-    //   sink.asExpr() = ma.getArgument(0)
-    // )
   }
 }
 
 from DirectoryListingExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink, source, sink, "Sensitive directory listing information flows to an exposure point."
+select sink.getNode(), source, sink, "Potential CWE-548: Directory listing information might be exposed."
