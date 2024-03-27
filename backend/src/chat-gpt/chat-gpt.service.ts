@@ -151,18 +151,17 @@ export class ChatGptService {
                 // Calculate time until next request
                 const isRateLimitError = error.response && error.response.status === 429;
                 if (isRateLimitError && i < retries - 1) {
-                    // console.log(
-                    //     `Rate limit hit. Retrying in ${
-                    //         delayMs * Math.pow(2, i)
-                    //     } ms`,
-                    // );
-                    // await this.delay(delayMs * Math.pow(2, i)); // Exponential backoff
-
                     // Instead of exponential backoff, use the time specified in the header
-                    let timeOut = parseFloat(error.response.headers['x-ratelimit-reset-tokens'].replace('s', ''));
-                    console.log(`Rate limit hit. Retrying in ${timeOut} seconds`)
-                    await this.delay(timeOut * 1000);
-
+                    try{
+                        let timeOut = parseFloat(error.response.headers['x-ratelimit-reset-tokens'].replace('s', ''));
+                        console.log(`Rate limit hit. Retrying in ${timeOut} seconds`)
+                        await this.delay(timeOut * 1000);
+                    }
+                    // If there is an issue with the header, use exponential backoff
+                    catch(e){
+                        await this.delay(delayMs * Math.pow(2, i)); // Exponential backoff
+                    }
+                  
                 } else {
                     throw error; // Re-throw the error if it's not a 429 or if max retries exceeded
                 }

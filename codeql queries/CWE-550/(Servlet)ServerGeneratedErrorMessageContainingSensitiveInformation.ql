@@ -83,4 +83,4 @@ class HttpServletExceptionSourceConfig extends TaintTracking::Configuration {
 // Executes the configuration to find data flows from identified sources to sinks
 from HttpServletExceptionSourceConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "Potential CWE-550: (Servlet) Server-Generated Error Message Containing Sensitive Information."
+select sink.getNode(), source, sink, "CWE-550: (Servlet) Server-Generated Error Message Containing Sensitive Information."

@@ -90,4 +90,4 @@
  
  from RuntimeSensitiveInfoExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
  where config.hasFlowPath(source, sink)
- select sink.getNode(), source, sink, "Potential CWE-537: Java runtime error message containing sensitive information"
+ select sink.getNode(), source, sink, "CWE-537: Java runtime error message containing sensitive information"

@@ -45,7 +45,7 @@ where
         ) 
     ) 
 
-select sl, "Potential CWE-531: Variable Inclusion of Sensitive Information in Test Code via string literal"
+select sl, "CWE-531: Variable Inclusion of Sensitive Information in Test Code via string literal"
 
 
 

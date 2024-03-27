@@ -79,4 +79,4 @@ class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
 
 from SensitiveInfoLeakServletConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "Potential CWE-536: Servlet Runtime Error Message Containing Sensitive Information."
+select sink.getNode(), source, sink, "CWE-536: Servlet Runtime Error Message Containing Sensitive Information."

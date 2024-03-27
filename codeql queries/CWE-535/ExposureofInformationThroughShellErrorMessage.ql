@@ -77,4 +77,4 @@ class ShellErrorExposureConfig extends TaintTracking::Configuration {
 
 from ShellErrorExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "Potential CWE-535: Exposure of Information Through Shell Error Message"
+select sink.getNode(), source, sink, "CWE-535: Exposure of Information Through Shell Error Message"

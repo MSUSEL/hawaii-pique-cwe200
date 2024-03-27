@@ -62,4 +62,4 @@ class SqlExceptionToConsoleConfig extends TaintTracking::Configuration {
 
 from SqlExceptionToConsoleConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "Potential CWE-550: (SQL) Server Generated Error Message Containing Sensitive Information."
+select sink.getNode(), source, sink, "CWE-550: (SQL) Server Generated Error Message Containing Sensitive Information."

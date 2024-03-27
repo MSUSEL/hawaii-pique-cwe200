@@ -41,5 +41,5 @@
      // Find sensitive variable expressions within those methods
      sve.getEnclosingCallable() = m
  
- select sve, "Potential CWE-531: Exposure of sensitive information in test code through a sensitive variable."
+ select sve, "CWE-531: Exposure of sensitive information in test code through a sensitive variable."
  

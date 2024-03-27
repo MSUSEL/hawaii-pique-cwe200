@@ -13,7 +13,7 @@ import java
 import semmle.code.java.security.SensitiveVariables
 
 from SensitiveStringLiteral ssl
-select ssl, "Potential CWE-540 violation: sensitive information in source code."
+select ssl, "CWE-540 violation: sensitive information in source code."
 
 
 

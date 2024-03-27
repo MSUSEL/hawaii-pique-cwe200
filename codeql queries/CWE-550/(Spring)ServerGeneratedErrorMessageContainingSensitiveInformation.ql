@@ -69,4 +69,4 @@ class SpringBootSensitiveInfoExposureConfig extends TaintTracking::Configuration
 
 from SpringBootSensitiveInfoExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "Potential CWE-550: (Spring) Server Generated Error Message Containing Sensitive Information."
+select sink.getNode(), source, sink, "CWE-550: (Spring) Server Generated Error Message Containing Sensitive Information."

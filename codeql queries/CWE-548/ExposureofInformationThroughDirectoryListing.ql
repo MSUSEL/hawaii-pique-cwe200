@@ -48,4 +48,4 @@ class DirectoryListingExposureConfig extends TaintTracking::Configuration {
 
 from DirectoryListingExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "Potential CWE-548: Directory listing information might be exposed."
+select sink.getNode(), source, sink, "CWE-548: Directory listing information might be exposed."
