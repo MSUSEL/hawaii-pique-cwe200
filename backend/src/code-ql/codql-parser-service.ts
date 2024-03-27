@@ -36,7 +36,7 @@ export class CodeQlParserService {
                 }));
 
                 var object={
-                    name: rule.shortDescription.text,
+                    name: rule.id,
                     type: rule.defaultConfiguration.level,
                     message: rule.fullDescription
                         ? rule.fullDescription.text
