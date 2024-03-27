@@ -75,6 +75,9 @@ export class ChatGptService {
                                     sensitiveVariables,
                                 );
                             variables = variables.concat(fileVariablesList);
+                            // Ensure unique variables
+                            variables = [...new Set(variables)];
+                            
                         });
                     } catch (error) {
                         console.error('Error processing GPT response:', error);
