@@ -29,9 +29,8 @@ export class ChatGptService {
         let variables = [];
         const fileList: any[] = [];
 
-        // New Code for preprocessing
         // Create batches of provided java code
-        let batchSize = 5;      // todo define in config somewhere?
+        let batchSize = 5; 
         for (let i = 0; i < files.length; i += batchSize) {
             const batch = files.slice(i, i + batchSize);
 
@@ -74,10 +73,7 @@ export class ChatGptService {
                                 this.extractVariableNamesMultiple(
                                     sensitiveVariables,
                                 );
-                            variables = variables.concat(fileVariablesList);
-                            // Ensure unique variables
-                            variables = [...new Set(variables)];
-                            
+                            variables = variables.concat(fileVariablesList);                            
                         });
                     } catch (error) {
                         console.error('Error processing GPT response:', error);
@@ -89,22 +85,9 @@ export class ChatGptService {
                 // Handle the error or continue
             }
         }
+        // Ensure unique variables
+        variables = [...new Set(variables)];
         return { variables, fileList };
-
-        // Previous Code
-        // for (var file of files) {
-        //     var fileContents = await this.fileService.readFileAsync(file);
-        //     var response = await this.createGptWithBackoff(fileContents);
-        //     fileList.push({
-        //         key: file,
-        //         value: response.message,
-        //     });
-        //     this.eventsGateway.emitDataToClients('data', file + ':');
-        //     this.eventsGateway.emitDataToClients('data', response.message);
-        //     var fileVariablesList = this.extractVariableNames(response.message);
-        //     variables = variables.concat(fileVariablesList);
-        // }
-        // return { variables, fileList };
     }
 
     async createDavinci(fileContents: string) {
