@@ -9,9 +9,10 @@ import DataFlow::PathGraph
  * @description Detects sensitive information being sent in query strings over GET requests, which could be exposed in server logs or browser history.
  * @kind path-problem
  * @problem.severity warning
- * @id java/cwe-598-general
+ * @id CWE-598
  * @tags security
  *       external/cwe/cwe-598
+ * @cwe CWE-598
  */
 
 /** A configuration for finding flows of sensitive information into URLs used in GET requests. */
