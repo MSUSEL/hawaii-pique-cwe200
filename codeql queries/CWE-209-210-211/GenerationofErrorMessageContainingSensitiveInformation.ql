@@ -12,7 +12,7 @@
 import java
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.dataflow.FlowSources
-// import semmle.code.java.security.SensitiveVariables
+import semmle.code.java.security.SensitiveVariables
 import DataFlow::PathGraph
 
 /** A configuration for tracking sensitive information flow into error messages. */
@@ -21,12 +21,7 @@ class SensitiveInfoInErrorMsgConfig extends TaintTracking::Configuration {
 
   override predicate isSource(DataFlow::Node source) {
     // Broad definition, consider refining
-    // exists(SensitiveVariableExpr sve | source.asExpr() = sve) or
-
-    exists(Variable v | 
-      v.getName().toLowerCase().regexpMatch(".*(filepath|username|password).*") and
-      source.asExpr() = v.getAnAccess()
-    )
+    exists(SensitiveVariableExpr sve | source.asExpr() = sve)   
   }
 
   override predicate isSink(DataFlow::Node sink) {
