@@ -1,9 +1,3 @@
-import java
-import semmle.code.java.dataflow.DataFlow
-import semmle.code.java.dataflow.TaintTracking
-import semmle.code.java.security.SensitiveVariables
-import DataFlow::PathGraph
-
 /**
  * @name Use of GET request method with sensitive query strings
  * @description Detects sensitive information being sent in query strings over GET requests, which could be exposed in server logs or browser history.
@@ -15,34 +9,39 @@ import DataFlow::PathGraph
  * @cwe CWE-598
  */
 
-/** A configuration for finding flows of sensitive information into URLs used in GET requests. */
-class SensitiveInfoInGetRequestConfig extends TaintTracking::Configuration {
-  SensitiveInfoInGetRequestConfig() { this = "SensitiveInfoInGetRequestConfig" }
+import java
+import semmle.code.java.dataflow.DataFlow
+import semmle.code.java.dataflow.TaintTracking
+import semmle.code.java.security.SensitiveVariables
+import DataFlow::PathGraph
+
+/** A configuration for finding flows from sensitive information sources to URL constructions. */
+class SensitiveInfoToUrlConfig extends TaintTracking::Configuration {
+  SensitiveInfoToUrlConfig() { this = "SensitiveInfoToUrlConfig" }
 
   override predicate isSource(DataFlow::Node source) {
-    exists(SensitiveVariableExpr sve |
-      source.asExpr() = sve
-    )
+    exists(SensitiveVariableExpr sve |  source.asExpr() = sve)
   }
 
   override predicate isSink(DataFlow::Node sink) {
-    // Focus on where URL objects are used to open a connection, ensuring the connection is configured for a GET request.
-    exists(MethodAccess ma, VarAccess va |
-      ma.getMethod().hasName("openConnection") and
-      va.getVariable().getType().(RefType).hasQualifiedName("java.net", "URL") and
-      DataFlow::localExprFlow(va, ma.getQualifier()) and
-      exists(MethodAccess setMethod |
-        setMethod.getMethod().hasName("setRequestMethod") and
-        setMethod.getMethod().getDeclaringType().hasQualifiedName("java.net", "HttpURLConnection") and
-        setMethod.getArgument(0).(StringLiteral).getValue() = "GET" and
-        DataFlow::localExprFlow(ma, setMethod.getQualifier())
+    exists(ConstructorCall urlConstructor |
+      urlConstructor.getConstructedType().hasQualifiedName("java.net", "URL") and
+      urlConstructor.getAnArgument() = sink.asExpr() and
+      // Find the usage of the URL in an openConnection call
+      exists(MethodAccess openConnection |
+        openConnection.getMethod().hasName("openConnection") and
+        DataFlow::localExprFlow(urlConstructor, openConnection.getQualifier()) and
+        // Ensure this connection is used in a setRequestMethod call with "GET"
+        exists(MethodAccess setRequestMethod |
+          setRequestMethod.getMethod().hasName("setRequestMethod") and
+          setRequestMethod.getArgument(0).(StringLiteral).getValue() = "GET" and
+          DataFlow::localExprFlow(openConnection, setRequestMethod.getQualifier())
+        )
       )
-      |
-      sink.asExpr() = va
     )
   }
 }
 
-from SensitiveInfoInGetRequestConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
+from SensitiveInfoToUrlConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
 where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "CWE-598: Sensitive information exposed via GET request query string."
+select sink.getNode(), source, sink, "Sensitive information used in a URL constructed for a GET request."
