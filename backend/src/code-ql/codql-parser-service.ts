@@ -16,37 +16,51 @@ export class CodeQlParserService {
         return {rulesTree,locationsTree};
     }
 
-    parseRules(rules: any[], results: any[],sourcePath:string) {
-        var rulesList = [];
+    parseRules(rules: any[], results: any[], sourcePath: string) {
+        const rulesMap = new Map();
+        
         for (let i = 0; i < rules.length; i++) {
             let rule = rules[i];
+            let ruleDescription = cweDescriptions.get(rule.id) || "Description not available";
+            let ruleKey = `${rule.id}: ${ruleDescription}`; // Concatenate rule ID and description
+    
             var files = results
                 .filter((item) => item.ruleIndex == i)
                 .map((file) => ({
                     name: this.fileService.getFilenameFromPath(
-                        file.locations[0]?.physicalLocation.artifactLocation
-                            .uri,
+                        file.locations[0]?.physicalLocation.artifactLocation.uri,
                     ),
-                    fullPath: this.fileService.processFilePath(sourcePath,
-                        file.locations[0]?.physicalLocation.artifactLocation
-                            .uri,
+                    fullPath: this.fileService.processFilePath(
+                        sourcePath,
+                        file.locations[0]?.physicalLocation.artifactLocation.uri,
                     ),
                     message: file.message.text,
                     region: file.locations[0]?.physicalLocation.region,
                 }));
-
-                var object={
-                    name: rule.id,
+    
+            // Check if the concatenated ruleKey already exists in the map
+            if (rulesMap.has(ruleKey)) {
+                const existingEntry = rulesMap.get(ruleKey);
+                existingEntry.files = existingEntry.files.concat(files);
+                rulesMap.set(ruleKey, existingEntry);
+            } else {
+                // Create a new entry with the concatenated ruleKey if it does not exist
+                var object = {
+                    name: ruleKey,
                     type: rule.defaultConfiguration.level,
-                    message: rule.fullDescription
-                        ? rule.fullDescription.text
-                        : rule.shortDescription.text,
+                    message: rule.fullDescription ? rule.fullDescription.text : rule.shortDescription.text,
                     files: files,
-                }
-                if(object.files.length) rulesList.push(object);
+                    description: ruleDescription,
+                };
+                if (object.files.length) rulesMap.set(ruleKey, object);
+            }
         }
-        return rulesList;
+    
+        // Convert the Map values to an array since the final result expects an array
+        return Array.from(rulesMap.values());
     }
+    
+    
 
     parseResults(rules: any[], results: any[],sourcePath:string) {
         var resultList: Array<{ name: string; fullPath: string, files:any[] }> = [];
@@ -81,3 +95,31 @@ export class CodeQlParserService {
         return resultList;
     }
 }
+
+const cweDescriptions = new Map([
+    ["CWE-200", "Exposure of Sensitive Information to an Unauthorized Actor"],
+    ["CWE-201", "Insertion of Sensitive Information Into Sent Data"],
+    ["CWE-204", "Observable Response Discrepancy"],
+    ["CWE-205", "Observable Behavioral Discrepancy"],
+    ["CWE-208", "Observable Timing Discrepancy"],
+    ["CWE-209", "Generation of Error Message Containing Sensitive Information"],
+    ["CWE-210", "Self-generated Error Message Containing Sensitive Information"],
+    ["CWE-211", "Externally-Generated Error Message Containing Sensitive Information"],
+    ["CWE-213", "Exposure of Sensitive Information Due to Incompatible Policies"],
+    ["CWE-214", "Invocation of Process Using Visible Sensitive Information"],
+    ["CWE-215", "Insertion of Sensitive Information Into Debugging Code"],
+    ["CWE-497", "Exposure of Sensitive System Information to an Unauthorized Control Sphere"],
+    ["CWE-531", "Inclusion of Sensitive Information in Test Code"],
+    ["CWE-532", "Insertion of Sensitive Information into Log File"],
+    ["CWE-535", "Exposure of Information Through Shell Error Message"],
+    ["CWE-536", "Servlet Runtime Error Message Containing Sensitive Information"],
+    ["CWE-537", "Java Runtime Error Message Containing Sensitive Information"],
+    ["CWE-538", "Insertion of Sensitive Information into Externally-Accessible File or Directory"],
+    ["CWE-540", "Inclusion of Sensitive Information in Source Code"],
+    ["CWE-541", "Inclusion of Sensitive Information in an Include File"],
+    ["CWE-548", "Exposure of Information Through Directory Listing"],
+    ["CWE-550", "Server-generated Error Message Containing Sensitive Information"],
+    ["CWE-598", "Use of GET Request Method With Sensitive Query Strings"],
+    ["CWE-615", "Inclusion of Sensitive Information in Source Code Comments"],
+    ["CWE-651", "Exposure of WSDL File Containing Sensitive Information"],
+]);
