@@ -22,7 +22,9 @@ export class CodeQlParserService {
         for (let i = 0; i < rules.length; i++) {
             let rule = rules[i];
             let ruleDescription = cweDescriptions.get(rule.id) || "Description not available";
-            let ruleKey = `${rule.id}: ${ruleDescription}`; // Concatenate rule ID and description
+            // let ruleKey = `${rule.id}: ${ruleDescription}`; // Concatenate rule ID and description
+            let ruleKey = `${rule.id}`; // Concatenate rule ID and description
+
     
             var files = results
                 .filter((item) => item.ruleIndex == i)
