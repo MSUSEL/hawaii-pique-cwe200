@@ -49,10 +49,10 @@ export class CodeQlService {
         // Get Sensitive variables from gpt
                     
                     // Used for testing
-                    let slice = javaFiles.slice(0, 10);  
-                    const data=await this.gptService.openAiGetSensitiveVariables(slice);
+                    // let slice = javaFiles.slice(0, 10);  
+                    // const data=await this.gptService.openAiGetSensitiveVariables(slice);
 
-        // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Replace String with findings?
         const mapping = this.formatMappings(data.sensitiveVariablesMapping);
@@ -214,7 +214,7 @@ export class CodeQlService {
         keys.forEach((key, index) => {
             // Correctly map each variable to a string with surrounding quotes and then join them
             const variablesString = mapping[key].map(v => `${v}`).join(", ");
-            result += `fileName = "${key}" and variableName = [${variablesString}]`;
+            result += `fileName = "${key}" and result = [${variablesString}]`;
             
             // Add the ' or\n' between entries, but not after the last entry
             if (index < keys.length - 1) {
