@@ -67,3 +67,6 @@ backend/Files/CWEToyDataset/CWEToyDatasetdb
 .angular
 
 codeql-pack.lock.yml
+backend/Files/CWEToyDataset/data.json
+testing/codeql_results.json
+testing/codeql_results.json

@@ -3,13 +3,13 @@
         "true_positives": [],
         "false_positives": [],
         "true_negatives": [
-            "GOOD_GenericErrorMessages.java",
-            "GOOD_MinimalDataLogging.java"
+            "GOOD_MinimalDataLogging.java",
+            "GOOD_GenericErrorMessages.java"
         ],
         "false_negatives": [
-            "BAD_UserDetailsExposure.java",
             "BAD_VerboseErrorMessages.java",
-            "BAD_LoggingSensitiveInformation.java"
+            "BAD_LoggingSensitiveInformation.java",
+            "BAD_UserDetailsExposure.java"
         ]
     },
     "CWE-201": {
@@ -20,8 +20,8 @@
             "GOOD_EncryptDataBeforeTransmission.java"
         ],
         "false_negatives": [
-            "BAD_SendSensitiveInfoInGetRequest.java",
             "BAD_SendSensitiveDataViaEmail.java",
+            "BAD_SendSensitiveInfoInGetRequest.java",
             "BAD_LogSensitiveInfoBeforeSending.java"
         ]
     },
@@ -29,13 +29,13 @@
         "true_positives": [],
         "false_positives": [],
         "true_negatives": [
-            "GOOD_ConsistentAuthenticationTiming.java",
-            "GOOD_UniformLoginResponse.java"
+            "GOOD_UniformLoginResponse.java",
+            "GOOD_ConsistentAuthenticationTiming.java"
         ],
         "false_negatives": [
-            "BAD_ConditionalErrorHandling.java",
+            "BAD_LoginResponseDiscrepancy.java",
             "BAD_AuthenticationTiming.java",
-            "BAD_LoginResponseDiscrepancy.java"
+            "BAD_ConditionalErrorHandling.java"
         ]
     },
     "CWE-208": {
@@ -46,22 +46,23 @@
             "GOOD_ConstantTimePasswordCheck.java"
         ],
         "false_negatives": [
-            "BAD_VariableResponseTimeDBQuery.java",
+            "BAD_EarlyReturnPasswordCheck.java",
             "BAD_ConditionalProcessingTiming.java",
-            "BAD_EarlyReturnPasswordCheck.java"
+            "BAD_VariableResponseTimeDBQuery.java"
         ]
     },
     "CWE-209": {
-        "true_positives": [],
-        "false_positives": [],
+        "true_positives": [
+            "BAD_VerboseAuthenticationFailure.java",
+            "BAD_SensitivePathDisclosureInErrors.java"
+        ],
         "true_negatives": [
             "GOOD_GenericDatabaseErrorHandling.java",
             "GOOD_GeneralizedAuthenticationFeedback.java"
         ],
+        "false_positives": [],
         "false_negatives": [
-            "BAD_DetailedDatabaseErrorExposure.java",
-            "BAD_SensitivePathDisclosureInErrors.java",
-            "BAD_VerboseAuthenticationFailure.java"
+            "BAD_DetailedDatabaseErrorExposure.java"
         ]
     },
     "CWE-215": {
@@ -80,15 +81,16 @@
     },
     "CWE-531": {
         "true_positives": [
+            "BAD_HardcodedCredentialsTest.java",
             "BAD_EmbeddedSensitiveDataInTests.java",
-            "BAD_ApiKeyExposureTestConfig.java",
-            "BAD_HardcodedCredentialsTest.java"
+            "BAD_ApiKeyExposureTestConfig.java"
         ],
         "false_positives": [
-            "GOOD_EnvironmentVariablesForSensitiveDataTest.java",
+            "GOOD_EnvironmentVariablesForSensitiveDataTest.java"
+        ],
+        "true_negatives": [
             "GOOD_ExternalizedSensitiveInfoConfigTest.java"
         ],
-        "true_negatives": [],
         "false_negatives": []
     },
     "CWE-532": {
@@ -97,8 +99,8 @@
             "BAD_LogUserCredentials.java"
         ],
         "true_negatives": [
-            "GOOD_FilterSensitiveInfoFromLogs.java",
-            "GOOD_SecureLoggingPractices.java"
+            "GOOD_SecureLoggingPractices.java",
+            "GOOD_FilterSensitiveInfoFromLogs.java"
         ],
         "false_positives": [],
         "false_negatives": [
@@ -137,25 +139,12 @@
             "BAD_NetworkConfigError.java"
         ],
         "true_negatives": [
-            "GOOD_SecureErrorLogging.java",
-            "GOOD_ApiErrorResponseHandling.java"
+            "GOOD_ApiErrorResponseHandling.java",
+            "GOOD_SecureErrorLogging.java"
         ],
         "false_positives": [],
         "false_negatives": [
             "BAD_FileReadSensitiveError.java"
-        ]
-    },
-    "CWE-538": {
-        "true_positives": [],
-        "false_positives": [],
-        "true_negatives": [
-            "GOOD_SecureLogging.java",
-            "GOOD_SecureConfigStorage.java"
-        ],
-        "false_negatives": [
-            "BAD_LoggingCredentials.java",
-            "BAD_LogPaymentTransactions.java",
-            "BAD_StoreDbConnectionInfo.java"
         ]
     },
     "CWE-540": {
@@ -168,14 +157,14 @@
         ],
         "false_positives": [],
         "false_negatives": [
-            "BAD_HardcodedCredentials.java",
-            "BAD_ApiKeyEmbedded.java"
+            "BAD_ApiKeyEmbedded.java",
+            "BAD_HardcodedCredentials.java"
         ]
     },
     "CWE-548": {
         "true_positives": [
-            "BAD_DocumentDirectoryListingServlet.java",
-            "BAD_InsecureDirectoryListingServlet.java"
+            "BAD_InsecureDirectoryListingServlet.java",
+            "BAD_DocumentDirectoryListingServlet.java"
         ],
         "true_negatives": [
             "GOOD_SecureBackendFileProcessingServlet.java",
@@ -193,23 +182,23 @@
             "BAD_DetailedRuntimeExceptionServlet.java"
         ],
         "true_negatives": [
-            "GOOD_GenericErrorHandling.java",
-            "GOOD_SecureErrorLogging2.java"
+            "GOOD_SecureErrorLogging2.java",
+            "GOOD_GenericErrorHandling.java"
         ],
         "false_positives": [],
         "false_negatives": []
     },
     "CWE-598": {
         "true_positives": [
-            "BAD_HealthInfoSubmissionGET.java",
             "BAD_CreditCardSubmissionGET.java",
+            "BAD_HealthInfoSubmissionGET.java",
             "BAD_PasswordChangeGET.java"
         ],
-        "false_positives": [
-            "GOOD_FetchPublicData.java",
-            "GOOD_FetchWeatherData.java"
+        "true_negatives": [
+            "GOOD_FetchWeatherData.java",
+            "GOOD_FetchPublicData.java"
         ],
-        "true_negatives": [],
+        "false_positives": [],
         "false_negatives": []
     }
 }
