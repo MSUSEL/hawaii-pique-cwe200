@@ -28,6 +28,7 @@ export class ChatGptService {
     async openAiGetSensitiveVariables(files: string[]) {
         let variables = [];
         const fileList: any[] = [];
+        let sensitiveVariablesMapping = new Map<string, string[]>();
 
         // Create batches of provided java code
         let batchSize = 5; 
@@ -73,7 +74,9 @@ export class ChatGptService {
                                 this.extractVariableNamesMultiple(
                                     sensitiveVariables,
                                 );
-                            variables = variables.concat(fileVariablesList);                            
+                            variables = variables.concat(fileVariablesList);
+                            sensitiveVariablesMapping[fileName] = fileVariablesList;
+                            
                         });
                     } catch (error) {
                         console.error('Error processing GPT response:', error);
@@ -87,7 +90,7 @@ export class ChatGptService {
         }
         // Ensure unique variables
         variables = [...new Set(variables)];
-        return { variables, fileList };
+        return { variables, fileList, sensitiveVariablesMapping };
     }
 
     async createDavinci(fileContents: string) {

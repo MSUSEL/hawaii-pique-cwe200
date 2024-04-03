@@ -39,16 +39,27 @@ export class CodeQlService {
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
 
-        // this.debugChatGPT(sourcePath);
+        // const data = this.debugChatGPT(sourcePath);
         // await this.runChatGPT(sourcePath);
+
+
 
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
 
         // Get Sensitive variables from gpt
+                    
+                    // Used for testing
+                    // let slice = javaFiles.slice(0, 10);  
+                    // const data=await this.gptService.openAiGetSensitiveVariables(slice);
+
         const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Replace String with findings?
-        const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+        const mapping = this.formatMappings(data.sensitiveVariablesMapping);
+        let fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+        fileContents = fileContents.replace("----------", mapping);
+
+
 
         // Write response to file
         await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
@@ -82,7 +93,8 @@ export class CodeQlService {
         const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Replace String with findings?
-        const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+        const fileContents = this.formatMappings(data.sensitiveVariablesMapping)
+        // const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
 
         // Write response to file
         await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
@@ -104,6 +116,8 @@ export class CodeQlService {
             else{
                 fs.appendFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
             }
+
+            return data;
         }
     }
 
@@ -193,4 +207,23 @@ export class CodeQlService {
 
 
     }
+
+    formatMappings(mapping): string {
+        let result: string = "";
+        // Only consider keys with non-empty values, since this causes issues with codeql later on.
+        const keys = Object.keys(mapping).filter(key => mapping[key].length > 0);
+        keys.forEach((key, index) => {
+            // Correctly map each variable to a string with surrounding quotes and then join them
+            const variablesString = mapping[key].map(v => `${v}`).join(", ");
+            result += `fileName = "${key}" and result = [${variablesString}]`;
+            
+            // Add the ' or\n' between entries, but not after the last entry
+            if (index < keys.length - 1) {
+                result += " or\n";
+            }
+        });
+        return result;
+    }
+    
+    
 }

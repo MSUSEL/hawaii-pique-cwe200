@@ -7,16 +7,27 @@ private string suspicious() {
         ======
     ]
 }
+
+
+string suspicious(string fileName) {
+----------
+  }
+
+
 class SensitiveVariable extends Variable {
   SensitiveVariable() {
-    this.getName().matches(suspicious())
+    exists(File f | 
+      f = this.getCompilationUnit().getFile() and
+      this.getName().matches(suspicious(f.getBaseName()))
+    )
   }
 }
 
 class SensitiveVariableExpr extends Expr {
   SensitiveVariableExpr() {
-    exists(Variable v | this = v.getAnAccess() |
-    v.getName().matches(suspicious()) and
+    exists(Variable v, File f | this = v.getAnAccess() and
+      f = v.getCompilationUnit().getFile() and
+      v.getName().matches(suspicious(f.getBaseName())) and
       not this instanceof CompileTimeConstantExpr
     )
   }
@@ -25,7 +36,10 @@ class SensitiveVariableExpr extends Expr {
 class SensitiveStringLiteral extends StringLiteral {
   SensitiveStringLiteral() {
     // Check for matches against the suspicious patterns
-    this.getValue().regexpMatch(suspicious()) and
+    exists(File f | 
+      f = this.getCompilationUnit().getFile() and
+      this.getValue().regexpMatch(suspicious(f.getBaseName()))    
+      ) and
     not exists(MethodAccess ma |
       ma.getAnArgument() = this and
       (
