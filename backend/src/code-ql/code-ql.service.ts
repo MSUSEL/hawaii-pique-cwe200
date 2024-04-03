@@ -210,7 +210,8 @@ export class CodeQlService {
 
     formatMappings(mapping): string {
         let result: string = "";
-        const keys = Object.keys(mapping);
+        // Only consider keys with non-empty values, since this causes issues with codeql later on.
+        const keys = Object.keys(mapping).filter(key => mapping[key].length > 0);
         keys.forEach((key, index) => {
             // Correctly map each variable to a string with surrounding quotes and then join them
             const variablesString = mapping[key].map(v => `${v}`).join(", ");
