@@ -7,6 +7,12 @@ private string suspicious() {
         ======
     ]
 }
+
+predicate suspicious(string fileName, string variableName) {
+----------
+}
+
+
 class SensitiveVariable extends Variable {
   SensitiveVariable() {
     this.getName().matches(suspicious())
