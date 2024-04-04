@@ -31,81 +31,89 @@ export class ChatGptService {
         const fileList: any[] = [];
         let sensitiveVariablesMapping = new Map<string, string[]>();
         let sensitiveStringsMapping = new Map<string, string[]>();
+        const concurrentCallsLimit = 5; // Maximum number of concurrent API calls
+        const batches = []; // Array to hold all batch promises
 
 
         // Create batches of provided java code
         let batchSize = 5; 
         for (let i = 0; i < files.length; i += batchSize) {
-            const batch = files.slice(i, i + batchSize);
+            batches.push(files.slice(i, i + batchSize));
+        }
 
+        // Function to process a single batch
+    const processBatch = async (batch: string[], index) => {
+        let processedFiles = await this.fileUtilService.preprocessFiles(batch);
+
+        if (typeof processedFiles === 'string') {
             try {
-                let processedFiles = await this.fileUtilService.preprocessFiles(
-                    batch,
-                );
+                const response = await this.createGptWithBackoff(processedFiles, index);
+                console.log(`Results for batch ${index} \n ${response.message}`);
 
-                // todo is there a case when the files aren't a string?
-                if (typeof processedFiles === 'string') {
-                    try {
-                        // Attempt to query GPT with files
-                        const response = await this.createGptWithBackoff(
-                            processedFiles,
+                const json = JSON.parse(response.message);
+
+                json.files.forEach((file: any) => {
+                    // Extract the sensitive variables for each file
+                    let fileName = file.fileName;
+                    let sensitiveVariables = file.sensitiveVariables;
+                    let sensitiveStrings = file.sensitiveStrings;
+
+                    fileList.push({
+                        key: fileName,
+                        value: sensitiveVariables,
+                    });
+
+                    this.eventsGateway.emitDataToClients(
+                        'data',
+                        fileName + ':',
+                    );
+                    this.eventsGateway.emitDataToClients(
+                        'data',
+                        sensitiveVariables,
+                    );
+
+                    const fileVariablesList =
+                        this.extractVariableNamesMultiple(
+                            sensitiveVariables,
                         );
-                        console.log(response.message);
-
-                        // Assuming response.message is a JSON string, parse response
-                        const json = JSON.parse(response.message);
-                        json.files.forEach((file: any) => {
-                            // Extract the sensitive variables for each file
-                            let fileName = file.fileName;
-                            let sensitiveVariables = file.sensitiveVariables;
-                            let sensitiveStrings = file.sensitiveStrings;
-
-                            fileList.push({
-                                key: fileName,
-                                value: sensitiveVariables,
-                            });
-
-                            this.eventsGateway.emitDataToClients(
-                                'data',
-                                fileName + ':',
-                            );
-                            this.eventsGateway.emitDataToClients(
-                                'data',
-                                sensitiveVariables,
-                            );
-
-                            const fileVariablesList =
-                                this.extractVariableNamesMultiple(
-                                    sensitiveVariables,
-                                );
 
 
-                                let fileStringList =
-                                this.extractVariableNamesMultiple(
-                                    sensitiveStrings,
-                                );  
-                                
-                                // fileStringList = processStrings(fileStringList);
+                        let fileStringList =
+                        this.extractVariableNamesMultiple(
+                            sensitiveStrings,
+                        );  
+                        
+                        // fileStringList = processStrings(fileStringList);
 
-                            variables = variables.concat(fileVariablesList);
-                            sensitiveVariablesMapping[fileName] = fileVariablesList;
+                    variables = variables.concat(fileVariablesList);
+                    sensitiveVariablesMapping[fileName] = fileVariablesList;
 
-                            strings = strings.concat(fileStringList);
-                            sensitiveStringsMapping[fileName] = fileStringList;
-                            
-                        });
-                    } catch (error) {
-                        console.error('Error processing GPT response:', error);
-                        // Handle the error or continue
-                    }
-                }
+                    strings = strings.concat(fileStringList);
+                    sensitiveStringsMapping[fileName] = fileStringList;
+                    
+                });
+
             } catch (error) {
-                console.error('Error in file processing:', error);
-                // Handle the error or continue
+                console.error('Error processing GPT response:', error);
             }
         }
-        // Ensure unique variables
+    };
+
+        // Function to limit concurrent batch processing
+        const limitConcurrentBatches = async (batches: string[][]) => {
+            const promises = batches.map(async (batch, index) => {
+                return processBatch(batch, index);
+            });
+            await Promise.allSettled(promises);
+        };
+
+        limitConcurrentBatches(batches);
+    
+        // Post-processing
         variables = [...new Set(variables)];
+
+
+
         return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping };
     }
 
@@ -142,16 +150,14 @@ export class ChatGptService {
      * @param retries number of request tries
      * @param delayMs delay between requests in milliseconds
      */
-    async createGptWithBackoff(fileContents: string, retries = 10, delayMs = 1000) {
+    async createGptWithBackoff(fileContents: string, index, retries = 10, delayMs = 1000) {
         for (let i = 0; i < retries; i++) {
             try {
                 // Attempt to make a new GPT and get response
                 return await this.createGpt(fileContents);
             } catch (error) {
                 // Report failure
-                console.error(
-                    `Attempt ${i + 1}: Error caught in createGptWithBackoff`,
-                );
+                // console.error(`Attempt ${i + 1}: Error caught in createGptWithBackoff`);
 
                 // Calculate time until next request
                 const isRateLimitError = error.response && error.response.status === 429;
@@ -159,7 +165,7 @@ export class ChatGptService {
                     // Instead of exponential backoff, use the time specified in the header
                     try{
                         let timeOut = parseFloat(error.response.headers['x-ratelimit-reset-tokens'].replace('s', ''));
-                        console.log(`Rate limit hit. Retrying in ${timeOut} seconds`)
+                        console.log(`Rate limit hit. Retrying batch ${index} in ${timeOut} seconds`)
                         await this.delay(timeOut * 1000);
                     }
                     // If there is an issue with the header, use exponential backoff
