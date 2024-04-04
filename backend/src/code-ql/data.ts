@@ -13,7 +13,11 @@ string suspicious(string fileName) {
 ----------
   }
 
+string suspiciousStrings(string fileName) {
+++++++++++
+    }
 
+    
 class SensitiveVariable extends Variable {
   SensitiveVariable() {
     exists(File f | 
