@@ -14,7 +14,6 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 - CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
 - CWE-201: Insertion of Sensitive Information Into Sent Data
 - CWE-204: Observable Response Discrepancy
-- CWE-205: Observable Behavioral Discrepancy
 - CWE-208: Observable Timing Discrepancy
 - CWE-209: Generation of Error Message Containing Sensitive Information
 - CWE-215: Insertion of Sensitive Information Into Debugging Code
@@ -31,6 +30,7 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 
 
 ### Future Coverage ###
+- CWE-205: Observable Behavioral Discrepancy
 - CWE-210: Self-generated Error Message Containing Sensitive Information
 - CWE-211: Externally-Generated Error Message Containing Sensitive Information
 - CWE-213: Exposure of Sensitive Information Due to Incompatible Policies
