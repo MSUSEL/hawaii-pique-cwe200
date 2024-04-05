@@ -49,23 +49,23 @@ export class CodeQlService {
         // Get Sensitive variables from gpt
                     
                     // // Used for testing
-                    // let slice = javaFiles.slice(0, 10);  
+                    // let slice = javaFiles.slice(0, 20);  
                     // const data=await this.gptService.openAiGetSensitiveVariables(slice);
 
-        // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Replace String with findings?
-        // const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
-        // const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
-        // let fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
-        // fileContents = fileContents.replace("----------", variablesMapping);
-        // fileContents = fileContents.replace("++++++++++", stringsMapping);
+        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
+        const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
+        let fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+        fileContents = fileContents.replace("----------", variablesMapping);
+        fileContents = fileContents.replace("++++++++++", stringsMapping);
 
 
 
         // Write response to file
-        // await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
-        // await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+        await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
+        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
 
 
 
