@@ -79,6 +79,15 @@ npm run start-frontend
 
 **Note: ** 4 and 5 may be need to run in separate shells / consoles
 
+
+### Query Testing ###
+There is a labeled toy dataset located in `backend/Files/CWEToyDataset` that includes 5 test cases for each CWE. Within each specific CWE file are 5 .java files with 3 BAD (Vulnerable) and 2 GOOD (Secure) code examples. 
+To test the results of the queries run this command `codeql database analyze backend/Files/CWEToyDataset/CWEToyDatasetdb --format=sarifv2.1.0 --output=out.sarif --rerun codeql/codeql-custom-queries-java` from the project root. 
+After this is complete, navigate to `testing/toy-dataset-results.py` and run this file. You should see the accuracies printed out in the terminal. If you want to know exactly how each query classified their corresponding test cases. Look in the `codeql_results.json` file located in the same directory.
+
+#### Making your queries work with the testing script ####
+If you make a new query or modify one, make sure you add the @id CWE-<NUMBER> and @cwe CWE-<NUMBER> tags to the meta data at the top of the query.
+
 ### Contribution guidelines ###
 
 * Writing tests
