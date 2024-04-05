@@ -4,10 +4,14 @@ import { ConfigService } from '@nestjs/config';
 import { FileUtilService } from 'src/files/fileUtilService';
 import { EventsGateway } from 'src/events/events.gateway';
 import * as path from 'path';
+import * as cliProgress from 'cli-progress';
+
 
 @Injectable()
 export class ChatGptService {
     openai: OpenAI.OpenAIApi = null;
+    progressBar: any;
+    debug: string;
     constructor(
         private configService: ConfigService,
         private eventsGateway: EventsGateway,
@@ -18,6 +22,9 @@ export class ChatGptService {
             apiKey: api_key,
         });
         this.openai = new OpenAI.OpenAIApi(configuration);
+        this.progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+        this.debug = this.configService.get('DEBUG');
+
     }
 
     /**
@@ -50,8 +57,13 @@ export class ChatGptService {
             try {
                 const response = await this.createGptWithBackoff(processedFiles, index);
                 completedBatches += 1;
-                console.log(`\r${completedBatches / batches.length * 100}% of files processed`);
-                // console.log(`Results for batch ${index} \n ${response.message}`);
+                let progress = completedBatches / batches.length * 100;
+                this.progressBar.update(progress);
+                // console.log(`\r${completedBatches / batches.length * 100}% of files processed`);
+
+                if (this.debug.toLowerCase() === 'true') {
+                    console.log(`Results for batch ${index} \n ${response.message}`);
+                }
 
                 const json = JSON.parse(response.message);
 
@@ -104,17 +116,19 @@ export class ChatGptService {
 
         // Function to limit concurrent batch processing
         const limitConcurrentBatches = async (batches: string[][]) => {
+            console.log("Finding Sensitive Information in Project")
+            this.progressBar.start(100, 0);
             const promises = batches.map(async (batch, index) => {
                 return processBatch(batch, index);
             });
             await Promise.allSettled(promises);
+            this.progressBar.stop();
         };
 
         await limitConcurrentBatches(batches);
     
         // Post-processing
         variables = [...new Set(variables)];
-
 
 
         return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping };
@@ -168,7 +182,11 @@ export class ChatGptService {
                     // Instead of exponential backoff, use the time specified in the header
                     try{
                         let timeOut = parseFloat(error.response.headers['x-ratelimit-reset-tokens'].replace('s', ''));
-                        console.log(`Rate limit hit. Retrying batch ${index} in ${timeOut} seconds`)
+                        
+                        if (this.debug.toLowerCase() === 'true'){
+                            console.log(`Rate limit hit. Retrying batch ${index} in ${timeOut} seconds`)
+                        }
+
                         await this.delay(timeOut * 1000);
                     }
                     // If there is an issue with the header, use exponential backoff
@@ -309,7 +327,9 @@ export class ChatGptService {
             variables = text.map((variable) => `\"${variable.name}\"`);
             return variables;
         } catch (e) {
-            console.log(text);
+            if (this.debug.toLowerCase() === 'true') {
+                console.log(text);
+            }
             return variables;
         }
         return variables;
@@ -324,7 +344,9 @@ export class ChatGptService {
             );
             return variables;
         } catch (e) {
-            console.log(text);
+            if (this.debug.toLowerCase() === 'true') {
+                console.log(text);
+            }
             return variables;
         }
     }
