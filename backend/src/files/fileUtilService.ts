@@ -191,7 +191,8 @@ export class FileUtilService {
 
         // init new processed file
         let processedLines: string[] = [];
-        processedLines.push('-----BEGIN FILE: [' + filePath + ']-----');
+        let fileName = path.basename(filePath);
+        processedLines.push('-----BEGIN FILE: [' + fileName + ']-----');
         let inMultilineComment = false;
         const sensitiveKeywords = [
             "copyright"

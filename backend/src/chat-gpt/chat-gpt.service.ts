@@ -33,6 +33,7 @@ export class ChatGptService {
         let sensitiveStringsMapping = new Map<string, string[]>();
         const concurrentCallsLimit = 5; // Maximum number of concurrent API calls
         const batches = []; // Array to hold all batch promises
+        let completedBatches = 0; // Number of completed batches
 
 
         // Create batches of provided java code
@@ -48,7 +49,9 @@ export class ChatGptService {
         if (typeof processedFiles === 'string') {
             try {
                 const response = await this.createGptWithBackoff(processedFiles, index);
-                console.log(`Results for batch ${index} \n ${response.message}`);
+                completedBatches += 1;
+                console.log(`\r${completedBatches / batches.length * 100}% of files processed`);
+                // console.log(`Results for batch ${index} \n ${response.message}`);
 
                 const json = JSON.parse(response.message);
 
@@ -107,7 +110,7 @@ export class ChatGptService {
             await Promise.allSettled(promises);
         };
 
-        limitConcurrentBatches(batches);
+        await limitConcurrentBatches(batches);
     
         // Post-processing
         variables = [...new Set(variables)];
@@ -187,43 +190,20 @@ export class ChatGptService {
      * @param code code to append to query prompt
      */
     createQuery(code: string) {
-        // `You are a security analyst tasked with identifying sensitive variables related to system configurations, database connections, and credentials, which could potentially have security issues in a given source code. Your goal is to identify variables that, if exposed to external users or hackers, could lead to security vulnerabilities or breaches. Please analyze the provided source code and list down any sensitive variables related to system configurations, database connections, or credentials that fit the criteria mentioned above. Please provide the names of the sensitive variables only, without disclosing any specific values. Your analysis will help in securing the application and preventing potential data leaks or unauthorized access.please I want your response in json format like
-        // {
-        //     "sensitiveVariables": [
-        //       {
-        //         "name": "variableName1",
-        //         "description": "variableDescription"
-        //       },
-        //       {
-        //         "name": "variableName2",
-        //         "description": "variableDescription"
-        //       },
-        //       {
-        //         "name": "variableNameN",
-        //         "description": "variableDescription"
-        //       }
-        //     ]
-        // }
-
-        // New Prompt
-        // todo move to a const config?
         const message = `
         You are a security analyst tasked with identifying sensitive variables related to system configurations, database connections, and credentials in multiple source code files. Your goal is to identify variables that, if exposed to external users or hackers, could lead to security vulnerabilities or breaches. Please analyze the provided source code files and list down any sensitive variables related to system configurations, database connections, or credentials that fit the criteria mentioned above for each file separately. The beginning of each file is marked by "-----BEGIN FILE: [FileName]-----", and the end is marked by "-----END FILE: [FileName]-----". Please provide the names of the sensitive variables only, without disclosing any specific values, and format your response in JSON. Your analysis will help in securing the application and preventing potential data leaks or unauthorized access. I only want the JSON response not anything else. Also, give me all the sensative variables for a specifc file before moving to the next file. 
         
-        Also, identify all sensitive hardcoded strings. For clarity, a 'sensitive string' is defined as any hardcoded text that could potentially contain sensitive information. This includes but is not limited to passwords, API keys, and personal information that is explicitly written in the code. Where if someone had access to the source code, they could see the information.
+        Also, identify all sensitive hardcoded strings. For clarity, a 'sensitive string' is defined as any hardcoded text that could potentially contain sensitive information. This includes but is not limited to passwords, API keys, and personal information that is explicitly written in the code. Please focus on Personally Identifiable Information. Where if someone had access to the source code, they could see the information.
 
         Since I want your response to be in JSON and I will be taking your response and making a string array with it, I need you to make sure that it won’t break the format. Here are some formatting considerations I need you to not do.
 
         1) I need each sensitive string as its own element in the array. Even if there are multiple in a single concatenated string. Each of them should be by themselves. Don’t ever have + concatenated strings since this will break formatting.
         
-        2) Next, don’t response with sensitive strings that will break a string array. Such as ones that have \ or nested quotes that would cause it to not be a valid string in TypeScript. IF IT HAS A \ DON"T SEND IT. The same goes for a generic error message. 
+        2) Next, don’t response with sensitive strings that will break a string array. Such as ones that have \ or nested quotes that would cause it to not be a valid string in TypeScript. IF IT HAS A backslash in it "\" DON"T SEND IT as that breaks formatting SUPER IMPORTANT. The same goes for a generic error message. 
 
         3) If there is a case where a string is in a key value format I would like you to just give me the value and drop the key. For example, if a result is 'Email: john.doe@example.com', only 'john.doe@example.com' should be returned. If there are multiple key value pairs in a single sensitive string, I want each of the values to be their own element. For example, "name": "Name: John Doe, Email: john.doe@example.com, Phone: 555-0100" would result in “John Doe”, “john.doe@example.com”, “555-0100”. Notice how all of the keys are dropped.   
 
         Just remember that it is just as important to find sensitive hardcoded strings as it is to make sure that your response does not break either JSON or String formatting. 
-
-        
-
 
         
         Please structure your response in the following JSON format for each file:

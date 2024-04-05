@@ -49,10 +49,10 @@ export class CodeQlService {
         // Get Sensitive variables from gpt
                     
                     // // Used for testing
-                    let slice = javaFiles.slice(0, 20);  
-                    const data=await this.gptService.openAiGetSensitiveVariables(slice);
+                    // let slice = javaFiles.slice(0, 20);  
+                    // const data=await this.gptService.openAiGetSensitiveVariables(slice);
 
-        // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Replace String with findings?
         const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
@@ -65,24 +65,24 @@ export class CodeQlService {
 
         // Write response to file
         await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
-        // await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
 
 
 
         // Remove previous database if it exists
-        // const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-        // await this.fileUtilService.removeDir(db);
+        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+        await this.fileUtilService.removeDir(db);
 
-        // // Create new database with codeql
-        // const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        // await this.runChildProcess(createDbCommand);
+        // Create new database with codeql
+        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        await this.runChildProcess(createDbCommand);
 
-        // // todo try catch if failed to make db? Can run analyze if no db
+        // todo try catch if failed to make db? Can run analyze if no db
 
-        // // Analyze with codeql
-        // const outputPath = path.join(sourcePath, 'result.sarif');
-        // const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
-        // await this.runChildProcess(analyzeDbCommand);
+        // Analyze with codeql
+        const outputPath = path.join(sourcePath, 'result.sarif');
+        const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
+        await this.runChildProcess(analyzeDbCommand);
 
         return await this.parserService.getSarifResults(sourcePath);
 

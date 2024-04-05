@@ -42,7 +42,7 @@ class SensitiveStringLiteral extends StringLiteral {
     // Check for matches against the suspicious patterns
     exists(File f | 
       f = this.getCompilationUnit().getFile() and
-      this.getValue().regexpMatch(suspicious(f.getBaseName()))    
+      this.getValue().regexpMatch(suspiciousStrings(f.getBaseName()))    
       ) and
     not exists(MethodAccess ma |
       ma.getAnArgument() = this and
