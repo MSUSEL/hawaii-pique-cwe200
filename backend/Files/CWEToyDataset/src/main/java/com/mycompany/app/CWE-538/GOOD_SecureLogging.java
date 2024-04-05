@@ -7,7 +7,7 @@ public class GOOD_SecureLogging {
 
         try (FileWriter logWriter = new FileWriter("/var/log/myapp/access.log", true)) {
             // Secure: Logging without including sensitive information
-            logWriter.write("User login attempt: " + username + "\n");
+            logWriter.write("User login attempt:");
         } catch (IOException e) {
             System.err.println("An error occurred.");
         }
