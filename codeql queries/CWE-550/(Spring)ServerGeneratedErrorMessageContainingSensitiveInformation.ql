@@ -14,45 +14,44 @@
 import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
-import DataFlow::PathGraph
+module Flow = TaintTracking::Global<SpringBootSensitiveInfoExposureConfig>;
+import Flow::PathGraph
 
+module SpringBootSensitiveInfoExposureConfig implements DataFlow::ConfigSig{
 
-class SpringBootSensitiveInfoExposureConfig extends TaintTracking::Configuration {
-  SpringBootSensitiveInfoExposureConfig() { this = "SpringBootSensitiveInfoExposureConfig" }
-
-  override predicate isSource(DataFlow::Node source) {
-    exists(MethodAccess ma |
+  predicate isSource(DataFlow::Node source) {
+    exists(MethodCall mc |
       // Include Throwable methods and system/environment properties as sources
       (
-      (ma.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-       ma.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace", "toString"])) or
-      (ma.getMethod().getDeclaringType().hasQualifiedName("java.lang", "System") and
-       ma.getMethod().hasName(["getenv", "getProperty"])) or
+      (mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+      mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace", "toString"])) or
+      (mc.getMethod().getDeclaringType().hasQualifiedName("java.lang", "System") and
+      mc.getMethod().hasName(["getenv", "getProperty"])) or
       // Include user input as a potential source
-      (ma.getMethod().getDeclaringType().hasQualifiedName("javax.servlet", "ServletRequest") and
-       ma.getMethod().hasName(["getParameter", "getAttribute"])))
-     and source.asExpr() = ma)
+      (mc.getMethod().getDeclaringType().hasQualifiedName("javax.servlet", "ServletRequest") and
+      mc.getMethod().hasName(["getParameter", "getAttribute"])))
+     and source.asExpr() = mc)
   }
 
-  override predicate isSink(DataFlow::Node sink) {
-    exists(MethodAccess ma |
+  predicate isSink(DataFlow::Node sink) {
+    exists(MethodCall mc |
       // ResponseStatusException constructor as a sink
-      ma.getMethod().hasQualifiedName("org.springframework.web.server", "ResponseStatusException", "<init>") and
-      sink.asExpr() = ma.getAnArgument()
+      mc.getMethod().hasQualifiedName("org.springframework.web.server", "ResponseStatusException", "<init>") and
+      sink.asExpr() = mc.getAnArgument()
     ) or
     exists(ConstructorCall cc |
       // Constructor call of ResponseStatusException as a sink
       cc.getConstructedType().hasQualifiedName("org.springframework.web.server", "ResponseStatusException") and
       sink.asExpr() = cc.getAnArgument()
     ) or
-    exists(MethodAccess respMa |
+    exists(MethodCall respMa |
       // ResponseEntity body method as a sink
       respMa.getMethod().getDeclaringType().hasQualifiedName("org.springframework.http", "ResponseEntity") and
       respMa.getMethod().hasName("body") and
       sink.asExpr() = respMa.getAnArgument()
     ) or
     // Additional constraint for logging methods to be considered as sinks
-    exists(MethodAccess logMa |
+    exists(MethodCall logMa |
         logMa.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
         logMa.getMethod().hasName(["error", "warn", "info", "debug"]) and
         sink.asExpr() = logMa.getAnArgument() and
@@ -67,6 +66,6 @@ class SpringBootSensitiveInfoExposureConfig extends TaintTracking::Configuration
   }
 }
 
-from SpringBootSensitiveInfoExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
-where config.hasFlowPath(source, sink)
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink)
 select sink.getNode(), source, sink, "CWE-550: (Spring) Server Generated Error Message Containing Sensitive Information."

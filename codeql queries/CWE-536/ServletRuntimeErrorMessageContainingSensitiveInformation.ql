@@ -15,26 +15,25 @@ import semmle.code.java.frameworks.Servlets
 import semmle.code.java.dataflow.FlowSources
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.security.SensitiveVariables
-import DataFlow::PathGraph
 
+module Flow = TaintTracking::Global<SensitiveInfoLeakServletConfig>;
+import Flow::PathGraph
 
-class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
-  SensitiveInfoLeakServletConfig() { this = "SensitiveInfoLeakServletConfig" }
+module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
 
-
-  override predicate isSource(DataFlow::Node source) {
-    exists(MethodAccess ma |
+  predicate isSource(DataFlow::Node source) {
+    exists(MethodCall mc |
       // Sources from exceptions
-      ma.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-      (ma.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])) and
-      source.asExpr() = ma
+      mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+      (mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])) and
+      source.asExpr() = mc
     )
     or
-    exists(MethodAccess ma |
+    exists(MethodCall mc |
       // Additional sources: Sensitive file paths
-      ma.getMethod().hasName("getAbsolutePath") and
-      ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "File") and
-      source.asExpr() = ma
+      mc.getMethod().hasName("getAbsolutePath") and
+      mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "File") and
+      source.asExpr() = mc
     )
     or
     exists(SensitiveVariableExpr sve |
@@ -42,33 +41,33 @@ class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
     )
   }
 
-  override predicate isSink(DataFlow::Node sink) {
-    exists(MethodAccess ma |
+  predicate isSink(DataFlow::Node sink) {
+    exists(MethodCall mc |
       // Ensuring write is called on servlet response
-      ma.getMethod().hasName("write") and
-      ma.getQualifier().(MethodAccess).getMethod().hasName("getWriter") and
-      ma.getQualifier().(MethodAccess).getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
-      ma.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
-      sink.asExpr() = ma.getAnArgument()
+      mc.getMethod().hasName("write") and
+      mc.getQualifier().(MethodCall).getMethod().hasName("getWriter") and
+      mc.getQualifier().(MethodCall).getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
+      mc.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
+      sink.asExpr() = mc.getAnArgument()
     ) 
     or
-    exists(MethodAccess ma |
+    exists(MethodCall mc |
       // Inferring println on PrintWriter obtained from servlet response, assuming context
-      ma.getMethod().hasName("println") and
-      ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
-      ma.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
+      mc.getMethod().hasName("println") and
+      mc.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
+      mc.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
       // Additional context checks might be added here to more directly associate with servlets
-      sink.asExpr() = ma.getAnArgument()
+      sink.asExpr() = mc.getAnArgument()
     )
     or
-    exists(MethodAccess log |
+    exists(MethodCall log |
       log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
       log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
       log.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
       sink.asExpr() = log.getAnArgument()
    )
     or
-    exists(MethodAccess log |
+    exists(MethodCall log |
       log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
       log.getMethod().hasName(["error", "warn", "info", "debug"]) and
       log.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
@@ -77,6 +76,6 @@ class SensitiveInfoLeakServletConfig extends TaintTracking::Configuration {
   }
 }
 
-from SensitiveInfoLeakServletConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
-where config.hasFlowPath(source, sink)
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink)
 select sink.getNode(), source, sink, "CWE-536: Servlet Runtime Error Message Containing Sensitive Information."

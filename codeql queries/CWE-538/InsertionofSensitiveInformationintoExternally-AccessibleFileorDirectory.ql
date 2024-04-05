@@ -14,13 +14,14 @@
 import java
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.security.SensitiveVariables
-import DataFlow::PathGraph
+
+module Flow = TaintTracking::Global<SensitiveInfoToFileConfig>;
+import Flow::PathGraph
 
 /** A configuration for tracking flows of sensitive information to file writes. */
-class SensitiveInfoToFileConfig extends TaintTracking::Configuration {
-  SensitiveInfoToFileConfig() { this = "SensitiveInfoToFileConfig" }
+module SensitiveInfoToFileConfig implements DataFlow::ConfigSig{
 
-  override predicate isSource(DataFlow::Node source) {
+  predicate isSource(DataFlow::Node source) {
     // // Refine source identification
     // exists(Variable v |
     //   // Check for variable names that directly indicate sensitive information
@@ -33,23 +34,23 @@ class SensitiveInfoToFileConfig extends TaintTracking::Configuration {
     exists(SensitiveStringLiteral ssl |  source.asExpr() = ssl)
   }
 
-  override predicate isSink(DataFlow::Node sink) {
+  predicate isSink(DataFlow::Node sink) {
     // Refine sink identification
-    exists(MethodAccess ma |
-      (ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "FileWriter") and
-       ma.getMethod().hasName("write")) or
-      (ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "BufferedWriter") and
-       ma.getMethod().hasName("write")) or
-      (ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "FileOutputStream") and
-       ma.getMethod().hasName("write")) or
-       ma.getMethod().hasName("write") or
-       ma.getMethod().hasName("store")
+    exists(MethodCall mc |
+      (mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "FileWriter") and
+       mc.getMethod().hasName("write")) or
+      (mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "BufferedWriter") and
+       mc.getMethod().hasName("write")) or
+      (mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "FileOutputStream") and
+       mc.getMethod().hasName("write")) or
+       mc.getMethod().hasName("write") or
+       mc.getMethod().hasName("store")
       |
-      sink.asExpr() = ma.getArgument(0) // Ensure the sensitive data is being written
+      sink.asExpr() = mc.getArgument(0) // Ensure the sensitive data is being written
     )
   }
 }
 
-from SensitiveInfoToFileConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
-where config.hasFlowPath(source, sink)
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink)
 select sink.getNode(), source, sink, "CWE-538: Sensitive information written to an externally-accessible file."

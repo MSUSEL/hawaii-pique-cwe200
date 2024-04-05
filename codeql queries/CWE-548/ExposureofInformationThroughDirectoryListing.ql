@@ -12,40 +12,39 @@
 import java
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.frameworks.Servlets
-import DataFlow::PathGraph
 
+module Flow = TaintTracking::Global<DirectoryListingExposureConfig>;
+import Flow::PathGraph
 /** 
  * A configuration for tracking directory listing information exposure 
  * through HTTP responses in servlets.
  */
-class DirectoryListingExposureConfig extends TaintTracking::Configuration {
-  DirectoryListingExposureConfig() { this = "DirectoryListingExposureConfig" }
-
-  override predicate isSource(DataFlow::Node source) {
-    exists(MethodAccess ma |
-      ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "File") and
-      ma.getMethod().hasName("listFiles") and
-      source.asExpr() = ma
+module DirectoryListingExposureConfig implements DataFlow::ConfigSig {
+  predicate isSource(DataFlow::Node source) {
+    exists(MethodCall mc |
+      mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "File") and
+      mc.getMethod().hasName("listFiles") and
+      source.asExpr() = mc
     )
   }
 
-  override predicate isSink(DataFlow::Node sink) {
-    exists(MethodAccess ma |
-      (ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintWriter") and
-      ma.getMethod().hasName("println"))and 
+  predicate isSink(DataFlow::Node sink) {
+    exists(MethodCall mc |
+      (mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintWriter") and
+      mc.getMethod().hasName("println"))and 
       // Ensure the argument to println is considered for the data flow.
-      sink.asExpr() = ma.getArgument(0)
+      sink.asExpr() = mc.getArgument(0)
     ) 
     or
-    exists(MethodAccess ma |
-      ma.getMethod().getDeclaringType().getAnAncestor().hasQualifiedName("org.apache.logging.log4j", "Logger") and
-      ma.getMethod().getName().matches("info|debug|warn|error|logger") and
-      sink.asExpr() = ma.getArgument(0)
+    exists(MethodCall mc |
+      mc.getMethod().getDeclaringType().getAnAncestor().hasQualifiedName("org.apache.logging.log4j", "Logger") and
+      mc.getMethod().getName().matches("info|debug|warn|error|logger") and
+      sink.asExpr() = mc.getArgument(0)
 
     )
   }
 }
 
-from DirectoryListingExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
-where config.hasFlowPath(source, sink)
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink)
 select sink.getNode(), source, sink, "CWE-548: Directory listing information might be exposed."

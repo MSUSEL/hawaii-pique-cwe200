@@ -16,62 +16,62 @@
 import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
-import DataFlow::PathGraph
 
+module Flow = TaintTracking::Global<HttpServletExceptionSourceConfig>;
+import Flow::PathGraph
 
 // Defines a configuration for tracking the flow of sensitive information in HttpServlets
-class HttpServletExceptionSourceConfig extends TaintTracking::Configuration {
-  HttpServletExceptionSourceConfig() { this = "HttpServletExceptionSourceConfig" }
+module HttpServletExceptionSourceConfig implements DataFlow::ConfigSig{
 
   // Identifies sources of sensitive information within servlet methods
-  override predicate isSource(DataFlow::Node source) {
-    exists(MethodAccess ma, Method m |
+  predicate isSource(DataFlow::Node source) {
+    exists(MethodCall mc, Method m |
       // Ensures the method is part of a class that extends HttpServlet
       m.getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
       (
         // Captures method calls on Throwable instances that may leak information
-        (ma.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-         ma.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace", "toString"])) or
+        (mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+        mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace", "toString"])) or
         // Includes methods that expose file system paths
-        (ma.getMethod().hasName("getAbsolutePath") and
-         ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "File")) or
+        (mc.getMethod().hasName("getAbsolutePath") and
+        mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "File")) or
         // Considers environment variables and system properties as potential sources
-        (ma.getMethod().hasName(["getenv", "getProperty"]) and
-         ma.getMethod().getDeclaringType().hasQualifiedName("java.lang", "System")) or
+        (mc.getMethod().hasName(["getenv", "getProperty"]) and
+        mc.getMethod().getDeclaringType().hasQualifiedName("java.lang", "System")) or
         // Include user input as a potential source
-        (ma.getMethod().getDeclaringType().hasQualifiedName("javax.servlet", "ServletRequest") and
-        ma.getMethod().hasName(["getParameter", "getAttribute"]))
+        (mc.getMethod().getDeclaringType().hasQualifiedName("javax.servlet", "ServletRequest") and
+        mc.getMethod().hasName(["getParameter", "getAttribute"]))
       ) and
       // The call must occur within the servlet method
-      ma.getEnclosingCallable() = m and
-      source.asExpr() = ma
+      mc.getEnclosingCallable() = m and
+      source.asExpr() = mc
     )
   }
 
   // Defines sinks where sensitive information could be exposed to clients
-  override predicate isSink(DataFlow::Node sink) {
-    exists(MethodAccess ma |
+  predicate isSink(DataFlow::Node sink) {
+    exists(MethodCall mc |
       // Targets servlet response writing methods
-      ma.getMethod().hasName("write") and
+      mc.getMethod().hasName("write") and
       // Checks the write method is called on a PrintWriter obtained from HttpServletResponse
-      ma.getQualifier().(MethodAccess).getMethod().hasName("getWriter") and
-      ma.getQualifier().(MethodAccess).getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
-      sink.asExpr() = ma.getAnArgument()
+      mc.getQualifier().(MethodCall).getMethod().hasName("getWriter") and
+      mc.getQualifier().(MethodCall).getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
+      sink.asExpr() = mc.getAnArgument()
     ) or
-    exists(MethodAccess ma |
+    exists(MethodCall mc |
       // Targets PrintWriter methods that may leak information
-      ma.getMethod().hasName("println") and
-      ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
-      sink.asExpr() = ma.getAnArgument()
+      mc.getMethod().hasName("println") and
+      mc.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
+      sink.asExpr() = mc.getAnArgument()
     ) or 
-    exists(MethodAccess ma |
+    exists(MethodCall mc |
       // Includes HttpServletResponse methods that can expose information
-      (ma.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", "sendError") or
-       ma.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", "addHeader") or
-       ma.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", "setStatus")) and
-      sink.asExpr() = ma.getAnArgument()
+      (mc.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", "sendError") or
+      mc.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", "addHeader") or
+      mc.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", "setStatus")) and
+      sink.asExpr() = mc.getAnArgument()
     ) or
-    exists(MethodAccess logMa |
+    exists(MethodCall logMa |
       // Adds logging methods as sinks, considering them potential leak points
       logMa.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
       logMa.getMethod().hasName(["error", "warn", "info", "debug"]) and
@@ -81,6 +81,6 @@ class HttpServletExceptionSourceConfig extends TaintTracking::Configuration {
 }
 
 // Executes the configuration to find data flows from identified sources to sinks
-from HttpServletExceptionSourceConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
-where config.hasFlowPath(source, sink)
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink)
 select sink.getNode(), source, sink, "CWE-550: (Servlet) Server-Generated Error Message Containing Sensitive Information."

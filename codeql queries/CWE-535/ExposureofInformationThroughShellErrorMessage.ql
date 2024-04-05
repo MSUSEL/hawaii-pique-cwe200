@@ -11,24 +11,25 @@
  
 import java
 import semmle.code.java.dataflow.TaintTracking
-import DataFlow::PathGraph
+
+module Flow = TaintTracking::Global<ShellErrorExposureConfig>;
+import Flow::PathGraph
 
 
-class ShellErrorExposureConfig extends TaintTracking::Configuration {
-  ShellErrorExposureConfig() { this = "ShellErrorExposureConfig" }
-
-  override predicate isSource(DataFlow::Node source) {
-    exists(MethodAccess ma |
+module ShellErrorExposureConfig implements DataFlow::ConfigSig {
+ 
+  predicate isSource(DataFlow::Node source) {
+    exists(MethodCall mc |
       // Captures getting the error stream from a process
-      ma.getMethod().hasName("getErrorStream") and
+      mc.getMethod().hasName("getErrorStream") and
       // Ensure the Process is the result of exec or start, indicating command execution
-      (ma.getQualifier().(VarAccess).getVariable().getAnAssignedValue() instanceof MethodAccess and
-       ma.getQualifier().(VarAccess).getVariable().getAnAssignedValue().(MethodAccess).getMethod().hasName("exec") or
-       ma.getQualifier().(VarAccess).getVariable().getAnAssignedValue().(MethodAccess).getMethod().hasName("start")) and
-      source.asExpr() = ma
+      (mc.getQualifier().(VarAccess).getVariable().getAnAssignedValue() instanceof MethodCall and
+       mc.getQualifier().(VarAccess).getVariable().getAnAssignedValue().(MethodCall).getMethod().hasName("exec") or
+       mc.getQualifier().(VarAccess).getVariable().getAnAssignedValue().(MethodCall).getMethod().hasName("start")) and
+      source.asExpr() = mc
     )
     or
-    exists(MethodAccess exec |
+    exists(MethodCall exec |
       // Direct use of user input in command execution
       exec.getMethod().hasName("exec") and
       exec.getMethod().getDeclaringType().hasQualifiedName("java.lang", "Runtime") and
@@ -36,45 +37,45 @@ class ShellErrorExposureConfig extends TaintTracking::Configuration {
     )
   }
 
-  override predicate isSink(DataFlow::Node sink) {
+  predicate isSink(DataFlow::Node sink) {
     // System.out.println or similar direct output methods as sinks
-    (exists(MethodAccess println |
+    (exists(MethodCall println |
       println.getMethod().hasName("println") and
       println.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
       ((RefType)println.getQualifier().(VarAccess).getVariable().getType()).hasQualifiedName("java.io", "PrintStream") and
       sink.asExpr() = println.getAnArgument()) 
     )
     or
-    exists(MethodAccess getMessage |
+    exists(MethodCall getMessage |
       getMessage.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
       getMessage.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
       sink.asExpr() = getMessage
     )
     or
-    exists(MethodAccess log |
+    exists(MethodCall log |
       log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
       log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
       sink.asExpr() = log.getAnArgument()
    )
     or
-    exists(MethodAccess log |
+    exists(MethodCall log |
       log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
       log.getMethod().hasName(["error", "warn", "info", "debug"]) and
       sink.asExpr() = log.getAnArgument()
     )
   }
 
-  override predicate isSanitizer(DataFlow::Node node) {
-    exists(MethodAccess ma |
+  predicate isSanitizer(DataFlow::Node node) {
+    exists(MethodCall mc |
       // Use regex matching to check if the method name contains 'sanitize', case-insensitive
-      (ma.getMethod().getName().toLowerCase().matches("%sanitize%") or
-      ma.getMethod().getName().toLowerCase().matches("%encrypt%"))
+      (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
+      mc.getMethod().getName().toLowerCase().matches("%encrypt%"))
       and
-      node.asExpr() = ma.getAnArgument()
+      node.asExpr() = mc.getAnArgument()
     )
   }  
 }
 
-from ShellErrorExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
-where config.hasFlowPath(source, sink)
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink)
 select sink.getNode(), source, sink, "CWE-535: Exposure of Information Through Shell Error Message"

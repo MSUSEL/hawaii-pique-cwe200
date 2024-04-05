@@ -13,18 +13,17 @@ import java
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.dataflow.FlowSources
 import semmle.code.java.security.SensitiveVariables
-import DataFlow::PathGraph
 
+module Flow = TaintTracking::Global<SensitiveInfoInErrorMsgConfig>;
+import Flow::PathGraph
 /** A configuration for tracking sensitive information flow into error messages. */
-class SensitiveInfoInErrorMsgConfig extends TaintTracking::Configuration {
-  SensitiveInfoInErrorMsgConfig() { this = "SensitiveInfoInErrorMsgConfig" }
-
-  override predicate isSource(DataFlow::Node source) {
+module SensitiveInfoInErrorMsgConfig implements DataFlow::ConfigSig{
+  predicate isSource(DataFlow::Node source) {
     // Broad definition, consider refining
     exists(SensitiveVariableExpr sve | source.asExpr() = sve)   
   }
 
-  override predicate isSink(DataFlow::Node sink) {
+  predicate isSink(DataFlow::Node sink) {
     // Identifying common error message generation points
     exists(MethodAccess ma | 
       ma.getMethod().getName().regexpMatch("printStackTrace|log|error|println") and
@@ -33,6 +32,6 @@ class SensitiveInfoInErrorMsgConfig extends TaintTracking::Configuration {
   }
 }
 
-from SensitiveInfoInErrorMsgConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
-where config.hasFlowPath(source, sink)
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink)
 select sink.getNode(), source, sink, "CWE-209: Error message may contain sensitive information."

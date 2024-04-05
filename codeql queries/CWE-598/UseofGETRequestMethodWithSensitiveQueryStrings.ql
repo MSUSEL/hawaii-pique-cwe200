@@ -13,26 +13,27 @@ import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.security.SensitiveVariables
-import DataFlow::PathGraph
+
+module Flow = TaintTracking::Global<SensitiveInfoToUrlConfig>;
+import Flow::PathGraph
 
 /** A configuration for finding flows from sensitive information sources to URL constructions. */
-class SensitiveInfoToUrlConfig extends TaintTracking::Configuration {
-  SensitiveInfoToUrlConfig() { this = "SensitiveInfoToUrlConfig" }
+module SensitiveInfoToUrlConfig implements DataFlow::ConfigSig {
 
-  override predicate isSource(DataFlow::Node source) {
+  predicate isSource(DataFlow::Node source) {
     exists(SensitiveVariableExpr sve |  source.asExpr() = sve)
   }
 
-  override predicate isSink(DataFlow::Node sink) {
+  predicate isSink(DataFlow::Node sink) {
     exists(ConstructorCall urlConstructor |
       urlConstructor.getConstructedType().hasQualifiedName("java.net", "URL") and
       urlConstructor.getAnArgument() = sink.asExpr() and
       // Find the usage of the URL in an openConnection call
-      exists(MethodAccess openConnection |
+      exists(MethodCall openConnection |
         openConnection.getMethod().hasName("openConnection") and
         DataFlow::localExprFlow(urlConstructor, openConnection.getQualifier()) and
         // Ensure this connection is used in a setRequestMethod call with "GET"
-        exists(MethodAccess setRequestMethod |
+        exists(MethodCall setRequestMethod |
           setRequestMethod.getMethod().hasName("setRequestMethod") and
           setRequestMethod.getArgument(0).(StringLiteral).getValue() = "GET" and
           DataFlow::localExprFlow(openConnection, setRequestMethod.getQualifier())
@@ -42,6 +43,7 @@ class SensitiveInfoToUrlConfig extends TaintTracking::Configuration {
   }
 }
 
-from SensitiveInfoToUrlConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
-where config.hasFlowPath(source, sink)
-select sink.getNode(), source, sink, "Sensitive information used in a URL constructed for a GET request."
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink)
+select sink.getNode(), source, sink, "Sensitive information used in a URL constructed for a GET request." 
+

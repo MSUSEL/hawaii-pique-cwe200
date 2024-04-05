@@ -29,9 +29,9 @@ class DebugFlagCheck extends IfStmt {
   
   // Ensure no sanitization method is in the same method scope as the debug check
   predicate noSanitizationInScope() {
-    not exists(MethodAccess ma |
-      ma.getMethod().getName().toLowerCase().matches("%sanitize%") and
-      ma.getEnclosingCallable() = this.getEnclosingCallable()
+    not exists(MethodCall mc |
+      mc.getMethod().getName().toLowerCase().matches("%sanitize%") and
+      mc.getEnclosingCallable() = this.getEnclosingCallable()
     )
   }
 }

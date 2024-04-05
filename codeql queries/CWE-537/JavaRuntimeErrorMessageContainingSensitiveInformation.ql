@@ -13,18 +13,18 @@
  import semmle.code.java.dataflow.TaintTracking
  import semmle.code.java.dataflow.FlowSources
  import semmle.code.java.security.SensitiveVariables
- import DataFlow::PathGraph
 
+ module Flow = TaintTracking::Global<RuntimeSensitiveInfoExposureConfig>;
+ import Flow::PathGraph
  
- class RuntimeSensitiveInfoExposureConfig extends TaintTracking::Configuration {
-   RuntimeSensitiveInfoExposureConfig() { this = "RuntimeSensitiveInfoExposureConfig" }
- 
-   override predicate isSource(DataFlow::Node source) {
-     exists(MethodAccess ma |
+ module RuntimeSensitiveInfoExposureConfig implements DataFlow::ConfigSig{
+  
+  predicate isSource(DataFlow::Node source) {
+     exists(MethodCall mc |
        // Sources from exceptions
-       ma.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-       (ma.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])) and
-       source.asExpr() = ma
+       mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+       (mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])) and
+       source.asExpr() = mc
      )
      or
      exists(SensitiveVariableExpr sve |
@@ -32,37 +32,37 @@
     )
    }
  
-   override predicate isSink(DataFlow::Node sink) {
-    exists(MethodAccess ma |
+  predicate isSink(DataFlow::Node sink) {
+    exists(MethodCall mc |
       // Target method accesses that are calls to println on PrintStream
-      ma.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintStream") and
-      ma.getMethod().hasName("println") and
-      isWithinCatchBlock(ma) and
-      sink.asExpr() = ma.getAnArgument()
+      mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintStream") and
+      mc.getMethod().hasName("println") and
+      isWithinCatchBlock(mc) and
+      sink.asExpr() = mc.getAnArgument()
     )
      or
-     exists(MethodAccess ma |
+     exists(MethodCall mc |
        // Sinks using PrintWriter
-       ma.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-       ma.getMethod().hasName("println") and
-       ma.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
-       isWithinCatchBlock(ma) and
-       sink.asExpr() = ma.getAnArgument()
+       mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+       mc.getMethod().hasName("println") and
+       mc.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
+       isWithinCatchBlock(mc) and
+       sink.asExpr() = mc.getAnArgument()
      )
      or
-     exists(MethodAccess ma |
-      ma.getMethod().hasName("printStackTrace") and
-      sink.asExpr() = ma // Directly mark the method call as the sink
+     exists(MethodCall mc |
+      mc.getMethod().hasName("printStackTrace") and
+      sink.asExpr() = mc // Directly mark the method call as the sink
       )
      or
-     exists(MethodAccess log |
+     exists(MethodCall log |
        log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
        log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
        isWithinCatchBlock(log) and
        sink.asExpr() = log.getAnArgument()
     )
      or
-     exists(MethodAccess log |
+     exists(MethodCall log |
        log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
        log.getMethod().hasName(["error", "warn", "info", "debug"]) and
        isWithinCatchBlock(log) and
@@ -70,24 +70,24 @@
      )
    }
 
-   override predicate isSanitizer(DataFlow::Node node) {
-    exists(MethodAccess ma |
+  predicate isSanitizer(DataFlow::Node node) {
+    exists(MethodCall mc |
       // Use regex matching to check if the method name contains 'sanitize', case-insensitive
-      (ma.getMethod().getName().toLowerCase().matches("%sanitize%") or
-      ma.getMethod().getName().toLowerCase().matches("%encrypt%") 
+      (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
+      mc.getMethod().getName().toLowerCase().matches("%encrypt%") 
       )
       and
-      node.asExpr() = ma.getAnArgument()
+      node.asExpr() = mc.getAnArgument()
     )
   }  
 
-  predicate isWithinCatchBlock(MethodAccess ma) {
+  predicate isWithinCatchBlock(MethodCall mc) {
     exists(CatchClause cc |
-      ma.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock()
+      mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock()
     )
   }   
 }
  
- from RuntimeSensitiveInfoExposureConfig config, DataFlow::PathNode source, DataFlow::PathNode sink
- where config.hasFlowPath(source, sink)
- select sink.getNode(), source, sink, "CWE-537: Java runtime error message containing sensitive information"
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink)
+select sink.getNode(), source, sink, "CWE-537: Java runtime error message containing sensitive information"
