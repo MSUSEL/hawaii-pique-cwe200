@@ -9,7 +9,7 @@ Sensitive information may be inadvertently exposed through various methods, incl
 or printing usernames and passwords, among others. Given the complexity and subtlety of these exposures, our tool offers a comprehensive scanning solution. 
 Users can upload their Java projects for a thorough analysis, ensuring all instances of such vulnerabilities are identified.
 
-### Coverage ###
+### Current Coverage ###
 
 - CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
 - CWE-201: Insertion of Sensitive Information Into Sent Data
@@ -17,12 +17,7 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 - CWE-205: Observable Behavioral Discrepancy
 - CWE-208: Observable Timing Discrepancy
 - CWE-209: Generation of Error Message Containing Sensitive Information
-- CWE-210: Self-generated Error Message Containing Sensitive Information
-- CWE-211: Externally-Generated Error Message Containing Sensitive Information
-- CWE-213: Exposure of Sensitive Information Due to Incompatible Policies
-- CWE-214: Invocation of Process Using Visible Sensitive Information
 - CWE-215: Insertion of Sensitive Information Into Debugging Code
-- CWE-497: Exposure of Sensitive System Information to an Unauthorized Control Sphere
 - CWE-531: Inclusion of Sensitive Information in Test Code
 - CWE-532: Insertion of Sensitive Information into Log File
 - CWE-535: Exposure of Information Through Shell Error Message
@@ -30,12 +25,23 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 - CWE-537: Java Runtime Error Message Containing Sensitive Information
 - CWE-538: Insertion of Sensitive Information into Externally-Accessible File or Directory
 - CWE-540: Inclusion of Sensitive Information in Source Code
-- CWE-541: Inclusion of Sensitive Information in an Include File
 - CWE-548: Exposure of Information Through Directory Listing
 - CWE-550: Server-generated Error Message Containing Sensitive Information
 - CWE-598: Use of GET Request Method With Sensitive Query Strings
+
+
+### Future Coverage ###
+- CWE-210: Self-generated Error Message Containing Sensitive Information
+- CWE-211: Externally-Generated Error Message Containing Sensitive Information
+- CWE-213: Exposure of Sensitive Information Due to Incompatible Policies
+- CWE-214: Invocation of Process Using Visible Sensitive Information
+- CWE-497: Exposure of Sensitive System Information to an Unauthorized Control Sphere
+- CWE-541: Inclusion of Sensitive Information in an Include File
 - CWE-615: Inclusion of Sensitive Information in Source Code Comments
 - CWE-651: Exposure of WSDL File Containing Sensitive Information
+
+
+
 
 ### How do I get set up? ###
 
