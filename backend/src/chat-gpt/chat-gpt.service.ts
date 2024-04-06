@@ -177,7 +177,7 @@ export class ChatGptService {
                 // console.error(`Attempt ${i + 1}: Error caught in createGptWithBackoff`);
 
                 // Calculate time until next request
-                const isRateLimitError = error.response && error.response.status === 429;
+                const isRateLimitError = error.response && error.response.status === 429 || error.response.status === 502;
                 if (isRateLimitError && i < retries - 1) {
                     // Instead of exponential backoff, use the time specified in the header
                     try{
