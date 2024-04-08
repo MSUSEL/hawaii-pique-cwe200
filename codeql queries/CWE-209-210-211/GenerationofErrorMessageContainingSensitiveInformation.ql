@@ -25,9 +25,9 @@ module SensitiveInfoInErrorMsgConfig implements DataFlow::ConfigSig{
 
   predicate isSink(DataFlow::Node sink) {
     // Identifying common error message generation points
-    exists(MethodAccess ma | 
-      ma.getMethod().getName().regexpMatch("printStackTrace|log|error|println") and
-      sink.asExpr() = ma.getArgument(0)
+    exists(MethodCall mc | 
+      mc.getMethod().getName().regexpMatch("printStackTrace|log|error|println") and
+      sink.asExpr() = mc.getArgument(0)
     )
   }
 }

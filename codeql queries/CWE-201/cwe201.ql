@@ -21,7 +21,7 @@
 
 private class GetMessageFlowSource extends DataFlow::Node {
   GetMessageFlowSource() {
-    exists(Method method | this.asExpr().(MethodAccess).getMethod() = method |
+    exists(Method method | this.asExpr().(MethodCall).getMethod() = method |
       method.hasName("getMessage") and
       method.hasNoParameters() and
       method.getDeclaringType().hasQualifiedName("java.lang", "Throwable")

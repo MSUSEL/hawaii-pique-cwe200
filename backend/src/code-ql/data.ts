@@ -1,14 +1,6 @@
 export const SensitiveVariablesContents:string=`
 import java
 
-private string suspicious() {
-  result =
-    [
-        ======
-    ]
-}
-
-
 string suspicious(string fileName) {
 ----------
   }
@@ -44,12 +36,12 @@ class SensitiveStringLiteral extends StringLiteral {
       f = this.getCompilationUnit().getFile() and
       this.getValue().regexpMatch(suspiciousStrings(f.getBaseName()))    
       ) and
-    not exists(MethodAccess ma |
-      ma.getAnArgument() = this and
+    not exists(MethodCall mc |
+      mc.getAnArgument() = this and
       (
-        ma.getMethod().hasName("getenv") or
-        ma.getMethod().hasName("getParameter") or
-        ma.getMethod().hasName("getProperty") 
+        mc.getMethod().hasName("getenv") or
+        mc.getMethod().hasName("getParameter") or
+        mc.getMethod().hasName("getProperty") 
       )
     )
   }   
