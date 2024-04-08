@@ -31,14 +31,14 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 
 ### Future Coverage ###
 - CWE-205: Observable Behavioral Discrepancy
-- CWE-210: Self-generated Error Message Containing Sensitive Information
-- CWE-211: Externally-Generated Error Message Containing Sensitive Information
+- ~~CWE-210: Self-generated Error Message Containing Sensitive Information~~ (Covered by 209, look to see if it can be narrowed)
+- ~~CWE-211: Externally-Generated Error Message Containing Sensitive Information~~ (Covered by 209, look to see if it can be narrowed)
 - CWE-213: Exposure of Sensitive Information Due to Incompatible Policies
 - CWE-214: Invocation of Process Using Visible Sensitive Information
-- CWE-497: Exposure of Sensitive System Information to an Unauthorized Control Sphere
-- CWE-541: Inclusion of Sensitive Information in an Include File
-- CWE-615: Inclusion of Sensitive Information in Source Code Comments
-- CWE-651: Exposure of WSDL File Containing Sensitive Information
+- ~~CWE-497: Exposure of Sensitive System Information to an Unauthorized Control Sphere~~ (Already covered by other queries)
+- ~~CWE-541: Inclusion of Sensitive Information in an Include File~~ (Not relevant to Java)
+- CWE-615: Inclusion of Sensitive Information in Source Code Comments (Try looking into CodeQL parsing with JavaDoc)
+- CWE-651: Exposure of WSDL File Containing Sensitive Information (Ibrahim is working on this)
 
 
 
