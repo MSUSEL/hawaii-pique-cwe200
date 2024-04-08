@@ -3,7 +3,7 @@
  * @description Identifies instances where sensitive variables are exposed in debug output without proper sanitization, which could lead to sensitive data leaks.
  * @kind problem
  * @problem.severity warning
- * @id CWE-215
+ * @id java/debug-code-sensitive-data-exposure/CWE-215
  * @tags security
  *      external/cwe/cwe-215
  *      external/cwe/cwe-532

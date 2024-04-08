@@ -4,7 +4,7 @@
  * @kind problem
  * @problem.severity medium
  * @precision medium
- * @id CWE-531
+ * @id java/test-code-sensitive-var-info-exposure/CWE-531
  * @tags security
  *       cwe-531
  *       java

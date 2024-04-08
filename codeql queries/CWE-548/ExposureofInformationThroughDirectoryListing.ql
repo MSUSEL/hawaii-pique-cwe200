@@ -3,7 +3,7 @@
  * @description Detects potential exposure of directory listing information through HTTP responses in servlets, which could lead to sensitive information disclosure.
  * @kind path-problem
  * @problem.severity warning
- * @id CWE-548
+ * @id java/directory-info-exposure-http/CWE-548
  * @tags security
  *      external/cwe/cwe-548
  * @cwe CWE-548

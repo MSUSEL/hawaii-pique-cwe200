@@ -3,7 +3,7 @@
  * @description Exposing error messages from shell commands can lead to information disclosure.
  * @kind path-problem
  * @problem.severity warning
- * @id CWE-535
+ * @id java/shell-error-exposure/CWE-535
  * @tags security
  *       external/cwe/cwe-535
  * @cwe CWE-535

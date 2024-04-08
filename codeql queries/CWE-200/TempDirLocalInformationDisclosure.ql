@@ -5,7 +5,7 @@
  * @problem.severity warning
  * @security-severity 6.5
  * @precision medium
- * @id CWE-200
+ * @id java/temp-dir-info-disclosure/CWE-200
  * @tags security
  *       external/cwe/cwe-200
  *       external/cwe/cwe-732

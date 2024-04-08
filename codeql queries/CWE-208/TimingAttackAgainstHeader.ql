@@ -5,7 +5,7 @@
  * @kind path-problem
  * @problem.severity error
  * @precision high
- * @id CWE-208
+ * @id java/header-timing-attack/CWE-208
  * @tags security
  *       experimental
  *       external/cwe/cwe-208

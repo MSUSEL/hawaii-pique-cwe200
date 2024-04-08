@@ -7,7 +7,7 @@
  * @problem.severity error
  * @security-severity 5.4
  * @precision high
- * @id CWE-209
+ * @id java/stack-trace-exposure/CWE-209
  * @tags security
  *       external/cwe/cwe-209
  *       external/cwe/cwe-497

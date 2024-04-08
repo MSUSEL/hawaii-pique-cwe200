@@ -3,7 +3,7 @@
  * @description Detects when sensitive information, such as passwords or personal data, is written to files that may be accessible externally, potentially leading to information exposure.
  * @kind path-problem
  * @problem.severity error
- * @id CWE-538
+ * @id java/sensitive-info-to-file/CWE-538
  * @tags security
  *       external/cwe/cwe-538
  * @cwe CWE-538

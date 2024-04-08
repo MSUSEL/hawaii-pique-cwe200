@@ -3,7 +3,7 @@
  * @description Writing sensitive information from exceptions or sensitive file paths to HTTP responses can leak details to users.
  * @kind path-problem
  * @problem.severity warning
- * @id CWE-536
+ * @id java/servlet-info-exposure/CWE-536
  * @tags security
  *       external/cwe/cwe-536
  * @cwe CWE-536
