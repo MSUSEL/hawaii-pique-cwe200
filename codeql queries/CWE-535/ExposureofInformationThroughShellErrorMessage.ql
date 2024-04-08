@@ -65,15 +65,16 @@ module ShellErrorExposureConfig implements DataFlow::ConfigSig {
     )
   }
 
-  predicate isSanitizer(DataFlow::Node node) {
+  predicate isBarrier(DataFlow::Node node) {
     exists(MethodCall mc |
       // Use regex matching to check if the method name contains 'sanitize', case-insensitive
       (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
-      mc.getMethod().getName().toLowerCase().matches("%encrypt%"))
+      mc.getMethod().getName().toLowerCase().matches("%encrypt%") 
+      )
       and
       node.asExpr() = mc.getAnArgument()
     )
-  }  
+  }   
 }
 
 from Flow::PathNode source, Flow::PathNode sink

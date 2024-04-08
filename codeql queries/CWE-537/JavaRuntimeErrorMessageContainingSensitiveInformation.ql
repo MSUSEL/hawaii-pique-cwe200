@@ -70,7 +70,7 @@
      )
    }
 
-  predicate isSanitizer(DataFlow::Node node) {
+  predicate isBarrier(DataFlow::Node node) {
     exists(MethodCall mc |
       // Use regex matching to check if the method name contains 'sanitize', case-insensitive
       (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
@@ -80,13 +80,13 @@
       node.asExpr() = mc.getAnArgument()
     )
   }  
-
-  predicate isWithinCatchBlock(MethodCall mc) {
-    exists(CatchClause cc |
-      mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock()
-    )
-  }   
 }
+
+predicate isWithinCatchBlock(MethodCall mc) {
+  exists(CatchClause cc |
+    mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock()
+  )
+} 
  
 from Flow::PathNode source, Flow::PathNode sink
 where Flow::flowPath(source, sink)
