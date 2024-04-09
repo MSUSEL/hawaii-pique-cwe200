@@ -24,6 +24,9 @@ export class CodeQlParserService {
             let ruleDescription = cweDescriptions.get(rule.id) || "Description not available";
             // let ruleKey = `${rule.id}: ${ruleDescription}`; // Concatenate rule ID and description
             let ruleKey = `${rule.id}`; // Concatenate rule ID and description
+            let ruleKeySplit = ruleKey.split("/")
+            ruleKey = ruleKeySplit[ruleKeySplit.length-1]
+
 
     
             var files = results
