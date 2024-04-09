@@ -125,7 +125,7 @@ def analyze_codeql_results(codeql_results, java_files):
     num_results = len(results)
         
     for res in results:
-        query_cwe = res['ruleId']
+        query_cwe = res['ruleId'].split('/')[-1]
         directory = res['locations'][0]['physicalLocation']['artifactLocation']['uri']
         split = directory.split("/")
         cwe = split[-2]
