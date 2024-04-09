@@ -79,8 +79,8 @@ export class ChatGptService {
                     let sensitiveComments = file.sensitiveComments;
 
                     fileList.push({
-                        key: fileName,
-                        sentitiveVariables: sensitiveVariables,
+                        fileName: fileName,
+                        sensitiveVariables: sensitiveVariables,
                         sensitiveStrings: sensitiveStrings,
                         sensitiveComments: sensitiveComments
                     });

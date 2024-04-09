@@ -132,13 +132,33 @@ export class FileUtilService {
         let sensitiveStringsMapping = new Map<string, string[]>();
         let sensitiveCommentsMapping = new Map<string, string[]>();
 
+        filePath = "Files/CWEToyDataset/data.json"
+
 
         if (fs.existsSync(filePath)) {
             try {
                 const data = fs.readFileSync(filePath, 'utf8');
                 const json = JSON.parse(data);
-                // const result = json[specificFile];
-                // return json[specificFile];
+
+            json.forEach((file) => {
+                let key = file["fileName"];
+                let sensitiveVariables = file["sensitiveVariables"].map((variable) => variable["name"]);
+                let sensitiveStrings = file["sensitiveStrings"].map((str) => str["name"]);
+                let sensitiveComments = file["sensitiveComments"].map((comment) => comment["name"]);
+
+                fileList.push({
+                    fileName: key,
+                    sensitiveVariables: sensitiveVariables,
+                    sensitiveStrings: sensitiveStrings,
+                    sensitiveComments: sensitiveComments
+                });
+
+                variables = variables.concat(sensitiveVariables);
+                sensitiveVariablesMapping.set(key, sensitiveVariables);
+                sensitiveStringsMapping.set(key, sensitiveStrings);
+                sensitiveCommentsMapping.set(key, sensitiveComments);
+            });
+
             } catch (error) {
                 console.error(error);
             }

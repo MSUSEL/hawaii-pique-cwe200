@@ -69,7 +69,7 @@ export class CodeQlService {
 
         // // Write response to file
         // await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
-        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+        // await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
 
 
 
