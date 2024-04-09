@@ -3,11 +3,18 @@ import java
 
 string suspicious(string fileName) {
 ----------
-  }
+}
 
 string suspiciousStrings(string fileName) {
 ++++++++++
-    }
+}
+
+
+
+string suspiciousComments(string fileName) {
+**********
+}    
+    
 
     
 class SensitiveVariable extends Variable {
@@ -44,6 +51,16 @@ class SensitiveStringLiteral extends StringLiteral {
         mc.getMethod().hasName("getProperty") 
       )
     )
+  }   
+}
+
+class SensitiveComment extends StringLiteral {
+  SensitiveComment() {
+    // Check for matches against the suspicious patterns
+    exists(File f | 
+      f = this.getCompilationUnit().getFile() and
+      this.getValue().regexpMatch(suspiciousComments(f.getBaseName()))    
+    ) 
   }   
 }
 `
