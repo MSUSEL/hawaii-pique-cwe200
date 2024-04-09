@@ -139,9 +139,9 @@ export class FileUtilService {
 
             json.forEach((file) => {
                 let key = file["fileName"];
-                let sensitiveVariables = file["sensitiveVariables"].map((variable) => variable["name"]);
-                let sensitiveStrings = file["sensitiveStrings"].map((str) => str["name"]);
-                let sensitiveComments = file["sensitiveComments"].map((comment) => comment["name"]);
+                let sensitiveVariables = file["sensitiveVariables"].map((variable) => `"${variable["name"]}"`);
+                let sensitiveStrings = file["sensitiveStrings"].map((str) => `"${str["name"]}"`);
+                let sensitiveComments = file["sensitiveComments"].map((comment) => `"${comment["name"]}"`);
 
                 fileList.push({
                     fileName: key,
@@ -151,9 +151,9 @@ export class FileUtilService {
                 });
 
                 variables = variables.concat(sensitiveVariables);
-                sensitiveVariablesMapping.set(key, sensitiveVariables);
-                sensitiveStringsMapping.set(key, sensitiveStrings);
-                sensitiveCommentsMapping.set(key, sensitiveComments);
+                sensitiveVariablesMapping[key] = sensitiveVariables;
+                sensitiveStringsMapping[key] = sensitiveStrings;
+                sensitiveCommentsMapping[key] = sensitiveComments;
             });
 
             } catch (error) {
