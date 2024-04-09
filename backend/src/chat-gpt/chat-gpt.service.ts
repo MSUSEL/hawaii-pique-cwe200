@@ -355,25 +355,14 @@ export class ChatGptService {
         var variables = [];
         try {
             for (const variable of text) {
-                try {                    
                     let v : string = variable.name.replace(/["\\]/g, "")
                     variables.push(`\"${v}\"`)
-                    
-                }
-                catch (e){
-                    // if (this.debug.toLowerCase() === 'true') {
-                        console.log(`Not a valid string {text}`);
-                    // }
-                }
-                
             }
             // variables = text.map((variable) => `\"${variable.name}\"`);
-            return variables;
         } catch (e) {
             if (this.debug.toLowerCase() === 'true') {
                 console.log(text);
             }
-            return variables;
         }
         return variables;
     }
