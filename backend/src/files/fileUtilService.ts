@@ -123,6 +123,31 @@ export class FileUtilService {
         }
     }
 
+    parseJSONFile(filePath: string, specificFile : string[]) {
+        
+        let variables = [];
+        const fileList: any[] = [];
+        
+        let sensitiveVariablesMapping = new Map<string, string[]>();
+        let sensitiveStringsMapping = new Map<string, string[]>();
+        let sensitiveCommentsMapping = new Map<string, string[]>();
+
+
+        if (fs.existsSync(filePath)) {
+            try {
+                const data = fs.readFileSync(filePath, 'utf8');
+                const json = JSON.parse(data);
+                // const result = json[specificFile];
+                // return json[specificFile];
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping };
+
+    }
+
     /**
      * Remove directory and contents if it exists
      *
@@ -201,22 +226,24 @@ export class FileUtilService {
         // remove comments and imports
         for await (const line of rl) {
             let trimmedLine = line.trim();
-            if (trimmedLine.startsWith('/*')) {
-                inMultilineComment = true;
-            }
+            processedLines.push(trimmedLine);
+
+            // if (trimmedLine.startsWith('/*')) {
+            //     inMultilineComment = true;
+            // }
     
-            if (inMultilineComment || trimmedLine.startsWith('//')) {
-                // If the line is a comment, check if it contains a sensitive keyword
-                if (sensitiveKeywords.some(keyword => trimmedLine.toLowerCase().includes(keyword))) {
-                    processedLines.push(trimmedLine);
-                }
-            } else if (trimmedLine) {
-                processedLines.push(trimmedLine);
-            }
+        //     if (inMultilineComment || trimmedLine.startsWith('//')) {
+        //         // If the line is a comment, check if it contains a sensitive keyword
+        //         if (sensitiveKeywords.some(keyword => trimmedLine.toLowerCase().includes(keyword))) {
+        //             processedLines.push(trimmedLine);
+        //         }
+            // } else if (trimmedLine) {
+            //     processedLines.push(trimmedLine);
+            // }
     
-            if (trimmedLine.endsWith('*/')) {
-                inMultilineComment = false;
-            }
+        //     if (trimmedLine.endsWith('*/')) {
+        //         inMultilineComment = false;
+        //     }
         }
         processedLines.push('-----END FILE: [' + filePath + ']-----');
 

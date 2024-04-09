@@ -35,9 +35,13 @@ export class ChatGptService {
     async openAiGetSensitiveVariables(files: string[]) {
         let variables = [];
         let strings = [];
+        let comments = [];
         const fileList: any[] = [];
+        
         let sensitiveVariablesMapping = new Map<string, string[]>();
         let sensitiveStringsMapping = new Map<string, string[]>();
+        let sensitiveCommentsMapping = new Map<string, string[]>();
+        
         const concurrentCallsLimit = 5; // Maximum number of concurrent API calls
         const batches = []; // Array to hold all batch promises
         let completedBatches = 0; // Number of completed batches
@@ -72,10 +76,13 @@ export class ChatGptService {
                     let fileName = file.fileName;
                     let sensitiveVariables = file.sensitiveVariables;
                     let sensitiveStrings = file.sensitiveStrings;
+                    let sensitiveComments = file.sensitiveComments;
 
                     fileList.push({
                         key: fileName,
-                        value: sensitiveVariables,
+                        sentitiveVariables: sensitiveVariables,
+                        sensitiveStrings: sensitiveStrings,
+                        sensitiveComments: sensitiveComments
                     });
 
                     this.eventsGateway.emitDataToClients(
@@ -87,24 +94,24 @@ export class ChatGptService {
                         sensitiveVariables,
                     );
 
-                    const fileVariablesList =
-                        this.extractVariableNamesMultiple(
-                            sensitiveVariables,
-                        );
+                    const fileVariablesList = this.extractVariableNamesMultiple(sensitiveVariables);
 
 
-                        let fileStringList =
-                        this.extractVariableNamesMultiple(
-                            sensitiveStrings,
-                        );  
+                    let fileStringList = this.extractVariableNamesMultiple(sensitiveStrings);  
                         
                         // fileStringList = processStrings(fileStringList);
+                    
+                    let fileCommentsList = this.extractVariableNamesMultiple(file.sensitiveComments);
 
                     variables = variables.concat(fileVariablesList);
                     sensitiveVariablesMapping[fileName] = fileVariablesList;
 
                     strings = strings.concat(fileStringList);
                     sensitiveStringsMapping[fileName] = fileStringList;
+
+                    comments = comments.concat(fileCommentsList);
+                    sensitiveCommentsMapping[fileName] = fileCommentsList;
+
                     
                 });
 
@@ -224,6 +231,9 @@ export class ChatGptService {
         Just remember that it is just as important to find sensitive hardcoded strings as it is to make sure that your response does not break either JSON or String formatting. 
 
         
+        In addition, I would like you to also provide me any sensitive information that is exposed in commments. This could be anything that is written in a comment that could be sensitive. This could be anything from a password to a personal email address.
+
+
         Please structure your response in the following JSON format for each file:
 
         {
@@ -249,6 +259,16 @@ export class ChatGptService {
                     "name": "stringName2",
                     "description": "stringDescription2"
                   }
+                ],
+                sensitiveComments: [
+                    {
+                        "name": "commentName1",
+                        "description": "commentDescription1"
+                    },
+                    {
+                        "name": "commentName2",
+                        "description": "commentDescription2"
+                    }
                 ]
               },
               {
@@ -272,6 +292,16 @@ export class ChatGptService {
                     "name": "stringName2",
                     "description": "stringDescription2"
                   }
+                ],
+                sensitiveComments: [
+                    {
+                        "name": "commentName1",
+                        "description": "commentDescription1"
+                    },
+                    {
+                        "name": "commentName2",
+                        "description": "commentDescription2"
+                    }
                 ]
               }
             ]

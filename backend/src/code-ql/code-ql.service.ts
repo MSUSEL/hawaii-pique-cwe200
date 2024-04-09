@@ -49,10 +49,14 @@ export class CodeQlService {
         // Get Sensitive variables from gpt
                     
                     // // Used for testing
-                    let slice = javaFiles.slice(0, 20);  
-                    const data=await this.gptService.openAiGetSensitiveVariables(slice);
+                    // let slice = javaFiles.slice(0, 20);  
+                    // const data=await this.gptService.openAiGetSensitiveVariables(slice);
 
+        // Use GPT
         // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+
+        // Use existing data so that we don't use GPT credits
+        const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"), javaFiles);
 
         // Replace String with findings?
         // const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
@@ -65,7 +69,7 @@ export class CodeQlService {
 
         // // Write response to file
         // await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
-        // await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
 
 
 
@@ -74,8 +78,8 @@ export class CodeQlService {
         await this.fileUtilService.removeDir(db);
 
         // Create new database with codeql
-        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        await this.runChildProcess(createDbCommand);
+        // const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        // await this.runChildProcess(createDbCommand);
 
         // todo try catch if failed to make db? Can run analyze if no db
 
