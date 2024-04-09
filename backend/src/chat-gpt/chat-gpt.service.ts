@@ -138,7 +138,7 @@ export class ChatGptService {
         variables = [...new Set(variables)];
 
 
-        return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping };
+        return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping };
     }
 
     async createDavinci(fileContents: string) {
@@ -354,7 +354,20 @@ export class ChatGptService {
     extractVariableNamesMultiple(text: SensitiveVariables[]): string[] {
         var variables = [];
         try {
-            variables = text.map((variable) => `\"${variable.name}\"`);
+            for (const variable of text) {
+                try {                    
+                    let v : string = variable.name.replace(/["\\]/g, "")
+                    variables.push(`\"${v}\"`)
+                    
+                }
+                catch (e){
+                    // if (this.debug.toLowerCase() === 'true') {
+                        console.log(`Not a valid string {text}`);
+                    // }
+                }
+                
+            }
+            // variables = text.map((variable) => `\"${variable.name}\"`);
             return variables;
         } catch (e) {
             if (this.debug.toLowerCase() === 'true') {
