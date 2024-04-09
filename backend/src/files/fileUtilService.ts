@@ -123,7 +123,7 @@ export class FileUtilService {
         }
     }
 
-    parseJSONFile(filePath: string, specificFile : string[]) {
+    parseJSONFile(filePath: string) {
         
         let variables = [];
         const fileList: any[] = [];
@@ -131,9 +131,6 @@ export class FileUtilService {
         let sensitiveVariablesMapping = new Map<string, string[]>();
         let sensitiveStringsMapping = new Map<string, string[]>();
         let sensitiveCommentsMapping = new Map<string, string[]>();
-
-        filePath = "Files/CWEToyDataset/data.json"
-
 
         if (fs.existsSync(filePath)) {
             try {
