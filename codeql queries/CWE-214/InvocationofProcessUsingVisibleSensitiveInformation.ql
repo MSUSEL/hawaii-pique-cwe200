@@ -27,17 +27,19 @@ module ProcessExecutionWithSensitiveInfoConfig implements DataFlow::ConfigSig {
   }
 
   predicate isSink(DataFlow::Node sink) {
+    // Checks if the sink is a method call to Runtime.exec
     exists(MethodCall execCall |
       execCall.getMethod().getDeclaringType().hasQualifiedName("java.lang", "Runtime") and
       execCall.getMethod().hasName("exec") and
       sink.asExpr() = execCall.getArgument(0)
     )
     or
+    // Checks if the sink is a method call to ProcessBuilder.start
     exists(MethodCall envCall |
-        envCall.getMethod().getDeclaringType().hasQualifiedName("java.lang", "ProcessBuilder") and
-        // envCall.getMethod().hasName("environment") and
-        sink.asExpr() = envCall.getArgument(0)
-      )
+      envCall.getMethod().getDeclaringType().hasQualifiedName("java.lang", "ProcessBuilder") and
+      envCall.getMethod().hasName("start") and
+      sink.asExpr() = envCall.getQualifier()
+    )
   }
 }
 
