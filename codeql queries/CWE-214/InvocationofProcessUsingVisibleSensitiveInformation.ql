@@ -39,6 +39,19 @@ module ProcessExecutionWithSensitiveInfoConfig implements DataFlow::ConfigSig {
       envCall.getMethod().getDeclaringType().hasQualifiedName("java.lang", "ProcessBuilder") and
       envCall.getMethod().hasName("start") and
       sink.asExpr() = envCall.getQualifier()
+    ) 
+    or
+    exists(MethodCall envCall |
+      envCall.getMethod().hasName("ProcessBuilder") and
+      sink.asExpr() = envCall.getQualifier()
+    )
+    or
+    exists(MethodCall putCall, MethodCall envCall |
+      putCall.getMethod().getDeclaringType().hasQualifiedName("java.util", "Map") and
+      putCall.getMethod().hasName("put") and
+      putCall.getQualifier() = envCall and
+      envCall.getMethod().hasQualifiedName("java.lang", "ProcessBuilder", "environment") and
+      sink.asExpr() = putCall.getArgument(0)
     )
   }
 }
