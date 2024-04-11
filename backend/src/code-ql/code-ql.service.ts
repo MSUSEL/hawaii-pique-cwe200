@@ -41,8 +41,8 @@ export class CodeQlService {
      
 
         // const data = this.debugChatGPT(sourcePath);
-        await this.runChatGPT(sourcePath);
-        return
+        // await this.runChatGPT(sourcePath);
+        // return
 
 
 
@@ -55,23 +55,24 @@ export class CodeQlService {
                     // const data=await this.gptService.openAiGetSensitiveVariables(slice);
 
         // Use GPT
-        // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Use existing data so that we don't use GPT credits
         //const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"), javaFiles);
 
         // Replace String with findings?
-        // const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
-        // const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
-        // let fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
-        // fileContents = fileContents.replace("----------", variablesMapping);
-        // fileContents = fileContents.replace("++++++++++", stringsMapping);
+        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
+        const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
+        let fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+        fileContents = fileContents.replace("----------", variablesMapping);
+        fileContents = fileContents.replace("++++++++++", stringsMapping);
+        fileContents = fileContents.replace("**********", data.comments.join(','))
 
 
 
         // // Write response to file
-        // await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
-        // await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+        await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
+        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
 
 
 
@@ -80,8 +81,8 @@ export class CodeQlService {
         await this.fileUtilService.removeDir(db);
 
         // Create new database with codeql
-        // const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        // await this.runChildProcess(createDbCommand);
+        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        await this.runChildProcess(createDbCommand);
 
         // todo try catch if failed to make db? Can run analyze if no db
 
