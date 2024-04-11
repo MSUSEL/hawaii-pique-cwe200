@@ -1,6 +1,24 @@
+/**
+ * @name Comment contains sensitive information
+ * @description Identifies comments that might inadvertently contain sensitive information, which could lead to security risks if exposed in source code.
+ * @kind problem
+ * @problem.severity warning
+ * @id java/sensitive-comments/CWE615
+ * @tags security
+ *       external/cwe/cwe-615
+ * @cwe CWE-615
+ */
+
 import java
 import semmle.code.java.security.SensitiveVariables
 
-from Javadoc comment, SensitiveComment sc
-where comment.toString().matches("%" + sc.getValue() + "%")
-select comment, "CWE-615: This comment contains sensitive information."
+class HardCodedSensitiveComments extends Javadoc {
+  HardCodedSensitiveComments() {
+    exists(|
+      this.getAChild().(JavadocText).getText().matches("%" + suspiciousComments() + "%")
+    )
+  }
+}
+
+from HardCodedSensitiveComments comment
+select comment, " This comment may have hardcoded sensitive info"
