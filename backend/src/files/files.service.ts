@@ -27,12 +27,8 @@ export class FilesService {
 
         // commenting because unsure if specifically done this way
         // const uploadedProjectDir = path.join(this.projectsPath, file.originalname, 'src');
-        const uploadedProjectDir = path.join(this.projectsPath);
-
-        // Get list of java files
-        // todo purpose?
-        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(uploadedProjectDir);
-
+        const uploadedProjectDir = path.join(this.projectsPath,file.originalname.split(".")[0]);
+        
         // Return mapped directory tree
         return this.fileUtilService.getDirectoryTree(uploadedProjectDir)
     }

@@ -38,9 +38,11 @@ export class CodeQlService {
     async runCodeQl(createCodeQlDto: any) {
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
+     
 
         // const data = this.debugChatGPT(sourcePath);
-        // await this.runChatGPT(sourcePath);
+        await this.runChatGPT(sourcePath);
+        return
 
 
 

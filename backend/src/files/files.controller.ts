@@ -24,8 +24,8 @@ export class FilesController {
      */
     @Post()
     @UseInterceptors(FileInterceptor('file'))
-    create(@UploadedFile() file: Express.Multer.File) {
-        return this.filesService.create(file);
+    create(@UploadedFile() project: Express.Multer.File) {
+        return this.filesService.create(project);
     }
 
 
