@@ -7,11 +7,10 @@
  * @kind path-problem
  * @problem.severity warning
  * @precision medium
- * @id java/signature-timing-attack/CWE-208
+ * @id java/possible-timing-attack-against-signature
  * @tags security
  *       experimental
  *       external/cwe/cwe-208
- * @cwe CWE-208
  */
 
 import java

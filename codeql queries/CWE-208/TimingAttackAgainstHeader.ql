@@ -5,11 +5,10 @@
  * @kind path-problem
  * @problem.severity error
  * @precision high
- * @id java/header-timing-attack/CWE-208
+ * @id java/timing-attack-against-headers-value
  * @tags security
  *       experimental
  *       external/cwe/cwe-208
- * @cwe CWE-208
  */
 
 import java
