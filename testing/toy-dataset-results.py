@@ -128,7 +128,7 @@ def analyze_codeql_results(codeql_results, java_files):
         query_cwe = res['ruleId'].split('/')[-1]
         directory = res['locations'][0]['physicalLocation']['artifactLocation']['uri']
         split = directory.split("/")
-        cwe = split[-2]
+        cwe = get_cwe(split)
         file_name = split[-1]
 
         # We only care about the CWE query matching the result for testing purposes.
@@ -161,6 +161,11 @@ def analyze_codeql_results(codeql_results, java_files):
     'cwe_specific_results': cwe_specific_results,
     'cwe_extra_results': cwe_extra_results 
 }
+
+def get_cwe(items):
+    for item in items:
+        if item.startswith("CWE-"):
+            return item
 
 # This is used to count CWEs that had no results 0% accuracy)
 def count_nulls(codeql_results, cwe_specific_results):
