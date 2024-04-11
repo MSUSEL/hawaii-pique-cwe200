@@ -11,8 +11,11 @@ string suspiciousStrings(string fileName) {
 
 
 
-string suspiciousComments(string fileName) {
-**********
+string suspiciousComments() {
+  result = 
+  [
+    **********
+  ]
 }    
     
 
