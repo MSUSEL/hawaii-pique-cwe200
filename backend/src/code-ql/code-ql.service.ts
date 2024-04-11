@@ -56,7 +56,7 @@ export class CodeQlService {
         // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Use existing data so that we don't use GPT credits
-        const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"), javaFiles);
+        //const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"), javaFiles);
 
         // Replace String with findings?
         // const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
