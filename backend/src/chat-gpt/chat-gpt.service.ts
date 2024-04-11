@@ -138,7 +138,7 @@ export class ChatGptService {
         variables = [...new Set(variables)];
 
 
-        return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping };
+        return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, comments };
     }
 
     async createDavinci(fileContents: string) {
@@ -231,7 +231,8 @@ export class ChatGptService {
         Just remember that it is just as important to find sensitive hardcoded strings as it is to make sure that your response does not break either JSON or String formatting. 
 
         
-        In addition, I would like you to also provide me any sensitive information that is exposed in commments. This could be anything that is written in a comment that could be sensitive. This could be anything from a password to a personal email address.
+        In addition, I would like you to also provide me any sensitive information that is exposed in commments. In particular, I am looking for hardcoded sensitive information. 
+        What I don't want is any comments that are just generic comments that don't have any sensitive information in them. 
 
 
         Please structure your response in the following JSON format for each file:
