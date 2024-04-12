@@ -28,6 +28,8 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 - CWE-548: Exposure of Information Through Directory Listing
 - CWE-550: Server-generated Error Message Containing Sensitive Information
 - CWE-598: Use of GET Request Method With Sensitive Query Strings
+- CWE-615: Inclusion of Sensitive Information in Source Code Comments
+
 
 
 ### Future Coverage ###
@@ -37,7 +39,6 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 - CWE-213: Exposure of Sensitive Information Due to Incompatible Policies
 - ~~CWE-497: Exposure of Sensitive System Information to an Unauthorized Control Sphere~~ (Already covered by other queries)
 - ~~CWE-541: Inclusion of Sensitive Information in an Include File~~ (Not relevant to Java)
-- CWE-615: Inclusion of Sensitive Information in Source Code Comments (Try looking into CodeQL parsing with JavaDoc)
 - CWE-651: Exposure of WSDL File Containing Sensitive Information (Ibrahim is working on this)
 
 
