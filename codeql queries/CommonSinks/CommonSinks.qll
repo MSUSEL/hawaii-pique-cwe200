@@ -60,6 +60,26 @@ module CommonSinks {
             getMessage.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
             sink.asExpr() = getMessage
         )
+
+        or
+
+        exists(MethodCall mc |
+            // Ensure the method call is 'printStackTrace'
+            mc.getMethod().hasName("printStackTrace") and
+            // Ensure the method is called on an instance of Throwable or its subclasses
+            mc.getQualifier().getType().(RefType).getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+            // The sink is the method call itself, not an argument of the method call
+            sink.asExpr() = mc
+          )
+
+          or
+
+          exists(MethodCall ma |
+            ma.getMethod().hasName("printStackTrace") and
+            // Optionally check for a Throwable type or catch block context
+            ma.getAnArgument().getType() instanceof TypeThrowable and
+            sink.asExpr() = ma.getAnArgument()
+        )
     }
 
     predicate isIOSink(DataFlow::Node sink) {
