@@ -13,8 +13,7 @@
 
 import java
 import semmle.code.java.dataflow.TaintTracking
-import semmle.code.java.security.SensitiveVariables
-import CommonSinks.CommonSinks
+import shared.SensitiveVariables
 
 module Flow = TaintTracking::Global<SensitiveInfoToFileConfig>;
 import Flow::PathGraph
@@ -36,7 +35,19 @@ module SensitiveInfoToFileConfig implements DataFlow::ConfigSig{
   }
 
   predicate isSink(DataFlow::Node sink) {
-    CommonSinks::isIOSink(sink)
+    // Refine sink identification
+    exists(MethodCall mc |
+      (mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "FileWriter") and
+       mc.getMethod().hasName("write")) or
+      (mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "BufferedWriter") and
+       mc.getMethod().hasName("write")) or
+      (mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "FileOutputStream") and
+       mc.getMethod().hasName("write")) or
+       mc.getMethod().hasName("write") or
+       mc.getMethod().hasName("store")
+      |
+      sink.asExpr() = mc.getArgument(0) // Ensure the sensitive data is being written
+    )
   }
 }
 

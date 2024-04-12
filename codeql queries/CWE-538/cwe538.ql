@@ -6,14 +6,15 @@
  * @problem.severity warning
  * @security-severity 7.5
  * @precision medium
- * @id java/sensitive-info-log-file/CWE-538
+ * @id java/sensitive-info-log-file
  * @tags security
- *       external/cwe/cwe-538
+ *       cwe-538
  * @cwe CWE-538
  */
 
  import java
- import semmle.code.java.security.SensitiveLoggingQuery
+ import shared.SensitiveVariables
+ import shared.SensitiveLoger
  import SensitiveLoggerFlow::PathGraph
  
  from SensitiveLoggerFlow::PathNode source, SensitiveLoggerFlow::PathNode sink
