@@ -1,45 +1,59 @@
-/**
- * @name CWE-531: Information Exposure Through Sensitive Variables in Java Test Code
- * @description Detects potential information exposure through sensitive variables in Java test code.
- * @kind problem
- * @problem.severity medium
- * @precision medium
- * @id java/test-code-sensitive-var-info-exposure/CWE-531
+/** 
+ * @name Exposure of sensitive information in servlet responses
+ * @description Writing sensitive information from exceptions or sensitive file paths to HTTP responses can leak details to users.
+ * @kind path-problem
+ * @problem.severity warning
+ * @id java/servlet-info-exposure/CWE-536
  * @tags security
- *       cwe-531
- *       java
- * @cwe CWE-531
+ *       external/cwe/cwe-536
+ * @cwe CWE-536
  */
 
  import java
+ import semmle.code.java.dataflow.TaintTracking
+ import semmle.code.java.frameworks.Servlets
+ import semmle.code.java.dataflow.FlowSources
+ import semmle.code.java.dataflow.DataFlow
  import semmle.code.java.security.SensitiveVariables
+ import CommonSinks.CommonSinks
+ 
+ module Flow = TaintTracking::Global<InclusionofSensitiveInformationinTestCodeConfig>;
+ import Flow::PathGraph
+ 
+ module InclusionofSensitiveInformationinTestCodeConfig implements DataFlow::ConfigSig {
+ 
+/**
+ * The purpose of this query is to detect potential information exposure through sensitive variables in Java test code.
+ */ 
+class TestClass extends RefType {
+    TestClass() {
+        // JUnit 3 test case
+        this.getASupertype*().hasQualifiedName("junit.framework", "TestCase") or
+        // JUnit 4 and 5 test annotations
+        this.getAnAnnotation().getType().hasQualifiedName(["org.junit", "org.junit.jupiter.api"], "Test") or
+        // Test class naming convention
+        this.getName().regexpMatch(".*Test.*")
+    }
+}
 
-
- // Utilize the existing definitions for JUnit test classes
- class JUnit3TestClass extends Class {
-     JUnit3TestClass() {
-         this.getASupertype*().hasQualifiedName("junit.framework", "TestCase")
-     }
+   predicate isSource(DataFlow::Node source) {
+     exists(SensitiveVariableExpr sve, TestClass tc |
+        sve.getEnclosingCallable().getDeclaringType() = tc and
+        source.asExpr() = sve
+     )
+   }
+ 
+   predicate isSink(DataFlow::Node sink) {
+     // Ensure that all sinks are within servlets
+     exists(MethodCall mc | sink.asExpr() = mc.getAnArgument() and
+     CommonSinks::isServletSink(sink) or
+     CommonSinks::isPrintSink(sink) or
+     CommonSinks::isLoggingSink(sink)) or 
+     CommonSinks::isErrorSink(sink)
+   }
  }
  
- class JUnit4Or5TestClass extends Class {
-     JUnit4Or5TestClass() {
-         this.getAnAnnotation().getType().hasQualifiedName(["org.junit", "org.junit.jupiter.api"], "Test")
-     }
- }
- 
- from Class testClass, Method m, SensitiveVariableExpr sve
- where
-     // Look for classes that are likely test classes
-     (
-     testClass instanceof JUnit3TestClass or
-     testClass instanceof JUnit4Or5TestClass or
-     testClass.getName().regexpMatch(".*Test.*") // Classes with 'Test' in their name
-     ) and 
-     // Get the methods within each test class
-     m.getDeclaringType() = testClass and 
-     // Find sensitive variable expressions within those methods
-     sve.getEnclosingCallable() = m
- 
- select sve, "CWE-531: Exposure of sensitive information in test code through a sensitive variable."
+ from Flow::PathNode source, Flow::PathNode sink
+ where Flow::flowPath(source, sink)
+ select sink.getNode(), source, sink, "CWE-531: Exposure of sensitive information in test code."
  
