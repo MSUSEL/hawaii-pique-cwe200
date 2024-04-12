@@ -14,6 +14,8 @@
 import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
+import CommonSinks.CommonSinks
+
 module Flow = TaintTracking::Global<SpringBootSensitiveInfoExposureConfig>;
 import Flow::PathGraph
 
@@ -34,35 +36,24 @@ module SpringBootSensitiveInfoExposureConfig implements DataFlow::ConfigSig{
   }
 
   predicate isSink(DataFlow::Node sink) {
-    exists(MethodCall mc |
-      // ResponseStatusException constructor as a sink
-      mc.getMethod().hasQualifiedName("org.springframework.web.server", "ResponseStatusException", "<init>") and
-      sink.asExpr() = mc.getAnArgument()
-    ) or
-    exists(ConstructorCall cc |
-      // Constructor call of ResponseStatusException as a sink
-      cc.getConstructedType().hasQualifiedName("org.springframework.web.server", "ResponseStatusException") and
-      sink.asExpr() = cc.getAnArgument()
-    ) or
-    exists(MethodCall respMa |
-      // ResponseEntity body method as a sink
-      respMa.getMethod().getDeclaringType().hasQualifiedName("org.springframework.http", "ResponseEntity") and
-      respMa.getMethod().hasName("body") and
-      sink.asExpr() = respMa.getAnArgument()
-    ) or
-    // Additional constraint for logging methods to be considered as sinks
+    CommonSinks::isSpringSink(sink) or
+
+    // Directly check for Spring annotations on the enclosing class of the log method
     exists(MethodCall logMa |
-        logMa.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
-        logMa.getMethod().hasName(["error", "warn", "info", "debug"]) and
-        sink.asExpr() = logMa.getAnArgument() and
-        // Directly check for Spring annotations on the enclosing class of the log method
-        (
-          logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.stereotype", "Controller") or
-          logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.web.bind.annotation", "RestController") or
-          logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.stereotype", "Service") or
-          logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.stereotype", "Component")
-        )
+      sink.asExpr() = logMa.getAnArgument() and
+      (
+        logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.stereotype", "Controller") or
+        logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.web.bind.annotation", "RestController") or
+        logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.stereotype", "Service") or
+        logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.stereotype", "Component")
+      ) and 
+      (
+        CommonSinks::isLoggingSink(sink) or
+        CommonSinks::isPrintSink(sink) or
+        CommonSinks::isErrorSink(sink) or
+        CommonSinks::isIOSink(sink)
       )
+    )
   }
 }
 

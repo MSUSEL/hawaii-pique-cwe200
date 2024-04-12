@@ -14,6 +14,8 @@
 
 import java
 import semmle.code.java.dataflow.TaintTracking
+import CommonSinks.CommonSinks
+
 module Flow = TaintTracking::Global<SqlExceptionToConsoleConfig>;
 import Flow::PathGraph
 
@@ -35,28 +37,12 @@ module SqlExceptionToConsoleConfig implements DataFlow::ConfigSig {
     )
   }
   
-  // Sinks are calls to System.out.println that take a string as an argument.
   predicate isSink(DataFlow::Node sink) {
-    exists(MethodCall mc |
-      
-      (
-        (mc.getMethod().hasName("println")) or 
-        
-        // Direct console printing
-        (mc.getMethod().hasName("println") and
-        mc.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintStream")) or
-        
-        // Logging frameworks
-        (mc.getQualifier().getType().(RefType).hasQualifiedName("org.apache.logging.log4j", "Logger") and
-        mc.getMethod().hasName(["error", "warn", "info", "debug"])) or
-        
-        // Error responses in web applications
-        (mc.getMethod().hasName("sendError") and
-        mc.getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse")) 
-      )
-      and
-      sink.asExpr() = mc.getAnArgument()
-    )
+    CommonSinks::isPrintSink(sink) or
+    CommonSinks::isLoggingSink(sink) or
+    CommonSinks::isServletSink(sink) or
+    CommonSinks::isErrorSink(sink) or
+    CommonSinks::isIOSink(sink)
   }
 }
 

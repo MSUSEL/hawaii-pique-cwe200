@@ -12,6 +12,7 @@
 import java
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.frameworks.Servlets
+import CommonSinks.CommonSinks
 
 module Flow = TaintTracking::Global<DirectoryListingExposureConfig>;
 import Flow::PathGraph
@@ -29,24 +30,9 @@ module DirectoryListingExposureConfig implements DataFlow::ConfigSig {
   }
 
   predicate isSink(DataFlow::Node sink) {
-    exists(MethodCall mc |
-      (mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintWriter") and
-      mc.getMethod().hasName("println"))and 
-      // Ensure the argument to println is considered for the data flow.
-      sink.asExpr() = mc.getAnArgument()
-    ) 
-    or
-    exists(MethodCall mc |
-      mc.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
-      mc.getMethod().getName().matches(["info", "debug", "warn", "error", "logger"]) and
-      sink.asExpr() = mc.getAnArgument()
-    )
-    or
-    exists(MethodCall logMa |
-      // Adds logging methods as sinks, considering them potential leak points
-      logMa.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
-      logMa.getMethod().hasName(["error", "warn", "info", "debug"]) and
-      sink.asExpr() = logMa.getAnArgument())
+    CommonSinks::isPrintSink(sink) or
+    CommonSinks::isServletSink(sink) or
+    CommonSinks::isLoggingSink(sink)
   }
 }
 

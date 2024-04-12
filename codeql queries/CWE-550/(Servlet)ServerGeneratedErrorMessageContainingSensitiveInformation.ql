@@ -16,6 +16,7 @@
 import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
+import CommonSinks.CommonSinks
 
 module Flow = TaintTracking::Global<HttpServletExceptionSourceConfig>;
 import Flow::PathGraph
@@ -50,38 +51,9 @@ module HttpServletExceptionSourceConfig implements DataFlow::ConfigSig{
 
   // Defines sinks where sensitive information could be exposed to clients
   predicate isSink(DataFlow::Node sink) {
-    exists(MethodCall mc |
-      // Targets servlet response writing methods
-      mc.getMethod().hasName("write") and
-      // Checks the write method is called on a PrintWriter obtained from HttpServletResponse
-      mc.getQualifier().(MethodCall).getMethod().hasName("getWriter") and
-      mc.getQualifier().(MethodCall).getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
-      sink.asExpr() = mc.getAnArgument()
-    ) or
-    exists(MethodCall mc |
-      // Targets PrintWriter methods that may leak information
-      mc.getMethod().hasName("println") and
-      mc.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
-      sink.asExpr() = mc.getAnArgument()
-    ) or 
-    exists(MethodCall mc |
-      // Includes HttpServletResponse methods that can expose information
-      (mc.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", "sendError") or
-      mc.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", "addHeader") or
-      mc.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", "setStatus")) and
-      sink.asExpr() = mc.getAnArgument()
-    ) or
-    exists(MethodCall logMa |
-      // Adds logging methods as sinks, considering them potential leak points
-      logMa.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
-      logMa.getMethod().hasName(["error", "warn", "info", "debug"]) and
-      sink.asExpr() = logMa.getAnArgument()
-    ) or
-    exists(MethodCall mc |
-      mc.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
-      mc.getMethod().getName().matches(["info", "debug", "warn", "error", "logger"]) and
-      sink.asExpr() = mc.getAnArgument()
-    )
+    CommonSinks::isPrintSink(sink) or 
+    CommonSinks::isServletSink(sink) or
+    CommonSinks::isLoggingSink(sink)
   }
 }
 

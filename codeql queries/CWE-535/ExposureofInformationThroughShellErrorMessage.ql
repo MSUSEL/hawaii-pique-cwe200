@@ -11,6 +11,7 @@
  
 import java
 import semmle.code.java.dataflow.TaintTracking
+import CommonSinks.CommonSinks
 
 module Flow = TaintTracking::Global<ShellErrorExposureConfig>;
 import Flow::PathGraph
@@ -38,31 +39,10 @@ module ShellErrorExposureConfig implements DataFlow::ConfigSig {
   }
 
   predicate isSink(DataFlow::Node sink) {
-    // System.out.println or similar direct output methods as sinks
-    (exists(MethodCall println |
-      println.getMethod().hasName("println") and
-      println.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
-      ((RefType)println.getQualifier().(VarAccess).getVariable().getType()).hasQualifiedName("java.io", "PrintStream") and
-      sink.asExpr() = println.getAnArgument()) 
-    )
-    or
-    exists(MethodCall getMessage |
-      getMessage.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
-      getMessage.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-      sink.asExpr() = getMessage
-    )
-    or
-    exists(MethodCall log |
-      log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
-      log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
-      sink.asExpr() = log.getAnArgument()
-   )
-    or
-    exists(MethodCall log |
-      log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
-      log.getMethod().hasName(["error", "warn", "info", "debug"]) and
-      sink.asExpr() = log.getAnArgument()
-    )
+    CommonSinks::isLoggingSink(sink) or
+    CommonSinks::isPrintSink(sink) or
+    CommonSinks::isErrorSink(sink) or
+    CommonSinks::isServletSink(sink)
   }
 
   predicate isBarrier(DataFlow::Node node) {

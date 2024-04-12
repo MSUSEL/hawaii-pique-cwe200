@@ -15,6 +15,7 @@ import semmle.code.java.frameworks.Servlets
 import semmle.code.java.dataflow.FlowSources
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.security.SensitiveVariables
+import CommonSinks.CommonSinks
 
 module Flow = TaintTracking::Global<SensitiveInfoLeakServletConfig>;
 import Flow::PathGraph
@@ -42,37 +43,14 @@ module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
   }
 
   predicate isSink(DataFlow::Node sink) {
-    exists(MethodCall mc |
-      // Ensuring write is called on servlet response
-      mc.getMethod().hasName("write") and
-      mc.getQualifier().(MethodCall).getMethod().hasName("getWriter") and
-      mc.getQualifier().(MethodCall).getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
-      mc.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
-      sink.asExpr() = mc.getAnArgument()
-    ) 
-    or
-    exists(MethodCall mc |
-      // Inferring println on PrintWriter obtained from servlet response, assuming context
-      mc.getMethod().hasName("println") and
-      mc.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
-      mc.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
-      // Additional context checks might be added here to more directly associate with servlets
-      sink.asExpr() = mc.getAnArgument()
-    )
-    or
-    exists(MethodCall log |
-      log.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
-      log.getMethod().hasName(["error", "warn", "info", "debug", "fatal"]) and
-      log.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
-      sink.asExpr() = log.getAnArgument()
-   )
-    or
-    exists(MethodCall log |
-      log.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
-      log.getMethod().hasName(["error", "warn", "info", "debug"]) and
-      log.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
-      sink.asExpr() = log.getAnArgument()
-    )
+    // Ensure that all sinks are within servlets
+    exists(MethodCall mc | sink.asExpr() = mc.getAnArgument() and
+      mc.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet")
+    ) and  
+    (CommonSinks::isServletSink(sink) or
+    CommonSinks::isPrintSink(sink) or
+    CommonSinks::isLoggingSink(sink)) or 
+    CommonSinks::isErrorSink(sink)
   }
 }
 
