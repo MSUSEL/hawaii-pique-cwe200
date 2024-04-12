@@ -33,15 +33,20 @@ module DirectoryListingExposureConfig implements DataFlow::ConfigSig {
       (mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "PrintWriter") and
       mc.getMethod().hasName("println"))and 
       // Ensure the argument to println is considered for the data flow.
-      sink.asExpr() = mc.getArgument(0)
+      sink.asExpr() = mc.getAnArgument()
     ) 
     or
     exists(MethodCall mc |
-      mc.getMethod().getDeclaringType().getAnAncestor().hasQualifiedName("org.apache.logging.log4j", "Logger") and
-      mc.getMethod().getName().matches("info|debug|warn|error|logger") and
-      sink.asExpr() = mc.getArgument(0)
-
+      mc.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
+      mc.getMethod().getName().matches(["info", "debug", "warn", "error", "logger"]) and
+      sink.asExpr() = mc.getAnArgument()
     )
+    or
+    exists(MethodCall logMa |
+      // Adds logging methods as sinks, considering them potential leak points
+      logMa.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
+      logMa.getMethod().hasName(["error", "warn", "info", "debug"]) and
+      sink.asExpr() = logMa.getAnArgument())
   }
 }
 
