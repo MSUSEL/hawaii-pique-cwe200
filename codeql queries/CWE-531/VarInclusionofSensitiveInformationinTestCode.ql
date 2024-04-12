@@ -1,12 +1,14 @@
 /** 
- * @name Exposure of sensitive information in servlet responses
- * @description Writing sensitive information from exceptions or sensitive file paths to HTTP responses can leak details to users.
- * @kind path-problem
- * @problem.severity warning
- * @id java/servlet-info-exposure/CWE-536
+ * @name CWE-531: Information Exposure Through Variable in Java Test Code
+ * @description Detects potential information exposure through string literals in Java test code.
+ * @kind problem
+ * @problem.severity medium
+ * @precision medium
+ * @id java/test-code-sensitive-var-info-exposure/CWE-531
  * @tags security
- *       external/cwe/cwe-536
- * @cwe CWE-536
+ *       cwe-531
+ *       java
+ * @cwe CWE-531
  */
 
  import java
