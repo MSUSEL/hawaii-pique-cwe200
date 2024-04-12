@@ -51,8 +51,10 @@
      )
      or
      exists(MethodCall mc |
-      mc.getMethod().hasName("printStackTrace") and
-      sink.asExpr() = mc // Directly mark the method call as the sink
+      mc.getMethod().hasName("printStackTrace")
+      and isWithinCatchBlock(mc)
+      and
+      sink.asExpr() = mc.getAnArgument()// Directly mark the method call as the sink
       )
      or
      exists(MethodCall log |
@@ -68,6 +70,21 @@
        isWithinCatchBlock(log) and
        sink.asExpr() = log.getAnArgument()
      )
+     or
+     exists(ConstructorCall cc |
+      cc.getConstructedType().hasQualifiedName("java.io", "FileReader") and
+      sink.asExpr() = cc.getAnArgument()
+      
+      // and
+      // sink.asExpr() = openConnection.getAnArgument()
+
+      // and
+      // DataFlow::localExprFlow(BufferedReader, FileReader.getQualifier()) and
+      // exists(MethodCall setRequestMethod |
+      //   setRequestMethod.getMethod().hasName("println") and
+      //   DataFlow::localExprFlow(openConnection, setRequestMethod.getQualifier())
+      // )
+    )
    }
 
   predicate isBarrier(DataFlow::Node node) {
@@ -91,3 +108,9 @@ predicate isWithinCatchBlock(MethodCall mc) {
 from Flow::PathNode source, Flow::PathNode sink
 where Flow::flowPath(source, sink)
 select sink.getNode(), source, sink, "CWE-537: Java runtime error message containing sensitive information"
+
+// import java
+
+// from ConstructorCall cc 
+// where cc.getConstructedType().hasQualifiedName("java.io", "FileReader")
+// select cc, "This code creates a new FileReader."
