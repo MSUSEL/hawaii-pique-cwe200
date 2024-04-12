@@ -127,6 +127,7 @@ export class FileUtilService {
         
         let variables = [];
         const fileList: any[] = [];
+        let comments = [];
         
         let sensitiveVariablesMapping = new Map<string, string[]>();
         let sensitiveStringsMapping = new Map<string, string[]>();
@@ -154,6 +155,8 @@ export class FileUtilService {
                 sensitiveVariablesMapping[key] = sensitiveVariables;
                 sensitiveStringsMapping[key] = sensitiveStrings;
                 sensitiveCommentsMapping[key] = sensitiveComments;
+                comments = comments.concat(sensitiveComments);
+
             });
 
             } catch (error) {
@@ -161,7 +164,7 @@ export class FileUtilService {
             }
         }
 
-        return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping };
+        return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, comments};
 
     }
 

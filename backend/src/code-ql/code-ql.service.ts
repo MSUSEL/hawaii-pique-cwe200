@@ -7,6 +7,7 @@ import * as fs from 'fs';
 import { ConfigService } from '@nestjs/config';
 import { ChatGptService } from 'src/chat-gpt/chat-gpt.service';
 import { SensitiveVariablesContents } from './data';
+import { SensitiveInfo } from './SensitiveInfo';
 import { EventsGateway } from 'src/events/events.gateway';
 @Injectable()
 export class CodeQlService {
@@ -55,15 +56,15 @@ export class CodeQlService {
                     // const data=await this.gptService.openAiGetSensitiveVariables(slice);
 
         // Use GPT
-        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Use existing data so that we don't use GPT credits
-        //const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"), javaFiles);
+        const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"));
 
         // Replace String with findings?
-        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
-        const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
-        let fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+        const variablesMapping = this.formatMappings2(data.sensitiveVariablesMapping);
+        const stringsMapping = this.formatMappings2(data.sensitiveStringsMapping);
+        let fileContents = SensitiveInfo.replace("======", data.variables.join(','));
         fileContents = fileContents.replace("----------", variablesMapping);
         fileContents = fileContents.replace("++++++++++", stringsMapping);
         fileContents = fileContents.replace("**********", data.comments.join(','))
@@ -77,19 +78,19 @@ export class CodeQlService {
 
 
         // Remove previous database if it exists
-        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-        await this.fileUtilService.removeDir(db);
+        // const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+        // await this.fileUtilService.removeDir(db);
 
         // Create new database with codeql
-        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        await this.runChildProcess(createDbCommand);
+        // const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        // await this.runChildProcess(createDbCommand);
 
         // todo try catch if failed to make db? Can run analyze if no db
 
         // Analyze with codeql
-        const outputPath = path.join(sourcePath, 'result.sarif');
-        const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
-        await this.runChildProcess(analyzeDbCommand);
+        // const outputPath = path.join(sourcePath, 'result.sarif');
+        // const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
+        // await this.runChildProcess(analyzeDbCommand);
 
         return await this.parserService.getSarifResults(sourcePath);
 
@@ -177,7 +178,9 @@ export class CodeQlService {
      */
     async writeVariablesToFile(variables: string) {
         // todo why is this a constant path? Can be moved to config or other?
-        const filePath = "../codeql/ql/java/ql/lib/semmle/code/java/security/SensitiveVariables.qll";
+        // const filePath = "../codeql/ql/java/ql/lib/semmle/code/java/security/SensitiveVariables.qll";
+        const filePath = "../codeql queries/SensitiveInfo.yml";
+
         await this.fileUtilService.writeToFile(filePath, variables)
     }
 
@@ -233,6 +236,20 @@ export class CodeQlService {
         });
         return result;
     }
-    
-    
+
+    formatMappings2(mapping) : string{
+        mapping = {"file1": ["var1", "var2"], "file2": ["var3", "var4"]};
+        let result: string = "";
+
+        const keys = Object.keys(mapping).filter(key => mapping[key].length > 0);
+        keys.forEach((key, index) => {
+            // Correctly map each variable to a string with surrounding quotes and then join them
+            const variablesString = mapping[key].map(v => `"${v}"`).join(", ");
+
+            // - ["file1", ["var1", "var2"]]
+
+            result += `    - ["${key}", [${variablesString}]] \n`;     
+        });
+        return result;
+    }
 }
