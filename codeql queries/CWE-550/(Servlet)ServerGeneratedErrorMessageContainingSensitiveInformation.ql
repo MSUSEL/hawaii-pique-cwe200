@@ -76,6 +76,11 @@ module HttpServletExceptionSourceConfig implements DataFlow::ConfigSig{
       logMa.getMethod().getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
       logMa.getMethod().hasName(["error", "warn", "info", "debug"]) and
       sink.asExpr() = logMa.getAnArgument()
+    ) or
+    exists(MethodCall mc |
+      mc.getMethod().getDeclaringType().hasQualifiedName("org.apache.logging.log4j", "Logger") and
+      mc.getMethod().getName().matches(["info", "debug", "warn", "error", "logger"]) and
+      sink.asExpr() = mc.getAnArgument()
     )
   }
 }
