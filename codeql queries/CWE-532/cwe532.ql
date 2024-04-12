@@ -42,6 +42,7 @@ module SensitiveLoggerConfig implements DataFlow::ConfigSig {
 }
 
 module SensitiveLoggerFlow = TaintTracking::Global<SensitiveLoggerConfig>;
+import SensitiveLoggerFlow::PathGraph
 
  
  from SensitiveLoggerFlow::PathNode source, SensitiveLoggerFlow::PathNode sink
