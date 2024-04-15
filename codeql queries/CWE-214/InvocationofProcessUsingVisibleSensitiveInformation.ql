@@ -41,17 +41,19 @@ module ProcessExecutionWithSensitiveInfoConfig implements DataFlow::ConfigSig {
       sink.asExpr() = envCall.getQualifier()
     ) 
     or
+    // Checks if the sink is a method call to ProcessBuilder
     exists(MethodCall envCall |
       envCall.getMethod().hasName("ProcessBuilder") and
       sink.asExpr() = envCall.getQualifier()
     )
     or
+    // Checks if the sink is a method call to ProcessBuilder.environment.put
     exists(MethodCall putCall, MethodCall envCall |
-      putCall.getMethod().getDeclaringType().hasQualifiedName("java.util", "Map") and
       putCall.getMethod().hasName("put") and
-      putCall.getQualifier() = envCall and
-      envCall.getMethod().hasQualifiedName("java.lang", "ProcessBuilder", "environment") and
-      sink.asExpr() = putCall.getArgument(0)
+      envCall = putCall.getQualifier().(MethodCall) and
+      envCall.getMethod().hasName("environment") and
+      envCall.getQualifier().getType().(RefType).hasQualifiedName("java.lang", "ProcessBuilder") and
+      (sink.asExpr() = putCall.getAnArgument())
     )
   }
 }
