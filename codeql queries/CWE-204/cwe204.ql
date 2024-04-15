@@ -3,7 +3,7 @@
  * @description Detects if statements within sensitive contexts that produce different error messages based on conditional branches, which could lead to observable discrepancies.
  * @kind problem
  * @problem.severity warning
- * @id java/error-message-discrepancies/CWE-204
+ * @id java/error-message-discrepancies/204
  * @tags security
  *       external/cwe/cwe-204
  * @cwe CWE-204

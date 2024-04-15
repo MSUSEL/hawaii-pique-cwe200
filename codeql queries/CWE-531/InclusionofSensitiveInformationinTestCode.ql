@@ -4,11 +4,12 @@
  * @kind problem
  * @problem.severity medium
  * @precision medium
- * @id java/test-code-sensitive-str-info-exposure/CWE-531
+ * @id java/test-code-sensitive-str-info-exposure/531
  * @tags security
  *       cwe-531
  *       java
  * @cwe CWE-531
+ * @severity medium
  */
 import java
 import semmle.code.java.security.SensitiveVariables

@@ -6,7 +6,7 @@
  * @problem.severity warning
  * @security-severity 7.5
  * @precision medium
- * @id java/sensitive-info-log-file/CWE-538
+ * @id java/sensitive-info-log-file/538
  * @tags security
  *       cwe-538
  * @cwe CWE-538

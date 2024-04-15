@@ -4,7 +4,7 @@
  * @kind path-problem
  * @problem.severity warning
  * @security-severity 7.2
- * @id java/webview-debugging/CWE-215
+ * @id java/webview-debugging/215
  * @tags security
  *       external/cwe/cwe-489
  * @precision high

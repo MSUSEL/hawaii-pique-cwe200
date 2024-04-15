@@ -3,7 +3,7 @@
  * @description Identifies instances where sensitive information such as file paths, usernames, or passwords might be included in error messages, potentially leading to information exposure.
  * @kind path-problem
  * @problem.severity warning
- * @id java/error-message-sensitive-info/CWE-209
+ * @id java/error-message-sensitive-info/209
  * @tags security
  *       external/cwe/cwe-209
  * @cwe CWE-209

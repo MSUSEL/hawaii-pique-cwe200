@@ -4,7 +4,7 @@
  * @kind problem
  * @problem.severity warning
  * @security-severity 7.2
- * @id java/android-debuggable-attribute/CWE-215
+ * @id java/android-debuggable-attribute/215
  * @tags security
  *       external/cwe/cwe-489
  * @precision very-high

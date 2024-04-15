@@ -3,7 +3,7 @@
  * @description Identifies instances where sensitive information such as credentials may be hardcoded in the source code, potentially leading to security vulnerabilities.
  * @kind problem
  * @problem.severity error
- * @id java/sensitive-info-in-code/CWE-540
+ * @id java/sensitive-info-in-code/540
  * @tags security
  *       external/cwe/cwe-540
  * @cwe CWE-540

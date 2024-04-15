@@ -3,7 +3,7 @@
  * @description Identifies comments that might inadvertently contain sensitive information, which could lead to security risks if exposed in source code.
  * @kind problem
  * @problem.severity warning
- * @id java/sensitive-comments/CWE-615
+ * @id java/sensitive-comments/615
  * @tags security
  *       external/cwe/cwe-615
  * @cwe CWE-615

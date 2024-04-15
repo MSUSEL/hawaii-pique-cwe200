@@ -1,14 +1,16 @@
 /** 
  * @name CWE-531: Information Exposure Through Variable in Java Test Code
  * @description Detects potential information exposure through string literals in Java test code.
- * @kind problem
+ * @kind path-problem
  * @problem.severity medium
  * @precision medium
- * @id java/test-code-sensitive-var-info-exposure/CWE-531
+ * @id java/test-code-sensitive-var-info-exposure/531
  * @tags security
  *       cwe-531
  *       java
  * @cwe CWE-531
+ * @severity medium
+
  */
 
  import java
@@ -24,20 +26,6 @@
  
  module InclusionofSensitiveInformationinTestCodeConfig implements DataFlow::ConfigSig {
  
-/**
- * The purpose of this query is to detect potential information exposure through sensitive variables in Java test code.
- */ 
-class TestClass extends RefType {
-    TestClass() {
-        // JUnit 3 test case
-        this.getASupertype*().hasQualifiedName("junit.framework", "TestCase") or
-        // JUnit 4 and 5 test annotations
-        this.getAnAnnotation().getType().hasQualifiedName(["org.junit", "org.junit.jupiter.api"], "Test") or
-        // Test class naming convention
-        this.getName().regexpMatch(".*Test.*")
-    }
-}
-
    predicate isSource(DataFlow::Node source) {
      exists(SensitiveVariableExpr sve, TestClass tc |
         sve.getEnclosingCallable().getDeclaringType() = tc and
@@ -54,6 +42,17 @@ class TestClass extends RefType {
      CommonSinks::isErrorSink(sink)
    }
  }
+
+ class TestClass extends RefType {
+  TestClass() {
+      // JUnit 3 test case
+      this.getASupertype*().hasQualifiedName("junit.framework", "TestCase") or
+      // JUnit 4 and 5 test annotations
+      this.getAnAnnotation().getType().hasQualifiedName(["org.junit", "org.junit.jupiter.api"], "Test") or
+      // Test class naming convention
+      this.getName().regexpMatch(".*Test.*")
+  }
+}
  
  from Flow::PathNode source, Flow::PathNode sink
  where Flow::flowPath(source, sink)

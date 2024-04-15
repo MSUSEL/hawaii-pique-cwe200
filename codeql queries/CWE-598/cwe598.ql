@@ -4,7 +4,7 @@
  * @kind path-problem
  * @problem.severity warning
  * @precision medium
- * @id java/sensitive-get-query/CWE-598
+ * @id java/sensitive-get-query/598
  * @tags security
  *       experimental
  *       external/cwe/cwe-598

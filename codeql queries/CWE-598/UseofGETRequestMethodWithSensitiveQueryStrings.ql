@@ -3,7 +3,7 @@
  * @description Detects sensitive information being sent in query strings over GET requests, which could be exposed in server logs or browser history.
  * @kind path-problem
  * @problem.severity warning
- * @id ava/sensitive-get-query2/CWE-598
+ * @id ava/sensitive-get-query2/598
  * @tags security
  *       external/cwe/cwe-598
  * @cwe CWE-598

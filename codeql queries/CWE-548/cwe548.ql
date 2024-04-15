@@ -7,7 +7,7 @@
  * @kind problem
  * @problem.severity warning
  * @precision medium
- * @id java/directory-listing-exposure/CWE-548
+ * @id java/directory-listing-exposure/548
  * @tags security
  *       experimental
  *       external/cwe/cwe-548

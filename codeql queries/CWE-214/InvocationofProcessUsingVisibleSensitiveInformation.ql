@@ -4,7 +4,7 @@
  * @kind path-problem
  * @problem.severity error
  * @precision high
- * @id java/invocation-of-process-using-visible-sensitive-information/CWE-214
+ * @id java/invocation-of-process-using-visible-sensitive-information/214
  * @tags security
  *       external/cwe/cwe-200
  * @cwe CWE-214

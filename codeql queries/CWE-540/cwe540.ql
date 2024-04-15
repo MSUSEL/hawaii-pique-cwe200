@@ -5,7 +5,7 @@
  * @problem.severity error
  * @security-severity 9.8
  * @precision low
- * @id java/hardcoded-sensitive-field/CWE-540
+ * @id java/hardcoded-sensitive-field/540
  * @tags security
  * 		 external/cwe/cwe-540
  *       external/cwe/cwe-798

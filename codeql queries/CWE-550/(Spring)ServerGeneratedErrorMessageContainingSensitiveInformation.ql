@@ -5,7 +5,7 @@
  *              information disclosure vulnerabilities.
  * @kind path-problem
  * @problem.severity warning
- * @id java/spring-info-exposure/CWE-550
+ * @id java/spring-info-exposure/550
  * @tags security
  *       external/cwe/cwe-550
  *       external/cwe/cwe-200

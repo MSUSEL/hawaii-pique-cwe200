@@ -3,7 +3,7 @@
  * @description Detects potential exposure of sensitive information from SQLExceptions through console output, logging frameworks, or web application responses.
  * @kind path-problem
  * @problem.severity warning
- * @id java/sql-info-exposure/CWE-550
+ * @id java/sql-info-exposure/550
  * @tags security
  *       external/cwe/cwe-209
  *       external/cwe/cwe-215

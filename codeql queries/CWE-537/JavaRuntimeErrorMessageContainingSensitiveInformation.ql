@@ -3,7 +3,7 @@
  * @description Logging or printing sensitive information or detailed error messages can lead to information disclosure.
  * @kind path-problem
  * @problem.severity warning
- * @id java/runtime-error-info-exposure/CWE-537
+ * @id java/runtime-error-info-exposure/537
  * @tags security
  *       external/cwe/cwe-537
  * @cwe CWE-537
@@ -52,7 +52,6 @@
       sink.asExpr() = mc.getAnArgument()
     )
   }
-}
 
   predicate isBarrier(DataFlow::Node node) {
     exists(MethodCall mc |
@@ -64,6 +63,9 @@
       node.asExpr() = mc.getAnArgument()
     )
   }  
+}
+
+
 
  
 from Flow::PathNode source, Flow::PathNode sink
