@@ -110,9 +110,10 @@ def calculate_accuracy(data):
         cwe_results_dic[cwe] = accuracy
         print(f"Accuracy of {cwe} query: {accuracy}%")
         
-    print("\n")
+    # print("\n")
     # Calculate the total accuracy of all codeql queries
-    if total_samples != 0: print(f"Total accuracy: {((total_true_positives + total_true_negatives) / total_samples)*100}%")
+    if total_samples != 0: 
+        print(f"Total accuracy: {((total_true_positives + total_true_negatives) / total_samples)*100}%")
     else: print("Total accuracy: 0%")
 
 # Analyze the results of the codeql analysis
@@ -125,7 +126,7 @@ def analyze_codeql_results(codeql_results, java_files):
     num_results = len(results)
         
     for res in results:
-        query_cwe = res['ruleId'].split('/')[-1]
+        query_cwe = "CWE-" + res['ruleId'].split('/')[-1]
         directory = res['locations'][0]['physicalLocation']['artifactLocation']['uri']
         split = directory.split("/")
         cwe = get_cwe(split)
