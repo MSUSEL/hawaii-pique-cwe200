@@ -1,23 +1,7 @@
-
 extensions:
   - addsTo:
       pack: custom-codeql-queries
-      extensible: suspiciousVariables
+      extensible: thisIsATest
     data:
-    - ["file1", ["var1", "var2"]] 
-    - ["file2", ["var3", "var4"]] 
-
-
-  - addsTo:
-      pack: custom-codeql-queries
-      extensible: suspiciousStrings
-    data:
-    - ["file1", ["var1", "var2"]] 
-    - ["file2", ["var3", "var4"]] 
-
-
-  - addsTo:
-      pack: custom-codeql-queries
-      extensible: suspiciousComments
-    data:
-
+      - ["file1.java", "DEBUG_MODE"]
+      - ["file2.java", "sensitiveInfo"]

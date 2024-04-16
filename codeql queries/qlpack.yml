@@ -5,3 +5,5 @@ name: custom-codeql-queries
 version: 0.0.1
 dependencies:
   codeql/java-queries: ^0.8.9
+dataExtensions:
+  - SensitiveInfo.yml
