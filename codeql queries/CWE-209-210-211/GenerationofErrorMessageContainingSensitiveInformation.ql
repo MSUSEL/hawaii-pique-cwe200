@@ -13,6 +13,7 @@ import java
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.dataflow.FlowSources
 import semmle.code.java.security.SensitiveVariables
+import CommonSinks.CommonSinks
 
 module Flow = TaintTracking::Global<SensitiveInfoInErrorMsgConfig>;
 import Flow::PathGraph
@@ -20,15 +21,20 @@ import Flow::PathGraph
 module SensitiveInfoInErrorMsgConfig implements DataFlow::ConfigSig{
   predicate isSource(DataFlow::Node source) {
     // Broad definition, consider refining
-    exists(SensitiveVariableExpr sve | source.asExpr() = sve)   
+    exists(SensitiveVariableExpr sve | source.asExpr() = sve) or 
+    exists(SensitiveStringLiteral ssl |source.asExpr() = ssl) or
+    
+    exists(MethodAccess ma |
+      ma.getMethod().hasName("getMessage") and
+      source.asExpr() = ma
+    )
   }
 
   predicate isSink(DataFlow::Node sink) {
     // Identifying common error message generation points
-    exists(MethodCall mc | 
-      mc.getMethod().getName().regexpMatch("printStackTrace|log|error|println") and
-      sink.asExpr() = mc.getArgument(0)
-    )
+    CommonSinks::isPrintSink(sink) or 
+    CommonSinks::isErrorSink(sink)
+
   }
 }
 
