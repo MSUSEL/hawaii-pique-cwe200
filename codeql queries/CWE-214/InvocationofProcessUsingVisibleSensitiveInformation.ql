@@ -31,7 +31,7 @@ module ProcessExecutionWithSensitiveInfoConfig implements DataFlow::ConfigSig {
     exists(MethodCall execCall |
       execCall.getMethod().getDeclaringType().hasQualifiedName("java.lang", "Runtime") and
       execCall.getMethod().hasName("exec") and
-      sink.asExpr() = execCall.getArgument(0)
+      sink.asExpr() = execCall.getAnArgument()
     )
     or
     // Checks if the sink is a method call to ProcessBuilder.start
