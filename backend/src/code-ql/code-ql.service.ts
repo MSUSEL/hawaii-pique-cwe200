@@ -7,6 +7,10 @@ import * as fs from 'fs';
 import { ConfigService } from '@nestjs/config';
 import { ChatGptService } from 'src/chat-gpt/chat-gpt.service';
 import { SensitiveVariablesContents } from './data';
+import { SensitiveVariables } from './SensitiveVariables';
+import { SensitiveComments } from './SensitiveComments';
+import { SensitiveStrings } from './SenstiveStrings';
+
 import { EventsGateway } from 'src/events/events.gateway';
 @Injectable()
 export class CodeQlService {
@@ -51,64 +55,85 @@ export class CodeQlService {
         // Get Sensitive variables from gpt
                     
                     // // Used for testing
-                    // let slice = javaFiles.slice(0, 20);  
-                    // const data=await this.gptService.openAiGetSensitiveVariables(slice);
+                    let slice = javaFiles.slice(120, 130);  
+                    const data=await this.gptService.openAiGetSensitiveVariables(slice);
 
         // Use GPT
-        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Use existing data so that we don't use GPT credits
-        //const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"), javaFiles);
+        // const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"));
 
         // Replace String with findings?
         const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
+        let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
+        await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
+        await this.writeVariablesToFile(variablesFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveVariables.yml")
+
+
         const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
-        let fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
-        fileContents = fileContents.replace("----------", variablesMapping);
-        fileContents = fileContents.replace("++++++++++", stringsMapping);
-        fileContents = fileContents.replace("**********", data.comments.join(','))
+        let stringsFile = SensitiveStrings.replace("++++++++++", stringsMapping);
+        await this.writeVariablesToFile(stringsFile, "../codeql queries/SensitiveInfo/SensitiveStrings.yml")
+        await this.writeVariablesToFile(stringsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveStrings.yml")
+
+
+        const commentsMapping = this.formatStringArray(data.comments);
+        let commentsFile = SensitiveComments.replace("**********", commentsMapping);
+        await this.writeVariablesToFile(commentsFile, "../codeql queries/SensitiveInfo/SensitiveComments.yml")
+        await this.writeVariablesToFile(commentsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveComments.yml")
+
+
+
+
+        
+        
+        
+        // let fileContents = SensitiveInfo.replace("======", data.variables.join(','));
+        // fileContents = fileContents.replace("----------", variablesMapping);
+        // fileContents = fileContents.replace("++++++++++", stringsMapping);
+        // fileContents = fileContents.replace("**********", data.comments.join(','))
 
 
 
         // // Write response to file
-        await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
+        // await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
         await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
 
 
 
         // Remove previous database if it exists
-        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-        await this.fileUtilService.removeDir(db);
+        // const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+        // await this.fileUtilService.removeDir(db);
 
         // Create new database with codeql
-        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        await this.runChildProcess(createDbCommand);
+        // const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        // await this.runChildProcess(createDbCommand);
 
         // todo try catch if failed to make db? Can run analyze if no db
 
         // Analyze with codeql
-        const outputPath = path.join(sourcePath, 'result.sarif');
-        const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
-        await this.runChildProcess(analyzeDbCommand);
+        // const outputPath = path.join(sourcePath, 'result.sarif');
+        // const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
+        // await this.runChildProcess(analyzeDbCommand);
 
         return await this.parserService.getSarifResults(sourcePath);
 
     }
 
-    async runChatGPT(sourcePath){
-        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+    // async runChatGPT(sourcePath){
+    //     const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
 
-        // Get Sensitive variables from gpt
-        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+    //     // Get Sensitive variables from gpt
+    //     const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
-        // Replace String with findings?
-        const fileContents = this.formatMappings(data.sensitiveVariablesMapping)
-        // const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+    //     // Replace String with findings?
+    //     const fileContents = this.formatMappings(data.sensitiveVariablesMapping)
+    //     // const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
 
-        // Write response to file
-        await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
-        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
-    }
+    //     // Write response to file
+    //     await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
+    //     await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+    // }
 
     async debugChatGPT(sourcePath){
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
@@ -175,9 +200,11 @@ export class CodeQlService {
      *
      * @param variables variables to write
      */
-    async writeVariablesToFile(variables: string) {
+    async writeVariablesToFile(variables: string, filePath: string) {
         // todo why is this a constant path? Can be moved to config or other?
-        const filePath = "../codeql/ql/java/ql/lib/semmle/code/java/security/SensitiveVariables.qll";
+        // const filePath = "../codeql/ql/java/ql/lib/semmle/code/java/security/SensitiveVariables.qll";
+        // const filePath = "../codeql queries/SensitiveInfo.yml";
+
         await this.fileUtilService.writeToFile(filePath, variables)
     }
 
@@ -217,22 +244,32 @@ export class CodeQlService {
 
     }
 
-    formatMappings(mapping): string {
-        let result: string = "";
-        // Only consider keys with non-empty values, since this causes issues with codeql later on.
-        const keys = Object.keys(mapping).filter(key => mapping[key].length > 0);
-        keys.forEach((key, index) => {
-            // Correctly map each variable to a string with surrounding quotes and then join them
-            const variablesString = mapping[key].map(v => `${v}`).join(", ");
-            result += `fileName = "${key}" and result = [${variablesString}]`;
-            
-            // Add the ' or\n' between entries, but not after the last entry
-            if (index < keys.length - 1) {
-                result += " or\n";
-            }
+    formatMappings(mapping) : string{
+        // mapping = {"GOOD_ConsistentAuthenticationTiming.java": ["VALID_USERNAME", "VALID_PASSWORD"], "GOOD_UniformLoginResponse": ["username"]};
+        
+        let result = "";
+
+        // Iterate over each key (filename) in the mapping object
+        Object.keys(mapping).forEach(key => {
+            // For each variable associated with the key, generate a new line in the output
+            mapping[key].forEach(variable => {
+                result += `    - ["${key}", ${variable}]\n`;
+            });
         });
+    
         return result;
     }
+
+    formatStringArray(inputArray: string[]): string {
+        // Initialize the result string
+        let result = '';
     
+        // Loop through each string in the array
+        inputArray.forEach(item => {
+            // Append the formatted item to the result string
+            result += `    - [${item}]\n`;
+        });
     
+        return result;
+    }
 }

@@ -1,0 +1,16 @@
+
+extensions:
+  - addsTo:
+      pack: custom-codeql-queries
+      extensible: sensitiveStrings
+    data:
+    - ["BAD_CreditCardSubmissionGET.java", "1234567890123456"]
+    - ["BAD_CreditCardSubmissionGET.java", "12/23"]
+    - ["BAD_CreditCardSubmissionGET.java", "123"]
+    - ["BAD_HealthInfoSubmissionGET.java", "12345"]
+    - ["BAD_HealthInfoSubmissionGET.java", "Fever, cough, and shortness of breath"]
+    - ["BAD_HealthInfoSubmissionGET.java", "DrJohnDoe"]
+    - ["BAD_PasswordChangeGET.java", "user2"]
+    - ["BAD_PasswordChangeGET.java", "oldPass123"]
+    - ["BAD_PasswordChangeGET.java", "newPass456"]
+

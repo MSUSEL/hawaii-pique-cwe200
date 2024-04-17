@@ -1,0 +1,12 @@
+
+extensions:  
+  - addsTo:
+      pack: custom-codeql-queries
+      extensible: sensitiveComments
+    data:
+    - ["ak_test_12345"]
+    - ["AESKey123456789"]
+    - ["admin"]
+    - ["admin12345"]
+    - ["jdbc:mysql://localhost:3306/production"]
+
