@@ -35,19 +35,21 @@
  
   predicate isSink(DataFlow::Node sink) {
     // Identify direct calls to printStackTrace as sinks.
-    exists(MethodCall mc |
-      mc.getMethod().hasName("printStackTrace") and
-      mc.getQualifier().getType().(RefType).getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-      sink.asExpr() = mc
-    )
-    or
+    // exists(MethodCall mc |
+    //   mc.getMethod().hasName("printStackTrace") and
+    //   mc.getQualifier().getType().(RefType).getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+    //   sink.asExpr() = mc
+    // )
+    // or
     // Identify logging, printing, or error handling operations as sinks using the CommonSinks module.
     exists(MethodCall mc, CatchClause cc | 
+      cc.getACaughtType().getASupertype*().hasQualifiedName("java.lang", "RuntimeException") and
       mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock() and
       (
         CommonSinks::isLoggingSink(sink) or
         CommonSinks::isPrintSink(sink) or
-        CommonSinks::isErrorSink(sink)
+        CommonSinks::isErrorSink(sink) or
+        CommonSinks::isServletSink(sink)
       ) and
       sink.asExpr() = mc.getAnArgument()
     )
