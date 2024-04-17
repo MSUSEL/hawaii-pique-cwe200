@@ -42,98 +42,32 @@ export class CodeQlService {
     async runCodeQl(createCodeQlDto: any) {
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
-     
+        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+        // let slice = javaFiles.slice(120, 130);  
+
 
         // const data = this.debugChatGPT(sourcePath);
-        // await this.runChatGPT(sourcePath);
-        // return
+        // const data = await this.runChatGPT(javaFiles, sourcePath);
 
+        // const data = this.useSavedData(sourcePath); // Use existing data so that we don't use GPT credits
 
+        // await this.saveSenstiveInfo(data); // Saves all the sensitive info to .yml files
 
-        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
-
-        // Get Sensitive variables from gpt
-                    
-                    // // Used for testing
-                    let slice = javaFiles.slice(120, 130);  
-                    const data=await this.gptService.openAiGetSensitiveVariables(slice);
-
-        // Use GPT
-        // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
-
-        // Use existing data so that we don't use GPT credits
-        // const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"));
-
-        // Replace String with findings?
-        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
-        let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
-        await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
-        await this.writeVariablesToFile(variablesFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveVariables.yml")
-
-
-        const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
-        let stringsFile = SensitiveStrings.replace("++++++++++", stringsMapping);
-        await this.writeVariablesToFile(stringsFile, "../codeql queries/SensitiveInfo/SensitiveStrings.yml")
-        await this.writeVariablesToFile(stringsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveStrings.yml")
-
-
-        const commentsMapping = this.formatStringArray(data.comments);
-        let commentsFile = SensitiveComments.replace("**********", commentsMapping);
-        await this.writeVariablesToFile(commentsFile, "../codeql queries/SensitiveInfo/SensitiveComments.yml")
-        await this.writeVariablesToFile(commentsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveComments.yml")
-
-
-
-
-        
-        
-        
-        // let fileContents = SensitiveInfo.replace("======", data.variables.join(','));
-        // fileContents = fileContents.replace("----------", variablesMapping);
-        // fileContents = fileContents.replace("++++++++++", stringsMapping);
-        // fileContents = fileContents.replace("**********", data.comments.join(','))
-
-
-
-        // // Write response to file
-        // await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
-        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
-
-
-
-        // Remove previous database if it exists
-        // const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-        // await this.fileUtilService.removeDir(db);
-
-        // Create new database with codeql
-        // const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        // await this.runChildProcess(createDbCommand);
-
-        // todo try catch if failed to make db? Can run analyze if no db
-
-        // Analyze with codeql
-        // const outputPath = path.join(sourcePath, 'result.sarif');
-        // const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
-        // await this.runChildProcess(analyzeDbCommand);
+        await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
 
         return await this.parserService.getSarifResults(sourcePath);
 
     }
 
-    // async runChatGPT(sourcePath){
-    //     const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+    async runChatGPT(javaFiles, sourcePath){
+        // Get Sensitive variables from gpt
+        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
-    //     // Get Sensitive variables from gpt
-    //     const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        // Write response to file
+        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);
 
-    //     // Replace String with findings?
-    //     const fileContents = this.formatMappings(data.sensitiveVariablesMapping)
-    //     // const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
-
-    //     // Write response to file
-    //     await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
-    //     await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
-    // }
+        return data;
+    }
 
     async debugChatGPT(sourcePath){
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
@@ -154,6 +88,11 @@ export class CodeQlService {
             return data;
         }
     }
+
+    useSavedData(sourcePath){
+        return this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"));
+    }
+
 
     /**
      * Execute command string using codeql
@@ -271,5 +210,40 @@ export class CodeQlService {
         });
     
         return result;
+    }
+
+    async saveSenstiveInfo(data){
+        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
+        let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
+        await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
+        await this.writeVariablesToFile(variablesFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveVariables.yml")
+
+
+        const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
+        let stringsFile = SensitiveStrings.replace("++++++++++", stringsMapping);
+        await this.writeVariablesToFile(stringsFile, "../codeql queries/SensitiveInfo/SensitiveStrings.yml")
+        await this.writeVariablesToFile(stringsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveStrings.yml")
+
+
+        const commentsMapping = this.formatStringArray(data.comments);
+        let commentsFile = SensitiveComments.replace("**********", commentsMapping);
+        await this.writeVariablesToFile(commentsFile, "../codeql queries/SensitiveInfo/SensitiveComments.yml")
+        await this.writeVariablesToFile(commentsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveComments.yml")
+
+    }
+
+    async codeqlProcess(sourcePath: string, createCodeQlDto: any){
+        // Remove previous database if it exists
+        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+        await this.fileUtilService.removeDir(db);
+
+        // Create new database with codeql
+        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        await this.runChildProcess(createDbCommand);
+
+        // Analyze with codeql
+        const outputPath = path.join(sourcePath, 'result.sarif');
+        const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
+        await this.runChildProcess(analyzeDbCommand);
     }
 }

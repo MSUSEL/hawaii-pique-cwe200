@@ -124,6 +124,7 @@ export class FileUtilService {
     }
 
     parseJSONFile(filePath: string) {
+        let filePath2 = "../../Files/CWEToyDataset/data.json"
         
         let variables = [];
         const fileList: any[] = [];
