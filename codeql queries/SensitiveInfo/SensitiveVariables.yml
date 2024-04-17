@@ -4,7 +4,13 @@ extensions:
       pack: custom-codeql-queries
       extensible: sensitiveVariables
     data:
-    - ["GOOD_ConsistentAuthenticationTiming.java", "VALID_USERNAME"]
-    - ["GOOD_ConsistentAuthenticationTiming.java", "VALID_PASSWORD"]
-    - ["GOOD_UniformLoginResponse", "username"]
+    - ["BAD_CreditCardSubmissionGET.java", "cardNumber"]
+    - ["BAD_CreditCardSubmissionGET.java", "expiryDate"]
+    - ["BAD_CreditCardSubmissionGET.java", "cvv"]
+    - ["BAD_HealthInfoSubmissionGET.java", "patientId"]
+    - ["BAD_HealthInfoSubmissionGET.java", "symptoms"]
+    - ["BAD_HealthInfoSubmissionGET.java", "doctorId"]
+    - ["BAD_PasswordChangeGET.java", "username"]
+    - ["BAD_PasswordChangeGET.java", "oldPassword"]
+    - ["BAD_PasswordChangeGET.java", "newPassword"]
 

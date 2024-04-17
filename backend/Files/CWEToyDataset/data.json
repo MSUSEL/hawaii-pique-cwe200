@@ -1,1 +1,163 @@
-[]
+[
+	{
+		"fileName": "BAD_ApiKeyInComments.java",
+		"sensitiveVariables": [],
+		"sensitiveStrings": [],
+		"sensitiveComments": [
+			{
+				"name": "ak_test_12345",
+				"description": "API Key exposed in comments"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_EncryptionKeyInComments.java",
+		"sensitiveVariables": [],
+		"sensitiveStrings": [],
+		"sensitiveComments": [
+			{
+				"name": "AESKey123456789",
+				"description": "Encryption key exposed in comments"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_HardcodedCredentialsInComments.java",
+		"sensitiveVariables": [],
+		"sensitiveStrings": [],
+		"sensitiveComments": [
+			{
+				"name": "admin",
+				"description": "Username exposed in comments"
+			},
+			{
+				"name": "admin12345",
+				"description": "Password exposed in comments"
+			},
+			{
+				"name": "jdbc:mysql://localhost:3306/production",
+				"description": "Database connection URL exposed in comments"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_SecureCommentPractices.java",
+		"sensitiveVariables": [],
+		"sensitiveStrings": [],
+		"sensitiveComments": []
+	},
+	{
+		"fileName": "GOOD_SecureKeyManagement.java",
+		"sensitiveVariables": [],
+		"sensitiveStrings": [],
+		"sensitiveComments": []
+	},
+	{
+		"fileName": "BAD_CreditCardSubmissionGET.java",
+		"sensitiveVariables": [
+			{
+				"name": "cardNumber",
+				"description": "Credit card number used for payment submission"
+			},
+			{
+				"name": "expiryDate",
+				"description": "Expiry date of the credit card"
+			},
+			{
+				"name": "cvv",
+				"description": "CVV of the credit card"
+			}
+		],
+		"sensitiveStrings": [
+			{
+				"name": "1234567890123456",
+				"description": "Hardcoded credit card number"
+			},
+			{
+				"name": "12/23",
+				"description": "Hardcoded credit card expiry date"
+			},
+			{
+				"name": "123",
+				"description": "Hardcoded CVV of the credit card"
+			}
+		],
+		"sensitiveComments": []
+	},
+	{
+		"fileName": "BAD_HealthInfoSubmissionGET.java",
+		"sensitiveVariables": [
+			{
+				"name": "patientId",
+				"description": "Patient's unique identifier"
+			},
+			{
+				"name": "symptoms",
+				"description": "Patient's health symptoms"
+			},
+			{
+				"name": "doctorId",
+				"description": "Doctor's unique identifier"
+			}
+		],
+		"sensitiveStrings": [
+			{
+				"name": "12345",
+				"description": "Hardcoded patient ID"
+			},
+			{
+				"name": "Fever, cough, and shortness of breath",
+				"description": "Hardcoded patient symptoms"
+			},
+			{
+				"name": "DrJohnDoe",
+				"description": "Hardcoded doctor ID"
+			}
+		],
+		"sensitiveComments": []
+	},
+	{
+		"fileName": "BAD_PasswordChangeGET.java",
+		"sensitiveVariables": [
+			{
+				"name": "username",
+				"description": "Username for password change"
+			},
+			{
+				"name": "oldPassword",
+				"description": "Old password for the user"
+			},
+			{
+				"name": "newPassword",
+				"description": "New password for the user"
+			}
+		],
+		"sensitiveStrings": [
+			{
+				"name": "user2",
+				"description": "Hardcoded username"
+			},
+			{
+				"name": "oldPass123",
+				"description": "Hardcoded old password"
+			},
+			{
+				"name": "newPass456",
+				"description": "Hardcoded new password"
+			}
+		],
+		"sensitiveComments": []
+	},
+	{
+		"fileName": "GOOD_FetchPublicData.java",
+		"sensitiveVariables": [],
+		"sensitiveStrings": [],
+		"sensitiveComments": []
+	},
+	{
+		"fileName": "GOOD_FetchWeatherData.java",
+		"sensitiveVariables": [],
+		"sensitiveStrings": [],
+		"sensitiveComments": []
+	}
+]

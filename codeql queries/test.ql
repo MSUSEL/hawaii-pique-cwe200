@@ -12,7 +12,7 @@ import SensitiveInfo.SensitiveInfo // Import from the correct module path
 class HardCodedSensitiveComments extends Javadoc {
   HardCodedSensitiveComments() {
     exists(SensitiveComments::SensitiveComment sc | 
-      this.getAChild().(JavadocText).getText().regexpMatch(".*" + sc.getValue() + ".*")
+      this.getAChild().(JavadocText).getText().matches("%" + sc.getValue() + "%")
     )
   }
 }

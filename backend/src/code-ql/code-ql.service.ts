@@ -55,24 +55,35 @@ export class CodeQlService {
         // Get Sensitive variables from gpt
                     
                     // // Used for testing
-                    // let slice = javaFiles.slice(0, 20);  
-                    // const data=await this.gptService.openAiGetSensitiveVariables(slice);
+                    let slice = javaFiles.slice(120, 130);  
+                    const data=await this.gptService.openAiGetSensitiveVariables(slice);
 
         // Use GPT
         // const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
         // Use existing data so that we don't use GPT credits
-        const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"));
+        // const data = this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"));
 
         // Replace String with findings?
-        const variablesMapping = this.formatMappings2(data.sensitiveVariablesMapping);
+        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
         let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
         await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
+        await this.writeVariablesToFile(variablesFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveVariables.yml")
 
 
-        const stringsMapping = this.formatMappings2(data.sensitiveStringsMapping);
+        const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
         let stringsFile = SensitiveStrings.replace("++++++++++", stringsMapping);
         await this.writeVariablesToFile(stringsFile, "../codeql queries/SensitiveInfo/SensitiveStrings.yml")
+        await this.writeVariablesToFile(stringsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveStrings.yml")
+
+
+        const commentsMapping = this.formatStringArray(data.comments);
+        let commentsFile = SensitiveComments.replace("**********", commentsMapping);
+        await this.writeVariablesToFile(commentsFile, "../codeql queries/SensitiveInfo/SensitiveComments.yml")
+        await this.writeVariablesToFile(commentsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveComments.yml")
+
+
+
 
         
         
@@ -233,26 +244,8 @@ export class CodeQlService {
 
     }
 
-    formatMappings(mapping): string {
-        let result: string = "";
-        // Only consider keys with non-empty values, since this causes issues with codeql later on.
-        const keys = Object.keys(mapping).filter(key => mapping[key].length > 0);
-        keys.forEach((key, index) => {
-            // Correctly map each variable to a string with surrounding quotes and then join them
-            const variablesString = mapping[key].map(v => `${v}`).join(", ");
-            result += `fileName = "${key}" and result = [${variablesString}]`;
-            
-            // Add the ' or\n' between entries, but not after the last entry
-            if (index < keys.length - 1) {
-                result += " or\n";
-            }
-        });
-        return result;
-    }
-
-    formatMappings2(mapping) : string{
-
-        mapping = {"GOOD_ConsistentAuthenticationTiming.java": ["VALID_USERNAME", "VALID_PASSWORD"], "GOOD_UniformLoginResponse": ["username"]};
+    formatMappings(mapping) : string{
+        // mapping = {"GOOD_ConsistentAuthenticationTiming.java": ["VALID_USERNAME", "VALID_PASSWORD"], "GOOD_UniformLoginResponse": ["username"]};
         
         let result = "";
 
@@ -260,8 +253,21 @@ export class CodeQlService {
         Object.keys(mapping).forEach(key => {
             // For each variable associated with the key, generate a new line in the output
             mapping[key].forEach(variable => {
-                result += `    - ["${key}", "${variable}"]\n`;
+                result += `    - ["${key}", ${variable}]\n`;
             });
+        });
+    
+        return result;
+    }
+
+    formatStringArray(inputArray: string[]): string {
+        // Initialize the result string
+        let result = '';
+    
+        // Loop through each string in the array
+        inputArray.forEach(item => {
+            // Append the formatted item to the result string
+            result += `    - [${item}]\n`;
         });
     
         return result;
