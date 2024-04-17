@@ -43,16 +43,27 @@ module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
   }
 
   predicate isSink(DataFlow::Node sink) {
-    // Ensure that all sinks are within servlets
-    exists(MethodCall mc | sink.asExpr() = mc.getAnArgument() and
-      mc.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet")
-    ) and  
-    (CommonSinks::isServletSink(sink) or
-    CommonSinks::isPrintSink(sink) or
-    CommonSinks::isLoggingSink(sink)) or 
-    CommonSinks::isErrorSink(sink)
-  }
+    exists(CatchClause cc, MethodCall mc |
+      // Ensure the CatchClause is catching ServletException
+      cc.getACaughtType().hasQualifiedName("javax.servlet", "ServletException") and
+      // Ensure the MethodCall is within the CatchClause for the ServletException
+      mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock() and
+      // Ensure the sink matches one of the known sensitive sinks
+      (
+        CommonSinks::isLoggingSink(sink) or
+        CommonSinks::isPrintSink(sink) or
+        CommonSinks::isServletSink(sink) or
+        CommonSinks::isErrorSink(sink) or
+        CommonSinks::isIOSink(sink)
+      ) and
+      // Link the sink to the argument of the MethodCall
+      sink.asExpr() = mc.getAnArgument()
+    )
 }
+
+}
+
+
 
 from Flow::PathNode source, Flow::PathNode sink
 where Flow::flowPath(source, sink)
