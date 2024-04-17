@@ -1,7 +1,0 @@
-extensions:
-  - addsTo:
-      pack: custom-codeql-queries
-      extensible: thisIsATest
-    data:
-      - ["file1.java", "DEBUG_MODE"]
-      - ["file2.java", "sensitiveInfo"]

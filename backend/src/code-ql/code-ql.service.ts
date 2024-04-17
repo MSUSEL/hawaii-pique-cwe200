@@ -7,7 +7,10 @@ import * as fs from 'fs';
 import { ConfigService } from '@nestjs/config';
 import { ChatGptService } from 'src/chat-gpt/chat-gpt.service';
 import { SensitiveVariablesContents } from './data';
-import { SensitiveInfo } from './SensitiveInfo';
+import { SensitiveVariables } from './SensitiveVariables';
+import { SensitiveComments } from './SensitiveComments';
+import { SensitiveStrings } from './SenstiveStrings';
+
 import { EventsGateway } from 'src/events/events.gateway';
 @Injectable()
 export class CodeQlService {
@@ -63,16 +66,26 @@ export class CodeQlService {
 
         // Replace String with findings?
         const variablesMapping = this.formatMappings2(data.sensitiveVariablesMapping);
+        let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
+        await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
+
+
         const stringsMapping = this.formatMappings2(data.sensitiveStringsMapping);
-        let fileContents = SensitiveInfo.replace("======", data.variables.join(','));
-        fileContents = fileContents.replace("----------", variablesMapping);
-        fileContents = fileContents.replace("++++++++++", stringsMapping);
-        fileContents = fileContents.replace("**********", data.comments.join(','))
+        let stringsFile = SensitiveStrings.replace("++++++++++", stringsMapping);
+        await this.writeVariablesToFile(stringsFile, "../codeql queries/SensitiveInfo/SensitiveStrings.yml")
+
+        
+        
+        
+        // let fileContents = SensitiveInfo.replace("======", data.variables.join(','));
+        // fileContents = fileContents.replace("----------", variablesMapping);
+        // fileContents = fileContents.replace("++++++++++", stringsMapping);
+        // fileContents = fileContents.replace("**********", data.comments.join(','))
 
 
 
         // // Write response to file
-        await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
+        // await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
         await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
 
 
@@ -96,20 +109,20 @@ export class CodeQlService {
 
     }
 
-    async runChatGPT(sourcePath){
-        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+    // async runChatGPT(sourcePath){
+    //     const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
 
-        // Get Sensitive variables from gpt
-        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+    //     // Get Sensitive variables from gpt
+    //     const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
 
-        // Replace String with findings?
-        const fileContents = this.formatMappings(data.sensitiveVariablesMapping)
-        // const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
+    //     // Replace String with findings?
+    //     const fileContents = this.formatMappings(data.sensitiveVariablesMapping)
+    //     // const fileContents = SensitiveVariablesContents.replace("======", data.variables.join(','));
 
-        // Write response to file
-        await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
-        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
-    }
+    //     // Write response to file
+    //     await this.writeVariablesToFile(fileContents)    // commented b/c path doesn't exist
+    //     await this.writeFilesGptResponseToJson(data.fileList, sourcePath);  // todo
+    // }
 
     async debugChatGPT(sourcePath){
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
@@ -176,10 +189,10 @@ export class CodeQlService {
      *
      * @param variables variables to write
      */
-    async writeVariablesToFile(variables: string) {
+    async writeVariablesToFile(variables: string, filePath: string) {
         // todo why is this a constant path? Can be moved to config or other?
         // const filePath = "../codeql/ql/java/ql/lib/semmle/code/java/security/SensitiveVariables.qll";
-        const filePath = "../codeql queries/SensitiveInfo.yml";
+        // const filePath = "../codeql queries/SensitiveInfo.yml";
 
         await this.fileUtilService.writeToFile(filePath, variables)
     }
@@ -238,18 +251,19 @@ export class CodeQlService {
     }
 
     formatMappings2(mapping) : string{
-        mapping = {"file1": ["var1", "var2"], "file2": ["var3", "var4"]};
-        let result: string = "";
 
-        const keys = Object.keys(mapping).filter(key => mapping[key].length > 0);
-        keys.forEach((key, index) => {
-            // Correctly map each variable to a string with surrounding quotes and then join them
-            const variablesString = mapping[key].map(v => `"${v}"`).join(", ");
+        mapping = {"GOOD_ConsistentAuthenticationTiming.java": ["VALID_USERNAME", "VALID_PASSWORD"], "GOOD_UniformLoginResponse": ["username"]};
+        
+        let result = "";
 
-            // - ["file1", ["var1", "var2"]]
-
-            result += `    - ["${key}", [${variablesString}]] \n`;     
+        // Iterate over each key (filename) in the mapping object
+        Object.keys(mapping).forEach(key => {
+            // For each variable associated with the key, generate a new line in the output
+            mapping[key].forEach(variable => {
+                result += `    - ["${key}", "${variable}"]\n`;
+            });
         });
+    
         return result;
     }
 }

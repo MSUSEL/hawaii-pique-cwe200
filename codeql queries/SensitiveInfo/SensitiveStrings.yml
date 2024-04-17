@@ -1,0 +1,10 @@
+
+extensions:
+  - addsTo:
+      pack: custom-codeql-queries
+      extensible: sensitiveStrings
+    data:
+    - ["GOOD_ConsistentAuthenticationTiming.java", "VALID_USERNAME"]
+    - ["GOOD_ConsistentAuthenticationTiming.java", "VALID_PASSWORD"]
+    - ["GOOD_UniformLoginResponse", "username"]
+

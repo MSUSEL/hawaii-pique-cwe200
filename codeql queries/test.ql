@@ -1,17 +1,4 @@
 import java
-import SensitiveInfo
-
-class SensitiveVariableExpr extends Expr {
-    SensitiveVariableExpr() {
-      exists(Variable v, File f | this = v.getAnAccess() and
-        f = v.getCompilationUnit().getFile() 
-        and
-        v.getName().matches(SensitiveInfo::thisIsATest(f.getBaseName())) and
-        not this instanceof CompileTimeConstantExpr
-      )
-    }
-  }
-
-
-from SensitiveVariableExpr sve
+import SensitiveInfo.SensitiveInfo // Import from the correct module path
+from SensitiveVariables::SensitiveVariableExpr sve
 select sve
