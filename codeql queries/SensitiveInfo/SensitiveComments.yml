@@ -1,0 +1,10 @@
+extensions:
+  - addsTo:
+      pack: custom-codeql-queries
+      extensible: sensitiveComments
+    data:
+    - ["admin"]
+
+
+
+
