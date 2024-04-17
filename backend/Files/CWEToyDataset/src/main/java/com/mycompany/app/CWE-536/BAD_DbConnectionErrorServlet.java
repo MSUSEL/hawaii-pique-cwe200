@@ -25,4 +25,18 @@ public class BAD_DbConnectionErrorServlet extends HttpServlet {
             throw new ServletException("MySQL driver not found", e);
         }
     }
+
+    public void safeDoGet(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            doGet(request, response);
+        } catch (ServletException e) {
+            try {
+                response.getWriter().println("ServletException caught: " + e.getMessage());
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle IOException separately if needed
+        }
+    } 
 }
