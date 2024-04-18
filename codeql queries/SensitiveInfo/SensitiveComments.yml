@@ -4,9 +4,26 @@ extensions:
       pack: custom-codeql-queries
       extensible: sensitiveComments
     data:
+    - ["Exposing stack trace and system details in the HTTP response"]
+    - ["Logging exception details including stack trace when in debug mode"]
+    - ["Logging all system properties, including potentially sensitive ones"]
+    - ["A processing error occurred, refer to application logs for details."]
     - ["ak_test_12345"]
     - ["AESKey123456789"]
     - ["admin"]
     - ["admin12345"]
     - ["jdbc:mysql://localhost:3306/production"]
+    - ["Vulnerability: Allowing a database error exception to bubble up unhandled, which might include detailed information about the database state or structure."]
+    - ["Hardcoded API key for external service"]
+    - ["Sensitive Information"]
+    - ["PossibleTimingAttackAgainstSigniture"]
+    - ["PossibleTimingAttackAgainstSigniture"]
+    - ["PossibleTimingAttackAgainstSigniture"]
+    - ["This occurred while using a sensitive business multiplier."]
+    - ["Example of a critical mistake in business logic"]
+    - ["Insecure: The service does not filter out sensitive information from the aggregated data before sharing."]
+    - ["Insecure: Directly printing SQL exception details, which might include sensitive database schema information."]
+    - ["Insecure: Logging both the username and the password, potentially exposing sensitive information in logs."]
+    - ["Caught ServletException: "]
+    - ["Error reading file: "]
 

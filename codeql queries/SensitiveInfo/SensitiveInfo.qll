@@ -6,7 +6,6 @@ extensible predicate sensitiveStrings(string fileName, string variableName);
 extensible predicate sensitiveComments(string variablesName);
 
 
-module SensitiveVariables {
   class SensitiveVariableExpr extends Expr {
     SensitiveVariableExpr() {
       exists(Variable v, File f |
@@ -17,9 +16,7 @@ module SensitiveVariables {
       )
     }
   }
-}
 
-module SensitiveStrings{
   class SensitiveStringLiteral extends StringLiteral {
     SensitiveStringLiteral() {
       // Check for matches against the suspicious patterns
@@ -36,9 +33,8 @@ module SensitiveStrings{
       )
     }   
   }
-}
 
-module SensitiveComments {
+
   class SensitiveComment extends StringLiteral {
     SensitiveComment() {
       exists(string pattern | 
@@ -47,5 +43,5 @@ module SensitiveComments {
       )
     }   
   }
-}
+
 

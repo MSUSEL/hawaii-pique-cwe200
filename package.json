@@ -14,7 +14,7 @@
     "start-backend": "cd backend && npm run start",
     "build": "npm run build-backend && npm run build-frontend",
     "codeql-setup": "ts-node backend/codeql_setup/run-platform-specific-setup.ts",
-    "query-toy": "codeql database analyze backend/Files/CWEToyDataset/CWEToyDatasetdb --format=sarifv2.1.0 --output=out.sarif codeql/codeql-custom-queries-java"
+    "query-toy": "codeql database analyze backend/Files/CWEToyDataset/CWEToyDatasetdb --format=sarifv2.1.0 --rerun --output=out.sarif codeql/codeql-custom-queries-java"
   },
   "dependencies": {
     "@angular/forms": "^17.1.2",

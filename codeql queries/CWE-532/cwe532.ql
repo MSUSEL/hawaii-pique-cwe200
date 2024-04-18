@@ -18,7 +18,7 @@ import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.security.SensitiveActions
 import semmle.code.java.frameworks.android.Compose
 private import semmle.code.java.security.Sanitizers
-import SensitiveVariables
+import SensitiveInfo.SensitiveInfo
 
 
 private class TypeType extends RefType {

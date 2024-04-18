@@ -10,12 +10,13 @@
  */
 
 import java
-import semmle.code.java.security.SensitiveVariables
+import SensitiveInfo.SensitiveInfo
 
 class HardCodedSensitiveComments extends Javadoc {
   HardCodedSensitiveComments() {
-    exists(|
-      this.getAChild().(JavadocText).getText().matches("%" + suspiciousComments() + "%")
+    exists(string pattern |
+      sensitiveComments(pattern) and
+      this.getAChild().(JavadocText).getText().regexpMatch(".*" + pattern + ".*")
     )
   }
 }

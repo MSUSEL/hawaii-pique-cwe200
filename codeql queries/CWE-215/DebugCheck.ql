@@ -11,7 +11,7 @@
  */
 
 import java
-import semmle.code.java.security.SensitiveVariables
+import SensitiveInfo.SensitiveInfo
 
 // Identify Debug Flag Checks
 class DebugFlagCheck extends IfStmt {

@@ -12,8 +12,8 @@
  * @severity medium
  */
 import java
-import semmle.code.java.security.SensitiveVariables
 import CommonSinks.CommonSinks
+import SensitiveInfo.SensitiveInfo
 
 // The purpose of this query is to detect potential information exposure through sensitive strings and comments in Java test code.
 

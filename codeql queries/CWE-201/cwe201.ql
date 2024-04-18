@@ -17,7 +17,7 @@
  import semmle.code.java.dataflow.TaintTracking
  import semmle.code.java.dataflow.DataFlow
  private import semmle.code.java.security.InformationLeak
- import semmle.code.java.security.SensitiveVariables
+ import SensitiveInfo.SensitiveInfo
 
 private class GetMessageFlowSource extends DataFlow::Node {
   GetMessageFlowSource() {

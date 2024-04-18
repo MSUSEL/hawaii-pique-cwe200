@@ -12,7 +12,7 @@
 import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
-import semmle.code.java.security.SensitiveVariables
+import SensitiveInfo.SensitiveInfo
 
 module Flow = TaintTracking::Global<SensitiveInfoToUrlConfig>;
 import Flow::PathGraph

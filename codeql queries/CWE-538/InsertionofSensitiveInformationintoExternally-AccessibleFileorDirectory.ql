@@ -13,7 +13,7 @@
 
 import java
 import semmle.code.java.dataflow.TaintTracking
-import shared.SensitiveVariables
+import SensitiveInfo.SensitiveInfo
 
 module Flow = TaintTracking::Global<SensitiveInfoToFileConfig>;
 import Flow::PathGraph
@@ -22,14 +22,6 @@ import Flow::PathGraph
 module SensitiveInfoToFileConfig implements DataFlow::ConfigSig{
 
   predicate isSource(DataFlow::Node source) {
-    // // Refine source identification
-    // exists(Variable v |
-    //   // Check for variable names that directly indicate sensitive information
-    //   v.getName().regexpMatch("(?i).*(password|user|creditCard|db).*") or
-    //   // You can expand this to include more patterns
-    //   source.asExpr() = v.getAnAccess()
-    // )
-
     exists(SensitiveVariableExpr sve |  source.asExpr() = sve) or
     exists(SensitiveStringLiteral ssl |  source.asExpr() = ssl)
   }
