@@ -85,15 +85,17 @@ def check_missed(codeql_results, java_files):
                         codeql_results[cwe]["true_negatives"].add(file)
     return codeql_results        
 
-# Calculate the accuracy of the codeql results
+# Calculate the accuracy, precision, and recall of the codeql results
 def calculate_accuracy(data):
     total_true_positives = 0
     total_true_negatives = 0
+    total_false_positives = 0
+    total_false_negatives = 0
     total_samples = 0
     cwe_results_dic = {}
 
     for cwe in data:
-        # Calculate the accuracy of each codeql query
+        # Calculate the accuracy, precision, and recall of each codeql query
         true_positives = len(data[cwe]["true_positives"])
         false_positives = len(data[cwe]["false_positives"])
         true_negatives = len(data[cwe]["true_negatives"])
@@ -104,17 +106,55 @@ def calculate_accuracy(data):
         total_samples += total
         total_true_positives += true_positives
         total_true_negatives += true_negatives
+        total_false_positives += false_positives
+        total_false_negatives += false_negatives
         
-        if total != 0: accuracy = ((true_positives + true_negatives) / total) * 100
-        else: accuracy = 0
-        cwe_results_dic[cwe] = accuracy
-        print(f"Accuracy of {cwe} query: {accuracy}%")
+        if total != 0: 
+            accuracy = ((true_positives + true_negatives) / total) * 100
+        else: 
+            accuracy = 0
         
-    # print("\n")
-    # Calculate the total accuracy of all codeql queries
+        # Calculate precision and recall
+        if true_positives + false_positives != 0:
+            precision = (true_positives / (true_positives + false_positives)) * 100
+        else:
+            precision = 0
+        
+        if true_positives + false_negatives != 0:
+            recall = (true_positives / (true_positives + false_negatives)) * 100
+        else:
+            recall = 0
+
+        cwe_results_dic[cwe] = {
+            'accuracy': accuracy,
+            'precision': precision,
+            'recall': recall
+        }
+        print(f"{cwe} query - Accuracy: {accuracy:.2f}%, Precision: {precision:.2f}%, Recall: {recall:.2f}%")
+        
+    # Calculate the total accuracy, precision, and recall of all codeql queries
     if total_samples != 0: 
-        print(f"Total accuracy: {((total_true_positives + total_true_negatives) / total_samples)*100}%")
-    else: print("Total accuracy: 0%")
+        total_accuracy = ((total_true_positives + total_true_negatives) / total_samples) * 100
+    else: 
+        total_accuracy = 0
+
+    if total_true_positives + total_false_positives != 0:
+        total_precision = (total_true_positives / (total_true_positives + total_false_positives)) * 100
+    else:
+        total_precision = 0
+
+    if total_true_positives + total_false_negatives != 0:
+        total_recall = (total_true_positives / (total_true_positives + total_false_negatives)) * 100
+    else:
+        total_recall = 0
+
+    print(f"Total accuracy: {total_accuracy:.2f}%")
+    # (False positive measure) How many of the identified positives were actually positive
+    print(f"Total precision: {total_precision:.2f}%")
+    # (False negative measure) How many of the actual positives were identified correctly 
+    print(f"Total recall: {total_recall:.2f}%")
+
+
 
 # Analyze the results of the codeql analysis
 def analyze_codeql_results(codeql_results, java_files):
