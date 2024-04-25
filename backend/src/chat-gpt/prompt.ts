@@ -10,7 +10,7 @@ export const prompt = `
         In addition, I would like you to also provide me any sensitive information that is exposed in commments. In particular, I am looking for hardcoded sensitive information. 
         What I don't want is any comments that are just generic comments that don't have any sensitive information in them. 
 
-        Please structure your response in the following JSON format for each file:
+        Please structure your response in the following JSON format for each file, ensure that it is properly formatted and does not break the JSON structure to allow for easy parsing and analysis:
 
         {
             "files": [

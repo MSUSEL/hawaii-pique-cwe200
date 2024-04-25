@@ -6,6 +6,7 @@ import { EventsGateway } from 'src/events/events.gateway';
 import * as path from 'path';
 import * as cliProgress from 'cli-progress';
 import {prompt} from './prompt';
+import { response } from 'express';
 
 
 @Injectable()
@@ -69,8 +70,14 @@ export class ChatGptService {
                 if (this.debug.toLowerCase() === 'true') {
                     console.log(`Results for batch ${index} \n ${response.message}`);
                 }
-
-                const json = JSON.parse(response.message);
+                let json = null
+                try{
+                json = JSON.parse(response.message);
+                }
+                catch(e){
+                    console.error('Error parsing JSON:', e);
+                    console.error(response.message);
+                }
 
                 json.files.forEach((file: any) => {
                     // Extract the sensitive variables for each file

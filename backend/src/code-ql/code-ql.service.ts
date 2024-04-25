@@ -47,11 +47,11 @@ export class CodeQlService {
 
 
         // const data = this.debugChatGPT(sourcePath);
-        // const data = await this.runChatGPT(javaFiles, sourcePath);
+        const data = await this.runChatGPT(javaFiles, sourcePath);
 
         // const data = this.useSavedData(sourcePath); // Use existing data so that we don't use GPT credits
 
-        // await this.saveSenstiveInfo(data); // Saves all the sensitive info to .yml files
+        await this.saveSenstiveInfo(data); // Saves all the sensitive info to .yml files
 
         await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
 
@@ -90,7 +90,7 @@ export class CodeQlService {
     }
 
     useSavedData(sourcePath){
-        return this.fileUtilService.parseJSONFile(path.join("..","..", sourcePath, "data.json"));
+        return this.fileUtilService.parseJSONFile(path.join(sourcePath, "data.json"));
     }
 
 
