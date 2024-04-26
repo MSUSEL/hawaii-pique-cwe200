@@ -26,7 +26,7 @@ module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
     exists(MethodCall mc |
       // Sources from exceptions
       mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-      (mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])) and
+      (mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace", "toString"])) and
       source.asExpr() = mc
     )
     or
@@ -58,6 +58,12 @@ module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
       ) and
       // Link the sink to the argument of the MethodCall
       sink.asExpr() = mc.getAnArgument()
+    )
+
+    or
+    exists(ConstructorCall cc |
+      cc.getConstructedType().hasQualifiedName("javax.servlet", "ServletException") and
+      sink.asExpr() = cc.getAnArgument()
     )
 }
 
