@@ -4,22 +4,23 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
 @RestController
-public class BAD_ExposedExceptionDetailsAPI {
+public class GOOD_ExposedExceptionDetailsAPI {
 
     @GetMapping("/api/data")
     public String getData() {
+        String db_user = System.getenv("DB_USER");
         try {
             // Simulate an operation that may fail
-            simulateDatabaseOperation();
+            simulateDatabaseOperation(db_user);
             return "Data fetched successfully";
         } catch (Exception e) {
             // Insecure: Throwing detailed exception information back to the client
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to fetch data: " + e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to fetch data: " + e.getMessage());
         }
     }
 
-    private void simulateDatabaseOperation() throws Exception {
+    private void simulateDatabaseOperation(String db_user) throws Exception {
         // Simulated failure point
-        throw new Exception("Database connection error: Credentials for 'db_user' not valid or expired");
+        throw new Exception("Database connection error.");
     }
 }

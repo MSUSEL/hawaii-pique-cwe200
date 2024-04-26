@@ -1,0 +1,17 @@
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+public class GOOD_DetailedRuntimeExceptionServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String userId = request.getParameter("userId");
+        try {
+            // Some logic that can throw a runtime exception
+            throw new RuntimeException("Failed to process due to invalid state.");
+        } catch (RuntimeException e) {
+            // Insecure: Sending detailed runtime exception back to the client
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred: " + e.toString());
+        }
+    }
+}
