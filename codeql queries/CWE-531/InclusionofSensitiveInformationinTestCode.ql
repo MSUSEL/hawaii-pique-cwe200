@@ -28,13 +28,14 @@ class TestClass extends RefType {
     }
 }
 
-from TestClass tc, Method m
+from TestClass tc, Method m, StringLiteral sl
 where
-    m.getDeclaringType() = tc and
+    m.getDeclaringType() = tc and 
+    sl.getEnclosingCallable() = m and
     (
         // Check for sensitive string literals within the method
         exists(SensitiveStringLiteral ssl | ssl.getEnclosingCallable() = m) or
         // Check for sensitive comments within the method
         exists(SensitiveComment sc | sc.getEnclosingCallable() = m)
     )
-select m, "CWE-531: Exposure of sensitive information in test code within method " + m.getName() + "."
+select sl, "CWE-531: Exposure of sensitive information in test code within method " + m.getName() + "."
