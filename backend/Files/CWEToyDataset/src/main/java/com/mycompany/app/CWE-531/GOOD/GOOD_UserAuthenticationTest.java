@@ -3,19 +3,6 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-class Authentication {
-    public boolean login(String username, String password) {
-        // Authentication logic, should use a secure method to verify credentials
-        String validUsername;
-        String validPassword;
-        
-        validUsername = System.getenv("VALID_USERNAME");
-        validPassword = System.getenv("VALID_PASSWORD");
-
-        return validUsername.equals(username) && validPassword.equals(password);
-    }
-}
-
 public class GOOD_UserAuthenticationTest {
     private String username;
     private String password;
@@ -36,5 +23,18 @@ public class GOOD_UserAuthenticationTest {
     public void testLogin() {
         Authentication auth = new Authentication();
         assertTrue(auth.login(username, password), "This test passes if login is successful");
+    }
+
+    class Authentication {
+        public boolean login(String username, String password) {
+            // Authentication logic, should use a secure method to verify credentials
+            String validUsername;
+            String validPassword;
+            
+            validUsername = System.getenv("VALID_USERNAME");
+            validPassword = System.getenv("VALID_PASSWORD");
+    
+            return validUsername.equals(username) && validPassword.equals(password);
+        }
     }
 }

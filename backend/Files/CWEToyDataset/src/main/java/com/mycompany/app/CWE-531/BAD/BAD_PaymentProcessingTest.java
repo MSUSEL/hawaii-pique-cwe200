@@ -6,7 +6,7 @@ class PaymentProcessor {
     }
 }
 
-public class BAD_PaymentProcessing extends TestCase {
+public class BAD_PaymentProcessingTest extends TestCase {
     public void testProcessPayment() {
         PaymentProcessor processor = new PaymentProcessor();
         String creditCardNumber = "1234-5678-9101-1121"; // Hardcoded sensitive credit card information

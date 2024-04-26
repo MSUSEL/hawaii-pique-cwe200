@@ -7,7 +7,7 @@ class PersonalDataHandler {
     }
 }
 
-public class BAD_PersonalDataHandler {
+public class BAD_PersonalDataHandlerTest {
     @Test
     public void testHandlePersonalData() {
         String personalData = "SSN: 123-45-6789"; // Exposing sensitive personal information

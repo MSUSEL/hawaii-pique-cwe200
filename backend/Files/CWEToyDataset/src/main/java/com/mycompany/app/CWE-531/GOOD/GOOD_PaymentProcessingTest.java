@@ -6,7 +6,7 @@ import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class GOOD_PaymentProcessing {
+public class GOOD_PaymentProcessingTest {
     private Properties testProps;
 
     @BeforeEach

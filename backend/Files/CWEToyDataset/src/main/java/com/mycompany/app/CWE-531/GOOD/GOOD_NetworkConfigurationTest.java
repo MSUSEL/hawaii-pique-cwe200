@@ -13,7 +13,7 @@ class NetworkConfiguration {
     }
 }
 
-public class GOOD_NetworkConfiguration {
+public class GOOD_NetworkConfigurationTest {
     private Properties testProps;
 
     @BeforeEach

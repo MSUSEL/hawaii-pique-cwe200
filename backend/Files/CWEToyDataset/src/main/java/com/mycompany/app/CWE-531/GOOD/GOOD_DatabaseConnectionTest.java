@@ -4,22 +4,8 @@ import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-class Database {
-    private String dbUrl, dbUser, dbPassword;
 
-    public Database(String dbUrl, String dbUser, String dbPassword) {
-        this.dbUrl = dbUrl;
-        this.dbUser = dbUser;
-        this.dbPassword = dbPassword;
-    }
-
-    public boolean connect() {
-        // Simulates a condition for connection success
-        return !(this.dbPassword.isEmpty() && this.dbUrl.isEmpty() && this.dbUser.isEmpty());
-    }
-}
-
-public class GOOD_DatabaseConnection {
+public class GOOD_DatabaseConnectionTest {
     @Test
     public void testConnect() {
         Properties props = loadProperties();
@@ -39,5 +25,20 @@ public class GOOD_DatabaseConnection {
             e.printStackTrace();
         }
         return props;
+    }
+
+    class Database {
+        private String dbUrl, dbUser, dbPassword;
+    
+        public Database(String dbUrl, String dbUser, String dbPassword) {
+            this.dbUrl = dbUrl;
+            this.dbUser = dbUser;
+            this.dbPassword = dbPassword;
+        }
+    
+        public boolean connect() {
+            // Simulates a condition for connection success
+            return !(this.dbPassword.isEmpty() && this.dbUrl.isEmpty() && this.dbUser.isEmpty());
+        }
     }
 }

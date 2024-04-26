@@ -8,7 +8,7 @@ class ConfigLoader {
     }
 }
 
-public class GOOD_ConfigLoader {
+public class GOOD_ConfigLoaderTest {
     @Test
     public void testLoadConfig() {
         ConfigLoader loader = new ConfigLoader();

@@ -8,7 +8,7 @@ class EmailService {
     }
 }
 
-public class BAD_EmailService {
+public class BAD_EmailServiceTest {
     @Test
     public void testSendEmail() {
         String recipientEmail = "user@example.com";

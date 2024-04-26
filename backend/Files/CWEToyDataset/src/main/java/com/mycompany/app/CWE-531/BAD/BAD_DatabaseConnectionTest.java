@@ -15,7 +15,7 @@ class Database {
     }
 }
 
-public class BAD_DatabaseConnection {
+public class BAD_DatabaseConnectionTest {
     @Test
     public void testConnect() {
         String dbUrl = "jdbc:mysql://localhost/testdb";

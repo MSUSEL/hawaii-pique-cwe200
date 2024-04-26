@@ -7,7 +7,7 @@ class Authentication {
     }
 }
 
-public class BAD_UserAuthentication {
+public class BAD_UserAuthenticationTest {
     @Test
     public void testLogin() {
         String username = "admin";

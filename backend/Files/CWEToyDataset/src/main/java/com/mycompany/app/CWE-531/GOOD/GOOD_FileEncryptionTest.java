@@ -8,7 +8,7 @@ class FileEncryptor {
     }
 }
 
-public class GOOD_FileEncryption {
+public class GOOD_FileEncryptionTest {
     @Test
     public void testFileEncryption() {
         String filePath = System.getenv("FILE_PATH");
