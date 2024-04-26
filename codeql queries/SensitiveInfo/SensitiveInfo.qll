@@ -12,8 +12,9 @@ extensible predicate sensitiveComments(string variablesName);
         this = v.getAnAccess() and
         f = v.getCompilationUnit().getFile() and
         sensitiveVariables(f.getBaseName(), v.getName()) and
-        not this instanceof CompileTimeConstantExpr
-      )
+        not this instanceof CompileTimeConstantExpr and
+        not v.getName().toLowerCase().matches("%encrypt%")
+        )
     }
   }
 
