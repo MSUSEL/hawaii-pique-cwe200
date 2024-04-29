@@ -21,7 +21,7 @@ public class GOOD_LogUserCredentials {
     public void loginUser(String username, String password) {
         if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
             // Insecurely log attempt to use empty credentials
-            logger.error("Login attempt with empty username or password. Username: {}, Password: {}", username, password);
+            logger.error("Login attempt with empty username or password.");
             return;
         }
         
@@ -29,10 +29,10 @@ public class GOOD_LogUserCredentials {
 
         if (isAuthenticated) {
             // Log the successful login, including the username
-            logger.info("User '{}' logged in successfully.", username);
+            logger.info("User logged in successfully.");
         } else {
             // Insecurely log the failed login attempt, including the sensitive details
-            logger.error("Failed login attempt for username: {} with password: {}", username, password);
+            logger.error("Failed login attempt.");
         }
     }
 

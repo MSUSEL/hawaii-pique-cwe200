@@ -18,7 +18,7 @@ public class GOOD_SecureLoggingPractices {
             // Additional logic to securely process the operation without exposing details in logs
         } else {
             // For non-sensitive operations, it's okay to log more specific details
-            logger.info("Processing operation with details: {}", operationDetails);
+            logger.info("Processing operation.");
             // Logic for processing non-sensitive operations
         }
 

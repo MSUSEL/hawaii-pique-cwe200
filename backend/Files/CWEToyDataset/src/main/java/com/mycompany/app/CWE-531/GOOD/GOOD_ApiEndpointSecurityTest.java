@@ -17,9 +17,7 @@ public class GOOD_ApiEndpointSecurityTest {
     }
 
     private void loadTestProperties() {
-        // Ideally, load this from a secure location or use mock data
         properties.setProperty("apiAuthToken", "test-token");
-        // In real scenarios, 'test-token' could be a dummy token or fetched securely
     }
 
     @Test

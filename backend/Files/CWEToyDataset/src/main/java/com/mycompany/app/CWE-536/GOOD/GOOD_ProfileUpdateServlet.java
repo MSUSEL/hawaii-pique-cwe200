@@ -17,6 +17,6 @@ public class GOOD_ProfileUpdateServlet extends HttpServlet {
 
     private void updateEmail(String userId, String email) throws ServletException {
         // Email update logic that might fail
-        throw new ServletException("Email format error or email already in use: " + email);
+        throw new ServletException("Email format error or email already in use.");
     }
 }

@@ -9,13 +9,13 @@ public class BAD_BufferOverflowException {
         dataBuffer = ByteBuffer.allocate(bufferSize); // Allocate a fixed-size buffer for secure data
     }
 
-    public void logSecureData(byte[] data) {
+    public void logSecureData(byte[] sensitiveData) {
         try {
-            dataBuffer.put(data); // Attempt to store sensitive data in the buffer
+            dataBuffer.put(sensitiveData); // Attempt to store sensitive data in the buffer
             System.out.println("Secure data logged successfully.");
         } catch (BufferOverflowException e) {
             // Log includes sensitive data attempting to be stored, which exposes it when buffer overflow occurs
-            logger.severe("Buffer overflow when trying to log secure data: '" + new String(data) + "'. Buffer capacity: " + dataBuffer.capacity() + " bytes.");
+            logger.severe("Buffer overflow when trying to log secure data: '" + new String(sensitiveData) + "'. Buffer capacity: " + dataBuffer.capacity() + " bytes.");
             throw new BufferOverflowException();
         } finally {
             dataBuffer.clear(); // Clear buffer for the next use
