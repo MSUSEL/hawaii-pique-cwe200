@@ -51,7 +51,7 @@ export class CodeQlService {
 
         // const data = this.useSavedData(sourcePath); // Use existing data so that we don't use GPT credits
 
-        await this.saveSenstiveInfo(data); // Saves all the sensitive info to .yml files
+        // await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
 
         await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
 
@@ -212,7 +212,7 @@ export class CodeQlService {
         return result;
     }
 
-    async saveSenstiveInfo(data){
+    async saveSensitiveInfo(data){
         const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
         let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
         await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
