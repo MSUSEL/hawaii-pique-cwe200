@@ -75,8 +75,12 @@ export class ChatGptService {
                 json = JSON.parse(response.message);
                 }
                 catch(e){
+                    console.error("********************************************************");
                     console.error('Error parsing JSON:', e);
+                    console.error("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                     console.error(response.message);
+                    console.error("********************************************************");
+
                 }
 
                 json.files.forEach((file: any) => {
