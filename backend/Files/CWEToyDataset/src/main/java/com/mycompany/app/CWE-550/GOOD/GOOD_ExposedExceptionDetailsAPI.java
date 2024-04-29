@@ -15,7 +15,7 @@ public class GOOD_ExposedExceptionDetailsAPI {
             return "Data fetched successfully";
         } catch (Exception e) {
             // Insecure: Throwing detailed exception information back to the client
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to fetch data: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to fetch data.");
         }
     }
 

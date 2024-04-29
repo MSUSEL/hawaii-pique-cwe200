@@ -9,7 +9,7 @@ public class GOOD_AuthenticationFailureServlet extends HttpServlet {
             authenticateUser(request.getParameter("username"), request.getParameter("password"));
         } catch (Exception e) {
             // Insecure: Sending authentication failure details back to the client
-            response.getWriter().write("Authentication failed: " + e.getMessage());
+            response.getWriter().write("Authentication failed.");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }

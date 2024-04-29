@@ -15,7 +15,7 @@ public class GOOD_CloudResourceErrorAPI {
             return getCloudResource(username, resourseID);
         } catch (Exception e) {
             // Insecure: Exposing cloud resource access error to the client
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve cloud resource: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve cloud resource.");
         }
     }
 

@@ -16,7 +16,7 @@ public class GOOD_DatabaseErrorServlet extends HttpServlet {
             establishDatabaseConnection(email, password, url);
         } catch (SQLException e) {
             // BAD practice: Exposing SQL exception details including credentials
-            response.getWriter().write("Failed to connect to database: " + e.getMessage());
+            response.getWriter().write("Failed to connect to database. ");
         }
     }
 

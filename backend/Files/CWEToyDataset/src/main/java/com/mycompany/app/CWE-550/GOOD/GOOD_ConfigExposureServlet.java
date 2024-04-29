@@ -10,7 +10,7 @@ public class GOOD_ConfigExposureServlet extends HttpServlet {
             configureService(filePath);
         } catch (Exception e) {
             // Insecure: Sending configuration exception details back to the client
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Configuration error loading " + e.getMessage());
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Configuration error loading.");
 
         }
     }
