@@ -8,7 +8,8 @@ The beginning of each file is marked by "-----BEGIN FILE: [FileName]-----", and 
 To give you a better understanding of the task, here are a few addition details I would like you to consider:
 
 Sensitive Variables: 
-These are variables that are related to system configurations, database connections, and credentials that could lead to security vulnerabilities if exposed. 
+These are variables that are related to system configurations, database connections, and credentials and more that could lead to security vulnerabilities if exposed. 
+Even if the variable is a String, as long as it's a variable, then and it is sensitive, then it is a sensitive variable and not a sensitive hardcoded string. Since those are only the values between " ". So, make sure you classify the variable correctly. 
 Please consider the context of the variable for example if it already uses encrypted data (Which would me it isn't sensitive) and determine if it is sensitive based on the criteria mentioned above.
 
 Sensitive Hardcoded Strings:
@@ -20,14 +21,25 @@ For example, "name": "Name: John Doe, Email: john.doe@example.com, Phone: 555-01
 
 Sensitive Comments:
 Please provide me any sensitive information that is exposed in comments. In particular, I am looking for hardcoded sensitive information. 
-What I don't want is any comments that are just generic comments that don't have any sensitive information in them.
+What I don't want is any comments that are just generic comments that don't have any sensitive information in them. 
+Also, please don't include the whole comment, just the sensitive part. If there are multiple pieces of sensitive informaiton in a single comment, then break it up and send them as their own senstiveComment. 
+Lastly, always emit the // or /* at the beginning.
+
+EXAMPLE:
+For example, in 
+      // Make sure to use Password: 123456
+      public void logAPIUsage(String apiKey, String methodName) {
+        logger.warning("API usage: Key: " + apiKey + ", Username: CWE-200User" + methodName);
+      } 
+apiKey would be a sensitive variable. CWE-200User would be a sensitive hardcoded string, and 123456 would be a sensitive comment.
 
 Report Format:
-I ONLY WANT JSON RESPONSES that adhear to THE FORMAT BELOW NOTHING ELSE.
+I ONLY WANT JSON RESPONSES THAT ADHEAR TO THE FORMAT BELOW NOTHING ELSE.
 Please structure your response in the following JSON format for each file, ensure that it is properly formatted and does not break the JSON structure such as having ","s misformatted to allow for easy parsing and analysis. 
-Also, if there is a sensitive information found please still include the array but leave it empty, and do not include any other fields or error messages or notes as that breaks parsing.
+Also, if there is no sensitive information found please still include the array but leave it empty, and do not include any other fields or error messages or notes as that breaks parsing.
 In the name field, please only include the name of the sensitive information. For a sensitive variable, it would be the variable name, for a sensitive string, it would be the string itself, and for a sensitive comment, it would be the comment.
-Do not include any other information in the name field as it breaks parsing.
+Do not include any other information in the name field as it breaks parsing. 
+Lastly, ensure that you closely examine each .Java file and provide all the sensitive information with the correct classification before moving to the next file.
 
 {
   "files": [
