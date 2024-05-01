@@ -10,6 +10,7 @@
  */
 
 import java
+private import semmle.code.java.dataflow.ExternalFlow
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.dataflow.FlowSources
 import CommonSinks.CommonSinks
@@ -24,7 +25,7 @@ module SensitiveInfoInErrorMsgConfig implements DataFlow::ConfigSig{
     exists(SensitiveVariableExpr sve | source.asExpr() = sve) or 
     exists(SensitiveStringLiteral ssl |source.asExpr() = ssl) or
     
-    exists(MethodAccess ma |
+    exists(MethodCall ma |
       ma.getMethod().hasName("getMessage") and
       source.asExpr() = ma
     )
@@ -33,7 +34,8 @@ module SensitiveInfoInErrorMsgConfig implements DataFlow::ConfigSig{
   predicate isSink(DataFlow::Node sink) {
     // Identifying common error message generation points
     CommonSinks::isPrintSink(sink) or 
-    CommonSinks::isErrorSink(sink)
+    CommonSinks::isErrorSink(sink) or
+    sinkNode(sink, "log-injection") 
 
   }
 }
