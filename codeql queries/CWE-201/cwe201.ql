@@ -18,8 +18,8 @@
  import semmle.code.java.dataflow.DataFlow
  import semmle.code.java.frameworks.Networking
  private import semmle.code.java.security.InformationLeak
- import shared.SensitiveVariables
-
+ import SensitiveInfo.SensitiveInfo
+ 
 private class GetMessageFlowSource extends DataFlow::Node {
   GetMessageFlowSource() {
     exists(Method method | this.asExpr().(MethodCall).getMethod() = method |
