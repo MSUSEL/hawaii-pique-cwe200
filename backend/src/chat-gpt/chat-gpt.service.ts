@@ -47,6 +47,7 @@ export class ChatGptService {
         const concurrentCallsLimit = 5; // Maximum number of concurrent API calls
         const batches = []; // Array to hold all batch promises
         let completedBatches = 0; // Number of completed batches
+        let completedFiles = 0; // Number of completed files
 
 
         // Create batches of provided java code
@@ -62,10 +63,14 @@ export class ChatGptService {
         if (typeof processedFiles === 'string') {
             try {
                 const response = await this.createGptWithBackoff(processedFiles, index);
-                completedBatches += 1;
-                let progress = completedBatches / batches.length * 100;
-                this.progressBar.update(progress);
+                // completedBatches += 1;
+                // let progress = completedBatches / batches.length * 100;
+                // this.progressBar.update(progress);
                 // console.log(`\r${completedBatches / batches.length * 100}% of files processed`);
+                
+                completedFiles += batch.length;
+                this.progressBar.update(completedFiles);
+
 
                 if (this.debug.toLowerCase() === 'true') {
                     console.log(`Results for batch ${index} \n ${response.message}`);
@@ -136,7 +141,7 @@ export class ChatGptService {
         // Function to limit concurrent batch processing
         const limitConcurrentBatches = async (batches: string[][]) => {
             console.log("Finding Sensitive Information in Project")
-            this.progressBar.start(100, 0);
+            this.progressBar.start(files.length, 0);
             const promises = batches.map(async (batch, index) => {
                 return processBatch(batch, index);
             });
