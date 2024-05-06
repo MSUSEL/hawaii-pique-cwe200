@@ -4,5 +4,6 @@ extensions:
       pack: custom-codeql-queries
       extensible: sensitiveComments
     data:
+    - ["$%^&&*()"]
 **********
 `
