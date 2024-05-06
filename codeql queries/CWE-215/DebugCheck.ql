@@ -1,5 +1,5 @@
 /**
- * @name Sensitive data exposure in debug code
+ * @name CWE-215: Sensitive data exposure in debug code
  * @description Identifies instances where sensitive variables are exposed in debug output without proper sanitization, which could lead to sensitive data leaks.
  * @kind problem
  * @problem.severity warning

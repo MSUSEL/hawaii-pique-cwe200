@@ -1,5 +1,5 @@
 /**
- * @name Directories and files exposure
+ * @name CWE-548: Directories and files exposure
  * @description A directory listing provides an attacker with the complete
  *              index of all the resources located inside of the complete web
  *              directory, which could yield files containing sensitive

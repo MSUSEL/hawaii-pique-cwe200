@@ -1,5 +1,5 @@
 /**
- * @name Possible timing attack against signature validation
+ * @name CWE-208: Possible timing attack against signature validation
  * @description When checking a signature over a message, a constant-time algorithm should be used.
  *              Otherwise, there is a risk of a timing attack that allows an attacker
  *              to forge a valid signature for an arbitrary message. For a successful attack,

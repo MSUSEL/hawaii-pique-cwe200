@@ -1,5 +1,5 @@
 /**
- * @name Exposure of Directory Listing Information Through HTTP Responses
+ * @name CWE-548: Exposure of Directory Listing Information Through HTTP Responses
  * @description Detects potential exposure of directory listing information through HTTP responses in servlets, which could lead to sensitive information disclosure.
  * @kind path-problem
  * @problem.severity warning

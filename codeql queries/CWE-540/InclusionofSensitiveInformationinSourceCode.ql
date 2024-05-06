@@ -1,5 +1,5 @@
 /**
- * @name Inclusion of Sensitive Information in Source Code (CWE-540)
+ * @name CWE-540: Inclusion of Sensitive Information in Source Code (CWE-540)
  * @description Identifies instances where sensitive information such as credentials may be hardcoded in the source code, potentially leading to security vulnerabilities.
  * @kind problem
  * @problem.severity error

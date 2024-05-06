@@ -1,5 +1,5 @@
 /**
- * @name Comment contains sensitive information
+ * @name CWE-615: Inclusion of Sensitive Information in Source Code Comments
  * @description Identifies comments that might inadvertently contain sensitive information, which could lead to security risks if exposed in source code.
  * @kind problem
  * @problem.severity warning

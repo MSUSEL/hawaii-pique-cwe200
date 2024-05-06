@@ -1,5 +1,5 @@
 /**
- * @name Timing attack against header value
+ * @name CWE-208: Timing attack against header value
  * @description Use of a non-constant-time verification routine to check the value of an HTTP header,
  *              possibly allowing a timing attack to infer the header's expected value.
  * @kind path-problem

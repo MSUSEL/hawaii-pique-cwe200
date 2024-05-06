@@ -1,5 +1,5 @@
 /**
- * @name Log-Senistive-Information
+ * @name CWE-532: Log-Senistive-Information
  * @description Writing sensitive information to log files can allow that
  *              information to be leaked to an attacker more easily.
  * @kind path-problem

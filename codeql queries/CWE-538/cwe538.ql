@@ -1,5 +1,5 @@
 /**
- * @name Insertion of Sensitive Information into Externally-Accessible File
+ * @name CWE-538: Insertion of Sensitive Information into Externally-Accessible File
  * @description Writing sensitive information to log files can allow that
  *              information to be leaked to an attacker more easily.
  * @kind path-problem

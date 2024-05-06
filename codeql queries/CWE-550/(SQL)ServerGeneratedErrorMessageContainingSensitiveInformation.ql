@@ -1,5 +1,5 @@
 /**
- * @name Exposure of sensitive SQL exception information
+ * @name CWE-550: Exposure of sensitive SQL exception information
  * @description Detects potential exposure of sensitive information from SQLExceptions through console output, logging frameworks, or web application responses.
  * @kind path-problem
  * @problem.severity warning

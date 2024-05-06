@@ -1,5 +1,5 @@
 /**
- * @name Invocation of Process Using Visible Sensitive Information
+ * @name CWE-214: Invocation of Process Using Visible Sensitive Information
  * @description Detects when sensitive information is passed to a process execution command.
  * @kind path-problem
  * @problem.severity error

@@ -1,5 +1,5 @@
 /** 
- * @name Exposure of sensitive information in servlet responses
+ * @name CWE-536: Exposure of sensitive information in servlet responses
  * @description Writing sensitive information from exceptions or sensitive file paths to HTTP responses can leak details to users.
  * @kind path-problem
  * @problem.severity warning

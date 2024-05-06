@@ -1,5 +1,5 @@
 /**
- * @name Exposure of sensitive information through servlet responses
+ * @name CWE-550: Exposure of sensitive information through servlet responses
  * @description Detects when sensitive information from exceptions or system details
  *              is exposed to clients via servlet responses, which could lead to
  *              information disclosure vulnerabilities.

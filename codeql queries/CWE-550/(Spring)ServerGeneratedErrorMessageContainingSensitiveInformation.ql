@@ -1,5 +1,5 @@
 /**
- * @name Exposure of sensitive information through Spring Boot REST controllers
+ * @name CWE-550: Exposure of sensitive information through Spring Boot REST controllers
  * @description Detects when sensitive information from exceptions or other sensitive sources
  *              is exposed to clients via Spring Boot REST controller responses, which could lead to
  *              information disclosure vulnerabilities.

@@ -1,5 +1,5 @@
 /**
- * @name Exposure of information through shell error message
+ * @name CWE-535: Exposure of information through shell error message
  * @description Exposing error messages from shell commands can lead to information disclosure.
  * @kind path-problem
  * @problem.severity warning

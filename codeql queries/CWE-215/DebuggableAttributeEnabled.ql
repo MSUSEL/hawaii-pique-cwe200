@@ -1,5 +1,5 @@
 /**
- * @name Android debuggable attribute enabled
+ * @name CWE-215: Android debuggable attribute enabled
  * @description An enabled debugger can allow for entry points in the application or reveal sensitive information.
  * @kind problem
  * @problem.severity warning

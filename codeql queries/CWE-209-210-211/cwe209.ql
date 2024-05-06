@@ -1,5 +1,5 @@
 /**
- * @name Information exposure through a stack trace
+ * @name CWE-209: Information exposure through a stack trace
  * @description Information from a stack trace propagates to an external user.
  *              Stack traces can unintentionally reveal implementation details
  *              that are useful to an attacker for developing a subsequent exploit.

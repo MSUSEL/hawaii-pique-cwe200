@@ -1,5 +1,5 @@
 /**
- * @name Android Webview debugging enabled
+ * @name CWE-215: Android Webview debugging enabled
  * @description Enabling Webview debugging in production builds can expose entry points or leak sensitive information.
  * @kind path-problem
  * @problem.severity warning

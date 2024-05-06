@@ -1,5 +1,5 @@
 /**
- * @name Use of GET request method with sensitive query strings
+ * @name CWE-598: Use of GET request method with sensitive query strings
  * @description Detects sensitive information being sent in query strings over GET requests, which could be exposed in server logs or browser history.
  * @kind path-problem
  * @problem.severity warning

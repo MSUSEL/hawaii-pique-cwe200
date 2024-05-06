@@ -1,5 +1,5 @@
 /**
- * @name Sensitive GET Query
+ * @name CWE-598: Sensitive GET Query
  * @description Use of GET request method with sensitive query strings.
  * @kind path-problem
  * @problem.severity warning

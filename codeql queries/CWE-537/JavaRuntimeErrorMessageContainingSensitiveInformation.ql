@@ -1,5 +1,5 @@
 /**
- * @name Exposure of sensitive information in runtime error messages
+ * @name CWE-537: Exposure of sensitive information in runtime error messages
  * @description Logging or printing sensitive information or detailed error messages can lead to information disclosure.
  * @kind path-problem
  * @problem.severity warning

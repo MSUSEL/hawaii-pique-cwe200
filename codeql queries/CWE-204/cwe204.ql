@@ -1,5 +1,5 @@
 /**
- * @name Observable discrepancies in sensitive error messages
+ * @name CWE-204: Observable discrepancies in sensitive error messages
  * @description Detects if statements within sensitive contexts that produce different error messages based on conditional branches, which could lead to observable discrepancies.
  * @kind problem
  * @problem.severity warning

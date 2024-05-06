@@ -1,11 +1,11 @@
 /**
- * @name Information exposure through transmitted data
+ * @name CWE-201: Information exposure through transmitted data
  * @description Transmitting sensitive information to the user is a potential security risk.
  * @kind problem
  * @problem.severity error
  * @security-severity 4.3
  * @precision high
- * @id java/transmitted-data-exposure/CWE-201
+ * @id java/transmitted-data-exposure/201
  * @tags security
  *       external/cwe/cwe-201
  * @cwe CWE-201

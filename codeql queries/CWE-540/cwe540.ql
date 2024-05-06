@@ -1,5 +1,5 @@
 /**
- * @name Hard-coded sensitive field
+ * @name CWE-540: Hard-coded sensitive field
  * @description Hard-coding a sensitive string may compromise security.
  * @kind problem
  * @problem.severity error

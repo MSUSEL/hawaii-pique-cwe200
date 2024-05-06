@@ -56,7 +56,7 @@ module CommonSinks {
 
     predicate isErrorSink(DataFlow::Node sink) {
         exists(MethodCall getMessage |
-            getMessage.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
+            getMessage.getMethod().hasName(["getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
             getMessage.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
             sink.asExpr() = getMessage
         )
