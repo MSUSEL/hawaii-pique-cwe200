@@ -9,7 +9,7 @@ import { ChatGptService } from 'src/chat-gpt/chat-gpt.service';
 import { SensitiveVariablesContents } from './data';
 import { SensitiveVariables } from './SensitiveVariables';
 import { SensitiveComments } from './SensitiveComments';
-import { SensitiveStrings } from './SenstiveStrings';
+import { SensitiveStrings } from './SensitiveStrings';
 
 import { EventsGateway } from 'src/events/events.gateway';
 @Injectable()
@@ -43,17 +43,26 @@ export class CodeQlService {
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
-        // let slice = javaFiles.slice(120, 130);  
+        let slice = javaFiles.slice(0, 20);  
+        // const data = await this.runChatGPT(slice, sourcePath);
+
 
 
         // const data = this.debugChatGPT(sourcePath);
-        const data = await this.runChatGPT(javaFiles, sourcePath);
+        // const data = await this.runChatGPT(javaFiles, sourcePath);
 
         // const data = this.useSavedData(sourcePath); // Use existing data so that we don't use GPT credits
 
         // await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
 
-        await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
+        // await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
+
+        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+
+        // Analyze with codeql
+        const outputPath = path.join(sourcePath, 'result.sarif');
+        const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --rerun --output=${outputPath} ${this.queryPath}`;
+        await this.runChildProcess(analyzeDbCommand);
 
         return await this.parserService.getSarifResults(sourcePath);
 
