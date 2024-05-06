@@ -25,7 +25,7 @@ export class CodeQlParserService {
             // let ruleKey = `${rule.id}: ${ruleDescription}`; // Concatenate rule ID and description
             let ruleKey = `${rule.id}`; // Concatenate rule ID and description
             let ruleKeySplit = ruleKey.split("/")
-            ruleKey = ruleKeySplit[ruleKeySplit.length-1]
+            ruleKey = `CWE-${ruleKeySplit[ruleKeySplit.length-1]}`
 
 
     
