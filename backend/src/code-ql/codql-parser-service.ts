@@ -18,44 +18,50 @@ export class CodeQlParserService {
 
     parseRules(rules: any[], results: any[], sourcePath: string) {
         const rulesMap = new Map();
-        
+        const fileMap = new Map();  // Map to track files and their associated rules
+    
         for (let i = 0; i < rules.length; i++) {
             let rule = rules[i];
-            let ruleDescription = cweDescriptions.get(rule.id) || "Description not available";
-            // let ruleKey = `${rule.id}: ${ruleDescription}`; // Concatenate rule ID and description
-            let ruleKey = `${rule.id}`; // Concatenate rule ID and description
-            let ruleKeySplit = ruleKey.split("/")
-            ruleKey = `CWE-${ruleKeySplit[ruleKeySplit.length-1]}`
-
-
+            let ruleKey = `CWE-${rule.id.split("/").pop()}`;
     
             var files = results
                 .filter((item) => item.ruleIndex == i)
                 .map((file) => ({
                     name: this.fileService.getFilenameFromPath(
                         file.locations[0]?.physicalLocation.artifactLocation.uri,
-                    ),
+                    ) + " | Line - " + file.locations[0]?.physicalLocation.region.startLine,
                     fullPath: this.fileService.processFilePath(
                         sourcePath,
                         file.locations[0]?.physicalLocation.artifactLocation.uri,
                     ),
                     message: file.message.text,
                     region: file.locations[0]?.physicalLocation.region,
-                }));
+                }))
+                .filter(file => {
+                    // Construct a unique identifier for the file based on its location and line
+                    const fileIdentifier = `${file.fullPath}:${file.region.startLine}`;
     
-            // Check if the concatenated ruleKey already exists in the map
+                    // Check if this file has already been processed under another rule
+                    if (fileMap.has(fileIdentifier)) {
+                        return false;  // Skip this file as it's already associated with a rule
+                    } else {
+                        fileMap.set(fileIdentifier, ruleKey);  // Mark this file as processed under this rule
+                        return true;
+                    }
+                });
+    
+            // Check if the ruleKey already exists in the map
             if (rulesMap.has(ruleKey)) {
                 const existingEntry = rulesMap.get(ruleKey);
                 existingEntry.files = existingEntry.files.concat(files);
                 rulesMap.set(ruleKey, existingEntry);
             } else {
-                // Create a new entry with the concatenated ruleKey if it does not exist
+                // Create a new entry if it does not exist
                 var object = {
                     name: ruleKey,
                     type: rule.defaultConfiguration.level,
                     message: rule.fullDescription ? rule.fullDescription.text : rule.shortDescription.text,
                     files: files,
-                    description: ruleDescription,
                 };
                 if (object.files.length) rulesMap.set(ruleKey, object);
             }
@@ -64,6 +70,7 @@ export class CodeQlParserService {
         // Convert the Map values to an array since the final result expects an array
         return Array.from(rulesMap.values());
     }
+    
     
     
 
