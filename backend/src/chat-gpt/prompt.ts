@@ -22,7 +22,8 @@ For example, "name": "Name: John Doe, Email: john.doe@example.com, Phone: 555-01
 Sensitive Comments:
 Please provide me any sensitive information that is exposed in comments. In particular, I am looking for hardcoded sensitive information. 
 What I don't want is any comments that are just generic comments that don't have any sensitive information in them. 
-Also, please don't include the whole comment, just the sensitive part. If there are multiple pieces of sensitive informaiton in a single comment, then break it up and send them as their own senstiveComment. 
+Also, please don't include the whole comment, just the sensitive part. If there are multiple pieces of sensitive informaiton in a single comment, then break it up and send them as their own senstiveComment.
+Make sure you don't break the JSON format for the name. For example, this is bad "name": "Crumb data: "+crumbName+"="+crumb, this is good "name": "Crumb data: crumbName crumb", 
 Lastly, always emit the // or /* at the beginning.
 
 EXAMPLE:
@@ -37,10 +38,13 @@ Report Format:
 I ONLY WANT JSON RESPONSES THAT ADHEAR TO THE FORMAT BELOW NOTHING ELSE.
 Please structure your response in the following JSON format for each file, ensure that it is properly formatted and does not break the JSON structure such as having ","s misformatted to allow for easy parsing and analysis. 
 Also, if there is no sensitive information found please still include the array but leave it empty, and do not include any other fields or error messages or notes as that breaks parsing.
+In the past, I have gotten error messages like this, "Based on the analysis of the provided source code file, there is no sensitive information found. Here is the report in the requested" Having this will break the JSON. So don't include anything messages with it. JUST THE JSON RESPONSE.
 In the name field, please only include the name of the sensitive information. For a sensitive variable, it would be the variable name, for a sensitive string, it would be the string itself, and for a sensitive comment, it would be the comment.
 Do not include any other information in the name field as it breaks parsing. 
 Lastly, ensure that you closely examine each .Java file and provide all the sensitive information with the correct classification before moving to the next file.
 
+Below this line is the only type of response I want. Even if there is no sensitive information found, I still want just the JSON response.
+----------------------------------------------------------------
 {
   "files": [
     {
