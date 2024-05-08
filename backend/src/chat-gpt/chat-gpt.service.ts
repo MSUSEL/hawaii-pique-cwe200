@@ -7,6 +7,7 @@ import * as path from 'path';
 import * as cliProgress from 'cli-progress';
 import {prompt} from './prompt';
 import { response } from 'express';
+import {encode} from 'gpt-tokenizer';
 
 
 @Injectable()
@@ -45,16 +46,12 @@ export class ChatGptService {
         let sensitiveCommentsMapping = new Map<string, string[]>();
         
         const concurrentCallsLimit = 5; // Maximum number of concurrent API calls
-        const batches = []; // Array to hold all batch promises
+        // const batches = []; // Array to hold all batch promises
         let completedBatches = 0; // Number of completed batches
         let completedFiles = 0; // Number of completed files
 
+        const batches = await this.createDynamicBatches(files);
 
-        // Create batches of provided java code
-        let batchSize = 2; 
-        for (let i = 0; i < files.length; i += batchSize) {
-            batches.push(files.slice(i, i + batchSize));
-        }
 
         // Function to process a single batch
     const processBatch = async (batch: string[], index) => {
@@ -62,12 +59,7 @@ export class ChatGptService {
 
         if (typeof processedFiles === 'string') {
             try {
-                const response = await this.createGptWithBackoff(processedFiles, index);
-                // completedBatches += 1;
-                // let progress = completedBatches / batches.length * 100;
-                // this.progressBar.update(progress);
-                // console.log(`\r${completedBatches / batches.length * 100}% of files processed`);
-                
+                const response = await this.createGptWithBackoff(processedFiles, index);                
                 completedFiles += batch.length;
                 this.progressBar.update(completedFiles);
 
@@ -201,7 +193,7 @@ export class ChatGptService {
                 // console.error(`Attempt ${i + 1}: Error caught in createGptWithBackoff`);
 
                 // Calculate time until next request
-                const isRateLimitError = error.response && error.response.status === 429 || error.response.status === 502 || error.response.status === 400;
+                const isRateLimitError = error.response && error.response.status === 429 || error.response.status === 502;
                 if (isRateLimitError && i < retries - 1) {
                     // Instead of exponential backoff, use the time specified in the header
                     try{
@@ -327,6 +319,46 @@ export class ChatGptService {
             };
         }
     }
+
+
+    async createDynamicBatches(files) {
+        const maxTokensPerBatch = 6000; // Adjust based on your API's token limit
+        let currentBatch = [];
+        const promptTokenCount = encode(prompt).length;
+        let totalBatchTokenCount = promptTokenCount;
+        const batches = [];
+        let check = 0;
+    
+        for (const file of files) {
+            const fileContent = await this.fileUtilService.processJavaFile(file);
+            const tokenCount = encode(fileContent).length;
+    
+            if (tokenCount > maxTokensPerBatch) {
+                console.error(`File ${file} exceeds the maximum tokens per batch limit.`);
+                continue; // Optionally skip this file or handle it separately
+            }
+    
+            if (totalBatchTokenCount + tokenCount > maxTokensPerBatch) {
+                // Current batch full, push it and start a new one
+                batches.push(currentBatch);
+                check += currentBatch.length;
+                currentBatch = [file];
+                totalBatchTokenCount = tokenCount + promptTokenCount; // Reset token count for new batch
+            } else {
+                // Add file to current batch
+                currentBatch.push(file);
+                totalBatchTokenCount += tokenCount;
+            }
+        }
+        if (currentBatch.length > 0) {
+            batches.push(currentBatch); // Push the last batch
+            check += currentBatch.length;
+        }
+        return batches;
+    }
+    
+
+
 }
 
 interface SensitiveVariables {
