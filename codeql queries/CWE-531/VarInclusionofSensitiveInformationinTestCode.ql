@@ -1,6 +1,6 @@
 /** 
- * @name CWE-531: Information Exposure Through Variable in Java Test Code
- * @description Detects potential information exposure through string literals in Java test code.
+ * @name CWE-531: Inclusion of Sensitive Information in Test Code
+ * @description Detects potential information exposure through variables in Java test code.
  * @kind path-problem
  * @problem.severity medium
  * @precision medium
