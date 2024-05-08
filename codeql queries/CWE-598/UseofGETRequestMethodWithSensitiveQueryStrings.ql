@@ -42,7 +42,7 @@
      ) 
      or
      // Detect use of Apache HttpGet that flows into an execute method call
-     exists(ConstructorCall httpGetCall, MethodCall executeCall |
+     exists(ConstructorCall httpGetCall |
        httpGetCall.getConstructedType().hasQualifiedName("org.apache.http.client.methods", "HttpGet") and
        httpGetCall.getAnArgument() = sink.asExpr() 
        // and
