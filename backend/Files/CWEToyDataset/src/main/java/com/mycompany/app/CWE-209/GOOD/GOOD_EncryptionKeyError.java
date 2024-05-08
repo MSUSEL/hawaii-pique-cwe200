@@ -8,7 +8,7 @@ public class GOOD_EncryptionKeyError {
             // Encryption logic
         } catch (IllegalArgumentException e) {
             // Log the error internally without exposing it to the user or external logs
-            System.err.println("Failed to initialize encryption: " + e.getMessage());
+            System.err.println("Failed to initialize encryption.");
             // Throw a generic SecurityException without specific details
             throw new SecurityException("Encryption initialization failed.");
         }

@@ -9,7 +9,7 @@ public class GOOD_DetailedDatabaseErrorExposure {
             // Secure: Using a generic error message that does not expose any details of the underlying data structure or SQL.
             System.out.println("A database error occurred. Please try again later.");
             // Log the specific error internally where it cannot be accessed by the end-user
-            logInternalError("Database query failed: " + e.getMessage());
+            logInternalError("Database query failed.");
         }
     }
 
