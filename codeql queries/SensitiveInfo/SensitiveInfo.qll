@@ -29,7 +29,16 @@ extensible predicate sensitiveComments(string variablesName);
         (
           mc.getMethod().hasName("getenv") or
           mc.getMethod().hasName("getParameter") or
-          mc.getMethod().hasName("getProperty") 
+          mc.getMethod().hasName("getProperty") or
+          mc.getMethod().hasName("getInitParameter") or
+          mc.getMethod().hasName("getHeader") or
+          mc.getMethod().hasName("getCookie") or
+          mc.getMethod().hasName("getAttribute") or
+          mc.getMethod().hasName("getAuthType") or
+          mc.getMethod().hasName("getRemoteUser") or
+          mc.getMethod().hasName("getResource") or
+          mc.getMethod().hasName("getResourceAsStream") or
+         (mc.getMethod().hasName("addRequestProperty") and mc.getArgument(0) = this)
         )
       )
     }   
