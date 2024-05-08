@@ -51,7 +51,7 @@ export class ChatGptService {
 
 
         // Create batches of provided java code
-        let batchSize = 5; 
+        let batchSize = 2; 
         for (let i = 0; i < files.length; i += batchSize) {
             batches.push(files.slice(i, i + batchSize));
         }
@@ -201,7 +201,7 @@ export class ChatGptService {
                 // console.error(`Attempt ${i + 1}: Error caught in createGptWithBackoff`);
 
                 // Calculate time until next request
-                const isRateLimitError = error.response && error.response.status === 429 || error.response.status === 502;
+                const isRateLimitError = error.response && error.response.status === 429 || error.response.status === 502 || error.response.status === 400;
                 if (isRateLimitError && i < retries - 1) {
                     // Instead of exponential backoff, use the time specified in the header
                     try{
