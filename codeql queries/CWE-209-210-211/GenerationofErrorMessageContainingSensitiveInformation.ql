@@ -35,8 +35,7 @@
    predicate isSink(DataFlow::Node sink) {
      // Identifying common error message generation points
      CommonSinks::isPrintSink(sink) or 
-     CommonSinks::isErrorSink(sink) or
-     sinkNode(sink, "log-injection") 
+     CommonSinks::isErrorSink(sink)
    }
  }
  
