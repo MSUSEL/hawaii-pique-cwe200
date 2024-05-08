@@ -17,7 +17,8 @@ Defined as any hardcoded string literal text that contains sensitive information
 and personal information that is explicitly written in the code. Where if someone had access to the source code, they could see the information. 
 I need each sensitive string as its own element in the array. Even if there are multiple in a single concatenated string. Each of them should be by themselves. Don’t ever have + concatenated strings since this will break formatting.
 For example, if a result is 'Email: john.doe@example.com', only 'john.doe@example.com' should be returned. If there are multiple key value pairs in a single sensitive string, I want each of the values to be their own element. 
-For example, "name": "Name: John Doe, Email: john.doe@example.com, Phone: 555-0100" would result in “John Doe”, “john.doe@example.com”, “555-0100”. Notice how all of the keys are dropped.   
+For example, "name": "Name: John Doe, Email: john.doe@example.com, Phone: 555-0100" would result in “John Doe”, “john.doe@example.com”, “555-0100”. Notice how all of the keys are dropped.  
+Lastly, make sure the "name" and "description" fields don't break the JSON format. Especially if there are special characters in the string such as +. There should be no special characters in the "name" field. 
 
 Sensitive Comments:
 Please provide me any sensitive information that is exposed in comments. In particular, I am looking for hardcoded sensitive information. 
