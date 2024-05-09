@@ -26,7 +26,7 @@ export class FileUtilService {
 
         // Extract code to project directory
         zip.extractAllTo(
-            this.configService.get<string>('CODEQL_PROJECTS_DIR') + "/" + file.originalname.split(".")[0],  // extract name
+            this.configService.get<string>('CODEQL_PROJECTS_DIR') + "/" + file.originalname,  // extract name
             true    // overwrite
         );
     }
@@ -238,38 +238,37 @@ export class FileUtilService {
         let processedLines: string[] = [];
         let fileName = path.basename(filePath);
         processedLines.push('-----BEGIN FILE: [' + fileName + ']-----');
-        let inMultilineComment = false;
-        const sensitiveKeywords = [
-            "copyright"
-        ];
-
         // remove comments and imports
         for await (const line of rl) {
             let trimmedLine = line.trim();
             processedLines.push(trimmedLine);
-
-            // if (trimmedLine.startsWith('/*')) {
-            //     inMultilineComment = true;
-            // }
-    
-        //     if (inMultilineComment || trimmedLine.startsWith('//')) {
-        //         // If the line is a comment, check if it contains a sensitive keyword
-        //         if (sensitiveKeywords.some(keyword => trimmedLine.toLowerCase().includes(keyword))) {
-        //             processedLines.push(trimmedLine);
-        //         }
-            // } else if (trimmedLine) {
-            //     processedLines.push(trimmedLine);
-            // }
-    
-        //     if (trimmedLine.endsWith('*/')) {
-        //         inMultilineComment = false;
-        //     }
         }
         processedLines.push('-----END FILE: [' + filePath + ']-----');
 
         // return processed file
         return processedLines.join('\n');
     }
-    
+
     
 }
+
+
+// Smarter Batching 
+function estimateTokens(text) {
+    return text.split(/\s+/).length;  // Simple whitespace-based tokenization
+}
+
+
+
+
+// async function processBatches(batches) {
+//     for (const [index, batch] of batches.entries()) {
+//         const processedFiles = await preprocessFiles(batch); // Ensure this handles joining files appropriately
+//         try {
+//             const response = await this.createGptWithBackoff(processedFiles, index);
+//             handleResponse(response); // Implement response handling
+//         } catch (error) {
+//             console.error('Error processing GPT response:', error);
+//         }
+//     }
+// }

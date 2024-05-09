@@ -24,10 +24,9 @@ export class FilesService {
         // Save file contents to file
         await this.fileUtilService.writeZipFile(file);
         this.eventsGateway.emitDataToClients('data','file uploaded successfully')
-
         // commenting because unsure if specifically done this way
         // const uploadedProjectDir = path.join(this.projectsPath, file.originalname, 'src');
-        const uploadedProjectDir = path.join(this.projectsPath,file.originalname.split(".")[0]);
+        const uploadedProjectDir = path.join(this.projectsPath,file.originalname); // You don't have to worry about removing .zip. It's already done when it gets here.
         
         // Return mapped directory tree
         return this.fileUtilService.getDirectoryTree(uploadedProjectDir)
