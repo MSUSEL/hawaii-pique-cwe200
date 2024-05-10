@@ -7,7 +7,7 @@ import * as path from 'path';
 import * as cliProgress from 'cli-progress';
 import {prompt} from './prompt';
 import { response } from 'express';
-import {encode} from 'gpt-tokenizer';
+import {encode, decode} from 'gpt-tokenizer';
 
 
 @Injectable()
@@ -45,41 +45,26 @@ export class ChatGptService {
         let sensitiveStringsMapping = new Map<string, string[]>();
         let sensitiveCommentsMapping = new Map<string, string[]>();
         
-        const concurrentCallsLimit = 5; // Maximum number of concurrent API calls
-        // const batches = []; // Array to hold all batch promises
-        let completedBatches = 0; // Number of completed batches
         let completedFiles = 0; // Number of completed files
 
-        const batches = await this.createDynamicBatches(files);
+        const res = await this.createDynamicBatches(files);
+        const batches = res.batchesOfText;
+        const filesPerBatch = res.filesPerBatch;
 
 
         // Function to process a single batch
-    const processBatch = async (batch: string[], index) => {
-        let processedFiles = await this.fileUtilService.preprocessFiles(batch);
-
-        if (typeof processedFiles === 'string') {
+    const processBatch = async (batch: string, filesInBatch : number, index : number) => {
             try {
-                const response = await this.createGptWithBackoff(processedFiles, index);                
-                completedFiles += batch.length;
+                const response = await this.createGptWithBackoff(batch, index);                
+                completedFiles += filesInBatch;
                 this.progressBar.update(completedFiles);
-
 
                 if (this.debug.toLowerCase() === 'true') {
                     console.log(`Results for batch ${index} \n ${response.message}`);
                 }
-                let json = null
-                try{
-                json = JSON.parse(response.message);
-                }
-                catch(e){
-                    console.error("********************************************************");
-                    console.error('Error parsing JSON:', e);
-                    console.error("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                    console.error(response.message);
-                    console.error("********************************************************");
-
-                }
-
+                
+                let json = extractAndParseJSON(response.message)
+                
                 json.files.forEach((file: any) => {
                     // Extract the sensitive variables for each file
                     let fileName = file.fileName;
@@ -94,79 +79,61 @@ export class ChatGptService {
                         sensitiveComments: sensitiveComments
                     });
 
-                    this.eventsGateway.emitDataToClients(
-                        'data',
-                        fileName + ':',
-                    );
-                    this.eventsGateway.emitDataToClients(
-                        'data',
-                        sensitiveVariables,
-                    );
-
-                    const fileVariablesList = this.extractVariableNamesMultiple(sensitiveVariables);
-
-
-                    let fileStringList = this.extractVariableNamesMultiple(sensitiveStrings);  
-                        
-                        // fileStringList = processStrings(fileStringList);
+                    this.eventsGateway.emitDataToClients('data',fileName + ':',);
+                    this.eventsGateway.emitDataToClients('data',sensitiveVariables,);
                     
+                    // Extract the sensitive variables, strings, and comments for each file
+                    const fileVariablesList = this.extractVariableNamesMultiple(sensitiveVariables);
+                    let fileStringList = this.extractVariableNamesMultiple(sensitiveStrings);  
                     let fileCommentsList = this.extractVariableNamesMultiple(file.sensitiveComments);
 
-                    variables = variables.concat(fileVariablesList);
-                    sensitiveVariablesMapping[fileName] = fileVariablesList;
+                    // Create Mappings for the YML files
+                    // Append or create new entry in sensitiveVariablesMapping
+                    if (sensitiveVariablesMapping[fileName]) {
+                        sensitiveVariablesMapping[fileName] = sensitiveVariablesMapping[fileName].concat(fileVariablesList);
+                    } else {
+                        sensitiveVariablesMapping[fileName] = fileVariablesList;
+                    }
 
-                    strings = strings.concat(fileStringList);
-                    sensitiveStringsMapping[fileName] = fileStringList;
+                    // Append or create new entry in sensitiveStringsMapping
+                    if (sensitiveStringsMapping[fileName]) {
+                        sensitiveStringsMapping[fileName] = sensitiveStringsMapping[fileName].concat(fileStringList);
+                    } else {
+                        sensitiveStringsMapping[fileName] = fileStringList;
+                    }
 
-                    comments = comments.concat(fileCommentsList);
-                    sensitiveCommentsMapping[fileName] = fileCommentsList;
-
-                    
+                    // Append or create new entry in sensitiveCommentsMapping
+                    if (sensitiveCommentsMapping[fileName]) {
+                        sensitiveCommentsMapping[fileName] = sensitiveCommentsMapping[fileName].concat(fileCommentsList);
+                    } else {
+                        sensitiveCommentsMapping[fileName] = fileCommentsList;
+                    }
                 });
 
             } catch (error) {
                 console.error('Error processing GPT response:', error);
             }
-        }
     };
 
         // Function to limit concurrent batch processing
-        const limitConcurrentBatches = async (batches: string[][]) => {
+        const processConcurrentBatches = async (batches: string[], filesPerBatch : number[]) => {
             console.log("Finding Sensitive Information in Project")
-            this.progressBar.start(files.length, 0);
+            const totalFiles = filesPerBatch.reduce((acc, num) => acc + num, 0);
+            this.progressBar.start(totalFiles, 0);
             const promises = batches.map(async (batch, index) => {
-                return processBatch(batch, index);
+                return processBatch(batch, filesPerBatch[index], index);
             });
             await Promise.allSettled(promises);
             this.progressBar.stop();
         };
 
-        await limitConcurrentBatches(batches);
+        await processConcurrentBatches(batches, filesPerBatch);
     
         // Post-processing
         variables = [...new Set(variables)];
 
 
         return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, comments };
-    }
-
-    async createDavinci(fileContents: string) {
-        var prompt = this.createQuery(fileContents);
-        var response = await this.createDavinciCompletion(prompt);
-        this.extractVariableNames(response.message);
-        return response;
-    }
-
-
-    /**
-     * Create new GPT with given prompt and get response
-     *
-     * @param fileContents content to make prompt with
-     */
-    async createGpt(fileContents: string) {
-        const prompt = this.createQuery(fileContents);
-        // this.extractVariableNames(response.message);
-        return await this.createGptFourCompletion(prompt);
     }
 
     /**
@@ -187,7 +154,7 @@ export class ChatGptService {
         for (let i = 0; i < retries; i++) {
             try {
                 // Attempt to make a new GPT and get response
-                return await this.createGpt(fileContents);
+                return await this.createGptFourCompletion(fileContents);
             } catch (error) {
                 // Report failure
                 // console.error(`Attempt ${i + 1}: Error caught in createGptWithBackoff`);
@@ -217,36 +184,6 @@ export class ChatGptService {
         }
         throw new Error('createGptWithBackoff: Max retries exceeded');
     }
-
-    /**
-     * Create new GPT query
-     *
-     * @param code code to append to query prompt
-     */
-    createQuery(code: string) {
-        const message = ` ${prompt} ${code}`;
-        return message;
-    }
-
-    async createDavinciCompletion(prompt: string) {
-        const completion = await this.openai.createCompletion({
-            model: 'text-davinci-003',
-            prompt: prompt,
-            temperature: 0.1,
-            max_tokens: 250,
-        });
-        return { message: completion?.data.choices?.[0]?.text };
-    }
-
-    async createGptCompletion(prompt: string) {
-        var completion = await this.openai.createChatCompletion({
-            model: 'gpt-3.5-turbo',
-            temperature: 0.2,
-            messages: [{ role: 'user', content: prompt }],
-        });
-        return { message: completion.data.choices[0].message.content };
-    }
-
 
     /**
      * Execute GPT request
@@ -283,22 +220,6 @@ export class ChatGptService {
         return variables;
     }
 
-    extractVariableNames(text: string): string[] {
-        var variables = [];
-        try {
-            var json = JSON.parse(text);
-            variables = json['sensitiveVariables'].map(
-                (variable) => `\"${variable.name}\"`,
-            );
-            return variables;
-        } catch (e) {
-            if (this.debug.toLowerCase() === 'true') {
-                console.log(text);
-            }
-            return variables;
-        }
-    }
-
     async getFileGptResponse(filePath: String) {
         var directories = filePath.split('\\');
         var jsonFilePath = path.join(
@@ -322,43 +243,79 @@ export class ChatGptService {
 
 
     async createDynamicBatches(files) {
-        const maxTokensPerBatch = 6000; // Adjust based on your API's token limit
-        let currentBatch = [];
+        const maxTokensPerBatch = 6000; // Maximum number of tokens per batch
         const promptTokenCount = encode(prompt).length;
-        let totalBatchTokenCount = promptTokenCount;
-        const batches = [];
-        let check = 0;
+        let batchesOfText = []; // Array to hold all batches of text
+        let filesPerBatch = []; // Used later on by the progress bar
+        let batchText = prompt; 
+        let totalBatchTokenCount = promptTokenCount; 
+        let currentFileCount = 0;
+        let i = 0;
     
         for (const file of files) {
+            // Clean up the file (Removes unnecessary whitespace)
             const fileContent = await this.fileUtilService.processJavaFile(file);
-            const tokenCount = encode(fileContent).length;
     
-            if (tokenCount > maxTokensPerBatch) {
-                console.error(`File ${file} exceeds the maximum tokens per batch limit.`);
-                continue; // Optionally skip this file or handle it separately
+            // Add the start and end bounds to the file and then get its token count
+            const fileTokens = encode(await this.fileUtilService.addFileBoundaryMarkers(file, fileContent));
+            const currentFileTokenCount = fileTokens.length;
+    
+            if (currentFileTokenCount > maxTokensPerBatch) {
+                console.log(`File ${file} is too large to fit in a single batch ${i}`);
+    
+                // If there is already content in the current batch, push it and start a new batch
+                if (totalBatchTokenCount > promptTokenCount) {
+                    batchesOfText.push(batchText);
+                    filesPerBatch.push(currentFileCount);
+                    batchText = prompt; // Start with a fresh batch that includes the prompt
+                    currentFileCount = 0; // Reset file count for the new batch
+                }
+    
+                let startIndex = 0;
+                let endIndex = 0;
+    
+                while (startIndex < fileContent.length) {
+                    endIndex = startIndex + Math.min(maxTokensPerBatch * 3, fileContent.length - startIndex);
+    
+                    const sliceWithBounds = await this.fileUtilService.addFileBoundaryMarkers(file, fileContent.slice(startIndex, endIndex));
+                    let totalsize = fileContent.length
+                    let slicesize = sliceWithBounds.length
+    
+                    // Create a new batch with the prompt and the current slice
+                    batchText = prompt + sliceWithBounds;
+                    let sliceTokens = encode(batchText).length;
+    
+                    batchesOfText.push(batchText);  // Push the new batch immediately
+                    filesPerBatch.push(1); // Each slice from an oversized file is treated as a separate batch with 1 file
+    
+                    // Update the startIndex for the next slice
+                    startIndex = endIndex;
+                }
             }
-    
-            if (totalBatchTokenCount + tokenCount > maxTokensPerBatch) {
+            else if (totalBatchTokenCount + currentFileTokenCount > maxTokensPerBatch) {
                 // Current batch full, push it and start a new one
-                batches.push(currentBatch);
-                check += currentBatch.length;
-                currentBatch = [file];
-                totalBatchTokenCount = tokenCount + promptTokenCount; // Reset token count for new batch
+                batchesOfText.push(batchText);
+                filesPerBatch.push(currentFileCount);
+                batchText = prompt + fileContent;
+                totalBatchTokenCount = promptTokenCount + currentFileTokenCount;
+                currentFileCount = 1; // Start counting files in the new batch
             } else {
-                // Add file to current batch
-                currentBatch.push(file);
-                totalBatchTokenCount += tokenCount;
+                batchText += fileContent;
+                totalBatchTokenCount += currentFileTokenCount;
+                currentFileCount++; // Increment the count of files in the current batch
             }
+            i += 1;
         }
-        if (currentBatch.length > 0) {
-            batches.push(currentBatch); // Push the last batch
-            check += currentBatch.length;
+    
+        // Add the last batch if it contains any content beyond the initial prompt
+        if (batchText.length > prompt.length) {
+            batchesOfText.push(batchText);
+            filesPerBatch.push(currentFileCount);
         }
-        return batches;
+    
+        return { batchesOfText, filesPerBatch };
     }
     
-
-
 }
 
 interface SensitiveVariables {
@@ -366,19 +323,30 @@ interface SensitiveVariables {
     description: string;
 }
 
-function processStrings(strings: string[]): string[] {
-    return strings
-        .map((str) => {
-            // Attempt to split the string into key and value by ":"
-            const parts = str.split(/:\s*/);
-            // If there's a key-value structure, keep the value part
-            if (parts.length > 1) {
-                str = parts[1];
-            }
-            return str;
-        })
-        .filter((str) => {
-            // Drop the string if it contains backslashes or unescaped double quotes
-            return !str.includes('\\') && !str.match(/(?<!\\)"/);
-        });
+function extractAndParseJSON(inputString) {
+    // Attempt to sanitize input by escaping problematic characters
+    const sanitizedInput = inputString.replace(/(\+)(\s*[\w\s]+)(\+)/g, (match, p1, p2, p3) => `"${p1}${p2.trim()}${p3}"`);
+
+    // Regular expression to find JSON objects or arrays
+    const jsonRegex = /{.*}|\[.*\]/s;
+
+    // Match against the sanitized input string
+    const match = sanitizedInput.match(jsonRegex);
+
+    if (match) {
+        try {
+            // Try parsing the JSON string found
+            const json = JSON.parse(match[0]);
+            return json;
+        } catch (error) {
+            // Log or handle JSON parsing errors
+            console.error("Failed to parse JSON:", error);
+            return null;
+        }
+    } else {
+        // No JSON found
+        console.log("No JSON found in the input string.");
+        return null;
+    }
 }
+
