@@ -236,17 +236,18 @@ export class FileUtilService {
 
         // init new processed file
         let processedLines: string[] = [];
-        let fileName = path.basename(filePath);
-        processedLines.push('-----BEGIN FILE: [' + fileName + ']-----');
         // remove comments and imports
         for await (const line of rl) {
             let trimmedLine = line.trim();
             processedLines.push(trimmedLine);
         }
-        processedLines.push('-----END FILE: [' + filePath + ']-----');
-
         // return processed file
         return processedLines.join('\n');
+    }
+
+    async addFileBoundaryMarkers(filePath, file){
+        let fileName = path.basename(filePath);
+        return '-----BEGIN FILE: [' + fileName + ']----- \n' + file + '\n-----END FILE: [' + filePath + ']-----'
     }
 
     
