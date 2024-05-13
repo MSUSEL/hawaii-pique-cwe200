@@ -47,7 +47,7 @@ export class ChatGptService {
         
         let completedFiles = 0; // Number of completed files
 
-        const res = await this.createDynamicBatches(files);
+        const res = await this.simpleBatching(files);
         const batches = res.batchesOfText;
         const filesPerBatch = res.filesPerBatch;
 
@@ -103,11 +103,8 @@ export class ChatGptService {
                     }
 
                     // Append or create new entry in sensitiveCommentsMapping
-                    if (sensitiveCommentsMapping[fileName]) {
-                        sensitiveCommentsMapping[fileName] = sensitiveCommentsMapping[fileName].concat(fileCommentsList);
-                    } else {
-                        sensitiveCommentsMapping[fileName] = fileCommentsList;
-                    }
+                   comments = comments.concat(fileCommentsList);
+                   sensitiveCommentsMapping[fileName] = fileCommentsList;
                 });
 
             } catch (error) {
@@ -193,7 +190,7 @@ export class ChatGptService {
     async createGptFourCompletion(prompt: string) {
         try {
             const completion = await this.openai.createChatCompletion({
-                model: 'gpt-4',
+                model: 'gpt-4o',
                 temperature: 0.2,
                 messages: [{ role: 'user', content: prompt }],
             });
@@ -314,6 +311,18 @@ export class ChatGptService {
         }
     
         return { batchesOfText, filesPerBatch };
+    }
+
+    // With GPT-4o this approach might work the best
+    async simpleBatching(files){
+        let batchesOfText = []
+        let filesPerBatch = []
+        for (const file of files){
+            const fileContent = await this.fileUtilService.addFileBoundaryMarkers(file, await this.fileUtilService.processJavaFile(file))
+            batchesOfText.push(prompt + fileContent)
+            filesPerBatch.push(1)
+        }
+        return {batchesOfText, filesPerBatch}
     }
     
 }
