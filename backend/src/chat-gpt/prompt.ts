@@ -13,15 +13,17 @@ Even if the variable is a String, as long as it's a variable, then and it is sen
 Please consider the context of the variable for example if it already uses encrypted data (Which would me it isn't sensitive) and determine if it is sensitive based on the criteria mentioned above.
 
 Sensitive Hardcoded Strings:
-Defined as any hardcoded string literal text that contains sensitive information. This includes but is not limited to passwords, API keys, internal URLs, 
+- Defined as any hardcoded string literal text that contains sensitive information. This includes but is not limited to passwords, API keys, internal URLs, 
 and personal information that is explicitly written in the code. Where if someone had access to the source code, they could see the information. 
-I need each sensitive string as its own element in the array. Even if there are multiple in a single concatenated string. Each of them should be by themselves. Don’t ever have + concatenated strings since this will break formatting.
-For example, if a result is 'Email: john.doe@example.com', only 'john.doe@example.com' should be returned. If there are multiple key value pairs in a single sensitive string, I want each of the values to be their own element. 
-For example, "name": "Name: John Doe, Email: john.doe@example.com, Phone: 555-0100" would result in “John Doe”, “john.doe@example.com”, “555-0100”. Notice how all of the keys are dropped.  
-Lastly, make sure the "name" and "description" fields don't break the JSON format. Especially if there are special characters in the string such as +. There should be no special characters in the "name" field. 
+- Based on previous attempts, I have noticed a considerable amount of false positives in this area. So, please take into acount of the context of the string, and make sure it is actually sensitive.
+- I need each sensitive string as its own element in the array. Even if there are multiple in a single concatenated string. Each of them should be by themselves. Don’t ever have + concatenated strings since this will break formatting.
+--For example, if a result is 'Email: john.doe@example.com', only 'john.doe@example.com' should be returned. If there are multiple key value pairs in a single sensitive string, I want each of the values to be their own element. 
+--For example, "name": "Name: John Doe, Email: john.doe@example.com, Phone: 555-0100" would result in “John Doe”, “john.doe@example.com”, “555-0100”. Notice how all of the keys are dropped.  
+- Lastly, make sure the "name" and "description" fields don't break the JSON format. Especially if there are special characters in the string such as +. There should be no special characters in the "name" field. 
 
 Sensitive Comments:
 Please provide me any sensitive information that is exposed in comments. In particular, I am looking for hardcoded sensitive information. 
+Based on previous attempts, I have noticed a considerable amount of false positives in this area. Such as including comments that are just explaining a piece of code. So, please take into acount of the context of the comment, and make sure it is actually sensitive.
 What I don't want is any comments that are just generic comments that don't have any sensitive information in them. 
 Also, please don't include the whole comment, just the sensitive part. If there are multiple pieces of sensitive informaiton in a single comment, then break it up and send them as their own senstiveComment.
 Make sure you don't break the JSON format for the name. For example, this is bad "name": "Crumb data: "+crumbName+"="+crumb, this is good "name": "Crumb data: crumbName crumb", 
