@@ -8,7 +8,7 @@ import * as cliProgress from 'cli-progress';
 import {prompt} from './prompt';
 import { response } from 'express';
 import {encode, decode} from 'gpt-tokenizer';
-
+import async from 'async';
 
 @Injectable()
 export class ChatGptService {
@@ -113,14 +113,25 @@ export class ChatGptService {
     };
 
         // Function to limit concurrent batch processing
-        const processConcurrentBatches = async (batches: string[], filesPerBatch : number[]) => {
-            console.log("Finding Sensitive Information in Project")
+        const processConcurrentBatches = async (batches, filesPerBatch ) => {
+            let concurrencyLimit = 50; // Number of concurrent tasks to run
+            console.log("Finding Sensitive Information in Project");
+        
             const totalFiles = filesPerBatch.reduce((acc, num) => acc + num, 0);
             this.progressBar.start(totalFiles, 0);
-            const promises = batches.map(async (batch, index) => {
-                return processBatch(batch, filesPerBatch[index], index);
+        
+            const queue = async.queue(async (task, callback) => {
+                await processBatch(task.batch, task.files, task.index);
+                callback();
+            }, concurrencyLimit);
+        
+            // Push tasks to the queue
+            batches.forEach((batch, index) => {
+                queue.push({ batch, files: filesPerBatch[index], index });
             });
-            await Promise.allSettled(promises);
+        
+            // Wait for all tasks to be processed
+            await queue.drain();
             this.progressBar.stop();
         };
 
@@ -147,15 +158,12 @@ export class ChatGptService {
      * @param retries number of request tries
      * @param delayMs delay between requests in milliseconds
      */
-    async createGptWithBackoff(fileContents: string, index, retries = 10, delayMs = 1000) {
+    async createGptWithBackoff(fileContents: string, index, retries = 100, delayMs = 1000) {
         for (let i = 0; i < retries; i++) {
             try {
                 // Attempt to make a new GPT and get response
                 return await this.createGptFourCompletion(fileContents);
             } catch (error) {
-                // Report failure
-                // console.error(`Attempt ${i + 1}: Error caught in createGptWithBackoff`);
-
                 // Calculate time until next request
                 const isRateLimitError = error.response && error.response.status === 429 || error.response.status === 502;
                 if (isRateLimitError && i < retries - 1) {
