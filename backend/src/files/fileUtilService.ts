@@ -247,7 +247,7 @@ export class FileUtilService {
 
     async addFileBoundaryMarkers(filePath, file){
         let fileName = path.basename(filePath);
-        return '-----BEGIN FILE: [' + fileName + ']----- \n' + file + '\n-----END FILE: [' + filePath + ']-----'
+        return '-----BEGIN FILE: [' + fileName + ']----- \n' + file + '\n-----END FILE: [' + fileName + ']-----'
     }
 
     
