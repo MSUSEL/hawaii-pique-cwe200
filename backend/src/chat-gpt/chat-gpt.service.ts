@@ -47,7 +47,7 @@ export class ChatGptService {
         
         let completedFiles = 0; // Number of completed files
 
-        const res = await this.simpleBatching(files);
+        const res = await this.dynamicBatching(files);
         const batches = res.batchesOfText;
         const filesPerBatch = res.filesPerBatch;
 
@@ -201,6 +201,9 @@ export class ChatGptService {
                 model: 'gpt-4o',
                 temperature: 0.2,
                 messages: [{ role: 'user', content: prompt }],
+                top_p: 0.8,
+                frequency_penalty: 0.1,
+                presence_penalty: 0.1,
             });
 
             return { message: completion.data.choices[0].message.content };
@@ -247,8 +250,8 @@ export class ChatGptService {
     }
 
 
-    async createDynamicBatches(files) {
-        const maxTokensPerBatch = 6000; // Maximum number of tokens per batch
+    async dynamicBatching(files) {
+        const maxTokensPerBatch = 10000; // Maximum number of tokens per batch
         const promptTokenCount = encode(prompt).length;
         let batchesOfText = []; // Array to hold all batches of text
         let filesPerBatch = []; // Used later on by the progress bar
@@ -272,6 +275,7 @@ export class ChatGptService {
                 if (totalBatchTokenCount > promptTokenCount) {
                     batchesOfText.push(batchText);
                     filesPerBatch.push(currentFileCount);
+                    i = 0;
                     batchText = prompt; // Start with a fresh batch that includes the prompt
                     currentFileCount = 0; // Reset file count for the new batch
                 }
@@ -292,20 +296,24 @@ export class ChatGptService {
     
                     batchesOfText.push(batchText);  // Push the new batch immediately
                     filesPerBatch.push(1); // Each slice from an oversized file is treated as a separate batch with 1 file
-    
+                    i = 0;
                     // Update the startIndex for the next slice
                     startIndex = endIndex;
                 }
             }
+            // Current batch full, push it and start a new one
             else if (totalBatchTokenCount + currentFileTokenCount > maxTokensPerBatch) {
-                // Current batch full, push it and start a new one
                 batchesOfText.push(batchText);
                 filesPerBatch.push(currentFileCount);
-                batchText = prompt + fileContent;
+                i = 0;
+                batchText = prompt + await this.fileUtilService.addFileBoundaryMarkers(file, fileContent);
                 totalBatchTokenCount = promptTokenCount + currentFileTokenCount;
                 currentFileCount = 1; // Start counting files in the new batch
-            } else {
-                batchText += fileContent;
+            } 
+            
+            // The current file can be added to the current batch
+            else {
+                batchText += await this.fileUtilService.addFileBoundaryMarkers(file, fileContent);
                 totalBatchTokenCount += currentFileTokenCount;
                 currentFileCount++; // Increment the count of files in the current batch
             }
