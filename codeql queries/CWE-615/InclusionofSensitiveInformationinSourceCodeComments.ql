@@ -16,10 +16,15 @@ class HardCodedSensitiveComments extends Javadoc {
   HardCodedSensitiveComments() {
     exists(string pattern |
       sensitiveComments(pattern) and
-      this.getAChild().(JavadocText).getText().regexpMatch(".*" + pattern + ".*")
+      this.getAChild().(JavadocText).getText().regexpMatch(".*" + pattern + ".*") 
+      // and
+      // this.getAChild().(JavadocText).getText().toLowerCase().regexpMatch(".*(username|password|).*")
+
     )
   }
 }
 
 from HardCodedSensitiveComments comment
 select comment, " This comment may have hardcoded sensitive info"
+
+
