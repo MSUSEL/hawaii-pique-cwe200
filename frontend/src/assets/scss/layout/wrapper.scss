@@ -5,6 +5,7 @@
     perspective: 1500px;
     font-family: Cairo;
     overflow-x: hidden; /* Add this line */
+    overflow-y: hidden; 
 }
 
 .left-sidebar {
@@ -29,6 +30,14 @@
 .right-sidebar {
     min-width: 400px;
     max-width: 400px;
+
+    width: 300px; /* Set a fixed width for the sidebar */
+    height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    position: fixed; /* Fix the sidebar in place */
+    right: 0; /* Align the sidebar to the right */
+    top: 0; /* Align the sidebar to the top */
 
     background: $card-bg-color;
     border-left: 2px solid $card-border-color;
