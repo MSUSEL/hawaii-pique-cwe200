@@ -1,0 +1,176 @@
+{
+    "files": [
+      {
+        "fileName": "FileUploader.java",
+        "sensitiveVariables": [
+            "mNotification?", "mServiceLooper", "mServiceHandler", "mCurrentAccount", "mStorageManager", 
+            "mBinder", "mUploadsStorageManager", "accountManager", "startId", "account ", "optionalUser", 
+            "user", "msg", "localPaths?", "remotePaths?", "files", "ocUpload?", "newUpload", "uploadKey", 
+            "mCurrentUpload", "ocAccount ",  "mUploadClient", "uploadResult", "remoteId",  "tickerId?", 
+            "start", "accountName", "upload", "targetKey"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "TemporaryFolder.java",
+        "sensitiveVariables": [],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "ResetPasswordIT.java",
+        "sensitiveVariables": [
+            "userName", "password", "newPassword"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "DefaultResetPasswordRequestResponse.java",
+        "sensitiveVariables": [
+            "userEmail", "userReference", "verificationCode"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "ModelFactory.java",
+        "sensitiveVariables": [
+            "baseUri", "self", "doc", "spaceUri ", "spaceLink", "parentUri", "originalAuthor"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "AttachmentProvider.java",
+        "sensitiveVariables": [
+            "id", "accountId", "filename ", "uri", "segments", "c?", "file", "saveIn", "newFile", 
+            "callingId?", "format?", "attachmentUri", "name"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "AttachmentProvider.java",
+        "sensitiveVariables": [
+            "id", "accountId", "filename ", "uri", "segments", "c?", "file", "saveIn", "newFile", 
+            "callingId?", "format?", "attachmentUri", "name"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": [
+            "THIS HAS ONE"
+        ]
+      },
+      {
+        "fileName": "GhprbGitHubAuth.java",
+        "sensitiveVariables": [
+            "credentialsId", "id", "username", "password"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "DetectPostBuildStepDescriptor.java",
+        "sensitiveVariables": [
+            "hubCredentialsId"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "GitHubTokenCredentialsCreator.java",
+        "sensitiveVariables": [
+            "credentialsId", "login", "password", "username", "token", "credentials"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "BasicSSHUserPrivateKey.java",
+        "sensitiveVariables": [
+            "passphrase", "privateKeySource", "privateKeys", "username", "id", "secret", 
+            "privateKeyFile", "key", "files ", "sshHome", "keyName"
+        ],
+        "sensitiveStrings": [
+            "id_ecdsa", "id_ed25519", "id_rsa", "id_dsa", "identity"
+        ],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "AWSCodeDeployPublisher.java",
+        "sensitiveVariables": [
+            "awsAccessKey", "awsSecretKey" , "credentials"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "TinfoilScanRecorder.java",
+        "sensitiveVariables": [
+            "apiAccessKey", "apiSecretKey"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "TestlabNotifier.java",
+        "sensitiveVariables": [
+            "companyId", "apiKey"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "ArtifactoryChoiceListProvider.java",
+        "sensitiveVariables": [
+            "url", "credentialsId", "c", "groupId", "artifactId", "serialVersionUID"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "OpenstackCredentials.java",
+        "sensitiveVariables": [
+            "credentialId", "credential"
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "ViewOptionHandler.java",
+        "sensitiveVariables": [
+            "tok", "viewName" 
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "CLICommand.java",
+        "sensitiveVariables": [
+            "name", "id", "auth", "errorMsg", "stderr", "p", "cmd ", "logfiles", "newLocation"  
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "Computer.java",
+        "sensitiveVariables": [
+            "cachedHostName", "serialVersionUID ", "nodeName", "rootUrl ", "ia", "address", 
+            "result?", "item", "names?", "url", "sb", "c"   
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      },
+      {
+        "fileName": "Descriptor.java",
+        "sensitiveVariables": [
+            "formData", "owner", "helpRedirect","fieldNameToRedirectTo","formField", "fieldNameToRedirectTo"   
+        ],
+        "sensitiveStrings": [],
+        "sensitiveComments": []
+      }
+
+
+    ]
+  }
