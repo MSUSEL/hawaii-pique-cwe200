@@ -1,3 +1,16 @@
+"""
+This script counts the number of tokens in a given project and estimates the cost of querying and generating the output from ChatGPT.
+To add a new project to estimate, add it to the /backend/Files directory.
+Currently, the script uses the GPT-4o pricing of $5 per 1 million input tokens and $15 per 1 million output tokens.
+If there are changes to the pricing, update the INPUT_COST and OUTPUT_COST accordingly.
+
+Since we don't know the exact number of tokens in the output, we estimate it to be 30% of the input tokens.
+This is based on the average output tokens we have seen in the projects we have run so far. 
+Feel free to update this estimate if have run more projects and have a better estimate.
+This part is done in the estimate_output_tokens() function.
+
+"""
+
 import re
 import tiktoken
 import os
@@ -119,7 +132,7 @@ def get_tokenize_file_count_of_json():
     output_price = token_count * (0.03 / 1000)
     print(output_price)
 
-
+# This is the same algorithm used in the backend to batch files backend/src/chat-gpt/chat-gpt.service.ts
 def dynamicBatching(files):
         maxTokensPerBatch = 10000; # Maximum number of tokens per batch
         prompt = get_prompt() # Prompt to be used at the beginning of each batch
