@@ -43,7 +43,7 @@ export class CodeQlService {
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
-        let slice = javaFiles.slice(0, 20);  
+        // let slice = javaFiles.slice(0, 20);  
         // const data = await this.runChatGPT(slice, sourcePath);
 
 
@@ -57,12 +57,12 @@ export class CodeQlService {
 
         // await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
 
-        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+        // const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
 
-        // Analyze with codeql
-        const outputPath = path.join(sourcePath, 'result.sarif');
-        const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --rerun --output=${outputPath} ${this.queryPath}`;
-        await this.runChildProcess(analyzeDbCommand);
+        // // Analyze with codeql
+        // const outputPath = path.join(sourcePath, 'result.sarif');
+        // const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --rerun --output=${outputPath} ${this.queryPath}`;
+        // await this.runChildProcess(analyzeDbCommand);
 
         return await this.parserService.getSarifResults(sourcePath);
 
@@ -254,5 +254,15 @@ export class CodeQlService {
         const outputPath = path.join(sourcePath, 'result.sarif');
         const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
         await this.runChildProcess(analyzeDbCommand);
+    }
+
+    async getSarifResults(project: string){
+        const sourcePath = path.join(this.projectsPath, project);
+        console.log(sourcePath);
+        if (!fs.existsSync(path.join(sourcePath, 'result.sarif'))) {
+            return { error: 'Results file does not exist' };
+        }
+        let data = await this.parserService.getSarifResults(sourcePath);
+        return await this.parserService.getSarifResults(sourcePath);
     }
 }

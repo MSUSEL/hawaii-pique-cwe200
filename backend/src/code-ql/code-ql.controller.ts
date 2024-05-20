@@ -6,7 +6,8 @@ import {
     Patch,
     Param,
     Delete,
-    UseInterceptors
+    UseInterceptors,
+    Query
 } from '@nestjs/common';
 import { CodeQlService } from './code-ql.service';
 
@@ -29,7 +30,7 @@ export class CodeQlController {
     }
 
     @Get()
-    async getSarifResults(){
-        return {}
+    async getSarifResults(@Query('project') project : string){
+        return await this.codeQlService.getSarifResults(project);
     }
 }

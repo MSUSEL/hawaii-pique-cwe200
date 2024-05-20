@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+
 
 @Injectable({
     providedIn: 'root',
@@ -14,7 +15,8 @@ export class CodeQlService {
         return this.http.post(this.url,data);
     }
     
-    getSarifResult():Observable<any>{
-        return this.http.get(this.url);
+    getSarifResult(project : string):Observable<any>{
+        const params = new HttpParams().set('project', project);
+        return this.http.get(this.url, { params });
     }
 }

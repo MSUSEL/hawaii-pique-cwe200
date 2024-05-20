@@ -42,10 +42,12 @@ export class PageHeaderComponent implements OnInit {
     uploadProject() {
         var data: FormData = new FormData();
         data.append('file', this.utilService.SelectedProject, this.utilService.ProjectName);
+        this.isLoading=true;
 
         this.fileService.uploadFile(data).subscribe((response)=>{
             this.utilService.directoryFilesTree=response;
             this.utilService.isUploaded=true;
+            this.isLoading=false;
         })
     }
 
@@ -54,12 +56,35 @@ export class PageHeaderComponent implements OnInit {
         this.socketService.clearOutput();
         await this.socketService.socketConnect();
         this.isLoading=true;
+        
+        $('#terminal').toggleClass('d-none');
+
         this.codeQlService.runCodeQl({project:this.utilService.ProjectName}).subscribe((response)=>{
             this.editorService.rulesTree=response.rulesTree;
             this.editorService.locationsTree=response.locationsTree;
             this.isLoading=false;
             this.socketService.socketDisconnect();
-        })
+            // $('#terminal').toggleClass('d-none');
+
+        });
     }
+
+    async usePrevious(){
+        this.socketService.clearOutput();
+        await this.socketService.socketConnect();
+        this.isLoading=true;
+
+            this.codeQlService.getSarifResult(this.utilService.ProjectName).subscribe((response)=>{
+                try{
+                    this.editorService.rulesTree=response.rulesTree;
+                    this.editorService.locationsTree=response.locationsTree;
+                    this.isLoading=false;
+                    this.socketService.socketDisconnect();
+                }catch(e){
+                    this.isLoading=false;
+                    this.socketService.socketDisconnect();
+                }
+        });
+    }   
 
 }

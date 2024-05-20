@@ -10,17 +10,26 @@
         </h4>
         <div class="tollbar text-secondary" style="height: 45px;line-height: 45px;">
             <button class="btn print-button " 
-                title="Upload {{utilService.ProjectName}}  project"
+                title="Upload {{utilService.ProjectName}} project"
                 (click)="uploadProject()"
-                *ngIf="utilService.readyForUpload()">
+                *ngIf="utilService.readyForUpload() && !isLoading">
                 <i class="fa fa-cloud-upload-alt text-secondary"></i>
             </button>
+
             <button class="btn print-button" 
-                title="Analyze {{utilService.ProjectName}}  project" 
+                title="Analyze {{utilService.ProjectName}} project" 
                 *ngIf="utilService.readyForAnalysis() && !isLoading"
                 (click)="runCodeQl();">
                 <i class="fa fa-play text-secondary"></i>
             </button>
+
+            <button	class="btn print-button"
+            title="Use previous analysis results"
+            (click)="usePrevious();"
+            *ngIf="utilService.readyForAnalysis() && !isLoading">
+                <i class="fa fa-history text-secondary"></i>
+            </button>
+
             <div class="pt-1 " >
                 <div class="fa-2x d-inline" *ngIf="isLoading">
                     <i class="fas fa-spinner fa-pulse text-success"></i>

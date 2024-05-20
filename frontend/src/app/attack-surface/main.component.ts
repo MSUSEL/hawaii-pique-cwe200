@@ -22,7 +22,7 @@ export class AttackSurfaceComponent {
     openDialog(): void {
         var previousName:string=this.utilService.ProjectName;
         const dialogRef = this.dialog.open(SaveFileDialogComponent,{
-            height: '250px',
+            height: '320px',
             width: '500px',
             position:{
                 top:'100px'
@@ -34,7 +34,7 @@ export class AttackSurfaceComponent {
                 this.utilService.export();
             }else{
                 if(this.utilService.ProjectName.length==0 && result!=undefined){
-                    alert("Invalid  Name")
+                    alert("Invalid Name")
                 }
                 this.utilService.ProjectName=previousName;
             }
