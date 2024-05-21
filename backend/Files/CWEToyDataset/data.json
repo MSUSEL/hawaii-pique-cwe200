@@ -1,889 +1,2158 @@
 [
 	{
-		"fileName": "BAD_ApiKeyExposureTestConfig.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_unsafeCheckSignatures.java",
+		"variables": [
 			{
-				"name": "apiKey",
-				"description": "Sensitive API key exposed"
+				"name": "key",
+				"description": "Private key used for signing data"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
-		"fileName": "BAD_EmbeddedSensitiveDataInTests.java",
-		"sensitiveVariables": [
-			{
-				"name": "personalEmail",
-				"description": "Sensitive PII hardcoded"
-			},
-			{
-				"name": "personalPhone",
-				"description": "Sensitive PII hardcoded"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "user@example.com",
-				"description": "Hardcoded sensitive personal email"
-			},
-			{
-				"name": "555-0100",
-				"description": "Hardcoded sensitive personal phone number"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_HardcodedCredentialsTest.java",
-		"sensitiveVariables": [
+		"fileName": "GOOD_UserAuthenticationComments.java",
+		"variables": [
 			{
 				"name": "username",
-				"description": "Hardcoded username"
+				"description": "Username for user authentication"
 			},
 			{
 				"name": "password",
+				"description": "Password for user authentication"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_TempDirUsageVulnerable.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "CVE-2020-8908",
+				"description": "Directory has permissions `drwxr-xr-x`"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_TempDirUsageSafe.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_PersonalDetailsGET_Encrypted.java",
+		"variables": [
+			{
+				"name": "fullName",
+				"description": "Personal information - Full Name"
+			},
+			{
+				"name": "dateOfBirth",
+				"description": "Personal information - Date of Birth"
+			}
+		],
+		"strings": [
+			{
+				"name": "https://example.com/register?fullName=",
+				"description": "internal URL"
+			},
+			{
+				"name": "John Doe",
+				"description": "personal name"
+			},
+			{
+				"name": "1980-01-01",
+				"description": "date of birth"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_IoTDeviceFirmwareUpdateServlet.java",
+		"variables": [
+			{
+				"name": "deviceId",
+				"description": "deviceID"
+			},
+			{
+				"name": "firmwareVersion",
+				"description": "firmwareVersion"
+			}
+		],
+		"strings": [
+			{
+				"name": "0.23Beta",
+				"description": "firmware version"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_PaymentProcessingServlet.java",
+		"variables": [
+			{
+				"name": "paymentId",
+				"description": "paymentID"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_IoTDeviceFirmwareUpdateServlet.java",
+		"variables": [
+			{
+				"name": "deviceId",
+				"description": "Device ID"
+			},
+			{
+				"name": "firmwareVersion",
+				"description": "Firmware Version"
+			}
+		],
+		"strings": [
+			{
+				"name": "0.23Beta",
+				"description": "potentially sensitive firmware version"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_PaymentProcessingServlet.java",
+		"variables": [
+			{
+				"name": "paymentId",
+				"description": "Payment ID"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_PasswordSecureCommands.java",
+		"variables": [
+			{
+				"name": "password",
+				"description": "password"
+			}
+		],
+		"strings": [
+			{
+				"name": "mySecretPass123",
+				"description": "Sensitive password"
+			}
+		],
+		"comments": [
+			{
+				"name": "mySecretPass123",
+				"description": "Password"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_TokenSecureViaEnvironment.java",
+		"variables": [
+			{
+				"name": "secretToken",
+				"description": "token"
+			}
+		],
+		"strings": [
+			{
+				"name": "s3cr3tT0k3n",
+				"description": "Hardcoded secret token"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_APIEndpointDebugging.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API key"
+			}
+		],
+		"strings": [
+			{
+				"name": "https://api.example.com/data",
+				"description": "Internal API endpoint URL"
+			},
+			{
+				"name": "api_key_123456789",
+				"description": "Hardcoded API key"
+			}
+		],
+		"comments": [
+			{
+				"name": "api_key_123456789",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_AAS_compareMacWithConstant.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "constant",
+				"description": "Potential sensitive constant used in MAC comparison"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_AAS_noUserInputWhenCheckingCiphertext.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_AAS_saferCheckCiphertext.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_AAS_saferCheckSignatures.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_AAS_saferMacCheck.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_SensitivePathDisclosureInErrors.java",
+		"variables": [
+			{
+				"name": "filePath",
+				"description": "INTERNAL_URL"
+			}
+		],
+		"strings": [
+			{
+				"name": "/sensitive/config/secrets.txt",
+				"description": "Sensitive file path"
+			}
+		],
+		"comments": [
+			{
+				"name": "/sensitive/config/secrets.txt",
+				"description": "Internal File Path"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_SoftwareLicensingError.java",
+		"variables": [
+			{
+				"name": "licenseKey",
+				"description": "licenseKey"
+			}
+		],
+		"strings": [
+			{
+				"name": "Critical licensing error, contact support with code: ",
+				"description": "Sensitive error message exposing license key"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_VerboseAuthenticationFailure.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "username"
+			},
+			{
+				"name": "password",
+				"description": "password"
+			}
+		],
+		"strings": [
+			{
+				"name": "guessme",
 				"description": "Hardcoded password"
 			}
 		],
-		"sensitiveStrings": [
+		"comments": [
 			{
-				"name": "admin",
-				"description": "Hardcoded username"
+				"name": "guessme",
+				"description": "Password"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_UniformLoginResponse.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "username"
 			},
 			{
-				"name": "admin123",
-				"description": "Hardcoded password"
+				"name": "password",
+				"description": "password"
 			}
 		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_EnvironmentVariablesForSensitiveDataTest.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_ExternalizedSensitiveInfoConfigTest.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_FixedResponseTiming.java",
-		"sensitiveVariables": [
-			{
-				"name": "VALID_USERNAME",
-				"description": "Environment variable for valid username"
-			},
-			{
-				"name": "VALID_PASSWORD",
-				"description": "Environment variable for valid password"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_UniformErrorResponses.java",
-		"sensitiveVariables": [
-			{
-				"name": "VALID_USERNAME",
-				"description": "Environment variable for valid username"
-			},
-			{
-				"name": "VALID_PASSWORD",
-				"description": "Environment variable for valid password"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
 		"fileName": "BAD_AttackAgainstHeader_UnsafeComparison.java",
-		"sensitiveVariables": [
+		"variables": [
 			{
 				"name": "Key",
-				"description": "Hardcoded secret key for comparison"
+				"description": "secret"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
 				"name": "secret",
 				"description": "Hardcoded secret key"
 			}
 		],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
 		"fileName": "GOOD_AttackAgainstHeader_safeComparison.java",
-		"sensitiveVariables": [
+		"variables": [
 			{
 				"name": "Key",
-				"description": "Hardcoded secret key for comparison"
+				"description": "secret"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
 				"name": "secret",
 				"description": "Hardcoded secret key"
 			}
 		],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "BAD_AAS_CiphertextWithByteBufferEquals.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_DetailedErrorServlet.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
+		"fileName": "BAD_MedicalRecordSystemLookup.java",
+		"variables": [
 			{
-				"name": "/etc/app/config.properties",
-				"description": "Path to configuration file"
+				"name": "patientId",
+				"description": "patientID"
 			}
 		],
-		"sensitiveComments": [
+		"strings": [
 			{
-				"name": "Exposing stack trace and system details in the HTTP response",
-				"description": "Comment indicating insecure practice of exposing system details"
+				"name": "patient_112233",
+				"description": "Patient ID"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_MessagingSystem.java",
+		"variables": [
+			{
+				"name": "userId",
+				"description": "userID"
+			},
+			{
+				"name": "messageContent",
+				"description": "message"
+			}
+		],
+		"strings": [
+			{
+				"name": "user42",
+				"description": "User ID"
+			},
+			{
+				"name": "Your secret PIN is 1234.",
+				"description": "Sensitive message content"
+			}
+		],
+		"comments": [
+			{
+				"name": "Your secret PIN is 1234",
+				"description": "Personal Information"
 			}
 		]
 	},
 	{
-		"fileName": "BAD_InsecureDebugMode.java",
-		"sensitiveVariables": [
+		"fileName": "GOOD_PaymentProcessor.java",
+		"variables": [
 			{
-				"name": "DEBUG_MODE",
-				"description": "Flag to control debug mode"
+				"name": "paymentServiceUrl",
+				"description": "INTERNAL_URL"
+			},
+			{
+				"name": "serviceApiKey",
+				"description": "API_KEY"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_UseEnvVarsForCredentials.java",
+		"variables": [
 			{
-				"name": "/etc/app/config.secret",
-				"description": "Path to secret configuration file"
+				"name": "databaseUrl",
+				"description": "DB_CONNECTION_STRING"
+			},
+			{
+				"name": "databaseUser",
+				"description": "username"
+			},
+			{
+				"name": "databasePassword",
+				"description": "password"
 			}
 		],
-		"sensitiveComments": [
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_ProfileUpdateServlet.java",
+		"variables": [
 			{
-				"name": "Logging exception details including stack trace when in debug mode",
-				"description": "Comment indicating insecure practice of logging sensitive details"
+				"name": "userId",
+				"description": "userID"
+			},
+			{
+				"name": "email",
+				"description": "email"
+			}
+		],
+		"strings": [
+			{
+				"name": "userId",
+				"description": "Potentially sensitive user identifier"
+			},
+			{
+				"name": "email",
+				"description": "Potentially sensitive email address"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_TransactionServlet.java",
+		"variables": [
+			{
+				"name": "transactionId",
+				"description": "transactionID"
+			}
+		],
+		"strings": [
+			{
+				"name": "transactionId",
+				"description": "Potentially sensitive transaction identifier"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_UserProfileServlet.java",
+		"variables": [
+			{
+				"name": "userId",
+				"description": "userID"
+			}
+		],
+		"strings": [
+			{
+				"name": "userId",
+				"description": "Potentially sensitive user identifier"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_ApiKeyManagementServlet.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API_KEY"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_LogDbConnectionDetails.java",
+		"variables": [
+			{
+				"name": "dbUrl",
+				"description": "Database connection URL"
+			},
+			{
+				"name": "user",
+				"description": "Database username"
+			},
+			{
+				"name": "password",
+				"description": "Database password"
+			}
+		],
+		"strings": [
+			{
+				"name": "jdbc:mysql://localhost:3306/myapp",
+				"description": "Database connection URL"
+			},
+			{
+				"name": "admin",
+				"description": "Database username"
+			},
+			{
+				"name": "admin123",
+				"description": "Database password"
+			}
+		],
+		"comments": [
+			{
+				"name": "admin123",
+				"description": "Password"
 			}
 		]
 	},
 	{
-		"fileName": "BAD_SystemPropertiesLog.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": [
+		"fileName": "GOOD_LogPaymentInformation.java",
+		"variables": [
 			{
-				"name": "Logging all system properties, including potentially sensitive ones",
-				"description": "Comment indicating insecure practice of logging all system properties"
+				"name": "creditCardNumber",
+				"description": "Credit card number"
+			},
+			{
+				"name": "expiryDate",
+				"description": "Credit card expiry date"
+			},
+			{
+				"name": "cvv",
+				"description": "Credit card CVV"
+			}
+		],
+		"strings": [
+			{
+				"name": "1234567890123456",
+				"description": "Credit card number"
+			},
+			{
+				"name": "12/23",
+				"description": "Credit card expiry date"
+			},
+			{
+				"name": "123",
+				"description": "Credit card CVV"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_ApiKeyManagementServlet.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API key"
+			}
+		],
+		"strings": [
+			{
+				"name": "apiKey",
+				"description": "API key"
+			}
+		],
+		"comments": [
+			{
+				"name": "API key",
+				"description": "API key"
 			}
 		]
 	},
 	{
-		"fileName": "GOOD_RedactedLogging.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
+		"fileName": "BAD_DbConnectionErrorServlet.java",
+		"variables": [
 			{
-				"name": "Sensitive information here",
-				"description": "Placeholder for sensitive information"
+				"name": "conn",
+				"description": "Database connection"
 			}
 		],
-		"sensitiveComments": []
+		"strings": [
+			{
+				"name": "jdbc:mysql://localhost:3306/myapp",
+				"description": "database connection string"
+			},
+			{
+				"name": "user",
+				"description": "database username"
+			},
+			{
+				"name": "pass",
+				"description": "database password"
+			}
+		],
+		"comments": []
 	},
 	{
-		"fileName": "GOOD_SafeErrorHandlingServlet.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": [
+		"fileName": "GOOD_GeneralizedAuthenticationFeedback.java",
+		"variables": [
 			{
-				"name": "A processing error occurred, refer to application logs for details.",
-				"description": "Comment indicating secure practice of logging errors internally"
+				"name": "username",
+				"description": "username"
+			},
+			{
+				"name": "password",
+				"description": "password"
+			}
+		],
+		"strings": [
+			{
+				"name": "guessme",
+				"description": "Hardcoded password"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_MedicalRecordSystemLookup.java",
+		"variables": [
+			{
+				"name": "patientId",
+				"description": "patientId"
+			}
+		],
+		"strings": [
+			{
+				"name": "patient_112233",
+				"description": "Potentially sensitive patient identifier"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_MessagingSystem.java",
+		"variables": [
+			{
+				"name": "userId",
+				"description": "userId"
+			},
+			{
+				"name": "messageContent",
+				"description": "messageContent"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_DatabaseErrorServlet.java",
+		"variables": [
+			{
+				"name": "password",
+				"description": "password"
+			},
+			{
+				"name": "email",
+				"description": "email"
+			},
+			{
+				"name": "url",
+				"description": "database connection URL"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_ExposedExceptionDetailsAPI.java",
+		"variables": [
+			{
+				"name": "db_user",
+				"description": "database username"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_FinancialTransactionAPI.java",
+		"variables": [
+			{
+				"name": "accountNumber",
+				"description": "bank account number"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_NoSuchElementException.java",
+		"variables": [
+			{
+				"name": "password",
+				"description": "Sensitive data that should not be exposed"
+			}
+		],
+		"strings": [
+			{
+				"name": "pass123",
+				"description": "Sensitive password"
+			}
+		],
+		"comments": [
+			{
+				"name": "pass123",
+				"description": "Sensitive data that should not be exposed"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_LoggingCredentials.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "Sensitive Information"
+			},
+			{
+				"name": "password",
+				"description": "Sensitive Information"
+			}
+		],
+		"strings": [
+			{
+				"name": "password123",
+				"description": "Sensitive password"
+			}
+		],
+		"comments": [
+			{
+				"name": "password123",
+				"description": "Sensitive Information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_LogPaymentTransactions.java",
+		"variables": [
+			{
+				"name": "fullName",
+				"description": "Sensitive transaction detail"
+			},
+			{
+				"name": "creditCardNumber",
+				"description": "Sensitive transaction detail"
+			}
+		],
+		"strings": [
+			{
+				"name": "Alice Johnson",
+				"description": "Sensitive personal information (full name)"
+			},
+			{
+				"name": "1234567890123456",
+				"description": "Sensitive financial information (credit card number)"
+			}
+		],
+		"comments": [
+			{
+				"name": "/var/log/app/paymentTransactions.log",
+				"description": "A log file that might be improperly secured"
 			}
 		]
 	},
 	{
 		"fileName": "BAD_DetailedRuntimeExceptionServlet.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
+		"variables": [
 			{
-				"name": "Failed to process due to invalid state in user profile",
-				"description": "Sensitive error message"
+				"name": "userId",
+				"description": "userID"
 			}
 		],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
 		"fileName": "BAD_ExposedExceptionDetailsAPI.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
+		"variables": [
 			{
-				"name": "Failed to fetch data: ",
-				"description": "Sensitive error message"
-			},
-			{
-				"name": "Database connection error: Credentials for 'db_user' not valid or expired",
-				"description": "Sensitive error message"
+				"name": "db_user",
+				"description": "username"
 			}
 		],
-		"sensitiveComments": []
+		"strings": [
+			{
+				"name": "CWE-200-user",
+				"description": "Username"
+			}
+		],
+		"comments": []
 	},
 	{
-		"fileName": "BAD_VerboseSQLException.java",
-		"sensitiveVariables": [
-			{
-				"name": "connection",
-				"description": "Database connection object"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "jdbc:mysql://localhost:3306/myapp",
-				"description": "Database connection string"
-			},
-			{
-				"name": "user",
-				"description": "Database username"
-			},
-			{
-				"name": "password",
-				"description": "Database password"
-			},
-			{
-				"name": "Error executing SQL query: ",
-				"description": "Sensitive error message"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_GenericErrorHandling.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
-			{
-				"name": "Sensitive error message",
-				"description": "Sensitive error message"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureErrorLogging2.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
-			{
-				"name": "Sensitive database connection failure",
-				"description": "Sensitive error message"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_ApiKeyInComments.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": [
-			{
-				"name": "ak_test_12345",
-				"description": "API key exposed in comments"
-			}
-		]
-	},
-	{
-		"fileName": "BAD_EncryptionKeyInComments.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": [
-			{
-				"name": "AESKey123456789",
-				"description": "Encryption key exposed in comments"
-			}
-		]
-	},
-	{
-		"fileName": "BAD_HardcodedCredentialsInComments.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": [
-			{
-				"name": "admin",
-				"description": "Username exposed in comments"
-			},
-			{
-				"name": "admin12345",
-				"description": "Password exposed in comments"
-			},
-			{
-				"name": "jdbc:mysql://localhost:3306/production",
-				"description": "Database connection URL exposed in comments"
-			}
-		]
-	},
-	{
-		"fileName": "GOOD_SecureCommentPractices.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureKeyManagement.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_CommandLineToolSensitiveData.java",
-		"sensitiveVariables": [
-			{
-				"name": "sensitiveFilePath",
-				"description": "Path to a sensitive data file"
-			},
-			{
-				"name": "command",
-				"description": "Command that includes the sensitive file path"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "/path/to/sensitive/data.txt",
-				"description": "Hardcoded sensitive file path"
-			},
-			{
-				"name": "cat ",
-				"description": "Command that can expose sensitive file content"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_EnvVarExposure.java",
-		"sensitiveVariables": [
-			{
-				"name": "API_KEY",
-				"description": "API key passed as an argument"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "secretApiKey",
-				"description": "Hardcoded sensitive API key"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_ProcessInvocationWithArgs.java",
-		"sensitiveVariables": [
-			{
-				"name": "pass",
-				"description": "Password passed as an argument"
-			},
-			{
-				"name": "command",
-				"description": "Command that includes the sensitive password"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "helloWorld123",
-				"description": "Hardcoded sensitive password"
-			},
-			{
-				"name": "someCommand --password=",
-				"description": "Command that exposes the sensitive password"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureStorageForSensitiveInfo.java",
-		"sensitiveVariables": [
-			{
-				"name": "secretPassword",
-				"description": "Password fetched from a secure location"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "secretPassword",
-				"description": "Hardcoded sensitive password"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureSubprocessCommunication.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
-			{
-				"name": "secureCommand --option",
-				"description": "Command that could potentially expose sensitive information"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_ConfigurationPathException.java",
-		"sensitiveVariables": [
-			{
-				"name": "configPath",
-				"description": "Path to the configuration file"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "/etc/myapp/config.properties",
-				"description": "Hardcoded path to a configuration file"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_FileAccessErrorExposure.java",
-		"sensitiveVariables": [
-			{
-				"name": "filePath",
-				"description": "Path to the file to be read"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "/etc/secret-config.properties",
-				"description": "Hardcoded path to a secret configuration file"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_VerboseDatabaseErrorMessage.java",
-		"sensitiveVariables": [
-			{
-				"name": "connection",
-				"description": "Database connection object"
-			},
-			{
-				"name": "statement",
-				"description": "SQL statement object"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "jdbc:mysql://localhost:3306/myapp",
-				"description": "Database connection string"
-			},
-			{
-				"name": "user",
-				"description": "Database username"
-			},
-			{
-				"name": "pass",
-				"description": "Database password"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SanitizeErrorOutput.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
-			{
-				"name": "/path/to/sensitive/data",
-				"description": "Example of a sensitive path in an error message"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureLoggingWithCodes.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_FinancialTransactionAPI.java",
+		"variables": [
 			{
 				"name": "accountNumber",
-				"description": "Account number for payment processing"
+				"description": "bankAccountNumber"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
-				"name": "123456789",
-				"description": "Example of a hardcoded account number"
+				"name": "accountNumber",
+				"description": "Account number"
 			}
 		],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "BAD_DebugLoggingSensitiveInfo.java",
-		"sensitiveVariables": [
-			{
-				"name": "username",
-				"description": "User's username, sensitive if exposed"
-			},
-			{
-				"name": "password",
-				"description": "User's password, highly sensitive if exposed"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "DEBUG: Attempting login with username: ",
-				"description": "Debugging string that exposes username"
-			},
-			{
-				"name": " and password: ",
-				"description": "Debugging string that exposes password"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_DebugOutputWithCredentials.java",
-		"sensitiveVariables": [
-			{
-				"name": "username",
-				"description": "User's username, sensitive if exposed"
-			},
-			{
-				"name": "password",
-				"description": "User's password, highly sensitive if exposed"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "DEBUG: Authentication succeeded for user: ",
-				"description": "Debugging string that exposes username"
-			},
-			{
-				"name": "DEBUG: Authentication failed for user: ",
-				"description": "Debugging string that exposes username"
-			},
-			{
-				"name": " with password: ",
-				"description": "Debugging string that exposes password"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_ExceptionDebuggingWithSensitiveData.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_PaymentErrorExposureServlet.java",
+		"variables": [
 			{
 				"name": "creditCardNumber",
-				"description": "Credit card number, highly sensitive if exposed"
+				"description": "creditCard"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
-				"name": "DEBUG: Failed to process payment with card ",
-				"description": "Debugging string that exposes credit card number"
+				"name": "creditCardNumber",
+				"description": "Credit card number"
 			}
 		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_EnhancedDebugWithoutSensitiveData.java",
-		"sensitiveVariables": [
+		"comments": [
 			{
-				"name": "userId",
-				"description": "User's ID, sensitive if exposed"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureDebuggingPractices.java",
-		"sensitiveVariables": [
-			{
-				"name": "username",
-				"description": "User's username, sensitive if exposed"
-			},
-			{
-				"name": "password",
-				"description": "User's password, highly sensitive if exposed"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_ExcessiveDatabaseExceptionDetails.java",
-		"sensitiveVariables": [
-			{
-				"name": "user",
-				"description": "Database username"
-			},
-			{
-				"name": "pass",
-				"description": "Database password"
-			},
-			{
-				"name": "conn",
-				"description": "Database connection object"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "jdbc:mysql://localhost:3306/nonexistentDB",
-				"description": "Database connection string"
-			},
-			{
-				"name": "Failed to connect to database. Error: ",
-				"description": "Error message exposing database connection details"
-			},
-			{
-				"name": "username = ",
-				"description": "Exposing username in error message"
-			}
-		],
-		"sensitiveComments": [
-			{
-				"name": "Vulnerability: Allowing a database error exception to bubble up unhandled, which might include detailed information about the database state or structure.",
-				"description": "Comment exposing potential vulnerability"
+				"name": "Exposing payment processing exception details to the client",
+				"description": "Sensitive information about payment processing errors"
 			}
 		]
 	},
 	{
-		"fileName": "BAD_VerboseLibraryExceptionHandling.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
+		"fileName": "BAD_UserDataHandlingAPI.java",
+		"variables": [
 			{
-				"name": "/secure/config/api_keys.config",
-				"description": "Path to secure configuration file"
+				"name": "userData",
+				"description": "personalInformation"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "Exposing detailed user data handling errors",
+				"description": "Sensitive information about user data handling errors"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_DockerRunEncryptedConfig.java",
+		"variables": [
+			{
+				"name": "configSecret",
+				"description": "Configuration secret"
+			}
+		],
+		"strings": [
+			{
+				"name": "config123Secret!",
+				"description": "Sensitive configuration secret"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_EncryptCommandExecution.java",
+		"variables": [
+			{
+				"name": "sensitiveArgument",
+				"description": "Sensitive argument"
+			}
+		],
+		"strings": [
+			{
+				"name": "sensitiveValue",
+				"description": "Sensitive argument value"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_EncryptTempFileProcess.java",
+		"variables": [
+			{
+				"name": "sensitiveData",
+				"description": "Highly confidential information"
+			}
+		],
+		"strings": [
+			{
+				"name": "Highly confidential information",
+				"description": "Sensitive data"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_EnvVarEncryption.java",
+		"variables": [
+			{
+				"name": "API_KEY",
+				"description": "API key"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "sensitive information",
+				"description": "Sensitive information in environment variable"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_NetworkConfigSecureHandling.java",
+		"variables": [
+			{
+				"name": "vpnPassword",
+				"description": "VPN password"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "vpnPassword",
+				"description": "Sensitive information in environment variable"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_AAS_unsafeCheckSignatures.java",
+		"variables": [
+			{
+				"name": "key",
+				"description": "Private key used for signing"
 			},
 			{
-				"name": "Failed to load critical configuration: ",
-				"description": "Error message exposing file system path"
+				"name": "data",
+				"description": "Data to be signed"
 			}
 		],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
-		"fileName": "BAD_WebServiceExceptionExposure.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_AAS_unsafeCheckSignaturesWithOutputArray.java",
+		"variables": [
 			{
-				"name": "endpointUrl",
-				"description": "URL for external web service"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "http://example.com/nonexistent/service",
-				"description": "URL for external web service"
+				"name": "key",
+				"description": "Private key used for signing"
 			},
 			{
-				"name": "Failed to call external service. Response code: ",
-				"description": "Error message exposing web service details"
+				"name": "data",
+				"description": "Data to be signed"
 			}
 		],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
-		"fileName": "GOOD_GenericExternalErrorHandling.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureLibraryExceptionHandling.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
+		"fileName": "BAD_AAS_unsafeMacCheckWithArrayEquals.java",
+		"variables": [
 			{
-				"name": "/secure/path/valid/file",
-				"description": "Path to secure file"
+				"name": "data",
+				"description": "Data to be MACed"
 			}
 		],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
-		"fileName": "BAD_DocumentDirectoryListingServlet.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_AAS_unsafeMacCheckWithDoFinalWithOutputArray.java",
+		"variables": [
 			{
-				"name": "documentPath",
-				"description": "Path to the directory containing uploaded documents"
+				"name": "data",
+				"description": "Data to be MACed"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
-		"fileName": "BAD_InsecureDirectoryListingServlet.java",
-		"sensitiveVariables": [
+		"fileName": "GOOD_HealthInfoSubmissionGET.java",
+		"variables": [
 			{
-				"name": "path",
-				"description": "Path to the directory containing uploaded files"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_LogDirectoryPaths.java",
-		"sensitiveVariables": [
-			{
-				"name": "directoryPath",
-				"description": "Path to the directory containing sensitive data"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "/path/to/sensitive/data",
-				"description": "Hardcoded path to sensitive data"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_DocumentAccessServlet.java",
-		"sensitiveVariables": [
-			{
-				"name": "requestedFileName",
-				"description": "Name of the requested file"
+				"name": "patientId",
+				"description": "Patient Identifier"
 			},
 			{
-				"name": "fileDirectory",
-				"description": "Path to the directory containing uploaded documents"
+				"name": "symptoms",
+				"description": "Patient Symptoms"
 			},
 			{
-				"name": "filePath",
-				"description": "Path to the requested file"
+				"name": "doctorId",
+				"description": "Doctor Identifier"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [
+			{
+				"name": "https://healthcare.example.com/bookAppointment?patientId=",
+				"description": "Internal healthcare service URL"
+			},
+			{
+				"name": "12345",
+				"description": "Example patient ID"
+			},
+			{
+				"name": "Fever, cough, and shortness of breath",
+				"description": "Example symptoms"
+			},
+			{
+				"name": "DrJohnDoe",
+				"description": "Example doctor ID"
+			}
+		],
+		"comments": []
 	},
 	{
-		"fileName": "GOOD_SecureBackendFileProcessingServlet.java",
-		"sensitiveVariables": [
+		"fileName": "GOOD_HttpsApiCall.java",
+		"variables": [
 			{
-				"name": "tempFilesPath",
-				"description": "Path to the directory containing temporary files"
+				"name": "ENCRYPTED_OAUTH_TOKEN",
+				"description": "OAuth Token"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [
+			{
+				"name": "https://api.secure-service.com/data",
+				"description": "Secure API service URL"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_PasswordChangeGET_Encrypted.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "User Name"
+			},
+			{
+				"name": "oldPassword",
+				"description": "Old Password"
+			},
+			{
+				"name": "newPassword",
+				"description": "New Password"
+			}
+		],
+		"strings": [
+			{
+				"name": "https://example.com/changePassword?username=",
+				"description": "internal URL"
+			},
+			{
+				"name": "user2",
+				"description": "username"
+			},
+			{
+				"name": "oldPass123",
+				"description": "password"
+			},
+			{
+				"name": "newPass456",
+				"description": "password"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_ExposeSensitiveInfoInEmail.java",
+		"variables": [
+			{
+				"name": "creditCardNumber",
+				"description": "creditCard"
+			}
+		],
+		"strings": [
+			{
+				"name": "noreply@example.com",
+				"description": "Email address"
+			}
+		],
+		"comments": [
+			{
+				"name": "credit card number",
+				"description": "Sensitive Information Exposure"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_ExposeSessionIDInHeaders.java",
+		"variables": [
+			{
+				"name": "sessionID",
+				"description": "sessionID"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "session ID",
+				"description": "Exposing sensitive session ID in HTTP headers"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_SendCredentialsInGetRequest.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "username"
+			},
+			{
+				"name": "password",
+				"description": "password"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "credentials in URL",
+				"description": "Sending credentials in URL as part of GET request exposes sensitive data in logs and possibly network sniffing"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_SendSensitiveDataByEmail.java",
+		"variables": [
+			{
+				"name": "sensitiveData",
+				"description": "sensitiveData"
+			}
+		],
+		"strings": [
+			{
+				"name": "smtp.example.com",
+				"description": "SMTP server address"
+			},
+			{
+				"name": "noreply@example.com",
+				"description": "Email address"
+			}
+		],
+		"comments": [
+			{
+				"name": "sensitive data",
+				"description": "Sending sensitive data in email content"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_SendSensitiveInfoInGetRequest.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "username"
+			},
+			{
+				"name": "password",
+				"description": "password"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_APIKeyUpdater.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API key"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_CredentialUpdater.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "Username"
+			},
+			{
+				"name": "password",
+				"description": "Password"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_DatabaseAccessLogger.java",
+		"variables": [
+			{
+				"name": "connectionString",
+				"description": "Database connection string"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_DatabaseCredentialsReset.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "Username"
+			},
+			{
+				"name": "newPassword",
+				"description": "New password"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_MedicalRecordRequest.java",
+		"variables": [
+			{
+				"name": "patientId",
+				"description": "patient ID"
+			}
+		],
+		"strings": [
+			{
+				"name": "http://example.com/medicalRecords?patientId=",
+				"description": "Internal URL exposing sensitive medical record information"
+			},
+			{
+				"name": "987654321",
+				"description": "Sensitive patient ID"
+			}
+		],
+		"comments": [
+			{
+				"name": "Sensitive data in query",
+				"description": "Exposing sensitive medical data in URL query parameters"
+			},
+			{
+				"name": "Extremely risky!",
+				"description": "Indicates the use of sensitive medical data in an insecure manner"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_PasswordChangeGET.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "username"
+			},
+			{
+				"name": "oldPassword",
+				"description": "old password"
+			},
+			{
+				"name": "newPassword",
+				"description": "new password"
+			}
+		],
+		"strings": [
+			{
+				"name": "http://example.com/changePassword?username=",
+				"description": "Internal URL with sensitive data in query"
+			},
+			{
+				"name": "user2",
+				"description": "Username"
+			},
+			{
+				"name": "oldPass123",
+				"description": "Old password"
+			},
+			{
+				"name": "newPass456",
+				"description": "New password"
+			}
+		],
+		"comments": [
+			{
+				"name": "Sensitive data in query",
+				"description": "Exposing sensitive password data in URL query parameters"
+			},
+			{
+				"name": "Highly insecure method!",
+				"description": "Indicates the use of sensitive password data in an insecure manner"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_PersonalDetailsGET.java",
+		"variables": [
+			{
+				"name": "fullName",
+				"description": "full name"
+			},
+			{
+				"name": "dateOfBirth",
+				"description": "date of birth"
+			}
+		],
+		"strings": [
+			{
+				"name": "http://example.com/register?fullName=",
+				"description": "Internal URL with sensitive data in query"
+			},
+			{
+				"name": "John Doe",
+				"description": "Full name"
+			},
+			{
+				"name": "1980-01-01",
+				"description": "Date of birth"
+			}
+		],
+		"comments": [
+			{
+				"name": "Sensitive data in query",
+				"description": "Personal Information"
+			},
+			{
+				"name": "Extremely risky!",
+				"description": "Personal Information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_SessionTokenGET.java",
+		"variables": [
+			{
+				"name": "sessionToken",
+				"description": "session token"
+			}
+		],
+		"strings": [
+			{
+				"name": "http://example.com/data?sessionToken=",
+				"description": "Internal URL with sensitive session token in query"
+			},
+			{
+				"name": "abc123sessionToken",
+				"description": "Session token"
+			}
+		],
+		"comments": [
+			{
+				"name": "Sensitive session token in query",
+				"description": "Session Token"
+			},
+			{
+				"name": "Extremely risky!",
+				"description": "Session Token"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_AuthenticationFailureServlet.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "Username for authentication"
+			},
+			{
+				"name": "password",
+				"description": "Password for authentication"
+			}
+		],
+		"strings": [
+			{
+				"name": "Invalid credentials provided for user ",
+				"description": "Exposing sensitive authentication failure details"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_CloudResourceErrorAPI.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "Username for cloud resource access"
+			},
+			{
+				"name": "resourceID",
+				"description": "Resource ID for cloud resource access"
+			}
+		],
+		"strings": [
+			{
+				"name": "CWE-200-test",
+				"description": "Hardcoded username"
+			},
+			{
+				"name": "12345",
+				"description": "Hardcoded resource ID"
+			},
+			{
+				"name": "Access denied for resource ID ",
+				"description": "Exposing sensitive cloud resource access error details"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_DatabaseErrorServlet.java",
+		"variables": [
+			{
+				"name": "password",
+				"description": "Password for database connection"
+			},
+			{
+				"name": "email",
+				"description": "Email for database connection"
+			},
+			{
+				"name": "url",
+				"description": "URL for database connection"
+			}
+		],
+		"strings": [
+			{
+				"name": "email",
+				"description": "Personal email address"
+			},
+			{
+				"name": "password",
+				"description": "Password"
+			},
+			{
+				"name": "url",
+				"description": "Internal URL"
+			}
+		],
+		"comments": [
+			{
+				"name": "Exposing SQL exception details including credentials",
+				"description": "Exposing SQL exception details including credentials"
+			}
+		]
 	},
 	{
 		"fileName": "GOOD_EncryptDataBeforeTransmission.java",
-		"sensitiveVariables": [
+		"variables": [
 			{
 				"name": "KEY",
-				"description": "This is a static final string that is used as a key for encryption."
+				"description": "Encryption key"
 			},
 			{
 				"name": "APIKey",
-				"description": "This is a string that contains an API token."
+				"description": "API token"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
 				"name": "Bar12345Bar12345",
-				"description": "This is a hardcoded encryption key."
+				"description": "Encryption key"
 			},
 			{
 				"name": "The API token is 123",
-				"description": "This is a hardcoded API token."
+				"description": "API token"
 			}
 		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_UseHttpsForSensitiveData.java",
-		"sensitiveVariables": [
+		"comments": [
 			{
-				"name": "sensitiveData",
-				"description": "This is a string that contains sensitive data."
-			}
-		],
-		"sensitiveStrings": [
+				"name": "Bar12345Bar12345",
+				"description": "128 bit key example"
+			},
 			{
-				"name": "This is sensitive",
-				"description": "This is a hardcoded sensitive message."
+				"name": "The API token is 123",
+				"description": "API token"
 			}
-		],
-		"sensitiveComments": []
+		]
 	},
 	{
 		"fileName": "BAD_AuthenticationTiming.java",
-		"sensitiveVariables": [
+		"variables": [
 			{
 				"name": "validUsername",
-				"description": "This is a string that contains a valid username."
+				"description": "Username"
 			},
 			{
-				"name": "VALID_USER",
-				"description": "This is an environment variable that contains a valid username."
-			},
-			{
-				"name": "USER_PASSWORD",
-				"description": "This is an environment variable that contains a user's password."
+				"name": "attemptPassword",
+				"description": "Password"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
 		"fileName": "BAD_ConditionalErrorHandling.java",
-		"sensitiveVariables": [
+		"variables": [
 			{
 				"name": "userData",
-				"description": "This is a map that contains user data, including sensitive information."
-			},
-			{
-				"name": "existingUser",
-				"description": "This is a string that contains an existing user's username."
+				"description": "User data including sensitive information"
 			}
 		],
-		"sensitiveStrings": [
-			{
-				"name": "userDataIncludingSensitiveInfo",
-				"description": "This is a hardcoded sensitive string that represents user data."
-			}
-		],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
 		"fileName": "BAD_LoginResponseDiscrepancy.java",
-		"sensitiveVariables": [
+		"variables": [
 			{
 				"name": "username",
-				"description": "This is a string that contains a user's username."
+				"description": "Username"
 			},
 			{
 				"name": "password",
-				"description": "This is a string that contains a user's password."
+				"description": "Password"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
-		"fileName": "BAD_ApiKeyEmbedded.java",
-		"sensitiveVariables": [
+		"fileName": "GOOD_ConsistentAuthenticationTiming.java",
+		"variables": [
 			{
-				"name": "SERVICE_API_KEY",
-				"description": "Hardcoded API key for external service"
+				"name": "VALID_USERNAME",
+				"description": "Username"
+			},
+			{
+				"name": "VALID_PASSWORD",
+				"description": "Password"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_AuthenticationGET.java",
+		"variables": [
 			{
-				"name": "ABCD1234EFGH5678",
-				"description": "Hardcoded API key for external service"
+				"name": "userId",
+				"description": "user ID"
+			},
+			{
+				"name": "authToken",
+				"description": "authentication token"
 			}
 		],
-		"sensitiveComments": [
+		"strings": [
 			{
-				"name": "Hardcoded API key for external service",
-				"description": "Comment containing sensitive information about the API key"
+				"name": "http://example.com/auth?userId=",
+				"description": "Internal URL"
+			},
+			{
+				"name": "user123",
+				"description": "Username"
+			},
+			{
+				"name": "secureTokenXYZ",
+				"description": "Authentication Token"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_BankingTransactionQuery.java",
+		"variables": [
+			{
+				"name": "accountNumber",
+				"description": "bank account number"
+			}
+		],
+		"strings": [
+			{
+				"name": "http://example.com/transactions?accountNumber=",
+				"description": "Internal URL"
+			},
+			{
+				"name": "1234567890",
+				"description": "Account Number"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_CreditCardSubmissionGET_Encrypted.java",
+		"variables": [
+			{
+				"name": "cardNumber",
+				"description": "credit card number"
+			},
+			{
+				"name": "expiryDate",
+				"description": "credit card expiration date"
+			},
+			{
+				"name": "cvv",
+				"description": "credit card CVV"
+			}
+		],
+		"strings": [
+			{
+				"name": "https://example.com/submitPayment?cardNumber=",
+				"description": "Internal URL"
+			},
+			{
+				"name": "1234567890123456",
+				"description": "Credit Card Number"
+			},
+			{
+				"name": "12/23",
+				"description": "Credit Card Expiry Date"
+			},
+			{
+				"name": "123",
+				"description": "Credit Card CVV"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_NetworkDebugger.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API Key"
+			}
+		],
+		"strings": [
+			{
+				"name": "192.168.1.100",
+				"description": "Internal IP address"
+			},
+			{
+				"name": "secretAPIkey",
+				"description": "API key"
+			}
+		],
+		"comments": [
+			{
+				"name": "secretAPIkey",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_APIEndpointDebugging.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API Key"
+			}
+		],
+		"strings": [
+			{
+				"name": "https://api.example.com/data",
+				"description": "API endpoint URL"
+			},
+			{
+				"name": "api_key_123456789",
+				"description": "API key"
+			}
+		],
+		"comments": [
+			{
+				"name": "api_key_123456789",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_DebugFeatureToggle.java",
+		"variables": [
+			{
+				"name": "userSSN",
+				"description": "Sensitive personal information (SSN)"
+			}
+		],
+		"strings": [
+			{
+				"name": "123-45-6789",
+				"description": "Social Security Number (SSN)"
+			}
+		],
+		"comments": [
+			{
+				"name": "123-45-6789",
+				"description": "Sensitive personal information"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_DebugLoggingEnabled.java",
+		"variables": [
+			{
+				"name": "accessToken",
+				"description": "Access Token"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "ACCESS_TOKEN",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_DebugLoggingSensitiveInfo.java",
+		"variables": [
+			{
+				"name": "password",
+				"description": "Sensitive information (Password)"
+			}
+		],
+		"strings": [
+			{
+				"name": "defaultPass",
+				"description": "Default password"
+			}
+		],
+		"comments": [
+			{
+				"name": "defaultPass",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_DebugModeActive.java",
+		"variables": [
+			{
+				"name": "encryptionKey",
+				"description": "Highly sensitive information (Encryption Key)"
+			}
+		],
+		"strings": [
+			{
+				"name": "ABCD-1234-EFGH-5678",
+				"description": "Encryption key"
+			}
+		],
+		"comments": [
+			{
+				"name": "ABCD-1234-EFGH-5678",
+				"description": "Highly sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_EnvVarExposure.java",
+		"variables": [
+			{
+				"name": "API_KEY",
+				"description": "API key"
+			}
+		],
+		"strings": [
+			{
+				"name": "secretApiKey",
+				"description": "Hardcoded API key"
+			}
+		],
+		"comments": [
+			{
+				"name": "secretApiKey",
+				"description": "Sensitive API key"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_InsecureAPIKeyInvocation.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API key"
+			}
+		],
+		"strings": [
+			{
+				"name": "abcd1234verysecret",
+				"description": "Hardcoded API key"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_NetworkConfigCredentialsExposure.java",
+		"variables": [
+			{
+				"name": "vpnPassword",
+				"description": "VPN password"
+			}
+		],
+		"strings": [
+			{
+				"name": "admin",
+				"description": "Hardcoded username"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_PasswordExposureInCommands.java",
+		"variables": [
+			{
+				"name": "password",
+				"description": "Password"
+			}
+		],
+		"strings": [
+			{
+				"name": "mySecretPass123",
+				"description": "Hardcoded password"
+			}
+		],
+		"comments": [
+			{
+				"name": "mySecretPass123",
+				"description": "Exposing a password in a system command"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_ProcessInvocationWithArgs.java",
+		"variables": [
+			{
+				"name": "pass",
+				"description": "Password"
+			},
+			{
+				"name": "password",
+				"description": "Password"
+			}
+		],
+		"strings": [
+			{
+				"name": "helloWorld123",
+				"description": "Hardcoded password"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_TokenExposureViaEnvironment.java",
+		"variables": [
+			{
+				"name": "secretToken",
+				"description": "Secret token"
+			}
+		],
+		"strings": [
+			{
+				"name": "s3cr3tT0k3n",
+				"description": "Hardcoded secret token"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_DebugOutputWithCredentials.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "username"
+			},
+			{
+				"name": "password",
+				"description": "password"
+			}
+		],
+		"strings": [
+			{
+				"name": "admin",
+				"description": "Username"
+			},
+			{
+				"name": "wrongPassword",
+				"description": "Password"
+			},
+			{
+				"name": "adminSecret",
+				"description": "Password"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_ExceptionDebuggingWithSensitiveData.java",
+		"variables": [
+			{
+				"name": "creditCardNumber",
+				"description": "creditCard"
+			}
+		],
+		"strings": [
+			{
+				"name": "1234-5678-9012-3456",
+				"description": "Credit Card Number"
+			}
+		],
+		"comments": [
+			{
+				"name": "1234-5678-9012-3456",
+				"description": "credit card number"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_SecureDebuggingPractices.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "username"
+			},
+			{
+				"name": "password",
+				"description": "password"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_ApiEndpointSecurityTest.java",
+		"variables": [
+			{
+				"name": "secretToken",
+				"description": "token"
+			}
+		],
+		"strings": [
+			{
+				"name": "secret-token-XYZ",
+				"description": "Security Token"
+			}
+		],
+		"comments": [
+			{
+				"name": "secret-token-XYZ",
+				"description": "security token"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_ConfigLoaderTest.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API key"
+			}
+		],
+		"strings": [
+			{
+				"name": "ABCD-1234-EFGH-5678",
+				"description": "API Key"
+			}
+		],
+		"comments": [
+			{
+				"name": "ABCD-1234-EFGH-5678",
+				"description": "API key"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_ProfileUpdateServlet.java",
+		"variables": [
+			{
+				"name": "email",
+				"description": "Potentially sensitive personal information"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_BufferOverflowException.java",
+		"variables": [
+			{
+				"name": "sensitiveData",
+				"description": "Sensitive data being logged"
+			}
+		],
+		"strings": [
+			{
+				"name": "User:Admin, Password:AdminPass123!",
+				"description": "Sensitive data including username and password"
+			}
+		],
+		"comments": [
+			{
+				"name": "AdminPass123!",
+				"description": "Password"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_IllegalArgumentException.java",
+		"variables": [
+			{
+				"name": "email",
+				"description": "Sensitive personal information"
+			},
+			{
+				"name": "password",
+				"description": "Sensitive authentication information"
+			}
+		],
+		"strings": [
+			{
+				"name": "email",
+				"description": "Potentially sensitive personal information"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_IllegalStateException.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "Sensitive authentication information"
+			},
+			{
+				"name": "password",
+				"description": "Sensitive authentication information"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "password",
+				"description": "Password"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_LogUserCredentials.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "username"
+			},
+			{
+				"name": "password",
+				"description": "password"
+			}
+		],
+		"strings": [
+			{
+				"name": "admin",
+				"description": "Username"
+			},
+			{
+				"name": "adminPass",
+				"description": "Password"
+			},
+			{
+				"name": "user1",
+				"description": "Username"
+			},
+			{
+				"name": "pass1234",
+				"description": "Password"
+			}
+		],
+		"comments": [
+			{
+				"name": "adminPass",
+				"description": "Password"
+			},
+			{
+				"name": "pass1234",
+				"description": "Password"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_TokenManager.java",
+		"variables": [
+			{
+				"name": "userId",
+				"description": "user ID"
+			},
+			{
+				"name": "oldToken",
+				"description": "old token"
+			},
+			{
+				"name": "newToken",
+				"description": "new token"
+			}
+		],
+		"strings": [
+			{
+				"name": "newToken12345",
+				"description": "New token"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_APIKeyRegenerator.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API key"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "API key",
+				"description": "Exposing API key and error details"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_APIKeyUpdater.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API key"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "apiKey",
+				"description": "Explicitly logging error that could include command syntax and apiKey"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_CredentialUpdater.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "username"
+			},
+			{
+				"name": "password",
+				"description": "password"
+			},
+			{
+				"name": "command",
+				"description": "command containing sensitive information"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "username",
+				"description": "Logging the error with username and details"
 			}
 		]
 	},
 	{
 		"fileName": "BAD_HardcodedCredentials.java",
-		"sensitiveVariables": [
+		"variables": [
 			{
 				"name": "DATABASE_URL",
 				"description": "Database connection URL"
@@ -897,10 +2166,10 @@
 				"description": "Database password"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
 				"name": "jdbc:mysql://localhost:3306/myapp",
-				"description": "Database connection URL"
+				"description": "Database URL"
 			},
 			{
 				"name": "admin",
@@ -908,14 +2177,19 @@
 			},
 			{
 				"name": "password123",
-				"description": "Database password"
+				"description": "Sensitive database password"
 			}
 		],
-		"sensitiveComments": []
+		"comments": [
+			{
+				"name": "password123",
+				"description": "Sensitive information hardcoded directly in the source code"
+			}
+		]
 	},
 	{
 		"fileName": "BAD_HardcodedSecretInConfig.java",
-		"sensitiveVariables": [
+		"variables": [
 			{
 				"name": "apiKey",
 				"description": "API key"
@@ -925,901 +2199,837 @@
 				"description": "Encryption key"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
+			{
+				"name": "https://api.example.com",
+				"description": "API Base URL"
+			},
 			{
 				"name": "supersecretkey12345",
-				"description": "API key"
+				"description": "Sensitive API key hardcoded"
 			},
 			{
 				"name": "0123456789abcdef",
-				"description": "Encryption key"
+				"description": "Sensitive encryption key hardcoded"
 			}
 		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_ExternalizeSensitiveConfig.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_UseEnvVarsForCredentials.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_LoggingCredentials.java",
-		"sensitiveVariables": [
+		"comments": [
 			{
-				"name": "username",
-				"description": "Username for logging in"
+				"name": "supersecretkey12345",
+				"description": "Sensitive API key hardcoded"
 			},
 			{
-				"name": "password",
-				"description": "Password for logging in"
+				"name": "0123456789abcdef",
+				"description": "Sensitive encryption key hardcoded"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_SSHConnectionHandler.java",
+		"variables": [
+			{
+				"name": "SSH_USER",
+				"description": "SSH username"
+			},
+			{
+				"name": "SSH_PASSWORD",
+				"description": "SSH password"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
 				"name": "admin",
-				"description": "Hardcoded username"
-			},
-			{
-				"name": "password123",
-				"description": "Hardcoded password"
-			}
-		],
-		"sensitiveComments": [
-			{
-				"name": "Sensitive Information",
-				"description": "Comment indicating sensitive information"
-			}
-		]
-	},
-	{
-		"fileName": "BAD_LogPaymentTransactions.java",
-		"sensitiveVariables": [
-			{
-				"name": "fullName",
-				"description": "Full name of the person making the transaction"
-			},
-			{
-				"name": "creditCardNumber",
-				"description": "Credit card number used for the transaction"
-			},
-			{
-				"name": "amount",
-				"description": "Amount of the transaction"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "Alice Johnson",
-				"description": "Hardcoded full name"
-			},
-			{
-				"name": "1234567890123456",
-				"description": "Hardcoded credit card number"
-			},
-			{
-				"name": "99.99",
-				"description": "Hardcoded transaction amount"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_WriteSensitiveUserInfo.java",
-		"sensitiveVariables": [
-			{
-				"name": "mobileNumber",
-				"description": "Mobile number of the user"
-			},
-			{
-				"name": "emailAddress",
-				"description": "Email address of the user"
-			},
-			{
-				"name": "homeAddress",
-				"description": "Home address of the user"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "123-456-7890",
-				"description": "Hardcoded mobile number"
-			},
-			{
-				"name": "user@example.com",
-				"description": "Hardcoded email address"
-			},
-			{
-				"name": "123 Main St, Honolulu, USA",
-				"description": "Hardcoded home address"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureConfigStorage.java",
-		"sensitiveVariables": [
-			{
-				"name": "dbUrl",
-				"description": "Database URL for connection"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "jdbc:mysql://localhost:3306/secureDB",
-				"description": "Hardcoded database URL"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureLogging.java",
-		"sensitiveVariables": [
-			{
-				"name": "username",
-				"description": "Username for logging in"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "admin",
-				"description": "Hardcoded username"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_MisconfiguredPermissions.java",
-		"sensitiveVariables": [
-			{
-				"name": "scriptPath",
-				"description": "Path to a sensitive script that might be executed with misconfigured permissions"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "/path/to/sensitive/script.sh",
-				"description": "Hardcoded path to a sensitive script"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_SensitiveInfoExposureViaShellError.java",
-		"sensitiveVariables": [
-			{
-				"name": "command",
-				"description": "Shell command that includes sensitive information"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "somecommand --password=secret",
-				"description": "Hardcoded shell command that includes a sensitive password"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_ShellCommandExposure.java",
-		"sensitiveVariables": [
-			{
-				"name": "command",
-				"description": "Shell command that might expose sensitive information in error messages"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "cp /path/to/sensitive/file /backup/location",
-				"description": "Hardcoded shell command that includes paths to sensitive files"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_EncapsulatedSecurityContext.java",
-		"sensitiveVariables": [
-			{
-				"name": "command",
-				"description": "Shell command executed within a controlled security context"
-			},
-			{
-				"name": "errorOutput",
-				"description": "Captured error output that might contain sensitive information"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "secureScript.sh",
-				"description": "Hardcoded shell command that might be associated with sensitive operations"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureShellCommandHandling.java",
-		"sensitiveVariables": [
-			{
-				"name": "command",
-				"description": "Shell command for sensitive file operation"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "cp /path/to/sensitive/file /backup/location",
-				"description": "Hardcoded shell command that includes paths to sensitive files"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_ConsistentAuthenticationTiming.java",
-		"sensitiveVariables": [
-			{
-				"name": "VALID_USERNAME",
-				"description": "A valid username fetched from environment variables"
-			},
-			{
-				"name": "VALID_PASSWORD",
-				"description": "A valid password fetched from environment variables"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_UniformLoginResponse.java",
-		"sensitiveVariables": [
-			{
-				"name": "username",
-				"description": "Username parameter from the HTTP request"
-			},
-			{
-				"name": "password",
-				"description": "Password parameter from the HTTP request"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_ConditionalContentDelivery.java",
-		"sensitiveVariables": [
-			{
-				"name": "userRole",
-				"description": "User role used to determine content delivery"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "Admin Dashboard",
-				"description": "Admin-specific content"
-			},
-			{
-				"name": "User Dashboard",
-				"description": "User-specific content"
-			},
-			{
-				"name": "Access Denied",
-				"description": "Response for unrecognized roles"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_DifferentialErrorHandling.java",
-		"sensitiveVariables": [
-			{
-				"name": "data",
-				"description": "Data to be processed and validated"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "Validation error: ",
-				"description": "Prefix for specific validation error messages"
-			},
-			{
-				"name": "General processing error.",
-				"description": "Generic error message for other exceptions"
-			},
-			{
-				"name": "Data cannot be empty.",
-				"description": "Specific validation error message"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_UserEnumerationLogin.java",
-		"sensitiveVariables": [
-			{
-				"name": "validUsername",
-				"description": "A valid username fetched from environment variables"
-			},
-			{
-				"name": "validPassword",
-				"description": "A valid password fetched from environment variables"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "User does not exist.",
-				"description": "Response when the user does not exist"
-			},
-			{
-				"name": "Incorrect password for user.",
-				"description": "Response when the password is incorrect"
-			},
-			{
-				"name": "Login successful.",
-				"description": "Response when login is successful"
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_AAS_saferCheckSignatures.java",
-		"sensitiveVariables": [
-			{
-				"name": "key",
-				"description": "Private key used for signature verification"
-			},
-			{
-				"name": "signature",
-				"description": "Generated signature from the data"
-			},
-			{
-				"name": "expected",
-				"description": "Expected signature for comparison"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_AAS_saferMacCheck.java",
-		"sensitiveVariables": [
-			{
-				"name": "data",
-				"description": "Data to be checked"
-			},
-			{
-				"name": "actualMac",
-				"description": "MAC generated from the data"
-			},
-			{
-				"name": "expectedMac",
-				"description": "Expected MAC for comparison"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_unsafeCheckCustomMac.java",
-		"sensitiveVariables": [
-			{
-				"name": "expected",
-				"description": "Expected ciphertext for comparison"
-			},
-			{
-				"name": "plaintext",
-				"description": "Plaintext to be encrypted"
-			},
-			{
-				"name": "key",
-				"description": "Key used for encryption"
-			},
-			{
-				"name": "tag",
-				"description": "Encrypted ciphertext"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": [
-			{
-				"name": "PossibleTimingAttackAgainstSigniture",
-				"description": "Comment indicating a possible timing attack against the signature"
-			}
-		]
-	},
-	{
-		"fileName": "BAD_unsafeCheckSignatures.java",
-		"sensitiveVariables": [
-			{
-				"name": "expected",
-				"description": "Expected signature for comparison"
-			},
-			{
-				"name": "data",
-				"description": "Data to be signed"
-			},
-			{
-				"name": "key",
-				"description": "Private key used for signing"
-			},
-			{
-				"name": "signature",
-				"description": "Generated signature from the data"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": [
-			{
-				"name": "PossibleTimingAttackAgainstSigniture",
-				"description": "Comment indicating a possible timing attack against the signature"
-			}
-		]
-	},
-	{
-		"fileName": "BAD_unsafeMacCheck.java",
-		"sensitiveVariables": [
-			{
-				"name": "expectedMac",
-				"description": "Expected MAC for comparison"
-			},
-			{
-				"name": "data",
-				"description": "Data to be MACed"
-			},
-			{
-				"name": "actualMac",
-				"description": "MAC generated from the data"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": [
-			{
-				"name": "PossibleTimingAttackAgainstSigniture",
-				"description": "Comment indicating a possible timing attack against the signature"
-			}
-		]
-	},
-	{
-		"fileName": "BAD_ArithmeticExceptionHandling.java",
-		"sensitiveVariables": [
-			{
-				"name": "sensitiveMultiplier",
-				"description": "This variable is used in a division operation and can cause a division by zero error if it is zero."
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": [
-			{
-				"name": "This occurred while using a sensitive business multiplier.",
-				"description": "This comment exposes sensitive business logic detail."
-			},
-			{
-				"name": "Example of a critical mistake in business logic",
-				"description": "This comment exposes a critical mistake in business logic."
-			}
-		]
-	},
-	{
-		"fileName": "BAD_IndexOutofBoundsInfoExposure.java",
-		"sensitiveVariables": [
-			{
-				"name": "sensitiveData",
-				"description": "This array contains sensitive data that should not be exposed."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "secretPassword123",
-				"description": "This string contains a hardcoded password."
-			},
-			{
-				"name": "confidentialInfo",
-				"description": "This string contains confidential information."
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_SensitiveNullPointerExceptionHandling.java",
-		"sensitiveVariables": [
-			{
-				"name": "secretKey",
-				"description": "This variable is supposed to hold a secret key, but it is null. This can cause a NullPointerException."
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SensitiveConcurrentModificationHandling.java",
-		"sensitiveVariables": [
-			{
-				"name": "sensitiveList",
-				"description": "This list contains sensitive data that should not be exposed."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "secret1",
-				"description": "This string contains a hardcoded secret."
-			},
-			{
-				"name": "secret2",
-				"description": "This string contains a hardcoded secret."
-			},
-			{
-				"name": "confidentialInfo",
-				"description": "This string contains confidential information."
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SensitiveTypeNotPresentExceptionHandling.java",
-		"sensitiveVariables": [
-			{
-				"name": "sensitiveClass",
-				"description": "This variable is supposed to hold a class object of a sensitive configuration class. If the class is not present, a TypeNotPresentException is thrown."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "com.secret.config.SensitiveConfiguration",
-				"description": "This string contains the name of a sensitive configuration class."
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_DataAggregationServiceExposure.java",
-		"sensitiveVariables": [
-			{
-				"name": "aggregatedData",
-				"description": "This variable contains aggregated user data, which may include sensitive information."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "sensitive medical data",
-				"description": "This string contains sensitive medical data."
-			},
-			{
-				"name": "financial transactions",
-				"description": "This string contains sensitive financial transaction data."
-			}
-		],
-		"sensitiveComments": [
-			{
-				"name": "Insecure: The service does not filter out sensitive information from the aggregated data before sharing.",
-				"description": "This comment reveals a security vulnerability in the code."
-			}
-		]
-	},
-	{
-		"fileName": "BAD_DatabaseSchemaExposure.java",
-		"sensitiveVariables": [
-			{
-				"name": "connection",
-				"description": "This variable contains database connection details, which are sensitive."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "jdbc:mysql://localhost:3306/mydb",
-				"description": "This string contains sensitive database connection details."
-			},
-			{
-				"name": "user",
-				"description": "This string contains a sensitive username for the database."
-			},
-			{
-				"name": "pass",
-				"description": "This string contains a sensitive password for the database."
-			}
-		],
-		"sensitiveComments": [
-			{
-				"name": "Insecure: Directly printing SQL exception details, which might include sensitive database schema information.",
-				"description": "This comment reveals a security vulnerability in the code."
-			}
-		]
-	},
-	{
-		"fileName": "BAD_LoggingSensitiveUserInfo.java",
-		"sensitiveVariables": [
-			{
-				"name": "password",
-				"description": "This variable contains user password, which is sensitive."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "admin",
-				"description": "This string contains a sensitive username."
+				"description": "Sensitive SSH username hardcoded"
 			},
 			{
 				"name": "adminPass",
-				"description": "This string contains a sensitive password."
+				"description": "Sensitive SSH password hardcoded"
 			}
 		],
-		"sensitiveComments": [
+		"comments": [
 			{
-				"name": "Insecure: Logging both the username and the password, potentially exposing sensitive information in logs.",
-				"description": "This comment reveals a security vulnerability in the code."
+				"name": "adminPass",
+				"description": "Sensitive SSH password hardcoded"
 			}
 		]
 	},
 	{
-		"fileName": "GOOD_ExplicitUserConsent.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SanitizeLogs.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [
+		"fileName": "GOOD_ApiEndpointSecurityTest.java",
+		"variables": [
 			{
-				"name": "john.doe@example.com",
-				"description": "This string contains a sensitive email address."
-			},
-			{
-				"name": "192.168.1.1",
-				"description": "This string contains a sensitive IP address."
-			},
-			{
-				"name": "1234567812345678",
-				"description": "This string contains a sensitive credit card number."
+				"name": "authToken",
+				"description": "API authentication token"
 			}
 		],
-		"sensitiveComments": []
+		"strings": [
+			{
+				"name": "test-token",
+				"description": "API token used for authentication"
+			}
+		],
+		"comments": []
 	},
 	{
-		"fileName": "BAD_LogDbConnectionDetails.java",
-		"sensitiveVariables": [
+		"fileName": "GOOD_DatabaseConnectionTest.java",
+		"variables": [
 			{
 				"name": "dbUrl",
-				"description": "Database URL"
+				"description": "Database connection URL"
 			},
 			{
-				"name": "user",
+				"name": "dbUser",
 				"description": "Database username"
 			},
 			{
-				"name": "password",
+				"name": "dbPassword",
 				"description": "Database password"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_EmailNotificationTest.java",
+		"variables": [
+			{
+				"name": "recipientEmail",
+				"description": "Recipient email address"
+			},
+			{
+				"name": "message",
+				"description": "Email message content"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_EmailServiceTest.java",
+		"variables": [
+			{
+				"name": "recipientEmail",
+				"description": "Recipient email address"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_FileEncryptionTest.java",
+		"variables": [
+			{
+				"name": "encryptionKey",
+				"description": "File encryption key"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_IndexOutofBoundsInfoExposure.java",
+		"variables": [
+			{
+				"name": "sensitiveData",
+				"description": "Array containing sensitive information such as passwords and confidential information"
+			}
+		],
+		"strings": [
+			{
+				"name": "secretPassword123",
+				"description": "Sensitive password"
+			},
+			{
+				"name": "confidentialInfo",
+				"description": "Confidential information"
+			}
+		],
+		"comments": [
+			{
+				"name": "secretPassword123",
+				"description": "Password"
+			},
+			{
+				"name": "confidentialInfo",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_NegativeArraySizeException.java",
+		"variables": [
+			{
+				"name": "secretArraySize",
+				"description": "Variable potentially containing sensitive information about array size"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_NoSuchElementException.java",
+		"variables": [
+			{
+				"name": "password",
+				"description": "Sensitive data that should not be exposed"
+			}
+		],
+		"strings": [
+			{
+				"name": "pass123",
+				"description": "Sensitive password"
+			}
+		],
+		"comments": [
+			{
+				"name": "pass123",
+				"description": "Password"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_SensitiveNullPointerExceptionHandling.java",
+		"variables": [
+			{
+				"name": "secretKey",
+				"description": "Sensitive key that should not be exposed"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "secretKey",
+				"description": "Sensitive key"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_PaymentProcessingTest.java",
+		"variables": [
+			{
+				"name": "creditCardNumber",
+				"description": "Credit Card Number"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_UserAuthenticationTest.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "Username"
+			},
+			{
+				"name": "password",
+				"description": "Password"
+			},
+			{
+				"name": "validUsername",
+				"description": "Valid Username"
+			},
+			{
+				"name": "validPassword",
+				"description": "Valid Password"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_UserDeletionTest.java",
+		"variables": [
+			{
+				"name": "userId",
+				"description": "User ID"
+			},
+			{
+				"name": "adminAuthToken",
+				"description": "Admin Authentication Token"
+			},
+			{
+				"name": "adminAuthTokenFromDB",
+				"description": "Admin Authentication Token from Database"
+			}
+		],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_APIAccessLogger.java",
+		"variables": [
+			{
+				"name": "apiKey",
+				"description": "API Key"
+			}
+		],
+		"strings": [
+			{
+				"name": "apiKey",
+				"description": "API key"
+			}
+		],
+		"comments": [
+			{
+				"name": "API key",
+				"description": "Logging sensitive API key"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_ErrorHandler.java",
+		"variables": [
+			{
+				"name": "userSession",
+				"description": "User Session"
+			}
+		],
+		"strings": [
+			{
+				"name": "userSession",
+				"description": "User session information"
+			}
+		],
+		"comments": [
+			{
+				"name": "userSession",
+				"description": "Log error message that might include sensitive session information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_FinancialTransactionLogger.java",
+		"variables": [
+			{
+				"name": "bankAccountNumber",
+				"description": "Bank Account Number"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "bankAccountNumber",
+				"description": "Logging sensitive bank account number"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_CloudServiceConfigExposure.java",
+		"variables": [
+			{
+				"name": "cloudAccessToken",
+				"description": "Access token for cloud service"
+			}
+		],
+		"strings": [
+			{
+				"name": "cloudAccessSecret!",
+				"description": "Cloud access token"
+			}
+		],
+		"comments": [
+			{
+				"name": "cloudAccessSecret!",
+				"description": "Sensitive information: Cloud access token"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_CommandLinePasswordExposure.java",
+		"variables": [
+			{
+				"name": "psswrd",
+				"description": "Password for command line execution"
+			}
+		],
+		"strings": [
+			{
+				"name": "secretPassword123",
+				"description": "Hardcoded password"
+			}
+		],
+		"comments": [
+			{
+				"name": "secretPassword123",
+				"description": "Sensitive information: Password"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_CommandLineToolSensitiveData.java",
+		"variables": [
+			{
+				"name": "sensitiveFilePath",
+				"description": "Sensitive file path used in command line"
+			}
+		],
+		"strings": [
+			{
+				"name": "/path/to/sensitive/data.txt",
+				"description": "Sensitive file path"
+			}
+		],
+		"comments": [
+			{
+				"name": "/path/to/sensitive/data.txt",
+				"description": "Sensitive information: File path"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DockerRunSensitiveInfoExposure.java",
+		"variables": [
+			{
+				"name": "configSecret",
+				"description": "Sensitive configuration secret for Docker container"
+			}
+		],
+		"strings": [
+			{
+				"name": "config123Secret!",
+				"description": "Hardcoded secret configuration"
+			}
+		],
+		"comments": [
+			{
+				"name": "CONFIG_SECRET=",
+				"description": "Sensitive environment variable"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DebugFeatureToggle.java",
+		"variables": [
+			{
+				"name": "userSSN",
+				"description": "Sensitive personal information (SSN)"
+			}
+		],
+		"strings": [
+			{
+				"name": "123-45-6789",
+				"description": "Sensitive personal information (SSN)"
+			}
+		],
+		"comments": [
+			{
+				"name": "123-45-6789",
+				"description": "Sensitive personal information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DebugLoggingEnabled.java",
+		"variables": [
+			{
+				"name": "accessToken",
+				"description": "Sensitive information (Access Token)"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "ACCESS_TOKEN",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DebugLoggingSensitiveInfo.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "Sensitive information (Username)"
+			},
+			{
+				"name": "password",
+				"description": "Sensitive information (Password)"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "defaultPass",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DebugModeActive.java",
+		"variables": [
+			{
+				"name": "encryptionKey",
+				"description": "Highly sensitive information (Encryption Key)"
+			}
+		],
+		"strings": [
+			{
+				"name": "ABCD-1234-EFGH-5678",
+				"description": "Highly sensitive information"
+			}
+		],
+		"comments": [
+			{
+				"name": "Highly sensitive information",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DebugOutputWithCredentials.java",
+		"variables": [
+			{
+				"name": "username",
+				"description": "Sensitive information (Username)"
+			},
+			{
+				"name": "password",
+				"description": "Sensitive information (Password)"
+			}
+		],
+		"strings": [
+			{
+				"name": "adminSecret",
+				"description": "Sensitive password"
+			}
+		],
+		"comments": [
+			{
+				"name": "user credentials",
+				"description": "Sensitive information"
+			},
+			{
+				"name": "user credentials",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_ExceptionDebuggingWithSensitiveData.java",
+		"variables": [
+			{
+				"name": "creditCardNumber",
+				"description": "Sensitive information (Credit Card Number)"
+			}
+		],
+		"strings": [
+			{
+				"name": "1234-5678-9012-3456",
+				"description": "Sensitive credit card number"
+			}
+		],
+		"comments": [
+			{
+				"name": "sensitive data",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_WriteSensitiveUserInfo.java",
+		"variables": [
+			{
+				"name": "mobileNumber",
+				"description": "phone"
+			},
+			{
+				"name": "emailAddress",
+				"description": "email"
+			},
+			{
+				"name": "homeAddress",
+				"description": "address"
+			}
+		],
+		"strings": [
+			{
+				"name": "123-456-7890",
+				"description": "Sensitive personal information (mobile number)"
+			},
+			{
+				"name": "user@example.com",
+				"description": "Sensitive personal information (email address)"
+			},
+			{
+				"name": "123 Main St, Honolulu, USA",
+				"description": "Sensitive personal information (home address)"
+			}
+		],
+		"comments": [
+			{
+				"name": "123-456-7890",
+				"description": "Sensitive Information"
+			},
+			{
+				"name": "user@example.com",
+				"description": "Sensitive Information"
+			},
+			{
+				"name": "123 Main St, Honolulu, USA",
+				"description": "Sensitive Information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_ApiClient.java",
+		"variables": [
+			{
+				"name": "API_KEY",
+				"description": "API key"
+			}
+		],
+		"strings": [
+			{
+				"name": "ABCD1234APIKEYSECRET",
+				"description": "Sensitive API key"
+			}
+		],
+		"comments": [
+			{
+				"name": "ABCD1234APIKEYSECRET",
+				"description": "Sensitive API key included in source code"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_ApiKeyEmbedded.java",
+		"variables": [
+			{
+				"name": "SERVICE_API_KEY",
+				"description": "API key"
+			}
+		],
+		"strings": [
+			{
+				"name": "ABCD1234EFGH5678",
+				"description": "Hardcoded API key for external service"
+			}
+		],
+		"comments": [
+			{
+				"name": "ABCD1234EFGH5678",
+				"description": "Hardcoded API key for external service"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_AwsService.java",
+		"variables": [
+			{
+				"name": "AWS_SECRET_ACCESS_KEY",
+				"description": "AWS secret key"
+			}
+		],
+		"strings": [
+			{
+				"name": "s3cr3tAcc355K3yV4lu3",
+				"description": "Sensitive AWS secret key"
+			}
+		],
+		"comments": [
+			{
+				"name": "s3cr3tAcc355K3yV4lu3",
+				"description": "Sensitive AWS secret key"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_ClientCredentials.java",
+		"variables": [
+			{
+				"name": "CLIENT_ID",
+				"description": "client ID"
+			},
+			{
+				"name": "CLIENT_SECRET",
+				"description": "client secret"
+			}
+		],
+		"strings": [
+			{
+				"name": "client-id-1234",
+				"description": "Client ID for OAuth"
+			},
+			{
+				"name": "super-secret-client-key",
+				"description": "Client Secret for OAuth"
+			}
+		],
+		"comments": [
+			{
+				"name": "client-id-1234",
+				"description": "Client ID hardcoded in source code"
+			},
+			{
+				"name": "super-secret-client-key",
+				"description": "Client Secret hardcoded in source code"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DatabaseAccess.java",
+		"variables": [
+			{
+				"name": "CONNECTION_STRING",
+				"description": "database connection string"
+			}
+		],
+		"strings": [
+			{
+				"name": "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;",
+				"description": "Sensitive database connection string"
+			}
+		],
+		"comments": [
+			{
+				"name": "myUsername",
+				"description": "Sensitive username included in connection string"
+			},
+			{
+				"name": "myPassword",
+				"description": "Sensitive password included in connection string"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DatabaseConnector.java",
+		"variables": [
+			{
+				"name": "DATABASE_URL",
+				"description": "database URL"
+			},
+			{
+				"name": "USERNAME",
+				"description": "username"
+			},
+			{
+				"name": "PASSWORD",
+				"description": "password"
+			}
+		],
+		"strings": [
 			{
 				"name": "jdbc:mysql://localhost:3306/myapp",
-				"description": "Database connection string"
+				"description": "Database URL"
 			},
 			{
 				"name": "admin",
 				"description": "Database username"
 			},
 			{
-				"name": "admin123",
-				"description": "Database password"
+				"name": "password123",
+				"description": "Sensitive database password"
 			}
 		],
-		"sensitiveComments": []
+		"comments": [
+			{
+				"name": "admin",
+				"description": "Sensitive username hardcoded in source code"
+			},
+			{
+				"name": "password123",
+				"description": "Sensitive password hardcoded in source code"
+			}
+		]
 	},
 	{
-		"fileName": "BAD_LogPaymentInformation.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_EncryptionUtil.java",
+		"variables": [
 			{
-				"name": "creditCardNumber",
-				"description": "Credit card number"
-			},
-			{
-				"name": "expiryDate",
-				"description": "Credit card expiry date"
-			},
-			{
-				"name": "cvv",
-				"description": "Credit card CVV"
+				"name": "PRIVATE_KEY",
+				"description": "private key"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
-				"name": "1234567890123456",
-				"description": "Credit card number"
-			},
-			{
-				"name": "12/23",
-				"description": "Credit card expiry date"
-			},
-			{
-				"name": "123",
-				"description": "Credit card CVV"
+				"name": "-----BEGIN PRIVATE KEY-----\nMIICeAIBADANBgkqhkiG9w0BAQEFAASC...\n-----END PRIVATE KEY-----",
+				"description": "Private key hardcoded in source code"
 			}
 		],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "BAD_LogUserCredentials.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_ApiKeySubmissionGET.java",
+		"variables": [
 			{
-				"name": "username",
-				"description": "User's username"
-			},
-			{
-				"name": "password",
-				"description": "User's password"
+				"name": "apiKey",
+				"description": "API key"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
-				"name": "user1",
-				"description": "User's username"
-			},
-			{
-				"name": "pass1234",
-				"description": "User's password"
+				"name": "secretApiKey123",
+				"description": "API key"
 			}
 		],
-		"sensitiveComments": []
+		"comments": [
+			{
+				"name": "secretApiKey123",
+				"description": "API key"
+			}
+		]
 	},
 	{
-		"fileName": "GOOD_FilterSensitiveInfoFromLogs.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_AuthenticationGET.java",
+		"variables": [
 			{
-				"name": "username",
-				"description": "User's username"
+				"name": "userId",
+				"description": "User ID"
 			},
 			{
-				"name": "password",
-				"description": "User's password"
+				"name": "authToken",
+				"description": "Authentication token"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
-				"name": "user1",
-				"description": "User's username"
+				"name": "user123",
+				"description": "User ID"
 			},
 			{
-				"name": "securePassword",
-				"description": "User's password"
+				"name": "secureTokenXYZ",
+				"description": "Authentication token"
 			}
 		],
-		"sensitiveComments": []
+		"comments": [
+			{
+				"name": "user123",
+				"description": "User ID"
+			},
+			{
+				"name": "secureTokenXYZ",
+				"description": "Authentication token"
+			}
+		]
 	},
 	{
-		"fileName": "GOOD_SecureLoggingPractices.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_BankingTransactionQuery.java",
+		"variables": [
 			{
-				"name": "operationDetails",
-				"description": "Details of the operation being processed"
+				"name": "accountNumber",
+				"description": "Bank account number"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
-				"name": "Updating user password",
-				"description": "Sensitive operation details"
+				"name": "http://example.com/transactions?accountNumber=",
+				"description": "Internal URL exposing sensitive account number"
 			},
 			{
-				"name": "Viewing general user profile information",
-				"description": "Non-sensitive operation details"
+				"name": "1234567890",
+				"description": "Sensitive account number"
 			}
 		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_DetailedDatabaseErrorExposure.java",
-		"sensitiveVariables": [
+		"comments": [
 			{
-				"name": "e",
-				"description": "Exception variable that might contain sensitive information about the database error."
+				"name": "1234567890",
+				"description": "Account number"
 			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "SELECT * FROM sensitive_table",
-				"description": "Database query string that exposes table name."
-			},
-			{
-				"name": "Failed to execute query on 'sensitive_table': Column 'secret_info' does not exist",
-				"description": "Error message string that exposes table name and column name."
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_SensitivePathDisclosureInErrors.java",
-		"sensitiveVariables": [
-			{
-				"name": "filePath",
-				"description": "Path to a file that might be sensitive."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "/sensitive/config/secrets.txt",
-				"description": "Hardcoded file path that might be sensitive."
-			},
-			{
-				"name": "Error: File not found - ",
-				"description": "Error message string that exposes the file path."
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_VerboseAuthenticationFailure.java",
-		"sensitiveVariables": [
-			{
-				"name": "username",
-				"description": "Username for authentication."
-			},
-			{
-				"name": "password",
-				"description": "Password for authentication."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "user",
-				"description": "Hardcoded username."
-			},
-			{
-				"name": "guessme",
-				"description": "Hardcoded password."
-			},
-			{
-				"name": "Authentication failed: ",
-				"description": "Error message string that exposes the reason for authentication failure."
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_GeneralizedAuthenticationFeedback.java",
-		"sensitiveVariables": [
-			{
-				"name": "username",
-				"description": "Username for authentication."
-			},
-			{
-				"name": "password",
-				"description": "Password for authentication."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "user",
-				"description": "Hardcoded username."
-			},
-			{
-				"name": "guessme",
-				"description": "Hardcoded password."
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_GenericDatabaseErrorHandling.java",
-		"sensitiveVariables": [
-			{
-				"name": "e",
-				"description": "Exception variable that might contain sensitive information about the database error."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "SELECT * FROM users",
-				"description": "Database query string that exposes table name."
-			}
-		],
-		"sensitiveComments": []
+		]
 	},
 	{
 		"fileName": "BAD_CreditCardSubmissionGET.java",
-		"sensitiveVariables": [
+		"variables": [
 			{
 				"name": "cardNumber",
 				"description": "Credit card number"
@@ -1833,29 +3043,79 @@
 				"description": "Credit card CVV"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
 				"name": "http://example.com/submitPayment?cardNumber=",
-				"description": "URL string containing credit card information"
+				"description": "Internal URL exposing sensitive credit card information"
 			},
 			{
 				"name": "1234567890123456",
-				"description": "Hardcoded credit card number"
+				"description": "Sensitive credit card number"
 			},
 			{
 				"name": "12/23",
-				"description": "Hardcoded credit card expiry date"
+				"description": "Sensitive credit card expiry date"
 			},
 			{
 				"name": "123",
-				"description": "Hardcoded credit card CVV"
+				"description": "Sensitive credit card CVV"
 			}
 		],
-		"sensitiveComments": []
+		"comments": [
+			{
+				"name": "1234567890123456",
+				"description": "Credit card number"
+			},
+			{
+				"name": "12/23",
+				"description": "Credit card expiry date"
+			},
+			{
+				"name": "123",
+				"description": "Credit card CVV"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_FinancialDataGET.java",
+		"variables": [
+			{
+				"name": "accountNumber",
+				"description": "Bank account number"
+			},
+			{
+				"name": "amount",
+				"description": "Transaction amount"
+			}
+		],
+		"strings": [
+			{
+				"name": "http://example.com/processPayment?account=",
+				"description": "Internal URL exposing sensitive financial data"
+			},
+			{
+				"name": "123456789",
+				"description": "Sensitive account number"
+			},
+			{
+				"name": "100.00",
+				"description": "Sensitive transaction amount"
+			}
+		],
+		"comments": [
+			{
+				"name": "Sensitive data in query",
+				"description": "Exposing sensitive financial data in URL query parameters"
+			},
+			{
+				"name": "Extremely risky!",
+				"description": "Indicates the use of sensitive financial data in an insecure manner"
+			}
+		]
 	},
 	{
 		"fileName": "BAD_HealthInfoSubmissionGET.java",
-		"sensitiveVariables": [
+		"variables": [
 			{
 				"name": "patientId",
 				"description": "Patient ID"
@@ -1869,680 +3129,1307 @@
 				"description": "Doctor ID"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
 				"name": "http://healthcare.example.com/bookAppointment?patientId=",
-				"description": "URL string containing patient information"
+				"description": "Internal URL exposing sensitive health information"
 			},
 			{
 				"name": "12345",
-				"description": "Hardcoded patient ID"
+				"description": "Sensitive patient ID"
 			},
 			{
 				"name": "Fever, cough, and shortness of breath",
-				"description": "Hardcoded patient symptoms"
+				"description": "Sensitive health symptoms"
 			},
 			{
 				"name": "DrJohnDoe",
-				"description": "Hardcoded doctor ID"
+				"description": "Sensitive doctor ID"
 			}
 		],
-		"sensitiveComments": []
+		"comments": [
+			{
+				"name": "Exposing PHI in query",
+				"description": "Exposing Protected Health Information (PHI) in URL query parameters"
+			},
+			{
+				"name": "Highly sensitive and insecure!",
+				"description": "Indicates the use of sensitive health information in an insecure manner"
+			}
+		]
 	},
 	{
-		"fileName": "BAD_PasswordChangeGET.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_DatabaseConnectionTest.java",
+		"variables": [
+			{
+				"name": "dbUrl",
+				"description": "Database URL"
+			},
+			{
+				"name": "dbUser",
+				"description": "Database username"
+			},
+			{
+				"name": "dbPassword",
+				"description": "Database password"
+			}
+		],
+		"strings": [
+			{
+				"name": "jdbc:mysql://localhost/testdb",
+				"description": "Internal database URL"
+			},
+			{
+				"name": "testuser",
+				"description": "Database username"
+			},
+			{
+				"name": "password",
+				"description": "Hardcoded sensitive password"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_EmailServiceTest.java",
+		"variables": [
+			{
+				"name": "recipientEmail",
+				"description": "Recipient email address"
+			},
+			{
+				"name": "message",
+				"description": "Sensitive message content"
+			}
+		],
+		"strings": [
+			{
+				"name": "user@example.com",
+				"description": "Email address"
+			},
+			{
+				"name": "Your password is password123!",
+				"description": "Sensitive information in email message"
+			}
+		],
+		"comments": [
+			{
+				"name": "password123!",
+				"description": "Sensitive information in test"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_FileEncryptionTest.java",
+		"variables": [
+			{
+				"name": "filePath",
+				"description": "File path"
+			},
+			{
+				"name": "encryptionKey",
+				"description": "Encryption key"
+			}
+		],
+		"strings": [
+			{
+				"name": "/path/to/important/file.txt",
+				"description": "File path"
+			},
+			{
+				"name": "SuperSecretKey!",
+				"description": "Sensitive encryption key"
+			}
+		],
+		"comments": [
+			{
+				"name": "SuperSecretKey!",
+				"description": "Sensitive encryption key exposed"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_NetworkConfigurationTest.java",
+		"variables": [
+			{
+				"name": "deviceSerial",
+				"description": "Device serial number"
+			},
+			{
+				"name": "configCommands",
+				"description": "Configuration commands"
+			}
+		],
+		"strings": [
+			{
+				"name": "SN12345678",
+				"description": "Device serial number"
+			},
+			{
+				"name": "set admin-password = 'newPassword123!';",
+				"description": "Sensitive command in network configuration"
+			}
+		],
+		"comments": [
+			{
+				"name": "newPassword123!",
+				"description": "Sensitive command in test"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_PaymentProcessingTest.java",
+		"variables": [
+			{
+				"name": "creditCardNumber",
+				"description": "Credit card number"
+			}
+		],
+		"strings": [
+			{
+				"name": "1234-5678-9101-1121",
+				"description": "Hardcoded sensitive credit card information"
+			}
+		],
+		"comments": [
+			{
+				"name": "1234-5678-9101-1121",
+				"description": "Hardcoded sensitive credit card information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_PersonalDataHandlerTest.java",
+		"variables": [
+			{
+				"name": "personalData",
+				"description": "Personal data (e.g., SSN)"
+			}
+		],
+		"strings": [
+			{
+				"name": "SSN: 123-45-6789",
+				"description": "Exposing sensitive personal information"
+			}
+		],
+		"comments": [
+			{
+				"name": "123-45-6789",
+				"description": "Exposing sensitive personal information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_UserAuthenticationTest.java",
+		"variables": [
 			{
 				"name": "username",
 				"description": "Username"
 			},
 			{
-				"name": "oldPassword",
-				"description": "Old password"
+				"name": "password",
+				"description": "Password"
+			}
+		],
+		"strings": [
+			{
+				"name": "admin",
+				"description": "Username"
+			},
+			{
+				"name": "admin123",
+				"description": "Sensitive data hardcoded in test code"
+			}
+		],
+		"comments": [
+			{
+				"name": "admin123",
+				"description": "Sensitive data hardcoded in test code"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_UserDeletionTest.java",
+		"variables": [
+			{
+				"name": "userId",
+				"description": "User ID"
+			},
+			{
+				"name": "adminAuthToken",
+				"description": "Admin authentication token"
+			}
+		],
+		"strings": [
+			{
+				"name": "user123",
+				"description": "User ID"
+			},
+			{
+				"name": "adminTokenXYZ",
+				"description": "Sensitive admin token exposed"
+			}
+		],
+		"comments": [
+			{
+				"name": "adminTokenXYZ",
+				"description": "Sensitive admin token exposed"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DatabaseAccessLogger.java",
+		"variables": [
+			{
+				"name": "dbCommand",
+				"description": "Database command"
+			},
+			{
+				"name": "connectionString",
+				"description": "Database connection string"
+			}
+		],
+		"strings": [],
+		"comments": [
+			{
+				"name": "connection string",
+				"description": "Exposing connection string and error details"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DatabaseCredentialsReset.java",
+		"variables": [
+			{
+				"name": "dbCommand",
+				"description": "Database command"
+			},
+			{
+				"name": "username",
+				"description": "Database username"
 			},
 			{
 				"name": "newPassword",
-				"description": "New password"
+				"description": "New database password"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [],
+		"comments": [
 			{
-				"name": "http://example.com/changePassword?username=",
-				"description": "URL string containing user credentials"
+				"name": "password",
+				"description": "Direct exposure of potentially sensitive command details and password"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_FirewallConfigurationServlet.java",
+		"variables": [
+			{
+				"name": "firewallRule",
+				"description": "Firewall rule"
 			},
 			{
-				"name": "user2",
-				"description": "Hardcoded username"
-			},
-			{
-				"name": "oldPass123",
-				"description": "Hardcoded old password"
-			},
-			{
-				"name": "newPass456",
-				"description": "Hardcoded new password"
+				"name": "command",
+				"description": "Shell command"
 			}
 		],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": [
+			{
+				"name": "Logging sensitive error details",
+				"description": "Exposing sensitive error details in logs"
+			}
+		]
 	},
 	{
-		"fileName": "GOOD_FetchPublicData.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_FetchWeatherData.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_unsafeMacCheckWithLoop.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_MisconfiguredPermissions.java",
+		"variables": [
 			{
-				"name": "socket",
-				"description": "Socket object used for network communication"
-			},
-			{
-				"name": "data",
-				"description": "Byte array storing data read from the socket"
-			},
-			{
-				"name": "tag",
-				"description": "Byte array storing tag read from the socket"
-			},
-			{
-				"name": "mac",
-				"description": "Mac object used for generating message authentication code"
-			},
-			{
-				"name": "computedTag",
-				"description": "Byte array storing computed tag"
+				"name": "scriptPath",
+				"description": "Path to sensitive script"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": [
+			{
+				"name": "sensitive information contained in error messages",
+				"description": "Potential exposure of sensitive information due to misconfigured permissions"
+			}
+		]
 	},
 	{
-		"fileName": "GOOD_safeMacCheckWithLoop.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_SecretFileDecryptor.java",
+		"variables": [
 			{
-				"name": "socket",
-				"description": "Socket object used for network communication"
+				"name": "decryptionToolPath",
+				"description": "Path to decryption tool"
 			},
 			{
-				"name": "data",
-				"description": "Byte array storing data read from the socket"
-			},
-			{
-				"name": "tag",
-				"description": "Byte array storing tag read from the socket"
-			},
-			{
-				"name": "mac",
-				"description": "Mac object used for generating message authentication code"
-			},
-			{
-				"name": "computedTag",
-				"description": "Byte array storing computed tag"
+				"name": "encryptedFilePath",
+				"description": "Path to encrypted file"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": [
+			{
+				"name": "Exposing decryption failure details that could hint at file paths or encryption methods",
+				"description": "Exposing sensitive decryption failure details"
+			}
+		]
 	},
 	{
-		"fileName": "GOOD_saferCheckCustomMac.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_SensitiveInfoExposureViaShellError.java",
+		"variables": [
 			{
-				"name": "expected",
-				"description": "Byte array storing expected tag"
-			},
-			{
-				"name": "plaintext",
-				"description": "Byte array storing plaintext data"
-			},
-			{
-				"name": "key",
-				"description": "Key object used for encryption"
-			},
-			{
-				"name": "cipher",
-				"description": "Cipher object used for encryption"
-			},
-			{
-				"name": "tag",
-				"description": "Byte array storing tag"
+				"name": "command",
+				"description": "Shell command containing sensitive information"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [
+			{
+				"name": "secret",
+				"description": "password"
+			}
+		],
+		"comments": [
+			{
+				"name": "The command includes sensitive information, such as a password or API key",
+				"description": "Command containing sensitive information"
+			},
+			{
+				"name": "Printing error messages to the console or logging them can expose sensitive information",
+				"description": "Exposing sensitive information through error messages"
+			}
+		]
 	},
 	{
-		"fileName": "GOOD_saferCheckSignatures.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_ShellCommandExposure.java",
+		"variables": [
 			{
-				"name": "expected",
-				"description": "Byte array storing expected signature"
-			},
-			{
-				"name": "data",
-				"description": "Byte array storing data"
-			},
-			{
-				"name": "key",
-				"description": "PrivateKey object used for signing"
-			},
-			{
-				"name": "engine",
-				"description": "Signature object used for signing"
-			},
-			{
-				"name": "signature",
-				"description": "Byte array storing signature"
+				"name": "command",
+				"description": "Shell command"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": [
+			{
+				"name": "Exposing potential sensitive information through error stream",
+				"description": "Potential exposure of sensitive information through error stream"
+			}
+		]
 	},
 	{
-		"fileName": "GOOD_saferMacCheck.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_LogDbConnectionDetails.java",
+		"variables": [
 			{
-				"name": "expectedMac",
-				"description": "Byte array storing expected MAC"
-			},
-			{
-				"name": "data",
-				"description": "Byte array storing data"
-			},
-			{
-				"name": "mac",
-				"description": "Mac object used for generating message authentication code"
-			},
-			{
-				"name": "actualMac",
-				"description": "Byte array storing actual MAC"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_DbConnectionErrorServlet.java",
-		"sensitiveVariables": [
-			{
-				"name": "conn",
-				"description": "This variable holds the database connection object which includes sensitive information like database URL, username, and password."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "jdbc:mysql://localhost:3306/myapp",
-				"description": "This string is the database connection URL which is sensitive as it reveals the database server address and database name."
+				"name": "dbUrl",
+				"description": "DB_CONNECTION_STRING"
 			},
 			{
 				"name": "user",
-				"description": "This string is the username for the database connection which is sensitive as it can be used for unauthorized access."
+				"description": "username"
 			},
 			{
-				"name": "pass",
-				"description": "This string is the password for the database connection which is sensitive as it can be used for unauthorized access."
+				"name": "password",
+				"description": "password"
 			}
 		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_ExternalServiceErrorServlet.java",
-		"sensitiveVariables": [
+		"strings": [
 			{
-				"name": "url",
-				"description": "This variable holds the URL of an external service, which could be sensitive if the service requires authentication or contains sensitive data."
+				"name": "jdbc:mysql://localhost:3306/myapp",
+				"description": "Internal database URL"
 			},
 			{
-				"name": "connection",
-				"description": "This variable holds the HttpsURLConnection object, which could contain sensitive information such as authentication tokens or cookies."
+				"name": "admin",
+				"description": "Database username"
+			},
+			{
+				"name": "admin123",
+				"description": "Database password"
 			}
 		],
-		"sensitiveStrings": [
+		"comments": [
 			{
-				"name": "https://api.example.com/data",
-				"description": "This string is the URL of an external service, which could be sensitive if the service requires authentication or contains sensitive data."
-			}
-		],
-		"sensitiveComments": [
-			{
-				"name": "Caught ServletException: ",
-				"description": "This comment suggests that exception details, which could contain sensitive information, are being logged inappropriately."
+				"name": "password",
+				"description": "Connecting to database with sensitive password"
 			}
 		]
 	},
 	{
-		"fileName": "BAD_FileReadErrorServlet.java",
-		"sensitiveVariables": [
-			{
-				"name": "filename",
-				"description": "This variable holds the name of a file to be read, which could be sensitive if the file contains sensitive data."
-			},
-			{
-				"name": "file",
-				"description": "This variable holds the File object, which could contain sensitive information such as the file path."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "/var/www/data/",
-				"description": "This string is the path to the directory where files are being read from, which could be sensitive if it reveals the structure of the server's file system."
-			}
-		],
-		"sensitiveComments": [
-			{
-				"name": "Error reading file: ",
-				"description": "This comment suggests that the full file path, which is sensitive, is being exposed in an error message."
-			}
-		]
-	},
-	{
-		"fileName": "GOOD_GenericErrorWithLoggingServlet.java",
-		"sensitiveVariables": [],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_SecureFileAccessServlet.java",
-		"sensitiveVariables": [
-			{
-				"name": "filename",
-				"description": "This variable holds the name of a file to be accessed, which could be sensitive if the file contains sensitive data."
-			},
-			{
-				"name": "file",
-				"description": "This variable holds the File object, which could contain sensitive information such as the file path."
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "/secure/data/",
-				"description": "This string is the path to the directory where files are being accessed from, which could be sensitive if it reveals the structure of the server's file system."
-			}
-		],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_TempDirUsageVulnerable.java",
-		"sensitiveVariables": [
-			{
-				"name": "temp1",
-				"description": "Temporary file with permissions `-rw-r--r--`"
-			},
-			{
-				"name": "temp2",
-				"description": "Temporary file with permissions `-rw-r--r--`"
-			},
-			{
-				"name": "temp3",
-				"description": "Temporary file with permissions `-rw-r--r--`"
-			},
-			{
-				"name": "systemTempDir",
-				"description": "System temporary directory"
-			},
-			{
-				"name": "tempDirChildFile",
-				"description": "Child file in temporary directory with permissions `-rw-r--r--`"
-			},
-			{
-				"name": "tempDirChildDir",
-				"description": "Child directory in temporary directory with permissions `drwxr-xr-x`"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "GOOD_TempDirUsageSafe.java",
-		"sensitiveVariables": [
-			{
-				"name": "temp1",
-				"description": "Temporary file with permissions `-rw-------`"
-			},
-			{
-				"name": "temp2",
-				"description": "Temporary directory with permissions `drwx------`"
-			},
-			{
-				"name": "tempChildFile",
-				"description": "Child file in temporary directory with permissions `-rw-------`"
-			},
-			{
-				"name": "tempDirChildDir",
-				"description": "Child directory in temporary directory with permissions `drwx------`"
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
-	},
-	{
-		"fileName": "BAD_LogSensitiveInfoBeforeSending.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_LogPaymentInformation.java",
+		"variables": [
 			{
 				"name": "creditCardNumber",
+				"description": "creditCard"
+			},
+			{
+				"name": "expiryDate",
+				"description": "ccExpirationDate"
+			},
+			{
+				"name": "cvv",
+				"description": "ccSecurityCode"
+			}
+		],
+		"strings": [
+			{
+				"name": "1234567890123456",
 				"description": "Credit card number"
 			},
 			{
-				"name": "payload",
-				"description": "Payload containing credit card number"
-			}
-		],
-		"sensitiveStrings": [
-			{
-				"name": "https://example.com/api/payment",
-				"description": "API endpoint"
+				"name": "12/23",
+				"description": "Credit card expiry date"
 			},
 			{
-				"name": "config.properties",
-				"description": "Configuration file name"
+				"name": "123",
+				"description": "Credit card CVV"
 			}
 		],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "BAD_SendSensitiveDataViaEmail.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_LogUserCredentials.java",
+		"variables": [
 			{
 				"name": "username",
-				"description": "Email username"
+				"description": "username"
 			},
 			{
 				"name": "password",
-				"description": "Email password"
-			},
-			{
-				"name": "smtpHost",
-				"description": "SMTP host"
-			},
-			{
-				"name": "smtpPort",
-				"description": "SMTP port"
-			},
-			{
-				"name": "sensitiveContent",
-				"description": "Sensitive content sent via email"
+				"description": "password"
 			}
 		],
-		"sensitiveStrings": [
+		"strings": [
 			{
-				"name": "recipient@example.com",
-				"description": "Email recipient"
+				"name": "adminPass",
+				"description": "User password"
+			},
+			{
+				"name": "pass1234",
+				"description": "User password"
 			}
 		],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "BAD_SendSensitiveInfoInGetRequest.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_TokenManager.java",
+		"variables": [
+			{
+				"name": "userId",
+				"description": "userID"
+			},
+			{
+				"name": "oldToken",
+				"description": "token"
+			},
+			{
+				"name": "newToken",
+				"description": "token"
+			}
+		],
+		"strings": [
+			{
+				"name": "newToken12345",
+				"description": "Simulated new token"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_UserAuthenticationLogger.java",
+		"variables": [
 			{
 				"name": "username",
-				"description": "Username sent in GET request"
+				"description": "username"
 			},
 			{
 				"name": "password",
-				"description": "Password sent in GET request"
+				"description": "password"
 			}
 		],
-		"sensitiveStrings": [
-			{
-				"name": "http://example.com/login?username=",
-				"description": "API endpoint with username"
-			},
-			{
-				"name": "&password=",
-				"description": "Password parameter in API endpoint"
-			}
-		],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
 	},
 	{
-		"fileName": "BAD_AAS_unsafeCheckCiphertext.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_UserDataManager.java",
+		"variables": [
 			{
-				"name": "key",
-				"description": "This variable holds the encryption key which is sensitive and should not be exposed."
+				"name": "userId",
+				"description": "userID"
 			},
 			{
-				"name": "plaintext",
-				"description": "This variable holds the plaintext data which could be sensitive information."
-			},
-			{
-				"name": "hash",
-				"description": "This variable holds the hash of the plaintext which could be sensitive information."
-			},
-			{
-				"name": "tag",
-				"description": "This variable holds the encrypted hash which could be sensitive information."
-			},
-			{
-				"name": "expected",
-				"description": "This variable holds the expected encrypted hash which could be sensitive information."
+				"name": "personalData",
+				"description": "personal information"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_ExposeErrorInApiResponse.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "Data cannot be null",
+				"description": "Error message exposing internal logic"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_SecureProcessInvocationWithEncryption.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "VerySensitiveData",
+				"description": "Sensitive data"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_EncapsulatedSecurityContext.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_FirewallConfigurationServlet.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_MisconfiguredPermissions.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_SecureKeyManagement.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_TemporaryFixComments.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_DocumentDirectoryListingServlet.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "/uploaded-documents",
+				"description": "Internal directory path"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_InsecureDirectoryListingServlet.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "/uploads",
+				"description": "Internal directory path"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_LogDirectoryPaths.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "/path/to/sensitive/data",
+				"description": "Internal directory path"
+			}
+		],
+		"comments": [
+			{
+				"name": "/path/to/sensitive/data",
+				"description": "Sensitive directory path"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_ExternalServiceErrorServlet.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "https://api.example.com/data",
+				"description": "internal URL"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_FileReadErrorServlet.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "/var/www/data/",
+				"description": "internal file path"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_AuthenticationFailureServlet.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_CloudResourceErrorAPI.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_ConfigExposureServlet.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_DetailedRuntimeExceptionServlet.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
 	},
 	{
 		"fileName": "BAD_AAS_unsafeCheckCiphertextWithByteBuffer.java",
-		"sensitiveVariables": [
-			{
-				"name": "key",
-				"description": "This variable holds the encryption key which is sensitive and should not be exposed."
-			},
-			{
-				"name": "plaintext",
-				"description": "This variable holds the plaintext data which could be sensitive information."
-			},
-			{
-				"name": "tag",
-				"description": "This variable holds the encrypted hash which could be sensitive information."
-			},
-			{
-				"name": "expected",
-				"description": "This variable holds the expected encrypted hash which could be sensitive information."
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"variables": [],
+		"strings": [],
+		"comments": []
 	},
 	{
 		"fileName": "BAD_AAS_unsafeCheckCiphertextWithOutputArray.java",
-		"sensitiveVariables": [
-			{
-				"name": "key",
-				"description": "This variable holds the encryption key which is sensitive and should not be exposed."
-			},
-			{
-				"name": "plaintext",
-				"description": "This variable holds the plaintext data which could be sensitive information."
-			},
-			{
-				"name": "tag",
-				"description": "This variable holds the encrypted hash which could be sensitive information."
-			},
-			{
-				"name": "expected",
-				"description": "This variable holds the expected encrypted hash which could be sensitive information."
-			}
-		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"variables": [],
+		"strings": [],
+		"comments": []
 	},
 	{
-		"fileName": "BAD_AAS_unsafeCheckSignatures.java",
-		"sensitiveVariables": [
+		"fileName": "GOOD_UseHttpsForSensitiveData.java",
+		"variables": [],
+		"strings": [
 			{
-				"name": "key",
-				"description": "This variable holds the private key which is sensitive and should not be exposed."
+				"name": "https://example.com/secure-api",
+				"description": "Internal URL"
 			},
 			{
-				"name": "data",
-				"description": "This variable holds the data which could be sensitive information."
-			},
-			{
-				"name": "signature",
-				"description": "This variable holds the signature which could be sensitive information."
-			},
-			{
-				"name": "expected",
-				"description": "This variable holds the expected signature which could be sensitive information."
+				"name": "{\"message\": \"This is sensitive\"}",
+				"description": "Sensitive data in JSON format"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "BAD_AAS_unsafeCheckSignaturesWithOutputArray.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_ExternalServiceErrorServlet.java",
+		"variables": [],
+		"strings": [
 			{
-				"name": "key",
-				"description": "This variable holds the private key which is sensitive and should not be exposed."
-			},
-			{
-				"name": "data",
-				"description": "This variable holds the data which could be sensitive information."
-			},
-			{
-				"name": "signature",
-				"description": "This variable holds the signature which could be sensitive information."
-			},
-			{
-				"name": "expected",
-				"description": "This variable holds the expected signature which could be sensitive information."
+				"name": "https://api.example.com/data",
+				"description": "internal URL"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "BAD_AAS_unsafeMacCheckWithArrayEquals.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_FileReadErrorServlet.java",
+		"variables": [],
+		"strings": [
 			{
-				"name": "mac",
-				"description": "Instance of Mac class used for message authentication code (MAC) operations"
-			},
-			{
-				"name": "data",
-				"description": "Byte array storing data read from the input stream"
-			},
-			{
-				"name": "actualMac",
-				"description": "Byte array storing the actual MAC of the data"
-			},
-			{
-				"name": "expectedMac",
-				"description": "Byte array storing the expected MAC of the data"
+				"name": "/var/www/data/",
+				"description": "file path"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "BAD_AAS_unsafeMacCheckWithDoFinalWithOutputArray.java",
-		"sensitiveVariables": [
+		"fileName": "GOOD_EncryptionKeyError.java",
+		"variables": [],
+		"strings": [
 			{
-				"name": "mac",
-				"description": "Instance of Mac class used for message authentication code (MAC) operations"
-			},
-			{
-				"name": "data",
-				"description": "Byte array storing data read from the input stream"
-			},
-			{
-				"name": "actualMac",
-				"description": "Byte array storing the actual MAC of the data"
-			},
-			{
-				"name": "expectedMac",
-				"description": "Byte array storing the expected MAC of the data"
+				"name": "12345",
+				"description": "Potentially sensitive encryption key"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "GOOD_AAS_compareMacWithConstant.java",
-		"sensitiveVariables": [
+		"fileName": "GOOD_HealthcareSystemError.java",
+		"variables": [],
+		"strings": [
 			{
-				"name": "mac",
-				"description": "Instance of Mac class used for message authentication code (MAC) operations"
-			},
-			{
-				"name": "data",
-				"description": "Byte array storing data read from the input stream"
-			},
-			{
-				"name": "actualMac",
-				"description": "Byte array storing the actual MAC of the data"
+				"name": "encryption=weak, HIPAA_compliant=false",
+				"description": "Sensitive system configuration details"
 			}
 		],
-		"sensitiveStrings": [
-			{
-				"name": "constant",
-				"description": "Hardcoded string used for comparison with the actual MAC"
-			}
-		],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "GOOD_AAS_noUserInputWhenCheckingCiphertext.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_AccessControlError.java",
+		"variables": [],
+		"strings": [
 			{
-				"name": "cipher",
-				"description": "Instance of Cipher class used for encryption and decryption"
-			},
-			{
-				"name": "plaintext",
-				"description": "Byte array storing plaintext data read from the input stream"
-			},
-			{
-				"name": "tag",
-				"description": "Byte array storing the ciphertext of the plaintext data"
-			},
-			{
-				"name": "expected",
-				"description": "Byte array storing the expected ciphertext of the plaintext data"
+				"name": "adminUser",
+				"description": "Potentially sensitive username"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"comments": []
 	},
 	{
-		"fileName": "GOOD_AAS_saferCheckCiphertext.java",
-		"sensitiveVariables": [
+		"fileName": "BAD_DatabaseSchemaError.java",
+		"variables": [],
+		"strings": [
 			{
-				"name": "cipher",
-				"description": "Instance of Cipher class used for encryption and decryption"
-			},
-			{
-				"name": "md",
-				"description": "Instance of MessageDigest class used for creating hash of the plaintext data"
-			},
-			{
-				"name": "plaintext",
-				"description": "Byte array storing plaintext data read from the input stream"
-			},
-			{
-				"name": "hash",
-				"description": "Byte array storing the hash of the plaintext data"
-			},
-			{
-				"name": "tag",
-				"description": "Byte array storing the ciphertext of the hash"
-			},
-			{
-				"name": "expected",
-				"description": "Byte array storing the expected ciphertext of the hash"
+				"name": "DROP TABLE Users",
+				"description": "Potentially sensitive SQL command"
 			}
 		],
-		"sensitiveStrings": [],
-		"sensitiveComments": []
+		"comments": []
+	},
+	{
+		"fileName": "BAD_DetailedDatabaseErrorExposure.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "sensitive_table",
+				"description": "Potentially sensitive table name"
+			},
+			{
+				"name": "secret_info",
+				"description": "Potentially sensitive column name"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_IndexOutofBoundsInfoExposure.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "secretPassword123",
+				"description": "Sensitive password"
+			},
+			{
+				"name": "confidentialInfo",
+				"description": "Confidential information"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_SensitiveConcurrentModificationHandling.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "secret1",
+				"description": "Sensitive information"
+			},
+			{
+				"name": "secret2",
+				"description": "Sensitive information"
+			},
+			{
+				"name": "confidentialInfo",
+				"description": "Confidential information"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_unsafeCheckCustomMac.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_unsafeMacCheck.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_unsafeMacCheckWithLoop.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_SensitiveInfoExposureViaShellError.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "secret",
+				"description": "password"
+			}
+		],
+		"comments": [
+			{
+				"name": "secret",
+				"description": "password"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_AccountBalanceServlet.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "accountId",
+				"description": "account identifier"
+			}
+		],
+		"comments": [
+			{
+				"name": "account ID",
+				"description": "personal information"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_CloudServiceConfigSecure.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "cloudAccessSecret!",
+				"description": "Sensitive cloud access token"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_ConfigExposureServlet.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "/etc/myapp/config.xml",
+				"description": "Hardcoded file path"
+			},
+			{
+				"name": "Error loading configuration for file: ",
+				"description": "Exposing sensitive configuration error details"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_RealTimeBiddingError.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "Session1234",
+				"description": "Session ID"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_EncryptionKeyError.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "12345",
+				"description": "Encryption key"
+			},
+			{
+				"name": "Sensitive data to encrypt",
+				"description": "Sensitive data"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_MilitaryOperationPlanError.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "Operation Red Dawn at 0400 hours; Secure the target zone.",
+				"description": "Military operation plan"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_PatentApplicationError.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "Invention: New efficient solar panel, Inventor: John Doe",
+				"description": "Patent details including inventor's name"
+			}
+		],
+		"comments": [
+			{
+				"name": "John Doe",
+				"description": "Personal Information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_SecurityException.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_ArithmeticException.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_APIAccessLogger.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_ErrorHandler.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_ErrorReportHandler.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_FilterSensitiveInfoFromLogs.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "securePassword",
+				"description": "Simulated secure password"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_FinancialTransactionLogger.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_SecureSoftwareUpdate.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "signatureKey123",
+				"description": "Example key, replace with actual key generation logic"
+			}
+		],
+		"comments": [
+			{
+				"name": "signatureKey123",
+				"description": "Signature Verification Key"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DataProcessor.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "sensitiveDataString",
+				"description": "Hardcoded sensitive data string"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_ApiKeySubmissionGET.java",
+		"variables": [],
+		"strings": [
+			{
+				"name": "secretApiKey123",
+				"description": "API key"
+			}
+		],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_AccountBalanceServlet.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_DbConnectionErrorServlet.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_AAS_CiphertextWithByteBufferEquals.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_AAS_unsafeCheckCiphertext.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_NetworkConfigurationTest.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_GenericErrorHandling.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_InitializationErrorServlet.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_GenericErrorWithLoggingServlet.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_AccessControlError.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_DatabaseSchemaError.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_DetailedDatabaseErrorExposure.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_FinancialAuditError.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_safeMacCheckWithLoop.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_saferCheckCustomMac.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_saferCheckSignatures.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_saferMacCheck.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_InitializationErrorServlet.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "Exposing internal configuration details during initialization failure",
+				"description": "Exposing internal configuration details during initialization failure"
+			}
+		]
+	},
+	{
+		"fileName": "GOOD_FetchPublicData.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "GOOD_FetchWeatherData.java",
+		"variables": [],
+		"strings": [],
+		"comments": []
+	},
+	{
+		"fileName": "BAD_ErrorReportHandlerLog.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "debugInfo",
+				"description": "Potential exposure of sensitive debug information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_LoginProcessorDebugging.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "Authentication failed for user",
+				"description": "Sensitive information"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_ApiKeyInComments.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "ak_test_12345",
+				"description": "API Key"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_AuthenticationBypassComments.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "admin",
+				"description": "Username"
+			},
+			{
+				"name": "admin123",
+				"description": "Password"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_DatabaseSchemaDetails.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "admin",
+				"description": "Default password"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_EncryptionDetailsComments.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "fixedSeedValue",
+				"description": "Seed value for random number generator"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_EncryptionKeyInComments.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "AESKey123456789",
+				"description": "Encryption key"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_HardcodedCredentialsInComments.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "admin",
+				"description": "Username"
+			},
+			{
+				"name": "admin12345",
+				"description": "Password"
+			},
+			{
+				"name": "jdbc:mysql://localhost:3306/production",
+				"description": "Database URL"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_NetworkConfigurationComments.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "255.255.255.0",
+				"description": "Subnet mask"
+			},
+			{
+				"name": "192.168.1.1",
+				"description": "Gateway"
+			},
+			{
+				"name": "192.168.1.100",
+				"description": "Server IP address"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_RecoveryKeyComments.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "12345-ABCDE-67890-FGHIJ",
+				"description": "Recovery key for administrative access"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_SecurityCheckBypassComments.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "devBypassKey#2023",
+				"description": "Secret key to bypass security check"
+			}
+		]
+	},
+	{
+		"fileName": "BAD_TestingCredentialsComments.java",
+		"variables": [],
+		"strings": [],
+		"comments": [
+			{
+				"name": "testUser",
+				"description": "Testing account login"
+			},
+			{
+				"name": "Test@1234",
+				"description": "Testing account password"
+			}
+		]
 	}
 ]
