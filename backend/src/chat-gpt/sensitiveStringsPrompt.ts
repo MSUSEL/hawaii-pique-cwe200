@@ -39,6 +39,8 @@ Provide a JSON response in the following format. Do not include any error messag
 2) Provide a JSON response for each file that matches the format below. 
   A) The "name" field should be the sensitive information found in the string.
   B) The "description" field should describe the type of sensitive information found.
+3) If there is a sensitive string in a hashmap, such as "password": "123", just provide the value "123" as the sensitive string.
+4) If there are no sensitive hardcoded strings in a file, provide an empty array for "sensitiveStrings".
 {
   "files": [
     {
@@ -55,5 +57,4 @@ Provide a JSON response in the following format. Do not include any error messag
       ]
     }
   ]
-}
-`;
+}`
