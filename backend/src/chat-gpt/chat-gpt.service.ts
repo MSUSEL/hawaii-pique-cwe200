@@ -9,14 +9,17 @@ import {sensitiveVariablesPrompt} from './sensitiveVariablesPrompt';
 import {sensitiveStringsPrompt} from './sensitiveStringsPrompt';
 import {sensitiveCommentsPrompt} from './sensitiveCommentsPrompt';
 import { response } from 'express';
-import {encode, decode} from 'gpt-tokenizer';
+import { get_encoding } from 'tiktoken';
 import async from 'async';
+import { spawn } from 'child_process';
 
 @Injectable()
 export class ChatGptService {
     openai: OpenAI.OpenAIApi = null;
     progressBar: any;
     debug: string;
+    projectsPath: string;
+    encode: any;
     constructor(
         private configService: ConfigService,
         private eventsGateway: EventsGateway,
@@ -26,9 +29,14 @@ export class ChatGptService {
         const configuration = new OpenAI.Configuration({
             apiKey: api_key,
         });
+
+        this.projectsPath = this.configService.get<string>(
+            'CODEQL_PROJECTS_DIR',
+        );
         this.openai = new OpenAI.OpenAIApi(configuration);
         this.progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
         this.debug = this.configService.get('DEBUG');
+        this.encode = get_encoding("o200k_base");
 
     }
 
@@ -256,33 +264,34 @@ export class ChatGptService {
 
 
     async dynamicBatching(files, prompt) {
-        const maxTokensPerBatch = 2000; // Maximum number of tokens per batch
-        const promptTokenCount = encode(prompt).length;
+        const maxTokensPerBatch = 10000; // Maximum number of tokens per batch
+        const promptTokenCount = this.encode.encode(prompt).length;
         let batchesOfText = []; // Array to hold all batches of text
         let filesPerBatch = []; // Used later on by the progress bar
         let batchText = prompt; 
         let totalBatchTokenCount = promptTokenCount; 
         let currentFileCount = 0;
         let i = 0;
+        let totalTokens = 0;
     
         for (const file of files) {
             // Clean up the file (Removes unnecessary whitespace)
             const fileContent = await this.fileUtilService.processJavaFile(file);
     
             // Add the start and end bounds to the file and then get its token count
-            const fileTokens = encode(await this.fileUtilService.addFileBoundaryMarkers(file, fileContent));
+            const fileTokens = this.encode.encode(await this.fileUtilService.addFileBoundaryMarkers(file, fileContent));
             const currentFileTokenCount = fileTokens.length;
     
             if (currentFileTokenCount > maxTokensPerBatch) {
                 console.log(`File ${file} is too large to fit in a single batch ${i}`);
     
                 // If there is already content in the current batch, push it and start a new batch
-                if (totalBatchTokenCount > promptTokenCount) {
+                if (totalBatchTokenCount > 0) {
                     batchesOfText.push(batchText);
                     filesPerBatch.push(currentFileCount);
                     i = 0;
-                    batchText = prompt; // Start with a fresh batch that includes the prompt
                     currentFileCount = 0; // Reset file count for the new batch
+
                 }
     
                 let startIndex = 0;
@@ -292,12 +301,9 @@ export class ChatGptService {
                     endIndex = startIndex + Math.min(maxTokensPerBatch * 3, fileContent.length - startIndex);
     
                     const sliceWithBounds = await this.fileUtilService.addFileBoundaryMarkers(file, fileContent.slice(startIndex, endIndex));
-                    let totalsize = fileContent.length
-                    let slicesize = sliceWithBounds.length
     
                     // Create a new batch with the prompt and the current slice
                     batchText = prompt + sliceWithBounds;
-                    let sliceTokens = encode(batchText).length;
     
                     batchesOfText.push(batchText);  // Push the new batch immediately
                     filesPerBatch.push(1); // Each slice from an oversized file is treated as a separate batch with 1 file
@@ -334,18 +340,37 @@ export class ChatGptService {
         return { batchesOfText, filesPerBatch };
     }
 
-    // With GPT-4o this approach might work the best
-    async simpleBatching(files){
-        let batchesOfText = []
-        let filesPerBatch = []
-        for (const file of files){
-            const fileContent = await this.fileUtilService.addFileBoundaryMarkers(file, await this.fileUtilService.processJavaFile(file))
-            batchesOfText.push(prompt + fileContent)
-            filesPerBatch.push(1)
+    async getCostEstimate(projectPath:string){
+        const INPUT_COST = (5 / 1000000) // GPT-4o pricing is $5 per 1 million input tokens
+        const OUTPUT_COST = (15 / 1000000) // GPT-4o pricing is $15 per 1 million output tokens
+
+        console.log(15_076_742 * INPUT_COST)
+        
+        const prompts = [sensitiveVariablesPrompt, sensitiveStringsPrompt, sensitiveCommentsPrompt];
+        const sourcePath = path.join(this.projectsPath, projectPath);
+        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+        let tokenCount = 0;
+        
+        // Calculate the cost of each prompt
+        for (const prompt of prompts) {
+            // Get the token count for each prompt produced by dynamic batching
+            let results = await this.dynamicBatching(javaFiles, prompt);
+            let batches = results.batchesOfText;
+            for (const batch of batches){
+                tokenCount += this.encode.encode(batch).length;
+            }
         }
-        return {batchesOfText, filesPerBatch}
+
+        let inputCost = tokenCount * INPUT_COST;
+        let outputCost = tokenCount * OUTPUT_COST * 0.30; // Based on previous runs Output tokens are around 30% of input tokens
+        let totalCost = inputCost + outputCost;
+
+        return {"totalCost" : totalCost,
+                "tokenCount" : tokenCount,
+                "inputCost" : inputCost,
+                "totalFiles" : javaFiles.length};
     }
-    
+
 }
 
 interface SensitiveVariables {

@@ -6,6 +6,7 @@ import {
     Patch,
     Param,
     Delete,
+    Query
 } from '@nestjs/common';
 import { ChatGptService } from './chat-gpt.service';
 
@@ -15,5 +16,10 @@ export class ChatGptController {
     @Post()
     async chatGptQuery(@Body() createChatGptDto: any) {
         return await this.chatGptService.getFileGptResponse(createChatGptDto.filePath)
+    }
+
+    @Get()
+    async getCostEstimate(@Query('project') projectPath : string){
+        return await this.chatGptService.getCostEstimate(projectPath);
     }
 }
