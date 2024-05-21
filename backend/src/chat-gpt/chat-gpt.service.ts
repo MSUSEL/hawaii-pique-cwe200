@@ -5,7 +5,9 @@ import { FileUtilService } from 'src/files/fileUtilService';
 import { EventsGateway } from 'src/events/events.gateway';
 import * as path from 'path';
 import * as cliProgress from 'cli-progress';
-import {prompt} from './prompt';
+import {sensitiveVariablesPrompt} from './sensitiveVariablesPrompt';
+import {sensitiveStringsPrompt} from './sensitiveStringsPrompt';
+import {sensitiveCommentsPrompt} from './sensitiveCommentsPrompt';
 import { response } from 'express';
 import {encode, decode} from 'gpt-tokenizer';
 import async from 'async';
@@ -46,103 +48,109 @@ export class ChatGptService {
         let sensitiveCommentsMapping = new Map<string, string[]>();
         
         let completedFiles = 0; // Number of completed files
-
-        const res = await this.dynamicBatching(files);
-        const batches = res.batchesOfText;
-        const filesPerBatch = res.filesPerBatch;
-
-
-        // Function to process a single batch
-    const processBatch = async (batch: string, filesInBatch : number, index : number) => {
-            try {
-                const response = await this.createGptWithBackoff(batch, index);                
-                completedFiles += filesInBatch;
-                this.progressBar.update(completedFiles);
-
-                if (this.debug.toLowerCase() === 'true') {
-                    console.log(`Results for batch ${index} \n ${response.message}`);
-                }
-                
-                let json = extractAndParseJSON(response.message)
-                
-                json.files.forEach((file: any) => {
-                    // Extract the sensitive variables for each file
-                    let fileName = file.fileName;
-                    let sensitiveVariables = file.sensitiveVariables;
-                    let sensitiveStrings = file.sensitiveStrings;
-                    let sensitiveComments = file.sensitiveComments;
-
-                    fileList.push({
-                        fileName: fileName,
-                        sensitiveVariables: sensitiveVariables,
-                        sensitiveStrings: sensitiveStrings,
-                        sensitiveComments: sensitiveComments
-                    });
-
-                    this.eventsGateway.emitDataToClients('data',fileName + ':',);
-                    this.eventsGateway.emitDataToClients('data',sensitiveVariables,);
-                    
-                    // Extract the sensitive variables, strings, and comments for each file
-                    const fileVariablesList = this.extractVariableNamesMultiple(sensitiveVariables);
-                    let fileStringList = this.extractVariableNamesMultiple(sensitiveStrings);  
-                    let fileCommentsList = this.extractVariableNamesMultiple(file.sensitiveComments);
-
-                    // Create Mappings for the YML files
-                    // Append or create new entry in sensitiveVariablesMapping
-                    if (sensitiveVariablesMapping[fileName]) {
-                        sensitiveVariablesMapping[fileName] = sensitiveVariablesMapping[fileName].concat(fileVariablesList);
-                    } else {
-                        sensitiveVariablesMapping[fileName] = fileVariablesList;
-                    }
-
-                    // Append or create new entry in sensitiveStringsMapping
-                    if (sensitiveStringsMapping[fileName]) {
-                        sensitiveStringsMapping[fileName] = sensitiveStringsMapping[fileName].concat(fileStringList);
-                    } else {
-                        sensitiveStringsMapping[fileName] = fileStringList;
-                    }
-
-                    // Append or create new entry in sensitiveCommentsMapping
-                   comments = comments.concat(fileCommentsList);
-                   sensitiveCommentsMapping[fileName] = fileCommentsList;
-                });
-
-            } catch (error) {
-                console.error('Error processing GPT response:', error);
-            }
-    };
-
-        // Function to limit concurrent batch processing
-        const processConcurrentBatches = async (batches, filesPerBatch ) => {
-            let concurrencyLimit = 50; // Number of concurrent tasks to run
-            console.log("Finding Sensitive Information in Project");
-        
-            const totalFiles = filesPerBatch.reduce((acc, num) => acc + num, 0);
-            this.progressBar.start(totalFiles, 0);
-        
-            const queue = async.queue(async (task, callback) => {
-                await processBatch(task.batch, task.files, task.index);
-                callback();
-            }, concurrencyLimit);
-        
-            // Push tasks to the queue
-            batches.forEach((batch, index) => {
-                queue.push({ batch, files: filesPerBatch[index], index });
-            });
-        
-            // Wait for all tasks to be processed
-            await queue.drain();
-            this.progressBar.stop();
-        };
-
-        await processConcurrentBatches(batches, filesPerBatch);
     
-        // Post-processing
+        const prompts = [
+            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
+            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
+            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments }
+        ];
+    
+        // Dictionary to store results by file name
+        const fileResults = {};
+    
+        for (const { type, prompt, mapping, result } of prompts) {
+            const res = await this.dynamicBatching(files, prompt);
+            const batches = res.batchesOfText;
+            const filesPerBatch = res.filesPerBatch;
+    
+            const processBatch = async (batch: string, filesInBatch: number, index: number) => {
+                try {
+                    const response = await this.createGptWithBackoff(batch, index);                
+                    completedFiles += filesInBatch;
+                    this.progressBar.update(completedFiles);
+    
+                    if (this.debug.toLowerCase() === 'true') {
+                        console.log(`Results for batch ${index} \n ${response.message}`);
+                    }
+                    
+                    let json = extractAndParseJSON(response.message);
+                    
+                    json.files.forEach((file: any) => {
+                        let fileName = file.fileName;
+                        let sensitiveData = [];
+                        if (type === 'variables') {sensitiveData = file.sensitiveVariables}
+                        else if (type === 'strings') {sensitiveData = file.sensitiveStrings}
+                        else if (type === 'comments') {sensitiveData = file.sensitiveComments}
+    
+                        // If file already exists in the dictionary, append the data
+                        if (fileResults[fileName]) {
+                            fileResults[fileName][type] = fileResults[fileName][type].concat(sensitiveData);
+                        } else {
+                            // Initialize the object with empty arrays if it does not exist
+                            fileResults[fileName] = {
+                                fileName: fileName,
+                                variables: [],
+                                strings: [],
+                                comments: []
+                            };
+                            fileResults[fileName][type] = sensitiveData;
+                        }
+    
+                        this.eventsGateway.emitDataToClients('data', fileName + ':',);
+                        // this.eventsGateway.emitDataToClients('data', sensitiveData,);
+    
+                        const fileDataList = this.extractVariableNamesMultiple(sensitiveData);
+    
+                        if (mapping[fileName]) {
+                            mapping[fileName] = mapping[fileName].concat(fileDataList);
+                        } else {
+                            mapping[fileName] = fileDataList;
+                        }
+    
+                        result.push(...fileDataList);
+                    });
+    
+                } catch (error) {
+                    console.error('Error processing GPT response:', error);
+                }
+            };
+    
+            const processConcurrentBatches = async (batches, filesPerBatch) => {
+                let concurrencyLimit = 50; // Number of concurrent tasks to run
+                console.log(`Finding ${type} in Project`);
+            
+                const totalFiles = filesPerBatch.reduce((acc, num) => acc + num, 0);
+                this.progressBar.start(totalFiles, 0);
+            
+                const queue = async.queue(async (task, callback) => {
+                    await processBatch(task.batch, task.files, task.index);
+                    callback();
+                }, concurrencyLimit);
+            
+                batches.forEach((batch, index) => {
+                    queue.push({ batch, files: filesPerBatch[index], index });
+                });
+            
+                await queue.drain();
+                this.progressBar.stop();
+            };
+    
+            await processConcurrentBatches(batches, filesPerBatch);
+        }
+    
+        // Convert the dictionary to a list
+        for (const fileName in fileResults) {
+            fileList.push(fileResults[fileName]);
+        }
+    
         variables = [...new Set(variables)];
-
-
-        return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, comments };
+        strings = [...new Set(strings)];
+        comments = [...new Set(comments)];
+    
+        return { variables, strings, comments, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping };
     }
+    
+
 
     /**
      * @param milliseconds time to delay in milliseconds
@@ -201,9 +209,6 @@ export class ChatGptService {
                 model: 'gpt-4o',
                 temperature: 0.2,
                 messages: [{ role: 'user', content: prompt }],
-                top_p: 0.8,
-                frequency_penalty: 0.1,
-                presence_penalty: 0.1,
             });
 
             return { message: completion.data.choices[0].message.content };
@@ -250,8 +255,8 @@ export class ChatGptService {
     }
 
 
-    async dynamicBatching(files) {
-        const maxTokensPerBatch = 10000; // Maximum number of tokens per batch
+    async dynamicBatching(files, prompt) {
+        const maxTokensPerBatch = 2000; // Maximum number of tokens per batch
         const promptTokenCount = encode(prompt).length;
         let batchesOfText = []; // Array to hold all batches of text
         let filesPerBatch = []; // Used later on by the progress bar
