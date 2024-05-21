@@ -21,6 +21,10 @@ import math
 # Ref https://openai.com/api/pricing/ 
 INPUT_COST = (5 / 1_000_000) # GPT-4o pricing is $5 per 1 million input tokens
 OUTPUT_COST = (15 / 1_000_000) # GPT-4o pricing is $15 per 1 million output tokens
+VARIABLES_PROMPT_PATH = 'backend/src/chat-gpt/sensitiveVariablesPrompt.ts'
+STRINGS_PROMPT_PATH = 'backend/src/chat-gpt/sensitiveStringsPrompt.ts'
+COMMENTS_PROMPT_PATH = 'backend/src/chat-gpt/sensitiveCommentsPrompt.ts'
+
 results = {}
 
 
@@ -45,19 +49,21 @@ def run_test(directory):
 
     token_count = 0
     token_count_preprocessed = 0
+    prompt_paths = [VARIABLES_PROMPT_PATH, STRINGS_PROMPT_PATH, COMMENTS_PROMPT_PATH]
 
     # Count Tokens in file with and without preprocessing
-    prompt = get_prompt()
-    for file in files:
-        file_txt = open_file(file)
-        token_count += encode(prompt + file_txt)
-    
-    # Batch files here
-    batch_files, _ = dynamicBatching(files)
-    for file in batch_files:
-        token_count_preprocessed += encode(file)
-    
-    results[directory] = token_count_preprocessed
+    for prompt_path in prompt_paths:
+        prompt = get_prompt(prompt_path)
+        for file in files:
+            file_txt = open_file(file)
+            token_count += encode(prompt + file_txt)
+        
+        # Batch files here
+        batch_files, _ = dynamicBatching(files, prompt_path)
+        for file in batch_files:
+            token_count_preprocessed += encode(file)
+        
+        results[directory] = token_count_preprocessed
 
 
     print(f' Number of tokens used for this project without preprocessing {token_count:,}')
@@ -78,7 +84,7 @@ def run_test(directory):
     print(f' Estimated Total Cost without preprocessing ${total_token_cost :.2f} | Input Cost ${input_token_cost :.2f} | Output Cost ${output_token_cost :.2f}')
     print(f' Estimated Total Cost with preprocessing ${total_preprocess_cost :.2f} | Input Cost ${input_token_cost_preprocessed :.2f} | Output Cost ${output_token_cost_preprocessed :.2f}')
 
-    return
+    return total_preprocess_cost
 
 
 def find_java_files(directory):    
@@ -96,7 +102,7 @@ def open_file(file):
 
 
 def encode(file):
-    encoding = tiktoken.get_encoding("cl100k_base")
+    encoding = tiktoken.get_encoding("o200k_base")
     return len(encoding.encode(file))
 
 
@@ -133,9 +139,9 @@ def get_tokenize_file_count_of_json():
     print(output_price)
 
 # This is the same algorithm used in the backend to batch files backend/src/chat-gpt/chat-gpt.service.ts
-def dynamicBatching(files):
+def dynamicBatching(files, prompt_path):
         maxTokensPerBatch = 10000; # Maximum number of tokens per batch
-        prompt = get_prompt() # Prompt to be used at the beginning of each batch
+        prompt = get_prompt(prompt_path) # Prompt to be used at the beginning of each batch
         promptTokenCount = encode(prompt)
         batchesOfText = []; # Array to hold all batches of text
         filesPerBatch = []; # Used later on by the progress bar
@@ -233,8 +239,8 @@ def add_file_boundary_markers(file_path: str, file_content: str) -> str:
     file_name = os.path.basename(file_path)
     return f'-----BEGIN FILE: [{file_name}]----- \n{file_content}\n-----END FILE: [{file_name}]-----'
       
-def get_prompt():
-    with open('backend/src/chat-gpt/prompt.ts', 'r', encoding='utf-8') as file:
+def get_prompt(path):
+    with open(path, 'r', encoding='utf-8') as file:
         content = file.read()
     
     # Regular expression to match text between backticks
