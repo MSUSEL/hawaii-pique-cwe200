@@ -66,7 +66,7 @@ Provide a JSON response in the following format. Do not include any error messag
 2) Provide a JSON response for each file that matches the format below. 
   A) The "name" field should be the sensitive information found in the comment.
   B) The "description" field should describe the type of sensitive information found.
-3) Do not include any \ in the name or description fields as this will cause the JSON to be invalid.
+3) Do not include any \ in the name or description fields as this will cause the JSON to be invalid. For example, "-----BEGIN PRIVATE KEY-----\nMIICeAIBADANBgkqhkiG9w0BAQEFAASC...\n-----END PRIVATE KEY-----" should be written as "-----BEGIN PRIVATE KEY-----nMIICeAIBADANBgkqhkiG9w0BAQEFAASC...n-----END PRIVATE
 {
   "files": [
     {
