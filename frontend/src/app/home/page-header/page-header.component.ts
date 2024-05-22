@@ -15,6 +15,7 @@ declare var $: any;
 })
 export class PageHeaderComponent implements OnInit {
     isLoading:boolean=false;
+    calculatedCost: number | null = null;
     constructor(
         public utilService: CVEUtilService,
         private socketService:SocketService,
@@ -105,13 +106,19 @@ export class PageHeaderComponent implements OnInit {
           },
           data: {
             onComfirm: () => this.runCodeQl(),
-            isLoading: true
+            isLoading: true,
+            cost : this.calculatedCost
           }
         });
-      
-        this.getCost().then(cost => {
-          dialogRef.componentInstance.updateData({ isLoading: false, cost });
-        });
+        if (this.calculatedCost === null){
+          this.getCost().then(cost => {
+            dialogRef.componentInstance.updateData({ isLoading: false, cost });
+          });
+        } else {
+          dialogRef.componentInstance.data.isLoading = false;
+          dialogRef.componentInstance.data.cost = this.calculatedCost;
+      }
+        
       
         dialogRef.afterClosed().subscribe(result => {
           if (result) {

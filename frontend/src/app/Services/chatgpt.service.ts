@@ -8,6 +8,9 @@ import { environment } from 'src/environments/environment';
 })
 export class ChatGptService {
     public url = environment.apiUrl + '/chatgpt/';
+    public ChatGPTToken = null;
+    public GPTModel = null;
+
     constructor(private http: HttpClient) {}
 
     queryChatGpt(data:any):Observable<any>{
@@ -16,5 +19,13 @@ export class ChatGptService {
 
     getCostEstimate(projectPath:string):Observable<any>{
         return this.http.get(this.url+'?project='+projectPath);
+    }
+
+    getChatGptToken():Observable<any>{
+        return this.http.get(this.url+'token');
+    }
+
+    updateChatGptToken(token:string):Observable<any>{
+        return this.http.post(this.url+'token',{token:token});
     }
 }

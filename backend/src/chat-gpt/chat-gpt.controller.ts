@@ -22,4 +22,14 @@ export class ChatGptController {
     async getCostEstimate(@Query('project') projectPath : string){
         return await this.chatGptService.getCostEstimate(projectPath);
     }
+
+    @Get('token')
+    async getChatGptToken(){
+        return await this.chatGptService.getChatGptToken();
+    }
+
+    @Post('token')
+    async updateChatGptToken(@Body() body: { token: string }) {
+        return await this.chatGptService.updateChatGptToken(body.token);
+    }
 }

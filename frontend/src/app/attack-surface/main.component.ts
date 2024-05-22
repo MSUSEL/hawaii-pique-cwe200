@@ -45,8 +45,8 @@ export class AttackSurfaceComponent {
 
     openSettingsDialog() : void {
         const dialogRef = this.dialog.open(SettingsDialogComponent,{
-            height: '320px',
-            width: '500px',
+            height: '400px',
+            width: '600px',
             position:{
                 top:'100px'
             }

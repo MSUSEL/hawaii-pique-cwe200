@@ -373,6 +373,34 @@ export class ChatGptService {
             totalFiles: javaFiles.length,
         };
     }
+
+    getChatGptToken() {
+        const apiKey = this.configService.get('API_KEY');
+        if (!apiKey) {
+            return { message: 'API Key not set' };
+        }
+        const obfuscatedToken = apiKey.slice(0, -4).replace(/./g, '*') + apiKey.slice(-4);
+        return { token: obfuscatedToken };
+    }
+
+    async updateChatGptToken(newToken: string) {
+        const envPath = path.resolve(__dirname, '../../../.env'); // Path to your .env file
+        let envContent = await this.fileUtilService.readFileAsync(envPath);
+        
+        // Update the API_KEY value in the .env file
+        const updatedEnvContent = envContent.replace(
+            /API_KEY='.*'(\r\n|\n)/,
+            `API_KEY='${newToken}'$1`
+        );
+        // Write the updated content back to the .env file
+        this.fileUtilService.writeToFile(envPath, updatedEnvContent);
+
+        // Optionally reload the config values if needed
+        this.configService['envVariablesLoaded'] = false;
+        this.configService['load']();
+
+        return { message: 'API Key updated successfully' };
+    }
     
 
 }
