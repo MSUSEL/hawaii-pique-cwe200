@@ -125,8 +125,8 @@ export class PageHeaderComponent implements OnInit {
         await this.socketService.socketConnect();
     
         return new Promise((resolve, reject) => {
-        //   this.chatGptService.getCostEstimate(this.utilService.ProjectName).subscribe(
-            this.chatGptService.getCostEstimate("CWEToyDataset").subscribe(
+          this.chatGptService.getCostEstimate(this.utilService.ProjectName).subscribe(
+            // this.chatGptService.getCostEstimate("CWEToyDataset").subscribe(
             (response) => {
               resolve(response.totalCost);
               this.socketService.socketDisconnect();
@@ -139,5 +139,4 @@ export class PageHeaderComponent implements OnInit {
         });
       }
       
-
 }

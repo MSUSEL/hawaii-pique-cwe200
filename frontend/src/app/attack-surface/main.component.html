@@ -21,9 +21,13 @@
                     </div>
                 </li> -->
                 <li class="nav-item dropdown">
-                    <button class="dropdown-item btn" title="Choose a zip file with your code to start analysis" (click)="fileInput.click();"> <i
+                    <button class="nav-item btn hover-green" title="Choose a zip file with your code to start analysis" (click)="fileInput.click();"> <i
                         class=" fa fa-file-import pl-1 pr-2" ></i>Import</button>
                 </li>
+                <li class="nav-item">
+                    <button class="nav-item btn hover-green" (click)="openSettingsDialog();">
+                        Settings <i class="fa fa-gear px-2"></i>
+                    </button>
             </ul>
             <div>
                 <button class="nav-item btn hover-green" (click)="openDialog()" [disabled]="true">

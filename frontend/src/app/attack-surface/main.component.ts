@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import {  CVEUtilService } from './cwe-util.service';
 import {MatDialog} from '@angular/material/dialog';
 import { SaveFileDialogComponent } from './dialogs/dialogs.component';
+import { SettingsDialogComponent } from './dialogs/settings.dialog.component';
 import {ConfirmationDialogComponent} from '../home/page-header/dialogs/confirmation-dialog.component';
 
 import { ItemFlatNode } from '../shared-components/tree/tree.component';
@@ -38,6 +39,16 @@ export class AttackSurfaceComponent {
                     alert("Invalid Name")
                 }
                 this.utilService.ProjectName=previousName;
+            }
+        });
+    }
+
+    openSettingsDialog() : void {
+        const dialogRef = this.dialog.open(SettingsDialogComponent,{
+            height: '320px',
+            width: '500px',
+            position:{
+                top:'100px'
             }
         });
     }

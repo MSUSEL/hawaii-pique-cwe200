@@ -6,6 +6,7 @@ import { AttackSurfaceComponent } from './main.component';
 import { PageHeaderComponent } from '../home/page-header/page-header.component';
 import { MainComponent } from './MainComponents/main.component';
 import { SaveFileDialogComponent } from './dialogs/dialogs.component';
+import { SettingsDialogComponent } from './dialogs/settings.dialog.component';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
 import { CodeQlComponent } from './code-ql/code-ql.component';
 import { ConfirmationDialogComponent } from '../home/page-header/dialogs/confirmation-dialog.component';
@@ -18,6 +19,7 @@ import { ConfirmationDialogComponent } from '../home/page-header/dialogs/confirm
         PageHeaderComponent,
         MainComponent,
         SaveFileDialogComponent,
+        SettingsDialogComponent,
         CodeQlComponent,
         ConfirmationDialogComponent
     ],
