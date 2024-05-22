@@ -161,7 +161,7 @@ def dynamicBatching(files, prompt_path):
                 # print(f'File {file} is too large to fit in a single batch {i}')
     
                 # If there is already content in the current batch, push it and start a new batch
-                if (totalBatchTokenCount > promptTokenCount):
+                if (totalBatchTokenCount > 0):
                     batchesOfText.append(batchText)
                     filesPerBatch.append(currentFileCount)
                     i = 0
@@ -274,4 +274,5 @@ def estimate_output_tokens():
 if __name__ == "__main__":
     # get_tokenize_file_count_of_json()
     # estimate_output_tokens()
+    # run_test('Files/CWEToyDataset')
     main()

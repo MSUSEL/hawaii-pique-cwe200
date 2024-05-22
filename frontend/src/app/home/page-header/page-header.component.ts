@@ -4,6 +4,10 @@ import { FilesService } from 'src/app/Services/fileService';
 import { SocketService } from 'src/app/Services/socket-service.service';
 import { CVEUtilService } from 'src/app/attack-surface/cwe-util.service';
 import { EditorService } from 'src/app/shared-components/editor-service';
+import {ConfirmationDialogComponent} from './dialogs/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ChatGptService } from 'src/app/Services/chatgpt.service';
+
 declare var $: any;
 @Component({
     selector: 'app-page-header',
@@ -16,7 +20,10 @@ export class PageHeaderComponent implements OnInit {
         private socketService:SocketService,
         private fileService: FilesService,
         private codeQlService:CodeQlService,
-        private editorService:EditorService
+        private chatGptService:ChatGptService,
+        private editorService:EditorService,
+        public dialog: MatDialog
+
     ) {}
 
     ngOnInit(): void {
@@ -37,6 +44,8 @@ export class PageHeaderComponent implements OnInit {
                 $('#terminal').toggleClass('d-none');
             });
         });
+
+        // this.openAgreementDialog();
     }
 
     uploadProject() {
@@ -86,5 +95,49 @@ export class PageHeaderComponent implements OnInit {
                 }
         });
     }   
+
+    openAgreementDialog(): void {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+          height: '235px',
+          width: '500px',
+          position: {
+            top: '100px'
+          },
+          data: {
+            onComfirm: () => this.runCodeQl(),
+            isLoading: true
+          }
+        });
+      
+        this.getCost().then(cost => {
+          dialogRef.componentInstance.updateData({ isLoading: false, cost });
+        });
+      
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.utilService.export();
+          }
+        });
+      }
+      
+      async getCost(): Promise<number> {
+        this.socketService.clearOutput();
+        await this.socketService.socketConnect();
+    
+        return new Promise((resolve, reject) => {
+        //   this.chatGptService.getCostEstimate(this.utilService.ProjectName).subscribe(
+            this.chatGptService.getCostEstimate("CWEToyDataset").subscribe(
+            (response) => {
+              resolve(response.totalCost);
+              this.socketService.socketDisconnect();
+            },
+            (error) => {
+              reject(error);
+              this.socketService.socketDisconnect();
+            }
+          );
+        });
+      }
+      
 
 }

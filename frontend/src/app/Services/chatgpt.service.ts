@@ -13,4 +13,8 @@ export class ChatGptService {
     queryChatGpt(data:any):Observable<any>{
         return this.http.post(this.url,data);
     }
+
+    getCostEstimate(projectPath:string):Observable<any>{
+        return this.http.get(this.url+'?project='+projectPath);
+    }
 }

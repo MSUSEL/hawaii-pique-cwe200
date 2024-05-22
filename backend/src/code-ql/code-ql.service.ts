@@ -78,26 +78,6 @@ export class CodeQlService {
         return data;
     }
 
-    async debugChatGPT(sourcePath){
-        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
-        // Code used for testing Chat GPT Calls with preprocessing
-        for(let i = 0; i < 10; i++) {
-            let slice = javaFiles.slice(0, (i + 1) * 10);  
-            let start = performance.now();
-            const data=await this.gptService.openAiGetSensitiveVariables(slice);
-            let end = performance.now();
-            console.log(`Slice of ${slice.length} took ${end - start} milliseconds`);
-            if(i == 0){
-                fs.writeFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
-            }
-            else{
-                fs.appendFileSync(`./times.txt`, `Slice of ${slice.length} took ${end - start} milliseconds\n`);
-            }
-
-            return data;
-        }
-    }
-
     useSavedData(sourcePath){
         return this.fileUtilService.parseJSONFile(path.join(sourcePath, "data.json"));
     }
@@ -186,9 +166,6 @@ export class CodeQlService {
                 }
             });
         });
-
-
-
 
     }
 

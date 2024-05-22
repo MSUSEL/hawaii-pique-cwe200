@@ -17,6 +17,7 @@ import { FooterComponent } from './home/footer/footer.component';
 import { AppInterceptorService } from './Services/InterCeptors';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
 
+
 @NgModule({
     declarations: [AppComponent, TopHeaderComponent, FooterComponent],
     imports: [
@@ -29,6 +30,7 @@ import { SharedComponentsModule } from './shared-components/shared-components.mo
         AppRoutingModule,
         SharedComponentsModule,
         AttackSurfaceModule,
+        
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

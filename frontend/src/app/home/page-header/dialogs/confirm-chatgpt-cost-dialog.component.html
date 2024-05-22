@@ -1,0 +1,18 @@
+<!-- confirm-chatgpt-cost-dialog.component.html -->
+<h2 mat-dialog-title>Warning</h2>
+<div mat-dialog-content>
+  <p>
+    This tool utilizes ChatGPT to perform analysis. Based on this project, it is <b>estimated</b> to cost:
+    <ng-container *ngIf="data.isLoading; else costTemplate">
+      <mat-spinner diameter="20"></mat-spinner>
+    </ng-container>
+    <ng-template #costTemplate>
+      {{ data.cost | currency }}
+    </ng-template>
+  </p>
+  <p *ngIf="!data.isLoading">Do you want to proceed?</p>
+</div>
+<div mat-dialog-actions *ngIf="!data.isLoading">
+  <button mat-button (click)="onNoClick()">No</button>
+  <button mat-button (click)="onYesClick()">Yes</button>
+</div>
