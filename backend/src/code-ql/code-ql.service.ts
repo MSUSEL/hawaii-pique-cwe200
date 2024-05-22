@@ -46,23 +46,11 @@ export class CodeQlService {
         // let slice = javaFiles.slice(0, 20);  
         // const data = await this.runChatGPT(slice, sourcePath);
 
+        // const data = await this.runChatGPT(javaFiles, sourcePath);
 
+        // await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
 
-        // const data = this.debugChatGPT(sourcePath);
-        const data = await this.runChatGPT(javaFiles, sourcePath);
-
-        // const data = this.useSavedData(sourcePath); // Use existing data so that we don't use GPT credits
-
-        await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
-
-        // await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
-
-        // const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-
-        // // Analyze with codeql
-        // const outputPath = path.join(sourcePath, 'result.sarif');
-        // const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --rerun --output=${outputPath} ${this.queryPath}`;
-        // await this.runChildProcess(analyzeDbCommand);
+        await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
 
         return await this.parserService.getSarifResults(sourcePath);
 
@@ -228,8 +216,11 @@ export class CodeQlService {
         await this.runChildProcess(createDbCommand);
 
         // Analyze with codeql
-        const outputPath = path.join(sourcePath, 'result.sarif');
-        const analyzeDbCommand = `database analyze ${db} --format=sarifv2.1.0 --output=${outputPath} ${this.queryPath}`;
+        const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';
+        const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
+
+        const outputPath = path.join(sourcePath, `result.${extension}`);
+        const analyzeDbCommand = `database analyze ${db} --format=${format} --output=${outputPath} ${this.queryPath}`;
         await this.runChildProcess(analyzeDbCommand);
     }
 
