@@ -283,7 +283,7 @@ export class ChatGptService {
             const currentFileTokenCount = fileTokens.length;
     
             if (currentFileTokenCount > maxTokensPerBatch) {
-                console.log(`File ${file} is too large to fit in a single batch ${i}`);
+                // console.log(`File ${file} is too large to fit in a single batch ${i}`);
     
                 // If there is already content in the current batch, push it and start a new batch
                 if (totalBatchTokenCount > 0) {
@@ -340,36 +340,40 @@ export class ChatGptService {
         return { batchesOfText, filesPerBatch };
     }
 
-    async getCostEstimate(projectPath:string){
-        const INPUT_COST = (5 / 1000000) // GPT-4o pricing is $5 per 1 million input tokens
-        const OUTPUT_COST = (15 / 1000000) // GPT-4o pricing is $15 per 1 million output tokens
-
-        console.log(15_076_742 * INPUT_COST)
-        
+    async getCostEstimate(projectPath: string) {
+        const INPUT_COST = (5 / 1000000); // GPT-4o pricing is $5 per 1 million input tokens
+        const OUTPUT_COST = (15 / 1000000); // GPT-4o pricing is $15 per 1 million output tokens
+    
+    
         const prompts = [sensitiveVariablesPrompt, sensitiveStringsPrompt, sensitiveCommentsPrompt];
         const sourcePath = path.join(this.projectsPath, projectPath);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
         let tokenCount = 0;
-        
-        // Calculate the cost of each prompt
-        for (const prompt of prompts) {
-            // Get the token count for each prompt produced by dynamic batching
-            let results = await this.dynamicBatching(javaFiles, prompt);
-            let batches = results.batchesOfText;
-            for (const batch of batches){
-                tokenCount += this.encode.encode(batch).length;
-            }
-        }
-
+    
+        // Calculate the cost of each prompt concurrently
+        const promptResults = await Promise.all(
+            prompts.map(async (prompt) => {
+                let results = await this.dynamicBatching(javaFiles, prompt);
+                return results.batchesOfText;
+            })
+        );
+    
+        // Flatten the array of batches and calculate total tokens
+        const batches = promptResults.flat();
+        tokenCount = batches.reduce((total, batch) => total + this.encode.encode(batch).length, 0);
+    
         let inputCost = tokenCount * INPUT_COST;
         let outputCost = tokenCount * OUTPUT_COST * 0.30; // Based on previous runs Output tokens are around 30% of input tokens
         let totalCost = inputCost + outputCost;
-
-        return {"totalCost" : totalCost,
-                "tokenCount" : tokenCount,
-                "inputCost" : inputCost,
-                "totalFiles" : javaFiles.length};
+    
+        return {
+            totalCost: totalCost,
+            tokenCount: tokenCount,
+            inputCost: inputCost,
+            totalFiles: javaFiles.length,
+        };
     }
+    
 
 }
 
