@@ -105,7 +105,7 @@ export class PageHeaderComponent implements OnInit {
             top: '100px'
           },
           data: {
-            onComfirm: () => this.runCodeQl(),
+            onConfirm: () => this.runCodeQl(),
             isLoading: true,
             cost : this.calculatedCost
           }
@@ -118,13 +118,14 @@ export class PageHeaderComponent implements OnInit {
           dialogRef.componentInstance.data.isLoading = false;
           dialogRef.componentInstance.data.cost = this.calculatedCost;
       }
+      
         
       
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            this.utilService.export();
-          }
-        });
+        // dialogRef.afterClosed().subscribe(result => {
+        //   if (result) {
+        //     this.utilService.export();
+        //   }
+        // });
       }
       
       async getCost(): Promise<number> {
