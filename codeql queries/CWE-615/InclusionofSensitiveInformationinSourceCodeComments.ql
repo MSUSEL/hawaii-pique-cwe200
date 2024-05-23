@@ -9,22 +9,19 @@
  * @cwe CWE-615
  */
 
-import java
-import SensitiveInfo.SensitiveInfo
-
-class HardCodedSensitiveComments extends Javadoc {
-  HardCodedSensitiveComments() {
-    exists(string pattern |
-      sensitiveComments(pattern) and
-      this.getAChild().(JavadocText).getText().regexpMatch(".*" + pattern + ".*") 
-      // and
-      // this.getAChild().(JavadocText).getText().toLowerCase().regexpMatch(".*(username|password|).*")
-
-    )
-  }
-}
-
-from HardCodedSensitiveComments comment
-select comment, " This comment may have hardcoded sensitive info"
-
-
+ import java
+ import SensitiveInfo.SensitiveInfo
+ 
+ class HardCodedSensitiveComments extends Javadoc {
+   HardCodedSensitiveComments() {
+     exists(string pattern, File f |
+       sensitiveComments(f.getBaseName(), pattern) and
+       this.getFile() = f and
+       this.getAChild().(JavadocText).getText().regexpMatch(".*" + pattern + ".*")
+     )
+   }
+ }
+ 
+ from HardCodedSensitiveComments comment
+ select comment, "This comment may have hardcoded sensitive info"
+ 

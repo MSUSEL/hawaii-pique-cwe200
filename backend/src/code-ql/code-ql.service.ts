@@ -136,26 +136,6 @@ export class CodeQlService {
         await this.fileUtilService.writeToFile(jsonPath, data)
     }
 
-    copyQueries(srcDir: string, destDir: string) {
-
-        fs.readdir(srcDir, { withFileTypes: true }, (err, entries) => {
-            if (err) throw err;
-
-            entries.forEach(entry => {
-                const srcPath = path.join(srcDir, entry.name);
-                const destPath = path.join(destDir, entry.name);
-
-                if (entry.isDirectory()) {
-                    fs.mkdir(destPath, { recursive: true }, (err) => {
-                        if (err) throw err;
-                        console.log(`Directory created: ${destPath}`);
-                        this.copyQueries(srcPath, destPath); // Recursive call to copy directory contents
-                    });
-                }
-            });
-        });
-
-    }
 
     formatMappings(mapping) : string{
         // mapping = {"GOOD_ConsistentAuthenticationTiming.java": ["VALID_USERNAME", "VALID_PASSWORD"], "GOOD_UniformLoginResponse": ["username"]};
@@ -220,7 +200,7 @@ export class CodeQlService {
         const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
 
         const outputPath = path.join(sourcePath, `result.${extension}`);
-        const analyzeDbCommand = `database analyze ${db} --format=${format} --output=${outputPath} ${this.queryPath}`;
+        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${this.queryPath}`;
         await this.runChildProcess(analyzeDbCommand);
     }
 

@@ -3,7 +3,7 @@ import java
 // Define the extensible predicates
 extensible predicate sensitiveVariables(string fileName, string variableName);
 extensible predicate sensitiveStrings(string fileName, string variableName);
-extensible predicate sensitiveComments(string variablesName);
+extensible predicate sensitiveComments(string fileName, string variableName);
 
 
   class SensitiveVariableExpr extends Expr {
@@ -45,13 +45,14 @@ extensible predicate sensitiveComments(string variablesName);
   }
 
 
-  class SensitiveComment extends StringLiteral {
-    SensitiveComment() {
-      exists(string pattern | 
-        sensitiveComments(pattern) and 
-        this.getValue().regexpMatch(pattern)
-      )
-    }   
-  }
+  // class SensitiveComment extends StringLiteral {
+  //   SensitiveComment() {
+  //     exists(File f, string pattern |
+  //       f = this.getCompilationUnit().getFile() and
+  //       sensitiveComments(f.getBaseName(), pattern) and
+  //       this.getValue().regexpMatch(pattern)
+  //     )
+  //   }   
+  // }
 
 

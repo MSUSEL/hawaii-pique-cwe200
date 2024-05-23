@@ -34,8 +34,6 @@ where
     sl.getEnclosingCallable() = m and
     (
         // Check for sensitive string literals within the method
-        exists(SensitiveStringLiteral ssl | ssl.getEnclosingCallable() = m) or
-        // Check for sensitive comments within the method
-        exists(SensitiveComment sc | sc.getEnclosingCallable() = m)
+        exists(SensitiveStringLiteral ssl | ssl.getEnclosingCallable() = m)
     )
 select sl, "CWE-531: Exposure of sensitive information in test code within method " + m.getName() + "."
