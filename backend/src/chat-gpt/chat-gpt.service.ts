@@ -58,8 +58,8 @@ export class ChatGptService {
         let completedFiles = 0; // Number of completed files
     
         const prompts = [
-            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
-            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
+            // { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
+            // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
             { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments }
         ];
     
@@ -341,6 +341,10 @@ export class ChatGptService {
     }
 
     async getCostEstimate(projectPath: string) {
+        /*
+        Results from previous runs to help estimate costs:
+        CWEToyDataset: Predicted = $1.79, Actual = $1.23
+        */
         const INPUT_COST = (5 / 1000000); // GPT-4o pricing is $5 per 1 million input tokens
         const OUTPUT_COST = (15 / 1000000); // GPT-4o pricing is $15 per 1 million output tokens
     
