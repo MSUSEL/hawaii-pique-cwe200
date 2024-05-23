@@ -199,7 +199,7 @@ export class CodeQlService {
         await this.writeVariablesToFile(stringsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveStrings.yml")
 
 
-        const commentsMapping = this.formatStringArray(data.comments);
+        const commentsMapping = this.formatMappings(data.sensitiveCommentsMapping);
         let commentsFile = SensitiveComments.replace("**********", commentsMapping);
         await this.writeVariablesToFile(commentsFile, "../codeql queries/SensitiveInfo/SensitiveComments.yml")
         await this.writeVariablesToFile(commentsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveComments.yml")
