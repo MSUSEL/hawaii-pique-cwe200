@@ -1,65 +1,65 @@
-
-<ul class="nav nav-tabs border-bottom bg-creamy" id="myTab" role="tablist" *ngIf="editorService.openedFiles.length">
-    <li class="nav-item tab-hover" role="presentation" *ngFor="let item of editorService.openedFiles;let i=index;">
-        <button class="nav-link" 
-            [ngClass]="{'active':item.fullPath==editorService.activeFile.fullPath}"
-            id="item_{{i}}" data-toggle="tab" data-target="#home" type="button"
-            (click)="onFileTabSelected(item)"
-            role="tab" aria-controls="home" aria-selected="true">{{item.name}}
-        </button>
-        <button type="button" (click)="closeFile(item);" class="btn close-button">
-            <i class="fa fa-times"></i>
-        </button>
-    </li>
-</ul>
-<div class="tab-content h-100 my-0" id="myTabContent" *ngIf="editorService.openedFiles.length" >
-    <div class="tab-pane fade show active" style="height: 600px;" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div style="height: 600px;" *ngIf="editorService.openedFiles.length && view=='code'">
-            <div class="code-header d-flex justify-content-between px-3">
-                <div>
-                    <span class="text-secondary">{{filePath}}</span>
-                </div>
-                <div class="toolbar" >
-                    <button class="btn "
-                        (click)="this.view='gpt';gerChatGptResponse('gpt');" 
-                        title="Extract Sensitive Information from ChatGpt">
-                        <i class="fa fa-list text-secondary hover-green"></i>
-                    </button>
-                    <button class="btn hover-green" title="Save Changes">
-                        <i class="fa fa-save text-secondary hover-green"></i>
-                    </button>
-                </div>
-            </div>
-            <ngx-monaco-editor class="my-code-editor h-100" 
-                [options]="editorOptions" 
-                (onInit)="onInitEditor($event)"
-                (ngModelChange)="onCodeChange($event)"
-                [(ngModel)]="editorService.activeFile.code">
-            </ngx-monaco-editor>
-        </div>
-        <div class="h-100" *ngIf="view=='gpt'">
-            <div class="code-header d-flex justify-content-between px-3">
-                <div>
-                    <span class="text-secondary">{{editorService.activeFile.name}} Sensitive Information</span>
-                </div>
-                <div class="toolbar" >
-                    <button class="btn hover-green "
-                        (click)="gerChatGptResponse('gpt');" 
-                        title="Extract Sensitive Information from ChatGpt">
-                        <i class="fa fa-list text-secondary hover-green"></i> Gpt Model
-                    </button>
-                    <button class="btn hover-green" title="Source Code" (click)="this.view='code'">
-                        <i class="fa fa-code text-secondary hover-green"></i>
-                    </button>
-                </div>
-            </div>
-
-            <ngx-monaco-editor class="my-code-editor h-100" 
-                [options]="editorOptions" 
-                [(ngModel)]="this.chatGptResponse">
-            </ngx-monaco-editor>
-        </div>
-
-    </div>
-
-</div>
+<div style="overflow-x: auto; white-space: nowrap;">
+    <ul class="nav nav-tabs border-bottom bg-creamy" id="myTab" #myTab role="tablist" *ngIf="editorService.openedFiles.length" style="display: flex; flex-wrap: nowrap;">
+        <li class="nav-item tab-hover" role="presentation" *ngFor="let item of editorService.openedFiles; let i = index;" style="flex: 0 0 auto;">
+            <button class="nav-link" 
+                [ngClass]="{'active': item.fullPath == editorService.activeFile.fullPath}"
+                id="item_{{i}}" data-toggle="tab" data-target="#home" type="button"
+                (click)="onFileTabSelected(item)"
+                role="tab" aria-controls="home" aria-selected="true">{{item.name}}
+            </button>
+            <button type="button" (click)="closeFile(item);" class="btn close-button">
+                <i class="fa fa-times"></i>
+            </button>
+        </li>
+    </ul>
+  </div>
+  <div class="tab-content h-100 my-0" id="myTabContent" *ngIf="editorService.openedFiles.length">
+      <div class="tab-pane fade show active" style="height: 600px;" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <div style="height: 600px;" *ngIf="editorService.openedFiles.length && view == 'code'">
+              <div class="code-header d-flex justify-content-between px-3">
+                  <div>
+                      <span class="text-secondary">{{filePath}}</span>
+                  </div>
+                  <div class="toolbar">
+                      <button class="btn"
+                          (click)="this.view = 'gpt'; gerChatGptResponse('gpt');" 
+                          title="Extract Sensitive Information from ChatGpt">
+                          <i class="fa fa-list text-secondary hover-green"></i>
+                      </button>
+                      <button class="btn hover-green" title="Save Changes">
+                          <i class="fa fa-save text-secondary hover-green"></i>
+                      </button>
+                  </div>
+              </div>
+              <ngx-monaco-editor class="my-code-editor h-100" 
+                  [options]="editorOptions" 
+                  (onInit)="onInitEditor($event)"
+                  (ngModelChange)="onCodeChange($event)"
+                  [(ngModel)]="editorService.activeFile.code">
+              </ngx-monaco-editor>
+          </div>
+          <div class="h-100" *ngIf="view == 'gpt'">
+              <div class="code-header d-flex justify-content-between px-3">
+                  <div>
+                      <span class="text-secondary">{{editorService.activeFile.name}} Sensitive Information</span>
+                  </div>
+                  <div class="toolbar">
+                      <button class="btn hover-green"
+                          (click)="gerChatGptResponse('gpt');" 
+                          title="Extract Sensitive Information from ChatGpt">
+                          <i class="fa fa-list text-secondary hover-green"></i> Gpt Model
+                      </button>
+                      <button class="btn hover-green" title="Source Code" (click)="this.view = 'code'">
+                          <i class="fa fa-code text-secondary hover-green"></i>
+                      </button>
+                  </div>
+              </div>
+  
+              <ngx-monaco-editor class="my-code-editor h-100" 
+                  [options]="editorOptions" 
+                  [(ngModel)]="this.chatGptResponse">
+              </ngx-monaco-editor>
+          </div>
+      </div>
+  </div>
+  
