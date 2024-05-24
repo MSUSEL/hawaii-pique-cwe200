@@ -1,6 +1,5 @@
 import csv
 import json
-import os
 
 # Function to read the CSV and process the data
 def process_csv_to_json(csv_file, json_file):
@@ -36,5 +35,4 @@ def process_csv_to_json(csv_file, json_file):
 # Usage
 csv_file = 'testing/ChatGPT/input.csv'
 json_file = 'testing/ChatGPT/output.json'
-print(os.getcwd())
 process_csv_to_json(csv_file, json_file)
