@@ -8,6 +8,7 @@ import * as cliProgress from 'cli-progress';
 import {sensitiveVariablesPrompt} from './sensitiveVariablesPrompt';
 import {sensitiveStringsPrompt} from './sensitiveStringsPrompt';
 import {sensitiveCommentsPrompt} from './sensitiveCommentsPrompt';
+import {classifyPrompt} from './classifyPrompt'
 import { response } from 'express';
 import { get_encoding } from 'tiktoken';
 import async from 'async';
@@ -49,18 +50,22 @@ export class ChatGptService {
         let variables = [];
         let strings = [];
         let comments = [];
+        let classifications = [];
         const fileList: any[] = [];
         
         let sensitiveVariablesMapping = new Map<string, string[]>();
         let sensitiveStringsMapping = new Map<string, string[]>();
         let sensitiveCommentsMapping = new Map<string, string[]>();
+        let classificationMapping = new Map<string, string[]>();
         
         let completedFiles = 0; // Number of completed files
     
         const prompts = [
             // { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
             // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
-            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments }
+            // { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
+            { type: 'classification', prompt: classifyPrompt, mapping: classificationMapping, result: classifications }
+
         ];
     
         // Dictionary to store results by file name
@@ -89,6 +94,7 @@ export class ChatGptService {
                         if (type === 'variables') {sensitiveData = file.sensitiveVariables}
                         else if (type === 'strings') {sensitiveData = file.sensitiveStrings}
                         else if (type === 'comments') {sensitiveData = file.sensitiveComments}
+                        else if (type === 'classification') {sensitiveData = file.classification}
     
                         // If file already exists in the dictionary, append the data
                         if (fileResults[fileName]) {
@@ -99,7 +105,8 @@ export class ChatGptService {
                                 fileName: fileName,
                                 variables: [],
                                 strings: [],
-                                comments: []
+                                comments: [],
+                                classification: [],
                             };
                             fileResults[fileName][type] = sensitiveData;
                         }
@@ -155,7 +162,7 @@ export class ChatGptService {
         strings = [...new Set(strings)];
         comments = [...new Set(comments)];
     
-        return { variables, strings, comments, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping };
+        return { variables, strings, comments, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping, classifications, classificationMapping };
     }
     
 
@@ -264,7 +271,7 @@ export class ChatGptService {
 
 
     async dynamicBatching(files, prompt) {
-        const maxTokensPerBatch = 10000; // Maximum number of tokens per batch
+        const maxTokensPerBatch = 5000; // Maximum number of tokens per batch
         const promptTokenCount = this.encode.encode(prompt).length;
         let batchesOfText = []; // Array to hold all batches of text
         let filesPerBatch = []; // Used later on by the progress bar
