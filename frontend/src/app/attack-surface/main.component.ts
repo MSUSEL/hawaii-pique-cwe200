@@ -7,6 +7,7 @@ import {ConfirmationDialogComponent} from '../home/page-header/dialogs/confirmat
 
 import { ItemFlatNode } from '../shared-components/tree/tree.component';
 import { FilesService } from '../Services/fileService';
+import { HelpDialogComponent } from './dialogs/help-dialog.component';
 
 declare var $: any;
 @Component({
@@ -53,5 +54,14 @@ export class AttackSurfaceComponent {
         });
     }
 
+    openHelpDialog() : void {
+        const dialogRef = this.dialog.open(HelpDialogComponent,{
+            height: '600px',
+            width: '600px',
+            position:{
+                top:'100px'
+            }
+        });
+    }
 
 }

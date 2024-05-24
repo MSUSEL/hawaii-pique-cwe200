@@ -10,6 +10,7 @@ import { SettingsDialogComponent } from './dialogs/settings.dialog.component';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
 import { CodeQlComponent } from './code-ql/code-ql.component';
 import { ConfirmationDialogComponent } from '../home/page-header/dialogs/confirmation-dialog.component';
+import { HelpDialogComponent } from './dialogs/help-dialog.component';
 
 
 
@@ -20,6 +21,7 @@ import { ConfirmationDialogComponent } from '../home/page-header/dialogs/confirm
         MainComponent,
         SaveFileDialogComponent,
         SettingsDialogComponent,
+        HelpDialogComponent,
         CodeQlComponent,
         ConfirmationDialogComponent
     ],
