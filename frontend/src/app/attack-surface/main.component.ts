@@ -56,8 +56,8 @@ export class AttackSurfaceComponent {
 
     openHelpDialog() : void {
         const dialogRef = this.dialog.open(HelpDialogComponent,{
-            height: '600px',
-            width: '600px',
+            height: '675px',
+            width: '800px',
             position:{
                 top:'100px'
             }
