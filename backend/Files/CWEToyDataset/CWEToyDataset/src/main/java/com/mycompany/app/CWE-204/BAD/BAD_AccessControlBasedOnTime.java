@@ -11,7 +11,7 @@ public class BAD_AccessControlBasedOnTime {
         } else {
             System.out.println("Access Denied for non-admin users");
         }
-            
-        
     }
 }
+
+

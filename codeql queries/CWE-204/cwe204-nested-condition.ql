@@ -21,15 +21,14 @@
    }
  }
  
- from IfStmt outerIf, IfStmt innerIf, SensitiveMessageLiteral str1, SensitiveMessageLiteral str2, SensitiveMessageLiteral str3
+ from IfStmt outerIf, IfStmt innerIf, SensitiveMessageLiteral innerVal, SensitiveMessageLiteral outerVal
  where
    // Check if the innerIf is directly within the body of outerIf
    outerIf.getAChild*() = innerIf and
    // Check for specific message literals in the then and else branches of the inner if-statement and the else branch of the outer if-statement
-   innerIf.getThen().getBasicBlock().getANode() = str1 and
-   innerIf.getElse().getBasicBlock().getANode() = str2 and
-   outerIf.getElse().getBasicBlock().getANode() = str3 and
+   innerIf.getElse().getBasicBlock().getANode() = innerVal and
+   outerIf.getElse().getBasicBlock().getANode() = outerVal and
    // Ensure the innerIf and outerIf are not the same
-   outerIf != innerIf
+   innerVal.getValue() != outerVal.getValue()
    
- select outerIf.getBasicBlock(), str1, str2, str3, "This 'if' statement in a sensitive method has different messages in its branches, potentially indicating observable discrepancies (CWE-204)."
+ select outerIf.getBasicBlock(), "CWE-204: Observable discrepancies due to different error messages in nested if-statements."
