@@ -14,6 +14,7 @@ def count_files(directory):
                 elif file.startswith('BAD_'):
                     cwe_counts[cwe]['BAD'] += 1
                 cwe_counts[cwe]['TOTAL'] += 1
+        print(f"{cwe}: GOOD={cwe_counts[cwe]['GOOD']}, BAD={cwe_counts[cwe]['BAD']}, TOTAL={cwe_counts[cwe]['TOTAL']}")
 
     return cwe_counts
 
@@ -23,11 +24,11 @@ def print_counts(cwe_counts):
         good_total += counts['GOOD']
         bad_total += counts['BAD']
         total += counts['TOTAL']
-        print(f"{cwe}: GOOD={counts['GOOD']}, BAD={counts['BAD']}, TOTAL={counts['TOTAL']}")
+
     print(f"Total: GOOD={good_total}, BAD={bad_total}, TOTAL={total}")
 
 # Set the directory path
-directory_path = 'backend/Files/CWEToyDataset/src/main/java/com/mycompany/app/'
+directory_path = 'backend/Files/CWEToyDataset/CWEToyDataset/src/main/java/com/mycompany/app'
 
 # Count the files
 cwe_file_counts = count_files(directory_path)

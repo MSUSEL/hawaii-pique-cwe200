@@ -9,7 +9,7 @@ def process_csv_to_json(csv_file, json_file):
         reader = csv.DictReader(file)
         for row in reader:
             file_name = row['File Name']
-            variables = [element.strip().strip('"').strip("'") for element in row['Sensitive Variables'].split(',') if element.strip().strip('"').strip("'")]
+            variables = [element.strip().strip('"').strip("'").replace('?', '') for element in row['Sensitive Variables'].split(',') if element.strip().strip('"').strip("'")]
             strings = [element.strip().strip('"').strip("'") for element in row['Sensitive Strings'].split(',') if element.strip().strip('"').strip("'")]
             comments = [element.strip().strip('"').strip("'") for element in row['Sensitive Comments'].split(',') if element.strip().strip('"').strip("'")]
 
