@@ -4,9 +4,9 @@ public class GOOD_AccessControlBasedOnTime {
             System.out.println("Access Granted");
         } else {
             if (hour < 9 || hour > 17) {
-                System.out.println("Access Denied: Outside working hours");
+                System.out.println("Access Denied");
             } else {
-                System.out.println("Access Denied: Insufficient privileges");
+                System.out.println("Access Denied");
             }
         }
     }
