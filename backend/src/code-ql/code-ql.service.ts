@@ -10,6 +10,7 @@ import { SensitiveVariablesContents } from './data';
 import { SensitiveVariables } from './SensitiveVariables';
 import { SensitiveComments } from './SensitiveComments';
 import { SensitiveStrings } from './SensitiveStrings';
+import { Sinks } from './Sinks';
 
 import { EventsGateway } from 'src/events/events.gateway';
 @Injectable()
@@ -43,12 +44,12 @@ export class CodeQlService {
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
-        // let slice = javaFiles.slice(0, 20);  
+        // let slice = javaFiles.slice(0, 5);  
         // const data = await this.runChatGPT(slice, sourcePath);
 
-        // const data = await this.runChatGPT(javaFiles, sourcePath);
+        const data = await this.runChatGPT(javaFiles, sourcePath);
 
-        // await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
+        await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
 
         await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
 
@@ -152,7 +153,18 @@ export class CodeQlService {
     
         return result;
     }
-
+      
+    formatSinkMappings(mapping: Map<string, string[][]>): string {
+        let result = "";
+        // Iterate over each key-value pair in the mapping object
+        for (const [key, sinks] of mapping.entries()) {
+          // For each array associated with the key, generate a new line in the output
+          for (const sink of sinks) {
+            result += `    - ["${key}", ${sink[0]}, ${sink[1]}]\n`;
+          }
+        }
+        return result;
+      }
     formatStringArray(inputArray: string[]): string {
         // Initialize the result string
         let result = '';
@@ -167,22 +179,28 @@ export class CodeQlService {
     }
 
     async saveSensitiveInfo(data){
-        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
-        let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
-        await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
-        await this.writeVariablesToFile(variablesFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveVariables.yml")
+        // const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
+        // let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
+        // await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
+        // await this.writeVariablesToFile(variablesFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveVariables.yml")
 
 
-        const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
-        let stringsFile = SensitiveStrings.replace("++++++++++", stringsMapping);
-        await this.writeVariablesToFile(stringsFile, "../codeql queries/SensitiveInfo/SensitiveStrings.yml")
-        await this.writeVariablesToFile(stringsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveStrings.yml")
+        // const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
+        // let stringsFile = SensitiveStrings.replace("++++++++++", stringsMapping);
+        // await this.writeVariablesToFile(stringsFile, "../codeql queries/SensitiveInfo/SensitiveStrings.yml")
+        // await this.writeVariablesToFile(stringsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveStrings.yml")
 
 
-        const commentsMapping = this.formatMappings(data.sensitiveCommentsMapping);
-        let commentsFile = SensitiveComments.replace("**********", commentsMapping);
-        await this.writeVariablesToFile(commentsFile, "../codeql queries/SensitiveInfo/SensitiveComments.yml")
-        await this.writeVariablesToFile(commentsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveComments.yml")
+        // const commentsMapping = this.formatMappings(data.sensitiveCommentsMapping);
+        // let commentsFile = SensitiveComments.replace("**********", commentsMapping);
+        // await this.writeVariablesToFile(commentsFile, "../codeql queries/SensitiveInfo/SensitiveComments.yml")
+        // await this.writeVariablesToFile(commentsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveComments.yml")
+
+
+        // const sinksMapping = this.formatSinkMappings(data.sinksMapping);
+        // let sinksFile = Sinks.replace("----------", sinksMapping);
+        // await this.writeVariablesToFile(sinksFile, "../codeql queries/SensitiveInfo/Sinks.yml")
+        // await this.writeVariablesToFile(sinksFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/Sinks.yml")
 
     }
 
@@ -214,3 +232,5 @@ export class CodeQlService {
         return await this.parserService.getSarifResults(sourcePath);
     }
 }
+
+

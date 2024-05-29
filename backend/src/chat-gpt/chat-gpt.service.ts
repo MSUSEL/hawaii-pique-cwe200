@@ -8,6 +8,7 @@ import * as cliProgress from 'cli-progress';
 import {sensitiveVariablesPrompt} from './sensitiveVariablesPrompt';
 import {sensitiveStringsPrompt} from './sensitiveStringsPrompt';
 import {sensitiveCommentsPrompt} from './sensitiveCommentsPrompt';
+import { sinkPrompt } from './sinkPrompt';
 import {classifyPrompt} from './classifyPrompt'
 import { response } from 'express';
 import { get_encoding } from 'tiktoken';
@@ -51,20 +52,23 @@ export class ChatGptService {
         let strings = [];
         let comments = [];
         let classifications = [];
+        let sinks = [];
         const fileList: any[] = [];
         
         let sensitiveVariablesMapping = new Map<string, string[]>();
         let sensitiveStringsMapping = new Map<string, string[]>();
         let sensitiveCommentsMapping = new Map<string, string[]>();
         let classificationMapping = new Map<string, string[]>();
+        let sinksMapping = new Map<string, string[][]>();
         
         let completedFiles = 0; // Number of completed files
     
         const prompts = [
-            // { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
-            // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
-            // { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
-            { type: 'classification', prompt: classifyPrompt, mapping: classificationMapping, result: classifications }
+            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
+            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
+            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
+            // { type: 'classification', prompt: classifyPrompt, mapping: classificationMapping, result: classifications },
+            // { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
 
         ];
     
@@ -81,6 +85,8 @@ export class ChatGptService {
                     const response = await this.createGptWithBackoff(batch, index);                
                     completedFiles += filesInBatch;
                     this.progressBar.update(completedFiles);
+                    // this.eventsGateway.emitDataToClients('', this.progressBar)
+
     
                     if (this.debug.toLowerCase() === 'true') {
                         console.log(`Results for batch ${index} \n ${response.message}`);
@@ -95,6 +101,7 @@ export class ChatGptService {
                         else if (type === 'strings') {sensitiveData = file.sensitiveStrings}
                         else if (type === 'comments') {sensitiveData = file.sensitiveComments}
                         else if (type === 'classification') {sensitiveData = file.classification}
+                        else if (type === 'sinks') {sensitiveData = file.sinks}
     
                         // If file already exists in the dictionary, append the data
                         if (fileResults[fileName]) {
@@ -107,21 +114,36 @@ export class ChatGptService {
                                 strings: [],
                                 comments: [],
                                 classification: [],
+                                sinks: [],
                             };
                             fileResults[fileName][type] = sensitiveData;
                         }
     
-                        this.eventsGateway.emitDataToClients('data', fileName + ':',);
+                        // this.eventsGateway.emitDataToClients('data', fileName + ':',);
                         // this.eventsGateway.emitDataToClients('data', sensitiveData,);
     
-                        const fileDataList = this.extractVariableNamesMultiple(sensitiveData);
-    
-                        if (mapping[fileName]) {
-                            mapping[fileName] = mapping[fileName].concat(fileDataList);
-                        } else {
-                            mapping[fileName] = fileDataList;
-                        }
-    
+                        let fileDataList = this.extractVariableNamesMultiple(sensitiveData);
+                        
+                        // If type is sinks, extract the types
+                        if (type === 'sinks') {
+                            const names = this.extractVariableNamesMultiple(sensitiveData);
+                            const types = this.extractTypes(sensitiveData);
+                          
+                            let values: string[][] = names.map((name, index) => [name, types[index]]);
+                          
+                            if (sinksMapping.has(fileName)) {
+                              sinksMapping.set(fileName, sinksMapping.get(fileName)!.concat(values));
+                            } else {
+                              sinksMapping.set(fileName, values);
+                            }
+                          }
+                        else{
+                            if (mapping[fileName]) {
+                                mapping[fileName] = mapping[fileName].concat(fileDataList);
+                            } else {
+                                mapping[fileName] = fileDataList;
+                            }
+                        }    
                         result.push(...fileDataList);
                     });
     
@@ -161,8 +183,10 @@ export class ChatGptService {
         variables = [...new Set(variables)];
         strings = [...new Set(strings)];
         comments = [...new Set(comments)];
+        classifications = [...new Set(classifications)];
+        sinks = [...new Set(sinks)];
     
-        return { variables, strings, comments, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping, classifications, classificationMapping };
+        return { variables, strings, comments, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping, classifications, classificationMapping, sinks, sinksMapping };
     }
     
 
@@ -248,6 +272,21 @@ export class ChatGptService {
         return variables;
     }
 
+    extractTypes(text: SinkType[]): string[] {
+        var types = [];
+        try {
+            for (const variable of text) {
+                    let v : string = variable.type.replace(/["\\]/g, "")
+                    types.push(`\"${v}\"`)
+            }
+        } catch (e) {
+            if (this.debug.toLowerCase() === 'true') {
+                console.log(text);
+            }
+        }
+        return types;
+    }
+
     async getFileGptResponse(filePath: String) {
         var directories = filePath.split('\\');
         var jsonFilePath = path.join(
@@ -271,7 +310,7 @@ export class ChatGptService {
 
 
     async dynamicBatching(files, prompt) {
-        const maxTokensPerBatch = 5000; // Maximum number of tokens per batch
+        const maxTokensPerBatch = 10000; // Maximum number of tokens per batch
         const promptTokenCount = this.encode.encode(prompt).length;
         let batchesOfText = []; // Array to hold all batches of text
         let filesPerBatch = []; // Used later on by the progress bar
@@ -419,6 +458,11 @@ export class ChatGptService {
 interface SensitiveVariables {
     name: string;
     description: string;
+}
+
+interface SinkType {
+    name: string;
+    type: string;
 }
 
 function extractAndParseJSON(inputString) {
