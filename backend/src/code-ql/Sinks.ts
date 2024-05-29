@@ -4,6 +4,6 @@ extensions:
       pack: custom-codeql-queries
       extensible: sinks
     data:
-    - ["fileName.java", "sinkName", "type]
+    - ["fileName", "sinkName", "type"]
 ----------
 `

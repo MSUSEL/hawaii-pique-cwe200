@@ -1,11 +1,13 @@
 import java
+import semmle.code.java.dataflow.TaintTracking
+
 
 // Define the extensible predicates
 extensible predicate sensitiveVariables(string fileName, string variableName);
 extensible predicate sensitiveStrings(string fileName, string variableName);
 extensible predicate sensitiveComments(string fileName, string variableName);
-
-
+extensible predicate sinks(string fileName, string sinkName, string sinkType); 
+  
   class SensitiveVariableExpr extends Expr {
     SensitiveVariableExpr() {
       exists(Variable v, File f |
@@ -54,5 +56,16 @@ extensible predicate sensitiveComments(string fileName, string variableName);
   //     )
   //   }   
   // }
+
+  
+    predicate getSink(DataFlow::Node sink, string sinkType) { 
+      exists(File f, MethodCall mc | 
+        f = mc.getFile() and
+        sinks(f.getBaseName(), mc.getMethod().getName(), sinkType) and
+        sink.asExpr() = mc.getAnArgument() 
+        )
+    }
+  
+  
 
 
