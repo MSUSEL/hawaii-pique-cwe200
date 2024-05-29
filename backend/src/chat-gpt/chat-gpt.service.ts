@@ -22,6 +22,7 @@ export class ChatGptService {
     debug: string;
     projectsPath: string;
     encode: any;
+    idToNameMapping: Map<string, string> = new Map<string, string>();
     constructor(
         private configService: ConfigService,
         private eventsGateway: EventsGateway,
@@ -64,10 +65,10 @@ export class ChatGptService {
         let completedFiles = 0; // Number of completed files
     
         const prompts = [
-            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
-            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
-            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
-            // { type: 'classification', prompt: classifyPrompt, mapping: classificationMapping, result: classifications },
+            // { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
+            // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
+            // { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
+            { type: 'classification', prompt: classifyPrompt, mapping: classificationMapping, result: classifications },
             // { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
 
         ];
@@ -77,6 +78,8 @@ export class ChatGptService {
     
         for (const { type, prompt, mapping, result } of prompts) {
             const res = await this.dynamicBatching(files, prompt);
+            // const res = await this.simpleBatching(files, prompt); // Use this if you just want to send one file at a time
+
             const batches = res.batchesOfText;
             const filesPerBatch = res.filesPerBatch;
     
@@ -95,7 +98,8 @@ export class ChatGptService {
                     let json = extractAndParseJSON(response.message);
                     
                     json.files.forEach((file: any) => {
-                        let fileName = file.fileName;
+                        let fileID = file.fileName.split('.java')[0];
+                        let fileName = this.idToNameMapping.get(fileID);
                         let sensitiveData = [];
                         if (type === 'variables') {sensitiveData = file.sensitiveVariables}
                         else if (type === 'strings') {sensitiveData = file.sensitiveStrings}
@@ -319,13 +323,18 @@ export class ChatGptService {
         let currentFileCount = 0;
         let i = 0;
         let totalTokens = 0;
+        let id = 0;
     
         for (const file of files) {
+            // 
+            let fullID = "ID-" + id.toString();
+            this.idToNameMapping.set(fullID, file.split('\\').pop());
+
             // Clean up the file (Removes unnecessary whitespace)
-            const fileContent = await this.fileUtilService.processJavaFile(file);
+            const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
     
             // Add the start and end bounds to the file and then get its token count
-            const fileTokens = this.encode.encode(await this.fileUtilService.addFileBoundaryMarkers(file, fileContent));
+            const fileTokens = this.encode.encode(await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
             const currentFileTokenCount = fileTokens.length;
     
             if (currentFileTokenCount > maxTokensPerBatch) {
@@ -346,7 +355,7 @@ export class ChatGptService {
                 while (startIndex < fileContent.length) {
                     endIndex = startIndex + Math.min(maxTokensPerBatch * 3, fileContent.length - startIndex);
     
-                    const sliceWithBounds = await this.fileUtilService.addFileBoundaryMarkers(file, fileContent.slice(startIndex, endIndex));
+                    const sliceWithBounds = await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent.slice(startIndex, endIndex));
     
                     // Create a new batch with the prompt and the current slice
                     batchText = prompt + sliceWithBounds;
@@ -363,18 +372,19 @@ export class ChatGptService {
                 batchesOfText.push(batchText);
                 filesPerBatch.push(currentFileCount);
                 i = 0;
-                batchText = prompt + await this.fileUtilService.addFileBoundaryMarkers(file, fileContent);
+                batchText = prompt + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent);
                 totalBatchTokenCount = promptTokenCount + currentFileTokenCount;
                 currentFileCount = 1; // Start counting files in the new batch
             } 
             
             // The current file can be added to the current batch
             else {
-                batchText += await this.fileUtilService.addFileBoundaryMarkers(file, fileContent);
+                batchText += await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent);
                 totalBatchTokenCount += currentFileTokenCount;
                 currentFileCount++; // Increment the count of files in the current batch
             }
             i += 1;
+            id += 1;
         }
     
         // Add the last batch if it contains any content beyond the initial prompt
@@ -383,6 +393,28 @@ export class ChatGptService {
             filesPerBatch.push(currentFileCount);
         }
     
+        return { batchesOfText, filesPerBatch };
+    }
+
+    async simpleBatching(files, prompt) {
+        const promptTokenCount = this.encode.encode(prompt).length;
+        let batchesOfText = []; // Array to hold all batches of text
+        let filesPerBatch = []; // Used later on by the progress bar
+        let batchText = prompt; 
+        let id = 0;
+    
+        for (const file of files) {
+            // 
+            let fullID = "ID-" + id.toString();
+            this.idToNameMapping.set(fullID, file.split('\\').pop());
+
+            // Clean up the file (Removes unnecessary whitespace)
+            const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
+            batchesOfText.push(batchText + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+            filesPerBatch.push(1);
+            id += 1;
+        }
+
         return { batchesOfText, filesPerBatch };
     }
 

@@ -202,11 +202,11 @@ export class FileUtilService {
      *
      * @param batch list of files to process
      */
-    async preprocessFiles(batch: string[]) {
-        const batchResults = await this.processFilesInBatch(batch);
-        // console.log(concatnatedBatch);
-        return batchResults.join('');
-    }
+    // async preprocessFiles(batch: string[]) {
+    //     const batchResults = await this.processFilesInBatch(batch);
+    //     // console.log(concatnatedBatch);
+    //     return batchResults.join('');
+    // }
 
     /**
      * Preprocesses a batch of files by removing comments and imports, and
@@ -214,11 +214,11 @@ export class FileUtilService {
      *
      * @param filePaths list of files to process
      */
-    async processFilesInBatch(filePaths: string[]): Promise<string[]> {
-        return Promise.all(
-            filePaths.map((filePath) => this.processJavaFile(filePath)),
-        );
-    }
+    // async processFilesInBatch(filePaths: string[]): Promise<string[]> {
+    //     return Promise.all(
+    //         filePaths.map((filePath) => this.processJavaFile(filePath)),
+    //     );
+    // }
 
     /**
      * Process single java file by removing comments and imports, and
@@ -226,28 +226,41 @@ export class FileUtilService {
      *
      * @param filePath Path to java file to process
      */
-    async processJavaFile(filePath: string): Promise<string> {
+    async processJavaFile(filePath: string, id: string): Promise<string> {
+        let baseName = path.basename(filePath).split('.java')[0];
         // Read file contents
         const fileStream = fs.createReadStream(filePath);
         const rl = readline.createInterface({
             input: fileStream,
             crlfDelay: Infinity,
         });
-
-        // init new processed file
+    
+        // Initialize new processed file
         let processedLines: string[] = [];
-        // remove comments and imports
+        let classNameChanged = false;
+    
         for await (const line of rl) {
             let trimmedLine = line.trim();
+    
+            // Check if the line contains the class declaration
+            if (!classNameChanged && trimmedLine.includes('class ') && trimmedLine.includes(baseName)) {
+                // Replace the class name with the given ID
+                trimmedLine = trimmedLine.replace(baseName, id);
+            }
+    
             processedLines.push(trimmedLine);
         }
-        // return processed file
+    
+        // Return processed file content as a string
         return processedLines.join('\n');
     }
+    
 
-    async addFileBoundaryMarkers(filePath, file){
-        let fileName = path.basename(filePath);
-        return '-----BEGIN FILE: [' + fileName + ']----- \n' + file + '\n-----END FILE: [' + fileName + ']-----'
+    async addFileBoundaryMarkers(id, file){
+        // let fileName = path.basename(filePath);
+        // return '-----BEGIN FILE: [' + fileName + ']----- \n' + file + '\n-----END FILE: [' + fileName + ']-----'
+        return '-----BEGIN FILE: [' + id + ']----- \n' + file + '\n-----END FILE: [' + id + ']-----'
+
     }
 
     
