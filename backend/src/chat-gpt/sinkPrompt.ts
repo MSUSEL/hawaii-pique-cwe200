@@ -38,6 +38,16 @@ the point of asking you is that a list such as that would be incomplete and woul
 Weather that be because the sink is not well known, or because it is a custom sink that is unique to the code base.
 So, you will need to look for the sinks in the code yourself, while also considering the context in which the sink is used.
 
+### Why is this important?
+The sink names that you find will be used in CodeQL queries to find potential vulnerabilities in the code.
+Specifically, the sinks will be check for using the MethodCall mc, mc.getMethod().hasName(name) syntax in CodeQL.
+So, I need you to make sure the name that you give me is the exact name of the method that is being called.
+
+### Example
+If we have a sink such as system.out.println("Hello World"), the name of the sink would be "println". 
+I don't need the system.out part, just the method name that is being called. 
+Please apply this same logic to all the sinks that you find.
+  
 ### File Markers
 There is a possibility that I will provide you with multiple files to analyze. Each file will be marked with a start and end marker.
 Each file begins with "-----BEGIN FILE: [FileName]-----" and ends with "-----END FILE: [FileName]-----".
