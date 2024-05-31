@@ -65,10 +65,10 @@ export class ChatGptService {
         let completedFiles = 0; // Number of completed files
     
         const prompts = [
-            // { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
-            // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
-            // { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
-            { type: 'classification', prompt: classifyPrompt, mapping: classificationMapping, result: classifications },
+            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
+            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
+            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
+            // { type: 'classification', prompt: classifyPrompt, mapping: classificationMapping, result: classifications },
             // { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
 
         ];
@@ -180,8 +180,10 @@ export class ChatGptService {
         }
     
         // Convert the dictionary to a list
+        let numParsedFiles = 0;
         for (const fileName in fileResults) {
             fileList.push(fileResults[fileName]);
+            numParsedFiles += 1;
         }
     
         variables = [...new Set(variables)];
@@ -189,6 +191,9 @@ export class ChatGptService {
         comments = [...new Set(comments)];
         classifications = [...new Set(classifications)];
         sinks = [...new Set(sinks)];
+
+        // A sanity check to ensure that the number of files processed is equal to the number of files in the project
+        console.log(`Total number of files {${files.length}}, total number of parsed files {${numParsedFiles}}`)
     
         return { variables, strings, comments, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping, classifications, classificationMapping, sinks, sinksMapping };
     }
@@ -314,88 +319,78 @@ export class ChatGptService {
 
 
     async dynamicBatching(files, prompt) {
-        const maxTokensPerBatch = 10000; // Maximum number of tokens per batch
+        const maxTokensPerBatch = 10000;
         const promptTokenCount = this.encode.encode(prompt).length;
-        let batchesOfText = []; // Array to hold all batches of text
-        let filesPerBatch = []; // Used later on by the progress bar
-        let batchText = prompt; 
-        let totalBatchTokenCount = promptTokenCount; 
-        let currentFileCount = 0;
-        let i = 0;
-        let totalTokens = 0;
-        let id = 0;
-    
+        let batches = [];
+        let currentBatch = { text: prompt, tokenCount: promptTokenCount, fileCount: 0 };
+        
         for (const file of files) {
-            // 
-            let fullID = "ID-" + id.toString();
-            this.idToNameMapping.set(fullID, file.split('\\').pop());
-
-            // Clean up the file (Removes unnecessary whitespace)
-            const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
+            const fileID = `ID-${this.idToNameMapping.size}`;
+            this.idToNameMapping.set(fileID, file.split('\\').pop());
+            const fileContent = await this.fileUtilService.processJavaFile(file, fileID);
+            const boundedFileContent = this.fileUtilService.addFileBoundaryMarkers(fileID, fileContent);
+            const fileTokenCount = this.encode.encode(boundedFileContent).length + promptTokenCount;
     
-            // Add the start and end bounds to the file and then get its token count
-            const fileTokens = this.encode.encode(await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
-            const currentFileTokenCount = fileTokens.length;
-    
-            if (currentFileTokenCount > maxTokensPerBatch) {
-                // console.log(`File ${file} is too large to fit in a single batch ${i}`);
-    
-                // If there is already content in the current batch, push it and start a new batch
-                if (totalBatchTokenCount > 0) {
-                    batchesOfText.push(batchText);
-                    filesPerBatch.push(currentFileCount);
-                    i = 0;
-                    currentFileCount = 0; // Reset file count for the new batch
-
-                }
-    
-                let startIndex = 0;
-                let endIndex = 0;
-    
-                while (startIndex < fileContent.length) {
-                    endIndex = startIndex + Math.min(maxTokensPerBatch * 3, fileContent.length - startIndex);
-    
-                    const sliceWithBounds = await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent.slice(startIndex, endIndex));
-    
-                    // Create a new batch with the prompt and the current slice
-                    batchText = prompt + sliceWithBounds;
-    
-                    batchesOfText.push(batchText);  // Push the new batch immediately
-                    filesPerBatch.push(1); // Each slice from an oversized file is treated as a separate batch with 1 file
-                    i = 0;
-                    // Update the startIndex for the next slice
-                    startIndex = endIndex;
-                }
+            if (fileTokenCount > maxTokensPerBatch) {
+                // Case 3: File is too large and needs to be split
+                if (currentBatch.fileCount > 0) this.pushCurrentBatch(batches, currentBatch, prompt);
+                this.handleLargeFile(fileID, fileContent, batches, prompt, maxTokensPerBatch, currentBatch);
+                continue;
             }
-            // Current batch full, push it and start a new one
-            else if (totalBatchTokenCount + currentFileTokenCount > maxTokensPerBatch) {
-                batchesOfText.push(batchText);
-                filesPerBatch.push(currentFileCount);
-                i = 0;
-                batchText = prompt + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent);
-                totalBatchTokenCount = promptTokenCount + currentFileTokenCount;
-                currentFileCount = 1; // Start counting files in the new batch
-            } 
-            
-            // The current file can be added to the current batch
-            else {
-                batchText += await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent);
-                totalBatchTokenCount += currentFileTokenCount;
-                currentFileCount++; // Increment the count of files in the current batch
+    
+            if (currentBatch.tokenCount + fileTokenCount > maxTokensPerBatch) {
+                // Case 2: File doesn't fit in the current batch
+                this.pushCurrentBatch(batches, currentBatch, prompt);
             }
-            i += 1;
-            id += 1;
+    
+            // Case 1: File fits in the current batch
+            this.addFileToBatch(currentBatch, boundedFileContent, fileTokenCount);
         }
     
-        // Add the last batch if it contains any content beyond the initial prompt
-        if (batchText.length > prompt.length) {
-            batchesOfText.push(batchText);
-            filesPerBatch.push(currentFileCount);
-        }
+        if (currentBatch.fileCount > 0) this.pushCurrentBatch(batches, currentBatch, prompt);
     
-        return { batchesOfText, filesPerBatch };
+        return { batchesOfText: batches.map(b => b.text), filesPerBatch: batches.map(b => b.fileCount) };
     }
+    
+    addFileToBatch(batch, content, tokenCount) {
+        batch.text += content;
+        batch.tokenCount += tokenCount;
+        batch.fileCount++;
+    }
+    
+    pushCurrentBatch(batches, batch, prompt) {
+        batches.push({ ...batch });
+        batch.text = prompt; // Reset to just the prompt
+        batch.tokenCount = this.encode.encode(batch.text).length;
+        batch.fileCount = 0;
+    }
+    
+    handleLargeFile(fileID, content, batches, prompt, maxTokensPerBatch, currentBatch) {
+        let startIndex = 0;
+        while (startIndex < content.length) {
+            // For simplicity, assume that token counts are 75% of characters. (ChatGPT Reccomendation)
+            let endIndex = Math.min(startIndex + maxTokensPerBatch * 3, content.length);
+            let slice = content.slice(startIndex, endIndex);
+            startIndex = endIndex;
+            
+            try{
+                let sliceWithBounds = this.fileUtilService.addFileBoundaryMarkers(fileID, slice)
+                let sliceTokenCount = this.encode.encode(sliceWithBounds).length;
+    
+                this.addFileToBatch(currentBatch, sliceWithBounds, sliceTokenCount);
+                this.pushCurrentBatch(batches, currentBatch, prompt);
+            }
 
+            catch(e){
+                console.log(e);
+            }
+            
+        }
+    }
+    
+    
+    
+    // Used for testing, just sends one file at a time
     async simpleBatching(files, prompt) {
         const promptTokenCount = this.encode.encode(prompt).length;
         let batchesOfText = []; // Array to hold all batches of text
@@ -447,7 +442,7 @@ export class ChatGptService {
         let inputCost = tokenCount * INPUT_COST;
         let outputCost = tokenCount * OUTPUT_COST * 0.30; // Based on previous runs Output tokens are around 30% of input tokens
         let totalCost = inputCost + outputCost;
-    
+        this.idToNameMapping.clear();
         return {
             totalCost: totalCost,
             tokenCount: tokenCount,
