@@ -227,36 +227,49 @@ export class FileUtilService {
      * @param filePath Path to java file to process
      */
     async processJavaFile(filePath: string, id: string): Promise<string> {
-        let baseName = path.basename(filePath).split('.java')[0];
-        // Read file contents
-        const fileStream = fs.createReadStream(filePath);
-        const rl = readline.createInterface({
-            input: fileStream,
-            crlfDelay: Infinity,
-        });
-    
-        // Initialize new processed file
-        let processedLines: string[] = [];
-        let classNameChanged = false;
-    
-        for await (const line of rl) {
-            let trimmedLine = line.trim();
-    
-            // Check if the line contains the class declaration
-            if (!classNameChanged && trimmedLine.includes('class ') && trimmedLine.includes(baseName)) {
-                // Replace the class name with the given ID
-                trimmedLine = trimmedLine.replace(baseName, id);
-            }
-    
-            processedLines.push(trimmedLine);
-        }
-    
-        // Return processed file content as a string
-        return processedLines.join('\n');
+    let baseName = path.basename(filePath).split('.java')[0];
+    // Read file contents
+    const fileStream = fs.createReadStream(filePath);
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity,
+    });
+
+    // Initialize new processed file
+    let processedLines: string[] = [];
+    let classNameChanged = false;
+    let lines = [];
+    for await (const line of rl) {
+        lines.push(line);
     }
+
+    for (let i = 0; i < lines.length; i++) {
+    let trimmedLine = lines[i].replace(/^\s*[\r\n]/gm, '');
+
+    // Check if the line contains the class declaration
+    if (!classNameChanged && trimmedLine.includes('class ') && trimmedLine.includes(baseName)) {
+        // Replace the class name with the given ID
+        trimmedLine = trimmedLine.replace(baseName, id);
+    }
+
+    // Check if the next line contains only }, ), or ;
+    if (i < lines.length - 1 && /^[\}\);\s]*$/.test(lines[i + 1])) {
+        trimmedLine += ' ' + lines[i + 1].trim();
+        i++; // Skip next iteration
+    }
+
+    // Skip blank lines
+    if (trimmedLine.trim() !== '') {
+        processedLines.push(trimmedLine);
+    }
+}
+
+    // Return processed file content as a string
+    return processedLines.join('\n');
+}
     
 
-    async addFileBoundaryMarkers(id, file){
+    addFileBoundaryMarkers(id: string, file: string){
         // let fileName = path.basename(filePath);
         // return '-----BEGIN FILE: [' + fileName + ']----- \n' + file + '\n-----END FILE: [' + fileName + ']-----'
         return '-----BEGIN FILE: [' + id + ']----- \n' + file + '\n-----END FILE: [' + id + ']-----'
