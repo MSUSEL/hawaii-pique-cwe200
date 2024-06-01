@@ -47,9 +47,9 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 ### How do I get set up? ###
 
 #### Dependencies
-1. [Node.js](https://nodejs.org/en?ref=altcademy.com)
-2. [Maven](https://maven.apache.org/install.html)
-3. [CodeQL CLI](https://github.com/github/codeql-cli-binaries/releases)
+1. [Node.js](https://nodejs.org/en?ref=altcademy.com) You will need to add Node as a system env variable
+2. [Maven](https://maven.apache.org/install.html) You will need to add MVN as a system env variable
+3. [CodeQL CLI](https://github.com/github/codeql-cli-binaries/releases) You will need to add CodeQL as a system env variable
 
 **In root directory**
 
