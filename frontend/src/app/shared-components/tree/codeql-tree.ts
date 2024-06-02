@@ -93,7 +93,6 @@ export class RuleTreeComponent extends RuleTree implements OnInit {
     }
 
     findFile(node:any){
-        console.log(node)
         this.editorService.findFile(node);
     }
 }

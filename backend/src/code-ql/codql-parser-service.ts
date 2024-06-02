@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { FileUtilService } from 'src/files/fileUtilService';
 import * as path from 'path'
+import * as os from 'os';
+
 
 @Injectable()
 export class CodeQlParserService {
@@ -30,9 +32,9 @@ export class CodeQlParserService {
                     name: this.fileService.getFilenameFromPath(
                         file.locations[0]?.physicalLocation.artifactLocation.uri,
                     ) + " | Line - " + file.locations[0]?.physicalLocation.region.startLine,
-                    fullPath: this.fileService.processFilePath(
+                    fullPath: this.correctPath(this.fileService.processFilePath(
                         sourcePath,
-                        file.locations[0]?.physicalLocation.artifactLocation.uri,
+                        file.locations[0]?.physicalLocation.artifactLocation.uri),
                     ),
                     message: file.message.text,
                     region: file.locations[0]?.physicalLocation.region,
@@ -79,15 +81,16 @@ export class CodeQlParserService {
         for (let i = 0; i < results.length; i++) {
             let result = results[i];
             var filePath=result.locations[0]?.physicalLocation.artifactLocation.uri;
-            var fullPath = this.fileService.processFilePath(sourcePath,filePath);
+            var fullPath = this.correctPath(this.fileService.processFilePath(sourcePath,filePath));
+
             var fileIndex = resultList.findIndex(
-                (file) => file.fullPath == fullPath,
+                (file) => this.correctPath(file.fullPath) == fullPath,
             );
             var file: any = null;
             if (fileIndex == -1) {
                 file = {
                     name: this.fileService.getFilenameFromPath(filePath),
-                    fullPath: this.fileService.processFilePath(sourcePath,filePath),
+                    fullPath: this.correctPath(this.fileService.processFilePath(sourcePath,filePath)),
                     files:[]
                 };
                 resultList.push(file)
@@ -106,7 +109,18 @@ export class CodeQlParserService {
         }
         return resultList;
     }
+
+    correctPath(filePath: string) {
+        if (os.platform() === 'win32') {
+            return filePath.replace(/\//g, '\\');
+        }
+        // Normalize path for Linux and macOS
+        else {
+            return filePath.replace(/\\/g, '/');
+        }
+    }
 }
+
 
 const cweDescriptions = new Map([
     ["CWE-200", "Exposure of Sensitive Information to an Unauthorized Actor"],
