@@ -1,6 +1,5 @@
-import { execSync } from 'child_process';
-import * as os from 'os';
-
+const { execSync } = require('child_process');
+const os = require('os');
 
 // Function to check the platform and execute the appropriate command
 function runPlatformSpecificCommand() {
@@ -12,7 +11,7 @@ function runPlatformSpecificCommand() {
         if (platform === 'win32') {
             execSync('ts-node backend/codeql_setup/windows-setup.ts', { stdio: 'inherit' });
         } else {
-            execSync('sh linux-setup.sh', { stdio: 'inherit' });
+            execSync('sh backend/codeql_setup/linux-setup.sh', { stdio: 'inherit' });
         }
     } catch (error) {
         console.error('Error occurred while running platform-specific command:', error);
