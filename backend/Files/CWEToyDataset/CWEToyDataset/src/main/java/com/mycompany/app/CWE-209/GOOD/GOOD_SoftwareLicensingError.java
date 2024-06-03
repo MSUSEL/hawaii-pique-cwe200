@@ -7,7 +7,7 @@ public class GOOD_SoftwareLicensingError {
             // License checking logic
         } catch (Exception e) {
             System.err.println("Software license validation failed.");
-            throw new RuntimeException("Critical licensing issue, please contact support.", e);
+            throw new RuntimeException("Critical licensing issue, please contact support.");
         }
     }
 

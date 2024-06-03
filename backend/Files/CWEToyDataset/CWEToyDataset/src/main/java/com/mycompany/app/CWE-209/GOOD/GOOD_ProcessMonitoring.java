@@ -5,7 +5,7 @@ public class GOOD_ProcessMonitoring {
             throw new Exception("Process interruption detected.");
         } catch (Exception e) {
             System.err.println("Monitoring error occurred.");
-            throw new RuntimeException("Critical process monitoring failure. Immediate action required.", e);
+            throw new RuntimeException("Critical process monitoring failure. Immediate action required.");
         }
     }
 

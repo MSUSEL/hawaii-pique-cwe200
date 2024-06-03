@@ -7,7 +7,7 @@ public class GOOD_RealTimeBiddingError {
             // Bid processing logic
         } catch (Exception e) {
             System.err.println("Bid processing issue detected.");
-            throw new RuntimeException("Bid processing error.", e);
+            throw new RuntimeException("Bid processing error.");
         }
     }
 

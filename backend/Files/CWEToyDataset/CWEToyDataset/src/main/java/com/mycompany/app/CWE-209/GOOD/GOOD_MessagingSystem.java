@@ -5,7 +5,7 @@ public class GOOD_MessagingSystem {
             throw new Exception("Messaging service interruption.");
         } catch (Exception e) {
             System.err.println("Messaging service error.");
-            throw new RuntimeException("Messaging service currently unavailable.", e);
+            throw new RuntimeException("Messaging service currently unavailable.");
         }
     }
 
