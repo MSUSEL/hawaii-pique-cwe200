@@ -66,8 +66,8 @@ export class ChatGptService {
     
         const prompts = [
             { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
-            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
-            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
+            // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
+            // { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
             // { type: 'classification', prompt: classifyPrompt, mapping: classificationMapping, result: classifications },
             // { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
 
@@ -109,8 +109,7 @@ export class ChatGptService {
     
                         // If file already exists in the dictionary, append the data
                         if (fileResults[fileName]) {
-                            fileResults[fileName][type] = fileResults[fileName][type].concat(sensitiveData);
-                        } else {
+                            fileResults[fileName][type] = Array.from(new Set(fileResults[fileName][type].concat(sensitiveData)));                        } else {
                             // Initialize the object with empty arrays if it does not exist
                             fileResults[fileName] = {
                                 fileName: fileName,
@@ -319,7 +318,7 @@ export class ChatGptService {
 
 
     async dynamicBatching(files, prompt) {
-        const maxTokensPerBatch = 10000;
+        const maxTokensPerBatch = 5000;
         const promptTokenCount = this.encode.encode(prompt).length;
         let batches = [];
         let currentBatch = { text: prompt, tokenCount: promptTokenCount, fileCount: 0 };
