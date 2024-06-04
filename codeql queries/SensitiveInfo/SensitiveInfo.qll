@@ -62,7 +62,29 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
       exists(File f, MethodCall mc | 
         f = mc.getFile() and
         sinks(f.getBaseName(), mc.getMethod().getName(), sinkType) and
-        sink.asExpr() = mc.getAnArgument() 
+        sink.asExpr() = mc.getAnArgument()
+        )
+    }
+
+    predicate getSinkAny(DataFlow::Node sink) { 
+      exists(File f, MethodCall mc | 
+        f = mc.getFile() and
+        (sinks(f.getBaseName(), mc.getMethod().getName(), "I/O Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Print Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Network Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Log Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Database Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Email Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "IPC Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Clipboard Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "GUI Display Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "RPC Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Environment Variable Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Command Execution Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Configuration File Sink"))
+
+        and
+        sink.asExpr() = mc.getAnArgument()
         )
     }
   
