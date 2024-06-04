@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class NetworkConfiguratorCustomSink {
+public class BAD_NetworkConfiguratorCustomSink {
 
     public static void configureNetwork(String networkConfig) {
         String command = "configure_network --config " + networkConfig;

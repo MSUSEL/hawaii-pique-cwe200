@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class UserProfileManagerCustomSink {
+public class BAD_UserProfileManagerCustomSink {
 
     public static void updateUserProfile(String userId, String profileData) {
         String command = "update_user_profile --user-id " + userId + " --data " + profileData;

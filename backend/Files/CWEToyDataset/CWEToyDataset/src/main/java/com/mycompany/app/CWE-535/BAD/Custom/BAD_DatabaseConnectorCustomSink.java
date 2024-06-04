@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class DatabaseConnectorCustomSink {
+public class BAD_DatabaseConnectorCustomSink {
 
     public static void connectToDatabase(String dbConnectionString) {
         String command = "connect_db --connection-string " + dbConnectionString;

@@ -2,10 +2,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class BackupServiceCustomSink {
+public class BAD_FileProcessorCustomSink {
 
-    public static void performBackup(String backupLocation) {
-        String command = "perform_backup --location " + backupLocation;
+    public static void processFile(String filePath) {
+        String command = "process_file --path " + filePath;
 
         try {
             Process process = Runtime.getRuntime().exec(command);
@@ -13,18 +13,18 @@ public class BackupServiceCustomSink {
             String error;
 
             while ((error = errorReader.readLine()) != null) {
-                OutputToDisplay.output("Backup error: " + error);
+                PrintErrorMessage.print("File processing error: " + error);
             }
 
             if (process.waitFor() != 0) {
-                OutputToDisplay.output("Backup failed, see logs for details.");
+                PrintErrorMessage.print("File processing failed, see logs for details.");
             }
         } catch (IOException | InterruptedException e) {
-            OutputToDisplay.output("Backup operation failed: " + e.getMessage());
+            PrintErrorMessage.print("Processing operation failed: " + e.getMessage());
         }
     }
 
     public static void main(String[] args) {
-        performBackup("/secure/backup/location");
+        processFile("/path/to/sensitive/file.txt");
     }
 }
