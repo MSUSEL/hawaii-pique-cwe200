@@ -1,4 +1,4 @@
-/** 
+/**
  * @name CWE-536: Exposure of sensitive information in servlet responses
  * @description Writing sensitive information from exceptions or sensitive file paths to HTTP responses can leak details to users.
  * @kind path-problem
@@ -18,15 +18,18 @@ import CommonSinks.CommonSinks
 import SensitiveInfo.SensitiveInfo
 
 module Flow = TaintTracking::Global<SensitiveInfoLeakServletConfig>;
+
 import Flow::PathGraph
 
 module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
-
   predicate isSource(DataFlow::Node source) {
     exists(MethodCall mc |
       // Sources from exceptions
       mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-      (mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace", "toString"])) and
+      mc.getMethod()
+          .hasName([
+              "getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace", "toString"
+            ]) and
       source.asExpr() = mc
     )
     or
@@ -37,12 +40,11 @@ module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
       source.asExpr() = mc
     )
     or
-    exists(SensitiveVariableExpr sve |
-      source.asExpr() = sve
-    )
+    exists(SensitiveVariableExpr sve | source.asExpr() = sve)
   }
 
   predicate isSink(DataFlow::Node sink) {
+    // Consider the case where the sink exposes sensitive info within a catch clause of type ServletException
     exists(CatchClause cc, MethodCall mc |
       // Ensure the CatchClause is catching ServletException
       cc.getACaughtType().hasQualifiedName("javax.servlet", "ServletException") and
@@ -50,6 +52,7 @@ module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
       mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock() and
       // Ensure the sink matches one of the known sensitive sinks
       (
+        getSinkAny(sink) or
         CommonSinks::isLoggingSink(sink) or
         CommonSinks::isPrintSink(sink) or
         CommonSinks::isServletSink(sink) or
@@ -59,18 +62,19 @@ module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
       // Link the sink to the argument of the MethodCall
       sink.asExpr() = mc.getAnArgument()
     )
-
     or
-    exists(ConstructorCall cc |
-      cc.getConstructedType().hasQualifiedName("javax.servlet", "ServletException") and
+    // Consider the case where the sink is a throw statement that throws a ServletException
+    exists(ThrowStmt ts, ConstructorCall cc |
+      // Identifying throw statements creating ServletException with sensitive information
+      ts.getThrownExceptionType().hasQualifiedName("javax.servlet", "ServletException") and
+      // Throw statements don't have an argument, so you need to look at the ConstructorCall that creates the exception
+      cc = ts.getExpr().(ConstructorCall) and
       sink.asExpr() = cc.getAnArgument()
     )
+  }
 }
-
-}
-
-
 
 from Flow::PathNode source, Flow::PathNode sink
 where Flow::flowPath(source, sink)
-select sink.getNode(), source, sink, "CWE-536: Servlet Runtime Error Message Containing Sensitive Information."
+select sink.getNode(), source, sink,
+  "CWE-536: Servlet Runtime Error Message Containing Sensitive Information."

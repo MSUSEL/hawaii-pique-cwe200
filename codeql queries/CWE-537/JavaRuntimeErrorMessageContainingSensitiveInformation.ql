@@ -9,35 +9,36 @@
  * @cwe CWE-537
  */
 
- import java
- import semmle.code.java.dataflow.TaintTracking
- import semmle.code.java.dataflow.FlowSources
- import CommonSinks.CommonSinks
- import SensitiveInfo.SensitiveInfo
+import java
+import semmle.code.java.dataflow.TaintTracking
+import semmle.code.java.dataflow.FlowSources
+import CommonSinks.CommonSinks
+import SensitiveInfo.SensitiveInfo
 
- module Flow = TaintTracking::Global<RuntimeSensitiveInfoExposureConfig>;
- import Flow::PathGraph
- 
- module RuntimeSensitiveInfoExposureConfig implements DataFlow::ConfigSig{
-  
+module Flow = TaintTracking::Global<RuntimeSensitiveInfoExposureConfig>;
+
+import Flow::PathGraph
+
+module RuntimeSensitiveInfoExposureConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source) {
-     exists(MethodCall mc |
-       // Sources from exceptions
-       mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-       (mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"])) and
-       source.asExpr() = mc
-     )
-     or
-     exists(SensitiveVariableExpr sve |
-      source.asExpr() = sve
+    exists(MethodCall mc |
+      // Sources from exceptions
+      mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
+      mc.getMethod()
+          .hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace"]) and
+      source.asExpr() = mc
     )
-   }
- 
+    or
+    exists(SensitiveVariableExpr sve | source.asExpr() = sve)
+  }
+
   predicate isSink(DataFlow::Node sink) {
-    exists(MethodCall mc, CatchClause cc | 
+    // Consider the case where the sink exposes sensitive info within a catch clause of type RuntimeException
+    exists(MethodCall mc, CatchClause cc |
       cc.getACaughtType().getASupertype*().hasQualifiedName("java.lang", "RuntimeException") and
       mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock() and
       (
+        getSinkAny(sink) or
         CommonSinks::isLoggingSink(sink) or
         CommonSinks::isPrintSink(sink) or
         CommonSinks::isErrorSink(sink) or
@@ -45,23 +46,30 @@
       ) and
       sink.asExpr() = mc.getAnArgument()
     )
+    or
+    // Consider the case where the sink is a throw statement that has a super type of RuntimeException
+    exists(ThrowStmt ts, ConstructorCall cc |
+      // Identifying throw statements creating RuntimeExceptions with sensitive information
+      ts.getThrownExceptionType().getASupertype*().hasQualifiedName("java.lang", "RuntimeException") and
+      // Throw statements don't have an argument, so you need to look at the ConstructorCall that creates the exception
+      cc = ts.getExpr().(ConstructorCall) and
+      sink.asExpr() = cc.getAnArgument()
+    )
   }
 
   predicate isBarrier(DataFlow::Node node) {
     exists(MethodCall mc |
       // Use regex matching to check if the method name contains 'sanitize', case-insensitive
-      (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
-      mc.getMethod().getName().toLowerCase().matches("%encrypt%") 
-      )
-      and
+      (
+        mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
+        mc.getMethod().getName().toLowerCase().matches("%encrypt%")
+      ) and
       node.asExpr() = mc.getAnArgument()
     )
-  }  
+  }
 }
 
-
-
- 
 from Flow::PathNode source, Flow::PathNode sink
 where Flow::flowPath(source, sink)
-select sink.getNode(), source, sink, "CWE-537: Java runtime error message containing sensitive information"
+select sink.getNode(), source, sink,
+  "CWE-537: Java runtime error message containing sensitive information"
