@@ -13,7 +13,8 @@ def count_files(directory):
                     cwe_counts[cwe]['GOOD'] += 1
                 elif file.startswith('BAD_'):
                     cwe_counts[cwe]['BAD'] += 1
-                cwe_counts[cwe]['TOTAL'] += 1
+                # Ensure that we don't count the util files
+                cwe_counts[cwe]['TOTAL'] += 1 if file.startswith('GOOD_') or file.startswith('BAD_') else 0
         print(f"{cwe}: GOOD={cwe_counts[cwe]['GOOD']}, BAD={cwe_counts[cwe]['BAD']}, TOTAL={cwe_counts[cwe]['TOTAL']}")
 
     return cwe_counts
