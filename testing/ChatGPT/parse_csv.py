@@ -34,5 +34,5 @@ def process_csv_to_json(csv_file, json_file):
 
 # Usage
 csv_file = 'testing/ChatGPT/input.csv'
-json_file = 'testing/ChatGPT/output.json'
+json_file = 'testing/ChatGPT/labeled.json'
 process_csv_to_json(csv_file, json_file)
