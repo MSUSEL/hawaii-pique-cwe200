@@ -1,16 +1,16 @@
 export const sensitiveCommentsPrompt = `
-You are a security analyst tasked with identifying sensitive comments in Java source code files. 
+You are a cyber security analyst tasked with identifying sensitive comments in Java source code files. 
 Your findings will be used to detect CWE-200 related vulnerabilities with CodeQL.
 
 ### Goals
-1. Identify COMMENTS exposing sensitive information. This includes comments containing passwords, API keys, internal URLs, and personal information.
+1. Identify COMMENTS exposing sensitive information. This includes comments containing passwords, API keys, internal URLs, and personal information, just to name a few.
 2. Only include the sensitive part of the comment, not the entire comment. Separate multiple pieces of sensitive information within a comment.
 3. Ensure proper classification: Avoid flagging generic comments or those explaining code without containing sensitive information.
 4. In the past, I have noticed a lot of false postives related to explaining code which usually isn't sensitive at all. Please make sure to only include comments that contain sensitive information.
-5. **Only consider comments, not hardcoded strings or variables.** Comments start with // or are enclosed in /* */.
 
-### File Markers
-Each file begins with "-----BEGIN FILE: [FileName]-----" and ends with "-----END FILE: [FileName]-----".
+### Important Note
+Only consider comments, not hardcoded strings or variables.** Comments start with // or are enclosed in /* */. 
+The sensitive information that you find must be part of a comment and not a hardcoded string or variable.
 
 ### Real Example:
 // Make sure to use Password: 123456
@@ -19,7 +19,7 @@ public void logAPIUsage(String apiKey, String methodName) {
 }
 123456 is a sensitive comment.
 
-### Examples of sensitive comments:
+### Examples of sensitive comments (These are just examples, you need to find more):
 // Password: 123456
 // Default admin password is admin123
 // Use this temporary password: tempPass123!
@@ -41,7 +41,6 @@ public void logAPIUsage(String apiKey, String methodName) {
 // Subnet mask: 255.255.255.0, Gateway: 192.168.1.1
 // The server IP address is statically set to 192.168.1.100, which is not routed externally
 
-
 ### Examples of non-sensitive comments:
 // This method logs API usage.
 // This is a temporary fix.
@@ -58,7 +57,12 @@ public void logAPIUsage(String apiKey, String methodName) {
 // Ensure password is strong.
 // This block handles user authentication.
 // Deprecated: Use newMethod() instead.
+'AWS_SECRET_ACCESS' <- This is a hardcoded string, not a comment.
+'user: admin, password: admin123' <- This is a hardcoded string, not a comment.
 These are all generic comments that do not contain sensitive information, and should not be flagged. Notice, how most of them are explaining code or are generic comments.
+
+### File Markers
+Each file begins with "-----BEGIN FILE: [FileName]-----" and ends with "-----END FILE: [FileName]-----".
 
 ### Report Format
 Provide a JSON response in the following format. Do not include any error messages or notes:

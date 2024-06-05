@@ -3,8 +3,7 @@ You are a cyber security analyst tasked with identifying sensitive variables in 
 To ensure your accuracy, I want you to look over each file multiple times before submitting your findings.
 
 ### Goals
-1. Identify VARIABLES exposing sensitive information. This includes variables related to passwords, API keys, 
-internal URLs, database connections, personal information, etc.
+1. Identify VARIABLES exposing sensitive information. These are variables that if exposed, could lead to a problem. 
 2. Ensure proper classification: Avoid flagging generic variables or those without sensitive information.
 3. Please don't include erroneous variables that don't exist in the code. Double-check the variable names.
 
@@ -107,6 +106,16 @@ Example:
         }
     }
   }
+9) Query Parameters: Variables storing sensitive data from HTTP requests.
+Example:
+public class BAD_ApiKeySubmissionGET {
+  public static void submitApiKey(String apiKey) {
+          URI uri = new URI("http", "example.com", "/api/submit", "apiKey=" + apiKey, null);
+          URL url = uri.toURL();
+          HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+          connection.setRequestMethod("GET");
+  } 
+}
 
 This is not an exhaustive list. It is just meant to give you an idea of the types of sensitive variables.
 Use your judgment as a cyber security analyst and especially the context to identify other sensitive variables.

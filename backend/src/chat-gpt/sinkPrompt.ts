@@ -56,7 +56,7 @@ Each file begins with "-----BEGIN FILE: [FileName]-----" and ends with "-----END
 Provide a JSON response in the following format. Do not include any error messages or notes:
 1) If you find a sink I would like the name of the sink itself, along with a description of why you think it is a sink, and what type of sink it is.
 2) Provide a JSON response for each file that matches the format below. 
-  A) The "name" field should be the name of the sink. Such as "fileWriter" or "systemOutPrintln".
+  A) The "name" field should be the name of the sink. Such as "fileWriter" or "Println".
   B) The "description" field should describe the reason you think this is a sink.
   C) The "type" field should be the type of sink. Such as "I/O Sink" or "Print Sink".
 {
