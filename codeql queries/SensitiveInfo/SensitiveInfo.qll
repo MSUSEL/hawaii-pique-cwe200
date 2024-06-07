@@ -15,7 +15,7 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
         f = v.getCompilationUnit().getFile() and
         sensitiveVariables(f.getBaseName(), v.getName()) and
         not this instanceof CompileTimeConstantExpr and
-        not v.getName().toLowerCase().matches("%encrypt%")
+        not v.getName().toLowerCase().matches("%encrypted%")
         )
     }
   }
