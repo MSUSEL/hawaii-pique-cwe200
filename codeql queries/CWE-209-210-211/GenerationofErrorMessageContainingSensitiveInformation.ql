@@ -24,18 +24,28 @@
      // Broad definition, consider refining
      exists(SensitiveVariableExpr sve | source.asExpr() = sve) or 
      exists(SensitiveStringLiteral ssl |source.asExpr() = ssl) 
-    //  or
-     
-    //  exists(MethodCall ma |
-    //    ma.getMethod().hasName("getMessage") and
-    //    source.asExpr() = ma
-    //  )
+     or
+     exists(MethodCall ma |
+       ma.getMethod().hasName("getMessage") and
+       source.asExpr() = ma
+     )
    }
  
    predicate isSink(DataFlow::Node sink) {
      // Identifying common error message generation points
      CommonSinks::isPrintSink(sink) or 
      CommonSinks::isErrorSink(sink)
+
+
+     or
+    // Consider the case where the sink is a throw statement that throws a ServletException
+    exists(ThrowStmt ts, ConstructorCall cc |
+      // Identifying throw statements creating ServletException with sensitive information
+      ts.getThrownExceptionType().getASupertype*().hasQualifiedName("java.lang", "Exception") and
+      // Throw statements don't have an argument, so you need to look at the ConstructorCall that creates the exception
+      cc = ts.getExpr().(ConstructorCall) and
+      sink.asExpr() = cc.getAnArgument()
+    )
    }
  }
  
