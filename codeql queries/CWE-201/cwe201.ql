@@ -34,9 +34,19 @@ private class GetMessageFlowSource extends DataFlow::Node {
 
 class MailSendMethod extends DataFlow::Node {
   MailSendMethod() {
-    exists(MethodCall mailCall | this.asExpr() = mailCall.getAnArgument() | 
-      mailCall.getMethod().hasName("setText") and
-      mailCall.getQualifier().getType().(RefType).hasQualifiedName("javax.mail", "Message")
+    exists(MethodCall mailCall | 
+      this.asExpr() = mailCall.getAnArgument() and  
+      (mailCall.getMethod().hasName("setText") or
+      mailCall.getMethod().hasName("setContent") or
+      mailCall.getMethod().hasName("setSubject") or 
+      mailCall.getMethod().hasName("addRecipient") or
+      mailCall.getMethod().hasName("setFrom") or
+      mailCall.getMethod().hasName("addHeader"))
+      
+      and
+
+      mailCall.getMethod().getDeclaringType().hasQualifiedName("javax.mail.internet", _) 
+      
     )
   }
 }
@@ -50,6 +60,8 @@ class MailSendMethod extends DataFlow::Node {
     sink instanceof InformationLeakSink or 
     sink instanceof MailSendMethod or 
     sink.asExpr() instanceof UrlConstructorCall 
+    or
+    getSink(sink, "Email Sink")
  }
 }
 
