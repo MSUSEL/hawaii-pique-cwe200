@@ -6,6 +6,12 @@ extensions:
     data:
     - ["$%^&&*().java", "$%^&&*()"]
     - ["GOOD_SecureKeyManagement.java", "encryptionKey"]
+    - ["BAD_CustomLogging.java", "apiKey"]
+    - ["BAD_SecurityHandler.java", "decryptionKey"]
+    - ["BAD_SessionManager.java", "token"]
+    - ["BAD_SessionManager.java", "userId"]
+    - ["BAD_RegistrationService.java", "ssn"]
+    - ["BAD_LoginServiceCustom.java", "username"]
     - ["GOOD_UserAuthenticationComments.java", "username"]
     - ["GOOD_UserAuthenticationComments.java", "password"]
     - ["BAD_CloudServiceConfigExposure.java", "cloudAccessToken"]

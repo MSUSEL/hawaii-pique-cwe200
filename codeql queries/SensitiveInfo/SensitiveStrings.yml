@@ -103,9 +103,6 @@ extensions:
     - ["BAD_ClientCredentials.java", "super-secret-client-key"]
     - ["BAD_DatabaseAccess.java", "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;"]
     - ["BAD_DatabaseConnector.java", "password123"]
-    - ["BAD_EncryptionUtil.java", "-----BEGIN PRIVATE KEY-----
-MIICeAIBADANBgkqhkiG9w0BAQEFAASC...
------END PRIVATE KEY-----"]
     - ["BAD_HardcodedCredentials.java", "password123"]
     - ["BAD_HardcodedSecretInConfig.java", "supersecretkey12345"]
     - ["BAD_HardcodedSecretInConfig.java", "0123456789abcdef"]

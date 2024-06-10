@@ -71,6 +71,7 @@ def check_missed(codeql_results, java_files):
     for cwe in codeql_results:
         cwe_related_files = set()
         for java_file in java_files:
+            file_name = java_file.split("/")[-1]
             if cwe in java_file:
                 cwe_related_files.add(java_file)
         for file in cwe_related_files:
@@ -81,7 +82,7 @@ def check_missed(codeql_results, java_files):
                 file not in codeql_results[cwe]["false_negatives"]):
                     if file.startswith("BAD"):
                         codeql_results[cwe]["false_negatives"].add(file)
-                    else:
+                    elif file.startswith("GOOD"):
                         codeql_results[cwe]["true_negatives"].add(file)
     return codeql_results        
 
