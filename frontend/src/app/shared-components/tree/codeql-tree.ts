@@ -23,6 +23,7 @@ export interface CodeQlNode {
     fullPath:string;
     message:string;
     region:any;
+    location:any;
 }
 export class RuleFlatNode {
     name: string;
@@ -32,6 +33,7 @@ export class RuleFlatNode {
     message:string;
     expandable: boolean;
     size:number=0;
+    location:string;
 }
 
 @Directive()
@@ -50,7 +52,8 @@ export class RuleTree {
             message:node.message,
             fullPath:node.fullPath?node.fullPath:'',
             size:node.files?node.files.length:0,
-            region:node.region
+            region:node.region,
+            location:node.location
         };
     };
 

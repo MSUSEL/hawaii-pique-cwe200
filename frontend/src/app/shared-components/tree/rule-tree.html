@@ -3,16 +3,25 @@
         <!-- This is the tree node template for leaf nodes -->
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="27" class="custom-tree-node value"> 
             <!-- use a disabled button to provide padding for tree leaf -->
-            <div class="d-flex">
+            <div class="d-flex align-items-center" style="font-size: 14px !important;">
                 <i class="fa fa-file-code pr-1 text-secondary mr-1"></i>
                 
-                <div  class="text-secondary hover-green" 
-                        [ngClass]="{'active':node.fullPath==editorService.activeFile.fullPath}" 
-                        [title]="node.message"  (click)="findFile(node);"
-                        style="font-size: 14px !important;"  >
-                        
-                        {{node.name}}
+                <div class="text-secondary hover-green" 
+                     [ngClass]="{'active': node.fullPath == editorService.activeFile.fullPath}" 
+                     [title]="node.location" 
+                     (click)="findFile(node);" 
+                     style="margin-left: auto; white-space: nowrap; flex-grow: 1;">
+                    Line: {{node.location}} | &nbsp;
                 </div>
+
+                <div class="text-secondary hover-green" 
+                     [ngClass]="{'active': node.fullPath == editorService.activeFile.fullPath}" 
+                     [title]="node.message" 
+                     (click)="findFile(node);" 
+                     style=" white-space: nowrap;">
+                    {{node.name}}
+                </div>
+
             </div>  
         </mat-tree-node>
         <!-- This is the tree node template for expandable nodes -->

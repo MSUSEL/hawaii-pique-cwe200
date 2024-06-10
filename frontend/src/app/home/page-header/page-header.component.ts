@@ -87,6 +87,7 @@ export class PageHeaderComponent implements OnInit {
             this.codeQlService.getSarifResult(this.utilService.ProjectName).subscribe((response)=>{
                 try{
                     this.editorService.rulesTree=response.rulesTree;
+                    console.log(response.rulesTree);
                     this.editorService.locationsTree=response.locationsTree;
                     this.isLoading=false;
                     this.socketService.socketDisconnect();

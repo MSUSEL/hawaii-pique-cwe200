@@ -31,13 +31,14 @@ export class CodeQlParserService {
                 .map((file) => ({
                     name: this.fileService.getFilenameFromPath(
                         file.locations[0]?.physicalLocation.artifactLocation.uri,
-                    ) + " | Line - " + file.locations[0]?.physicalLocation.region.startLine,
+                ),
                     fullPath: this.correctPath(this.fileService.processFilePath(
                         sourcePath,
                         file.locations[0]?.physicalLocation.artifactLocation.uri),
                     ),
                     message: file.message.text,
                     region: file.locations[0]?.physicalLocation.region,
+                    location: file.locations[0]?.physicalLocation.region.startLine.toString(),
                 }))
                 .filter(file => {
                     // Construct a unique identifier for the file based on its location and line
