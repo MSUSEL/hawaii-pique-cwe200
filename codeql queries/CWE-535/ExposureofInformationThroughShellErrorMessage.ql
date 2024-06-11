@@ -12,6 +12,7 @@
 import java
 import semmle.code.java.dataflow.TaintTracking
 import CommonSinks.CommonSinks
+import SensitiveInfo.SensitiveInfo
 
 module Flow = TaintTracking::Global<ShellErrorExposureConfig>;
 import Flow::PathGraph
@@ -42,7 +43,8 @@ module ShellErrorExposureConfig implements DataFlow::ConfigSig {
     CommonSinks::isLoggingSink(sink) or
     CommonSinks::isPrintSink(sink) or
     CommonSinks::isErrorSink(sink) or
-    CommonSinks::isServletSink(sink)
+    CommonSinks::isServletSink(sink) or
+    getSinkAny(sink)
   }
 
   predicate isBarrier(DataFlow::Node node) {
