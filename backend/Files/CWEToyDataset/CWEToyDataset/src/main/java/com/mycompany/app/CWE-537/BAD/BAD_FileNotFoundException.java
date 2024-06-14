@@ -2,7 +2,7 @@ import java.io.*;
 
 public class BAD_FileNotFoundException {
 
-    public void processFile(String filePath) {
+    public void processFile(String filePath) throws FileNotFoundException{
         try {
             new FileReader(filePath);
         } catch (FileNotFoundException e) {

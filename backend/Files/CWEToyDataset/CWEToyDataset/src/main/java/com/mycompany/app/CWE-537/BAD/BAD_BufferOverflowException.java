@@ -13,7 +13,6 @@ public class BAD_BufferOverflowException {
             System.out.println("Secure data stored successfully.");
         } catch (BufferOverflowException e) {
             System.err.println("Buffer overflow occurred while attempting to store secure data: " + new String(sensitiveData));
-            throw new BufferOverflowException("Buffer overflow occurred while attempting to store secure data: " + new String(sensitiveData));
         } finally {
             dataBuffer.clear();
         }
