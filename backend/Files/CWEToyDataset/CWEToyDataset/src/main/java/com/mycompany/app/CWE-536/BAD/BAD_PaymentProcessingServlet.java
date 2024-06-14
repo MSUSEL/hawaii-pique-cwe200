@@ -5,12 +5,7 @@ import javax.servlet.http.*;
 public class BAD_PaymentProcessingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String paymentId = request.getParameter("paymentId");
-        try {
-            processPayment(paymentId);
-        } catch (ServletException e) {
-            // Handling the exception by exposing payment ID
-            response.getWriter().println("Payment processing failed for Payment ID: " + paymentId);
-        }
+        processPayment(paymentId);
     }
 
     private void processPayment(String paymentId) throws ServletException {

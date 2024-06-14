@@ -9,14 +9,8 @@ public class BAD_IoTDeviceFirmwareUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String deviceId = request.getParameter("deviceId");
         String firmwareVersion = request.getParameter("firmwareVersion");
-        try {
-            deployFirmwareUpdate(deviceId, firmwareVersion);
-        } catch (ServletException e) {
-            // Exposing potentially sensitive configuration and state information about IoT devices
-            logger.error("Failed firmware update for device ID: {} with firmware version: {}. Error: {}", deviceId, firmwareVersion, e.getMessage());
-            response.getWriter().println("Firmware update process encountered an error. Please check device status.");
-            notifyTechSupport(deviceId, firmwareVersion, e.getMessage());
-        }
+        
+        deployFirmwareUpdate(deviceId, firmwareVersion);
     }
 
     private void deployFirmwareUpdate(String deviceId, String firmwareVersion) throws ServletException {
@@ -27,8 +21,5 @@ public class BAD_IoTDeviceFirmwareUpdateServlet extends HttpServlet {
         // Assume more update logic here that could fail
     }
 
-    private void notifyTechSupport(String deviceId, String firmwareVersion, String error) {
-        // Notifying technical support with detailed error info, could log sensitive information if not properly managed
-        logger.info("Tech support notified for device ID: {}, Firmware Version: {}, Error: {}", deviceId, firmwareVersion, error);
-    }
+
 }
