@@ -5,11 +5,9 @@ public class BAD_ArithmeticExceptionHandling {
             // Potential division by zero error
             int result = 100 / sensitiveMultiplier; 
         } catch (ArithmeticException e) {
-            // Inappropriately handling ArithmeticException
-            System.err.println("Failed to calculate due to an arithmetic error: " + e.getMessage());
+            System.err.println("Failed to calculate due to an arithmetic error ussing " + String.valueOf(sensitiveMultiplier));
             // Exposing sensitive business logic detail
-            System.err.println("This occurred while using a sensitive business multiplier.");
-        }
+            throw new ArithmeticException("Failed to calculate due to an arithmetic error using " + String.valueOf(sensitiveMultiplier));}
     }
 
     private static int getSensitiveMultiplier() {

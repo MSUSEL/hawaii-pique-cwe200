@@ -1,7 +1,4 @@
-import java.util.logging.*;
-
 public class GOOD_IllegalArgumentException {
-    private static final Logger logger = Logger.getLogger("RegistrationLogger");
 
     public void registerUser(String username, String email, String password) {
         try {
@@ -10,7 +7,7 @@ public class GOOD_IllegalArgumentException {
             }
             // Logic to register user
         } catch (IllegalArgumentException e) {
-            logger.warning("Registration attempt failed.");
+            System.err.println("Registration attempt failed.");
             throw new RuntimeException("Invalid email format.");
         }
     }
