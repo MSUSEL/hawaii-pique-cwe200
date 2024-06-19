@@ -5,7 +5,11 @@ public class BAD_SecurityException {
             }
             // Process the request
             else{
-                string name = requestData.getName();
+                this.processRequest(requestData);
             }
+    }
+
+    private void processRequest(String requestData) {
+        // Process the request
     }
 }

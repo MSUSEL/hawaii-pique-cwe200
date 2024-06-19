@@ -1,6 +1,6 @@
 public class BAD_IndexOutofBoundsInfoExposure {
 
-    public static string main(String[] args, int index) {
+    public static void main(String[] args, int index) {
         String[] sensitiveData = {"secretPassword123", "confidentialInfo"};
         
         if (index < 0 || index >= sensitiveData.length) {
@@ -8,7 +8,6 @@ public class BAD_IndexOutofBoundsInfoExposure {
         }
         else{
             String data = sensitiveData[index]; // This will throw IndexOutOfBoundsException
-            return data;
         }
     }
 }

@@ -9,15 +9,12 @@ public class BAD_ApiKeySubmissionGET {
             URL url = uri.toURL();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            
-            System.out.println("Sending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + connection.getResponseCode());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
     
     public static void main(String[] args) {
-        submitApiKey("secretApiKey123"); // Extremely risky!
+        submitApiKey("secretApiKey123");
     }
 }

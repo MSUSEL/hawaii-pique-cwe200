@@ -1,4 +1,5 @@
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.HttpResponse;
@@ -11,7 +12,7 @@ import java.util.Base64;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-public class GOOD_PersonalDetailsGET_Encrypted {
+public class GOOD_PersonalDetailsPOST_Encrypted {
     private static SecretKey secretKey;
 
     static {
@@ -20,7 +21,7 @@ public class GOOD_PersonalDetailsGET_Encrypted {
             keyGen.init(128); // AES with 128-bit key for encryption
             secretKey = keyGen.generateKey();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 
@@ -35,22 +36,24 @@ public class GOOD_PersonalDetailsGET_Encrypted {
         try {
             fullName = URLEncoder.encode(encrypt(fullName), StandardCharsets.UTF_8.name());
             dateOfBirth = URLEncoder.encode(encrypt(dateOfBirth), StandardCharsets.UTF_8.name());
-            String url = "https://example.com/register?fullName=" + fullName + "&dob=" + dateOfBirth; // Encrypted data in query
+
+            String url = "https://example.com/register";
             
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpGet httpGet = new HttpGet(url);
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
+            String postData = "fullName=" + fullName + "&dob=" + dateOfBirth;
 
-            HttpResponse response = httpClient.execute(httpGet);
-            System.out.println("Sending 'GET' request to URL: " + url);
-            System.out.println("Response Code: " + response.getStatusLine().getStatusCode());
+            httpPost.setEntity(new StringEntity(postData));
 
+            HttpResponse response = httpClient.execute(httpPost);
             httpClient.close();
         } catch (ClientProtocolException e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 

@@ -10,9 +10,7 @@ public class GOOD_FetchPublicData {
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            
-            System.out.println("Sending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + connection.getResponseCode());
+ 
         } catch (Exception e) {
             System.err.println("Error occurred while fetching sports data.");
         }

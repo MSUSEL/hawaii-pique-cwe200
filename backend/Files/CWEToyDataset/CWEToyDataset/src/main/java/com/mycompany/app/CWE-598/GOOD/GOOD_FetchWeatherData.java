@@ -11,8 +11,6 @@ public class GOOD_FetchWeatherData {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             
-            System.out.println("Sending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + connection.getResponseCode());
         } catch (Exception e) {
             System.err.println("Error occurred while fetching weather data.");
         }

@@ -3,10 +3,11 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
+import java.io.OutputStream;
 import java.util.Base64;
+import java.net.URLEncoder;
 
-public class GOOD_CreditCardSubmissionGET_Encrypted {
+public class GOOD_CreditCardSubmissionPOST_Encrypted {
 
     private static SecretKey secretKey;
 
@@ -16,7 +17,7 @@ public class GOOD_CreditCardSubmissionGET_Encrypted {
             keyGen.init(128); // Using AES with 128-bit keys.
             secretKey = keyGen.generateKey();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 
@@ -29,20 +30,28 @@ public class GOOD_CreditCardSubmissionGET_Encrypted {
 
     public static void submitCreditCard(String cardNumber, String expiryDate, String cvv) {
         try {
-            cardNumber = URLEncoder.encode(encrypt(cardNumber), "UTF-8");
-            expiryDate = URLEncoder.encode(encrypt(expiryDate), "UTF-8");
-            cvv = URLEncoder.encode(encrypt(cvv), "UTF-8");
+            cardNumber = encrypt(cardNumber);
+            expiryDate = encrypt(expiryDate);
+            cvv = encrypt(cvv);
 
-            String urlString = "https://example.com/submitPayment?cardNumber=" + cardNumber +
-                               "&expiryDate=" + expiryDate + "&cvv=" + cvv;
-            URL url = new URL(urlString);
+            URL url = new URL("https://example.com/submitPayment");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);  // Necessary for POST
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-            System.out.println("Sending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + connection.getResponseCode());
+            // Constructing the data to be sent
+            String urlParameters = "cardNumber=" + URLEncoder.encode(cardNumber, "UTF-8") +
+                                   "&expiryDate=" + URLEncoder.encode(expiryDate, "UTF-8") +
+                                   "&cvv=" + URLEncoder.encode(cvv, "UTF-8");
+
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(urlParameters.getBytes());
+                os.flush();
+            }
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 

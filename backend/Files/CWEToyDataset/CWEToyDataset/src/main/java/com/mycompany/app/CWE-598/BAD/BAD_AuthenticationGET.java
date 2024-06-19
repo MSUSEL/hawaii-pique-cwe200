@@ -5,21 +5,18 @@ import java.io.InputStream;
 public class BAD_AuthenticationGET {
     public static void authenticateUser(String userId, String authToken) {
         try {
-            String urlString = "http://example.com/auth?userId=" + userId + "&token=" + authToken; // Sensitive data in query
+            String urlString = "http://example.com/auth?userId=" + userId + "&token=" + authToken;
             URL url = new URL(urlString);
             URLConnection connection = url.openConnection();
-            
             InputStream responseStream = connection.getInputStream();
-            System.out.println("Authenticating with 'GET' request to URL: " + url);
-
-            // Handling the response (omitted for brevity)
+            
             responseStream.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 
     public static void main(String[] args) {
-        authenticateUser("user123", "secureTokenXYZ"); // Extremely risky!
+        authenticateUser("user123", "secureTokenXYZ");
     }
 }

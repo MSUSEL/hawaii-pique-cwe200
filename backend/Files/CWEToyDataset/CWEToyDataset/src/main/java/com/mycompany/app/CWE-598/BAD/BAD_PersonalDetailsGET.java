@@ -8,23 +8,21 @@ import java.io.IOException;
 public class BAD_PersonalDetailsGET {
     public static void sendPersonalDetails(String fullName, String dateOfBirth) {
         try {
-            String url = "http://example.com/register?fullName=" + fullName + "&dob=" + dateOfBirth; // Sensitive data in query
+            String url = "http://example.com/register?fullName=" + fullName + "&dob=" + dateOfBirth;
             CloseableHttpClient httpClient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(url);
 
             HttpResponse response = httpClient.execute(httpGet);
-            System.out.println("Sending 'GET' request to URL: " + url);
-            System.out.println("Response Code: " + response.getStatusLine().getStatusCode());
 
             httpClient.close();
         } catch (ClientProtocolException e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 
     public static void main(String[] args) {
-        sendPersonalDetails("John Doe", "1980-01-01"); // Extremely risky!
+        sendPersonalDetails("John Doe", "1980-01-01");
     }
 }

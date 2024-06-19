@@ -1,4 +1,5 @@
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.HttpResponse;
@@ -16,7 +17,7 @@ public class GOOD_BankingTransactionQuery {
             keyGen.init(128); // AES 128-bit key
             secretKey = keyGen.generateKey();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 
@@ -30,17 +31,21 @@ public class GOOD_BankingTransactionQuery {
     public static void queryTransactionDetails(String accountNumber) {
         try {
             accountNumber = encryptAccountNumber(accountNumber);
-            String url = "http://example.com/transactions?accountNumber=" + accountNumber; // Encrypted data in query
+            String url = "https://example.com/transactions"; // Use HTTPS
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpGet httpGet = new HttpGet(url);
+            HttpPost httpPost = new HttpPost(url);
 
-            HttpResponse response = httpClient.execute(httpGet);
-            System.out.println("Transaction details requested for encrypted account number: " + accountNumber);
-            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
+            // Setting the Request headers
+            httpPost.setHeader("Content-Type", "application/json");
+            // Construct JSON payload
+            String jsonPayload = "{\"accountNumber\":\"" + accountNumber + "\"}";
+            StringEntity entity = new StringEntity(jsonPayload);
+            httpPost.setEntity(entity);
 
+            HttpResponse response = httpClient.execute(httpPost);
             httpClient.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 

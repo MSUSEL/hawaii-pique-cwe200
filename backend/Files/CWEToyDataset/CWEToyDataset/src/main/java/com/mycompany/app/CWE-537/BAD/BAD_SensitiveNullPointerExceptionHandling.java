@@ -8,19 +8,17 @@ import java.io.PrintWriter;
 public class BAD_SensitiveNullPointerExceptionHandling extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         String secretKey = null;
         
         if (request.getParameter("secretKey") != null) {
             secretKey = request.getParameter("secretKey");
         }
         else{
-            throw NullPointerException(secretKey + " is null.");
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Failed to handle secret key properly: " + e.getMessage());
-            response.addHeader("Error-Info", "Error due to null secret key: " + secretKey);
+            throw new NullPointerException(secretKey + " is null.");
         }
     }
-
+    
     private static String getSecretKey() {
         // Simulate a failure in secret key retrieval
         return null;

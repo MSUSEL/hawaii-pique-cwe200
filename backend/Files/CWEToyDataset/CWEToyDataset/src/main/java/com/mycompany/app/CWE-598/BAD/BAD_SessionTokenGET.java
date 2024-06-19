@@ -5,18 +5,16 @@ import java.net.HttpURLConnection;
 public class BAD_SessionTokenGET {
     public static void retrieveData(String sessionToken) {
         try {
-            String urlString = "http://example.com/data?sessionToken=" + sessionToken; // Sensitive session token in query
+            String urlString = "http://example.com/data?sessionToken=" + sessionToken;
             URL url = new URL(urlString);
             URLConnection connection = url.openConnection();
             
-            System.out.println("Accessing data with 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + ((HttpURLConnection) connection).getResponseCode());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
     
     public static void main(String[] args) {
-        retrieveData("abc123sessionToken"); // Extremely risky!
+        retrieveData("abc123sessionToken");
     }
 }

@@ -1,13 +1,14 @@
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
+import java.io.OutputStream;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.util.Base64;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-public class GOOD_HealthInfoSubmissionGET {
+public class GOOD_HealthInfoSubmissionPOST {
     private static SecretKey secretKey;
 
     static {
@@ -16,7 +17,7 @@ public class GOOD_HealthInfoSubmissionGET {
             keyGen.init(128); // Using AES with 128-bit keys.
             secretKey = keyGen.generateKey();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 
@@ -28,23 +29,33 @@ public class GOOD_HealthInfoSubmissionGET {
     }
 
     public static void bookMedicalAppointment(String patientId, String symptoms, String doctorId) {
+        HttpURLConnection connection = null;
         try {
-            // Encrypt and URL encode the parameters to ensure they are properly formatted for a URL
-            symptoms = URLEncoder.encode(encrypt(symptoms), StandardCharsets.UTF_8.toString());
+            // Encrypt and URL encode the parameters
             patientId = URLEncoder.encode(encrypt(patientId), StandardCharsets.UTF_8.toString());
+            symptoms = URLEncoder.encode(encrypt(symptoms), StandardCharsets.UTF_8.toString());
             doctorId = URLEncoder.encode(encrypt(doctorId), StandardCharsets.UTF_8.toString());
 
-            String urlString = "https://healthcare.example.com/bookAppointment?patientId=" + patientId +
-                               "&symptoms=" + symptoms + "&doctorId=" + doctorId; // Using HTTPS and encrypted data
+            URL url = new URL("https://healthcare.example.com/bookAppointment");
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true); // To send request content
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            // Construct the data to be sent in the POST body
+            String postData = "patientId=" + patientId + "&symptoms=" + symptoms + "&doctorId=" + doctorId;
             
-            URL url = new URL(urlString);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            
-            System.out.println("Sending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + connection.getResponseCode());
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(postData.getBytes());
+                os.flush();
+            }
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred while booking medical appointment.");
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
     }
     

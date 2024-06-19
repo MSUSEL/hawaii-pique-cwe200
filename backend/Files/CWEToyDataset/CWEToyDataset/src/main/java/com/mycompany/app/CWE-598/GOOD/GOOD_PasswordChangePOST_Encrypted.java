@@ -1,13 +1,14 @@
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
+import java.io.OutputStream;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.util.Base64;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-public class GOOD_PasswordChangeGET_Encrypted {
+public class GOOD_PasswordChangePOST_Encrypted {
     private static SecretKey secretKey;
 
     static {
@@ -16,7 +17,7 @@ public class GOOD_PasswordChangeGET_Encrypted {
             keyGen.init(128); // Using AES with 128-bit keys.
             secretKey = keyGen.generateKey();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 
@@ -28,21 +29,33 @@ public class GOOD_PasswordChangeGET_Encrypted {
     }
 
     public static void changePassword(String username, String oldPassword, String newPassword) {
+        HttpURLConnection connection = null;
         try {
+            URL url = new URL("https://example.com/changePassword");
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true); // Allows sending data
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            // Encrypt and encode parameters
             username = URLEncoder.encode(encrypt(username), StandardCharsets.UTF_8.name());
             oldPassword = URLEncoder.encode(encrypt(oldPassword), StandardCharsets.UTF_8.name());
             newPassword = URLEncoder.encode(encrypt(newPassword), StandardCharsets.UTF_8.name());
 
-            String urlString = "https://example.com/changePassword?username=" + username + 
-                               "&oldPassword=" + oldPassword + "&newPassword=" + newPassword; // Encrypted data in query
-            URL url = new URL(urlString);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            
-            System.out.println("Sending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + connection.getResponseCode());
+            // Construct POST data
+            String postData = "username=" + username + "&oldPassword=" + oldPassword + "&newPassword=" + newPassword;
+
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(postData.getBytes());
+                os.flush();
+            }
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred while changing password");
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
     }
     

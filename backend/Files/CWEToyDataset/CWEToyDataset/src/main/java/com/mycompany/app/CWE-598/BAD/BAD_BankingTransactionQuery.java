@@ -6,21 +6,18 @@ import org.apache.http.HttpResponse;
 public class BAD_BankingTransactionQuery {
     public static void queryTransactionDetails(String accountNumber) {
         try {
-            String url = "http://example.com/transactions?accountNumber=" + accountNumber; // Sensitive data in query
+            String url = "http://example.com/transactions?accountNumber=" + accountNumber;
             CloseableHttpClient httpClient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(url);
-
             HttpResponse response = httpClient.execute(httpGet);
-            System.out.println("Transaction details requested for account number: " + accountNumber);
-            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
 
             httpClient.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error occurred");
         }
     }
 
     public static void main(String[] args) {
-        queryTransactionDetails("1234567890"); // Extremely risky!
+        queryTransactionDetails("1234567890"); 
     }
 }
