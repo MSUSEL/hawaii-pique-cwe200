@@ -61,15 +61,16 @@ export class ChatGptService {
         let sensitiveCommentsMapping = new Map<string, string[]>();
         let classificationMapping = new Map<string, string[]>();
         let sinksMapping = new Map<string, string[][]>();
+        let rawResponses = "";
         
         let completedFiles = 0; // Number of completed files
     
         const prompts = [
             { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
-            // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
-            // { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
+            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
+            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
             // { type: 'classification', prompt: classifyPrompt, mapping: classificationMapping, result: classifications },
-            // { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
+            { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
 
         ];
     
@@ -85,7 +86,9 @@ export class ChatGptService {
     
             const processBatch = async (batch: string, filesInBatch: number, index: number) => {
                 try {
-                    const response = await this.createGptWithBackoff(batch, index);                
+                    const response = await this.createGptWithBackoff(batch, index);
+                    rawResponses += this.replaceIDs(response.message)
+
                     completedFiles += filesInBatch;
                     this.progressBar.update(completedFiles);
                     // this.eventsGateway.emitDataToClients('', this.progressBar)
@@ -174,7 +177,8 @@ export class ChatGptService {
                 await queue.drain();
                 this.progressBar.stop();
             };
-    
+            // Write raw responses to a file
+            this.fileUtilService.writeToFile(path.join(this.projectsPath, 'rawResponses.txt'), rawResponses);
             await processConcurrentBatches(batches, filesPerBatch);
         }
     
@@ -345,7 +349,8 @@ export class ChatGptService {
             // Case 1: File fits in the current batch
             this.addFileToBatch(currentBatch, boundedFileContent, fileTokenCount);
         }
-    
+        
+        // Push the last batch if it's not empty
         if (currentBatch.fileCount > 0) this.pushCurrentBatch(batches, currentBatch, prompt);
     
         return { batchesOfText: batches.map(b => b.text), filesPerBatch: batches.map(b => b.fileCount) };
@@ -383,7 +388,6 @@ export class ChatGptService {
             catch(e){
                 console.log(e);
             }
-            
         }
     }
     
@@ -421,7 +425,7 @@ export class ChatGptService {
         const OUTPUT_COST = (15 / 1000000); // GPT-4o pricing is $15 per 1 million output tokens
     
     
-        const prompts = [sensitiveVariablesPrompt, sensitiveStringsPrompt, sensitiveCommentsPrompt];
+        const prompts = [sensitiveVariablesPrompt, sensitiveStringsPrompt, sensitiveCommentsPrompt, sinkPrompt];
         const sourcePath = path.join(this.projectsPath, projectPath);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
         let tokenCount = 0;
@@ -477,6 +481,17 @@ export class ChatGptService {
 
         return { message: 'API Key updated successfully' };
     }
+
+    replaceIDs(inputString) {
+        return inputString.replace(/\b(ID-\d+)\.java\b/g, (match, id) => {
+            // Logging the match to see what is being caught by the regex
+            console.log(`Found ID: ${match}`);
+            if (this.idToNameMapping.get(id)) {
+              console.log(`Replacing ${id} with ${this.idToNameMapping.get(id)}`);
+              return this.idToNameMapping.get(id)
+            } 
+          });
+        }
     
 
 }
