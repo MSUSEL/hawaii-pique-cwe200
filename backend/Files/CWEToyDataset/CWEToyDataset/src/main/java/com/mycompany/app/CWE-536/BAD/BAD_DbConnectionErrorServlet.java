@@ -15,6 +15,10 @@ public class BAD_DbConnectionErrorServlet extends HttpServlet {
         String dbPass = request.getParameter("dbPass");
         Connection conn = null;
 
+        if (dbUrl == null || dbUser == null || dbPass == null) {
+            throw new ServletException("Invalid database connection parameters" + dbUrl + dbUser + dbPass);
+        }
+
         try {
             // Attempt to establish a database connection
             conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
