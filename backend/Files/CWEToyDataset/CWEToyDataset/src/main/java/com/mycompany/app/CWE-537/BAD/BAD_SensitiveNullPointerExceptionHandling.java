@@ -10,15 +10,13 @@ public class BAD_SensitiveNullPointerExceptionHandling extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String secretKey = null;
-        try {
-            // Simulate retrieving a secret key from a method that returns null
-            secretKey = getSecretKey();
-            // Attempting to use the secret key which is null
-            int length = secretKey.length(); // This will throw NullPointerException
-        } catch (NullPointerException e) {
-            // Inappropriately handling NullPointerException using HttpServletResponse
+        
+        if (request.getParameter("secretKey") != null) {
+            secretKey = request.getParameter("secretKey");
+        }
+        else{
+            throw NullPointerException(secretKey + " is null.");
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Failed to handle secret key properly: " + e.getMessage());
-            // Exposing that the secret key is null through the response header
             response.addHeader("Error-Info", "Error due to null secret key: " + secretKey);
         }
     }

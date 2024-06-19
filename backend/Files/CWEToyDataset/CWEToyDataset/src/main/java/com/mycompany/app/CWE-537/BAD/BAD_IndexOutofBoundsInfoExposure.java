@@ -1,13 +1,14 @@
 public class BAD_IndexOutofBoundsInfoExposure {
 
-    public static void main(String[] args) {
+    public static string main(String[] args, int index) {
         String[] sensitiveData = {"secretPassword123", "confidentialInfo"};
-        try {
-            // Attempting to access an index that does not exist
-            String data = sensitiveData[10]; // This will throw IndexOutOfBoundsException
-        } catch (IndexOutOfBoundsException e) {
-            System.err.println("This array should only be accessed within its bounds. Example sensitive data: " + sensitiveData[0]);
-            throw new IndexOutOfBoundsException("This array should only be accessed within its bounds. Example sensitive data: " + sensitiveData[0]);
+        
+        if (index < 0 || index >= sensitiveData.length) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of bounds for the array" + sensitiveData) ;
+        }
+        else{
+            String data = sensitiveData[index]; // This will throw IndexOutOfBoundsException
+            return data;
         }
     }
 }

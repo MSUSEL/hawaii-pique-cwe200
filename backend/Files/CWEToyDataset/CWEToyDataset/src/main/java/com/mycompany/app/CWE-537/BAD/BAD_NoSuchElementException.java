@@ -2,12 +2,14 @@ import java.util.*;
 
 public class BAD_NoSuchElementException {
     public String getConfigValue(String key) {
-        try {
-            Properties config = loadConfig();
-            return config.getProperty(key);  // Throws NoSuchElementException if the key is not found
-        } catch (NoSuchElementException e) {
+        Properties config = loadConfig();
+
+        if (config.getProperty(key) == null) {
             System.out.println("Config key not found: " + key);
             throw new NoSuchElementException("Config key not found: " + key);
+        }
+        else{
+            return config.getProperty(key);
         }
     }
 

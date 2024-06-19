@@ -3,11 +3,18 @@ import java.io.*;
 public class BAD_FileNotFoundException {
 
     public void processFile(String filePath) throws FileNotFoundException{
-        try {
-            new FileReader(filePath);
-        } catch (FileNotFoundException e) {
-            System.err.println("File processing failed. File path: " + filePath + ". Error: " + e.toString());
+
+        if (!isValudFilePath(filePath)) {
             throw new FileNotFoundException("File not found at " + filePath);
         }
+        else{
+            FileReader reader = new FileReader(filePath);
+            reader.close();
+        }
+    }
+
+    private boolean isValudFilePath(String filePath) {
+        // Check if the file path is valid
+        return true;
     }
 }

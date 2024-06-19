@@ -8,16 +8,16 @@ public class BAD_BufferOverflowException {
     }
 
     public void allocateSpace(byte[] sensitiveData) {
-        try {
-            dataBuffer.put(sensitiveData);
-            System.out.println("Secure data stored successfully.");
-        } catch (BufferOverflowException e) {
-            System.err.println("Buffer overflow occurred while attempting to store secure data: " + new String(sensitiveData));
-        } finally {
-            dataBuffer.clear();
+        
+        if (sensitiveData.length > dataBuffer.capacity()) {
+            throw new BufferOverflowException(); // Throw an exception if the data size exceeds the buffer capacity
         }
-    }
+        else{
+            dataBuffer.put(sensitiveData);
+        }
+        
 
+    }
     public static void main(String[] args) {
         BAD_BufferOverflowException buffer = new BAD_BufferOverflowException(256); // Small buffer size for demonstration
         // Example of sensitive data: username and password details
@@ -25,3 +25,5 @@ public class BAD_BufferOverflowException {
         buffer.allocateSpace(exampleSecureData); // This might cause a buffer overflow due to large data size
     }
 }
+
+

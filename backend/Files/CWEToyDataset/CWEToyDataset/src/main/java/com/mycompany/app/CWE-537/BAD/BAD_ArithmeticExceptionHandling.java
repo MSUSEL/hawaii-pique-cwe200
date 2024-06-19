@@ -1,13 +1,14 @@
 public class BAD_ArithmeticExceptionHandling {
     public static void main(String[] args) {
         int sensitiveMultiplier = getSensitiveMultiplier();
-        try {
-            // Potential division by zero error
-            int result = 100 / sensitiveMultiplier; 
-        } catch (ArithmeticException e) {
-            System.err.println("Failed to calculate due to an arithmetic error ussing " + String.valueOf(sensitiveMultiplier));
+        
+        if (sensitiveMultiplier == 0) {
+            throw new ArithmeticException("Cannot calculate due to a sensitive multiplier of zero" + String.valueOf(sensitiveMultiplier));
+        }
+        else{
+            System.out.println("Calculating with a sensitive multiplier of " + String.valueOf(sensitiveMultiplier));
+        }
     }
-}
 
     private static int getSensitiveMultiplier() {
         // Simulate retrieving a sensitive multiplier that is mistakenly zero
