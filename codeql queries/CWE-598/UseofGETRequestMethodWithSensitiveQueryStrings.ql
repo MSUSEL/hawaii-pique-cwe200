@@ -99,6 +99,13 @@
      // Consider both arguments and the return of sanitization/encryption methods as barriers
      (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
      )
+
+     and
+  // Additionally, ensure the variable itself is not related to 'encrypt'
+  not exists(VarAccess va |
+    va.getVariable().getName().toLowerCase().matches("%encrypt%") and
+    node.asExpr() = va
+  )
    }
  }
  
