@@ -1,3 +1,14 @@
+/**
+ * @name CWE-204: Observable discrepancies in sensitive error messages guarded by switch statements
+ * @description Detects if statements within sensitive contexts that produce different error messages based on conditional branches, which could lead to observable discrepancies.
+ * @kind problem
+ * @problem.severity warning
+ * @id java/error-message-discrepancies/204
+ * @tags security
+ *       external/cwe/cwe-204
+ * @cwe CWE-204
+ */
+
 import java
 import SensitiveInfo.SensitiveInfo
 
@@ -42,9 +53,6 @@ class ObservableDiscrepancySwitch extends SwitchStmt {
         )
       )
     )
-    // Future extensions can be added here following the pattern above.
-    // For example, to check for logging methods with different arguments,
-    // you can add another `exists` block that checks for specific logging method calls.
   }
 }
 
