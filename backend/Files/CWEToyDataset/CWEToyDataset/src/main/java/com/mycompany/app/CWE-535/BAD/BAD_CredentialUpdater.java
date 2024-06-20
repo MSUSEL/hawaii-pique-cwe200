@@ -4,7 +4,6 @@ import java.io.*;
 import org.apache.logging.log4j.*;
 
 public class BAD_CredentialUpdater extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(BAD_CredentialUpdater.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
@@ -18,11 +17,11 @@ public class BAD_CredentialUpdater extends HttpServlet {
             if (exitCode != 0) {
                 BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
                 String errorDetails = errorReader.readLine();
-                logger.error("Failed to update credentials for {}: {}", username, errorDetails); // Logging the error with username and details
+                System.err.println("Failed to update credentials for " + username + ": " + errorDetails);
                 response.getWriter().write("Failed to update credentials. Please contact system administrator.");
             }
         } catch (InterruptedException | IOException e) {
-            logger.error("Exception when updating credentials for {}: {}", username, e.getMessage());
+            System.err.println("Error updating credentials: " + e.getMessage());
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
