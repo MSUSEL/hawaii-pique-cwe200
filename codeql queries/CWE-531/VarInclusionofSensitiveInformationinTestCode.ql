@@ -38,9 +38,20 @@
      exists(MethodCall mc | sink.asExpr() = mc.getAnArgument() and
      CommonSinks::isServletSink(sink) or
      CommonSinks::isPrintSink(sink) or
-     CommonSinks::isLoggingSink(sink)) or 
-     CommonSinks::isErrorSink(sink)
+     CommonSinks::isErrorSink(sink) or
+    //  Use the LLM response to indentify sinks
+     getSinkAny(sink))
    }
+
+   predicate isBarrier(DataFlow::Node node) {
+    exists(MethodCall mc |
+      // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
+      (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
+      mc.getMethod().getName().toLowerCase().matches("%encrypt%")) and
+    // Consider both arguments and the return of sanitization/encryption methods as barriers
+    (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
+    )
+  }
  }
 
  class TestClass extends RefType {

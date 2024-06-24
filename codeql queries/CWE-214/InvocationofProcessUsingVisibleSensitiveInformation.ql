@@ -22,11 +22,7 @@ import Flow::PathGraph
 module ProcessExecutionWithSensitiveInfoConfig implements DataFlow::ConfigSig {
 
   predicate isSource(DataFlow::Node source) {
-    exists(SensitiveVariableExpr sve |
-      source.asExpr() = sve and
-      not sve.(VarAccess).getVariable().getName().toLowerCase().matches("%encrypt%"))
-    
-    or 
+    exists(SensitiveVariableExpr sve |source.asExpr() = sve) or 
     exists(SensitiveStringLiteral ssl |source.asExpr() = ssl )
   }
 
@@ -59,6 +55,9 @@ module ProcessExecutionWithSensitiveInfoConfig implements DataFlow::ConfigSig {
       envCall.getQualifier().getType().(RefType).hasQualifiedName("java.lang", "ProcessBuilder") and
       (sink.asExpr() = putCall.getAnArgument())
     )
+    or
+    // Use the LLM response to indentify command execution sinks
+    getSink(sink, "Command Execution Sink")
   }
 
 predicate isBarrier(DataFlow::Node node) {

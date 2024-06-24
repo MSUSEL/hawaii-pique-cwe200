@@ -12,52 +12,66 @@
  * @cwe CWE-550
  */
 
-
 import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
 import CommonSinks.CommonSinks
+import SensitiveInfo.SensitiveInfo
 
 module Flow = TaintTracking::Global<HttpServletExceptionSourceConfig>;
+
 import Flow::PathGraph
 
 // Defines a configuration for tracking the flow of sensitive information in HttpServlets
-module HttpServletExceptionSourceConfig implements DataFlow::ConfigSig{
-
+module HttpServletExceptionSourceConfig implements DataFlow::ConfigSig {
   // Identifies sources of sensitive information within servlet methods
   predicate isSource(DataFlow::Node source) {
-    exists(MethodCall mc, Method m |
+    exists(MethodCall mc, Method m, CatchClause cc |
       // Ensures the method is part of a class that extends HttpServlet
       m.getDeclaringType().getASupertype*().hasQualifiedName("javax.servlet.http", "HttpServlet") and
       (
-        // Captures method calls on Throwable instances that may leak information
-        (mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-        mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace", "toString"])) or
-        // Includes methods that expose file system paths
-        (mc.getMethod().hasName("getAbsolutePath") and
-        mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "File")) or
-        // Considers environment variables and system properties as potential sources
-        (mc.getMethod().hasName(["getenv", "getProperty"]) and
-        mc.getMethod().getDeclaringType().hasQualifiedName("java.lang", "System")) or
-        // Include user input as a potential source
-        (mc.getMethod().getDeclaringType().hasQualifiedName("javax.servlet", "ServletRequest") and
-        mc.getMethod().hasName(["getParameter", "getAttribute"]))
-      ) and
-      // The call must occur within the servlet method
-      mc.getEnclosingCallable() = m and
-      source.asExpr() = mc
+        (
+          // Direct access to the exception variable itself
+          source.asExpr() = cc.getVariable().getAnAccess()
+          or
+          // Consider any method call on the exception object as a source
+          mc.getQualifier() = cc.getVariable().getAnAccess() and source.asExpr() = mc
+        ) and
+        source.asExpr() = mc and
+        // The call must occur within the servlet method
+        mc.getEnclosingCallable() = m
+      )
+      or
+      exists(SensitiveVariableExpr sve |
+        source.asExpr() = sve and
+        // The call must occur within the servlet method
+        sve.getEnclosingCallable() = m
+      )
     )
   }
 
   // Defines sinks where sensitive information could be exposed to clients
   predicate isSink(DataFlow::Node sink) {
-    CommonSinks::isPrintSink(sink) or 
+    CommonSinks::isPrintSink(sink) or
     CommonSinks::isServletSink(sink) or
-    CommonSinks::isLoggingSink(sink)
+    getSinkAny(sink)
+  }
+
+  
+  predicate isBarrier(DataFlow::Node node) {
+    exists(MethodCall mc |
+      // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
+      (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
+      mc.getMethod().getName().toLowerCase().matches("%encrypt%")) and
+    // Consider both arguments and the return of sanitization/encryption methods as barriers
+    (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
+    )
   }
 }
+
 
 // Executes the configuration to find data flows from identified sources to sinks
 from Flow::PathNode source, Flow::PathNode sink
 where Flow::flowPath(source, sink)
-select sink.getNode(), source, sink, "CWE-550: (Servlet) Server-Generated Error Message Containing Sensitive Information."
+select sink.getNode(), source, sink,
+  "CWE-550: (Servlet) Server-Generated Error Message Containing Sensitive Information."

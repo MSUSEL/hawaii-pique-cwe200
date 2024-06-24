@@ -30,9 +30,7 @@ private class TypeType extends RefType {
 module SensitiveLoggerConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source) { source.asExpr() instanceof SensitiveVariableExpr }
 
-  // predicate isSink(DataFlow::Node sink) { getSink(sink, "Log Sink") or sinkNode(sink, "log-injection") }
-  predicate isSink(DataFlow::Node sink) { getSink(sink, "Log Sink") }
-
+  predicate isSink(DataFlow::Node sink) { getSink(sink, "Log Sink") or sinkNode(sink, "log-injection") }
 
   predicate isBarrier(DataFlow::Node sanitizer) {
     sanitizer.asExpr() instanceof LiveLiteral or

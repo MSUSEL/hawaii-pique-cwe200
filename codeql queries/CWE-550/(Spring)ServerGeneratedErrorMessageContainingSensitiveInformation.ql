@@ -15,6 +15,7 @@ import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
 import CommonSinks.CommonSinks
+import SensitiveInfo.SensitiveInfo
 
 module Flow = TaintTracking::Global<SpringBootSensitiveInfoExposureConfig>;
 import Flow::PathGraph
@@ -22,19 +23,13 @@ import Flow::PathGraph
 module SpringBootSensitiveInfoExposureConfig implements DataFlow::ConfigSig{
 
   predicate isSource(DataFlow::Node source) {
-    exists(MethodCall mc |
-      // Include Throwable methods and system/environment properties as sources
-      (
-      (mc.getMethod().getDeclaringType().getASupertype*().hasQualifiedName("java.lang", "Throwable") and
-      mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "printStackTrace", "toString"])) or
-      (mc.getMethod().getDeclaringType().hasQualifiedName("java.lang", "System") and
-      mc.getMethod().hasName(["getenv", "getProperty"])) or
-      // Include user input as a potential source
-      (mc.getMethod().getDeclaringType().hasQualifiedName("javax.servlet", "ServletRequest") and
-      mc.getMethod().hasName(["getParameter", "getAttribute"])))
-     and source.asExpr() = mc)
-  }
-
+    exists(SensitiveVariableExpr sve | source.asExpr() = sve) or
+     // Direct access to the exception variable itself
+     exists(CatchClause cc | source.asExpr() = cc.getVariable().getAnAccess()) or
+     // Consider any method call on the exception object as a source
+     exists(CatchClause cc, MethodCall mc | mc.getQualifier() = cc.getVariable().getAnAccess() and source.asExpr() = mc)
+   }
+   
   predicate isSink(DataFlow::Node sink) {
     CommonSinks::isSpringSink(sink) or
 
@@ -48,11 +43,21 @@ module SpringBootSensitiveInfoExposureConfig implements DataFlow::ConfigSig{
         logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.stereotype", "Component")
       ) and 
       (
-        CommonSinks::isLoggingSink(sink) or
         CommonSinks::isPrintSink(sink) or
         CommonSinks::isErrorSink(sink) or
-        CommonSinks::isIOSink(sink)
+        CommonSinks::isIOSink(sink) or
+        getSinkAny(sink) 
       )
+    )
+  }
+
+  predicate isBarrier(DataFlow::Node node) {
+    exists(MethodCall mc |
+      // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
+      (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
+      mc.getMethod().getName().toLowerCase().matches("%encrypt%")) and
+    // Consider both arguments and the return of sanitization/encryption methods as barriers
+    (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
     )
   }
 }

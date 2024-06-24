@@ -31,8 +31,7 @@ module DirectoryListingExposureConfig implements DataFlow::ConfigSig {
 
   predicate isSink(DataFlow::Node sink) {
     CommonSinks::isPrintSink(sink) or
-    CommonSinks::isServletSink(sink) or
-    CommonSinks::isLoggingSink(sink)
+    CommonSinks::isServletSink(sink)
   }
 }
 

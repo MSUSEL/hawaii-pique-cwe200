@@ -38,7 +38,7 @@ module SensitiveInfoToFileConfig implements DataFlow::ConfigSig{
        mc.getMethod().hasName("write") or
        mc.getMethod().hasName("store")
       |
-      sink.asExpr() = mc.getArgument(0) // Ensure the sensitive data is being written
+      sink.asExpr() = mc.getAnArgument() // Ensure the sensitive data is being written
     )
   }
 }

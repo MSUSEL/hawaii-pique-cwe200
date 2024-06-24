@@ -63,6 +63,16 @@ class MailSendMethod extends DataFlow::Node {
     or
     getSink(sink, "Email Sink")
  }
+
+ predicate isBarrier(DataFlow::Node node) {
+  exists(MethodCall mc |
+    // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
+    (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
+    mc.getMethod().getName().toLowerCase().matches("%encrypt%")) and
+  // Consider both arguments and the return of sanitization/encryption methods as barriers
+  (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
+  )
+}
 }
 
  

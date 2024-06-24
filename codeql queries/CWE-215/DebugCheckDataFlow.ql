@@ -35,12 +35,17 @@ module DebugCheckConfig implements DataFlow::ConfigSig {
       CommonSinks::isServletSink(sink) or
       CommonSinks::isErrorSink(sink) or
       CommonSinks::isIOSink(sink)
+      // Use the LLM response to indentify sinks
+      or getSinkAny(sink)
   }
 
   predicate isBarrier(DataFlow::Node node) {
     exists(MethodCall mc |
-      mc.getMethod().getName().toLowerCase().matches("%sanitize%") and
-      mc = node.asExpr()
+      // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
+      (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
+      mc.getMethod().getName().toLowerCase().matches("%encrypt%")) and
+    // Consider both arguments and the return of sanitization/encryption methods as barriers
+    (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
     )
   }
 }

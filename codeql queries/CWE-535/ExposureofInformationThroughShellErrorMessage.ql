@@ -40,23 +40,22 @@ module ShellErrorExposureConfig implements DataFlow::ConfigSig {
   }
 
   predicate isSink(DataFlow::Node sink) {
-    CommonSinks::isLoggingSink(sink) or
     CommonSinks::isPrintSink(sink) or
     CommonSinks::isErrorSink(sink) or
     CommonSinks::isServletSink(sink) or
+    // Use the LLM response to indentify sinks
     getSinkAny(sink)
   }
 
   predicate isBarrier(DataFlow::Node node) {
     exists(MethodCall mc |
-      // Use regex matching to check if the method name contains 'sanitize', case-insensitive
+      // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
       (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
-      mc.getMethod().getName().toLowerCase().matches("%encrypt%") 
-      )
-      and
-      node.asExpr() = mc.getAnArgument()
+      mc.getMethod().getName().toLowerCase().matches("%encrypt%")) and
+    // Consider both arguments and the return of sanitization/encryption methods as barriers
+    (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
     )
-  }   
+  } 
 }
 
 from Flow::PathNode source, Flow::PathNode sink

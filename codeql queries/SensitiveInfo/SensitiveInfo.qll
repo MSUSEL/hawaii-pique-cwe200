@@ -72,7 +72,7 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
         (sinks(f.getBaseName(), mc.getMethod().getName(), "I/O Sink") or
         sinks(f.getBaseName(), mc.getMethod().getName(), "Print Sink") or
         sinks(f.getBaseName(), mc.getMethod().getName(), "Network Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "Log Sink") or
+        // sinks(f.getBaseName(), mc.getMethod().getName(), "Log Sink") or
         sinks(f.getBaseName(), mc.getMethod().getName(), "Database Sink") or
         sinks(f.getBaseName(), mc.getMethod().getName(), "Email Sink") or
         sinks(f.getBaseName(), mc.getMethod().getName(), "IPC Sink") or

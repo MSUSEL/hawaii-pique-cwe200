@@ -15,6 +15,7 @@
 import java
 import semmle.code.java.dataflow.TaintTracking
 import CommonSinks.CommonSinks
+import SensitiveInfo.SensitiveInfo
 
 module Flow = TaintTracking::Global<SqlExceptionToConsoleConfig>;
 import Flow::PathGraph
@@ -25,24 +26,43 @@ module SqlExceptionToConsoleConfig implements DataFlow::ConfigSig {
 
   // Sources are calls to methods on SQLException that retrieve error messages or codes.
   predicate isSource(DataFlow::Node source) {
-    exists(MethodCall mc |
-      (mc.getReceiverType().(RefType).hasQualifiedName("java.sql", "SQLException") or
-      mc.getReceiverType().(RefType).getASupertype*().hasQualifiedName("java.sql", "SQLException")or 
-      // Extend sources to include common SQL-related exceptions from popular libraries
-      mc.getReceiverType().(RefType).hasQualifiedName("org.springframework.jdbc", "DataAccessException") or
-      mc.getReceiverType().(RefType).hasQualifiedName("org.hibernate", "HibernateException")) and
-      mc.getMethod().hasName(["getMessage", "getStackTrace", "getStackTraceAsString", "getSQLState", 
-      "getErrorCode", "toString", "getenv", "getProperty", "getParameter", "getAttribute"]) and
-      source.asExpr() = mc
+    exists(CatchClause cc | 
+      // Check if the exception is a SQLException or a subclass
+      (
+      cc.getVariable().getType().(RefType).getASupertype*().hasQualifiedName("java.sql", "SQLException") or
+      cc.getVariable().getType().(RefType).hasQualifiedName("org.springframework.jdbc", "DataAccessException") or
+      cc.getVariable().getType().(RefType).hasQualifiedName("org.hibernate", "HibernateException") 
+      )
+      and
+      (
+        // Direct access to the exception variable
+        source.asExpr() = cc.getVariable().getAnAccess() or
+        // Access to methods called on the exception object
+        exists(MethodCall mc | 
+          mc.getQualifier() = cc.getVariable().getAnAccess() and
+          source.asExpr() = mc
+        )
+      )
     )
   }
   
   predicate isSink(DataFlow::Node sink) {
     CommonSinks::isPrintSink(sink) or
-    CommonSinks::isLoggingSink(sink) or
     CommonSinks::isServletSink(sink) or
     CommonSinks::isErrorSink(sink) or
-    CommonSinks::isIOSink(sink)
+    CommonSinks::isIOSink(sink) or
+    getSinkAny(sink)
+  }
+
+
+  predicate isBarrier(DataFlow::Node node) {
+    exists(MethodCall mc |
+      // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
+      (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
+      mc.getMethod().getName().toLowerCase().matches("%encrypt%")) and
+    // Consider both arguments and the return of sanitization/encryption methods as barriers
+    (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
+    )
   }
 }
 

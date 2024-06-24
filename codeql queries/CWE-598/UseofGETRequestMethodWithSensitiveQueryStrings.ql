@@ -45,11 +45,6 @@
      exists(ConstructorCall httpGetCall |
        httpGetCall.getConstructedType().hasQualifiedName("org.apache.http.client.methods", "HttpGet") and
        httpGetCall.getAnArgument() = sink.asExpr() 
-       // and
-       // Ensure the HttpGet instance flows to an execute method
-       // DataFlow::localExprFlow(httpGetCall, executeCall.getQualifier()) and
-       // executeCall.getMethod().hasName("execute") and
-       // executeCall.getMethod().getDeclaringType().hasQualifiedName("org.apache.http.client", "HttpClient")
      ) 
      or
      // Detect use of java.net.URL that flows into an openConnection method call
@@ -94,18 +89,10 @@
      exists(MethodCall mc |
        // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
        (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
-       mc.getMethod().getName().toLowerCase().matches("%encrypt%"))
-       and
+       mc.getMethod().getName().toLowerCase().matches("%encrypt%")) and
      // Consider both arguments and the return of sanitization/encryption methods as barriers
      (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
      )
-
-     and
-  // Additionally, ensure the variable itself is not related to 'encrypt'
-  not exists(VarAccess va |
-    va.getVariable().getName().toLowerCase().matches("%encrypt%") and
-    node.asExpr() = va
-  )
    }
  }
  
