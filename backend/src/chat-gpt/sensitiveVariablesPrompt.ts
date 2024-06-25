@@ -11,7 +11,7 @@ To ensure your accuracy, I want you to look over each file multiple times before
 1) Authentication and Authorization and Credentials Information: Variables holding passwords, API keys, usernames, etc.
 2) Personal Identifiable Information (PII): Variables containing names, emails, addresses, social security numbers, medical records, etc.
 3) Financial Information: Variables related to credit cards, bank account numbers, account Ids, payment ids, cvv, etc
-4) Sensitive File Paths and URLs: Variables storing internal URLs or file paths to files that contain sensitive information.
+4) Sensitive File Paths, URLs, and Exceptions: Variables storing internal URLs or file paths to files that contain sensitive information, or expcetions.
 5) System and Configuration Information: Variables with database or network connection strings, database schemas, or configuration details
 6) Security and Encryption Information: Variables holding encryption keys or certificates.
 7) Application-Specific Sensitive Data: Variables storing usernames, device IDs, settings, email messages, etc.
