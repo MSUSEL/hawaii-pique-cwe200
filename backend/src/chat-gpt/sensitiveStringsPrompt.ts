@@ -8,11 +8,11 @@ Your findings will be used to detect CWE-200 related vulnerabilities with CodeQL
 3. In the past, I have noticed a lot of false positives related to generic strings which usually aren't sensitive. Please make sure to only include strings that contain sensitive information.
 4. **Only consider hardcoded string literals, not variables or comments.**
 
-### Examples of sensitive hardcoded strings (These are just examples, you need to find more):
+### Examples of sensitive hardcoded strings (These are just examples, don't limit your evaluation to just these strings):
 "123456", "password123", "sk_test_BQokikJOvBiI2HlWgH4olfQ2", "abcd1234xyz", "john.doe@example.com", "(555) 555-1234", "192.168.1.1",
 "192.168.1.100", "jdbc:mysql://internal-db.example.com:3306/db", "https://api.internal.company.com", "https://example.com",
 "John Doe", "Jane Doe", "987-65-4321", "123-45-6789", "tempPass123!", "admin123", "Bearer abcdefghijklmnopqrstuvwxyz", "PrivateKey1234",
-"Token12345", "SuperSecret", "TopSecretKey", "SensitiveData", "Confidential", "APISecretKey", "EncryptionKey123", "SecurePassword"
+"Token12345"
 
 ### Examples of non-sensitive hardcoded strings:
 "hello", "world", "example", "welcome", "message", "success", "error", "unknown", "default", "placeholder", "test", "demo", "sample", 
