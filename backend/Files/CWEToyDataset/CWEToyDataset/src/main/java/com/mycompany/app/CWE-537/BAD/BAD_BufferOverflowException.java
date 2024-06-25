@@ -10,6 +10,7 @@ public class BAD_BufferOverflowException {
     public void allocateSpace(byte[] sensitiveData) {
         
         if (sensitiveData.length > dataBuffer.capacity()) {
+            System.err.println("Buffer overflow detected!" + sensitiveData);
             throw new BufferOverflowException(); // Throw an exception if the data size exceeds the buffer capacity
         }
         else{
