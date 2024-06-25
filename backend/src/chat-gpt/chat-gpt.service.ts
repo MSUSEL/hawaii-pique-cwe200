@@ -485,9 +485,9 @@ export class ChatGptService {
     replaceIDs(inputString) {
         return inputString.replace(/\b(ID-\d+)\.java\b/g, (match, id) => {
             // Logging the match to see what is being caught by the regex
-            console.log(`Found ID: ${match}`);
+            // console.log(`Found ID: ${match}`);
             if (this.idToNameMapping.get(id)) {
-              console.log(`Replacing ${id} with ${this.idToNameMapping.get(id)}`);
+            //   console.log(`Replacing ${id} with ${this.idToNameMapping.get(id)}`);
               return this.idToNameMapping.get(id)
             } 
           });

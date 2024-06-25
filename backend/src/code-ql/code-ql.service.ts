@@ -44,7 +44,7 @@ export class CodeQlService {
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
-        // let slice = javaFiles.slice(0, 5);  
+        // let slice = javaFiles.slice(177, 187);  
         // const data = await this.runChatGPT(slice, sourcePath);
 
         const data = await this.runChatGPT(javaFiles, sourcePath);
@@ -179,28 +179,31 @@ export class CodeQlService {
     }
 
     async saveSensitiveInfo(data){
-        // const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
-        // let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
-        // await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
-        // await this.writeVariablesToFile(variablesFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveVariables.yml")
+      
+        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
+        const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
+        const commentsMapping = this.formatMappings(data.sensitiveCommentsMapping);
+        const sinksMapping = this.formatSinkMappings(data.sinksMapping);
+            
+        let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
+        await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
+        await this.writeVariablesToFile(variablesFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveVariables.yml")
+        
+ 
+        let stringsFile = SensitiveStrings.replace("++++++++++", stringsMapping);
+        await this.writeVariablesToFile(stringsFile, "../codeql queries/SensitiveInfo/SensitiveStrings.yml")
+        await this.writeVariablesToFile(stringsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveStrings.yml")
+        
+  
+        let commentsFile = SensitiveComments.replace("**********", commentsMapping);
+        await this.writeVariablesToFile(commentsFile, "../codeql queries/SensitiveInfo/SensitiveComments.yml")
+        await this.writeVariablesToFile(commentsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveComments.yml")
+        
 
-
-        // const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
-        // let stringsFile = SensitiveStrings.replace("++++++++++", stringsMapping);
-        // await this.writeVariablesToFile(stringsFile, "../codeql queries/SensitiveInfo/SensitiveStrings.yml")
-        // await this.writeVariablesToFile(stringsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveStrings.yml")
-
-
-        // const commentsMapping = this.formatMappings(data.sensitiveCommentsMapping);
-        // let commentsFile = SensitiveComments.replace("**********", commentsMapping);
-        // await this.writeVariablesToFile(commentsFile, "../codeql queries/SensitiveInfo/SensitiveComments.yml")
-        // await this.writeVariablesToFile(commentsFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveComments.yml")
-
-
-        // const sinksMapping = this.formatSinkMappings(data.sinksMapping);
-        // let sinksFile = Sinks.replace("----------", sinksMapping);
-        // await this.writeVariablesToFile(sinksFile, "../codeql queries/SensitiveInfo/Sinks.yml")
-        // await this.writeVariablesToFile(sinksFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/Sinks.yml")
+        let sinksFile = Sinks.replace("----------", sinksMapping);
+        await this.writeVariablesToFile(sinksFile, "../codeql queries/SensitiveInfo/Sinks.yml")
+        await this.writeVariablesToFile(sinksFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/Sinks.yml")
+        
 
     }
 
@@ -211,6 +214,7 @@ export class CodeQlService {
 
         // Create new database with codeql
         const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        console.log(createDbCommand);
         await this.runChildProcess(createDbCommand);
 
         // Analyze with codeql
