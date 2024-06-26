@@ -8,13 +8,13 @@ To ensure your accuracy, I want you to look over each file multiple times before
 3. Please don't include erroneous variables that don't exist in the code. Double-check the variable names.
 
 ### Sensitive Variable Categories (suggestions):
-1) Authentication and Authorization and Credentials Information: Variables holding passwords, API keys, usernames, etc.
-2) Personal Identifiable Information (PII): Variables containing names, emails, addresses, social security numbers, medical records, etc.
+1) Authentication and Authorization and Credentials Information: Variables holding passwords, API keys, usernames, verification codes, etc.
+2) Personal Identifiable Information (PII): Variables containing names, emails, addresses, social security numbers, health Information, etc.
 3) Financial Information: Variables related to credit cards, bank account numbers, account Ids, payment ids, cvv, etc
-4) Sensitive File Paths, URLs, and Exceptions: Variables storing internal URLs or file paths to files that contain sensitive information, or expcetions.
+4) Sensitive File Paths, URLs, and Exceptions: Variables storing internal URLs or file paths to files that contain sensitive information, or exceptions.
 5) System and Configuration Information: Variables with database or network connection strings, database schemas, or configuration details
-6) Security and Encryption Information: Variables holding encryption keys or certificates.
-7) Application-Specific Sensitive Data: Variables storing usernames, device IDs, settings, email messages, etc.
+6) Security and Encryption Information: Variables holding encryption keys, seeds, or certificates.
+7) Application-Specific Sensitive Data: Variables storing device IDs, settings, email messages, etc.
 8) Query Parameters: Variables storing sensitive data in HTTP GET requests.
 This is not an exhaustive list. It is just meant to give you an idea of the types of sensitive variables.
 Use your judgment as a cyber security analyst and especially the context to identify other sensitive variables.
