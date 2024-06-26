@@ -7,23 +7,20 @@ public class BAD_BufferOverflowException {
         dataBuffer = ByteBuffer.allocate(bufferSize); // Allocate a fixed-size buffer for secure data
     }
 
-    public void allocateSpace(byte[] sensitiveData) {
+    public void allocateSpace(byte[] AWSKey) {
         
-        if (sensitiveData.length > dataBuffer.capacity()) {
-            System.err.println("Buffer overflow detected!" + sensitiveData);
-            throw new BufferOverflowException(); // Throw an exception if the data size exceeds the buffer capacity
+        if (AWSKey.length > dataBuffer.capacity()) {
+            throw new RuntimeException("Buffer overflow detected, failed to save AWS Key" + AWSKey); // Throw an exception if the data size exceeds the buffer capacity
         }
         else{
-            dataBuffer.put(sensitiveData);
+            dataBuffer.put(AWSKey);
         }
-        
-
     }
     public static void main(String[] args) {
         BAD_BufferOverflowException buffer = new BAD_BufferOverflowException(256); // Small buffer size for demonstration
         // Example of sensitive data: username and password details
-        byte[] exampleSecureData = "User:Admin, Password:AdminPass123!".getBytes();
-        buffer.allocateSpace(exampleSecureData); // This might cause a buffer overflow due to large data size
+        byte[] AWSKey = "ABCED123".getBytes();
+        buffer.allocateSpace(AWSKey); // This might cause a buffer overflow due to large data size
     }
 }
 

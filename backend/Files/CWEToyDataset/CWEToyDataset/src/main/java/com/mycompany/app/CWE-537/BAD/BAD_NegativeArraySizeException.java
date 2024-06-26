@@ -1,12 +1,17 @@
+import java.util.Map;
+import java.util.Collection;
+
+
 public class BAD_NegativeArraySizeException {
-    public void createInventoryList(int secretArraySize) {
+    public void createInventoryList(int arraySize, Map<String, String> medicalRecords) {
         
-        if (secretArraySize < 0) {
-            throw new NegativeArraySizeException("Cannot create inventory with negative size: " + secretArraySize);
+        if (arraySize < 0) {
+            throw new NegativeArraySizeException("Connot save records for : " + medicalRecords.values());
         }
         else{
-            String[] inventory = new String[secretArraySize];
-            System.out.println("Creating inventory list with size: " + secretArraySize);
+            String[] storage = new String[arraySize];
+            Collection<String> records = medicalRecords.values();
+            storage = records.toArray(storage);
         }
     }
 }

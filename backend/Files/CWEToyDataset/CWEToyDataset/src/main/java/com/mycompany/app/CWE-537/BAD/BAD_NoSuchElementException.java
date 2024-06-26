@@ -5,7 +5,6 @@ public class BAD_NoSuchElementException {
         Properties config = loadConfig();
 
         if (config.getProperty(key) == null) {
-            System.out.println("Config key not found: " + key);
             throw new NoSuchElementException("Config key not found: " + key);
         }
         else{
