@@ -3,7 +3,7 @@ import java.util.Collection;
 
 
 public class BAD_NegativeArraySizeException {
-    public void createInventoryList(int arraySize, Map<String, String> medicalRecords) {
+    public void createInventoryList(int arraySize, Map<String, String> medicalRecords) throws NegativeArraySizeException{
         
         if (arraySize < 0) {
             throw new NegativeArraySizeException("Connot save records for : " + medicalRecords.values());
