@@ -1,6 +1,6 @@
 public class BAD_IndexOutofBoundsInfoExposure {
 
-    public static void main(String[] args, int index) {
+    public static void main(String[] args, int index) throws IndexOutOfBoundsException{
         String[] sensitiveData = {"secretPassword123", "confidentialInfo"};
         
         if (index < 0 || index >= sensitiveData.length) {

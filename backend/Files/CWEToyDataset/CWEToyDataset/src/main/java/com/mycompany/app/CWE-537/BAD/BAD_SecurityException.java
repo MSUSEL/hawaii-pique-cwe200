@@ -1,5 +1,5 @@
 public class BAD_SecurityException {
-    public void handleRequest(String requestData) {
+    public void handleRequest(String requestData) throws SecurityException{
             if (requestData == null) {
                 throw new SecurityException("Your request " + requestData + " is not authorized. Please provide valid request data.");
             }

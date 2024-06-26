@@ -3,7 +3,7 @@ import java.nio.*;
 public class BAD_BufferOverflowException { 
     private ByteBuffer dataBuffer;
 
-    public BAD_BufferOverflowException(int bufferSize) {
+    public BAD_BufferOverflowException(int bufferSize) throws RuntimeException{
         dataBuffer = ByteBuffer.allocate(bufferSize); // Allocate a fixed-size buffer for secure data
     }
 

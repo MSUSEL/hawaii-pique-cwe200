@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 public class BAD_SensitiveNullPointerExceptionHandling extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, NullPointerException {
         String secretKey = null;
         
         if (request.getParameter("secretKey") != null) {

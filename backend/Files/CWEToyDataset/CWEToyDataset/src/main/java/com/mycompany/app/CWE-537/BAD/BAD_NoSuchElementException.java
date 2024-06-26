@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class BAD_NoSuchElementException {
-    public String getConfigValue(String key) {
+    public String getConfigValue(String key) throws NoSuchElementException{
         Properties config = loadConfig();
 
         if (config.getProperty(key) == null) {

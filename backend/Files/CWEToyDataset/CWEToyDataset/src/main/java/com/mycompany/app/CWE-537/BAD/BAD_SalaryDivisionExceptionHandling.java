@@ -1,5 +1,5 @@
 public class BAD_SalaryDivisionExceptionHandling {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ArithmeticException{
         
             int hoursWored = getConfidentialBaseSalary();
             int totalSalary = getNumberOfEmployees();
