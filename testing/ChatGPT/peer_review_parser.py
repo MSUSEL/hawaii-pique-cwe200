@@ -173,6 +173,26 @@ def load_json(file_path):
         data = json.load(f)
     return data
 
+def get_label_statistics(nested_dict):
+    """
+    Get statistics on the labels for each class.
+
+    :param nested_dict: The dictionary with all the data.
+    :return: A dictionary with the statistics.
+    """
+    label_stats = defaultdict(int)
+
+    for sheet_name, sheet_data in nested_dict.items():
+        for file_name, file_data in sheet_data.items():
+            for class_name, class_data in file_data.items():
+                labels = class_data['labels']
+                for label in labels:
+                    label = str(label)
+                    if label != 'nan':
+                        label_stats[label] += 1
+    
+    return label_stats
+
 # Usage
 file_path = 'testing/ChatGPT/Peer Review Data Files.xlsx'
 reviewers = ['david', 'sara', 'samantha']
@@ -182,7 +202,6 @@ classes = ['variables', 'strings', 'comments']
 xls = pd.ExcelFile(file_path)
 # sheet_names = xls.sheet_names
 sheet_names = [3, 4]
-
 
 # Create structure for all sheets
 nested_dict = parse_review(file_path, sheet_names, reviewers, classes)
@@ -195,6 +214,9 @@ chatGPT_output = load_json('backend/Files/ReviewSensFiles/data.json')
 
 # Compare classifications
 file_metrics, total_metrics, total_accuracy, total_precision, total_recall = compare_classifications(agreed_dict, chatGPT_output, classes)
+
+# Get label statistics
+label_stats = get_label_statistics(nested_dict)
 
 with open('testing/ChatGPT/gpt_results.txt', 'w') as f:
     
@@ -226,3 +248,9 @@ with open('testing/ChatGPT/gpt_results.txt', 'w') as f:
     # print(f"  Accuracy: {total_accuracy:.2f}")
     # print(f"  Precision: {total_precision:.2f}")
     # print(f"  Recall: {total_recall:.2f}")
+
+    # Print the label statistics
+    f.write("----------------------------------------------------\n")
+    f.write("Label Statistics:\n")
+    for label, count in label_stats.items():
+        f.write(f" {count}: {label}\n")
