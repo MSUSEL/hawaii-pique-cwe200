@@ -48,6 +48,8 @@ def clean_classifications(classifications):
     :return: Cleaned list of classifications.
     """
     classifications = classifications.tolist()
+    classifications = [str(item) for item in classifications]
+
     for i in range(len(classifications)):
         if not classifications[i]:
             classifications[i] = "None"
@@ -106,7 +108,8 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
     :param classes: List of classification sections.
     :return: Metrics for each file, class, and totals.
     """
-    file_metrics = defaultdict(lambda: defaultdict(lambda: {'tp': 0, 'fp': 0, 'fn': 0, 'tp_keys': [], 'fp_keys': [], 'fn_keys': []}))
+    file_metrics = defaultdict(lambda: defaultdict(lambda: {'tp': 0, 'fp': 0, 'fn': 0, 
+                                                            'tp_keys': [], 'fp_keys': [], 'fn_keys': []}))
     total_metrics = defaultdict(lambda: {'tp': 0, 'fp': 0, 'fn': 0})
     
     for sheet_name, sheet_data in agreed_dict.items():
@@ -116,10 +119,12 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
                 
                 chatGPT_set = set()
                 for file in chatGPT_output:
-                    if file['fileName'] == file_name:
+                    if 'fileName' in file and file['fileName'] == file_name:
                         chatGPT_set = set((item['name']) for item in file[class_name])
                         break
-                
+                if len(chatGPT_set) == 0:
+                    continue
+
                 for key, classification in agreed_set:
                     if classification == 'Y':
                         if key in chatGPT_set:
@@ -135,29 +140,33 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
                             file_metrics[file_name][class_name]['fp'] += 1
                             file_metrics[file_name][class_name]['fp_keys'].append(key)
                             total_metrics[class_name]['fp'] += 1
-    
-    class_metrics = {}
+                
+                file_metrics[file_name][class_name]['accuracy'] = file_metrics[file_name][class_name]['tp'] / (file_metrics[file_name][class_name]['tp'] + file_metrics[file_name][class_name]['fp'] + file_metrics[file_name][class_name]['fn']) if file_metrics[file_name][class_name]['tp'] + file_metrics[file_name][class_name]['fp'] + file_metrics[file_name][class_name]['fn'] > 0 else 0
+                file_metrics[file_name][class_name]['precision'] = file_metrics[file_name][class_name]['tp'] / (file_metrics[file_name][class_name]['tp'] + file_metrics[file_name][class_name]['fp']) if file_metrics[file_name][class_name]['tp'] + file_metrics[file_name][class_name]['fp'] > 0 else 0
+                file_metrics[file_name][class_name]['recall'] = file_metrics[file_name][class_name]['tp'] / (file_metrics[file_name][class_name]['tp'] + file_metrics[file_name][class_name]['fn']) if file_metrics[file_name][class_name]['tp'] + file_metrics[file_name][class_name]['fn'] > 0 else 0
+
+
+    # Calculate total metrics for each class
     for class_name in classes:
         tp = total_metrics[class_name]['tp']
         fp = total_metrics[class_name]['fp']
         fn = total_metrics[class_name]['fn']
-        accuracy = tp / (tp + fp + fn) if tp + fp + fn > 0 else 0
-        precision = tp / (tp + fp) if tp + fp > 0 else 0
-        recall = tp / (tp + fn) if tp + fn > 0 else 0
-        class_metrics[class_name] = {
-            'accuracy': accuracy,
-            'precision': precision,
-            'recall': recall
-        }
-    
+        
+        # Calculate total metrics for each class
+        total_metrics[class_name]['accuracy'] = (tp) / (tp + fp + fn) if (tp + fp + fn) > 0 else 0
+        total_metrics[class_name]['precision'] = tp / (tp + fp) if (tp + fp) > 0 else 0
+        total_metrics[class_name]['recall'] = tp / (tp + fn) if (tp + fn) > 0 else 0
+
+    # Calculate total metrics for all classes combined
     total_tp = sum(total_metrics[class_name]['tp'] for class_name in classes)
     total_fp = sum(total_metrics[class_name]['fp'] for class_name in classes)
     total_fn = sum(total_metrics[class_name]['fn'] for class_name in classes)
     total_accuracy = total_tp / (total_tp + total_fp + total_fn) if total_tp + total_fp + total_fn > 0 else 0
     total_precision = total_tp / (total_tp + total_fp) if total_tp + total_fp > 0 else 0
     total_recall = total_tp / (total_tp + total_fn) if total_tp + total_fn > 0 else 0
-    
-    return file_metrics, class_metrics, total_accuracy, total_precision, total_recall
+
+
+    return file_metrics, total_metrics, total_accuracy, total_precision, total_recall
 
 def load_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -172,7 +181,7 @@ classes = ['variables', 'strings', 'comments']
 # Read the Excel file to get sheet names
 xls = pd.ExcelFile(file_path)
 # sheet_names = xls.sheet_names
-sheet_names = [2]
+sheet_names = [3, 4]
 
 
 # Create structure for all sheets
@@ -185,28 +194,35 @@ agreed_dict = find_agreed_classifications(nested_dict, reviewers, classes)
 chatGPT_output = load_json('backend/Files/ReviewSensFiles/data.json')
 
 # Compare classifications
-file_metrics, class_metrics, total_accuracy, total_precision, total_recall = compare_classifications(agreed_dict, chatGPT_output, classes)
+file_metrics, total_metrics, total_accuracy, total_precision, total_recall = compare_classifications(agreed_dict, chatGPT_output, classes)
 
-# Print the class metrics
+with open('testing/ChatGPT/gpt_results.txt', 'w') as f:
+    
+    # Print the metrics for each file
+    for file, metrics_by_class in file_metrics.items():
+        f.write("====================================================\n")  
+        f.write(f"Metrics for {file}:\n")
+        for class_name, metrics in metrics_by_class.items():
+            f.write(f"  {class_name.capitalize()} Metrics:\n")
+            f.write(f"    Accuracy: {metrics['accuracy']:.2f}\n")
+            f.write(f"    Precision: {metrics['precision']:.2f}\n")
+            f.write(f"    Recall: {metrics['recall']:.2f}\n")
+            f.write(f"    TP Keys: {metrics['tp_keys']}\n")
+            f.write(f"    FP Keys: {metrics['fp_keys']}\n")
+            f.write(f"    FN Keys: {metrics['fn_keys']}\n")
+            f.write("\n") 
+        f.write("\n")
+    
 
-# Print the metrics for each file
-for file, metrics_by_class in file_metrics.items():
-    print(f"Metrics for {file}:")
-    for class_name, metrics in metrics_by_class.items():
-        print(f"  {class_name.capitalize()} Metrics:")
-        print(f"    TP Keys: {metrics['tp_keys']}")
-        print(f"    FP Keys: {metrics['fp_keys']}")
-        print(f"    FN Keys: {metrics['fn_keys']}")    
-    for class_name, metrics in class_metrics.items():
-        print(f"{class_name.capitalize()} Metrics:")
-        print(f"  Accuracy: {metrics['accuracy']:.2f}")
-        print(f"  Precision: {metrics['precision']:.2f}")
-        print(f"  Recall: {metrics['recall']:.2f}")
-
-
-
-# Print the total metrics
-print("Total Metrics:")
-print(f"  Accuracy: {total_accuracy:.2f}")
-print(f"  Precision: {total_precision:.2f}")
-print(f"  Recall: {total_recall:.2f}")
+    # Print the total metrics
+    f.write("++++++++++++++++++++++++++++++++++++++++++++++++++++\n") 
+    f.write("Total Metrics:\n")
+    for class_name, metrics in total_metrics.items():
+        f.write(f"  {class_name.capitalize()} Metrics:\n")
+        f.write(f"    Accuracy: {metrics['accuracy']:.2f}\n")
+        f.write(f"    Precision: {metrics['precision']:.2f}\n")
+        f.write(f"    Recall: {metrics['recall']:.2f}\n")
+        f.write("\n")
+    # print(f"  Accuracy: {total_accuracy:.2f}")
+    # print(f"  Precision: {total_precision:.2f}")
+    # print(f"  Recall: {total_recall:.2f}")
