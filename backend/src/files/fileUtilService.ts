@@ -1,5 +1,6 @@
 import {Global, Injectable} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
+import { exec } from 'child_process';
 import * as AdmZip from 'adm-zip';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -271,9 +272,35 @@ export class FileUtilService {
 
     addFileBoundaryMarkers(id: string, file: string){
         // let fileName = path.basename(filePath);
-        // return '-----BEGIN FILE: [' + fileName + ']----- \n' + file + '\n-----END FILE: [' + fileName + ']-----'
         return '-----BEGIN FILE: [' + id + ']----- \n' + file + '\n-----END FILE: [' + id + ']-----'
 
+    }
+
+    parseJavaFile(filePath: string, type: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const cwd = process.cwd();
+            // Path to the JAR file
+            const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
+            filePath = path.resolve(cwd, filePath);
+            
+            // Command to run the Java program
+            const command = `java -jar ${jarPath} ${filePath} ${type}`;
+    
+            // Execute the command
+            exec(command, (error, stdout, stderr) => {
+                if (error) {
+                    reject(`Error: ${stderr}`);
+                    return;
+                }
+                // Split the output by newline to get variable names
+                // const variables = stdout.split('\n').filter(line => line.trim() !== '');
+                // console.log(stdout);
+                // const json = JSON.parse(stdout);
+                // const variables = stdout.split('\n').filter(line => line.trim() !== '');
+
+                resolve(stdout);
+            });
+        });
     }
 
     

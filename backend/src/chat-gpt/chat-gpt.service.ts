@@ -14,6 +14,7 @@ import { response } from 'express';
 import { get_encoding } from 'tiktoken';
 import async from 'async';
 import { spawn } from 'child_process';
+import { Ollama } from 'ollama-node';
 
 @Injectable()
 export class ChatGptService {
@@ -67,10 +68,9 @@ export class ChatGptService {
     
         const prompts = [
             { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
-            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
-            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
-            // { type: 'classification', prompt: classifyPrompt, mapping: classificationMapping, result: classifications },
-            { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
+            // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
+            // { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
+            // { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
 
         ];
     
@@ -78,8 +78,8 @@ export class ChatGptService {
         const fileResults = {};
     
         for (const { type, prompt, mapping, result } of prompts) {
-            const res = await this.dynamicBatching(files, prompt);
-            // const res = await this.simpleBatching(files, prompt); // Use this if you just want to send one file at a time
+            // const res = await this.dynamicBatching(files, prompt);
+            const res = await this.simpleBatching(files, prompt, type); // Use this if you just want to send one file at a time
 
             const batches = res.batchesOfText;
             const filesPerBatch = res.filesPerBatch;
@@ -222,6 +222,7 @@ export class ChatGptService {
             try {
                 // Attempt to make a new GPT and get response
                 return await this.createGptFourCompletion(fileContents);
+                // return await this.createLlama3Completion(fileContents);
             } catch (error) {
                 // Calculate time until next request
                 const isRateLimitError = error.response && error.response.status === 429 || error.response.status === 502;
@@ -267,6 +268,25 @@ export class ChatGptService {
             throw error;
         }
     }
+
+
+    async createLlama3Completion(prompt: string) {
+        try {
+            const ollama = new Ollama();
+            await ollama.setModel("llama3");
+            
+            // callback to print each word 
+            const print = (word: string) => {
+              process.stdout.write(word);
+            }
+            let response = await ollama.streamingGenerate(prompt, print);
+            return { message: response };
+
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
     extractVariableNamesMultiple(text: SensitiveVariables[]): string[] {
         var variables = [];
@@ -333,6 +353,8 @@ export class ChatGptService {
             const fileContent = await this.fileUtilService.processJavaFile(file, fileID);
             const boundedFileContent = this.fileUtilService.addFileBoundaryMarkers(fileID, fileContent);
             const fileTokenCount = this.encode.encode(boundedFileContent).length + promptTokenCount;
+            // const variables = await this.fileUtilService.parseJavaFile(file);
+            // console.log(`Here are the variables for ${file} ${variables.join(", ")}`);
     
             if (fileTokenCount > maxTokensPerBatch) {
                 // Case 3: File is too large and needs to be split
@@ -391,24 +413,48 @@ export class ChatGptService {
         }
     }
     
-    
-    
+
     // Used for testing, just sends one file at a time
-    async simpleBatching(files, prompt) {
-        const promptTokenCount = this.encode.encode(prompt).length;
+    async simpleBatching(files, prompt, type) {
         let batchesOfText = []; // Array to hold all batches of text
         let filesPerBatch = []; // Used later on by the progress bar
-        let batchText = prompt; 
         let id = 0;
     
         for (const file of files) {
             // 
             let fullID = "ID-" + id.toString();
             this.idToNameMapping.set(fullID, file.split('\\').pop());
-
-            // Clean up the file (Removes unnecessary whitespace)
             const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
-            batchesOfText.push(batchText + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+
+            switch (type) {
+                case 'variables':
+                    let parsedVariables = await this.fileUtilService.parseJavaFile(file, type);
+                    const jsonDataVaraibles: VariableObject[] = JSON.parse(parsedVariables);
+                    const variables = jsonDataVaraibles.map(item => item.variable).join('\n');
+                    const variablesText = "\nHere are all the variables for this file:\n" + variables;
+                    batchesOfText.push(prompt + variablesText + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                    console.log(variablesText)    
+                    break;
+                case 'strings':
+                    let parsedStrings = await this.fileUtilService.parseJavaFile(file, type);
+                    const jsonDataStrings: StringObject[] = JSON.parse(parsedStrings);
+                    const strings = jsonDataStrings.map(item => item.string).join('\n');
+                    const stringsText = "\nHere are all the strings for this file:\n" + strings;
+                    batchesOfText.push(prompt + stringsText + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                    console.log(stringsText)  
+                    break;
+                case 'comments':
+                    let comments = await this.fileUtilService.parseJavaFile(file, type);
+                    // const jsonDataComments: CommentObject[] = JSON.parse(parsedComments);
+                    // const comments = jsonDataComments.map(item => item.comment).join('\n');
+                    const commentsText = "\nHere are all the comments for this file:\n" + comments;
+                    batchesOfText.push(prompt + commentsText + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                    console.log(commentsText)
+                    break;
+                
+                default:
+                    batchesOfText.push(prompt + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+            }
             filesPerBatch.push(1);
             id += 1;
         }
@@ -425,15 +471,27 @@ export class ChatGptService {
         const OUTPUT_COST = (15 / 1000000); // GPT-4o pricing is $15 per 1 million output tokens
     
     
-        const prompts = [sensitiveVariablesPrompt, sensitiveStringsPrompt, sensitiveCommentsPrompt, sinkPrompt];
+        // const prompts = [sensitiveVariablesPrompt, sensitiveStringsPrompt, sensitiveCommentsPrompt, sinkPrompt];
         const sourcePath = path.join(this.projectsPath, projectPath);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
         let tokenCount = 0;
+        
+        const prompts = [
+            // { type: 'variables', prompt: sensitiveVariablesPrompt},
+            // { type: 'strings', prompt: sensitiveStringsPrompt},
+            { type: 'comments', prompt: sensitiveCommentsPrompt},
+            // { type: 'sinks', prompt: sinkPrompt}
+        ];
     
+        // Dictionary to store results by file name
+        const fileResults = {};
+    
+
         // Calculate the cost of each prompt concurrently
         const promptResults = await Promise.all(
             prompts.map(async (prompt) => {
-                let results = await this.dynamicBatching(javaFiles, prompt);
+                // let results = await this.dynamicBatching(javaFiles, prompt);
+                let results = await this.simpleBatching(javaFiles, prompt.prompt, prompt.type);
                 return results.batchesOfText;
             })
         );
@@ -504,6 +562,18 @@ interface SensitiveVariables {
 interface SinkType {
     name: string;
     type: string;
+}
+
+interface VariableObject {
+    variable: string;
+  }
+
+interface StringObject {
+    string: string;
+}
+
+interface CommentObject {
+    comment: string;
 }
 
 function extractAndParseJSON(inputString) {

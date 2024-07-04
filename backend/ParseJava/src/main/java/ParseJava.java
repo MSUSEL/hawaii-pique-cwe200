@@ -22,16 +22,16 @@ import java.util.Set;
 
 public class ParseJava {
     public static void main(String[] args) {
-        // if (args.length != 2) {
-        //     System.out.println("Usage: MainExtractor <file-path> <type>");
-        //     return;
-        // }
+        if (args.length != 2) {
+            System.out.println("Usage: MainExtractor <file-path> <type>");
+            return;
+        }
 
-        // String filePath = args[0];
-        // String type = args[1];
+        String filePath = args[0];
+        String type = args[1];
 
-        String filePath = "src/sensFiles/TemporaryFolder.java"; // Adjust the path as needed
-        String type = "strings";
+        // String filePath = "src/sensFiles/TemporaryFolder.java"; // Adjust the path as needed
+        // String type = "strings";
 
      // Try to parse the specified file
         try (FileInputStream in = new FileInputStream(filePath)) {
@@ -51,13 +51,13 @@ public class ParseJava {
                     Set<String> comments = new HashSet<>();
                     // Visit the CompilationUnit to collect comments
                     cu.accept(new CommentCollector(), comments);
-                    printJSON(comments, type);
+                    printJSON(comments, "comment");
 
                 } else if (type.equalsIgnoreCase("strings")) {
                     Set<String> strings = new HashSet<>();
                     // Visit the CompilationUnit to collect string literals
                     cu.accept(new StringLiteralCollector(), strings);
-                    printJSON(strings, type);
+                    printJSON(strings, "string");
                 } else {
                     System.out.println("Invalid type. Must be one of: variables, comments, strings");
                     return;
