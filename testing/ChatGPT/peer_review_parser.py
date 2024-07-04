@@ -90,7 +90,10 @@ def find_agreed_classifications(nested_dict, reviewers, classes):
                         classification_counts[classification] += 1
                     # Check if 2 or more reviewers agree
                     for classification, count in classification_counts.items():
-                        if count >= 2:
+                        if count >= 2 and idx < len(keys):
+        
+                            # print(f"Agreed: {sheet_name}, {file_name}, {class_name}, {label}, {keys[idx]} {idx} {classification}")
+
                             agreed_dict[sheet_name][file_name][class_name].append({
                                 'label': label,
                                 'key': keys[idx],
@@ -200,8 +203,9 @@ classes = ['variables', 'strings', 'comments']
 
 # Read the Excel file to get sheet names
 xls = pd.ExcelFile(file_path)
-# sheet_names = xls.sheet_names
-sheet_names = [3, 4]
+sheet_names = xls.sheet_names
+sheet_names = sheet_names[2:4]
+print(sheet_names)
 
 # Create structure for all sheets
 nested_dict = parse_review(file_path, sheet_names, reviewers, classes)
