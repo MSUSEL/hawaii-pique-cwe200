@@ -16,6 +16,7 @@ import async from 'async';
 import { spawn } from 'child_process';
 import { Ollama } from 'ollama-node';
 
+
 @Injectable()
 export class ChatGptService {
     openai: OpenAI.OpenAIApi = null;
@@ -24,6 +25,7 @@ export class ChatGptService {
     projectsPath: string;
     encode: any;
     idToNameMapping: Map<string, string> = new Map<string, string>();
+    parsedResults:{ [key: string]: JavaParseResult };
     constructor(
         private configService: ConfigService,
         private eventsGateway: EventsGateway,
@@ -41,6 +43,8 @@ export class ChatGptService {
         this.progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
         this.debug = this.configService.get('DEBUG');
         this.encode = get_encoding("o200k_base");
+        this.parsedResults = {};
+
 
     }
 
@@ -63,6 +67,8 @@ export class ChatGptService {
         let classificationMapping = new Map<string, string[]>();
         let sinksMapping = new Map<string, string[][]>();
         let rawResponses = "";
+        let parsedResults: { [key: string]: JavaParseResult } = {};
+
         
         let completedFiles = 0; // Number of completed files
     
@@ -413,43 +419,46 @@ export class ChatGptService {
         }
     }
     
+    async getParsedResults(files) {
+        for (const file of files) {
+            await this.fileUtilService.parseJavaFile(file, this.parsedResults);
+        }
+    }
 
     // Used for testing, just sends one file at a time
     async simpleBatching(files, prompt, type) {
         let batchesOfText = []; // Array to hold all batches of text
         let filesPerBatch = []; // Used later on by the progress bar
         let id = 0;
+        
+        if (Object.keys(this.parsedResults).length === 0) {
+            await this.getParsedResults(files);
+        }
     
         for (const file of files) {
             // 
             let fullID = "ID-" + id.toString();
-            this.idToNameMapping.set(fullID, file.split('\\').pop());
+            this.idToNameMapping.set(fullID, path.basename(file));
             const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
 
             switch (type) {
                 case 'variables':
-                    let parsedVariables = await this.fileUtilService.parseJavaFile(file, type);
-                    const jsonDataVaraibles: VariableObject[] = JSON.parse(parsedVariables);
-                    const variables = jsonDataVaraibles.map(item => item.variable).join('\n');
-                    const variablesText = "\nHere are all the variables for this file:\n" + variables;
-                    batchesOfText.push(prompt + variablesText + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
-                    console.log(variablesText)    
+                    let variables = this.parsedResults[path.basename(file)]['variables'];
+                    const variablesText = "\nHere are all the variables for this file:\n" + variables.join('\n');
+                    batchesOfText.push(prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                    // console.log(variablesText)    
                     break;
                 case 'strings':
-                    let parsedStrings = await this.fileUtilService.parseJavaFile(file, type);
-                    const jsonDataStrings: StringObject[] = JSON.parse(parsedStrings);
-                    const strings = jsonDataStrings.map(item => item.string).join('\n');
-                    const stringsText = "\nHere are all the strings for this file:\n" + strings;
-                    batchesOfText.push(prompt + stringsText + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
-                    console.log(stringsText)  
+                    let strings = this.parsedResults[path.basename(file)]['strings'];
+                    const stringsText = "\nHere are all the strings for this file:\n" + strings.join('\n');
+                    batchesOfText.push(prompt + stringsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                    // console.log(stringsText)  
                     break;
                 case 'comments':
-                    let comments = await this.fileUtilService.parseJavaFile(file, type);
-                    // const jsonDataComments: CommentObject[] = JSON.parse(parsedComments);
-                    // const comments = jsonDataComments.map(item => item.comment).join('\n');
-                    const commentsText = "\nHere are all the comments for this file:\n" + comments;
-                    batchesOfText.push(prompt + commentsText + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
-                    console.log(commentsText)
+                    let comments = this.parsedResults[path.basename(file)]['comments'];
+                    const commentsText = "\nHere are all the comments for this file:\n" + comments.join('\n');
+                    batchesOfText.push(prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                    // console.log(commentsText)
                     break;
                 
                 default:
@@ -478,8 +487,8 @@ export class ChatGptService {
         
         const prompts = [
             { type: 'variables', prompt: sensitiveVariablesPrompt},
-            // { type: 'strings', prompt: sensitiveStringsPrompt},
-            // { type: 'comments', prompt: sensitiveCommentsPrompt},
+            { type: 'strings', prompt: sensitiveStringsPrompt},
+            { type: 'comments', prompt: sensitiveCommentsPrompt},
             // { type: 'sinks', prompt: sinkPrompt}
         ];
     
@@ -574,6 +583,13 @@ interface StringObject {
 
 interface CommentObject {
     comment: string;
+}
+
+interface JavaParseResult {
+    filename: string;
+    variables: string[];
+    comments: string[];
+    strings: string[];
 }
 
 function extractAndParseJSON(inputString) {

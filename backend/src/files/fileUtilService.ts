@@ -275,49 +275,57 @@ export class FileUtilService {
         return '-----BEGIN FILE: [' + id + ']----- \n' + file + '\n-----END FILE: [' + id + ']-----'
 
     }
-
-    parseJavaFile(filePath: string, type: string): Promise<string> {
+        
+    parseJavaFile(filePath: string, aggregatedResults: { [key: string]: JavaParseResult }): Promise<void> {
         return new Promise((resolve, reject) => {
             const cwd = process.cwd();
-            // Path to the JAR file
             const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
             filePath = path.resolve(cwd, filePath);
-            
-            // Check if the JAR file exists
+    
             if (!fs.existsSync(jarPath)) {
-                // Build the JAR file using Maven
                 exec('mvn clean package', { cwd: path.resolve(cwd, 'ParseJava') }, (error, stdout, stderr) => {
                     if (error) {
                         reject(`Error building JAR: ${stderr}`);
                         return;
                     }
-                    // Run the Java program after building the JAR
-                    this.runJavaProgram(jarPath, filePath, type).then(resolve).catch(reject);
+                    this.runJavaProgram(jarPath, filePath, aggregatedResults).then(resolve).catch(reject);
                 });
             } else {
-                // Run the Java program directly if JAR exists
-                this.runJavaProgram(jarPath, filePath, type).then(resolve).catch(reject);
+                this.runJavaProgram(jarPath, filePath, aggregatedResults).then(resolve).catch(reject);
             }
         });
     }
     
-    runJavaProgram(jarPath: string, filePath: string, type: string): Promise<string> {
+    runJavaProgram(jarPath: string, filePath: string, aggregatedResults: { [key: string]: JavaParseResult }): Promise<void> {
         return new Promise((resolve, reject) => {
-            const command = `java -jar ${jarPath} ${filePath} ${type}`;
-            
+            const command = `java -jar ${jarPath} ${filePath}`;
+    
             exec(command, (error, stdout, stderr) => {
                 if (error) {
                     reject(`Error: ${stderr}`);
                     return;
                 }
-                resolve(stdout);
+    
+                try {
+                    const result: JavaParseResult = JSON.parse(stdout);
+                    // console.log(result);
+                    aggregatedResults[path.basename(result.filename)] = result;
+                    resolve();
+                } catch (e) {
+                    reject(`Failed to parse JSON: ${e}`);
+                }
             });
         });
     }
         
-    
 }
 
+interface JavaParseResult {
+    filename: string;
+    variables: string[];
+    comments: string[];
+    strings: string[];
+}
 
 // Smarter Batching 
 function estimateTokens(text) {

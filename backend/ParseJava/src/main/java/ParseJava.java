@@ -22,51 +22,42 @@ import java.util.Set;
 
 public class ParseJava {
     public static void main(String[] args) {
-        if (args.length != 2) {
-            System.out.println("Usage: MainExtractor <file-path> <type>");
+        if (args.length != 1) {
+            System.out.println("Usage: ParseJava <file-path>");
             return;
         }
 
         String filePath = args[0];
-        String type = args[1];
-
         // String filePath = "src/sensFiles/TemporaryFolder.java"; // Adjust the path as needed
-        // String type = "strings";
+        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 
-     // Try to parse the specified file
+        
+
         try (FileInputStream in = new FileInputStream(filePath)) {
             JavaParser javaParser = new JavaParser();
             ParseResult<CompilationUnit> result = javaParser.parse(in);
 
-            // Check if parsing was successful and a CompilationUnit was obtained
             if (result.isSuccessful() && result.getResult().isPresent()) {
                 CompilationUnit cu = result.getResult().get();
-                
-                if (type.equalsIgnoreCase("variables")) {
-                    Set<String> variables = new HashSet<>();
-                    // Visit the CompilationUnit to collect variables
-                    cu.accept(new VariableCollector(), variables);
-                    printJSON(variables, "variable");
-                } else if (type.equalsIgnoreCase("comments")) {
-                    Set<String> comments = new HashSet<>();
-                    // Visit the CompilationUnit to collect comments
-                    cu.accept(new CommentCollector(), comments);
-                    printJSON(comments, "comment");
 
-                } else if (type.equalsIgnoreCase("strings")) {
-                    Set<String> strings = new HashSet<>();
-                    // Visit the CompilationUnit to collect string literals
-                    cu.accept(new StringLiteralCollector(), strings);
-                    printJSON(strings, "string");
-                } else {
-                    System.out.println("Invalid type. Must be one of: variables, comments, strings");
-                    return;
-                }
-            
+                Set<String> variables = new HashSet<>();
+                Set<String> comments = new HashSet<>();
+                Set<String> strings = new HashSet<>();
+
+                cu.accept(new VariableCollector(), variables);
+                cu.accept(new CommentCollector(), comments);
+                cu.accept(new StringLiteralCollector(), strings);
+
+                JSONObject jsonOutput = new JSONObject();
+                jsonOutput.put("filename", fileName);
+                jsonOutput.put("variables", new JSONArray(variables));
+                jsonOutput.put("comments", new JSONArray(comments));
+                jsonOutput.put("strings", new JSONArray(strings));
+
+                System.out.println(jsonOutput.toString(2));
             } else {
                 System.out.println("Parsing failed");
-                
-                // Print parsing problems if any
+
                 result.getProblems().forEach(problem -> System.out.println(problem.getMessage()));
             }
         } catch (Exception e) {
@@ -74,33 +65,20 @@ public class ParseJava {
         }
     }
 
-    private static void printJSON(Set<String> items, String type) {
-        JSONArray json = new JSONArray();
-        for (String item : items) {
-            JSONObject jsonObj = new JSONObject();
-            jsonObj.put(type, item);
-            json.put(jsonObj);
-        }
-        System.out.println(json.toString(2));
-    } 
-    
     // Visitor class to collect variable names from the AST
     private static class VariableCollector extends VoidVisitorAdapter<Set<String>> {
-        // Visit VariableDeclarator nodes to collect local variables and fields
         @Override
         public void visit(VariableDeclarator vd, Set<String> collector) {
             super.visit(vd, collector);
             collector.add(vd.getNameAsString());
         }
 
-        // Visit Parameter nodes to collect method and constructor parameters
         @Override
         public void visit(Parameter param, Set<String> collector) {
             super.visit(param, collector);
             collector.add(param.getNameAsString());
         }
 
-        // Visit FieldDeclaration nodes to collect field variables
         @Override
         public void visit(FieldDeclaration fd, Set<String> collector) {
             super.visit(fd, collector);
@@ -109,7 +87,6 @@ public class ParseJava {
             }
         }
 
-        // Visit CatchClause nodes to collect exception parameters
         @Override
         public void visit(CatchClause cc, Set<String> collector) {
             super.visit(cc, collector);
@@ -193,7 +170,6 @@ public class ParseJava {
             if (!value.isEmpty() && !value.equals(" ")) {
                 collector.add(value);
             }
-
         }
     }
 }
