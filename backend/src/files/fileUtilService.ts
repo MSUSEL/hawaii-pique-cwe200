@@ -283,26 +283,38 @@ export class FileUtilService {
             const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
             filePath = path.resolve(cwd, filePath);
             
-            // Command to run the Java program
-            const command = `java -jar ${jarPath} ${filePath} ${type}`;
+            // Check if the JAR file exists
+            if (!fs.existsSync(jarPath)) {
+                // Build the JAR file using Maven
+                exec('mvn clean package', { cwd: path.resolve(cwd, 'ParseJava') }, (error, stdout, stderr) => {
+                    if (error) {
+                        reject(`Error building JAR: ${stderr}`);
+                        return;
+                    }
+                    // Run the Java program after building the JAR
+                    this.runJavaProgram(jarPath, filePath, type).then(resolve).catch(reject);
+                });
+            } else {
+                // Run the Java program directly if JAR exists
+                this.runJavaProgram(jarPath, filePath, type).then(resolve).catch(reject);
+            }
+        });
+    }
     
-            // Execute the command
+    runJavaProgram(jarPath: string, filePath: string, type: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const command = `java -jar ${jarPath} ${filePath} ${type}`;
+            
             exec(command, (error, stdout, stderr) => {
                 if (error) {
                     reject(`Error: ${stderr}`);
                     return;
                 }
-                // Split the output by newline to get variable names
-                // const variables = stdout.split('\n').filter(line => line.trim() !== '');
-                // console.log(stdout);
-                // const json = JSON.parse(stdout);
-                // const variables = stdout.split('\n').filter(line => line.trim() !== '');
-
                 resolve(stdout);
             });
         });
     }
-
+        
     
 }
 

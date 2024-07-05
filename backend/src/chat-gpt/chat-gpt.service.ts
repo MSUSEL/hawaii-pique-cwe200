@@ -477,9 +477,9 @@ export class ChatGptService {
         let tokenCount = 0;
         
         const prompts = [
-            // { type: 'variables', prompt: sensitiveVariablesPrompt},
+            { type: 'variables', prompt: sensitiveVariablesPrompt},
             // { type: 'strings', prompt: sensitiveStringsPrompt},
-            { type: 'comments', prompt: sensitiveCommentsPrompt},
+            // { type: 'comments', prompt: sensitiveCommentsPrompt},
             // { type: 'sinks', prompt: sinkPrompt}
         ];
     
