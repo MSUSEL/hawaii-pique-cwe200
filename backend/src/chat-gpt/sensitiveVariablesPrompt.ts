@@ -24,7 +24,7 @@ Provide a JSON response in the following format. Do not include any error messag
 1) Where it says "variableName1" and "variableDescription1" you should replace them with the actual name and description of the sensitive variable.
 2) Provide a JSON response for each file that matches the format below. 
   A) The "name" field should be the sensitive information found in the variable.
-  B) The "description" field should which category the variable belongs to.
+  B) The "description" field should tell which category the variable belongs to.
 {
   "files": [
     {

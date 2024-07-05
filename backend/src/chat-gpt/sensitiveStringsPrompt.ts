@@ -24,7 +24,7 @@ Provide a JSON response in the following format. Do not include any error messag
 1) Where it says "stringName1" and "stringDescription1" you should replace with the actual name and description of the sensitive string.
 2) Provide a JSON response for each file that matches the format below. 
   A) The "name" field should be the sensitive information found in the string.
-  B) The "description" field should which category the string belongs to.
+  B) The "description" field should tell which category the string belongs to.
 3) Ensure that your response doesn't break the JSON format.
 {
   "files": [
