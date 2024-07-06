@@ -115,10 +115,17 @@ export class ChatGptService {
                         else if (type === 'comments') {sensitiveData = file.sensitiveComments}
                         else if (type === 'classification') {sensitiveData = file.classification}
                         else if (type === 'sinks') {sensitiveData = file.sinks}
+
+                        sensitiveData = sensitiveData.filter((value, index, self) => 
+                            index === self.findIndex((t) => (
+                                t.name === value.name && t.description === value.description
+                            ))
+                        );                        
     
                         // If file already exists in the dictionary, append the data
                         if (fileResults[fileName]) {
                             fileResults[fileName][type] = Array.from(new Set(fileResults[fileName][type].concat(sensitiveData)));                        } else {
+                            
                             // Initialize the object with empty arrays if it does not exist
                             fileResults[fileName] = {
                                 fileName: fileName,
@@ -128,7 +135,7 @@ export class ChatGptService {
                                 classification: [],
                                 sinks: [],
                             };
-                            fileResults[fileName][type] = sensitiveData;
+                            fileResults[fileName][type] = (sensitiveData);
                         }
     
                         // this.eventsGateway.emitDataToClients('data', fileName + ':',);
