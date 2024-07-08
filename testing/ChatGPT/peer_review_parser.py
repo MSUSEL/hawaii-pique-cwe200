@@ -84,13 +84,12 @@ def find_agreed_classifications(nested_dict, reviewers, classes):
                 labels = file_data[class_name]['labels']
                 keys = file_data[class_name]['keys']
                 for idx, label in enumerate(labels):
-                    classification_counts = defaultdict(int)
-                    for reviewer in reviewers:
-                        classification = file_data[class_name][reviewer][idx]
-                        classification_counts[classification] += 1
-                    # Check if 2 or more reviewers agree
-                    for classification, count in classification_counts.items():
-                        if count >= 2 and idx < len(keys):
+                        # Now instead of looking for 2 yeses, we just check to see if a label exists.
+                        if idx < len(keys):
+                            if str(label) != 'nan':
+                                classification = 'Y'
+                            else:
+                                classification = 'N'
         
                             # print(f"Agreed: {sheet_name}, {file_name}, {class_name}, {label}, {keys[idx]} {idx} {classification}")
 
@@ -137,6 +136,9 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
                         break
 
                 for key, classification in agreed_set:
+                    # if class_name == 'comments' and classification == 'Y':
+                    #     print(f"Agreed: {sheet_name}, {file_name}, {class_name}, {key}, {classification}")
+
                     if classification == 'Y':
                         if key in chatGPT_set:
 
