@@ -426,57 +426,78 @@ export class ChatGptService {
         }
     }
     
-    async getParsedResults(files) {
+    async getParsedResults(files : string[]) {
+        let parseProgress = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+        parseProgress.start(files.length, 0);
+
+        let value = 0;
         for (const file of files) {
-            await this.fileUtilService.parseJavaFile(file, this.parsedResults);
+            try{
+                await this.fileUtilService.parseJavaFile(file, this.parsedResults);
+            }
+            catch(e){
+                console.log(e); 
         }
+        value += 1;
+        parseProgress.update(value);
+        const progress = Math.floor((value / files.length) * 100);
+        this.eventsGateway.emitDataToClients('progress', JSON.stringify({ type: 'progress', progress }));
     }
+}
 
     // Used for testing, just sends one file at a time
     async simpleBatching(files, prompt, type) {
         let batchesOfText = []; // Array to hold all batches of text
         let filesPerBatch = []; // Used later on by the progress bar
         let id = 0;
-        
+    
         if (Object.keys(this.parsedResults).length === 0) {
             await this.getParsedResults(files);
         }
     
         for (const file of files) {
-            // 
             let fullID = "ID-" + id.toString();
             this.idToNameMapping.set(fullID, path.basename(file));
             const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
-
-            switch (type) {
-                case 'variables':
-                    let variables = this.parsedResults[path.basename(file)]['variables'];
-                    const variablesText = "\nHere are all the variables for this file:\n" + variables.join('\n');
-                    batchesOfText.push(prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
-                    // console.log(variablesText)    
-                    break;
-                case 'strings':
-                    let strings = this.parsedResults[path.basename(file)]['strings'];
-                    const stringsText = "\nHere are all the strings for this file:\n" + strings.join('\n');
-                    batchesOfText.push(prompt + stringsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
-                    // console.log(stringsText)  
-                    break;
-                case 'comments':
-                    let comments = this.parsedResults[path.basename(file)]['comments'];
-                    const commentsText = "\nHere are all the comments for this file:\n" + comments.join('\n');
-                    batchesOfText.push(prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
-                    // console.log(commentsText)
-                    break;
+    
+            try {
+                let variables = [];
+                let strings = [];
+                let comments = [];
+                const baseFileName = path.basename(file);
                 
-                default:
-                    batchesOfText.push(prompt + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                switch (type) {
+                    case 'variables':
+                        variables = this.parsedResults[baseFileName]['variables'] || [];
+                        const variablesText = "\nHere are all the variables for this file:\n" + variables.join('\n');
+                        batchesOfText.push(prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        break;
+                    case 'strings':
+                        strings = this.parsedResults[baseFileName]['strings'] || [];
+                        const stringsText = "\nHere are all the strings for this file:\n" + strings.join('\n');
+                        batchesOfText.push(prompt + stringsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        break;
+                    case 'comments':
+                        comments = this.parsedResults[baseFileName]['comments'] || [];
+                        const commentsText = "\nHere are all the comments for this file:\n" + comments.join('\n');
+                        batchesOfText.push(prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        break;
+                    default:
+                        batchesOfText.push(prompt + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                }
+            } catch (e) {
+                console.error(`Failed to parse JSON for file ${file}: ${e.message}`);
+                // Continue to the next file
+                continue;
             }
+    
             filesPerBatch.push(1);
             id += 1;
         }
-
+    
         return { batchesOfText, filesPerBatch };
     }
+    
 
     async getCostEstimate(projectPath: string) {
         /*
@@ -496,7 +517,7 @@ export class ChatGptService {
             { type: 'variables', prompt: sensitiveVariablesPrompt},
             { type: 'strings', prompt: sensitiveStringsPrompt},
             { type: 'comments', prompt: sensitiveCommentsPrompt},
-            // { type: 'sinks', prompt: sinkPrompt}
+            { type: 'sinks', prompt: sinkPrompt}
         ];
     
         // Dictionary to store results by file name
