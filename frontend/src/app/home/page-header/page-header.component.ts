@@ -77,7 +77,7 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     const dialogRef = this.dialog.open(GPTProgressDialogComponent, {
-      width: '400px',
+      width: '500px',
       disableClose: true, // Make the dialog non-dismissable when clicking outside
       data: {
         sensitiveVariables: 0,
@@ -86,6 +86,9 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
         sensitiveSinks: -1,
         processingCodeQL: -1,
         buildProgress: -1,
+      },
+      position: {
+        top: '100px'
       }
     });
 
@@ -145,7 +148,7 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
     //   })
     // );
 
-    $('#terminal').toggleClass('d-none');
+    // $('#terminal').toggleClass('d-none');
 
     this.codeQlService.runCodeQl({ project: this.utilService.ProjectName }).subscribe(
       (response) => {
@@ -202,7 +205,9 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
         onConfirm: () => this.runCodeQl(),
         isLoading: true,
         cost: this.calculatedCost
-      }
+      },
+      disableClose: true, // Make the dialog non-dismissable when clicking outside
+
     });
 
     // Store the dialog reference in the component instance
