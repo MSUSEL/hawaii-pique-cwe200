@@ -1,18 +1,31 @@
 <!-- confirm-chatgpt-cost-dialog.component.html -->
-<h2 mat-dialog-title>Warning</h2>
+<h2 mat-dialog-title>Cost Estimate</h2>
 <div mat-dialog-content>
-  <p>
-    This tool utilizes ChatGPT as part of the analysis. Based on this project, it is <b>estimated</b> to cost:
-    <ng-container *ngIf="data.isLoading; else costTemplate">
-      <mat-spinner diameter="20"></mat-spinner>
-    </ng-container>
-    <ng-template #costTemplate>
+  <!-- Display the progress bars or the cost estimation based on the flags -->
+  <ng-container *ngIf="!isEstimateComplete; else costTemplate">
+    <!-- Display the first progress bar -->
+    <div *ngIf="!isProgressComplete">
+      Progress: {{ progress }}%
+      <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+    </div>
+
+    <!-- Display the second progress bar after the first is complete -->
+    <div *ngIf="isProgressComplete">
+      Progress Estimate: {{ progressEstimate }}%
+      <mat-progress-bar mode="determinate" [value]="progressEstimate"></mat-progress-bar>
+    </div>
+  </ng-container>
+
+  <!-- Template for cost estimation message -->
+  <ng-template #costTemplate>
+    <p>
+      This tool utilizes ChatGPT as part of the analysis. Based on this project, it is <b>estimated</b> to cost:
       {{ data.cost | currency }}
-    </ng-template>
-  </p>
-  <p *ngIf="!data.isLoading">Do you want to proceed?</p>
+    </p>
+    <p>Do you want to proceed?</p>
+  </ng-template>
 </div>
-<div mat-dialog-actions *ngIf="!data.isLoading">
+<div mat-dialog-actions *ngIf="isEstimateComplete">
   <button mat-button (click)="onNoClick()">No</button>
   <button mat-button (click)="onYesClick()">Yes</button>
 </div>

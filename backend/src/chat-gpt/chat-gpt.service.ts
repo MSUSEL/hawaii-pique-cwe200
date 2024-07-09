@@ -67,16 +67,13 @@ export class ChatGptService {
         let classificationMapping = new Map<string, string[]>();
         let sinksMapping = new Map<string, string[][]>();
         let rawResponses = "";
-        let parsedResults: { [key: string]: JavaParseResult } = {};
-
-        
         let completedFiles = 0; // Number of completed files
     
         const prompts = [
             { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
-            // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
-            // { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
-            // { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
+            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
+            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
+            { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
 
         ];
     
@@ -84,11 +81,14 @@ export class ChatGptService {
         const fileResults = {};
     
         for (const { type, prompt, mapping, result } of prompts) {
+            completedFiles = 0;
             // const res = await this.dynamicBatching(files, prompt);
             const res = await this.simpleBatching(files, prompt, type); // Use this if you just want to send one file at a time
 
             const batches = res.batchesOfText;
             const filesPerBatch = res.filesPerBatch;
+            const totalFiles = filesPerBatch.reduce((acc, num) => acc + num, 0);
+
     
             const processBatch = async (batch: string, filesInBatch: number, index: number) => {
                 try {
@@ -97,7 +97,8 @@ export class ChatGptService {
 
                     completedFiles += filesInBatch;
                     this.progressBar.update(completedFiles);
-                    // this.eventsGateway.emitDataToClients('', this.progressBar)
+                    this.eventsGateway.emitDataToClients('GPTProgress-'+type, JSON.stringify({ 
+                        type: 'GPTProgress-'+type, GPTProgress: Math.floor((completedFiles / totalFiles) * 100) }));
 
     
                     if (this.debug.toLowerCase() === 'true') {
@@ -450,6 +451,8 @@ export class ChatGptService {
         let batchesOfText = []; // Array to hold all batches of text
         let filesPerBatch = []; // Used later on by the progress bar
         let id = 0;
+        const results = new Map<string, typeToPrompt>();
+
     
         if (Object.keys(this.parsedResults).length === 0) {
             await this.getParsedResults(files);
@@ -470,16 +473,19 @@ export class ChatGptService {
                     case 'variables':
                         variables = this.parsedResults[baseFileName]['variables'] || [];
                         const variablesText = "\nHere are all the variables for this file:\n" + variables.join('\n');
+                        results.set(baseFileName, { infoType: 'variables', result: variables });
                         batchesOfText.push(prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         break;
                     case 'strings':
                         strings = this.parsedResults[baseFileName]['strings'] || [];
                         const stringsText = "\nHere are all the strings for this file:\n" + strings.join('\n');
+                        results.set(baseFileName, { infoType: 'variables', result: variables });
                         batchesOfText.push(prompt + stringsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         break;
                     case 'comments':
                         comments = this.parsedResults[baseFileName]['comments'] || [];
                         const commentsText = "\nHere are all the comments for this file:\n" + comments.join('\n');
+                        results.set(baseFileName, { infoType: 'variables', result: variables });
                         batchesOfText.push(prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         break;
                     default:
@@ -512,6 +518,7 @@ export class ChatGptService {
         const sourcePath = path.join(this.projectsPath, projectPath);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
         let tokenCount = 0;
+        let progress = 0;
         
         const prompts = [
             { type: 'variables', prompt: sensitiveVariablesPrompt},
@@ -522,6 +529,10 @@ export class ChatGptService {
     
         // Dictionary to store results by file name
         const fileResults = {};
+
+
+          
+          
     
 
         // Calculate the cost of each prompt concurrently
@@ -529,6 +540,9 @@ export class ChatGptService {
             prompts.map(async (prompt) => {
                 // let results = await this.dynamicBatching(javaFiles, prompt);
                 let results = await this.simpleBatching(javaFiles, prompt.prompt, prompt.type);
+                progress += 1;
+                let estimateProgress = Math.floor((progress / (javaFiles.length * prompts.length)) * 100);
+                this.eventsGateway.emitDataToClients('progress', JSON.stringify({ type: 'estimateProgress', estimateProgress }));
                 return results.batchesOfText;
             })
         );
@@ -619,6 +633,12 @@ interface JavaParseResult {
     comments: string[];
     strings: string[];
 }
+
+// Used to store the inputs to the GPT API
+interface typeToPrompt {
+    infoType: string;
+    result: any; 
+  }
 
 function extractAndParseJSON(inputString) {
     // Attempt to sanitize input by escaping problematic characters

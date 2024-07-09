@@ -4,51 +4,101 @@ import { environment } from '../../environments/environment';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class SocketService {
-  public socket: Socket;
-  public socketOutput: any[] = [];
-  TerminalStreamingMode: boolean = true;
-  public url = environment.apiUrl;
+    public socket: Socket;
+    public socketOutput: any[] = [];
+    TerminalStreamingMode: boolean = true;
+    public url = environment.apiUrl;
 
-  private progressSubject = new Subject<number>();
+    private progressSubject = new Subject<number>();
+    private progressEstimate = new Subject<number>();
+    private GPTProgressVariables = new Subject<number>();
+    private GPTProgressStrings = new Subject<number>();
+    private GPTProgressSinks = new Subject<number>();
+    private GPTProgressComments = new Subject<number>();
+    private BuildProgress = new Subject<number>();
+    private CodeQLProgress = new Subject<number>();
 
-  constructor() {}
 
-  async socketConnect() {
-    this.socket = io(this.url);
-    this.socket.on('connect', () => {
-      console.log('socket connected');
-    });
+    constructor() { }
 
-    this.socket.on('data', (data: any) => {
-        console.log('Data:', data);
-      if (this.TerminalStreamingMode) {
-        const parsedData = JSON.parse(data);
-        if (parsedData.type === 'progress') {
-          this.progressSubject.next(parsedData.progress);
-        } else {
-          this.socketOutput.push({ type: 'data', data: parsedData });
-          const element = document.getElementById('terminal');
-          if (element) {
-            element.scrollTop = element.scrollHeight;
-          }
-        }
-      }
-    });
-  }
+    async socketConnect() {
+        this.socket = io(this.url);
+        this.socket.on('connect', () => {
+            console.log('socket connected');
+        });
 
-  getProgressUpdates(): Observable<number> {
-    return this.progressSubject.asObservable();
-  }
+        this.socket.on('data', (data: any) => {
+            if (this.TerminalStreamingMode) {
+                const parsedData = JSON.parse(data);
+                // Progress bar for pre-processing files
+                if (parsedData.type === 'progress') {
+                    this.progressSubject.next(parsedData.progress);
+                }
+                // Progress bar for cost estimate
+                else if (parsedData.type === 'estimateProgress') {
+                    this.progressEstimate.next(parsedData.estimateProgress);
+                }
+                else if (parsedData.type === 'GPTProgress-variables') {
+                    this.GPTProgressVariables.next(parsedData.GPTProgress);
+                }
+                else if (parsedData.type === 'GPTProgress-strings') {
+                    this.GPTProgressStrings.next(parsedData.GPTProgress);
+                }
+                else if (parsedData.type === 'GPTProgress-comments') {
+                    this.GPTProgressComments.next(parsedData.GPTProgress);
+                }
+                else if (parsedData.type === 'GPTProgress-sinks') {
+                    this.GPTProgressSinks.next(parsedData.GPTProgress);
+                }
+                else if (parsedData.type === 'CodeQLProgress') {
+                    this.CodeQLProgress.next(parsedData.GPTProgress);
+                }
+                else if (parsedData.type === 'BuildProgress') {
+                    this.BuildProgress.next(parsedData.GPTProgress);
+                }
 
-  async socketDisconnect() {
-    this.socket.off('data');
-    if (this.socket.connected) this.socket.disconnect();
-  }
+                else {
+                    this.socketOutput.push({ type: 'data', data: parsedData });
+                    const element = document.getElementById('terminal');
+                    if (element) {
+                        element.scrollTop = element.scrollHeight;
+                    }
+                }
+            }
+        });
+    }
 
-  clearOutput() {
-    this.socketOutput = [];
-  }
+    getProgressUpdates(): Observable<number> {
+        return this.progressSubject.asObservable();
+    }
+    getProgressEstimate(): Observable<number> {
+        return this.progressEstimate.asObservable();
+    }
+    getGPTProgressVariables(): Observable<number> {
+        return this.GPTProgressVariables.asObservable();
+    }
+    getGPTProgressStrings(): Observable<number> {
+        return this.GPTProgressStrings.asObservable();
+    }
+    getGPTProgressComments(): Observable<number> {
+        return this.GPTProgressComments.asObservable();
+    }
+    getGPTProgressSinks(): Observable<number> {
+        return this.GPTProgressSinks.asObservable();
+    }
+    getCodeQLProgress(): Observable<number> {
+        return this.CodeQLProgress.asObservable();
+    }
+
+    async socketDisconnect() {
+        this.socket.off('data');
+        if (this.socket.connected) this.socket.disconnect();
+    }
+
+    clearOutput() {
+        this.socketOutput = [];
+    }
 }
