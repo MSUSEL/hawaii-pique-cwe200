@@ -1,15 +1,14 @@
 /**
- * @name CWE-200: Local information disclosure in a temporary directory
- * @description Writing information without explicit permissions to a shared temporary directory may disclose it to other users.
+ * @name CWE-538: File and Directory Information Exposure
+ * @description The software exposes file or directory information to an actor that is not explicitly authorized to have that information.
  * @kind path-problem
  * @problem.severity warning
  * @security-severity 6.5
  * @precision medium
- * @id java/temp-dir-info-disclosure/200
+ * @id java/temp-dir-info-disclosure/538
  * @tags security
- *       external/cwe/cwe-200
- *       external/cwe/cwe-732
- * @cwe CWE-200
+ *       external/cwe/cwe-538
+ * @cwe CWE-538
  */
 
 import java

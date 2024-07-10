@@ -1,12 +1,12 @@
 /**
- * @name CWE-200: Exposure of sensitive information to an unauthorized actor via printStackTrace.
+ * @name CWE-209: Information exposure through an error message
  * @description Logging or printing sensitive information or detailed error messages can lead to information disclosure.
  * @kind problem
  * @problem.severity warning
  * @id java/runtime-error-info-exposure-printStackTrace/200
  * @tags security
- *       external/cwe/cwe-200
- * @cwe CWE-200
+ *       external/cwe/cwe-209
+ * @cwe CWE-209
  */
 
 
