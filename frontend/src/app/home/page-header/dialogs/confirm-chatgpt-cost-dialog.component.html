@@ -5,13 +5,13 @@
   <ng-container *ngIf="!isEstimateComplete; else costTemplate">
     <!-- Display the first progress bar -->
     <div *ngIf="!isProgressComplete">
-      Progress: {{ progress }}%
+      Parsing Files: {{ progress }}%
       <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
     </div>
 
     <!-- Display the second progress bar after the first is complete -->
     <div *ngIf="isProgressComplete">
-      Progress Estimate: {{ progressEstimate }}%
+      Generating Estimate: {{ progressEstimate }}%
       <mat-progress-bar mode="determinate" [value]="progressEstimate"></mat-progress-bar>
     </div>
   </ng-container>
