@@ -123,11 +123,14 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
     file_metrics = defaultdict(lambda: defaultdict(lambda: {'tp': 0, 'fp': 0, 'fn': 0, 
                                                             'tp_keys': [], 'fp_keys': [], 'fn_keys': []}))
     total_metrics = defaultdict(lambda: {'tp': 0, 'fp': 0, 'fn': 0})
+    label_metrics = {}
+    label_scores = {}
+
     
     for sheet_name, sheet_data in agreed_dict.items():
         for file_name, file_data in sheet_data.items():
             for class_name in classes:
-                agreed_set = set((entry['key'], entry['classification']) for entry in file_data[class_name])
+                agreed_set = set((entry['key'], entry['classification'], entry['label']) for entry in file_data[class_name])
                 
                 chatGPT_set = set()
                 for file in chatGPT_output:
@@ -135,9 +138,12 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
                         chatGPT_set = set((item['name']) for item in file[class_name])
                         break
 
-                for key, classification in agreed_set:
+                for key, classification, label in agreed_set:
                     # if class_name == 'comments' and classification == 'Y':
                     #     print(f"Agreed: {sheet_name}, {file_name}, {class_name}, {key}, {classification}")
+
+                    if label not in label_metrics:
+                        label_metrics[label] = {'tp': 0, 'fp': 0, 'fn': 0, 'total': 0}
 
                     if classification == 'Y':
                         if key in chatGPT_set:
@@ -145,15 +151,23 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
                             file_metrics[file_name][class_name]['tp'] += 1
                             file_metrics[file_name][class_name]['tp_keys'].append(key)
                             total_metrics[class_name]['tp'] += 1
+                            label_metrics[label]['tp'] += 1
+
+
                         else:
                             file_metrics[file_name][class_name]['fn'] += 1
                             file_metrics[file_name][class_name]['fn_keys'].append(key)
                             total_metrics[class_name]['fn'] += 1
+                            label_metrics[label]['fn'] += 1
+
                     else:
                         if key in chatGPT_set:
                             file_metrics[file_name][class_name]['fp'] += 1
                             file_metrics[file_name][class_name]['fp_keys'].append(key)
                             total_metrics[class_name]['fp'] += 1
+                            label_metrics[label]['fp'] += 1
+                    label_metrics[label]['total'] += 1
+
                 
                 file_metrics[file_name][class_name]['accuracy'] = file_metrics[file_name][class_name]['tp'] / (file_metrics[file_name][class_name]['tp'] + file_metrics[file_name][class_name]['fp'] + file_metrics[file_name][class_name]['fn']) if file_metrics[file_name][class_name]['tp'] + file_metrics[file_name][class_name]['fp'] + file_metrics[file_name][class_name]['fn'] > 0 else 0
                 file_metrics[file_name][class_name]['precision'] = file_metrics[file_name][class_name]['tp'] / (file_metrics[file_name][class_name]['tp'] + file_metrics[file_name][class_name]['fp']) if file_metrics[file_name][class_name]['tp'] + file_metrics[file_name][class_name]['fp'] > 0 else 0
@@ -181,8 +195,28 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
     total_precision = total_tp / (total_tp + total_fp) if total_tp + total_fp > 0 else 0
     total_recall = total_tp / (total_tp + total_fn) if total_tp + total_fn > 0 else 0
 
+    # Calculate label metrics
+    for label in label_metrics:
+        tp = label_metrics[label]['tp']
+        fp = label_metrics[label]['fp']
+        fn = label_metrics[label]['fn']
+        total = label_metrics[label]['total']
 
-    return file_metrics, total_metrics, total_accuracy, total_precision, total_recall
+        accuracy = tp / total if total > 0 else 0
+        precision = tp / (tp + fp) if tp + fp > 0 else 0
+        recall = tp / (tp + fn) if tp + fn > 0 else 0
+        f1_score = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
+
+        label_scores[label] = {
+            'accuracy': accuracy,
+            'precision': precision,
+            'recall': recall,
+            'f1_score': f1_score
+        }
+
+
+
+    return file_metrics, total_metrics, total_accuracy, total_precision, total_recall, label_scores
 
 def load_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -209,6 +243,29 @@ def get_label_statistics(nested_dict):
     
     return label_stats
 
+
+def calculate_label_metrics(label_metrics):
+    label_scores = {}
+    for label, metrics in label_metrics.items():
+        tp = metrics['tp']
+        fp = metrics['fp']
+        fn = metrics['fn']
+        total = metrics['total']
+
+        accuracy = tp / total if total > 0 else 0
+        precision = tp / (tp + fp) if tp + fp > 0 else 0
+        recall = tp / (tp + fn) if tp + fn > 0 else 0
+        f1_score = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
+
+        label_scores[label] = {
+            'accuracy': accuracy,
+            'precision': precision,
+            'recall': recall,
+            'f1_score': f1_score
+        }
+
+    return label_scores
+
 # Usage
 file_path = 'testing/ChatGPT/Peer Review Data Files.xlsx'
 reviewers = ['david', 'sara', 'samantha']
@@ -231,7 +288,7 @@ agreed_dict = find_agreed_classifications(nested_dict, reviewers, classes)
 chatGPT_output = load_json('backend/Files/ReviewSensFiles/data.json')
 
 # Compare classifications
-file_metrics, total_metrics, total_accuracy, total_precision, total_recall = compare_classifications(agreed_dict, chatGPT_output, classes)
+file_metrics, total_metrics, total_accuracy, total_precision, total_recall, label_scores = compare_classifications(agreed_dict, chatGPT_output, classes)
 
 # Get label statistics
 label_stats = sorted(get_label_statistics(nested_dict).items())
@@ -272,3 +329,14 @@ with open('testing/ChatGPT/gpt_results.txt', 'w') as f:
     
     for label, count in label_stats:
         f.write(f" {count}: {label}\n")
+
+    f.write("----------------------------------------------------\n")
+    f.write("Label Metrics:\n")
+    for label, scores in label_scores.items():
+        if label != 'nan':
+            f.write(f"  Label: {label}\n")
+            f.write(f"    Accuracy: {scores['accuracy']:.2f}\n")
+            f.write(f"    Precision: {scores['precision']:.2f}\n")
+            f.write(f"    Recall: {scores['recall']:.2f}\n")
+            f.write(f"    F1 Score: {scores['f1_score']:.2f}\n")
+            f.write("\n")
