@@ -31,11 +31,12 @@ export class SocketService {
         });
 
         this.socket.on('data', (data: any) => {
+            console.log(data);
             if (this.TerminalStreamingMode) {
                 const parsedData = JSON.parse(data);
                 // Progress bar for pre-processing files
-                if (parsedData.type === 'progress') {
-                    this.progressSubject.next(parsedData.progress);
+                if (parsedData.type === 'parsingProgress') {
+                    this.progressSubject.next(parsedData.parsingProgress);
                 }
                 // Progress bar for cost estimate
                 else if (parsedData.type === 'estimateProgress') {
