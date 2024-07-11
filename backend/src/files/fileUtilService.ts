@@ -302,17 +302,31 @@ export class FileUtilService {
     
             exec(command, (error, stdout, stderr) => {
                 if (error) {
-                    reject(`Error: ${stderr}`);
+                    console.error(`Error executing command for file ${filePath}: ${stderr}`);
+                    // Add empty result to aggregated results
+                    aggregatedResults[path.basename(filePath)] = {
+                        filename: path.basename(filePath),
+                        variables: [],
+                        comments: [],
+                        strings: [],
+                    };
+                    resolve();
                     return;
                 }
     
                 try {
                     const result: JavaParseResult = JSON.parse(stdout);
-                    // console.log(result);
                     aggregatedResults[path.basename(result.filename)] = result;
                     resolve();
                 } catch (e) {
-                    reject(`Failed to parse JSON: ${e}`);
+                    console.error(`Failed to parse JSON: ${e}`);
+                    aggregatedResults[path.basename(filePath)] = {
+                        filename: path.basename(filePath),
+                        variables: [],
+                        comments: [],
+                        strings: [],
+                    };
+                    resolve();
                 }
             });
         });
