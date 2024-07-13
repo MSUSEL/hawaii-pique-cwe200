@@ -124,8 +124,6 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
                                                             'tp_keys': [], 'fp_keys': [], 'fn_keys': []}))
     total_metrics = defaultdict(lambda: {'tp': 0, 'fp': 0, 'fn': 0})
     label_metrics = {}
-    label_scores = {}
-
     
     for sheet_name, sheet_data in agreed_dict.items():
         for file_name, file_data in sheet_data.items():
@@ -143,7 +141,8 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
                     #     print(f"Agreed: {sheet_name}, {file_name}, {class_name}, {key}, {classification}")
 
                     if label not in label_metrics:
-                        label_metrics[label] = {'tp': 0, 'fp': 0, 'fn': 0, 'total': 0}
+                        label_metrics[label] = {'tp': 0, 'fp': 0, 'fn': 0, 'total': 0, 
+                                                'var_fn_set': set(), 'str_fn_set': set(), 'com_fn_set': set()}
 
                     if classification == 'Y':
                         if key in chatGPT_set:
@@ -159,7 +158,12 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
                             file_metrics[file_name][class_name]['fn_keys'].append(key)
                             total_metrics[class_name]['fn'] += 1
                             label_metrics[label]['fn'] += 1
-
+                            if class_name == 'variables':
+                                label_metrics[label]['var_fn_set'].add(key)
+                            elif class_name == 'strings':
+                                label_metrics[label]['str_fn_set'].add(key)
+                            elif class_name == 'comments':
+                                label_metrics[label]['com_fn_set'].add(key)
                     else:
                         if key in chatGPT_set:
                             file_metrics[file_name][class_name]['fp'] += 1
@@ -207,16 +211,13 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
         recall = tp / (tp + fn) if tp + fn > 0 else 0
         f1_score = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
 
-        label_scores[label] = {
-            'accuracy': accuracy,
-            'precision': precision,
-            'recall': recall,
-            'f1_score': f1_score
-        }
+        # Add calculated metrics to the existing label_metrics dictionary
+        label_metrics[label]['accuracy'] = accuracy
+        label_metrics[label]['precision'] = precision
+        label_metrics[label]['recall'] = recall
+        label_metrics[label]['f1_score'] = f1_score
 
-
-
-    return file_metrics, total_metrics, total_accuracy, total_precision, total_recall, label_scores
+    return file_metrics, total_metrics, total_accuracy, total_precision, total_recall, label_metrics
 
 def load_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -243,29 +244,6 @@ def get_label_statistics(nested_dict):
     
     return label_stats
 
-
-def calculate_label_metrics(label_metrics):
-    label_scores = {}
-    for label, metrics in label_metrics.items():
-        tp = metrics['tp']
-        fp = metrics['fp']
-        fn = metrics['fn']
-        total = metrics['total']
-
-        accuracy = tp / total if total > 0 else 0
-        precision = tp / (tp + fp) if tp + fp > 0 else 0
-        recall = tp / (tp + fn) if tp + fn > 0 else 0
-        f1_score = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
-
-        label_scores[label] = {
-            'accuracy': accuracy,
-            'precision': precision,
-            'recall': recall,
-            'f1_score': f1_score
-        }
-
-    return label_scores
-
 # Usage
 file_path = 'testing/ChatGPT/Peer Review Data Files.xlsx'
 reviewers = ['david', 'sara', 'samantha']
@@ -274,7 +252,7 @@ classes = ['variables', 'strings', 'comments']
 # Read the Excel file to get sheet names
 xls = pd.ExcelFile(file_path)
 sheet_names = xls.sheet_names
-sheet_names = sheet_names[2:]
+sheet_names = sheet_names[3:]
 # sheet_names = ['Plugin.java']
 print(sheet_names)
 
@@ -317,26 +295,27 @@ with open('testing/ChatGPT/gpt_results.txt', 'w') as f:
     f.write("Total Metrics:\n")
     for class_name, metrics in total_metrics.items():
         f.write(f"  {class_name.capitalize()} Metrics:\n")
+        f.write(f"    TP {metrics['tp']} | FP {metrics['fp']} | FN {metrics['fn']}\n")
         f.write(f"    Accuracy: {metrics['accuracy']:.2f}\n")
         f.write(f"    Precision: {metrics['precision']:.2f}\n")
         f.write(f"    Recall: {metrics['recall']:.2f}\n")
         f.write(f"    F1 Score: {metrics['fscore']:.2f}\n")
         f.write("\n")
 
-    # Print the label statistics
-    f.write("----------------------------------------------------\n")
-    f.write("Label Statistics:\n")
-    
-    for label, count in label_stats:
-        f.write(f" {count}: {label}\n")
 
     f.write("----------------------------------------------------\n")
     f.write("Label Metrics:\n")
-    for label, scores in label_scores.items():
-        if label != 'nan':
-            f.write(f"  Label: {label}\n")
-            f.write(f"    Accuracy: {scores['accuracy']:.2f}\n")
-            f.write(f"    Precision: {scores['precision']:.2f}\n")
-            f.write(f"    Recall: {scores['recall']:.2f}\n")
-            f.write(f"    F1 Score: {scores['f1_score']:.2f}\n")
+    f.write(f"*** Warning since these labels all exist FP will always be 0, so only recall can be calculated ***\n\n")
+
+    # Sort the label_scores dictionary by the label name
+    sorted_label_scores = dict(sorted(label_scores.items(), key=lambda item: str(item[0])))
+    for label, scores in sorted_label_scores.items():
+
+        if str(label) != 'nan':
+            f.write(f"label {label}\n")
+            f.write(f" Total {scores['total']} | TP {scores['tp']} | FN {scores['fn']} | Recall {scores['recall']:.2f}\n")
+            f.write(f" FN Variables: {', '.join(scores['var_fn_set'])}\n")
+            f.write(f" FN Strings: {', '.join(scores['str_fn_set'])}\n")
+            f.write(f" FN Comments: {', '.join(scores['com_fn_set'])}\n")
             f.write("\n")
+     
