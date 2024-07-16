@@ -20,12 +20,18 @@ import { Ollama } from 'ollama-node';
 @Injectable()
 export class ChatGptService {
     openai: OpenAI.OpenAIApi = null;
-    progressBar: any;
+    // progressBar: any;
     debug: string;
     projectsPath: string;
     encode: any;
     idToNameMapping: Map<string, string> = new Map<string, string>();
     parsedResults:{ [key: string]: JavaParseResult };
+    
+    variablesInput = new Map<string, string>();
+    stringsInput = new Map<string, string>();
+    commentsInput = new Map<string, string>();
+    sinksInput = new Map<string, string>();
+
     constructor(
         private configService: ConfigService,
         private eventsGateway: EventsGateway,
@@ -40,7 +46,7 @@ export class ChatGptService {
             'CODEQL_PROJECTS_DIR',
         );
         this.openai = new OpenAI.OpenAIApi(configuration);
-        this.progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+        // this.progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
         this.debug = this.configService.get('DEBUG');
         this.encode = get_encoding("o200k_base");
         this.parsedResults = {};
@@ -67,67 +73,57 @@ export class ChatGptService {
         let classificationMapping = new Map<string, string[]>();
         let sinksMapping = new Map<string, string[][]>();
         let rawResponses = "";
-        let completedFiles = 0; // Number of completed files
-    
+        
         const prompts = [
-            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables },
-            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings },
-            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments },
-            { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result : sinks}
-
+            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput },
+            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput },
+            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput },
+            { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result: sinks, input: this.sinksInput }
         ];
-    
+        
         // Dictionary to store results by file name
         const fileResults = {};
     
-        for (const { type, prompt, mapping, result } of prompts) {
-            completedFiles = 0;
-            // const res = await this.dynamicBatching(files, prompt);
-            const res = await this.simpleBatching(files, prompt, type); // Use this if you just want to send one file at a time
-
-            const batches = res.batchesOfText;
-            const filesPerBatch = res.filesPerBatch;
-            const totalFiles = filesPerBatch.reduce((acc, num) => acc + num, 0);
-
+        for (const { type, prompt, mapping, result, input } of prompts) {
+            let completedBatches = 0;
+            let numParsedFiles = 0;
+            const batches = Array.from(input.values());
+            const filesPerBatch = Array.from(input.keys());
+            const totalBatches = batches.length;
     
             const processBatch = async (batch: string, filesInBatch: number, index: number) => {
                 try {
                     const response = await this.createGptWithBackoff(batch, index);
-                    rawResponses += this.replaceIDs(response.message)
-
-                    completedFiles += filesInBatch;
-                    this.progressBar.update(completedFiles);
-                    this.eventsGateway.emitDataToClients('GPTProgress-'+type, JSON.stringify({ 
-                        type: 'GPTProgress-'+type, GPTProgress: Math.floor((completedFiles / totalFiles) * 100) }));
-
+                    rawResponses += this.replaceIDs(response.message);
+                    completedBatches += 1;
+    
+                    this.eventsGateway.emitDataToClients('GPTProgress-' + type, JSON.stringify({ 
+                        type: 'GPTProgress-' + type, GPTProgress: Math.floor((completedBatches / totalBatches) * 100) }));
     
                     if (this.debug.toLowerCase() === 'true') {
                         console.log(`Results for batch ${index} \n ${response.message}`);
                     }
-                    
+    
                     let json = extractAndParseJSON(response.message);
-                    
+    
                     json.files.forEach((file: any) => {
-                        let fileID = file.fileName.split('.java')[0];
-                        let fileName = this.idToNameMapping.get(fileID);
+                        let fileName = file.fileName;
                         let sensitiveData = [];
                         if (type === 'variables') {sensitiveData = file.sensitiveVariables}
                         else if (type === 'strings') {sensitiveData = file.sensitiveStrings}
                         else if (type === 'comments') {sensitiveData = file.sensitiveComments}
                         else if (type === 'classification') {sensitiveData = file.classification}
                         else if (type === 'sinks') {sensitiveData = file.sinks}
-
+    
                         sensitiveData = sensitiveData.filter((value, index, self) => 
                             index === self.findIndex((t) => (
                                 t.name === value.name && t.description === value.description
                             ))
                         );                        
     
-                        // If file already exists in the dictionary, append the data
                         if (fileResults[fileName]) {
-                            fileResults[fileName][type] = Array.from(new Set(fileResults[fileName][type].concat(sensitiveData)));                        } else {
-                            
-                            // Initialize the object with empty arrays if it does not exist
+                            fileResults[fileName][type] = Array.from(new Set(fileResults[fileName][type].concat(sensitiveData)));
+                        } else {
                             fileResults[fileName] = {
                                 fileName: fileName,
                                 variables: [],
@@ -139,25 +135,19 @@ export class ChatGptService {
                             fileResults[fileName][type] = (sensitiveData);
                         }
     
-                        // this.eventsGateway.emitDataToClients('data', fileName + ':',);
-                        // this.eventsGateway.emitDataToClients('data', sensitiveData,);
-    
                         let fileDataList = this.extractVariableNamesMultiple(sensitiveData);
-                        
-                        // If type is sinks, extract the types
+    
                         if (type === 'sinks') {
                             const names = this.extractVariableNamesMultiple(sensitiveData);
                             const types = this.extractTypes(sensitiveData);
-                          
                             let values: string[][] = names.map((name, index) => [name, types[index]]);
-                          
+    
                             if (sinksMapping.has(fileName)) {
-                              sinksMapping.set(fileName, sinksMapping.get(fileName)!.concat(values));
+                                sinksMapping.set(fileName, sinksMapping.get(fileName)!.concat(values));
                             } else {
-                              sinksMapping.set(fileName, values);
+                                sinksMapping.set(fileName, values);
                             }
-                          }
-                        else{
+                        } else {
                             if (mapping[fileName]) {
                                 mapping[fileName] = mapping[fileName].concat(fileDataList);
                             } else {
@@ -166,7 +156,6 @@ export class ChatGptService {
                         }    
                         result.push(...fileDataList);
                     });
-    
                 } catch (error) {
                     console.error('Error processing GPT response:', error);
                 }
@@ -175,10 +164,7 @@ export class ChatGptService {
             const processConcurrentBatches = async (batches, filesPerBatch) => {
                 let concurrencyLimit = 50; // Number of concurrent tasks to run
                 console.log(`Finding ${type} in Project`);
-            
-                const totalFiles = filesPerBatch.reduce((acc, num) => acc + num, 0);
-                this.progressBar.start(totalFiles, 0);
-            
+                        
                 const queue = async.queue(async (task, callback) => {
                     await processBatch(task.batch, task.files, task.index);
                     callback();
@@ -189,18 +175,25 @@ export class ChatGptService {
                 });
             
                 await queue.drain();
-                this.progressBar.stop();
             };
-            // Write raw responses to a file
-            this.fileUtilService.writeToFile(path.join(this.projectsPath, 'rawResponses.txt'), rawResponses);
+    
             await processConcurrentBatches(batches, filesPerBatch);
+    
+            numParsedFiles = completedBatches * filesPerBatch[0].length;
+    
+            // Check if the number of parsed files is correct for the current type
+            // console.log(`Total number of files {${files.length}}, total number of parsed files for ${type} {${numParsedFiles}}`);
+    
+            this.eventsGateway.emitDataToClients('GPTProgress-' + type, JSON.stringify({ 
+                type: 'GPTProgress-' + type, GPTProgress: 100 }));
         }
     
+        // Write raw responses to a file
+        this.fileUtilService.writeToFile(path.join(this.projectsPath, 'rawResponses.txt'), rawResponses);
+    
         // Convert the dictionary to a list
-        let numParsedFiles = 0;
         for (const fileName in fileResults) {
             fileList.push(fileResults[fileName]);
-            numParsedFiles += 1;
         }
     
         variables = [...new Set(variables)];
@@ -208,12 +201,10 @@ export class ChatGptService {
         comments = [...new Set(comments)];
         classifications = [...new Set(classifications)];
         sinks = [...new Set(sinks)];
-
-        // A sanity check to ensure that the number of files processed is equal to the number of files in the project
-        console.log(`Total number of files {${files.length}}, total number of parsed files {${numParsedFiles}}`)
     
         return { variables, strings, comments, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping, classifications, classificationMapping, sinks, sinksMapping };
     }
+    
     
 
 
@@ -427,11 +418,9 @@ export class ChatGptService {
         }
     }
     
-    async getParsedResults(files : string[]) {
-        let parseProgress = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-        parseProgress.start(files.length, 0);
-
-        let value = 0;
+    async getParsedResults(files: string[]) {
+        let completed = 0;
+        let total = files.length;
         for (const file of files) {
             try{
                 await this.fileUtilService.parseJavaFile(file, this.parsedResults);
@@ -439,129 +428,148 @@ export class ChatGptService {
             catch(e){
                 console.log(e); 
         }
-        value += 1;
-        parseProgress.update(value);
-        const progress = Math.floor((value / files.length) * 100);
-        this.eventsGateway.emitDataToClients('progress', JSON.stringify({ type: 'progress', progress }));
+        completed += 1;
+        let progressPercent = Math.floor((completed / total) * 100);
+        this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
     }
 }
 
     // Used for testing, just sends one file at a time
-    async simpleBatching(files, prompt, type) {
-        let batchesOfText = []; // Array to hold all batches of text
-        let filesPerBatch = []; // Used later on by the progress bar
+    async simpleBatching(files: string[], prompt: string, type: string, output: Map<string, string>, progress: { value: number, total: number }) {
         let id = 0;
-        const results = new Map<string, typeToPrompt>();
-
-    
-        if (Object.keys(this.parsedResults).length === 0) {
-            await this.getParsedResults(files);
-        }
-    
         for (const file of files) {
-            let fullID = "ID-" + id.toString();
-            this.idToNameMapping.set(fullID, path.basename(file));
-            const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
-    
+            // let fullID = "ID-" + id.toString();
+            // this.idToNameMapping.set(fullID, path.basename(file));
+            // const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
+
+            const fileContent = await this.fileUtilService.processJavaFile(file, path.basename(file));
+            let fullID = path.basename(file)
+
+
+
+            if (!this.parsedResults[path.basename(file)]){
+                console.log(`Parsing file ${file}`);
+                await this.fileUtilService.parseJavaFile(file, this.parsedResults);
+            }
+
             try {
                 let variables = [];
                 let strings = [];
                 let comments = [];
                 const baseFileName = path.basename(file);
-                
+
                 switch (type) {
                     case 'variables':
                         variables = this.parsedResults[baseFileName]['variables'] || [];
-                        const variablesText = "\nHere are all the variables for this file:\n" + variables.join('\n');
-                        results.set(baseFileName, { infoType: 'variables', result: variables });
-                        batchesOfText.push(prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        const variablesText = "\nI have already done all of the parsing for you, here are all the variables in this file:\n" + variables.map((variable, index) => `${index + 1}. ${variable}`).join('\n');
+                        output.set(baseFileName, prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        console.log(output.get(baseFileName));
                         break;
                     case 'strings':
                         strings = this.parsedResults[baseFileName]['strings'] || [];
-                        const stringsText = "\nHere are all the strings for this file:\n" + strings.join('\n');
-                        results.set(baseFileName, { infoType: 'variables', result: variables });
-                        batchesOfText.push(prompt + stringsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        const stringsText = "\nI have already done all of the parsing for you, here are all the strings in this file:\n" + strings.map((string, index) => `${index + 1}. ${string}`).join('\n');
+                        output.set(baseFileName, prompt + stringsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         break;
                     case 'comments':
                         comments = this.parsedResults[baseFileName]['comments'] || [];
-                        const commentsText = "\nHere are all the comments for this file:\n" + comments.join('\n');
-                        results.set(baseFileName, { infoType: 'variables', result: variables });
-                        batchesOfText.push(prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        const commentsText = "\nI have already done all of the parsing for you, here are all the comments in this file:\n" + comments.map((comment, index) => `${index + 1}. ${comment}`).join('\n');
+                        output.set(baseFileName, prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         break;
                     default:
-                        batchesOfText.push(prompt + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        output.set(baseFileName, prompt + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                 }
             } catch (e) {
                 console.error(`Failed to parse JSON for file ${file}: ${e.message}`);
-                // Continue to the next file
-                continue;
             }
-    
-            filesPerBatch.push(1);
+
+            // Update progress in a synchronized manner
+            progress.value += 1;
+            let progressPercent = Math.floor((progress.value / progress.total) * 100);
+            this.eventsGateway.emitDataToClients('estimateProgress', JSON.stringify({ type: 'estimateProgress', estimateProgress: progressPercent }));
+
             id += 1;
         }
-    
-        return { batchesOfText, filesPerBatch };
     }
-    
+
+    // Used for testing, just skips the estimate to save
+    skipEstimate(){
+        this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: 100 }));
+        this.eventsGateway.emitDataToClients('estimateProgress', JSON.stringify({ type: 'estimateProgress', estimateProgress: 100 }));
+        return {
+            totalCost: 0,
+            tokenCount: 0,
+            inputCost: 0,
+            totalFiles: 0
+        };
+
+    }
 
     async getCostEstimate(projectPath: string) {
         /*
         Results from previous runs to help estimate costs:
         CWEToyDataset: Predicted = $1.79, Actual = $1.23
         */
+
+        // return this.skipEstimate()
         const INPUT_COST = (5 / 1000000); // GPT-4o pricing is $5 per 1 million input tokens
-        const OUTPUT_COST = (15 / 1000000); // GPT-4o pricing is $15 per 1 million output tokens
-    
-    
-        // const prompts = [sensitiveVariablesPrompt, sensitiveStringsPrompt, sensitiveCommentsPrompt, sinkPrompt];
+        const OUTPUT_COST = (15 / 1000000) * .15; // GPT-4o pricing is $15 per 1 million output tokens
+
+        // Get the source path and Java files
         const sourcePath = path.join(this.projectsPath, projectPath);
-        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
-        let tokenCount = 0;
-        let progress = 0;
-        
+        const javaFiles: string[] = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+
+        // Parse the Java files to get the variables, strings, and comments
+        await this.getParsedResults(javaFiles);
+
+        let totalTokenCount = 0;
+
         const prompts = [
-            { type: 'variables', prompt: sensitiveVariablesPrompt},
-            { type: 'strings', prompt: sensitiveStringsPrompt},
-            { type: 'comments', prompt: sensitiveCommentsPrompt},
-            { type: 'sinks', prompt: sinkPrompt}
+            { type: 'variables', prompt: sensitiveVariablesPrompt, output: this.variablesInput },
+            { type: 'strings', prompt: sensitiveStringsPrompt, output: this.stringsInput },
+            { type: 'comments', prompt: sensitiveCommentsPrompt, output: this.commentsInput },
+            { type: 'sinks', prompt: sinkPrompt, output: this.sinksInput }
         ];
-    
-        // Dictionary to store results by file name
-        const fileResults = {};
 
+        // Clear previous outputs
+        this.variablesInput.clear();
+        this.stringsInput.clear();
+        this.commentsInput.clear();
+        this.sinksInput.clear();
 
-          
-          
-    
+        // Initialize shared progress state
+        let progress = { value: 0, total: prompts.length * javaFiles.length };
+
+        // Helper function to process each prompt
+        const processPrompt = async (promptObj: { type: string; prompt: string; output: Map<string, string> }) => {
+            let tokenCount = 0;
+            await this.simpleBatching(javaFiles, promptObj.prompt, promptObj.type, promptObj.output, progress);
+
+            // Calculate tokens for the current prompt
+            const outputArray = Array.from(promptObj.output.values());
+            for (const batch of outputArray) {
+                totalTokenCount += this.encode.encode(batch).length;
+                tokenCount += this.encode.encode(batch).length;
+            }
+            console.log(`Token count for ${promptObj.type}: ${(tokenCount).toFixed(2)}`);
+        };
 
         // Calculate the cost of each prompt concurrently
-        const promptResults = await Promise.all(
-            prompts.map(async (prompt) => {
-                // let results = await this.dynamicBatching(javaFiles, prompt);
-                let results = await this.simpleBatching(javaFiles, prompt.prompt, prompt.type);
-                progress += 1;
-                let estimateProgress = Math.floor((progress / (javaFiles.length * prompts.length)) * 100);
-                this.eventsGateway.emitDataToClients('progress', JSON.stringify({ type: 'estimateProgress', estimateProgress }));
-                return results.batchesOfText;
-            })
-        );
-    
-        // Flatten the array of batches and calculate total tokens
-        const batches = promptResults.flat();
-        tokenCount = batches.reduce((total, batch) => total + this.encode.encode(batch).length, 0);
-    
-        let inputCost = tokenCount * INPUT_COST;
-        let outputCost = tokenCount * OUTPUT_COST * 0.30; // Based on previous runs Output tokens are around 30% of input tokens
-        let totalCost = inputCost + outputCost;
-        this.idToNameMapping.clear();
+        await Promise.all(prompts.map(prompt => processPrompt(prompt)));
+
+        // Calculate cost
+        const inputCost = totalTokenCount * INPUT_COST;
+        const outputCost = totalTokenCount * OUTPUT_COST;
+        const totalCost = inputCost + outputCost;
+
+        console.log(`Estimated cost for project ${projectPath}: $${totalCost.toFixed(2)}`);
         return {
             totalCost: totalCost,
-            tokenCount: tokenCount,
+            tokenCount: totalTokenCount,
             inputCost: inputCost,
             totalFiles: javaFiles.length,
         };
     }
+
 
     getChatGptToken() {
         const apiKey = this.configService.get('API_KEY');
