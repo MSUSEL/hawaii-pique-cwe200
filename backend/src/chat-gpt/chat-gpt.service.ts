@@ -75,10 +75,10 @@ export class ChatGptService {
         let rawResponses = "";
         
         const prompts = [
-            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput },
-            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput },
+            // { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput },
+            // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput },
             { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput },
-            { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result: sinks, input: this.sinksInput }
+            // { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result: sinks, input: this.sinksInput }
         ];
         
         // Dictionary to store results by file name
@@ -448,7 +448,7 @@ export class ChatGptService {
 
 
             if (!this.parsedResults[path.basename(file)]){
-                console.log(`Parsing file ${file}`);
+                // console.log(`Parsing file ${file}`);
                 await this.fileUtilService.parseJavaFile(file, this.parsedResults);
             }
 
@@ -463,7 +463,7 @@ export class ChatGptService {
                         variables = this.parsedResults[baseFileName]['variables'] || [];
                         const variablesText = "\nI have already done all of the parsing for you, here are all the variables in this file:\n" + variables.map((variable, index) => `${index + 1}. ${variable}`).join('\n');
                         output.set(baseFileName, prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
-                        console.log(output.get(baseFileName));
+                        // console.log(output.get(baseFileName));
                         break;
                     case 'strings':
                         strings = this.parsedResults[baseFileName]['strings'] || [];
@@ -472,8 +472,11 @@ export class ChatGptService {
                         break;
                     case 'comments':
                         comments = this.parsedResults[baseFileName]['comments'] || [];
-                        const commentsText = "\nI have already done all of the parsing for you, here are all the comments in this file:\n" + comments.map((comment, index) => `${index + 1}. ${comment}`).join('\n');
-                        output.set(baseFileName, prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        const commentsText = "\nI have already done all of the parsing for you, here are all the comments in this file - " + baseFileName + ":\n" + comments.map((comment, index) => `${index + 1}. ${comment}`).join('\n');
+                        // output.set(baseFileName, prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        output.set(baseFileName, prompt + commentsText);
+                        console.log(output.get(baseFileName));
+
                         break;
                     default:
                         output.set(baseFileName, prompt + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
