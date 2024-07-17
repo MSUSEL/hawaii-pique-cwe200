@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as OpenAI from 'openai';
+import OpenAI from "openai";
 import { ConfigService } from '@nestjs/config';
 import { FileUtilService } from 'src/files/fileUtilService';
 import { EventsGateway } from 'src/events/events.gateway';
@@ -19,8 +19,7 @@ import { Ollama } from 'ollama-node';
 
 @Injectable()
 export class ChatGptService {
-    openai: OpenAI.OpenAIApi = null;
-    // progressBar: any;
+    openai: OpenAI;
     debug: string;
     projectsPath: string;
     encode: any;
@@ -38,15 +37,14 @@ export class ChatGptService {
         private fileUtilService: FileUtilService,
     ) {
         const api_key = this.configService.get('API_KEY');
-        const configuration = new OpenAI.Configuration({
+         this.openai = new OpenAI({
             apiKey: api_key,
-        });
+          });
+
 
         this.projectsPath = this.configService.get<string>(
             'CODEQL_PROJECTS_DIR',
         );
-        this.openai = new OpenAI.OpenAIApi(configuration);
-        // this.progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
         this.debug = this.configService.get('DEBUG');
         this.encode = get_encoding("o200k_base");
         this.parsedResults = {};
@@ -75,9 +73,9 @@ export class ChatGptService {
         let rawResponses = "";
         
         const prompts = [
-            // { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput },
+            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput },
             // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput },
-            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput },
+            // { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput },
             // { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result: sinks, input: this.sinksInput }
         ];
         
@@ -262,13 +260,24 @@ export class ChatGptService {
      */
     async createGptFourCompletion(prompt: string) {
         try {
-            const completion = await this.openai.createChatCompletion({
+            // Break the prompt into sections, for better api usage
+            let sections = this.extractSections(prompt);
+
+
+            const response = await this.openai.chat.completions.create({
                 model: 'gpt-4o',
-                temperature: 0.2,
-                messages: [{ role: 'user', content: prompt }],
+                // temperature: 0.0,
+                top_p: 0.001,
+                messages: [
+                    { role: 'system', content: sections.prompt }, 
+                    { role: 'user', content: sections.values }, 
+                    { role: 'user', content: sections.code }
+                ],
+                response_format: { type: "json_object" },
             });
 
-            return { message: completion.data.choices[0].message.content };
+            return { message: response.choices[0].message.content };
+
         } catch (error) {
             throw error;
         }
@@ -461,18 +470,18 @@ export class ChatGptService {
                 switch (type) {
                     case 'variables':
                         variables = this.parsedResults[baseFileName]['variables'] || [];
-                        const variablesText = "\nI have already done all of the parsing for you, here are all the variables in this file:\n" + variables.map((variable, index) => `${index + 1}. ${variable}`).join('\n');
+                        const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file:\n" + variables.map((variable, index) => `${index + 1}. ${variable}`).join('\n') + "\n+++++\n";
                         output.set(baseFileName, prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         // console.log(output.get(baseFileName));
                         break;
                     case 'strings':
                         strings = this.parsedResults[baseFileName]['strings'] || [];
-                        const stringsText = "\nI have already done all of the parsing for you, here are all the strings in this file:\n" + strings.map((string, index) => `${index + 1}. ${string}`).join('\n');
+                        const stringsText = "\n+++++\nI have already done all of the parsing for you, here are all the strings in this file:\n" + strings.map((string, index) => `${index + 1}. ${string}`).join('\n') + "\n+++++\n";
                         output.set(baseFileName, prompt + stringsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         break;
                     case 'comments':
                         comments = this.parsedResults[baseFileName]['comments'] || [];
-                        const commentsText = "\nI have already done all of the parsing for you, here are all the comments in this file - " + baseFileName + ":\n" + comments.map((comment, index) => `${index + 1}. ${comment}`).join('\n');
+                        const commentsText = "\n+++++\nI have already done all of the parsing for you, here are all the comments in this file - " + baseFileName + ":\n" + comments.map((comment, index) => `${index + 1}. ${comment}`).join('\n') + "\n+++++\n";
                         // output.set(baseFileName, prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         output.set(baseFileName, prompt + commentsText);
                         console.log(output.get(baseFileName));
@@ -571,6 +580,20 @@ export class ChatGptService {
             inputCost: inputCost,
             totalFiles: javaFiles.length,
         };
+    }
+    extractSections(text: string): { prompt: string, values: string, code: string } {
+        const regex = /^(.*?)\+{5}(.*?)\+{5}(.*)$/s;
+        const match = regex.exec(text);
+    
+        if (match) {
+            return {
+                prompt: match[1].trim(),
+                values: match[2].trim(),
+                code: match[3].trim()
+            };
+        } else {
+            throw new Error("The text format is not correct.");
+        }
     }
 
 
