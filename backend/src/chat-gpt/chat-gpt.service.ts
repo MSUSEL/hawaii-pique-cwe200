@@ -259,6 +259,7 @@ export class ChatGptService {
      * @param prompt GPT prompt
      */
     async createGptFourCompletion(prompt: string) {
+        console.log(prompt);
         try {
             // Break the prompt into sections, for better api usage
             let sections = this.extractSections(prompt);
@@ -267,10 +268,10 @@ export class ChatGptService {
             const response = await this.openai.chat.completions.create({
                 model: 'gpt-4o',
                 // temperature: 0.0,
-                top_p: 0.001,
+                // top_p: 0.05,
                 messages: [
                     { role: 'system', content: sections.prompt }, 
-                    { role: 'user', content: sections.values }, 
+                    // { role: 'user', content: sections.values }, 
                     { role: 'user', content: sections.code }
                 ],
                 response_format: { type: "json_object" },
@@ -470,7 +471,8 @@ export class ChatGptService {
                 switch (type) {
                     case 'variables':
                         variables = this.parsedResults[baseFileName]['variables'] || [];
-                        const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file:\n" + variables.map((variable, index) => `${index + 1}. ${variable}`).join('\n') + "\n+++++\n";
+                        // const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file - " + baseFileName +":\n" + variables.map((variable, index) => `${index + 1}. ${variable}`).join('\n') + "\n+++++\n";
+                        const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file - " + baseFileName + ":\n" + variables.join(', ') + "\n+++++\n";
                         output.set(baseFileName, prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         // console.log(output.get(baseFileName));
                         break;
@@ -484,7 +486,7 @@ export class ChatGptService {
                         const commentsText = "\n+++++\nI have already done all of the parsing for you, here are all the comments in this file - " + baseFileName + ":\n" + comments.map((comment, index) => `${index + 1}. ${comment}`).join('\n') + "\n+++++\n";
                         // output.set(baseFileName, prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         output.set(baseFileName, prompt + commentsText);
-                        console.log(output.get(baseFileName));
+                        // console.log(output.get(baseFileName));
 
                         break;
                     default:
@@ -555,6 +557,7 @@ export class ChatGptService {
         const processPrompt = async (promptObj: { type: string; prompt: string; output: Map<string, string> }) => {
             let tokenCount = 0;
             await this.simpleBatching(javaFiles, promptObj.prompt, promptObj.type, promptObj.output, progress);
+            console.log(1)
 
             // Calculate tokens for the current prompt
             const outputArray = Array.from(promptObj.output.values());
@@ -567,6 +570,30 @@ export class ChatGptService {
 
         // Calculate the cost of each prompt concurrently
         await Promise.all(prompts.map(prompt => processPrompt(prompt)));
+
+        const result = javaFiles.reduce((acc, fileName) => {
+            const baseName = path.basename(fileName);
+            
+            const fileResult: { [key: string]: any } = {};
+            
+            prompts.forEach(promptObj => {
+                const output = promptObj.output.get(baseName) || '';
+                fileResult[promptObj.type] = {
+                    input: output,
+                    output: ''
+                };
+            });
+        
+            acc[baseName] = fileResult;
+            return acc;
+        }, {} as { [key: string]: any });
+        
+
+        const outputFilePath = path.join(this.projectsPath, projectPath, 'output_prompts.json');
+        this.fileUtilService.writeToFile(outputFilePath, JSON.stringify(result, null, 2));
+
+
+
 
         // Calculate cost
         const inputCost = totalTokenCount * INPUT_COST;

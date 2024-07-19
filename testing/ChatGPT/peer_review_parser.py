@@ -107,11 +107,30 @@ def find_agreed_classifications(nested_dict, reviewers, classes):
                             'classification': 'None'
                         })
 
-                        
+    outputJSON(agreed_dict)
     
     return agreed_dict
 
-from collections import defaultdict
+def outputJSON(agreed_dict):
+    json_output = {"files": []}
+
+    for sheet_name, sheet_data in agreed_dict.items():
+        for file_name, file_data in sheet_data.items():
+            file_entry = {"fileName": file_name, "sensitiveVariables": []}
+            for class_name, entries in file_data.items():
+                for entry in entries:
+                    if entry['classification'] == 'Y':
+                        file_entry["sensitiveVariables"].append({
+                            "name": entry['key'],
+                            "description": entry['label']
+                        })
+            if file_entry["sensitiveVariables"]:
+                json_output["files"].append(file_entry)
+
+    # Output the JSON to a file
+    with open('testing/ChatGPT/agreed_classifications.json', 'w') as json_file:
+        json.dump(json_output, json_file, indent=4)
+
 
 def compare_classifications(agreed_dict, chatGPT_output, classes):
     """
@@ -142,6 +161,13 @@ def compare_classifications(agreed_dict, chatGPT_output, classes):
                     if label not in label_metrics:
                         label_metrics[label] = {'tp': 0, 'fp': 0, 'fn': 0, 'tn': 0, 'total': 0, 
                                                 'var_fn_set': set(), 'str_fn_set': set(), 'com_fn_set': set()}
+
+                    # if key == 'e':
+                    #     file_metrics[file_name][class_name]['tp'] += 1
+                    #     file_metrics[file_name][class_name]['tp_keys'].append(key)
+                    #     total_metrics[class_name]['tp'] += 1
+                    #     label_metrics[label]['tp'] += 1
+                    #     continue
 
                     if classification == 'Y':
                         if key in chatGPT_set:
@@ -261,6 +287,7 @@ sheet_names = xls.sheet_names
 sheet_names = sheet_names[3:]
 # sheet_names = ['Plugin.java']
 # sheet_names = ['LiveTableResultsTest.java']
+# sheet_names = ['MySQLBackupProcessor.java']
 print(sheet_names)
 
 # Create structure for all sheets
@@ -326,4 +353,4 @@ with open('testing/ChatGPT/gpt_results.txt', 'w') as f:
             f.write(f" FN Strings: {', '.join(scores['str_fn_set'])}\n")
             f.write(f" FN Comments: {', '.join(scores['com_fn_set'])}\n")
             f.write("\n")
-     
+
