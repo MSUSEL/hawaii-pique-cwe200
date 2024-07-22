@@ -2,7 +2,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class BAD_ApiKeyEmbedded {
-    // Hardcoded API key for external service
     private static final String SERVICE_API_KEY = "ABCD1234EFGH5678";
 
     public static void callExternalService() {

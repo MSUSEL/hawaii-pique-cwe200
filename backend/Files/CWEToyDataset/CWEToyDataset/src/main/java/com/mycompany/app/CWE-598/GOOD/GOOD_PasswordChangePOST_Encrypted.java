@@ -60,6 +60,6 @@ public class GOOD_PasswordChangePOST_Encrypted {
     }
     
     public static void main(String[] args) {
-        changePassword("user2", "oldPass123", "newPass456"); // Now with encrypted parameters
+        changePassword("user2", "oldPass123", "newPass456"); 
     }
 }

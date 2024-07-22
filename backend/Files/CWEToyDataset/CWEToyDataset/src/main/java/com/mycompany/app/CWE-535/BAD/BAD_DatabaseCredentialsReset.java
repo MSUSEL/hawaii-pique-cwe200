@@ -9,7 +9,6 @@ public class BAD_DatabaseCredentialsReset {
             String errorOutput = errorReader.readLine();
 
             if (process.waitFor() != 0) {
-                // Direct exposure of potentially sensitive command details and password
                 System.err.println("Failed to reset database password: " + errorOutput + ". Command: " + command);
             }
         } catch (IOException | InterruptedException e) {

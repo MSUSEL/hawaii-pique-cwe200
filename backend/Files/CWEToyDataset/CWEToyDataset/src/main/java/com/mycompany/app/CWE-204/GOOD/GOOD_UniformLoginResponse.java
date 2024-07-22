@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-// This example uses the same error message if the username or password is incorrect. 
 @WebServlet("/secure-login")
 public class GOOD_UniformLoginResponse extends HttpServlet {
     @Override
@@ -17,13 +16,11 @@ public class GOOD_UniformLoginResponse extends HttpServlet {
         if (authenticate(username, password)) {
             resp.getWriter().write("Login successful");
         } else {
-            // Uniform error message regardless of the reason for failure
             resp.getWriter().write("Login failed. Please check your username and password.");
         }
     }
 
     private boolean authenticate(String username, String password) {
-        // Placeholder for authentication logic
         return false;
     }
 }

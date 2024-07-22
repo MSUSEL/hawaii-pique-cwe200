@@ -10,11 +10,9 @@ public class BAD_FinancialTransactionAPI {
     @PostMapping("/api/transaction")
     public String processTransaction(@RequestParam("accountNumber") String accountNumber, @RequestParam("amount") double amount) {
         try {
-            // Process transaction that may include sensitive financial operations
             executeTransaction(accountNumber, amount);
             return "Transaction processed successfully";
         } catch (Exception e) {
-            // Insecure: Exposing detailed transaction handling errors
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to process transaction for account " + accountNumber + " with amount $" + amount + ": " + e.getMessage(), e);
         }
     }

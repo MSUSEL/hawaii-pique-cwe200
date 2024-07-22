@@ -6,7 +6,7 @@ public class BAD_FileEncryptionTest {
     @Test
     public void testFileEncryption() {
         String filePath = "/path/to/important/file.txt";
-        String encryptionKey = "SuperSecretKey!"; // Sensitive encryption key exposed
+        String encryptionKey = "SuperSecretKey!";
         FileEncryptor encryptor = new FileEncryptor();
         assertTrue(encryptor.encryptFile(filePath, encryptionKey));
     }

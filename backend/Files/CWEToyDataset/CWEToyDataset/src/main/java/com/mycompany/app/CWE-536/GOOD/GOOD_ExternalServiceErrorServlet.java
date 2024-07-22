@@ -32,9 +32,7 @@ public class GOOD_ExternalServiceErrorServlet extends HttpServlet {
             doGet(request, response);
         } catch (ServletException e) {
             try {
-                // Logging the exception details inappropriately
                 LOGGER.warn("Caught ServletException.");
-                // In real-world scenarios, ensure that sensitive information is not logged like this
                 response.getWriter().println("An error occurred. Please try again later.");
             } catch (IOException ioException) {
                 LOGGER.error("Failed to write to response.");

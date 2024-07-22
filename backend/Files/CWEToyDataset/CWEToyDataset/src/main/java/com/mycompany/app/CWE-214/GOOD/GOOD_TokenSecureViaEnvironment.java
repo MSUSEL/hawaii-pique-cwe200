@@ -28,7 +28,6 @@ public class GOOD_TokenSecureViaEnvironment {
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         byte[] encryptedBytes = cipher.doFinal(token.getBytes());
 
-        // Encode bytes to Base64 to ensure safe transmission through environment variables
         return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 }

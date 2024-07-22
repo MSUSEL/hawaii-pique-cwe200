@@ -5,7 +5,7 @@ import java.util.Base64;
 public class GOOD_PasswordSecureCommands {
     public static void main(String[] args) {
         try {
-            String authToken = getEncryptedAuthToken();  // Retrieve securely stored token
+            String authToken = getEncryptedAuthToken();
             
             URL url = new URL("http://example.com/data");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -26,7 +26,7 @@ public class GOOD_PasswordSecureCommands {
     private static String getEncryptedAuthToken() {
         // Simulate retrieving an encrypted token and decrypting it
         String username = "admin";
-        String password = "mySecretPass123"; // Normally, you would retrieve this securely from a vault
+        String password = "mySecretPass123"; 
         String authString = username + ":" + password;
         byte[] authEncBytes = Base64.getEncoder().encode(authString.getBytes());
         return new String(authEncBytes);

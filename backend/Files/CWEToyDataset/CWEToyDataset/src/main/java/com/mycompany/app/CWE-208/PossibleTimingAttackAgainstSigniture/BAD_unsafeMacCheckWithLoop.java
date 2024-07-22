@@ -5,7 +5,6 @@ import javax.crypto.Mac;
 
 
 public class BAD_unsafeMacCheckWithLoop {
-    // BAD: compare MAC using a non-constant-time loop
     public boolean unsafeMacCheckWithLoop(Socket socket) throws Exception {
         try (InputStream is = socket.getInputStream()) {
             byte[] data = readBytes(is, 256);

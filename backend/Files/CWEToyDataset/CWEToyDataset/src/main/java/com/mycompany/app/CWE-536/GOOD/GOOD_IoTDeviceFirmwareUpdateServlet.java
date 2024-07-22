@@ -12,7 +12,6 @@ public class GOOD_IoTDeviceFirmwareUpdateServlet extends HttpServlet {
         try {
             deployFirmwareUpdate(deviceId, firmwareVersion);
         } catch (ServletException e) {
-            // Exposing potentially sensitive configuration and state information about IoT devices
             logger.error("Failed firmware update failed.");
             response.getWriter().println("Firmware update process encountered an error. Please check device status.");
             notifyTechSupport(deviceId, firmwareVersion, e.getMessage());
@@ -21,7 +20,7 @@ public class GOOD_IoTDeviceFirmwareUpdateServlet extends HttpServlet {
 
     private void deployFirmwareUpdate(String deviceId, String firmwareVersion) throws ServletException {
         // Logic to deploy firmware which might fail and needs careful exception handling
-        if (firmwareVersion.equals("0.23Beta")) { // Example: problematic version
+        if (firmwareVersion.equals("0.23Beta")) {
             throw new ServletException("Firmware version has known issues with this device.");
         }
         // Assume more update logic here that could fail

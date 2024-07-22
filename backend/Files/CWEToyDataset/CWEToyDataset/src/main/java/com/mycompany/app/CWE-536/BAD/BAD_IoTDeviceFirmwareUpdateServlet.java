@@ -15,7 +15,7 @@ public class BAD_IoTDeviceFirmwareUpdateServlet extends HttpServlet {
 
     private void deployFirmwareUpdate(String deviceId, String firmwareVersion) throws ServletException {
         // Logic to deploy firmware which might fail and needs careful exception handling
-        if (firmwareVersion.equals("0.23Beta")) { // Example: problematic version
+        if (firmwareVersion.equals("0.23Beta")) { 
             throw new ServletException("Firmware version " + firmwareVersion + " has known issues with device ID: " + deviceId);
         }
         // Assume more update logic here that could fail

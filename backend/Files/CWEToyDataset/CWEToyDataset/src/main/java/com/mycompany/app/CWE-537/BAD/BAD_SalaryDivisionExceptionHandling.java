@@ -15,7 +15,6 @@ public class BAD_SalaryDivisionExceptionHandling {
     }
 
     private static int getConfidentialBaseSalary() {
-        // Simulate retrieving a confidential base salary
         return 50000;  // Example: $50,000 total payroll
     }
 

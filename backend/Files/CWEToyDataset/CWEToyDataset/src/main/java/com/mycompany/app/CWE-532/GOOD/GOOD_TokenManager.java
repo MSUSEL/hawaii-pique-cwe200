@@ -6,6 +6,6 @@ public class GOOD_TokenManager {
     public void refreshToken(String userId, String oldToken) {
         // Simulate token refresh process
         String newToken = "newToken12345"; // Simulated new token
-        logger.debug("Refreshing token."); // Insecure logging of tokens
+        logger.debug("Refreshing token."); 
     }
 }

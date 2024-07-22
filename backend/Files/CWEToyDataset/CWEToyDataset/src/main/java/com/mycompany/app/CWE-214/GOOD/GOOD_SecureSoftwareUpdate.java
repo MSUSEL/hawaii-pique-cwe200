@@ -16,7 +16,7 @@ public class GOOD_SecureSoftwareUpdate {
             // Write the encrypted key to a secure location or transmit it securely
             Path securePath = writeKeyToSecureLocation(encryptedKey);
 
-            // Use ProcessBuilder to initiate the update process securely
+            // Use ProcessBuilder to initiate the update process
             ProcessBuilder builder = new ProcessBuilder("updateScript", securePath.toString());
             builder.inheritIO();  // Optionally inherit IO to manage output
             Process process = builder.start();

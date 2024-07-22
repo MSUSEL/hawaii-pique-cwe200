@@ -2,7 +2,7 @@ public class BAD_DebugModeActive {
     private static final boolean DEBUG_MODE_ACTIVE = System.getProperty("DEBUG_MODE_ACTIVE", "false").equalsIgnoreCase("true");
 
     public static void main(String[] args) {
-        String encryptionKey = "ABCD-1234-EFGH-5678"; // Highly sensitive information
+        String encryptionKey = "ABCD-1234-EFGH-5678";
 
         // Debug condition
         if (DEBUG_MODE_ACTIVE) {

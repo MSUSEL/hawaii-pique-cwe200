@@ -8,7 +8,7 @@ public class GOOD_EmailServiceTest {
         // Fetch the recipient email from environment variables
         String recipientEmail = System.getenv("RECIPIENT_EMAIL");
      
-        String message = "Hello, your request has been processed successfully."; // Generic, non-sensitive information
+        String message = "Hello, your request has been processed successfully."; 
         EmailService emailService = new EmailService();
         assertTrue(emailService.sendEmail(recipientEmail, message));
     }

@@ -14,7 +14,6 @@ public class GOOD_FinancialTransactionAPI {
             executeTransaction(accountNumber, amount);
             return "Transaction processed successfully";
         } catch (Exception e) {
-            // Insecure: Exposing detailed transaction handling errors
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to process transaction.");
         }
     }

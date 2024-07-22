@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GOOD_DontExposeSessionIDInHeaders {
     public void dontExposeSessionID(HttpServletResponse response, String sessionID) {
-        // GOOD: Store the session ID in a secure, HttpOnly cookie
         Cookie sessionCookie = new Cookie("sessionID", sessionID);
         sessionCookie.setSecure(true);
         sessionCookie.setHttpOnly(true);

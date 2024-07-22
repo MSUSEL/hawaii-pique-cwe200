@@ -5,6 +5,6 @@ public class BAD_FinancialTransactionLogger {
 
     public void logTransaction(String transactionId, double amount, String bankAccountNumber) {
         // Log transaction details
-        logger.info("Transaction logged with ID: " + transactionId + ", amount: " + amount + ", account number: " + bankAccountNumber); // Logging sensitive bank account number
+        logger.info("Transaction logged with ID: " + transactionId + ", amount: " + amount + ", account number: " + bankAccountNumber);
     }
 }

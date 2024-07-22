@@ -8,7 +8,6 @@ public class GOOD_PaymentProcessingServlet extends HttpServlet {
         try {
             processPayment(paymentId);
         } catch (ServletException e) {
-            // Handling the exception by exposing payment ID
             response.getWriter().println("Payment processing failed.");
         }
     }

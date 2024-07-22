@@ -8,7 +8,6 @@ import java.io.IOException;
 
 class NetworkConfiguration {
     public boolean configureNetwork(String deviceSerial, String configCommands) {
-        // Pretend to configure network devices with sensitive commands
         return !configCommands.isEmpty();
     }
 }

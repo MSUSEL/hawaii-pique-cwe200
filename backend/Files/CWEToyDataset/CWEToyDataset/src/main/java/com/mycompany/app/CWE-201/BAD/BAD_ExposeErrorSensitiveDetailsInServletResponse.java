@@ -8,7 +8,6 @@ public class BAD_ExposeErrorSensitiveDetailsInServletResponse extends HttpServle
         try {
             processRequest(request);
         } catch (Exception e) {
-            // BAD: Exposing detailed error information directly in servlet response
             response.getWriter().println("Failed to process request: " + e.getMessage());
         }
     }

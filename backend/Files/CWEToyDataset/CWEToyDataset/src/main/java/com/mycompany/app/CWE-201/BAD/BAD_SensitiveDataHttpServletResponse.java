@@ -7,7 +7,6 @@ public class BAD_SensitiveDataHttpServletResponse extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String ssn = getSensitiveData();
 
-        // Vulnerable: Sensitive data being written directly to the HTTP response
         response.setContentType("text/plain");
         response.getWriter().write("Sensitive Data: " + ssn);
     }

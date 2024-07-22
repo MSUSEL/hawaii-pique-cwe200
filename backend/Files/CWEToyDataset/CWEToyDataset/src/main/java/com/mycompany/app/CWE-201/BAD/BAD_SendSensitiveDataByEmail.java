@@ -13,7 +13,6 @@ public class BAD_SendSensitiveDataByEmail {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress("noreply@example.com"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-            // BAD: Sending sensitive data in email content
             message.setSubject("Verification code");
             message.setText("Here is your verification code: " + verificationCode);
             Transport.send(message);

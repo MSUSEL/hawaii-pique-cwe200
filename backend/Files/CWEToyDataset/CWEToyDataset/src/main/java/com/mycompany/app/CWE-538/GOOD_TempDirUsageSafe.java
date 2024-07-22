@@ -11,9 +11,9 @@ import java.util.EnumSet;
 
 public class GOOD_TempDirUsageSafe {
     void exampleSafe() throws IOException {
-        Path temp1 = Files.createTempFile("random", ".txt"); // GOOD: File has permissions `-rw-------`
+        Path temp1 = Files.createTempFile("random", ".txt"); 
 
-        Path temp2 = Files.createTempDirectory("random-directory"); // GOOD: File has permissions `drwx------`
+        Path temp2 = Files.createTempDirectory("random-directory"); 
 
         // Creating a temporary file with a non-randomly generated name
         File tempChildFile = new File(System.getProperty("java.io.tmpdir"), "/child-create-file.txt");
@@ -22,7 +22,7 @@ public class GOOD_TempDirUsageSafe {
         Files.createFile(
             tempChildFile.toPath(),
             PosixFilePermissions.asFileAttribute(EnumSet.of(PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE))
-        ); // GOOD: Good has permissions `-rw-------`
+        ); 
     }
 
     /*
@@ -31,7 +31,7 @@ public class GOOD_TempDirUsageSafe {
     void exampleSafeWithWindowsSupportFile() {
         // Creating a temporary file with a non-randomly generated name
         File tempChildFile = new File(System.getProperty("java.io.tmpdir"), "/child-create-file.txt");
-        createTempFile(tempChildFile.toPath()); // GOOD: Good has permissions `-rw-------`
+        createTempFile(tempChildFile.toPath()); 
     }
 
     static void createTempFile(Path tempDirChild) {
@@ -49,16 +49,16 @@ public class GOOD_TempDirUsageSafe {
                     Files.createFile(
                         tempDirChild,
                         PosixFilePermissions.asFileAttribute(posixFilePermissions)
-                    ); // GOOD: Directory has permissions `-rw-------`
+                    ); 
                 } else {
                     Files.setPosixFilePermissions(
                             tempDirChild,
                             posixFilePermissions
-                    ); // GOOD: Good has permissions `-rw-------`, or will throw an exception if this fails
+                    ); 
                 }
             } else if (!Files.exists(tempDirChild)) {
                 // On Windows, we still need to create the directory, when it doesn't already exist.
-                Files.createDirectory(tempDirChild); // GOOD: Windows doesn't share the temp directory between users
+                Files.createDirectory(tempDirChild); 
             }
         } catch (IOException exception) {
             throw new UncheckedIOException("Failed to create temp file", exception);
@@ -67,7 +67,7 @@ public class GOOD_TempDirUsageSafe {
 
     void exampleSafeWithWindowsSupportDirectory() {
         File tempDirChildDir = new File(System.getProperty("java.io.tmpdir"), "/child-dir");
-        createTempDirectories(tempDirChildDir.toPath()); // GOOD: Directory has permissions `drwx------`
+        createTempDirectories(tempDirChildDir.toPath()); 
     }
 
     static void createTempDirectories(Path tempDirChild) {
@@ -86,16 +86,16 @@ public class GOOD_TempDirUsageSafe {
                     Files.createDirectories(
                         tempDirChild,
                         PosixFilePermissions.asFileAttribute(posixFilePermissions)
-                    ); // GOOD: Directory has permissions `drwx------`
+                    ); 
                 } else {
                     Files.setPosixFilePermissions(
                             tempDirChild,
                             posixFilePermissions
-                    ); // GOOD: Good has permissions `drwx------`, or will throw an exception if this fails
+                    ); 
                 }
             } else if (!Files.exists(tempDirChild)) {
                 // On Windows, we still need to create the directory, when it doesn't already exist.
-                Files.createDirectories(tempDirChild); // GOOD: Windows doesn't share the temp directory between users
+                Files.createDirectories(tempDirChild); 
             }
         } catch (IOException exception) {
             throw new UncheckedIOException("Failed to create temp dir", exception);

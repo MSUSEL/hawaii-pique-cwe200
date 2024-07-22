@@ -27,7 +27,6 @@ public class GOOD_UserAuthenticationTest {
 
     class Authentication {
         public boolean login(String username, String password) {
-            // Authentication logic, should use a secure method to verify credentials
             String validUsername;
             String validPassword;
             

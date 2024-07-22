@@ -1,5 +1,4 @@
 public class GOOD_ExceptionDebuggingWithSensitiveData {
-    // This example demonstrates the risky practice of including sensitive data within exception handling for debugging purposes.
     private static final boolean DEBUG = false; // Debugging flag, should be false in production
 
     public static void processPayment(String creditCardNumber, double amount) {
@@ -12,7 +11,6 @@ public class GOOD_ExceptionDebuggingWithSensitiveData {
             System.out.println("Processing payment...");
             // Further processing logic...
         } catch (Exception e) {
-            // Insecure: Logging sensitive information during exception handling
             if (DEBUG){
                 System.out.println("DEBUG: Failed to process payment.");
             }

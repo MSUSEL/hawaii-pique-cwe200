@@ -10,7 +10,7 @@ class PersonalDataHandler {
 public class BAD_PersonalDataHandlerTest {
     @Test
     public void testHandlePersonalData() {
-        String personalData = "SSN: 123-45-6789"; // Exposing sensitive personal information
+        String personalData = "SSN: 123-45-6789";
         PersonalDataHandler handler = new PersonalDataHandler();
         assertEquals("Handled SSN: 123-45-6789", handler.handlePersonalData(personalData));
     }

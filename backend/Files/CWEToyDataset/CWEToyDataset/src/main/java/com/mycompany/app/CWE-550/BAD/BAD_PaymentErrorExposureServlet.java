@@ -10,7 +10,6 @@ public class BAD_PaymentErrorExposureServlet extends HttpServlet {
         try {
             processPayment(amount, creditCardNumber);
         } catch (Exception e) {
-            // Insecure: Exposing payment processing exception details to the client
             response.getWriter().write("Payment processing failed: " + creditCardNumber + amount + e.getMessage());
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

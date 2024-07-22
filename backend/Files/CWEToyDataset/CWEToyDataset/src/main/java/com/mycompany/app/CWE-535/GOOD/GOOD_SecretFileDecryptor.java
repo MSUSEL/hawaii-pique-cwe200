@@ -8,7 +8,6 @@ public class GOOD_SecretFileDecryptor {
             String error = errorReader.readLine();
 
             if (process.waitFor() != 0) {
-                // Exposing decryption failure details that could hint at file paths or encryption methods
                 System.err.println("Decryption failed.");
             }
         } catch (IOException | InterruptedException e) {

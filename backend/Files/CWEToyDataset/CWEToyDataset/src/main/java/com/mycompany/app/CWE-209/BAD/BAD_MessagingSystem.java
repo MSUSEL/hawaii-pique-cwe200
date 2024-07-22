@@ -1,7 +1,6 @@
 public class BAD_MessagingSystem {
     public void sendMessage(String userId, String messageContent) {
         try {
-            // Assume a failure in sending the message
             throw new Exception("Message sending failed for user " + userId + " with content: " + messageContent);
         } catch (Exception e) {
             System.err.println("Messaging error: " + e.getMessage());

@@ -6,6 +6,6 @@ public class BAD_ErrorReportHandlerLog {
 
     public void handleError(String errorCode, String errorMessage, String debugInfo) {
         // Log detailed error information
-        logger.error("Error reported: Code: {}, Message: {}, Debug Info: {}", errorCode, errorMessage, debugInfo); // Potential exposure of sensitive debug information
+        logger.error("Error reported: Code: {}, Message: {}, Debug Info: {}", errorCode, errorMessage, debugInfo); 
     }
 }

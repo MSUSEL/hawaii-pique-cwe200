@@ -3,7 +3,6 @@ import javax.servlet.*;
 import java.io.*;
 import java.util.Date;
 
-// GOOD: Securely processes files in a directory for backend operations without exposing file listings to users.
 public class GOOD_SecureBackendFileProcessingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Path to a directory containing temporary files
@@ -16,7 +15,6 @@ public class GOOD_SecureBackendFileProcessingServlet extends HttpServlet {
             return;
         }
 
-        // Processing files securely without exposing listings to users
         for (File file : tempDirectory.listFiles()) {
             if (file.isFile() && isOlderThanOneDay(file.lastModified())) {
                 boolean deleted = file.delete();

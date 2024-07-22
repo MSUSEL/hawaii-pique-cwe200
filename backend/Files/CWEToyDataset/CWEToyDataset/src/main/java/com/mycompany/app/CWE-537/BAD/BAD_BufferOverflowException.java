@@ -4,7 +4,7 @@ public class BAD_BufferOverflowException {
     private ByteBuffer dataBuffer;
 
     public BAD_BufferOverflowException(int bufferSize) throws RuntimeException{
-        dataBuffer = ByteBuffer.allocate(bufferSize); // Allocate a fixed-size buffer for secure data
+        dataBuffer = ByteBuffer.allocate(bufferSize);
     }
 
     public void allocateSpace(byte[] AWSKey) {
@@ -18,7 +18,6 @@ public class BAD_BufferOverflowException {
     }
     public static void main(String[] args) {
         BAD_BufferOverflowException buffer = new BAD_BufferOverflowException(256); // Small buffer size for demonstration
-        // Example of sensitive data: username and password details
         byte[] AWSKey = "ABCED123".getBytes();
         buffer.allocateSpace(AWSKey); // This might cause a buffer overflow due to large data size
     }

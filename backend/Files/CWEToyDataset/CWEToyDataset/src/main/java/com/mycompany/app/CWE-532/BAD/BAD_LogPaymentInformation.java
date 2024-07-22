@@ -7,9 +7,7 @@ public class BAD_LogPaymentInformation {
 
     public boolean validatePaymentDetails(String creditCardNumber, String expiryDate, String cvv) {
         logger.info("Processing payment with card number: " + creditCardNumber + ", expiry date: " + expiryDate + ", and CVV: " + cvv);
-        // Placeholder for validation logic
-        // Example: Check if the card number is valid using a checksum like Luhn's algorithm
-        // Check if expiry date is in the future and CVV is correctly formatted
+
         return creditCardNumber.length() == 16 && cvv.length() == 3; // Simplified validation
     }
 

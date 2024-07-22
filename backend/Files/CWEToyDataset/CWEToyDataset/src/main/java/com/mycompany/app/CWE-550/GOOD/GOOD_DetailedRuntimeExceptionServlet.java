@@ -10,7 +10,6 @@ public class GOOD_DetailedRuntimeExceptionServlet extends HttpServlet {
             // Some logic that can throw a runtime exception
             throw new RuntimeException("Failed to process due to invalid state.");
         } catch (RuntimeException e) {
-            // Insecure: Sending detailed runtime exception back to the client
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred.");
         }
     }

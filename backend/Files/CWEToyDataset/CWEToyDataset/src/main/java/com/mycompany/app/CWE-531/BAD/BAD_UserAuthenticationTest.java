@@ -11,7 +11,7 @@ public class BAD_UserAuthenticationTest {
     @Test
     public void testLogin() {
         String username = "admin";
-        String password = "admin123"; // Sensitive data hardcoded in test code
+        String password = "admin123"; 
         Authentication auth = new Authentication();
         assertTrue(auth.login(username, password)); // This test passes if login is successful
     }

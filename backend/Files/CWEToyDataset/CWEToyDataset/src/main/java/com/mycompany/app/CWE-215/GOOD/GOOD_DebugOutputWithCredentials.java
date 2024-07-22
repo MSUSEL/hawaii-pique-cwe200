@@ -2,7 +2,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GOOD_DebugOutputWithCredentials {
-    // Exposes the risky practice of including user credentials directly in debug output.
     private static final boolean DEBUG_ENABLED = true; // Debugging flag, should be false in production
     private static final Map<String, String> userStore = new HashMap<>();
 
@@ -12,10 +11,8 @@ public class GOOD_DebugOutputWithCredentials {
 
         if (DEBUG_ENABLED) {
             if (isAuthenticated) {
-                // Insecure: Potentially exposes user credentials in debug output
                 System.out.println("DEBUG: Authentication succeeded.");
             } else {
-                // Insecure: Potentially exposes user credentials in debug output
                 System.out.println("DEBUG: Authentication failed.");
             }
         }
@@ -24,10 +21,8 @@ public class GOOD_DebugOutputWithCredentials {
     }
 
     public static void main(String[] args) {
-        // Example of a failed authentication attempt that exposes credentials in debug mode
         authenticateUser("admin", "wrongPassword");
 
-        // Example of a successful authentication attempt
         authenticateUser("admin", "adminSecret");
     }
 }

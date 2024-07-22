@@ -14,7 +14,6 @@ public class BAD_ExposedExceptionDetailsAPI {
             simulateDatabaseOperation(db_user);
             return "Data fetched successfully";
         } catch (Exception e) {
-            // Insecure: Throwing detailed exception information back to the client
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to fetch data: " + e.getMessage(), e);
         }
     }

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import javax.crypto.Mac;
 
 public class GOOD_AAS_compareMacWithConstant {
-    // GOOD: compare MAC with constant using a constant-time method
     public boolean compareMacWithConstant(Socket socket) throws Exception {
         try (InputStream is = socket.getInputStream()) {
             Mac mac = Mac.getInstance("HmacSHA256");

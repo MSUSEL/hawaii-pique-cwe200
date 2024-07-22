@@ -7,7 +7,6 @@ public class GOOD_InitializationErrorServlet extends HttpServlet {
         try {
             loadConfiguration();
         } catch (Exception e) {
-            // BAD practice: Exposing internal configuration details during initialization failure
             throw new ServletException("Initialization failed due to configuration error.");
         }
     }

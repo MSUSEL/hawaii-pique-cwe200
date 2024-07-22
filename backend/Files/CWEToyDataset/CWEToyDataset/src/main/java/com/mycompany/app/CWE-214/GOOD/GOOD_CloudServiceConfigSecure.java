@@ -9,7 +9,6 @@ public class GOOD_CloudServiceConfigSecure {
             String cloudAccessToken = "cloudAccessSecret!";
             String encryptedToken = encryptToken(cloudAccessToken);
 
-            // Now we use the encrypted token as a command line argument
             ProcessBuilder builder = new ProcessBuilder("cloud", "deploy", "--access-token", encryptedToken, "my-cloud-app");
             Process process = builder.start();
             process.waitFor();  // Wait for the process to complete

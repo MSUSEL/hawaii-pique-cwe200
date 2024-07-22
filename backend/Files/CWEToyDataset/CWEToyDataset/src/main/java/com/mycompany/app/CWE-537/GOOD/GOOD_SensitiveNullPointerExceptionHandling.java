@@ -16,9 +16,7 @@ public class GOOD_SensitiveNullPointerExceptionHandling extends HttpServlet {
             // Attempting to use the secret key which is null
             int length = secretKey.length(); // This will throw NullPointerException
         } catch (NullPointerException e) {
-            // Inappropriately handling NullPointerException using HttpServletResponse
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Failed to handle secret key properly.");
-            // Exposing that the secret key is null through the response header
         }
     }
 

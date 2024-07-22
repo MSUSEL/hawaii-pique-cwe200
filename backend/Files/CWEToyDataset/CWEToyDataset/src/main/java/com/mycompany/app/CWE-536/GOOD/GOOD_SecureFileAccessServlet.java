@@ -17,7 +17,6 @@ public class GOOD_SecureFileAccessServlet extends HttpServlet {
             return;
         }
 
-        // Proceed with secure file reading...
     }
 
     private boolean isValidFilename(String filename) {

@@ -50,6 +50,6 @@ public class GOOD_BankingTransactionQuery {
     }
 
     public static void main(String[] args) {
-        queryTransactionDetails("1234567890"); // Now with encrypted account number
+        queryTransactionDetails("1234567890"); 
     }
 }

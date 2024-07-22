@@ -12,7 +12,7 @@ public class BAD_EmailServiceTest {
     @Test
     public void testSendEmail() {
         String recipientEmail = "user@example.com";
-        String message = "Your password is password123!"; // Sensitive information in test
+        String message = "Your password is password123!";
         EmailService emailService = new EmailService();
         assertTrue(emailService.sendEmail(recipientEmail, message));
     }

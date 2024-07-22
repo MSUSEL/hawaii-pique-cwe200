@@ -15,11 +15,8 @@ public class GOOD_SecureLoggingPractices {
         if (isSensitiveOperation(operationDetails)) {
             // For sensitive operations, log a generic message without specific details
             logger.info("Processing a sensitive operation.");
-            // Additional logic to securely process the operation without exposing details in logs
         } else {
-            // For non-sensitive operations, it's okay to log more specific details
             logger.info("Processing operation.");
-            // Logic for processing non-sensitive operations
         }
 
         // Placeholder for operation processing logic

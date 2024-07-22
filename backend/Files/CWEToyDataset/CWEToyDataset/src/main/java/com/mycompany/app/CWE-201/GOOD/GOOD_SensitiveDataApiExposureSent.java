@@ -19,7 +19,6 @@ public class GOOD_SensitiveDataApiExposureSent extends HttpServlet {
         response.getWriter().write(jsonResponse.toString());
     }
 
-    // Simulates retrieval of sensitive account details, e.g., bank account number
     private String getSensitiveAccountDetails(String userId) {
         // Example sensitive data retrieval
         return "Bank Account Number: 1234567890 for User ID: " + userId;

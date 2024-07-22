@@ -18,7 +18,7 @@ public class GOOD_CredentialUpdater extends HttpServlet {
             if (exitCode != 0) {
                 BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
                 String errorDetails = errorReader.readLine();
-                logger.error("Failed to update credentials."); // Logging the error with username and details
+                logger.error("Failed to update credentials.");
                 response.getWriter().write("Failed to update credentials. Please contact system administrator.");
             }
         } catch (InterruptedException | IOException e) {

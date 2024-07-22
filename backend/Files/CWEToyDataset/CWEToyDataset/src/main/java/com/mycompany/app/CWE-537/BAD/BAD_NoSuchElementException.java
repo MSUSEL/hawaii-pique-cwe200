@@ -16,7 +16,7 @@ public class BAD_NoSuchElementException {
         // Simulation of loading configuration properties
         Properties properties = new Properties();
         properties.put("username", "user1");
-        properties.put("password", "pass123");  // Sensitive data that should not be exposed
+        properties.put("password", "pass123"); 
         return properties;
     }
 }

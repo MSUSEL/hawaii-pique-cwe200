@@ -9,7 +9,6 @@ public class GOOD_SecureErrorLogging2 {
             // Some sensitive operation
             throw new Exception("Sensitive database connection failure");
         } catch (Exception e) {
-            // Secure: Logging the detailed error internally while showing a generic message to the user
             logger.error("An internal error occurred");
             System.out.println("An error occurred. Please contact support if the problem persists.");
         }

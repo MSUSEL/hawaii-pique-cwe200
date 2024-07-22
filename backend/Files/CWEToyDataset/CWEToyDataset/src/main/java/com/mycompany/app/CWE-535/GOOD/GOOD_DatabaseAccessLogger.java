@@ -16,7 +16,7 @@ public class GOOD_DatabaseAccessLogger {
             }
 
             if (process.waitFor() != 0) {
-                logger.error("Database access attempt failed with connection string."); // Safe logging
+                logger.error("Database access attempt failed with connection string.");
             }
         } catch (IOException | InterruptedException e) {
             logger.error("Database operation failed.");

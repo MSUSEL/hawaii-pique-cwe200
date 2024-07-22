@@ -11,7 +11,6 @@ public class GOOD_SensitiveConcurrentModificationHandling {
                 }
             }
         } catch (ConcurrentModificationException e) {
-            // Inappropriately handling ConcurrentModificationException
             System.err.println("Modification error during iteration.");
         
         }

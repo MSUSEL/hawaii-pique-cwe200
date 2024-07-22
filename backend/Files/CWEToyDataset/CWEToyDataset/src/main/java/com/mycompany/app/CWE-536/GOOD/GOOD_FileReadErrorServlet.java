@@ -12,7 +12,6 @@ public class GOOD_FileReadErrorServlet extends HttpServlet {
              BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
             // Process file...
         } catch (FileNotFoundException e) {
-            // This line potentially exposes the full file path, which is a security risk.
             response.getWriter().write("Error reading file.");
         }
     }
@@ -23,9 +22,7 @@ public class GOOD_FileReadErrorServlet extends HttpServlet {
             doGet(request, response);
         } catch (ServletException e) {
             try {
-                // Log and expose the ServletException inappropriately, simulating a poor security practice
                 response.getWriter().println("An internal error occurred.");
-                // In real-world applications, you should avoid providing this level of detail to the end user.
             } catch (IOException ioException) {
             }
         } catch (IOException e) {

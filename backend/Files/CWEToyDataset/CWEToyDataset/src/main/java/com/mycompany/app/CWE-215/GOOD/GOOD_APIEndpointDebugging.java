@@ -3,7 +3,7 @@ public class GOOD_APIEndpointDebugging {
 
     public static void main(String[] args) {
         String apiEndpoint = "https://api.example.com/data";
-        String apiKey = "api_key_123456789"; // Sensitive information
+        String apiKey = "api_key_123456789";
 
         if (API_DEBUG) {
             testAPI(apiEndpoint, apiKey);

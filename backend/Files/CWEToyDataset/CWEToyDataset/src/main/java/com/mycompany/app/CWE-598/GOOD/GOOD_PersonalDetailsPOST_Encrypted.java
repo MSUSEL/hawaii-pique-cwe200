@@ -58,6 +58,6 @@ public class GOOD_PersonalDetailsPOST_Encrypted {
     }
 
     public static void main(String[] args) {
-        sendPersonalDetails("John Doe", "1980-01-01"); // Now with encrypted parameters
+        sendPersonalDetails("John Doe", "1980-01-01");
     }
 }

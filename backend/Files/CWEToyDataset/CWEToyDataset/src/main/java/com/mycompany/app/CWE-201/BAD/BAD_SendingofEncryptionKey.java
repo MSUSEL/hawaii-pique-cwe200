@@ -14,7 +14,6 @@ public class BAD_SendingofEncryptionKey extends HttpServlet {
     }
 
     private String getEncryptionKey() {
-        // In a real scenario, this would fetch an encryption key used in data operations
         return "secretKey123!";
     }
 

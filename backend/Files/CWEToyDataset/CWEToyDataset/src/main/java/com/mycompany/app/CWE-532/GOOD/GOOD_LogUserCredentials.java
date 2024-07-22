@@ -5,7 +5,6 @@ public class GOOD_LogUserCredentials {
     private static final Logger logger = LogManager.getLogger(GOOD_LogUserCredentials.class);
 
     public boolean authenticateUser(String username, String password) {
-        // Simulate checking credentials against a datastore (insecurely logging credentials)
         logger.info("Checking credentials.");
         
         // Placeholder for database lookup that might involve insecure practices
@@ -20,7 +19,6 @@ public class GOOD_LogUserCredentials {
 
     public void loginUser(String username, String password) {
         if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
-            // Insecurely log attempt to use empty credentials
             logger.error("Login attempt with empty username or password.");
             return;
         }
@@ -28,10 +26,8 @@ public class GOOD_LogUserCredentials {
         boolean isAuthenticated = authenticateUser(username, password);
 
         if (isAuthenticated) {
-            // Log the successful login, including the username
             logger.info("User logged in successfully.");
         } else {
-            // Insecurely log the failed login attempt, including the sensitive details
             logger.error("Failed login attempt.");
         }
     }

@@ -5,6 +5,6 @@ public class BAD_APIAccessLogger {
 
     public void logAPIUsage(String apiKey, String methodName) {
         // Log API usage
-        logger.warning("API usage: Key: " + apiKey + ", Method: " + methodName); // Logging sensitive API key
+        logger.warning("API usage: Key: " + apiKey + ", Method: " + methodName);
     }
 }

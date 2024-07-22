@@ -5,7 +5,7 @@ public class BAD_ApiEndpointSecurityTest {
     @Test
     public void testSecureEndpoint() {
         ApiClient client = new ApiClient();
-        String secretToken = "secret-token-XYZ"; // Hardcoded security token
+        String secretToken = "secret-token-XYZ";
         client.setAuthToken(secretToken);
         Response response = client.makeSecureRequest();
         assertEquals(response.getStatusCode(), 200); // Assert successful response

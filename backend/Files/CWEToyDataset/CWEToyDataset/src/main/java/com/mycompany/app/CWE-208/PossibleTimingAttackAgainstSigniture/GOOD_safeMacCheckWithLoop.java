@@ -6,7 +6,6 @@ import javax.crypto.Mac;
 
 
 public class GOOD_safeMacCheckWithLoop {
-    // GOOD: compare MAC using a constant-time loop
     public boolean safeMacCheckWithLoop(Socket socket) throws Exception {
         try (InputStream is = socket.getInputStream()) {
             byte[] data = readBytes(is, 256);

@@ -17,11 +17,9 @@ public class BAD_SensitiveDataApiExposureSent extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        // Vulnerable: Sending sensitive data directly to the client via API response
         response.getWriter().write(jsonResponse.toString());
     }
 
-    // Simulates retrieval of sensitive account details, e.g., bank account number
     private String getSensitiveAccountDetails(String userId) {
         // Example sensitive data retrieval
         return "Bank Account Number: 1234567890 for User ID: " + userId;

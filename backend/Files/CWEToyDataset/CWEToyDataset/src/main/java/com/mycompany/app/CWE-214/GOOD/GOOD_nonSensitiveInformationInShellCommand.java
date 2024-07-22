@@ -8,7 +8,6 @@ public class GOOD_nonSensitiveInformationInShellCommand {
         try {
             String command = "analyze --no-sarif --format=csv --output=results.csv";
 
-            // Now we use the encrypted token as a command line argument
             ProcessBuilder builder = new ProcessBuilder("codeql", command);
             Process process = builder.start();
             process.waitFor();  // Wait for the process to complete

@@ -5,7 +5,7 @@ public class BAD_UserDeletionTest {
     @Test
     public void testDeleteUser() {
         String userId = "user123";
-        String adminAuthToken = "adminTokenXYZ"; // Sensitive admin token exposed
+        String adminAuthToken = "adminTokenXYZ"; 
         UserDeletionTest deletion = new UserDeletionTest();
         assertTrue(deletion.deleteUser(userId, adminAuthToken));
     }

@@ -8,7 +8,6 @@ public class BAD_AuthenticationFailureServlet extends HttpServlet {
         try {
             authenticateUser(request.getParameter("username"), request.getParameter("password"));
         } catch (Exception e) {
-            // Insecure: Sending authentication failure details back to the client
             response.getWriter().write("Authentication failed: " + e.getMessage());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }

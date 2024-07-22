@@ -5,7 +5,7 @@ import org.apache.logging.log4j.*;
 
 public class BAD_ApiKeyManagementServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String apiKey = request.getParameter("apiKey"); // API key is received from the request, simulating a query parameter
+        String apiKey = request.getParameter("apiKey");
         validateApiKey(apiKey);
     }
 

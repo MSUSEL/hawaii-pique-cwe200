@@ -7,7 +7,6 @@ public class BAD_InitializationErrorServlet extends HttpServlet {
         try {
             loadConfiguration();
         } catch (Exception e) {
-            // BAD practice: Exposing internal configuration details during initialization failure
             System.out.println("Initialization failed due to configuration error in " + getServletContext().getRealPath("/WEB-INF/config.properties") + ": " + e.getMessage());
         }
     }
