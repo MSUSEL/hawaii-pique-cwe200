@@ -199,80 +199,56 @@ export class FileUtilService {
 
 
     /**
-     * Preprocesses files by removing comments and imports, and concatenating multiple of them into a single string
-     *
-     * @param batch list of files to process
-     */
-    // async preprocessFiles(batch: string[]) {
-    //     const batchResults = await this.processFilesInBatch(batch);
-    //     // console.log(concatnatedBatch);
-    //     return batchResults.join('');
-    // }
-
-    /**
-     * Preprocesses a batch of files by removing comments and imports, and
-     * concatenating multiple of them into a single string
-     *
-     * @param filePaths list of files to process
-     */
-    // async processFilesInBatch(filePaths: string[]): Promise<string[]> {
-    //     return Promise.all(
-    //         filePaths.map((filePath) => this.processJavaFile(filePath)),
-    //     );
-    // }
-
-    /**
-     * Process single java file by removing comments and imports, and
-     * concatenating multiple of them into a single string
-     *
+     * Process single java file by replacing class name with ID, and removing blank lines
      * @param filePath Path to java file to process
+     * @param id ID to replace class name with
      */
     async processJavaFile(filePath: string, id: string): Promise<string> {
-    let baseName = path.basename(filePath).split('.java')[0];
-    // Read file contents
-    const fileStream = fs.createReadStream(filePath);
-    const rl = readline.createInterface({
-        input: fileStream,
-        crlfDelay: Infinity,
-    });
+        let baseName = path.basename(filePath).split('.java')[0];
+        // Read file contents
+        const fileStream = fs.createReadStream(filePath);
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity,
+        });
 
-    // Initialize new processed file
-    let processedLines: string[] = [];
-    let classNameChanged = false;
-    let lines = [];
-    for await (const line of rl) {
-        lines.push(line);
-    }
+        // Initialize new processed file
+        let processedLines: string[] = [];
+        let classNameChanged = false;
+        let lines = [];
+        for await (const line of rl) {
+            lines.push(line);
+        }
 
-    for (let i = 0; i < lines.length; i++) {
-    let trimmedLine = lines[i].replace(/^\s*[\r\n]/gm, '');
+        for (let i = 0; i < lines.length; i++) {
+            let trimmedLine = lines[i].replace(/^\s*[\r\n]/gm, '');
 
-    // Check if the line contains the class declaration
-    if (!classNameChanged && trimmedLine.includes('class ') && trimmedLine.includes(baseName)) {
-        // Replace the class name with the given ID
-        trimmedLine = trimmedLine.replace(baseName, id);
-    }
+            // Check if the line contains the class declaration
+            if (!classNameChanged && trimmedLine.includes('class ') && trimmedLine.includes(baseName)) {
+                // Replace the class name with the given ID
+                trimmedLine = trimmedLine.replace(baseName, id);
+            }
 
-    // Check if the next line contains only }, ), or ;
-    if (i < lines.length - 1 && /^[\}\);\s]*$/.test(lines[i + 1])) {
-        trimmedLine += ' ' + lines[i + 1].trim();
-        i++; // Skip next iteration
-    }
+            // Check if the next line contains only }, ), or ;
+            if (i < lines.length - 1 && /^[\}\);\s]*$/.test(lines[i + 1])) {
+                trimmedLine += ' ' + lines[i + 1].trim();
+                i++; // Skip next iteration
+            }
 
-    // Skip blank lines
-    if (trimmedLine.trim() !== '') {
-        processedLines.push(trimmedLine);
-    }
-}
+            // Skip blank lines
+            if (trimmedLine.trim() !== '') {
+                processedLines.push(trimmedLine);
+            }
+        }
 
-    // Return processed file content as a string
-    return processedLines.join('\n');
-}
+        // Return processed file content as a string
+        return processedLines.join('\n');
+    }   
     
 
     addFileBoundaryMarkers(id: string, file: string){
         // let fileName = path.basename(filePath);
-        return '-----BEGIN FILE: [' + id + ']----- \n' + file + '\n-----END FILE: [' + id + ']-----'
+        return '\n\n-----BEGIN FILE: [' + id + ']----- \n' + file + '\n-----END FILE: [' + id + ']-----'
 
     }
         
@@ -331,7 +307,7 @@ export class FileUtilService {
             });
         });
     }
-        
+  
 }
 
 interface JavaParseResult {
@@ -341,22 +317,3 @@ interface JavaParseResult {
     strings: string[];
 }
 
-// Smarter Batching 
-function estimateTokens(text) {
-    return text.split(/\s+/).length;  // Simple whitespace-based tokenization
-}
-
-
-
-
-// async function processBatches(batches) {
-//     for (const [index, batch] of batches.entries()) {
-//         const processedFiles = await preprocessFiles(batch); // Ensure this handles joining files appropriately
-//         try {
-//             const response = await this.createGptWithBackoff(processedFiles, index);
-//             handleResponse(response); // Implement response handling
-//         } catch (error) {
-//             console.error('Error processing GPT response:', error);
-//         }
-//     }
-// }
