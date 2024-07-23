@@ -61,9 +61,9 @@ export class ChatGptService {
         
         const prompts = [
             { type: 'variables', mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput , parser: new VariableParser()},
-            // { type: 'strings', mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput, parser: new StringParser()},
-            // { type: 'comments', mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput, parser: new CommentParser()},
-            // { type: 'sinks', mapping: sinksMapping, result: sinks, input: this.sinksInput, parser: new SinkParser() }
+            { type: 'strings', mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput, parser: new StringParser()},
+            { type: 'comments', mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput, parser: new CommentParser()},
+            { type: 'sinks', mapping: sinksMapping, result: sinks, input: this.sinksInput, parser: new SinkParser() }
         ];
         
         // Dictionary to store results by file name
@@ -81,14 +81,17 @@ export class ChatGptService {
                     rawResponses += this.replaceIDs(response.message);
                     console.log(`Results for batch ${batch_number} \n ${response.message}`);
                     completedBatches += 1;
-    
+                    
+                    // Emit progress to clients
                     this.eventsGateway.emitDataToClients('GPTProgress-' + type, JSON.stringify({ 
                         type: 'GPTProgress-' + type, 
                         GPTProgress: Math.floor((completedBatches / totalBatches) * 100) }
                     ));
   
+                    // Use Regex to extract JSON from the GPT response
                     let json = extractAndParseJSON(response.message);
-    
+                    
+                    // Parse the JSON response and save the results in different data structures
                     json.files.forEach((file: any) => {
                         // let fileID = file.fileName.split('.java')[0];
                         // let fileName = this.idToNameMapping.get(fileID);
@@ -117,8 +120,8 @@ export class ChatGptService {
                     callback();
                 }, concurrencyLimit);
             
-                batches.forEach((batch, batch_number) => {
-                    queue.push({ batch, files: filesPerBatch[batch_number], batch_number });
+                batches.forEach((batch, index) => {
+                    queue.push({ batch, files: filesPerBatch[index], index });
                 });
             
                 await queue.drain();
@@ -194,10 +197,10 @@ export class ChatGptService {
      * @param prompt GPT prompt
      */
     async createGptFourCompletion(prompt: string) {
-        // console.log(prompt);
+        console.log(prompt);
         try {
             // Break the prompt into sections, for better api usage
-            // let sections = this.extractSections(prompt);
+            let sections = this.extractSections(prompt);
 
             const response = await this.openai.chat.completions.create({
                 model: 'gpt-4o',
@@ -205,8 +208,8 @@ export class ChatGptService {
                 // top_p: 0.05,
                 messages: [
                     { role: 'system', content: prompt }, 
-                    // { role: 'user', content: sections.values }, 
-                    // { role: 'user', content: sections.code }
+                    { role: 'user', content: sections.values }, 
+                    { role: 'user', content: sections.code }
                 ],
                 response_format: { type: "json_object" },
             });
@@ -352,7 +355,7 @@ export class ChatGptService {
             // this.idToNameMapping.set(fullID, path.basename(file));
             const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
 
-            console.log(fileContent);
+            // console.log(fileContent);
 
             if (!this.parsedResults[path.basename(file)]){
                 // console.log(`Parsing file ${file}`);
@@ -373,19 +376,19 @@ export class ChatGptService {
                         break;
                     case 'strings':
                         strings = this.parsedResults[baseFileName]['strings'] || [];
-                        const stringsText = "\n+++++\nI have already done all of the parsing for you, here are all the strings in this file:\n" + strings.map((string, index) => `${index + 1}. ${string}`).join('\n') + "\n+++++\n";
+                        const stringsText = "\n+++++\nI have already done all of the parsing for you, here are all the strings in this file - " + baseFileName + ":\n" + strings.map((string, index) => `${index + 1}. "${string}"`).join('\n') + "\n+++++\n";
                         output.set(baseFileName, prompt + stringsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         break;
                     case 'comments':
                         comments = this.parsedResults[baseFileName]['comments'] || [];
                         const commentsText = "\n+++++\nI have already done all of the parsing for you, here are all the comments in this file - " + baseFileName + ":\n" + comments.map((comment, index) => `${index + 1}. ${comment}`).join('\n') + "\n+++++\n";
-                        // output.set(baseFileName, prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
-                        output.set(baseFileName, prompt + commentsText);
+                        output.set(baseFileName, prompt + commentsText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        // output.set(baseFileName, prompt + commentsText);
                         // console.log(output.get(baseFileName));
 
                         break;
                     default:
-                        output.set(baseFileName, prompt + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
+                        output.set(baseFileName, prompt + "\n+++++\n" + "\n+++++\n" + await this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                 }
             } catch (e) {
                 console.error(`Failed to parse JSON for file ${file}: ${e.message}`);
