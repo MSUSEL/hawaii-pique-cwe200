@@ -38,19 +38,12 @@ export class ChatGptService {
         private fileUtilService: FileUtilService,
     ) {
         const api_key = this.configService.get('API_KEY');
-         this.openai = new OpenAI({
-            apiKey: api_key,
-          });
+        this.openai = new OpenAI({apiKey: api_key,});
 
-
-        this.projectsPath = this.configService.get<string>(
-            'CODEQL_PROJECTS_DIR',
-        );
+        this.projectsPath = this.configService.get<string>('CODEQL_PROJECTS_DIR',);
         this.debug = this.configService.get('DEBUG');
         this.encode = get_encoding("o200k_base");
         this.parsedResults = {};
-
-
     }
 
     /**
@@ -59,25 +52,20 @@ export class ChatGptService {
      * @param files files to include in GPT prompt
      */
     async openAiGetSensitiveVariables(files: string[]) {
-        let variables = [];
-        let strings = [];
-        let comments = [];
-        let classifications = [];
-        let sinks = [];
+        let variables = [], strings = [], comments = [], sinks = [];
         const fileList: any[] = [];
         
         let sensitiveVariablesMapping = new Map<string, string[]>();
         let sensitiveStringsMapping = new Map<string, string[]>();
         let sensitiveCommentsMapping = new Map<string, string[]>();
-        let classificationMapping = new Map<string, string[]>();
         let sinksMapping = new Map<string, string[][]>();
         let rawResponses = "";
         
         const prompts = [
             { type: 'variables', mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput , parser: new VariableParser()},
-            { type: 'strings', mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput, parser: new StringParser()},
-            { type: 'comments', mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput, parser: new CommentParser()},
-            { type: 'sinks', mapping: sinksMapping, result: sinks, input: this.sinksInput, parser: new SinkParser() }
+            // { type: 'strings', mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput, parser: new StringParser()},
+            // { type: 'comments', mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput, parser: new CommentParser()},
+            // { type: 'sinks', mapping: sinksMapping, result: sinks, input: this.sinksInput, parser: new SinkParser() }
         ];
         
         // Dictionary to store results by file name
@@ -85,24 +73,20 @@ export class ChatGptService {
     
         for (const { type, mapping, result, input, parser } of prompts) {
             let completedBatches = 0;
-            let numParsedFiles = 0;
             const batches = Array.from(input.values());
             const filesPerBatch = Array.from(input.keys());
             const totalBatches = batches.length;
     
-            const processBatch = async (batch: string, filesInBatch: number, index: number) => {
+            const processBatch = async (batch: string, batch_number: number) => {
                 try {
-                    const response = await this.createGptWithBackoff(batch, index);
-                    // console.log(response.message);
+                    const response = await this.createGptWithBackoff(batch, batch_number);
                     rawResponses += this.replaceIDs(response.message);
+                    console.log(`Results for batch ${batch_number} \n ${response.message}`);
                     completedBatches += 1;
     
                     this.eventsGateway.emitDataToClients('GPTProgress-' + type, JSON.stringify({ 
                         type: 'GPTProgress-' + type, GPTProgress: Math.floor((completedBatches / totalBatches) * 100) }));
   
-                    console.log(`Results for batch ${index} \n ${response.message}`);
-                    
-    
                     let json = extractAndParseJSON(response.message);
     
                     json.files.forEach((file: any) => {
@@ -125,28 +109,23 @@ export class ChatGptService {
             };
     
             const processConcurrentBatches = async (batches, filesPerBatch) => {
-                let concurrencyLimit = 50; // Number of concurrent tasks to run
+                let concurrencyLimit = 50; // Number of concurrent batches to run
                 console.log(`Finding ${type} in Project`);
                         
                 const queue = async.queue(async (task, callback) => {
-                    await processBatch(task.batch, task.files, task.index);
+                    await processBatch(task.batch, task.index);
                     callback();
                 }, concurrencyLimit);
             
-                batches.forEach((batch, index) => {
-                    queue.push({ batch, files: filesPerBatch[index], index });
+                batches.forEach((batch, batch_number) => {
+                    queue.push({ batch, files: filesPerBatch[batch_number], batch_number });
                 });
             
                 await queue.drain();
             };
     
             await processConcurrentBatches(batches, filesPerBatch);
-    
-            numParsedFiles = completedBatches * filesPerBatch[0].length;
-    
-            // Check if the number of parsed files is correct for the current type
-            // console.log(`Total number of files {${files.length}}, total number of parsed files for ${type} {${numParsedFiles}}`);
-    
+        
             this.eventsGateway.emitDataToClients('GPTProgress-' + type, JSON.stringify({ 
                 type: 'GPTProgress-' + type, GPTProgress: 100 }));
         }
@@ -154,26 +133,21 @@ export class ChatGptService {
         // Write raw responses to a file
         this.fileUtilService.writeToFile(path.join(this.projectsPath, 'rawResponses.txt'), rawResponses);
     
-        // Convert the dictionary to a list
+        // Wrap the dictionaries into arrays for the JSON output
         for (const fileName in JSONOutput) {
             fileList.push(JSONOutput[fileName]);
         }
-    
+        
+        // Remove duplicates
         variables = [...new Set(variables)];
         strings = [...new Set(strings)];
         comments = [...new Set(comments)];
-        classifications = [...new Set(classifications)];
         sinks = [...new Set(sinks)];
     
-        return { variables, strings, comments, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping, classifications, classificationMapping, sinks, sinksMapping };
+        return { variables, strings, comments, sinks, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping, sinksMapping };
     }
     
     
-
-
-    /**
-     * @param milliseconds time to delay in milliseconds
-     */
     async delay(milliseconds) {
         return new Promise((resolve) => setTimeout(resolve, milliseconds));
     }
@@ -266,23 +240,6 @@ export class ChatGptService {
         } catch (error) {
             throw error;
         }
-    }
-
-
-    extractVariableNamesMultiple(text: SensitiveVariables[]): string[] {
-        var variables = [];
-        try {
-            for (const variable of text) {
-                    let v : string = variable.name.replace(/["\\]/g, "")
-                    variables.push(`\"${v}\"`)
-            }
-            // variables = text.map((variable) => `\"${variable.name}\"`);
-        } catch (e) {
-            if (this.debug.toLowerCase() === 'true') {
-                console.log(text);
-            }
-        }
-        return variables;
     }
 
     async getFileGptResponse(filePath: String) {
@@ -454,26 +411,7 @@ export class ChatGptService {
         }
     }
 
-    // Used for testing, just skips the estimate to save
-    skipEstimate(){
-        this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: 100 }));
-        this.eventsGateway.emitDataToClients('estimateProgress', JSON.stringify({ type: 'estimateProgress', estimateProgress: 100 }));
-        return {
-            totalCost: 0,
-            tokenCount: 0,
-            inputCost: 0,
-            totalFiles: 0
-        };
-
-    }
-
     async getCostEstimate(projectPath: string) {
-        /*
-        Results from previous runs to help estimate costs:
-        CWEToyDataset: Predicted = $1.79, Actual = $1.23
-        */
-
-        // return this.skipEstimate()
         const INPUT_COST = (5 / 1000000); // GPT-4o pricing is $5 per 1 million input tokens
         const OUTPUT_COST = (15 / 1000000) * .15; // GPT-4o pricing is $15 per 1 million output tokens
 
@@ -541,9 +479,6 @@ export class ChatGptService {
         const outputFilePath = path.join(this.projectsPath, projectPath, 'output_prompts.json');
         this.fileUtilService.writeToFile(outputFilePath, JSON.stringify(result, null, 2));
 
-
-
-
         // Calculate cost
         const inputCost = totalTokenCount * INPUT_COST;
         const outputCost = totalTokenCount * OUTPUT_COST;
@@ -606,13 +541,11 @@ export class ChatGptService {
             // Logging the match to see what is being caught by the regex
             // console.log(`Found ID: ${match}`);
             if (this.idToNameMapping.get(id)) {
-            //   console.log(`Replacing ${id} with ${this.idToNameMapping.get(id)}`);
-              return this.idToNameMapping.get(id)
-            } 
-          });
-        }
-    
-
+                //   console.log(`Replacing ${id} with ${this.idToNameMapping.get(id)}`);
+                return this.idToNameMapping.get(id)
+            }
+        });
+    }
 }
 
 interface SensitiveVariables {
@@ -625,18 +558,6 @@ interface SinkType {
     type: string;
 }
 
-interface VariableObject {
-    variable: string;
-  }
-
-interface StringObject {
-    string: string;
-}
-
-interface CommentObject {
-    comment: string;
-}
-
 interface JavaParseResult {
     filename: string;
     variables: string[];
@@ -644,11 +565,6 @@ interface JavaParseResult {
     strings: string[];
 }
 
-// Used to store the inputs to the GPT API
-interface typeToPrompt {
-    infoType: string;
-    result: any; 
-  }
 
 function extractAndParseJSON(inputString) {
     // Attempt to sanitize input by escaping problematic characters

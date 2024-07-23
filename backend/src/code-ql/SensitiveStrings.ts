@@ -4,6 +4,6 @@ extensions:
       pack: custom-codeql-queries
       extensible: sensitiveStrings
     data:
-    - ["$%^&&*().java", "$%^&&*()"]
+    - ["fileName", "senstiveString"]
 ++++++++++
 `
