@@ -223,11 +223,11 @@ export class FileUtilService {
         for (let i = 0; i < lines.length; i++) {
             let trimmedLine = lines[i].replace(/^\s*[\r\n]/gm, '');
 
-            // Check if the line contains the class declaration
-            if (!classNameChanged && trimmedLine.includes('class ') && trimmedLine.includes(baseName)) {
-                // Replace the class name with the given ID
-                trimmedLine = trimmedLine.replace(baseName, id);
-            }
+            // // Check if the line contains the class declaration
+            // if (!classNameChanged && trimmedLine.includes('class ') && trimmedLine.includes(baseName)) {
+            //     // Replace the class name with the given ID
+            //     trimmedLine = trimmedLine.replace(baseName, id);
+            // }
 
             // Check if the next line contains only }, ), or ;
             if (i < lines.length - 1 && /^[\}\);\s]*$/.test(lines[i + 1])) {

@@ -15,6 +15,7 @@ import { get_encoding } from 'tiktoken';
 import async from 'async';
 import { spawn } from 'child_process';
 import { Ollama } from 'ollama-node';
+import {VariableParser, StringParser, CommentParser, SinkParser} from './JSON-parsers'
 
 
 @Injectable()
@@ -73,16 +74,16 @@ export class ChatGptService {
         let rawResponses = "";
         
         const prompts = [
-            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput },
-            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput },
-            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput },
-            { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result: sinks, input: this.sinksInput }
+            { type: 'variables', mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput , parser: new VariableParser()},
+            { type: 'strings', mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput, parser: new StringParser()},
+            { type: 'comments', mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput, parser: new CommentParser()},
+            { type: 'sinks', mapping: sinksMapping, result: sinks, input: this.sinksInput, parser: new SinkParser() }
         ];
         
         // Dictionary to store results by file name
-        const fileResults = {};
+        const JSONOutput = {};
     
-        for (const { type, prompt, mapping, result, input } of prompts) {
+        for (const { type, mapping, result, input, parser } of prompts) {
             let completedBatches = 0;
             let numParsedFiles = 0;
             const batches = Array.from(input.values());
@@ -92,69 +93,31 @@ export class ChatGptService {
             const processBatch = async (batch: string, filesInBatch: number, index: number) => {
                 try {
                     const response = await this.createGptWithBackoff(batch, index);
-                    console.log(response.message);
+                    // console.log(response.message);
                     rawResponses += this.replaceIDs(response.message);
                     completedBatches += 1;
     
                     this.eventsGateway.emitDataToClients('GPTProgress-' + type, JSON.stringify({ 
                         type: 'GPTProgress-' + type, GPTProgress: Math.floor((completedBatches / totalBatches) * 100) }));
-    
-                    if (this.debug.toLowerCase() === 'true') {
-                        console.log(`Results for batch ${index} \n ${response.message}`);
-                    }
+  
+                    console.log(`Results for batch ${index} \n ${response.message}`);
+                    
     
                     let json = extractAndParseJSON(response.message);
     
                     json.files.forEach((file: any) => {
-                        let fileID = file.fileName.split('.java')[0];
-                        let fileName = this.idToNameMapping.get(fileID);
-                        let sensitiveData = [];
-                        if (type === 'variables') {sensitiveData = file.sensitiveVariables}
-                        else if (type === 'strings') {sensitiveData = file.sensitiveStrings}
-                        else if (type === 'comments') {sensitiveData = file.sensitiveComments}
-                        else if (type === 'classification') {sensitiveData = file.classification}
-                        else if (type === 'sinks') {sensitiveData = file.sinks}
-    
-                        sensitiveData = sensitiveData.filter((value, index, self) => 
-                            index === self.findIndex((t) => (
-                                t.name === value.name 
-                            ))
-                        );                        
-    
-                        if (fileResults[fileName]) {
-                            fileResults[fileName][type] = Array.from(new Set(fileResults[fileName][type].concat(sensitiveData)));
-                        } else {
-                            fileResults[fileName] = {
-                                fileName: fileName,
-                                variables: [],
-                                strings: [],
-                                comments: [],
-                                classification: [],
-                                sinks: [],
-                            };
-                            fileResults[fileName][type] = (sensitiveData);
-                        }
-    
-                        let fileDataList = this.extractVariableNamesMultiple(sensitiveData);
-    
-                        if (type === 'sinks') {
-                            const names = this.extractVariableNamesMultiple(sensitiveData);
-                            const types = this.extractTypes(sensitiveData);
-                            let values: string[][] = names.map((name, index) => [name, types[index]]);
-    
-                            if (sinksMapping.has(fileName)) {
-                                sinksMapping.set(fileName, sinksMapping.get(fileName)!.concat(values));
-                            } else {
-                                sinksMapping.set(fileName, values);
-                            }
-                        } else {
-                            if (mapping[fileName]) {
-                                mapping[fileName] = mapping[fileName].concat(fileDataList);
-                            } else {
-                                mapping[fileName] = fileDataList;
-                            }
-                        }    
-                        result.push(...fileDataList);
+                        // let fileID = file.fileName.split('.java')[0];
+                        // let fileName = this.idToNameMapping.get(fileID);
+
+                        let fileName = file.fileName
+                        
+                        // Save data for JSON output (data.json)
+                        parser.saveToJSON(JSONOutput, fileName, type, file);
+                        // Save data as a mapping for YMAL file 
+                        parser.saveToMapping(mapping, fileName, file);
+                        // Save data as a list
+                        result.push(...parser.getNamesAsList(file));
+
                     });
                 } catch (error) {
                     console.error('Error processing GPT response:', error);
@@ -192,8 +155,8 @@ export class ChatGptService {
         this.fileUtilService.writeToFile(path.join(this.projectsPath, 'rawResponses.txt'), rawResponses);
     
         // Convert the dictionary to a list
-        for (const fileName in fileResults) {
-            fileList.push(fileResults[fileName]);
+        for (const fileName in JSONOutput) {
+            fileList.push(JSONOutput[fileName]);
         }
     
         variables = [...new Set(variables)];
@@ -261,10 +224,10 @@ export class ChatGptService {
      * @param prompt GPT prompt
      */
     async createGptFourCompletion(prompt: string) {
-        console.log(prompt);
+        // console.log(prompt);
         try {
             // Break the prompt into sections, for better api usage
-            let sections = this.extractSections(prompt);
+            // let sections = this.extractSections(prompt);
 
 
             const response = await this.openai.chat.completions.create({
@@ -272,9 +235,9 @@ export class ChatGptService {
                 // temperature: 0.0,
                 // top_p: 0.05,
                 messages: [
-                    { role: 'system', content: sections.prompt }, 
-                    { role: 'user', content: sections.values }, 
-                    { role: 'user', content: sections.code }
+                    { role: 'system', content: prompt }, 
+                    // { role: 'user', content: sections.values }, 
+                    // { role: 'user', content: sections.code }
                 ],
                 response_format: { type: "json_object" },
             });
@@ -282,6 +245,7 @@ export class ChatGptService {
             return { message: response.choices[0].message.content };
 
         } catch (error) {
+            
             throw error;
         }
     }
@@ -319,21 +283,6 @@ export class ChatGptService {
             }
         }
         return variables;
-    }
-
-    extractTypes(text: SinkType[]): string[] {
-        var types = [];
-        try {
-            for (const variable of text) {
-                    let v : string = variable.type.replace(/["\\]/g, "")
-                    types.push(`\"${v}\"`)
-            }
-        } catch (e) {
-            if (this.debug.toLowerCase() === 'true') {
-                console.log(text);
-            }
-        }
-        return types;
     }
 
     async getFileGptResponse(filePath: String) {
@@ -450,9 +399,12 @@ export class ChatGptService {
     async simpleBatching(files: string[], prompt: string, type: string, output: Map<string, string>, progress: { value: number, total: number }) {
         let id = 0;
         for (const file of files) {
-            let fullID = "ID-" + id.toString();
-            this.idToNameMapping.set(fullID, path.basename(file));
+            // let fullID = "ID-" + id.toString();
+            let fullID = path.basename(file);
+            // this.idToNameMapping.set(fullID, path.basename(file));
             const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
+
+            console.log(fileContent);
 
             if (!this.parsedResults[path.basename(file)]){
                 // console.log(`Parsing file ${file}`);
