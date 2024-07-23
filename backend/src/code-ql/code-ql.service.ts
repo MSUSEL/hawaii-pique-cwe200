@@ -59,7 +59,7 @@ export class CodeQlService {
 
     async runChatGPT(javaFiles, sourcePath){
         // Get Sensitive variables from gpt
-        const data = await this.gptService.openAiGetSensitiveVariables(javaFiles);
+        const data = await this.gptService.LLMWrapper(javaFiles);
 
         // Write response to file
         await this.writeFilesGptResponseToJson(data.fileList, sourcePath);
