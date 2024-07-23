@@ -137,20 +137,19 @@ export class CodeQlService {
         await this.fileUtilService.writeToFile(jsonPath, data)
     }
 
-
-    formatMappings(mapping) : string{
-        // mapping = {"GOOD_ConsistentAuthenticationTiming.java": ["VALID_USERNAME", "VALID_PASSWORD"], "GOOD_UniformLoginResponse": ["username"]};
-        
+    formatMappings(mapping: { [key: string]: string[] }): string {
         let result = "";
-
+    
         // Iterate over each key (filename) in the mapping object
         Object.keys(mapping).forEach(key => {
             // For each variable associated with the key, generate a new line in the output
             mapping[key].forEach(variable => {
-                result += `    - ["${key}", ${variable}]\n`;
+                // Remove Unicode characters, new lines, colons, and square brackets from the variable
+                const sanitizedVariable = variable.replace(/[^\x00-\x7F]|[\n\r:\[\]]/g, "");
+                result += `    - ["${key}", ${sanitizedVariable}]\n`;
             });
         });
-    
+        
         return result;
     }
       
@@ -210,12 +209,12 @@ export class CodeQlService {
     async codeqlProcess(sourcePath: string, createCodeQlDto: any){
         // Remove previous database if it exists
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-        await this.fileUtilService.removeDir(db);
+        // await this.fileUtilService.removeDir(db);
 
-        // Create new database with codeql
-        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        console.log(createDbCommand);
-        await this.runChildProcess(createDbCommand);
+        // // Create new database with codeql
+        // const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        // console.log(createDbCommand);
+        // await this.runChildProcess(createDbCommand);
 
         // Analyze with codeql
         const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';
