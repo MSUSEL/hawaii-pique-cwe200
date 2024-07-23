@@ -4,12 +4,10 @@ import { ConfigService } from '@nestjs/config';
 import { FileUtilService } from 'src/files/fileUtilService';
 import { EventsGateway } from 'src/events/events.gateway';
 import * as path from 'path';
-import * as cliProgress from 'cli-progress';
 import {sensitiveVariablesPrompt} from './sensitiveVariablesPrompt';
 import {sensitiveStringsPrompt} from './sensitiveStringsPrompt';
 import {sensitiveCommentsPrompt} from './sensitiveCommentsPrompt';
 import { sinkPrompt } from './sinkPrompt';
-import {classifyPrompt} from './classifyPrompt'
 import { response } from 'express';
 import { get_encoding } from 'tiktoken';
 import async from 'async';
@@ -51,8 +49,8 @@ export class ChatGptService {
      *
      * @param files files to include in GPT prompt
      */
-    async openAiGetSensitiveVariables(files: string[]) {
-        let variables = [], strings = [], comments = [], sinks = [];
+    async LLMWrapper(files: string[]) {
+        let variables: string[] = [], strings: string[] = [], comments: string[] = [], sinks: string[] = [];
         const fileList: any[] = [];
         
         let sensitiveVariablesMapping = new Map<string, string[]>();
@@ -85,7 +83,9 @@ export class ChatGptService {
                     completedBatches += 1;
     
                     this.eventsGateway.emitDataToClients('GPTProgress-' + type, JSON.stringify({ 
-                        type: 'GPTProgress-' + type, GPTProgress: Math.floor((completedBatches / totalBatches) * 100) }));
+                        type: 'GPTProgress-' + type, 
+                        GPTProgress: Math.floor((completedBatches / totalBatches) * 100) }
+                    ));
   
                     let json = extractAndParseJSON(response.message);
     
@@ -97,7 +97,7 @@ export class ChatGptService {
                         
                         // Save data for JSON output (data.json)
                         parser.saveToJSON(JSONOutput, fileName, type, file);
-                        // Save data as a mapping for YMAL file 
+                        // Save data as a mapping for YMAL file, used for CodeQL 
                         parser.saveToMapping(mapping, fileName, file);
                         // Save data as a list
                         result.push(...parser.getNamesAsList(file));
@@ -109,7 +109,7 @@ export class ChatGptService {
             };
     
             const processConcurrentBatches = async (batches, filesPerBatch) => {
-                let concurrencyLimit = 50; // Number of concurrent batches to run
+                let concurrencyLimit = 50; // Number of concurrent batches to run (Used so we don't overload the GPT API)
                 console.log(`Finding ${type} in Project`);
                         
                 const queue = async.queue(async (task, callback) => {
@@ -172,11 +172,7 @@ export class ChatGptService {
                     // Instead of exponential backoff, use the time specified in the header
                     try{
                         let timeOut = parseFloat(error.response.headers['x-ratelimit-reset-tokens'].replace('s', ''));
-                        
-                        if (this.debug.toLowerCase() === 'true'){
-                            console.log(`Rate limit hit. Retrying batch ${index} in ${timeOut} seconds`)
-                        }
-
+                        console.log(`Rate limit hit. Retrying batch ${index} in ${timeOut} seconds`)
                         await this.delay(timeOut * 1000);
                     }
                     // If there is an issue with the header, use exponential backoff
@@ -202,7 +198,6 @@ export class ChatGptService {
         try {
             // Break the prompt into sections, for better api usage
             // let sections = this.extractSections(prompt);
-
 
             const response = await this.openai.chat.completions.create({
                 model: 'gpt-4o',
@@ -244,11 +239,7 @@ export class ChatGptService {
 
     async getFileGptResponse(filePath: String) {
         var directories = filePath.split('\\');
-        var jsonFilePath = path.join(
-            directories[0],
-            directories[1],
-            'data.json',
-        );
+        var jsonFilePath = path.join(directories[0], directories[1], 'data.json');
         try {
             var jsonArray = await this.fileUtilService.readJsonFile(jsonFilePath);
             for (const obj of jsonArray) {
@@ -337,8 +328,8 @@ export class ChatGptService {
     }
     
     async getParsedResults(files: string[]) {
-        let completed = 0;
-        let total = files.length;
+        let completed: number = 0;
+        let total: number = files.length;
         for (const file of files) {
             try{
                 await this.fileUtilService.parseJavaFile(file, this.parsedResults);
@@ -354,10 +345,10 @@ export class ChatGptService {
 
     // Used for testing, just sends one file at a time
     async simpleBatching(files: string[], prompt: string, type: string, output: Map<string, string>, progress: { value: number, total: number }) {
-        let id = 0;
+        let id: number = 0;
         for (const file of files) {
             // let fullID = "ID-" + id.toString();
-            let fullID = path.basename(file);
+            let fullID: string = path.basename(file);
             // this.idToNameMapping.set(fullID, path.basename(file));
             const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
 
@@ -369,10 +360,8 @@ export class ChatGptService {
             }
 
             try {
-                let variables = [];
-                let strings = [];
-                let comments = [];
-                const baseFileName = path.basename(file);
+                let variables:string[] = [], strings:string[] = [], comments:string[] = [];
+                const baseFileName: string = path.basename(file);
 
                 switch (type) {
                     case 'variables':
@@ -444,7 +433,6 @@ export class ChatGptService {
         const processPrompt = async (promptObj: { type: string; prompt: string; output: Map<string, string> }) => {
             let tokenCount = 0;
             await this.simpleBatching(javaFiles, promptObj.prompt, promptObj.type, promptObj.output, progress);
-            console.log(1)
 
             // Calculate tokens for the current prompt
             const outputArray = Array.from(promptObj.output.values());
