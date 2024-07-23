@@ -6,8 +6,6 @@ import { EventsGateway } from 'src/events/events.gateway';
 import * as path from 'path';
 import * as cliProgress from 'cli-progress';
 import {sensitiveVariablesPrompt} from './sensitiveVariablesPrompt';
-import {thresholdsVariables} from './thresholds';
-
 import {sensitiveStringsPrompt} from './sensitiveStringsPrompt';
 import {sensitiveCommentsPrompt} from './sensitiveCommentsPrompt';
 import { sinkPrompt } from './sinkPrompt';
@@ -17,7 +15,6 @@ import { get_encoding } from 'tiktoken';
 import async from 'async';
 import { spawn } from 'child_process';
 import { Ollama } from 'ollama-node';
-import { n } from 'ollama/dist/shared/ollama.6680e40f';
 
 
 @Injectable()
@@ -74,25 +71,12 @@ export class ChatGptService {
         let classificationMapping = new Map<string, string[]>();
         let sinksMapping = new Map<string, string[][]>();
         let rawResponses = "";
-        let threshold = 0;
-
-        const thresholds = {
-            "Authentication and Authorization and Credentials Information": 70,
-            "Personal Identifiable Information (PII)": 60,
-            "Financial Information": 80,
-            "Files Containing Sensitive Information, Sensitive File Paths, URLs/URIs": 75,
-            "Sensitive System and Configuration Information": 65,
-            "Security and Encryption Information": 85,
-            "Application-Specific Sensitive Data": 70,
-            "Query Parameters": 50,
-            "Exceptions": 20
-        };
         
         const prompts = [
-            { type: 'variables', prompt: thresholdsVariables, mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput },
-            // { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput },
-            // { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput },
-            // { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result: sinks, input: this.sinksInput }
+            { type: 'variables', prompt: sensitiveVariablesPrompt, mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput },
+            { type: 'strings', prompt: sensitiveStringsPrompt, mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput },
+            { type: 'comments', prompt: sensitiveCommentsPrompt, mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput },
+            { type: 'sinks', prompt: sinkPrompt, mapping: sinksMapping, result: sinks, input: this.sinksInput }
         ];
         
         // Dictionary to store results by file name
@@ -108,6 +92,7 @@ export class ChatGptService {
             const processBatch = async (batch: string, filesInBatch: number, index: number) => {
                 try {
                     const response = await this.createGptWithBackoff(batch, index);
+                    console.log(response.message);
                     rawResponses += this.replaceIDs(response.message);
                     completedBatches += 1;
     
@@ -121,22 +106,21 @@ export class ChatGptService {
                     let json = extractAndParseJSON(response.message);
     
                     json.files.forEach((file: any) => {
-                        let fileName = file.fileName;
+                        let fileID = file.fileName.split('.java')[0];
+                        let fileName = this.idToNameMapping.get(fileID);
                         let sensitiveData = [];
-                        if (type === 'variables') {sensitiveData = file.variables}
+                        if (type === 'variables') {sensitiveData = file.sensitiveVariables}
                         else if (type === 'strings') {sensitiveData = file.sensitiveStrings}
                         else if (type === 'comments') {sensitiveData = file.sensitiveComments}
                         else if (type === 'classification') {sensitiveData = file.classification}
                         else if (type === 'sinks') {sensitiveData = file.sinks}
     
-                        // Filter the sensitive data based on the thresholds
                         sensitiveData = sensitiveData.filter((value, index, self) => 
                             index === self.findIndex((t) => (
-                                t.name === value.name && t.description === value.description && t.likelihood === value.likelihood
-                            )) && parseInt(value.likelihood) >= (thresholds[value.description] || 100) 
-                        );
-                                               
-
+                                t.name === value.name 
+                            ))
+                        );                        
+    
                         if (fileResults[fileName]) {
                             fileResults[fileName][type] = Array.from(new Set(fileResults[fileName][type].concat(sensitiveData)));
                         } else {
@@ -286,8 +270,7 @@ export class ChatGptService {
             const response = await this.openai.chat.completions.create({
                 model: 'gpt-4o',
                 // temperature: 0.0,
-                // top_p: 0.01,
-                // presence_penalty: 0.5,
+                // top_p: 0.05,
                 messages: [
                     { role: 'system', content: sections.prompt }, 
                     { role: 'user', content: sections.values }, 
@@ -467,14 +450,9 @@ export class ChatGptService {
     async simpleBatching(files: string[], prompt: string, type: string, output: Map<string, string>, progress: { value: number, total: number }) {
         let id = 0;
         for (const file of files) {
-            // let fullID = "ID-" + id.toString();
-            // this.idToNameMapping.set(fullID, path.basename(file));
-            // const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
-
-            const fileContent = await this.fileUtilService.processJavaFile(file, path.basename(file));
-            let fullID = path.basename(file)
-
-
+            let fullID = "ID-" + id.toString();
+            this.idToNameMapping.set(fullID, path.basename(file));
+            const fileContent = await this.fileUtilService.processJavaFile(file, fullID);
 
             if (!this.parsedResults[path.basename(file)]){
                 // console.log(`Parsing file ${file}`);
@@ -490,10 +468,10 @@ export class ChatGptService {
                 switch (type) {
                     case 'variables':
                         variables = this.parsedResults[baseFileName]['variables'] || [];
-                        const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file - " + baseFileName +":\n" + variables.map((variable, index) => `${index + 1}. ${variable}`).join('\n') + "\n+++++\n";
-                        // const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file - " + baseFileName + ":\n" + variables.join(', ') + "\n+++++\n";
+                        // const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file - " + baseFileName +":\n" + variables.map((variable, index) => `${index + 1}. ${variable}`).join('\n') + "\n+++++\n";
+                        const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file - " + baseFileName + ":\n" + variables.join(', ') + "\n+++++\n";
                         output.set(baseFileName, prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
-                        console.log(output.get(baseFileName));
+                        // console.log(output.get(baseFileName));
                         break;
                     case 'strings':
                         strings = this.parsedResults[baseFileName]['strings'] || [];
@@ -557,7 +535,7 @@ export class ChatGptService {
         let totalTokenCount = 0;
 
         const prompts = [
-            { type: 'variables', prompt: thresholdsVariables, output: this.variablesInput },
+            { type: 'variables', prompt: sensitiveVariablesPrompt, output: this.variablesInput },
             { type: 'strings', prompt: sensitiveStringsPrompt, output: this.stringsInput },
             { type: 'comments', prompt: sensitiveCommentsPrompt, output: this.commentsInput },
             { type: 'sinks', prompt: sinkPrompt, output: this.sinksInput }
@@ -576,6 +554,7 @@ export class ChatGptService {
         const processPrompt = async (promptObj: { type: string; prompt: string; output: Map<string, string> }) => {
             let tokenCount = 0;
             await this.simpleBatching(javaFiles, promptObj.prompt, promptObj.type, promptObj.output, progress);
+            console.log(1)
 
             // Calculate tokens for the current prompt
             const outputArray = Array.from(promptObj.output.values());
@@ -686,8 +665,7 @@ export class ChatGptService {
 
 interface SensitiveVariables {
     name: string;
-    description: string;
-    likelihood: number;
+    // description: string;
 }
 
 interface SinkType {
@@ -746,4 +724,3 @@ function extractAndParseJSON(inputString) {
         return null;
     }
 }
-
