@@ -127,12 +127,16 @@ export class FileUtilService {
     parseJSONFile(filePath: string) {
         
         let variables = [];
-        const fileList: any[] = [];
+        let strings = [];
         let comments = [];
+        let sinks = [];
+        const fileList: any[] = [];
+        
         
         let sensitiveVariablesMapping = new Map<string, string[]>();
         let sensitiveStringsMapping = new Map<string, string[]>();
         let sensitiveCommentsMapping = new Map<string, string[]>();
+        let sinksMapping = new Map<string, string[][]>();
 
         if (fs.existsSync(filePath)) {
             try {
@@ -141,22 +145,30 @@ export class FileUtilService {
 
             json.forEach((file) => {
                 let key = file["fileName"];
-                let sensitiveVariables = file["sensitiveVariables"].map((variable) => `"${variable["name"]}"`);
-                let sensitiveStrings = file["sensitiveStrings"].map((str) => `"${str["name"]}"`);
-                let sensitiveComments = file["sensitiveComments"].map((comment) => `"${comment["name"]}"`);
+                let sensitiveVariables = file["variables"].map((variable) => `"${variable["name"]}"`);
+                let sensitiveStrings = file["strings"].map((str) => `"${str["name"]}"`);
+                let sensitiveComments = file["comments"].map((comment) => `"${comment["name"]}"`);
+                let sensitiveSinks = file["sinks"] ? file["sinks"].map((sink) => [sink["name"], sink["type"]]) : [];
 
                 fileList.push({
                     fileName: key,
-                    sensitiveVariables: sensitiveVariables,
-                    sensitiveStrings: sensitiveStrings,
-                    sensitiveComments: sensitiveComments
+                    variables: sensitiveVariables,
+                    strings: sensitiveStrings,
+                    comments: sensitiveComments,
+                    sinks: sensitiveSinks
                 });
 
                 variables = variables.concat(sensitiveVariables);
+                strings = strings.concat(sensitiveStrings);
+                comments = comments.concat(sensitiveComments);
+                sinks = sinks.concat(sensitiveSinks);
+
+
                 sensitiveVariablesMapping[key] = sensitiveVariables;
                 sensitiveStringsMapping[key] = sensitiveStrings;
                 sensitiveCommentsMapping[key] = sensitiveComments;
-                comments = comments.concat(sensitiveComments);
+                sinksMapping.set(key, sensitiveSinks);
+
 
             });
 
@@ -165,7 +177,13 @@ export class FileUtilService {
             }
         }
 
-        return { variables, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, comments};
+        let numberOfUniqueSinks = sinks.filter((sink, index, self) =>
+            index === self.findIndex((t) => (
+                t[0] === sink[0]
+            ))
+        );
+
+        return { variables, strings, comments, sinks, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping, sinksMapping };
 
     }
 
@@ -307,6 +325,48 @@ export class FileUtilService {
             });
         });
     }
+
+
+    convertLabeledDataToMap(labeledData: any): Map<string, Map<string, string[]>> {
+        let map = new Map<string, Map<string, string[]>>();
+    
+        if (!labeledData.files || !Array.isArray(labeledData.files)) {
+            console.error('Expected labeledData to have a files array, but got:', typeof labeledData.files);
+            return map;
+        }
+    
+        labeledData.files.forEach(entry => {
+            if (entry.fileName) {
+                let innerMap = new Map<string, string[]>();
+                innerMap.set('variables', entry.variables || []);
+                innerMap.set('strings', entry.strings || []);
+                innerMap.set('comments', entry.comments || []);
+                innerMap.set('sinks', entry.sinks || []);
+                map.set(entry.fileName, innerMap);
+            } else {
+                console.warn('Entry without fileName found:', entry);
+            }
+        });
+    
+        return map;
+    }
+
+// Save datasets to .jsonl files
+saveToJsonl (filePath, data) {
+    // Ensure the directory exists
+    const ensureDirectoryExistence = (filePath) => {
+        const dirname = path.dirname(filePath);
+        if (!fs.existsSync(dirname)) {
+            fs.mkdirSync(dirname, { recursive: true });
+        }
+    };
+
+    ensureDirectoryExistence(filePath);
+
+    const jsonlData = data.map(JSON.stringify).join('\n');
+    fs.writeFileSync(filePath, jsonlData);
+};
+    
   
 }
 

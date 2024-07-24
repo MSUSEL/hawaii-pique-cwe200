@@ -197,7 +197,7 @@ export class ChatGptService {
      * @param prompt GPT prompt
      */
     async createGptFourCompletion(prompt: string) {
-        console.log(prompt);
+        // console.log(prompt);
         try {
             // Break the prompt into sections, for better api usage
             let sections = this.extractSections(prompt);
@@ -205,7 +205,7 @@ export class ChatGptService {
             const response = await this.openai.chat.completions.create({
                 model: 'gpt-4o',
                 // temperature: 0.0,
-                // top_p: 0.05,
+                top_p: 0.05,
                 messages: [
                     { role: 'system', content: prompt }, 
                     { role: 'user', content: sections.values }, 
@@ -370,7 +370,7 @@ export class ChatGptService {
                     case 'variables':
                         variables = this.parsedResults[baseFileName]['variables'] || [];
                         // const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file - " + baseFileName +":\n" + variables.map((variable, index) => `${index + 1}. ${variable}`).join('\n') + "\n+++++\n";
-                        const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file - " + baseFileName + ":\n" + variables.join(', ') + "\n+++++\n";
+                        const variablesText = "\n+++++\nI have already done all of the parsing for you, here are all the variables in this file - " + baseFileName + ":\n" + variables.join(', ') + "\n Only consider these variables \n+++++\n";
                         output.set(baseFileName, prompt + variablesText + this.fileUtilService.addFileBoundaryMarkers(fullID, fileContent));
                         // console.log(output.get(baseFileName));
                         break;
@@ -449,27 +449,8 @@ export class ChatGptService {
         // Calculate the cost of each prompt concurrently
         await Promise.all(prompts.map(prompt => processPrompt(prompt)));
 
-        const result = javaFiles.reduce((acc, fileName) => {
-            const baseName = path.basename(fileName);
-            
-            const fileResult: { [key: string]: any } = {};
-            
-            prompts.forEach(promptObj => {
-                const output = promptObj.output.get(baseName) || '';
-                fileResult[promptObj.type] = {
-                    input: output,
-                    output: ''
-                };
-            });
+        this.createTrainingData()
         
-            acc[baseName] = fileResult;
-            return acc;
-        }, {} as { [key: string]: any });
-        
-
-        const outputFilePath = path.join(this.projectsPath, projectPath, 'output_prompts.json');
-        this.fileUtilService.writeToFile(outputFilePath, JSON.stringify(result, null, 2));
-
         // Calculate cost
         const inputCost = totalTokenCount * INPUT_COST;
         const outputCost = totalTokenCount * OUTPUT_COST;
@@ -537,6 +518,123 @@ export class ChatGptService {
             }
         });
     }
+
+
+    createTrainingData() {
+        const data = [
+            {input: this.variablesInput, type: 'variables'}, 
+            {input: this.stringsInput, type: 'strings'}, 
+            {input: this.commentsInput, type: 'comments'}, 
+            {input: this.sinksInput, type: 'sinks'}
+        ];
+        const labeledDataMap = this.fileUtilService.convertLabeledDataToMap(
+            this.fileUtilService.readJsonFile(path.join(this.projectsPath, 'ReviewSensFiles', 'agreed_classifications.json'))
+        );
+        
+        let variablesTrainingData = [];
+        let stringsTrainingData = [];
+        let commentsTrainingData = [];
+        let sinksTrainingData = [];
+    
+        let totalExamples = 0;
+        let includedExamples = 0;
+        const tokenLimit = 65536;
+    
+        for (const entry of data) {
+            const type = entry.type;
+            const inputMap = entry.input;
+    
+            for (const [fileName, content] of inputMap) {
+                totalExamples++;
+                console.log(`File Name: ${fileName}`);
+                const sections = this.extractSections(content);
+                let prompt = sections.prompt;
+                let values = sections.values;
+                let code = sections.code;
+    
+                if (labeledDataMap.has(fileName)) {
+                    const labeledEntry = labeledDataMap.get(fileName);
+                    let sensitiveVariables = (labeledEntry.get(type) || []).map(name => ({ name }));
+                    let output = {
+                        fileName: fileName,
+                        [type]: sensitiveVariables
+                    };
+
+
+                     // Skip if there are no sensitive variables for the sink type
+                     if (type === 'sinks' && sensitiveVariables.length === 0) {
+                        console.warn(`No sinks found for file: ${fileName}`);
+                        continue;
+                    }
+    
+                    let trainingData = {
+                        "messages": [
+                            {"role": "system", "content": prompt},
+                            {"role": "user",  "content": values},
+                            {"role": "user", "content": code},
+                            {"role": "assistant", "content": JSON.stringify(output)}, 
+                        ]
+                    };
+    
+                    // Calculate the token count for the training data
+                    const totalTokenCount = trainingData.messages.reduce((acc, msg) => acc + this.encode.encode(JSON.stringify(trainingData)).length, 0);
+    
+                    if (totalTokenCount <= tokenLimit) {
+                        includedExamples++;
+    
+                        switch(type) {
+                            case 'variables':
+                                variablesTrainingData.push(trainingData);
+                                break;
+                            case 'strings':
+                                stringsTrainingData.push(trainingData);
+                                break;
+                            case 'comments':
+                                commentsTrainingData.push(trainingData);
+                                break;
+                            case 'sinks':
+                                sinksTrainingData.push(trainingData);
+                                break;
+                        }
+                    } else {
+                        console.warn(`Example for file ${fileName} exceeds token limit with a total of ${totalTokenCount} and will be excluded.`);
+                    }
+                } else {
+                    console.warn(`No labeled data found for file: ${fileName}`);
+                }
+            }
+        }
+    
+        // Split each dataset into training and validation sets
+        const splitData = (data, validationRatio = 0.2) => {
+            const validationSize = Math.floor(data.length * validationRatio);
+            const shuffled = data.sort(() => 0.5 - Math.random());
+            return {
+                training: shuffled.slice(validationSize),
+                validation: shuffled.slice(0, validationSize)
+            };
+        };
+    
+        const variablesSplit = splitData(variablesTrainingData);
+        const stringsSplit = splitData(stringsTrainingData);
+        const commentsSplit = splitData(commentsTrainingData);
+        const sinksSplit = splitData(sinksTrainingData);
+    
+        this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'variables_training.jsonl'), variablesSplit.training);
+        this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'variables_validation.jsonl'), variablesSplit.validation);
+        this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'strings_training.jsonl'), stringsSplit.training);
+        this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'strings_validation.jsonl'), stringsSplit.validation);
+        this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'comments_training.jsonl'), commentsSplit.training);
+        this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'comments_validation.jsonl'), commentsSplit.validation);
+        this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'sinks_training.jsonl'), sinksSplit.training);
+        this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'sinks_validation.jsonl'), sinksSplit.validation);
+    
+        console.log("Training and validation data saved as .jsonl files.");
+        console.log(`Total examples: ${totalExamples}, Included examples: ${includedExamples}`);
+    
+        return {variablesTrainingData, stringsTrainingData, commentsTrainingData, sinksTrainingData};
+    }
+
 }
 
 interface SensitiveVariables {
