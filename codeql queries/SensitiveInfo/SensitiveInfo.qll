@@ -22,29 +22,39 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
 
   class SensitiveStringLiteral extends StringLiteral {
     SensitiveStringLiteral() {
-      // Check for matches against the suspicious patterns
-      exists(File f | 
-        f = this.getCompilationUnit().getFile() and
-        sensitiveStrings(f.getBaseName(), this.getValue())) and
-      not exists(MethodCall mc |
-        mc.getAnArgument() = this and
-        (
-          mc.getMethod().hasName("getenv") or
-          mc.getMethod().hasName("getParameter") or
-          mc.getMethod().hasName("getProperty") or
-          mc.getMethod().hasName("getInitParameter") or
-          mc.getMethod().hasName("getHeader") or
-          mc.getMethod().hasName("getCookie") or
-          mc.getMethod().hasName("getAttribute") or
-          mc.getMethod().hasName("getAuthType") or
-          mc.getMethod().hasName("getRemoteUser") or
-          mc.getMethod().hasName("getResource") or
-          mc.getMethod().hasName("getResourceAsStream") or
-         (mc.getMethod().hasName("addRequestProperty") and mc.getArgument(0) = this)
+        // Check for matches against the suspicious patterns
+        exists(File f | 
+            f = this.getCompilationUnit().getFile() and
+            sensitiveStrings(f.getBaseName(), this.getValue())) and
+        not (
+            exists(MethodCall mc |
+                mc.getAnArgument() = this and
+                (
+                    mc.getMethod().hasName("getenv") or
+                    mc.getMethod().hasName("getParameter") or
+                    mc.getMethod().hasName("getProperty") or
+                    mc.getMethod().hasName("getInitParameter") or
+                    mc.getMethod().hasName("getHeader") or
+                    mc.getMethod().hasName("getCookie") or
+                    mc.getMethod().hasName("getAttribute") or
+                    mc.getMethod().hasName("getAuthType") or
+                    mc.getMethod().hasName("getRemoteUser") or
+                    mc.getMethod().hasName("getResource") or
+                    mc.getMethod().hasName("getResourceAsStream") or
+                    (mc.getMethod().hasName("addRequestProperty") and mc.getArgument(0) = this)
+                )
+            ) or
+            this.getValue().regexpMatch(".*example.*") or
+            this.getValue().regexpMatch(".*test.*") or
+            this.getValue().regexpMatch(".*demo.*") or
+            this.getValue().regexpMatch(".*foo.*") or 
+            this.getValue().regexpMatch(".*bar.*") or
+            this.getValue().regexpMatch(".*baz.*") or
+            this.getValue().regexpMatch(".*secret.*")
         )
-      )
     }   
-  }
+}
+
 
 
   // class SensitiveComment extends StringLiteral {
