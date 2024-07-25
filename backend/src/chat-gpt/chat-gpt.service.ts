@@ -551,13 +551,11 @@ export class ChatGptService {
             }
         }
 
-
-
-        
         let variablesTrainingData = [];
         let stringsTrainingData = [];
         let commentsTrainingData = [];
         let sinksTrainingData = [];
+        let allTrainingData = [];
     
         let totalExamples = 0;
         let includedExamples = 0;
@@ -624,6 +622,9 @@ export class ChatGptService {
                             case 'sinks':
                                 sinksTrainingData.push(trainingData);
                                 break;
+                        
+                        // Combine all training data into one array (Used to train one model for all types)
+                        allTrainingData.push(trainingData);
                         }
                     } else {
                         console.warn(`Example for file ${fileName} exceeds token limit with a total of ${totalTokenCount} and will be excluded.`);
@@ -648,6 +649,7 @@ export class ChatGptService {
         const stringsSplit = splitData(stringsTrainingData);
         const commentsSplit = splitData(commentsTrainingData);
         const sinksSplit = splitData(sinksTrainingData);
+        const allSplit = splitData(allTrainingData);
     
         this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'variables_training.jsonl'), variablesSplit.training);
         this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'variables_validation.jsonl'), variablesSplit.validation);
@@ -657,6 +659,8 @@ export class ChatGptService {
         this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'comments_validation.jsonl'), commentsSplit.validation);
         this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'sinks_training.jsonl'), sinksSplit.training);
         this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'sinks_validation.jsonl'), sinksSplit.validation);
+        this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'all_training.jsonl'), allSplit.training);
+        this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'all_validation.jsonl'), allSplit.validation);
     
         console.log("Training and validation data saved as .jsonl files.");
         console.log(`Total examples: ${totalExamples}, Included examples: ${includedExamples}`);
