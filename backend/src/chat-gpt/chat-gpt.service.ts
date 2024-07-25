@@ -198,7 +198,7 @@ export class ChatGptService {
      * @param prompt GPT prompt
      */
     async createGptFourCompletion(prompt: string) {
-        // console.log(prompt);
+        console.log(prompt);
         try {
             // Break the prompt into sections, for better api usage
             let sections = this.extractSections(prompt);
@@ -451,7 +451,7 @@ export class ChatGptService {
         // Calculate the cost of each prompt concurrently
         await Promise.all(prompts.map(prompt => processPrompt(prompt)));
 
-        // this.createTrainingData()
+        this.createTrainingData()
         
         // Calculate cost
         const inputCost = totalTokenCount * INPUT_COST;
@@ -530,8 +530,29 @@ export class ChatGptService {
             {input: this.sinksInput, type: 'sinks'}
         ];
         const dataJSON = this.fileUtilService.readJsonFile(path.join(this.projectsPath, 'ReviewSensFiles', 'agreed_classifications.json'));
+        const toyDataset = this.fileUtilService.readJsonFile(path.join(this.projectsPath, 'ReviewSensFiles', 'toy_dataset.json'));
 
         const labeledDataMap = this.fileUtilService.convertLabeledDataToMap(dataJSON);
+
+
+        const toyDataMap =this.fileUtilService.convertLabeledDataToMap(toyDataset);
+        for (const [fileName, dataMap] of toyDataMap.entries()) {
+            if (labeledDataMap.has(fileName)) {
+                const existingMap = labeledDataMap.get(fileName);
+                for (const [key, value] of dataMap.entries()) {
+                    if (existingMap.has(key)) {
+                        existingMap.set(key, existingMap.get(key).concat(value));
+                    } else {
+                        existingMap.set(key, value);
+                    }
+                }
+            } else {
+                labeledDataMap.set(fileName, dataMap);
+            }
+        }
+
+
+
         
         let variablesTrainingData = [];
         let stringsTrainingData = [];
@@ -546,6 +567,7 @@ export class ChatGptService {
             const type = entry.type;
             const inputMap = entry.input;
     
+            // Make sure to add the toy dataset files to the same folder
             for (const [fileName, content] of inputMap) {
                 totalExamples++;
                 console.log(`File Name: ${fileName}`);
@@ -556,7 +578,7 @@ export class ChatGptService {
     
                 if (labeledDataMap.has(fileName)) {
                     const labeledEntry = labeledDataMap.get(fileName);
-                    let sensitiveVariables = labeledEntry.get(type) || [];
+                    let sensitiveVariables = (labeledEntry.get(type) || []).map(variable => ({ name: variable }));
                     let output = {
                         files: [
                             {
