@@ -9,15 +9,15 @@ import java.util.Properties;
 public class BAD_ExposeSensitiveInfoInEmail {
     public void sendEmail(String recipient, String creditCardNumber) {
         Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", "localhost");
+        properties.setProperty("mail.smtp.host", "walmart.internal.com");
         Session session = Session.getDefaultInstance(properties);
 
         try {
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("noreply@example.com"));
+            message.setFrom(new InternetAddress("fredsemailm@walmart.com"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-            message.setSubject("Sensitive Information Exposure");
-            message.setText("Your credit card number is: " + creditCardNumber);
+            message.setSubject("Fred here's your personal credit card number");
+            message.setText("Your credit card number is: " + creditCardNumber + "and the CVV is 987");
             Transport.send(message);
         } catch (MessagingException mex) {
             mex.printStackTrace();

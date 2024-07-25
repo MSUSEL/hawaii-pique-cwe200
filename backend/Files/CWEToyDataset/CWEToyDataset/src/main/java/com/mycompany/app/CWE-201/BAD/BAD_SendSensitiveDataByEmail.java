@@ -4,14 +4,14 @@ import javax.mail.internet.*;
 
 public class BAD_SendSensitiveDataByEmail {
     public void sendEmail(String recipient, String verificationCode) throws MessagingException {
-        String host = "smtp.example.com";
+        String host = "uh.mailservice.edu";
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.host", host);
         Session session = Session.getDefaultInstance(properties);
 
         try {
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("noreply@example.com"));
+            message.setFrom(new InternetAddress("cwe200@uh.edu"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             message.setSubject("Verification code");
             message.setText("Here is your verification code: " + verificationCode);

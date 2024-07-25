@@ -11,7 +11,7 @@ public class BAD_MedicalRecordSystemLookup {
 
         try {
             // Establish database connection
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/medical_records", "user", "password");
+            connection = DriverManager.getConnection("jdbc:mysql://hawaiihealth:3306/medical_records", "user", "password");
 
             // Prepare SQL query to retrieve medical record
             String sql = "SELECT * FROM medical_records WHERE patient_id = ?";
