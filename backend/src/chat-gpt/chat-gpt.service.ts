@@ -14,6 +14,7 @@ import async from 'async';
 import { spawn } from 'child_process';
 import { Ollama } from 'ollama-node';
 import {VariableParser, StringParser, CommentParser, SinkParser} from './JSON-parsers'
+import { json } from 'stream/consumers';
 
 
 @Injectable()
@@ -61,9 +62,9 @@ export class ChatGptService {
         
         const prompts = [
             { type: 'variables', mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput , parser: new VariableParser()},
-            { type: 'strings', mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput, parser: new StringParser()},
-            { type: 'comments', mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput, parser: new CommentParser()},
-            { type: 'sinks', mapping: sinksMapping, result: sinks, input: this.sinksInput, parser: new SinkParser() }
+            // { type: 'strings', mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput, parser: new StringParser()},
+            // { type: 'comments', mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput, parser: new CommentParser()},
+            // { type: 'sinks', mapping: sinksMapping, result: sinks, input: this.sinksInput, parser: new SinkParser() }
         ];
         
         // Dictionary to store results by file name
@@ -203,7 +204,8 @@ export class ChatGptService {
             let sections = this.extractSections(prompt);
 
             const response = await this.openai.chat.completions.create({
-                model: 'gpt-4o',
+                model: 'ft:gpt-4o-mini-2024-07-18:software-assurance-laboratory::9oh4HvD0',
+                // model: 'gpt-4o',
                 // temperature: 0.0,
                 top_p: 0.05,
                 messages: [
@@ -449,7 +451,7 @@ export class ChatGptService {
         // Calculate the cost of each prompt concurrently
         await Promise.all(prompts.map(prompt => processPrompt(prompt)));
 
-        this.createTrainingData()
+        // this.createTrainingData()
         
         // Calculate cost
         const inputCost = totalTokenCount * INPUT_COST;
@@ -527,9 +529,9 @@ export class ChatGptService {
             {input: this.commentsInput, type: 'comments'}, 
             {input: this.sinksInput, type: 'sinks'}
         ];
-        const labeledDataMap = this.fileUtilService.convertLabeledDataToMap(
-            this.fileUtilService.readJsonFile(path.join(this.projectsPath, 'ReviewSensFiles', 'agreed_classifications.json'))
-        );
+        const dataJSON = this.fileUtilService.readJsonFile(path.join(this.projectsPath, 'ReviewSensFiles', 'agreed_classifications.json'));
+
+        const labeledDataMap = this.fileUtilService.convertLabeledDataToMap(dataJSON);
         
         let variablesTrainingData = [];
         let stringsTrainingData = [];
@@ -554,12 +556,16 @@ export class ChatGptService {
     
                 if (labeledDataMap.has(fileName)) {
                     const labeledEntry = labeledDataMap.get(fileName);
-                    let sensitiveVariables = (labeledEntry.get(type) || []).map(name => ({ name }));
+                    let sensitiveVariables = labeledEntry.get(type) || [];
                     let output = {
-                        fileName: fileName,
-                        [type]: sensitiveVariables
+                        files: [
+                            {
+                                fileName: fileName,
+                                [type]: sensitiveVariables
+                            }
+                        ]
                     };
-
+                    
 
                      // Skip if there are no sensitive variables for the sink type
                      if (type === 'sinks' && sensitiveVariables.length === 0) {
@@ -575,6 +581,7 @@ export class ChatGptService {
                             {"role": "assistant", "content": JSON.stringify(output)}, 
                         ]
                     };
+                    console.log(JSON.stringify(output))
     
                     // Calculate the token count for the training data
                     const totalTokenCount = trainingData.messages.reduce((acc, msg) => acc + this.encode.encode(JSON.stringify(trainingData)).length, 0);
