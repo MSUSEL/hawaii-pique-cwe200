@@ -48,8 +48,9 @@ export class CodeQlService {
         // const data = await this.runChatGPT(slice, sourcePath);
 
         const data = await this.runChatGPT(javaFiles, sourcePath);
+        // const data = this.useSavedData(sourcePath);
 
-        await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
+        // await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
 
         await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
 
@@ -137,22 +138,54 @@ export class CodeQlService {
         await this.fileUtilService.writeToFile(jsonPath, data)
     }
 
-    formatMappings(mapping: { [key: string]: string[] }): string {
+
+    formatMappings(mapping: { [key: string]: string[] }, type): string {
         let result = "";
     
         // Iterate over each key (filename) in the mapping object
         Object.keys(mapping).forEach(key => {
             // For each variable associated with the key, generate a new line in the output
             mapping[key].forEach(variable => {
-                // Remove Unicode characters, new lines, colons, and square brackets from the variable
-                const sanitizedVariable = variable.replace(/[^\x00-\x7F]|[\n\r:\[\]]/g, "");
-                result += `    - ["${key}", ${sanitizedVariable}]\n`;
+                // Remove Unicode characters, double quotes, single quotes, and newlines from the variable
+                // Ensure backslashes are escaped
+                variable = variable.replace(/[^\x00-\x7F]/g, '').replace(/["'\n]/g, '').replace(/\\/g, '\\\\');
+    
+                // Check if the variable is in the format {key: value, key: value}
+                const regex = /{([^}]+)}/;
+                const match = regex.exec(variable);
+                if (match) {
+                    // Extract values from the variable
+                    const valuesString = match[1];
+                    const values = valuesString.split(',').map(pair => {
+                        const parts = pair.split(':');
+                        return parts.length > 1 ? parts[1].trim() : '';
+                    });
+                    if (type === "variables") {
+                        values.forEach(value => {
+                            result += `    - ["${key}", ${value}]\n`;
+                        });
+                    } else {
+                        values.forEach(value => {
+                            result += `    - ["${key}", "${value}"]\n`;
+                        });
+                    }
+                } else {
+                    // If not in the format {key: value, key: value}, handle as normal string
+                    if (type === "variables") {
+                        result += `    - ["${key}", "${variable}"]\n`;
+                    } else {
+                        result += `    - ["${key}", "${variable}"]\n`;
+                    }
+                }
             });
         });
-        
+    
         return result;
     }
-      
+    
+    
+    
+     
     formatSinkMappings(mapping: Map<string, string[][]>): string {
         let result = "";
         // Iterate over each key-value pair in the mapping object
@@ -179,9 +212,9 @@ export class CodeQlService {
 
     async saveSensitiveInfo(data){
       
-        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping);
-        const stringsMapping = this.formatMappings(data.sensitiveStringsMapping);
-        const commentsMapping = this.formatMappings(data.sensitiveCommentsMapping);
+        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping, "variables");
+        const stringsMapping = this.formatMappings(data.sensitiveStringsMapping, "strings");
+        const commentsMapping = this.formatMappings(data.sensitiveCommentsMapping, "comments");
         const sinksMapping = this.formatSinkMappings(data.sinksMapping);
             
         let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
@@ -234,6 +267,7 @@ export class CodeQlService {
         let data = await this.parserService.getSarifResults(sourcePath);
         return await this.parserService.getSarifResults(sourcePath);
     }
+
 }
 
 
