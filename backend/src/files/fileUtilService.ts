@@ -338,7 +338,7 @@ export class FileUtilService {
         labeledData.files.forEach(entry => {
             if (entry.fileName) {
                 let innerMap = new Map<string, string[]>();
-                innerMap.set('variables', entry.variables || []);
+                innerMap.set('variables', entry.sensitiveVariables || []);
                 innerMap.set('strings', entry.strings || []);
                 innerMap.set('comments', entry.comments || []);
                 innerMap.set('sinks', entry.sinks || []);
