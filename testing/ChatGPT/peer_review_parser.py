@@ -119,10 +119,10 @@ def outputJSON(agreed_dict):
             file_entry = {"fileName": file_name, "sensitiveVariables": []}
             for class_name, entries in file_data.items():
                 for entry in entries:
-                    if entry['classification'] == 'Y':
+                    if entry['classification'] == 'Y' and class_name == 'variables':
                         file_entry["sensitiveVariables"].append({
                             "name": entry['key'],
-                            "description": entry['label']
+                            # "description": entry['label']
                         })
             if file_entry["sensitiveVariables"]:
                 json_output["files"].append(file_entry)
@@ -288,7 +288,11 @@ sheet_names = sheet_names[3:]
 # sheet_names = ['Plugin.java']
 # sheet_names = ['LiveTableResultsTest.java']
 # sheet_names = ['MySQLBackupProcessor.java']
+sheet_names = ['AdvancedBluetoothDetailsHeaderC', 'Analysis.java', 'ArtifactoryChoiceListProvider.j',
+               'GitHubServerConfig.java', 'HttpMethod.java', 'LiveTableResultsTest_#2.java', 'ResetPasswordIT.java', 
+               'WifiEnterpriseConfig.java']
 print(sheet_names)
+
 
 # Create structure for all sheets
 nested_dict = parse_review(file_path, sheet_names, reviewers, classes)
