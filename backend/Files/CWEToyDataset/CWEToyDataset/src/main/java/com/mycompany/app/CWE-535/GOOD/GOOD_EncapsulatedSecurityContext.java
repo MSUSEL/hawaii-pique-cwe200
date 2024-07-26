@@ -2,7 +2,7 @@ public class GOOD_EncapsulatedSecurityContext {
 
     public static void main(String[] args) {
         try {
-            String[] command = {"sh", "-c", "secureScript.sh"};
+            String[] command = {"sh", "-c", "bin/user/connectToServer.sh"};
             ProcessBuilder pb = new ProcessBuilder(command);
             Process process = pb.start();
 

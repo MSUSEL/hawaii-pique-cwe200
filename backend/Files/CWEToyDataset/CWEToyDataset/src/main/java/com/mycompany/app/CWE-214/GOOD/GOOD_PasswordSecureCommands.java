@@ -7,7 +7,7 @@ public class GOOD_PasswordSecureCommands {
         try {
             String authToken = getEncryptedAuthToken();
             
-            URL url = new URL("http://example.com/data");
+            URL url = new URL("http://api.companynetwork.com/private/data?apikey=" + authToken);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization", "Basic " + authToken);

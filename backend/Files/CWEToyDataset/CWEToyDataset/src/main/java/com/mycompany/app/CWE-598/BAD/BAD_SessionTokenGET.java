@@ -5,7 +5,7 @@ import java.net.HttpURLConnection;
 public class BAD_SessionTokenGET {
     public static void retrieveData(String sessionToken) {
         try {
-            String urlString = "http://example.com/data?sessionToken=" + sessionToken;
+            String urlString = "http://api.internalnetwork.com/data?sessionToken=" + sessionToken;
             URL url = new URL(urlString);
             URLConnection connection = url.openConnection();
             

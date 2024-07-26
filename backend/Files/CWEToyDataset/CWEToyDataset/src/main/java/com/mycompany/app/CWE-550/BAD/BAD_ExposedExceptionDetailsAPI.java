@@ -8,7 +8,7 @@ public class BAD_ExposedExceptionDetailsAPI {
 
     @GetMapping("/api/data")
     public String getData() {
-        String db_user = "CWE-200-user";
+        String db_user = "john_doe";
         try {
             // Simulate an operation that may fail
             simulateDatabaseOperation(db_user);

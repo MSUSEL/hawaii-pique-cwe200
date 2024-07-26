@@ -25,6 +25,6 @@ public class BAD_DatabaseConnectorCustomSink {
     }
 
     public static void main(String[] args) {
-        connectToDatabase("jdbc:mysql://localhost:3306/mydb?user=admin&password=secret");
+        connectToDatabase("jdbc:mysql://mydb.abcdefghijklmnop.us-west-2.rds.amazonaws.com:3306/mydb?user=admin&password=secret");
     }
 }

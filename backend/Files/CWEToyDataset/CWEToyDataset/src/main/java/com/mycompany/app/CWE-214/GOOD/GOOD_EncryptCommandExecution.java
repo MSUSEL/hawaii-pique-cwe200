@@ -6,10 +6,10 @@ import javax.crypto.SecretKey;
 public class GOOD_EncryptCommandExecution {
     public static void main(String[] args) {
         try {
-            String sensitiveArgument = "sensitiveValue";
-            String encryptedArgument = encryptArgument(sensitiveArgument);
+            String bankAccountNumber = "48098433183058";
+            String encryptedArgument = encryptArgument(bankAccountNumber);
 
-            ProcessBuilder builder = new ProcessBuilder("secureScript", encryptedArgument);
+            ProcessBuilder builder = new ProcessBuilder("processpayment.sh", encryptedArgument);
             Process process = builder.start();
             process.waitFor();
         } catch (Exception e) {

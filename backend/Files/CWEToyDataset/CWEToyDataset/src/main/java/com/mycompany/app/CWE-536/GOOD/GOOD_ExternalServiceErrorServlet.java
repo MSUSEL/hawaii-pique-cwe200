@@ -13,7 +13,7 @@ public class GOOD_ExternalServiceErrorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            URL url = new URL("https://api.example.com/data");
+            URL url = new URL("https://api.companydata.com/v1/userinfo?auth_token=09876zyxwv54321");
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             // Assume connection setup and request...
 

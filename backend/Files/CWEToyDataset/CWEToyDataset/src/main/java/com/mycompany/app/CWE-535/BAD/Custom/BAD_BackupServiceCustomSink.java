@@ -25,6 +25,6 @@ public class BAD_BackupServiceCustomSink {
     }
 
     public static void main(String[] args) {
-        performBackup("/secure/backup/location");
+        performBackup("/private/secure/backup");
     }
 }

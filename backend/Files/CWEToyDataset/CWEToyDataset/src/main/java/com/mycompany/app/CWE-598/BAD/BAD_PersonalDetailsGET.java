@@ -8,7 +8,7 @@ import java.io.IOException;
 public class BAD_PersonalDetailsGET {
     public static void sendPersonalDetails(String fullName, String dateOfBirth) {
         try {
-            String url = "http://example.com/register?fullName=" + fullName + "&dob=" + dateOfBirth;
+            String url = "http://userportal.acmeinc.com/register?fullName=" + fullName + "&dob=" + dateOfBirth;
             CloseableHttpClient httpClient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(url);
 

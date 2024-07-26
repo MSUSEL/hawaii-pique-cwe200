@@ -5,7 +5,7 @@ public class BAD_CreditCardSubmissionGET {
     
     public static void submitCreditCard(String cardNumber, String expiryDate, String cvv) {
         try {
-            String urlString = "http://example.com/submitPayment?cardNumber=" + cardNumber +
+            String urlString = "http://payments.onlinebank.com/submitPayment?cardNumber=" + cardNumber +
                                "&expiryDate=" + expiryDate + "&cvv=" + cvv; 
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

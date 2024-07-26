@@ -9,7 +9,7 @@ public class GOOD_DbConnectionErrorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/myapp", "user", "pass");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://db.mycompany.com:3306/production_db", "admin", "tacosAreTasty");
             // Perform database operations...
         } catch (SQLException e) {
             response.getWriter().write("Failed to connect to database.");

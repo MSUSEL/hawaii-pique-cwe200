@@ -5,7 +5,7 @@ public class BAD_PasswordChangeGET {
     
     public static void changePassword(String username, String oldPassword, String newPassword) {
         try {
-            String urlString = "http://example.com/changePassword?username=" + username + 
+            String urlString = "http://secure.companyportal.com/changePassword?username=johndoe" + username + 
                                "&oldPassword=" + oldPassword + "&newPassword=" + newPassword;
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

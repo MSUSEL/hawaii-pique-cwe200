@@ -1,7 +1,7 @@
 public class BAD_SalaryDivisionExceptionHandling {
     public static void main(String[] args) throws ArithmeticException{
         
-            int hoursWored = getConfidentialBaseSalary();
+            int hoursWorked = getConfidentialBaseSalary();
             int totalSalary = getNumberOfEmployees();
             String employeeID = getEmployeeID();
 
@@ -9,7 +9,7 @@ public class BAD_SalaryDivisionExceptionHandling {
                 throw new ArithmeticException("Attempt to divide by zero - confidential payroll calculation cannot be completed for employee. " + employeeID);
             }
             else{
-                int hourlyRate = totalSalary / hoursWored;
+                int hourlyRate = totalSalary / hoursWorked;
                 System.out.println("Hourly rate for employee " + employeeID + " is: " + hourlyRate);
             }  
     }

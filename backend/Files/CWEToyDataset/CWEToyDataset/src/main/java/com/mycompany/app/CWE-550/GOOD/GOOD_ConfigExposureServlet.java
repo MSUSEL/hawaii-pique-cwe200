@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class GOOD_ConfigExposureServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String filePath = "/etc/myapp/config.xml";
+        String filePath = "/etc/financeapp/settings.xml";
         try {
             configureService(filePath);
         } catch (Exception e) {

@@ -8,7 +8,6 @@ public class BAD_LogUserCredentials {
         logger.info("Checking credentials for username: {} with password: {}", username, password);
         
         // Placeholder for database lookup that might involve insecure practices
-        // This part is purely illustrative and skips actual database operations
         if ("admin".equals(username) && "adminPass".equals(password)) {
             return true; // Simulated successful authentication
         } else if ("user1".equals(username) && "pass1234".equals(password)) {

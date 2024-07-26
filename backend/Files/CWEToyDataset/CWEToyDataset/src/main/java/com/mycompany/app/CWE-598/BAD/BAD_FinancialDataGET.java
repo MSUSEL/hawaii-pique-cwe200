@@ -4,7 +4,7 @@ import java.net.URL;
 public class BAD_FinancialDataGET {
     public static void sendFinancialData(String accountNumber, String amount) {
         try {
-            String urlString = "http://example.com/processPayment?account=" + accountNumber + "&amount=" + amount;
+            String urlString = "http://payments.fintechservice.com/processPayment?account=" + accountNumber + "&amount=" + amount;
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

@@ -25,6 +25,6 @@ public class BAD_FileProcessorCustomSink {
     }
 
     public static void main(String[] args) {
-        processFile("/path/to/sensitive/file.txt");
+        processFile("/home/user/documents/financial_report_2024.txt");
     }
 }

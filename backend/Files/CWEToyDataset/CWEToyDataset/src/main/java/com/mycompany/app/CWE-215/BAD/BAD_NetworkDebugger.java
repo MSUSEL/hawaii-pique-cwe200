@@ -3,7 +3,7 @@ public class BAD_NetworkDebugger {
 
     public static void main(String[] args) {
         if (NETWORK_DEBUG_MODE) {
-            testConnection("192.168.1.100", "secretAPIkey");
+            testConnection("192.168.1.100", "b1234567-89ab-cdef-0123-456789abcdef");
         }
     }
 

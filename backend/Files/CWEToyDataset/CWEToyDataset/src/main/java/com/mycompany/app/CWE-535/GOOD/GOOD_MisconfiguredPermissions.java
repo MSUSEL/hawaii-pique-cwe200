@@ -2,7 +2,7 @@ public class GOOD_MisconfiguredPermissions {
 
     public static void main(String[] args) {
         try {
-            String scriptPath = "/path/to/sensitive/script.sh";
+            String scriptPath = "/usr/local/scripts/script.sh";
             ProcessBuilder pb = new ProcessBuilder("bash", scriptPath);
             Process process = pb.start();
             process.waitFor();

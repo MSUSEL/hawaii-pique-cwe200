@@ -6,7 +6,7 @@ public class BAD_ApiKeyEmbedded {
 
     public static void callExternalService() {
         try {
-            URL url = new URL("https://api.externalservice.com/data?api_key=" + SERVICE_API_KEY);
+            URL url = new URL("https://api.acmehealth.com/v1/patientdata?key=mnop3456qrst7890uvwx1234&api_key=" + SERVICE_API_KEY);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 

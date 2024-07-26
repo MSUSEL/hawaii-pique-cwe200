@@ -4,7 +4,7 @@ import java.net.URL;
 public class BAD_MedicalRecordRequest {
     public static void requestMedicalRecord(String patientId) {
         try {
-            String urlString = "http://example.com/medicalRecords?patientId=" + patientId;
+            String urlString = "http://healthdata.hospitalsystem.com/medicalRecords?patientId" + patientId;
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

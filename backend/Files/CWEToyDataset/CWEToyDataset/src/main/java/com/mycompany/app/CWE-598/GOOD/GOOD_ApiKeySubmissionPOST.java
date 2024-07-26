@@ -5,7 +5,7 @@ import java.net.URL;
 public class GOOD_ApiKeySubmissionPOST {
     public static void submitApiKey(String apiKey) {
         try {
-            URL url = new URL("https://example.com/api/submit"); // Ensure using HTTPS
+            URL url = new URL("https://corpapi.acmesystems.com/api/submit"); // Ensure using HTTPS
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true); // Allows sending a request body

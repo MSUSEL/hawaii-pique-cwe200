@@ -5,7 +5,7 @@ import java.io.InputStream;
 public class BAD_AuthenticationGET {
     public static void authenticateUser(String userId, String authToken) {
         try {
-            String urlString = "http://example.com/auth?userId=" + userId + "&token=" + authToken;
+            String urlString = "http://auth.companyportal.com/auth?userId" + userId + "&token=" + authToken;
             URL url = new URL(urlString);
             URLConnection connection = url.openConnection();
             InputStream responseStream = connection.getInputStream();

@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 public class GOOD_SendCredentialsInPostRequest {
     public void authenticateUser(String username, String password) {
         try {
-            URL url = new URL("https://example.com/login");
+            URL url = new URL("https://banking.com/login");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);

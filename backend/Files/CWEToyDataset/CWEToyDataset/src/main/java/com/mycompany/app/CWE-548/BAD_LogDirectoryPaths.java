@@ -35,6 +35,6 @@ public class BAD_LogDirectoryPaths {
     }
 
     public static void main(String[] args) {
-        new BAD_LogDirectoryPaths().processFilesInDirectory("/path/to/sensitive/data");
+        new BAD_LogDirectoryPaths().processFilesInDirectory("/usr/local/photos");
     }
 }
