@@ -2,7 +2,7 @@ public class BAD_ShellCommandExposure {
 
     public static void main(String[] args) {
         try {
-            String[] command = {"sh", "-c", "cp /path/to/sensitive/file /backup/location"};
+            String[] command = {"sh", "-c", "cp /var/backups/financeapp/data/2024-07-25/backup.tar.gz"};
             Process process = Runtime.getRuntime().exec(command);
             int exitCode = process.waitFor();
 

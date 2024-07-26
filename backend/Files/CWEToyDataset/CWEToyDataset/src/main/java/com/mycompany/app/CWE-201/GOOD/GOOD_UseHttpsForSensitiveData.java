@@ -18,7 +18,7 @@ public class GOOD_UseHttpsForSensitiveData {
     }
 
     public static void main(String[] args) {
-        String sensitiveData = "{\"message\": \"This is sensitive\"}";
+        String sensitiveData = "{\"message\": \"My SSN is 1234566\"}";
         transmitDataSecurely(sensitiveData);
     }
 }
