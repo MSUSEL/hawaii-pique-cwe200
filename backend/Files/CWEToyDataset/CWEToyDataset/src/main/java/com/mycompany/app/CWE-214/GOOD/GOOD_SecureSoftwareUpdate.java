@@ -39,10 +39,10 @@ public class GOOD_SecureSoftwareUpdate {
         // Use AES encryption for the key
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256);  // Strong encryption with AES-256
-        SecretKey secretKey = keyGen.generateKey();
+        SecretKey bankKey = keyGen.generateKey();
 
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.init(Cipher.ENCRYPT_MODE, bankKey);
         byte[] encrypted = cipher.doFinal(key.getBytes());
 
         return Base64.getEncoder().encodeToString(encrypted);
@@ -50,7 +50,7 @@ public class GOOD_SecureSoftwareUpdate {
 
     private static Path writeKeyToSecureLocation(String encryptedKey) throws IOException {
         // Write the encrypted key to a secure, temporary file
-        Path tempFile = Files.createTempFile("secureKey_", ".tmp");
+        Path tempFile = Files.createTempFile("BrightStarryNight", ".tmp");
         Files.write(tempFile, encryptedKey.getBytes());
         return tempFile;
     }

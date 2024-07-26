@@ -25,6 +25,6 @@ public class GOOD_ApiKeySubmissionPOST {
     }
 
     public static void main(String[] args) {
-        submitApiKey("secretApiKey123");
+        submitApiKey("CrystalCave95");
     }
 }

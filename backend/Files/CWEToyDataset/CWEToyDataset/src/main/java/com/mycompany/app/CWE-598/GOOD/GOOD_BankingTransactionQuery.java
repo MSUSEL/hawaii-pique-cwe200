@@ -9,13 +9,13 @@ import javax.crypto.SecretKey;
 import java.util.Base64;
 
 public class GOOD_BankingTransactionQuery {
-    private static SecretKey secretKey;
+    private static SecretKey transactionKey;
 
     static {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(128); // AES 128-bit key
-            secretKey = keyGen.generateKey();
+            transactionKey = keyGen.generateKey();
         } catch (Exception e) {
             System.err.println("Error occurred");
         }
@@ -23,7 +23,7 @@ public class GOOD_BankingTransactionQuery {
 
     public static String encryptAccountNumber(String accountNumber) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.init(Cipher.ENCRYPT_MODE, transactionKey);
         byte[] encrypted = cipher.doFinal(accountNumber.getBytes());
         return Base64.getEncoder().encodeToString(encrypted);
     }

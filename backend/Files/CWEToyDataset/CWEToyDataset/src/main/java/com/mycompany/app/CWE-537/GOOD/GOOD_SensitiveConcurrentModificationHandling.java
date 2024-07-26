@@ -2,10 +2,10 @@ import java.util.*;
 
 public class GOOD_SensitiveConcurrentModificationHandling {
     public static void main(String[] args) {
-        List<String> sensitiveList = new ArrayList<>(Arrays.asList("secret1", "secret2", "confidentialInfo"));
+        List<String> changesList = new ArrayList<>(Arrays.asList("EmeraldIsle77", "GalacticVoyager42", "confidentialInfo"));
         try {
             for (String item : sensitiveList) {
-                if (item.equals("secret1")) {
+                if (item.equals("EmeraldIsle77")) {
                     // Modifying the list during iteration, which is not allowed
                     sensitiveList.remove(item);
                 }

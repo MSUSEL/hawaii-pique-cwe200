@@ -15,6 +15,6 @@ public class BAD_TransmitEncryptionKey {
     }
 
     public static void main(String[] args) {
-        new BAD_TransmitEncryptionKey().transmitKey("cia.internal.gov", 8080, "8NQHLMAI67SN".getBytes());
+        new BAD_TransmitEncryptionKey().transmitKey("cia.internal.gov", 8080, "AutumnLeaves2024".getBytes());
     }
 }

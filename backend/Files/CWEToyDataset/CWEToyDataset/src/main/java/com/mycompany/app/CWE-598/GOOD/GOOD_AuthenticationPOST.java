@@ -10,14 +10,14 @@ import java.io.InputStream;
 
 
 public class GOOD_AuthenticationPOST {
-    private static SecretKey secretKey;
+    private static SecretKey authenticationKey;
 
     static {
         try {
             // Generate a key for encryption
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(128); // AES 128-bit key
-            secretKey = keyGen.generateKey();
+            authenticationKey = keyGen.generateKey();
         } catch (Exception e) {
             System.err.println("Error occurred");
         }
@@ -25,7 +25,7 @@ public class GOOD_AuthenticationPOST {
 
     public static String encryptCredentials(String data) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.init(Cipher.ENCRYPT_MODE, authenticationKey);
         byte[] encrypted = cipher.doFinal(data.getBytes());
         return Base64.getEncoder().encodeToString(encrypted);
     }
@@ -34,7 +34,7 @@ public class GOOD_AuthenticationPOST {
         try {
             userId = encryptCredentials(userId);
             authToken = encryptCredentials(authToken);
-            URL url = new URL("https://example.com/auth"); // Use HTTPS
+            URL url = new URL("https://auth.corporateaccess.com/login"); // Use HTTPS
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true); // To send request content
@@ -60,6 +60,6 @@ public class GOOD_AuthenticationPOST {
     }
 
     public static void main(String[] args) {
-        authenticateUser("user123", "secureTokenXYZ");
+        authenticateUser("user123", "abc123def456ghi789jkl012mno345pqr678");
     }
 }

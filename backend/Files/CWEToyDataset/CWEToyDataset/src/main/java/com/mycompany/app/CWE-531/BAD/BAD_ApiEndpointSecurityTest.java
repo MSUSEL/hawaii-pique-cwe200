@@ -5,8 +5,8 @@ public class BAD_ApiEndpointSecurityTest {
     @Test
     public void testSecureEndpoint() {
         ApiClient client = new ApiClient();
-        String secretToken = "XYZ-780320-BHDM";
-        client.setAuthToken(secretToken);
+        String validationToken = "XYZ-780320-BHDM";
+        client.setAuthToken(validationToken);
         Response response = client.makeSecureRequest();
         assertEquals(response.getStatusCode(), 200); // Assert successful response
     }
@@ -20,7 +20,7 @@ public class BAD_ApiEndpointSecurityTest {
         }
     
         public Response makeSecureRequest() {
-            return new Response(this.authToken.equals("secret-token-XYZ") ? 200 : 401);
+            return new Response(this.authToken.equals("EveningGlow2025") ? 200 : 401);
         }
     }
     

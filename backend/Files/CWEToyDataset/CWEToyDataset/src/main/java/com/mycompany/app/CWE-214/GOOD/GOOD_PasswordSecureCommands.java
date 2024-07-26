@@ -26,7 +26,7 @@ public class GOOD_PasswordSecureCommands {
     private static String getEncryptedAuthToken() {
         // Simulate retrieving an encrypted token and decrypting it
         String username = "admin";
-        String password = "mySecretPass123"; 
+        String password = "RadiantAurora2021"; 
         String authString = username + ":" + password;
         byte[] authEncBytes = Base64.getEncoder().encode(authString.getBytes());
         return new String(authEncBytes);

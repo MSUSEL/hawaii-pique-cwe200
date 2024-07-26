@@ -6,7 +6,7 @@ public class BAD_HardcodedSecretInConfig {
 
     static {
         appConfig.put("apiBaseUrl", "https://api.example.com");
-        appConfig.put("apiKey", "supersecretkey12345");
+        appConfig.put("apiKey", "key12345");
         appConfig.put("encryptionKey", "0123456789abcdef"); 
     }
 

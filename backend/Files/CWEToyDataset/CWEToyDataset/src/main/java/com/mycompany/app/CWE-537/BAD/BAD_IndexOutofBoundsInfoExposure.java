@@ -1,13 +1,13 @@
 public class BAD_IndexOutofBoundsInfoExposure {
 
     public static void main(String[] args, int index) throws IndexOutOfBoundsException{
-        String[] sensitiveData = {"secretPassword123", "confidentialInfo"};
+        String[] dataMap = {"MistyMountain2020", "medicalRecords"};
         
         if (index < 0 || index >= sensitiveData.length) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of bounds for the array" + sensitiveData) ;
+            throw new IndexOutOfBoundsException("Index " + index + " is out of bounds for the array" + dataMap) ;
         }
         else{
-            String data = sensitiveData[index]; // This will throw IndexOutOfBoundsException
+            String data = dataMap[index]; // This will throw IndexOutOfBoundsException
         }
     }
 }

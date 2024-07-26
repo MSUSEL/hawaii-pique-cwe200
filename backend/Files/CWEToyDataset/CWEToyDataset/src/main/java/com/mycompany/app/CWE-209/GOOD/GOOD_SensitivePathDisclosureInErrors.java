@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class GOOD_SensitivePathDisclosureInErrors{
 
     public static void main(String[] args) {
-        String filePath = "/sensitive/config/secrets.txt";
+        String filePath = "/sensitive/config/users.txt";
 
         try {
             Scanner scanner = new Scanner(new File(filePath));

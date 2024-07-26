@@ -14,6 +14,6 @@ public class GOOD_SecureKeyManagement {
     }
     
     public static void main(String[] args) {
-        encryptUserData("Sensitive user data");
+        encryptUserData("user_data_2024-07-25");
     }
 }

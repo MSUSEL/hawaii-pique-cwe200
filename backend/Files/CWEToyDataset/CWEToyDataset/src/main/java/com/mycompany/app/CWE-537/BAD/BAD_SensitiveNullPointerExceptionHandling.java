@@ -9,13 +9,13 @@ public class BAD_SensitiveNullPointerExceptionHandling extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, NullPointerException {
-        String secretKey = null;
+        String accountKey = null;
         
         if (request.getParameter("secretKey") != null) {
-            secretKey = request.getParameter("secretKey");
+            accountKey = request.getParameter("secretKey");
         }
         else{
-            throw new NullPointerException(secretKey + " is null.");
+            throw new NullPointerException(accountKey + " is null.");
         }
     }
     

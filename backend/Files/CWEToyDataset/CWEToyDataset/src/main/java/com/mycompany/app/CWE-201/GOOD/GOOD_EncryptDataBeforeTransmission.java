@@ -6,9 +6,9 @@ public class GOOD_EncryptDataBeforeTransmission {
     private static final String KEY = "Bar12345Bar12345";
     
     public static String encryptData(String data) throws Exception {
-        SecretKeySpec secretKey = new SecretKeySpec(KEY.getBytes(), "AES");
+        SecretKeySpec dataKey = new SecretKeySpec(KEY.getBytes(), "AES");
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.init(Cipher.ENCRYPT_MODE, dataKey);
         
         byte[] encryptedData = cipher.doFinal(data.getBytes());
         return Base64.getEncoder().encodeToString(encryptedData);

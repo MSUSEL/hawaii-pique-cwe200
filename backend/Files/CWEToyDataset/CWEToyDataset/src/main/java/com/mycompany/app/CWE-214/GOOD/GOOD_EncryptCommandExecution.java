@@ -20,10 +20,10 @@ public class GOOD_EncryptCommandExecution {
     private static String encryptArgument(String argument) throws Exception {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(128);
-        SecretKey secretKey = keyGen.generateKey();
+        SecretKey userKey = keyGen.generateKey();
 
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.init(Cipher.ENCRYPT_MODE, userKey);
         byte[] encrypted = cipher.doFinal(argument.getBytes());
 
         return Base64.getEncoder().encodeToString(encrypted);

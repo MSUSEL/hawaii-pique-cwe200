@@ -23,6 +23,6 @@ public class GOOD_DebugOutputWithCredentials {
     public static void main(String[] args) {
         authenticateUser("admin", "wrongPassword");
 
-        authenticateUser("admin", "adminSecret");
+        authenticateUser("admin", "StarlitNight2021");
     }
 }

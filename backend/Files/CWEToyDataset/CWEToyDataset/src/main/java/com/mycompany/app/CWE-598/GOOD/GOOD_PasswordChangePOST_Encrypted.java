@@ -9,13 +9,13 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class GOOD_PasswordChangePOST_Encrypted {
-    private static SecretKey secretKey;
+    private static SecretKey accountKey;
 
     static {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(128); // Using AES with 128-bit keys.
-            secretKey = keyGen.generateKey();
+            accountKey = keyGen.generateKey();
         } catch (Exception e) {
             System.err.println("Error occurred");
         }
@@ -23,7 +23,7 @@ public class GOOD_PasswordChangePOST_Encrypted {
 
     public static String encrypt(String data) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.init(Cipher.ENCRYPT_MODE, accountKey);
         byte[] encrypted = cipher.doFinal(data.getBytes());
         return Base64.getEncoder().encodeToString(encrypted);
     }
@@ -31,7 +31,7 @@ public class GOOD_PasswordChangePOST_Encrypted {
     public static void changePassword(String username, String oldPassword, String newPassword) {
         HttpURLConnection connection = null;
         try {
-            URL url = new URL("https://example.com/changePassword");
+            URL url = new URL("https://secure.companyportal.com/changePassword");
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true); // Allows sending data
@@ -60,6 +60,6 @@ public class GOOD_PasswordChangePOST_Encrypted {
     }
     
     public static void main(String[] args) {
-        changePassword("user2", "oldPass123", "newPass456"); 
+        changePassword("user2", "DragonHeart21", "ShadowHunter34"); 
     }
 }

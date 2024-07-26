@@ -9,6 +9,6 @@ public class BAD_MessagingSystem {
     }
 
     public static void main(String[] args) {
-        new BAD_MessagingSystem().sendMessage("user42", "Your secret PIN is 1234.");
+        new BAD_MessagingSystem().sendMessage("user42", "Your PIN is 1234.");
     }
 }

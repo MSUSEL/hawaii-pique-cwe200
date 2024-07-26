@@ -9,13 +9,13 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class GOOD_HealthInfoSubmissionPOST {
-    private static SecretKey secretKey;
+    private static SecretKey patientKey;
 
     static {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(128); // Using AES with 128-bit keys.
-            secretKey = keyGen.generateKey();
+            patientKey = keyGen.generateKey();
         } catch (Exception e) {
             System.err.println("Error occurred");
         }
@@ -23,7 +23,7 @@ public class GOOD_HealthInfoSubmissionPOST {
 
     public static String encrypt(String data) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.init(Cipher.ENCRYPT_MODE, patientKey);
         byte[] encrypted = cipher.doFinal(data.getBytes());
         return Base64.getEncoder().encodeToString(encrypted);
     }

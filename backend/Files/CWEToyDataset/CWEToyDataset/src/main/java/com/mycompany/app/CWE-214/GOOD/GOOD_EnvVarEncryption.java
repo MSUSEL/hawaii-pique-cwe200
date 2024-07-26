@@ -23,11 +23,11 @@ public class GOOD_EnvVarEncryption {
     private static String encryptApiKey(String apiKey) throws Exception {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         keyGenerator.init(128); // Use AES-128 for encryption
-        SecretKey secretKey = keyGenerator.generateKey();
+        SecretKey authKey = keyGenerator.generateKey();
 
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        byte[] encryptedBytes = cipher.doFinal(apiKey.getBytes());
+        cipher.init(Cipher.ENCRYPT_MODE, authKey);
+        byte[] encryptedBytes = cipher.doFinal(authKey.getBytes());
 
         return Base64.getEncoder().encodeToString(encryptedBytes);
     }

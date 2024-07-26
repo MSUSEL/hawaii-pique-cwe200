@@ -12,7 +12,7 @@ public class GOOD_HttpsApiCall {
     public static void main(String[] args) {
         try {
             String token = getDecryptedToken(System.getenv("ENCRYPTED_OAUTH_TOKEN"));
-            URL url = new URL("https://api.secure-service.com/data");
+            URL url = new URL("https://api.retailnetwork.com/v2/orders");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setDoOutput(true); // Required for POST
@@ -35,7 +35,7 @@ public class GOOD_HttpsApiCall {
     private static String getDecryptedToken(String encryptedToken) {
         try {
             // Mock example for decryption (use a real encryption algorithm)
-            byte[] decodedKey = Base64.getDecoder().decode("YourBase64EncodedSecretKeyHere");
+            byte[] decodedKey = Base64.getDecoder().decode("QWxhZGRpbjpvcGVuIHNlc2FtZQ==");
             SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
 
             Cipher cipher = Cipher.getInstance("AES");

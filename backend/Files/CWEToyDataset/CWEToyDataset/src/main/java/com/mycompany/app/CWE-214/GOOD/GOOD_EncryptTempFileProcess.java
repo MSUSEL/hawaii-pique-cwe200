@@ -10,7 +10,7 @@ public class GOOD_EncryptTempFileProcess {
         // Generate encryption key
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256); // Use 256-bit AES for encryption
-        SecretKey secretKey = keyGen.generateKey();
+        SecretKey key = keyGen.generateKey();
 
         // Prepare data to encrypt
         String sensitiveData = "Highly confidential information";
@@ -18,7 +18,7 @@ public class GOOD_EncryptTempFileProcess {
 
         // Encrypt data
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
         byte[] encryptedData = cipher.doFinal(dataToEncrypt);
 
         // Write encrypted data to a secure temporary file

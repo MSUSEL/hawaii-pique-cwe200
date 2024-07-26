@@ -9,13 +9,13 @@ import java.net.URLEncoder;
 
 public class GOOD_CreditCardSubmissionPOST_Encrypted {
 
-    private static SecretKey secretKey;
+    private static SecretKey paymentKey;
 
     static {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(128); // Using AES with 128-bit keys.
-            secretKey = keyGen.generateKey();
+            paymentKey = keyGen.generateKey();
         } catch (Exception e) {
             System.err.println("Error occurred");
         }
@@ -23,7 +23,7 @@ public class GOOD_CreditCardSubmissionPOST_Encrypted {
 
     public static String encrypt(String data) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        cipher.init(Cipher.ENCRYPT_MODE, paymentKey);
         byte[] encrypted = cipher.doFinal(data.getBytes());
         return Base64.getEncoder().encodeToString(encrypted);
     }
@@ -34,7 +34,7 @@ public class GOOD_CreditCardSubmissionPOST_Encrypted {
             expiryDate = encrypt(expiryDate);
             cvv = encrypt(cvv);
 
-            URL url = new URL("https://example.com/submitPayment");
+            URL url = new URL("https://bankingAmerica.com/submitPayment");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);  // Necessary for POST

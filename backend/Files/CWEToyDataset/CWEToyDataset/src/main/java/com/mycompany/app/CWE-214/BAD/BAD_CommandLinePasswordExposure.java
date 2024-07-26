@@ -1,7 +1,7 @@
 public class BAD_CommandLinePasswordExposure {
     public static void main(String[] args) {
         try {
-            String psswrd = "secretPassword123";
+            String psswrd = "BlueSkyMorning";
             // Running a system command
             Runtime.getRuntime().exec(new String[]{"sh", "-c", "somecommand --password " + psswrd});
         } catch (Exception e) {

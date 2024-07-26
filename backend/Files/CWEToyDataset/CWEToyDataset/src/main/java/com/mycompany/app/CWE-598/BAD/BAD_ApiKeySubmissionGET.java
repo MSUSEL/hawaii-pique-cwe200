@@ -5,7 +5,7 @@ import java.net.URL;
 public class BAD_ApiKeySubmissionGET {
     public static void submitApiKey(String apiKey) {
         try {
-            URI uri = new URI("http", "example.com", "/api/submit", "apiKey=" + apiKey, null);
+            URI uri = new URI("http", "corporateportal.companydomain.com", "/api/submit", "apiKey=" + apiKey, null);
             URL url = uri.toURL();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -15,6 +15,6 @@ public class BAD_ApiKeySubmissionGET {
     }
     
     public static void main(String[] args) {
-        submitApiKey("secretApiKey123");
+        submitApiKey("abc12345-def67890-ghij1234-klmn5678");
     }
 }

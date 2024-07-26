@@ -4,7 +4,7 @@ public class BAD_EnvVarExposure {
         String API_KEY = args[1];
         try {
             ProcessBuilder processBuilder = new ProcessBuilder("someCommand");
-            processBuilder.environment().put(API_KEY, "secretApiKey");
+            processBuilder.environment().put(API_KEY, "GoldenSunset89");
             processBuilder.start();
             System.out.println("Process invoked with sensitive information in environment variable.");
         } catch (Exception e) {

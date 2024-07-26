@@ -9,12 +9,12 @@ public class GOOD_SensitiveNullPointerExceptionHandling extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String secretKey = null;
+        String creditCardPin = null;
         try {
             // Simulate retrieving a secret key from a method that returns null
-            secretKey = getSecretKey();
+            creditCardPin = getSecretKey();
             // Attempting to use the secret key which is null
-            int length = secretKey.length(); // This will throw NullPointerException
+            int length = creditCardPin.length(); // This will throw NullPointerException
         } catch (NullPointerException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Failed to handle secret key properly.");
         }

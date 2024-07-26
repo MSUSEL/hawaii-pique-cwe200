@@ -21,8 +21,8 @@ public class BAD_DebugOutputWithCredentials {
     }
 
     public static void main(String[] args) {
-        authenticateUser("admin", "wrongPassword");
+        authenticateUser("admin", "MorningDew2024");
 
-        authenticateUser("admin", "adminSecret");
+        authenticateUser("admin", "SummerSunshine20");
     }
 }
