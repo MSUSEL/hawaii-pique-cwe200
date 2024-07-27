@@ -12,9 +12,9 @@ from sentence_transformers import SentenceTransformer
 from keras.models import load_model
 import tensorflow as tf
 
+# Reconfigure stdout and stderr to handle UTF-8 encoding
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
-
 
 # Ensure the necessary NLTK data packages are downloaded
 packages = ['punkt', 'averaged_perceptron_tagger', 'wordnet', 'stopwords']
@@ -27,15 +27,29 @@ def check_and_download_nltk_data(package):
 for package in packages:
     check_and_download_nltk_data(package)
 
+# Initialize lists to hold different types of data
 variables = []
-projectAllVariables = []
+strings = []
+comments = []
+sinks = []
 
+# Dictionary to hold all variables for different types
+projectAllVariables = {
+    'variables': [],
+    'strings': [],
+    'comments': [],
+    'sinks': []
+}
+
+# Constants
 BATCH_SIZE = 32
 EPOCHS = 500
 DIM = 768
 
+# Initialize lemmatizer
 lemmatizer = WordNetLemmatizer()
 
+# Load stop words and add Java keywords to stop words
 def load_stop_words():
     stop_words = stopwords.words('english')
     try:
@@ -49,6 +63,7 @@ def load_stop_words():
         print(f"Error: {e}")
         return stop_words
 
+# Split camel case words
 def camel_case_split(s):
     words = [[s[0]]]
     for c in s[1:]:
@@ -58,6 +73,7 @@ def camel_case_split(s):
             words[-1].append(c)
     return [''.join(word) for word in words]
 
+# Preprocess text by tokenizing, removing stop words, and lemmatizing
 def Text_Preprocess(feature_text):
     word_tokens = word_tokenize(feature_text)
     if '\n' in word_tokens:
@@ -75,6 +91,7 @@ def Text_Preprocess(feature_text):
             lemmatized_sentence.append(lemmatizer.lemmatize(word.lower()))
     return listToString(lemmatized_sentence)
 
+# Calculate sentence embeddings using SentenceTransformer
 def calculate_SentBert_Vectors(API_Lines):
     model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
     Sentences = []
@@ -85,24 +102,28 @@ def calculate_SentBert_Vectors(API_Lines):
     embeddings = model.encode(Sentences)
     return embeddings
 
+# Convert list to string
 def listToString(lst):
     return ' '.join(lst)
 
+# Concatenate name vectors and context vectors
 def concatNameandContext(nameVec, contextVec):
     return [np.concatenate((nameVec[idx], contextVec[idx]), axis=None) for idx in range(len(nameVec))]
 
-def process_files(varData, files_dict):
+# Process files to extract relevant information and context
+def process_files(varData, files_dict, type, output_list, project_all_vars):
     for f in varData:
         fileName = f
-        allVariables = varData[f]['variables']
+        allVariables = varData[f][type]
         for v in allVariables:
             try:
                 context = get_context(files_dict[fileName], v)
-                variables.append((fileName, Text_Preprocess(v), context))
-                projectAllVariables.append([fileName, v])
+                output_list.append((fileName, Text_Preprocess(v), context))
+                project_all_vars.append([fileName, v])
             except Exception as e:
-                print(f"Error processing file {fileName} and variable {v}: {e}")
+                print(f"Error processing file {fileName} and {type[:-1]} {v}: {e}")
 
+# Get the context of a variable within a file
 def get_context(file, varName):
     context = ""
     for sent in file.split('\n'):
@@ -111,6 +132,7 @@ def get_context(file, varName):
             context += " " + sent
     return Text_Preprocess(context)
 
+# Read Java files from a directory
 def read_java_files(directory):
     java_files_with_content = {}
     for root, _, files in os.walk(directory):
@@ -122,44 +144,75 @@ def read_java_files(directory):
                 java_files_with_content[os.path.basename(file_path)] = file_content
     return java_files_with_content
 
+# Read parsed data from a JSON file
 def read_parsed_data(file_path):
     with open(file_path, "r") as jsonVars:
         return json.load(jsonVars)
 
+# Load stop words
 stop_words = load_stop_words()
 
+# Main function
 def main():
-    # project_path = 'testdata'
+    # Set the project path and parsed data file path
     project_path = sys.argv[1]
-    parsed_data_file_path = os.path.join(project_path, 'data.json')
+    # For testing 
+    # project_path = os.path.join(os.getcwd(),"backend" ,"src", "bert", "testdata")
+    parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
 
+    # Read Java files and parsed data
     files_dict = read_java_files(project_path)
     parsed_data = read_parsed_data(parsed_data_file_path)
-    process_files(parsed_data, files_dict)
 
-    variable_array = np.array(variables)
-    file_info = variable_array[:, 0]
-    variable_vectors = calculate_SentBert_Vectors(variable_array[:, 1])
-    context_vectors = calculate_SentBert_Vectors(variable_array[:, 2])
-    concatenated_variable_vectors = concatNameandContext(variable_vectors, context_vectors)
+    # Process files to extract variables, strings, and comments
+    process_files(parsed_data, files_dict, 'variables', variables, projectAllVariables['variables'])
+    process_files(parsed_data, files_dict, 'strings', strings, projectAllVariables['strings'])
+    process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'])
+    # process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'])
 
-    model = load_model('src/bert/sensInfo_variables_01_0.605.h5')
+    # Combine all data into a single dictionary
+    all_data = {
+        'variables': variables,
+        'strings': strings,
+        'comments': comments,
+        # 'sinks': sinks
+    }
 
-    test_x = np.reshape(concatenated_variable_vectors, (-1, DIM))
-    yPredict = model.predict(test_x)
+    final_results = {}
+
+    # Process each type of data
+    for data_type, data_list in all_data.items():
+        if data_list:
+            data_array = np.array(data_list)
+            file_info = data_array[:, 0]
+            name_vectors = calculate_SentBert_Vectors(data_array[:, 1])
+            context_vectors = calculate_SentBert_Vectors(data_array[:, 2])
+            concatenated_vectors = concatNameandContext(name_vectors, context_vectors)
+
+            # Load the model
+            model = load_model(os.path.join(os.getcwd(),"src", "bert","sensInfo_variables_01_0.605.h5"))
+
+            # For testing
+            # model = load_model(os.path.join(os.getcwd(),"backend" ,"src", "bert","sensInfo_variables_01_0.605.h5"))
+
+            # Run the model to get predictions
+            test_x = np.reshape(concatenated_vectors, (-1, DIM))
+            yPredict = model.predict(test_x)
+
+            # Collect predictions
+            for idx, prediction in enumerate(yPredict):
+                if prediction.round() > 0:
+                    file_name, variable = projectAllVariables[data_type][idx]
+                    if file_name not in final_results:
+                        final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
+                    final_results[file_name][data_type].append({"name": variable})
+
+    # Format results as JSON
+    formatted_results = [{"fileName": file_name, **details} for file_name, details in final_results.items()]
     
-    results = {}
-    for idx, prediction in enumerate(yPredict):
-        if prediction.round() > 0:
-            file_name, variable = projectAllVariables[idx]
-            if file_name not in results:
-                results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
-            results[file_name]["variables"].append({"name": variable})
-    
-    final_results = [{"fileName": file_name, **details} for file_name, details in results.items()]
-    
-    with open(os.path.join(project_path,'results.json'), 'w') as f:
-        json.dump(final_results, f, indent=4)
+    # Write results to a JSON file
+    with open(os.path.join(project_path, 'results.json'), 'w') as f:
+        json.dump(formatted_results, f, indent=4)
     print("finished")
 
 if __name__ == '__main__':

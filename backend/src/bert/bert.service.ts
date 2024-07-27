@@ -54,7 +54,7 @@ export class BertService {
             });
     
             bertProcess.stderr.on('data', (data) => {
-                // stderrData += data.toString();
+                stderrData += data.toString();
             });
     
             bertProcess.on('close', (code) => {
@@ -62,9 +62,9 @@ export class BertService {
                     resolve(stdoutData);
                 } else {
                     // Only print the error if it's not the specific warning we're ignoring
-                    if (!stderrData.includes('tf.losses.sparse_softmax_cross_entropy') && !stderrData.includes('Error in loading the saved optimizer state')) {
-                        // console.warn(`Warning or error from bertProcess: ${stderrData}`);
-                    }
+                    // if (!stderrData.includes('tf.losses.sparse_softmax_cross_entropy') && !stderrData.includes('Error in loading the saved optimizer state')) {
+                        console.warn(`Warning or error from bertProcess: ${stderrData}`);
+                    // }
                     resolve(null); // Resolve with null to indicate an issue, but avoid breaking the flow
                 }
             });
