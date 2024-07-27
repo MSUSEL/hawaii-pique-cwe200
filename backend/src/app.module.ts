@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { BertModule } from './bert/bert.module';
 import { FilesModule } from './files/files.module';
 import { ChatGptModule } from './chat-gpt/chat-gpt.module';
 import { ConfigModule } from '@nestjs/config';
@@ -17,6 +18,7 @@ import { EventsModule } from './events/events.module';
         EventsModule,
         ChatGptModule,
         CodeQlModule,
+        BertModule
     ],
     controllers: [AppController],
     providers: [AppService],
