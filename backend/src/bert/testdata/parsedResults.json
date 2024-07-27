@@ -1,0 +1,61 @@
+{
+  "BAD_APIEndpointDebugging.java": {
+    "variables": [
+      "args",
+      "apiEndpoint",
+      "apiKey",
+      "API_DEBUG",
+      "url",
+      "key"
+    ],
+    "filename": "C:\\Users\\kyler\\OneDrive\\Documents\\Work\\cwe200\\backend\\Files\\SmallTest\\SmallTest\\BAD_APIEndpointDebugging.java",
+    "comments": [
+      "Assume some testing logic here"
+    ],
+    "strings": [
+      "api_key_123456789",
+      "DEBUG: Testing API endpoint:",
+      "https://api.example.com/data",
+      "with API Key:",
+      "API_DEBUG"
+    ]
+  },
+  "BAD_DataProcessor.java": {
+    "variables": [
+      "args",
+      "data",
+      "DATA_PROCESSING_DEBUG",
+      "e",
+      "dataSnippet",
+      "message"
+    ],
+    "filename": "C:\\Users\\kyler\\OneDrive\\Documents\\Work\\cwe200\\backend\\Files\\SmallTest\\SmallTest\\BAD_DataProcessor.java",
+    "comments": [
+      "Simulating a processing error"
+    ],
+    "strings": [
+      "Processing failed at index: 10",
+      "sensitiveDataString",
+      "DATA_PROCESSING_DEBUG",
+      "false",
+      "DEBUG: Error processing data:"
+    ]
+  },
+  "BAD_DebugFeatureToggle.java": {
+    "variables": [
+      "DEBUG_FEATURE_TOGGLE",
+      "args",
+      "userSSN"
+    ],
+    "filename": "C:\\Users\\kyler\\OneDrive\\Documents\\Work\\cwe200\\backend\\Files\\SmallTest\\SmallTest\\BAD_DebugFeatureToggle.java",
+    "comments": [
+      "Code to handle sensitive personal information"
+    ],
+    "strings": [
+      "DEBUG_FEATURE_TOGGLE",
+      "DEBUG: User SSN for troubleshooting:",
+      "false",
+      "123-45-6789"
+    ]
+  }
+}

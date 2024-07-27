@@ -53,7 +53,7 @@ lemmatizer = WordNetLemmatizer()
 def load_stop_words():
     stop_words = stopwords.words('english')
     try:
-        with open("java_keywords.txt", "r") as javaKeywordsFile:
+        with open(os.path.join(os.getcwd(),"src", "bert","java_keywords.txt"), "r") as javaKeywordsFile:
             keywords = javaKeywordsFile.readlines()
             for keyword in keywords:
                 new_keyword = keyword.strip()
@@ -211,7 +211,7 @@ def main():
     formatted_results = [{"fileName": file_name, **details} for file_name, details in final_results.items()]
     
     # Write results to a JSON file
-    with open(os.path.join(project_path, 'results.json'), 'w') as f:
+    with open(os.path.join(project_path, 'data.json'), 'w') as f:
         json.dump(formatted_results, f, indent=4)
     print("finished")
 
