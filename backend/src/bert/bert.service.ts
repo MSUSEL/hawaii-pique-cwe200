@@ -11,7 +11,7 @@ import { json } from 'stream/consumers';
 
 @Injectable()
 export class BertService {
-    projectsPath: string;
+    projectPath: string;
     encode: any;
     parsedResults:{ [key: string]: JavaParseResult };
     fileContents = {};
@@ -22,15 +22,16 @@ export class BertService {
         private fileUtilService: FileUtilService,
     ) {
 
-        this.projectsPath = this.configService.get<string>('CODEQL_PROJECTS_DIR',);
+        this.projectPath = ""
         this.parsedResults = {};
         this.fileContents = {};
     }
 
-    async bertWrapper(filePaths: string[]){
+    async bertWrapper(filePaths: string[], sourcePath: string){
+        this.projectPath = sourcePath
         await this.getParsedResults(filePaths);
-        await this.readFiles(filePaths);
-        await this.getBertResponse(this.fileContents, this.parsedResults);
+        await this.fileUtilService.writeToFile(path.join(this.projectPath, 'parsedResults.json'), JSON.stringify(this.parsedResults, null, 2));
+        await this.getBertResponse(this.projectPath);
 
     }
 
@@ -41,24 +42,39 @@ export class BertService {
     
     }
 
-    async readFiles(filePaths: string[]){
-        for (let filePath of filePaths){
-            let baseName = path.basename(filePath);
-            this.fileContents[baseName] = this.fileUtilService.processJavaFile(filePath);
-        }
-    }
-
-    async getBertResponse(fileContents, parsedValues){ {
+    async getBertResponse(project_root) {
         return new Promise((resolve, reject) => {
-            const bertProcess = spawn('python', ['src/bert/bert.py', "filePath"]);
+            const bertProcess = spawn('python', ['src/bert/run_bert.py', project_root]);
+    
+            let stdoutData = '';
+            let stderrData = '';
+    
             bertProcess.stdout.on('data', (data) => {
-                resolve(data.toString());
+                stdoutData += data.toString();
             });
+    
             bertProcess.stderr.on('data', (data) => {
-                reject(data.toString());
+                // stderrData += data.toString();
+            });
+    
+            bertProcess.on('close', (code) => {
+                if (code === 0) {
+                    resolve(stdoutData);
+                } else {
+                    // Only print the error if it's not the specific warning we're ignoring
+                    if (!stderrData.includes('tf.losses.sparse_softmax_cross_entropy') && !stderrData.includes('Error in loading the saved optimizer state')) {
+                        // console.warn(`Warning or error from bertProcess: ${stderrData}`);
+                    }
+                    resolve(null); // Resolve with null to indicate an issue, but avoid breaking the flow
+                }
+            });
+    
+            bertProcess.on('error', (err) => {
+                reject(`Failed to start subprocess: ${err}`);
             });
         });
-    }}
+    }
+    
 }
 
 interface JavaParseResult {

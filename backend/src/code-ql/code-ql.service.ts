@@ -11,6 +11,7 @@ import { SensitiveVariables } from './SensitiveVariables';
 import { SensitiveComments } from './SensitiveComments';
 import { SensitiveStrings } from './SensitiveStrings';
 import { Sinks } from './Sinks';
+import { BertService } from 'src/bert/bert.service';
 
 import { EventsGateway } from 'src/events/events.gateway';
 @Injectable()
@@ -22,7 +23,8 @@ export class CodeQlService {
         private parserService: CodeQlParserService,
         private eventsGateway: EventsGateway,
         private fileUtilService: FileUtilService,
-        private gptService: ChatGptService
+        private gptService: ChatGptService,
+        private bertService: BertService
     ) {
         this.projectsPath = this.configService.get<string>(
             'CODEQL_PROJECTS_DIR',
@@ -47,10 +49,12 @@ export class CodeQlService {
         // let slice = javaFiles.slice(177, 187);  
         // const data = await this.runChatGPT(slice, sourcePath);
 
-        const data = await this.runChatGPT(javaFiles, sourcePath);
-        // const data = this.useSavedData(sourcePath);
+        // const data = await this.runChatGPT(javaFiles, sourcePath);
 
-        // await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
+        await this.runBert(javaFiles, sourcePath);
+        const data = this.useSavedData(sourcePath);
+
+        await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
 
         await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
 
@@ -66,6 +70,11 @@ export class CodeQlService {
         await this.writeFilesGptResponseToJson(data.fileList, sourcePath);
 
         return data;
+    }
+
+    async runBert(javaFiles, sourcePath){
+        // Get Sensitive variables from gpt
+        await this.bertService.bertWrapper(javaFiles, sourcePath);
     }
 
     useSavedData(sourcePath){

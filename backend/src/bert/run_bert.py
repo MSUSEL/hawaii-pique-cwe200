@@ -1,69 +1,42 @@
-#read toydataset too and it to data
-
-# Importing necessary libraries
-import pandas as pd
+import os
+import sys
+import json
+import numpy as np
 import nltk
-from sklearn import metrics
+from nltk.data import find
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag
 from sentence_transformers import SentenceTransformer
-import numpy
-from sklearn.model_selection import train_test_split
-import torch.nn as nn
-from keras.models import Sequential, load_model
-from keras.layers import Dense, Dropout
-from keras.layers import Embedding, Bidirectional
-from keras.layers import LSTM
-from keras.layers import GRU
-from keras.layers import Conv1D
-from keras.layers import GlobalMaxPooling1D
-from keras.layers import ReLU
-from keras.callbacks import ModelCheckpoint, EarlyStopping
-from keras.callbacks import TensorBoard, CSVLogger
-from keras import backend as K
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
-import json
-import sys
-import os
+from keras.models import load_model
+import tensorflow as tf
 
-os.chdir(os.path.join(os.getcwd(), "backend", "src", "bert"))
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
+
+
+# Ensure the necessary NLTK data packages are downloaded
+packages = ['punkt', 'averaged_perceptron_tagger', 'wordnet', 'stopwords']
+def check_and_download_nltk_data(package):
+    try:
+        find(f'tokenizers/{package}')
+    except LookupError:
+        nltk.download(package)
+
+for package in packages:
+    check_and_download_nltk_data(package)
+
+variables = []
+projectAllVariables = []
 
 BATCH_SIZE = 32
 EPOCHS = 500
-DIM=768
-# DIM=384
+DIM = 768
 
 lemmatizer = WordNetLemmatizer()
-# w2v_model = Word2Vec.load("fastText_Models/Word2Vec_StandardJavaAPIs")
-
-file_name = ""
-variables=[]
-strings=[]
-comments=[]
-
-
-def parse_values(fileParsedResults):
-    try:
-        parsed_results = json.loads(fileParsedResults)
-
-        # Extract the values and assign them to the respective lists
-        global variables, strings, comments, file_name
-        variables = parsed_results.get("variables", [])
-        strings = parsed_results.get("strings", [])
-        comments = parsed_results.get("comments", [])
-        file_name = parsed_results.get("filename", "")
-    
-    except:
-        pass
-
 
 def load_stop_words():
-    #NLP PReprocessing-------------------------------------
-    nltk.download('stopwords')
     stop_words = stopwords.words('english')
     try:
         with open("java_keywords.txt", "r") as javaKeywordsFile:
@@ -76,196 +49,118 @@ def load_stop_words():
         print(f"Error: {e}")
         return stop_words
 
-
-def camel_case_split(str):
-    words = [[str[0]]]
-
-    for c in str[1:]:
+def camel_case_split(s):
+    words = [[s[0]]]
+    for c in s[1:]:
         if words[-1][-1].islower() and c.isupper():
             words.append(list(c))
         else:
             words[-1].append(c)
-
     return [''.join(word) for word in words]
 
-
 def Text_Preprocess(feature_text):
-    nltk.download('punkt')
-    nltk.download('averaged_perceptron_tagger')
-    nltk.download('wordnet')
     word_tokens = word_tokenize(feature_text)
     if '\n' in word_tokens:
         word_tokens.remove('\n')
     filtered_sentence = [w for w in word_tokens if not w.lower() in stop_words and w.isalnum()]
-    for i in range(0, len(filtered_sentence)):
+    for i in range(len(filtered_sentence)):
         filtered_sentence[i:i + 1] = camel_case_split(filtered_sentence[i])
-    # print(filtered_sentence)
     tagged_sentence = pos_tag(filtered_sentence)
-    # print(tagged_sentence)
-    # filtered_API_Desc_tokens = [w for w in wo if not w[0].lower() in stop_words and w[0].isalnum()]
-    # ------------------------ add lemitization -------------------------------
     lemmatized_sentence = []
     for word, tag in tagged_sentence:
         ntag = tag[0].lower()
-        if (ntag in ['a', 'r', 'n', 'v']):
+        if ntag in ['a', 'r', 'n', 'v']:
             lemmatized_sentence.append(lemmatizer.lemmatize(word.lower(), ntag))
         else:
             lemmatized_sentence.append(lemmatizer.lemmatize(word.lower()))
     return listToString(lemmatized_sentence)
 
-
 def calculate_SentBert_Vectors(API_Lines):
     model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
-    Sentences=[]
+    Sentences = []
     for api in API_Lines:
-        preprocessedTokens=Text_Preprocess(api)
-        api=''
-        for token in preprocessedTokens:
-            api=api+token+' '
+        preprocessedTokens = Text_Preprocess(api)
+        api = ' '.join(preprocessedTokens)
         Sentences.append(api)
-    print(Sentences)
     embeddings = model.encode(Sentences)
     return embeddings
 
-
-def readContext(fileName,varName):
-    # with open("data/ReviewSensFiles/"+fileName,"r") as f:
-    with open(fileName, "r") as f:
-        context=""
-        fileSentences=f.readlines()
-        for sent in fileSentences:
-            sent_tokens = word_tokenize(sent)
-            if varName in sent_tokens:
-                context=context+" "+sent
-                continue
-
-    return  Text_Preprocess(context)
 def listToString(lst):
-    # print(lst)
-    str=""
-    for item in lst:
-        str=str+item+" "
-    return str
+    return ' '.join(lst)
 
+def concatNameandContext(nameVec, contextVec):
+    return [np.concatenate((nameVec[idx], contextVec[idx]), axis=None) for idx in range(len(nameVec))]
 
+def process_files(varData, files_dict):
+    for f in varData:
+        fileName = f
+        allVariables = varData[f]['variables']
+        for v in allVariables:
+            try:
+                context = get_context(files_dict[fileName], v)
+                variables.append((fileName, Text_Preprocess(v), context))
+                projectAllVariables.append([fileName, v])
+            except Exception as e:
+                print(f"Error processing file {fileName} and variable {v}: {e}")
 
-def calculate_SentBert_Vectors(API_Lines):
-    model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2") 
-    Sentences=[]
-    for api in API_Lines:
-        preprocessedTokens=Text_Preprocess(api)
-        api=''
-        for token in preprocessedTokens:
-            api=api+token+' '
-        Sentences.append(api)
-    embeddings = model.encode(Sentences)
-    return embeddings
+def get_context(file, varName):
+    context = ""
+    for sent in file.split('\n'):
+        sent_tokens = word_tokenize(sent)
+        if varName in sent_tokens:
+            context += " " + sent
+    return Text_Preprocess(context)
 
-def concatNameandContext(nameVec,contextVex):
-    totalVec=[]
-    for idx, vec in enumerate(nameVec):
-        totalVec.append(numpy.concatenate((nameVec[idx], contextVex[idx]), axis=None))
-        # print(totalVec)
-        # print(len(totalVec[0]))
-    return totalVec
+def read_java_files(directory):
+    java_files_with_content = {}
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith(".java"):
+                file_path = os.path.join(root, file)
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    file_content = f.read()
+                java_files_with_content[os.path.basename(file_path)] = file_content
+    return java_files_with_content
+
+def read_parsed_data(file_path):
+    with open(file_path, "r") as jsonVars:
+        return json.load(jsonVars)
 
 stop_words = load_stop_words()
 
-
 def main():
-    # filecontents = args[1]
-    # fileParsedResults = args[2]
+    # project_path = 'testdata'
+    project_path = sys.argv[1]
+    parsed_data_file_path = os.path.join(project_path, 'data.json')
 
-    file_contents = 'test'
+    files_dict = read_java_files(project_path)
+    parsed_data = read_parsed_data(parsed_data_file_path)
+    process_files(parsed_data, files_dict)
 
-    fileParsedResults = r"""
-{
-    "variables": [
-        "dataKey",
-        "cipher",
-        "args",
-        "APIKey",
-        "data",
-        "e",
-        "encryptedData",
-        "KEY"
-    ],
-    "filename": "C:\\Users\\kyler\\OneDrive\\Documents\\Work\\cwe200\\backend\\Files\\CWEToyDataset\\CWEToyDataset\\src\\main\\java\\com\\mycompany\\app\\CWE-201\\GOOD\\GOOD_EncryptDataBeforeTransmission.java",
-    "comments": [],
-    "strings": [
-        "The API token is 123",
-        "An error has occurred.",
-        "Encrypted Data:",
-        "Bar12345Bar12345",
-        "AES",
-        "AES/ECB/PKCS5Padding"
-    ]
-}
-"""
+    variable_array = np.array(variables)
+    file_info = variable_array[:, 0]
+    variable_vectors = calculate_SentBert_Vectors(variable_array[:, 1])
+    context_vectors = calculate_SentBert_Vectors(variable_array[:, 2])
+    concatenated_variable_vectors = concatNameandContext(variable_vectors, context_vectors)
 
+    model = load_model('src/bert/sensInfo_variables_01_0.605.h5')
 
-    file_contents = """
-    import javax.crypto.Cipher;
-    import javax.crypto.spec.SecretKeySpec;
-    import java.util.Base64;
-
-    public class GOOD_EncryptDataBeforeTransmission {
-        private static final String KEY = "Bar12345Bar12345";
-        
-        public static String encryptData(String data) throws Exception {
-            SecretKeySpec dataKey = new SecretKeySpec(KEY.getBytes(), "AES");
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, dataKey);
-            
-            byte[] encryptedData = cipher.doFinal(data.getBytes());
-            return Base64.getEncoder().encodeToString(encryptedData);
-        }
-
-        public static void main(String[] args) {
-            try {
-                String APIKey = "The API token is 123";
-                String encryptedData = encryptData(APIKey);
-                System.out.println("Encrypted Data: " + encryptedData);
-            } catch (Exception e) {
-                System.err.println("An error has occurred.");
-            }
-        }
-    }
-
-    """
-
-    # Parse the JSON
-    parse_values(fileParsedResults)
-    variable_array=numpy.array(variables)
-    contents_array = numpy.array(file_contents.split())
-
-    variable_vectors=calculate_SentBert_Vectors(variable_array)
-    context_vectors=calculate_SentBert_Vectors(contents_array)
-    concatenated_variable_vectors=concatNameandContext(variable_vectors, context_vectors)
-    print(1)
-    # Load model
-    model = load_model('sensInfo_variables_01_0.605.h5')
-
-    # Run model
-    test_x= numpy.reshape(concatenated_variable_vectors,(-1,DIM))
-    # print("test shape:", numpy.array(test_x).shape)
-    # test_y= numpy.reshape(test_set_y_id,(-1,1)).astype(numpy.float32)
+    test_x = np.reshape(concatenated_variable_vectors, (-1, DIM))
     yPredict = model.predict(test_x)
-    for idx, val in enumerate(yPredict):
-        print(projectAllVariables[idx]," ", yPredict[idx].round())
-
-    # Save Sensitive Info
-
-    # Turn into JSON
-
-
-
-    # Text_Preprocess(stop_words, file_contents)
-
-
-
+    
+    results = {}
+    for idx, prediction in enumerate(yPredict):
+        if prediction.round() > 0:
+            file_name, variable = projectAllVariables[idx]
+            if file_name not in results:
+                results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
+            results[file_name]["variables"].append({"name": variable})
+    
+    final_results = [{"fileName": file_name, **details} for file_name, details in results.items()]
+    
+    with open(os.path.join(project_path,'results.json'), 'w') as f:
+        json.dump(final_results, f, indent=4)
+    print("finished")
 
 if __name__ == '__main__':
-    # main(sys.argv)
-    print("------------------------------------ " + os.getcwd())
-    # main()
+    main()

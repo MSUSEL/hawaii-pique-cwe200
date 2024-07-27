@@ -221,7 +221,7 @@ export class FileUtilService {
      * @param filePath Path to java file to process
      * @param id ID to replace class name with
      */
-    async processJavaFile(filePath: string, id: string): Promise<string> {
+    async processJavaFile(filePath: string, id: string = "0"): Promise<string> {
         let baseName = path.basename(filePath).split('.java')[0];
         // Read file contents
         const fileStream = fs.createReadStream(filePath);
@@ -275,13 +275,15 @@ export class FileUtilService {
             const cwd = process.cwd();
             const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
             filePath = path.resolve(cwd, filePath);
-    
+            
+            // Check if JAR exists, if not build it
             if (!fs.existsSync(jarPath)) {
                 exec('mvn clean package', { cwd: path.resolve(cwd, 'ParseJava') }, (error, stdout, stderr) => {
                     if (error) {
                         reject(`Error building JAR: ${stderr}`);
                         return;
                     }
+                    // Run the Java program
                     this.runJavaProgram(jarPath, filePath, aggregatedResults).then(resolve).catch(reject);
                 });
             } else {
@@ -310,6 +312,7 @@ export class FileUtilService {
     
                 try {
                     const result: JavaParseResult = JSON.parse(stdout);
+                    console.log(result);
                     aggregatedResults[path.basename(result.filename)] = result;
                     resolve();
                 } catch (e) {
@@ -330,18 +333,19 @@ export class FileUtilService {
     convertLabeledDataToMap(labeledData: any): Map<string, Map<string, string[]>> {
         let map = new Map<string, Map<string, string[]>>();
     
-        if (!labeledData.files || !Array.isArray(labeledData.files)) {
-            console.error('Expected labeledData to have a files array, but got:', typeof labeledData.files);
+        if (!Array.isArray(labeledData)) {
+            console.error('Expected labeledData to be an array, but got:', typeof labeledData);
             return map;
         }
     
-        labeledData.files.forEach(entry => {
+        labeledData.forEach(entry => {
             if (entry.fileName) {
                 let innerMap = new Map<string, string[]>();
-                innerMap.set('variables', entry.sensitiveVariables || []);
-                innerMap.set('strings', entry.strings || []);
-                innerMap.set('comments', entry.comments || []);
-                innerMap.set('sinks', entry.sinks || []);
+                innerMap.set('variables', (entry.variables || []).map(variable => variable.name));
+                // Assuming `strings`, `comments`, and `sinks` follow the same structure and you want to handle them similarly
+                innerMap.set('strings', (entry.strings || []).map(string => string.name));
+                innerMap.set('comments', (entry.comments || []).map(comment => comment.name));
+                innerMap.set('sinks', (entry.sinks || []).map(sink => sink.name));
                 map.set(entry.fileName, innerMap);
             } else {
                 console.warn('Entry without fileName found:', entry);
