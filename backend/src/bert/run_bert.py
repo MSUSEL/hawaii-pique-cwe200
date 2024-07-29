@@ -146,7 +146,7 @@ def read_java_files(directory):
 
 # Read parsed data from a JSON file
 def read_parsed_data(file_path):
-    with open(file_path, "r") as jsonVars:
+    with open(file_path, "r", encoding="utf-8") as jsonVars:
         return json.load(jsonVars)
 
 # Load stop words
@@ -174,7 +174,7 @@ def main():
     all_data = {
         'variables': variables,
         'strings': strings,
-        'comments': comments,
+        # 'comments': comments,
         # 'sinks': sinks
     }
 
@@ -190,10 +190,10 @@ def main():
             concatenated_vectors = concatNameandContext(name_vectors, context_vectors)
 
             # Load the model
-            model = load_model(os.path.join(os.getcwd(),"src", "bert","sensInfo_variables_01_0.605.h5"))
+            model = load_model(os.path.join(os.getcwd(),"src", "bert", "models", f"{data_type}.h5"))
 
             # For testing
-            # model = load_model(os.path.join(os.getcwd(),"backend" ,"src", "bert","sensInfo_variables_01_0.605.h5"))
+            # model = load_model(os.path.join(os.getcwd(),"backend" ,"src", "bert", "models", f"{data_type}.h5"))
 
             # Run the model to get predictions
             test_x = np.reshape(concatenated_vectors, (-1, DIM))
@@ -202,10 +202,10 @@ def main():
             # Collect predictions
             for idx, prediction in enumerate(yPredict):
                 if prediction.round() > 0:
-                    file_name, variable = projectAllVariables[data_type][idx]
+                    file_name, data = projectAllVariables[data_type][idx]
                     if file_name not in final_results:
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
-                    final_results[file_name][data_type].append({"name": variable})
+                    final_results[file_name][data_type].append({"name": data})
 
     # Format results as JSON
     formatted_results = [{"fileName": file_name, **details} for file_name, details in final_results.items()]
