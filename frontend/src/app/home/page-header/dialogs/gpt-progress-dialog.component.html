@@ -1,26 +1,30 @@
 <h2 mat-dialog-title>Analysis Progress</h2>
 <div mat-dialog-content>
-  <div *ngIf="data?.sensitiveVariables >= 0">
+  <div *ngIf="data?.parsingProgress >= 0">
+    <p>Parsing Progress: {{ data?.parsingProgress }}%</p>
+    <mat-progress-bar mode="determinate" [value]="data?.parsingProgress"></mat-progress-bar>
+  </div>
+  <div *ngIf="data?.sensitiveVariables >= 0 && data?.parsingProgress >= 100">
     <p>Finding Sensitive Variables: {{ data?.sensitiveVariables }}%</p>
     <mat-progress-bar mode="determinate" [value]="data?.sensitiveVariables"></mat-progress-bar>
   </div>
-  <div *ngIf="data?.sensitiveStrings >= 0 && data?.sensitiveVariables >= 100">
+  <div *ngIf="data?.sensitiveStrings >= 0 && data?.sensitiveVariables >= 0">
     <p>Finding Sensitive Strings: {{ data?.sensitiveStrings }}%</p>
     <mat-progress-bar mode="determinate" [value]="data?.sensitiveStrings"></mat-progress-bar>
   </div>
-  <div *ngIf="data?.sensitiveComments >= 0 && data?.sensitiveStrings >= 100">
+  <div *ngIf="data?.sensitiveComments >= 0 && data?.sensitiveStrings >= 0">
     <p>Finding Sensitive Comments: {{ data?.sensitiveComments }}%</p>
     <mat-progress-bar mode="determinate" [value]="data?.sensitiveComments"></mat-progress-bar>
   </div>
-  <div *ngIf="data?.sensitiveSinks >= 0 && data?.sensitiveComments >= 100">
+  <div *ngIf="data?.sensitiveSinks >= 0 && data?.sensitiveComments >= 0">
     <p>Finding Sinks: {{ data?.sensitiveSinks }}%</p>
     <mat-progress-bar mode="determinate" [value]="data?.sensitiveSinks"></mat-progress-bar>
   </div>
-  <div *ngIf="data?.processingCodeQL >= 0 && data?.sensitiveSinks >= 100">
+  <div *ngIf="data?.processingCodeQL >= 0 && data?.sensitiveSinks >= 0">
     <p>Processing CodeQL: {{ data?.processingCodeQL }}%</p>
     <mat-progress-bar mode="determinate" [value]="data?.processingCodeQL"></mat-progress-bar>
   </div>
-  <div *ngIf="data?.buildProgress >= 0 && data?.processingCodeQL >= 100">
+  <div *ngIf="data?.buildProgress >= 0 && data?.processingCodeQL >= 0">
     <p>Build Progress: {{ data?.buildProgress }}%</p>
     <mat-progress-bar mode="determinate" [value]="data?.buildProgress"></mat-progress-bar>
   </div>

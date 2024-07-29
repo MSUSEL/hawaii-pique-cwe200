@@ -9,7 +9,6 @@ import { SaveFileDialogComponent } from './dialogs/dialogs.component';
 import { SettingsDialogComponent } from './dialogs/settings.dialog.component';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
 import { CodeQlComponent } from './code-ql/code-ql.component';
-import { ConfirmationDialogComponent } from '../home/page-header/dialogs/confirmation-dialog.component';
 import {GPTProgressDialogComponent} from '../home/page-header/dialogs/gpt-progress-dialog.component';
 import { HelpDialogComponent } from './dialogs/help-dialog.component';
 
@@ -24,7 +23,6 @@ import { HelpDialogComponent } from './dialogs/help-dialog.component';
         SettingsDialogComponent,
         HelpDialogComponent,
         CodeQlComponent,
-        ConfirmationDialogComponent,
         GPTProgressDialogComponent
 
     ],

@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChatGptService } from 'src/app/Services/chatgpt.service';
 import { Subscription } from 'rxjs';
 import { GPTProgressDialogComponent } from '../page-header/dialogs/gpt-progress-dialog.component';
-import { ConfirmationDialogComponent } from '../page-header/dialogs/confirmation-dialog.component';
+import { ChangeDetectorRef } from '@angular/core';
 
 declare var $: any;
 
@@ -28,7 +28,8 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
     private codeQlService: CodeQlService,
     private chatGptService: ChatGptService,
     private editorService: EditorService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -80,7 +81,8 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
       width: '500px',
       disableClose: true, // Make the dialog non-dismissable when clicking outside
       data: {
-        sensitiveVariables: 0,
+        parsingProgress: 0,
+        sensitiveVariables: -1,
         sensitiveStrings: -1,
         sensitiveComments: -1,
         sensitiveSinks: -1,
@@ -92,63 +94,73 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
       }
     });
 
+    // Subscribe to parsing progress updates
+    this.subscriptions.push(
+      this.socketService.getParsingProgress().subscribe(progress => {
+        console.log('parsingProgress update:', progress);
+        dialogRef.componentInstance.data.parsingProgress = progress;
+        if (progress >= 100) {
+          dialogRef.componentInstance.data.sensitiveVariables = 0;
+        }
+        this.cdr.detectChanges();  // Manually trigger change detection
+      })
+    );
+
     // Subscribe to progress updates
     this.subscriptions.push(
       this.socketService.getGPTProgressVariables().subscribe(progress => {
+        console.log('GPTProgressVariables update:', progress);
         dialogRef.componentInstance.data.sensitiveVariables = progress;
         if (progress >= 100) {
           dialogRef.componentInstance.data.sensitiveStrings = 0;
         }
+        this.cdr.detectChanges();  // Manually trigger change detection
       })
     );
 
     this.subscriptions.push(
       this.socketService.getGPTProgressStrings().subscribe(progress => {
+        console.log('GPTProgressStrings update:', progress);
         dialogRef.componentInstance.data.sensitiveStrings = progress;
         if (progress >= 100) {
           dialogRef.componentInstance.data.sensitiveComments = 0;
         }
+        this.cdr.detectChanges();  // Manually trigger change detection
       })
     );
 
     this.subscriptions.push(
       this.socketService.getGPTProgressComments().subscribe(progress => {
+        console.log('GPTProgressComments update:', progress);
         dialogRef.componentInstance.data.sensitiveComments = progress;
         if (progress >= 100) {
           dialogRef.componentInstance.data.sensitiveSinks = 0;
         }
+        this.cdr.detectChanges();  // Manually trigger change detection
       })
     );
 
     this.subscriptions.push(
       this.socketService.getGPTProgressSinks().subscribe(progress => {
+        console.log('GPTProgressSinks update:', progress);
         dialogRef.componentInstance.data.sensitiveSinks = progress;
         if (progress >= 100) {
           dialogRef.componentInstance.data.processingCodeQL = 0;
         }
+        this.cdr.detectChanges();  // Manually trigger change detection
       })
     );
 
     this.subscriptions.push(
       this.socketService.getCodeQLProgress().subscribe(progress => {
+        console.log('CodeQLProgress update:', progress);
         dialogRef.componentInstance.data.processingCodeQL = progress;
         if (progress >= 100) {
           dialogRef.componentInstance.data.buildProgress = 0;
         }
+        this.cdr.detectChanges();  // Manually trigger change detection
       })
     );
-
-    // this.subscriptions.push(
-    //   this.socketService.getBuildProgress().subscribe(progress => {
-    //     dialogRef.componentInstance.data.buildProgress = progress;
-    //     if (progress >= 100) {
-    //       this.isLoading = false;
-    //       this.unsubscribeAll();
-    //     }
-    //   })
-    // );
-
-    // $('#terminal').toggleClass('d-none');
 
     this.codeQlService.runCodeQl({ project: this.utilService.ProjectName }).subscribe(
       (response) => {
@@ -158,6 +170,7 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
         this.socketService.socketDisconnect();
         dialogRef.componentInstance.data.buildProgress = 100;
         this.unsubscribeAll();
+        this.cdr.detectChanges();  // Manually trigger change detection
       },
       (error) => {
         this.isLoading = false;
@@ -192,54 +205,6 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
         console.error(error);
       }
     );
-  }
-
-  openAgreementDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '500px', // Fixed width
-      height: 'auto', // Dynamic height
-      position: {
-        top: '100px'
-      },
-      data: {
-        onConfirm: () => this.runCodeQl(),
-        isLoading: true,
-        cost: this.calculatedCost
-      },
-      disableClose: true, // Make the dialog non-dismissable when clicking outside
-
-    });
-
-    // Store the dialog reference in the component instance
-    dialogRef.componentInstance.dialogRef = dialogRef;
-
-    if (this.calculatedCost === null) {
-      this.getCost().then((cost) => {
-        dialogRef.componentInstance.updateData({ isLoading: false, cost });
-        dialogRef.updateSize('500px', 'auto');  // Update the dialog size after the data is loaded
-      });
-    } else {
-      dialogRef.componentInstance.updateData({ isLoading: false, cost: this.calculatedCost });
-      dialogRef.updateSize('500px', 'auto');  // Update the dialog size immediately
-    }
-  }
-
-  async getCost(): Promise<number> {
-    this.socketService.clearOutput();
-    await this.socketService.socketConnect();
-
-    return new Promise((resolve, reject) => {
-      this.chatGptService.getCostEstimate(this.utilService.ProjectName).subscribe(
-        (response) => {
-          resolve(response.totalCost);
-          this.socketService.socketDisconnect();
-        },
-        (error) => {
-          reject(error);
-          this.socketService.socketDisconnect();
-        }
-      );
-    });
   }
 
   private unsubscribeAll() {

@@ -12,8 +12,7 @@ export class SocketService {
     TerminalStreamingMode: boolean = true;
     public url = environment.apiUrl;
 
-    private progressSubject = new Subject<number>();
-    private progressEstimate = new Subject<number>();
+    private parsingProgress = new Subject<number>();
     private GPTProgressVariables = new Subject<number>();
     private GPTProgressStrings = new Subject<number>();
     private GPTProgressSinks = new Subject<number>();
@@ -36,29 +35,25 @@ export class SocketService {
                 const parsedData = JSON.parse(data);
                 // Progress bar for pre-processing files
                 if (parsedData.type === 'parsingProgress') {
-                    this.progressSubject.next(parsedData.parsingProgress);
-                }
-                // Progress bar for cost estimate
-                else if (parsedData.type === 'estimateProgress') {
-                    this.progressEstimate.next(parsedData.estimateProgress);
+                    this.parsingProgress.next(parsedData.parsingProgress);
                 }
                 else if (parsedData.type === 'GPTProgress-variables') {
-                    this.GPTProgressVariables.next(parsedData.GPTProgress);
+                    this.GPTProgressVariables.next(parsedData.progress);
                 }
                 else if (parsedData.type === 'GPTProgress-strings') {
-                    this.GPTProgressStrings.next(parsedData.GPTProgress);
+                    this.GPTProgressStrings.next(parsedData.progress);
                 }
                 else if (parsedData.type === 'GPTProgress-comments') {
-                    this.GPTProgressComments.next(parsedData.GPTProgress);
+                    this.GPTProgressComments.next(parsedData.progress);
                 }
                 else if (parsedData.type === 'GPTProgress-sinks') {
-                    this.GPTProgressSinks.next(parsedData.GPTProgress);
+                    this.GPTProgressSinks.next(parsedData.progress);
                 }
                 else if (parsedData.type === 'CodeQLProgress') {
-                    this.CodeQLProgress.next(parsedData.GPTProgress);
+                    this.CodeQLProgress.next(parsedData.progress);
                 }
                 else if (parsedData.type === 'BuildProgress') {
-                    this.BuildProgress.next(parsedData.GPTProgress);
+                    this.BuildProgress.next(parsedData.progress);
                 }
 
                 else {
@@ -72,11 +67,8 @@ export class SocketService {
         });
     }
 
-    getProgressUpdates(): Observable<number> {
-        return this.progressSubject.asObservable();
-    }
-    getProgressEstimate(): Observable<number> {
-        return this.progressEstimate.asObservable();
+    getParsingProgress(): Observable<number> {
+        return this.parsingProgress.asObservable();
     }
     getGPTProgressVariables(): Observable<number> {
         return this.GPTProgressVariables.asObservable();

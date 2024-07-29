@@ -3,7 +3,6 @@ import {  CVEUtilService } from './cwe-util.service';
 import {MatDialog} from '@angular/material/dialog';
 import { SaveFileDialogComponent } from './dialogs/dialogs.component';
 import { SettingsDialogComponent } from './dialogs/settings.dialog.component';
-import {ConfirmationDialogComponent} from '../home/page-header/dialogs/confirmation-dialog.component';
 
 import { ItemFlatNode } from '../shared-components/tree/tree.component';
 import { FilesService } from '../Services/fileService';

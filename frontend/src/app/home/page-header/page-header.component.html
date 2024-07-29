@@ -19,7 +19,7 @@
             <button class="btn print-button" 
                 title="Analyze {{utilService.ProjectName}} project" 
                 *ngIf="utilService.readyForAnalysis() && !isLoading"
-                (click)="openAgreementDialog();">
+                (click)="runCodeQl();">
                 <i class="fa fa-play text-secondary"></i>
             </button>
 
