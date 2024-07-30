@@ -6,14 +6,15 @@ import org.apache.logging.log4j.*;
 public class BAD_ApiKeyManagementServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String apiKey = request.getParameter("apiKey");
-        validateApiKey(apiKey);
+        try{
+            if (apiKey == "apiKey" || apiKey.isEmpty()) {
+                throw new ServletException("Invalid API key " + apiKey + " provided.");
+            }
+        }
+        catch(ServletException e){
+            System.err.println("Invalid API key " + apiKey + " provided.");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while processing the request: " + e.getMessage());
+        }
     }
 
-    private void validateApiKey(String apiKey) throws ServletException {
-        // Simulate API key validation logic that might fail
-        if (apiKey == "apiKey" || apiKey.isEmpty()) {
-            throw new ServletException("Invalid API key " + apiKey + " provided.");
-        }
-        // More validation logic could go here
-    }
 }

@@ -7,11 +7,17 @@ public class BAD_ProfileUpdateServlet extends HttpServlet {
         String userId = request.getParameter("userId");
         String email = request.getParameter("email");
         updateEmail(userId, email);
+
+        try{
+            updateEmail(userId, email);
+        } catch (ServletException e) {
+            response.getWriter().println("Error updating email for user ID: " + userId);
+        }
     
     }
 
     private void updateEmail(String userId, String email) throws ServletException {
         // Email update logic that might fail
-        throw new ServletException("Email format error or email already in use: " + email);
+        throw new ServletException();
     }
 }

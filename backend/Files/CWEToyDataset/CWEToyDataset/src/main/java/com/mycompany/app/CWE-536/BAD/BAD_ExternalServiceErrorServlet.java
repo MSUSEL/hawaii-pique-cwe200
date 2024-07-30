@@ -7,18 +7,20 @@ import java.net.URL;
 public class BAD_ExternalServiceErrorServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
+        int responseCode = 0;
         try {
             URL url = new URL("https://api.example.com/data");
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             // Assume connection setup and request...
 
-            int responseCode = connection.getResponseCode();
+            responseCode = connection.getResponseCode();
             if (responseCode != HttpsURLConnection.HTTP_OK) {
-                throw new ServletException("Failed to fetch data from API: HTTP " + responseCode);
+                throw new ServletException();
             }
-        } catch (IOException e) {
-            throw new ServletException("Service error while fetching data", e);
+        } catch (ServletException e) {
+            System.err.println("Failed to fetch data from API: HTTP " + responseCode);
         }
     }
 

@@ -9,8 +9,11 @@ public class BAD_IoTDeviceFirmwareUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String deviceId = request.getParameter("deviceId");
         String firmwareVersion = request.getParameter("firmwareVersion");
-        
-        deployFirmwareUpdate(deviceId, firmwareVersion);
+        try {
+            deployFirmwareUpdate(deviceId, firmwareVersion);
+        } catch (ServletException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to deploy firmware update for device ID: " + deviceId + " with firmware version: " + firmwareVersion);
+        }
     }
 
     private void deployFirmwareUpdate(String deviceId, String firmwareVersion) throws ServletException {
@@ -20,6 +23,4 @@ public class BAD_IoTDeviceFirmwareUpdateServlet extends HttpServlet {
         }
         // Assume more update logic here that could fail
     }
-
-
 }
