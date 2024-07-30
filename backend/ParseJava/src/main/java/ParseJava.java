@@ -9,6 +9,7 @@ import com.github.javaparser.ast.stmt.CatchClause;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
@@ -49,16 +50,19 @@ public class ParseJava {
                     Set<String> variables = new HashSet<>();
                     Set<String> comments = new HashSet<>();
                     Set<String> strings = new HashSet<>();
+                    Set<String> methodCalls = new HashSet<>();
 
                     cu.accept(new VariableCollector(), variables);
                     cu.accept(new CommentCollector(), comments);
                     cu.accept(new StringLiteralCollector(), strings);
+                    cu.accept(new MethodCallCollector(), methodCalls);
 
                     JSONObject jsonOutput = new JSONObject();
                     jsonOutput.put("filename", fileName);
                     jsonOutput.put("variables", new JSONArray(variables));
                     jsonOutput.put("comments", new JSONArray(comments));
                     jsonOutput.put("strings", new JSONArray(strings));
+                    jsonOutput.put("methodCalls", new JSONArray(methodCalls));
 
                     System.out.println(jsonOutput.toString(2));
                 } else {
@@ -224,6 +228,19 @@ public class ParseJava {
                 }
             } catch (Exception e) {
                 System.err.println("Error collecting string literal: " + e.getMessage());
+            }
+        }
+    }
+
+    // Visitor class to collect method calls from the AST
+    private static class MethodCallCollector extends VoidVisitorAdapter<Set<String>> {
+        @Override
+        public void visit(MethodCallExpr mce, Set<String> collector) {
+            try {
+                super.visit(mce, collector);
+                collector.add(mce.getNameAsString());
+            } catch (Exception e) {
+                System.err.println("Error collecting method call: " + e.getMessage());
             }
         }
     }

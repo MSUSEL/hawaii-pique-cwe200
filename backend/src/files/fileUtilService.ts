@@ -305,6 +305,7 @@ export class FileUtilService {
                         variables: [],
                         comments: [],
                         strings: [],
+                        sinks: []
                     };
                     resolve();
                     return;
@@ -322,6 +323,7 @@ export class FileUtilService {
                         variables: [],
                         comments: [],
                         strings: [],
+                        sinks: []
                     };
                     resolve();
                 }
@@ -379,5 +381,6 @@ interface JavaParseResult {
     variables: string[];
     comments: string[];
     strings: string[];
+    sinks: string[];
 }
 
