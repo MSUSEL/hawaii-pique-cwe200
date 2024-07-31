@@ -62,6 +62,9 @@ public void logAPIUsage(String apiKey, String methodName) {
 // Ensure password is strong.
 // This block handles user authentication.
 // Deprecated: Use newMethod() instead.
+// encrypted password
+// get scrambled password and store it encrypted
+// the password in plain text
 'AWS_SECRET_ACCESS' <- This is a hardcoded string, not a comment.
 'user: admin, password: admin123' <- This is a hardcoded string, not a comment.
 These are all generic comments that do not contain sensitive information, and should not be flagged. Notice, how most of them are explaining code or are generic comments.

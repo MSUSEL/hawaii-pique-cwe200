@@ -415,7 +415,7 @@ export class ChatGptService {
 
         // Parse the Java files to get the variables, strings, and comments
         await this.getParsedResults(javaFiles);
-
+        // this.outputForBert();
         let totalTokenCount = 0;
 
         const prompts = [
@@ -450,8 +450,8 @@ export class ChatGptService {
 
         // Calculate the cost of each prompt concurrently
         await Promise.all(prompts.map(prompt => processPrompt(prompt)));
-
-        this.createTrainingData()
+        
+        // this.createTrainingData()
         
         // Calculate cost
         const inputCost = totalTokenCount * INPUT_COST;
@@ -521,21 +521,60 @@ export class ChatGptService {
         });
     }
 
+    outputForBert() {
+        // Write the parsed results to a JSON file
+        this.fileUtilService.writeToFile(path.join(this.projectsPath, 'parsedResults.json'), JSON.stringify(this.parsedResults, null, 2));
+        
+        // // Read in the labeled data
+        // const dataJSON = this.fileUtilService.readJsonFile(path.join(this.projectsPath, 'ReviewSensFiles', 'agreed_classifications.json'));
+        // const toyDataset = this.fileUtilService.readJsonFile(path.join(this.projectsPath, 'ReviewSensFiles', 'Toy_dataset_data.json'));
+
+        // // Combine the two datasets
+        // const labeledDataMap = this.fileUtilService.convertLabeledDataToMap(dataJSON);
+        
+        //     const toyDataMap = this.fileUtilService.convertLabeledDataToMap(toyDataset);
+        //     for (const [fileName, dataMap] of toyDataMap.entries()) {
+        //         if (labeledDataMap.has(fileName)) {
+        //             const existingMap = labeledDataMap.get(fileName);
+        //             for (const [key, value] of dataMap.entries()) {
+        //                 if (existingMap.has(key)) {
+        //                     existingMap.set(key, existingMap.get(key).concat(value));
+        //                 } else {
+        //                     existingMap.set(key, value);
+        //                 }
+        //             }
+        //         } else {
+        //             labeledDataMap.set(fileName, dataMap);
+        //         }
+        //     }
+        
+        //     // Convert labeledDataMap to a plain object for JSON serialization
+        // const labeledDataObject = {};
+        // for (const [fileName, dataMap] of labeledDataMap.entries()) {
+        //     labeledDataObject[fileName] = Object.fromEntries(dataMap);
+        // }
+
+        // // Write the combined dataset to a JSON file
+        // this.fileUtilService.writeToFile(path.join(this.projectsPath, 'labels.json'), JSON.stringify(labeledDataObject, null, 2));
+    }
+
+
+
+
 
     createTrainingData() {
         const data = [
-            {input: this.variablesInput, type: 'variables'}, 
-            {input: this.stringsInput, type: 'strings'}, 
-            {input: this.commentsInput, type: 'comments'}, 
-            {input: this.sinksInput, type: 'sinks'}
+            { input: this.variablesInput, type: 'variables' },
+            { input: this.stringsInput, type: 'strings' },
+            { input: this.commentsInput, type: 'comments' },
+            { input: this.sinksInput, type: 'sinks' }
         ];
         const dataJSON = this.fileUtilService.readJsonFile(path.join(this.projectsPath, 'ReviewSensFiles', 'agreed_classifications.json'));
         const toyDataset = this.fileUtilService.readJsonFile(path.join(this.projectsPath, 'ReviewSensFiles', 'toy_dataset.json'));
-
+    
         const labeledDataMap = this.fileUtilService.convertLabeledDataToMap(dataJSON);
-
-
-        const toyDataMap =this.fileUtilService.convertLabeledDataToMap(toyDataset);
+    
+        const toyDataMap = this.fileUtilService.convertLabeledDataToMap(toyDataset);
         for (const [fileName, dataMap] of toyDataMap.entries()) {
             if (labeledDataMap.has(fileName)) {
                 const existingMap = labeledDataMap.get(fileName);
@@ -550,7 +589,7 @@ export class ChatGptService {
                 labeledDataMap.set(fileName, dataMap);
             }
         }
-
+    
         let variablesTrainingData = [];
         let stringsTrainingData = [];
         let commentsTrainingData = [];
@@ -565,7 +604,6 @@ export class ChatGptService {
             const type = entry.type;
             const inputMap = entry.input;
     
-            // Make sure to add the toy dataset files to the same folder
             for (const [fileName, content] of inputMap) {
                 totalExamples++;
                 console.log(`File Name: ${fileName}`);
@@ -585,20 +623,19 @@ export class ChatGptService {
                             }
                         ]
                     };
-                    
-
-                     // Skip if there are no sensitive variables for the sink type
-                     if (type === 'sinks' && sensitiveVariables.length === 0) {
+    
+                    // Skip if there are no sensitive variables for the sink type
+                    if (type === 'sinks' && sensitiveVariables.length === 0) {
                         console.warn(`No sinks found for file: ${fileName}`);
                         continue;
                     }
     
                     let trainingData = {
                         "messages": [
-                            {"role": "system", "content": prompt},
-                            {"role": "user",  "content": values},
-                            {"role": "user", "content": code},
-                            {"role": "assistant", "content": JSON.stringify(output)}, 
+                            { "role": "system", "content": prompt },
+                            { "role": "user", "content": values },
+                            { "role": "user", "content": code },
+                            { "role": "assistant", "content": JSON.stringify(output) },
                         ]
                     };
                     console.log(JSON.stringify(output))
@@ -609,7 +646,7 @@ export class ChatGptService {
                     if (totalTokenCount <= tokenLimit) {
                         includedExamples++;
     
-                        switch(type) {
+                        switch (type) {
                             case 'variables':
                                 variablesTrainingData.push(trainingData);
                                 break;
@@ -622,10 +659,10 @@ export class ChatGptService {
                             case 'sinks':
                                 sinksTrainingData.push(trainingData);
                                 break;
-                        
+                        }
+    
                         // Combine all training data into one array (Used to train one model for all types)
                         allTrainingData.push(trainingData);
-                        }
                     } else {
                         console.warn(`Example for file ${fileName} exceeds token limit with a total of ${totalTokenCount} and will be excluded.`);
                     }
@@ -635,13 +672,16 @@ export class ChatGptService {
             }
         }
     
-        // Split each dataset into training and validation sets
-        const splitData = (data, validationRatio = 0.2) => {
-            const validationSize = Math.floor(data.length * validationRatio);
+        // Split each dataset into training, validation, and testing sets
+        const splitData = (data, trainingRatio = 0.8, validationRatio = 0.1) => {
+            const totalSize = data.length;
+            const trainingSize = Math.floor(totalSize * trainingRatio);
+            const validationSize = Math.floor(totalSize * validationRatio);
             const shuffled = data.sort(() => 0.5 - Math.random());
             return {
-                training: shuffled.slice(validationSize),
-                validation: shuffled.slice(0, validationSize)
+                training: shuffled.slice(0, trainingSize),
+                validation: shuffled.slice(trainingSize, trainingSize + validationSize),
+                testing: shuffled.slice(trainingSize + validationSize)
             };
         };
     
@@ -653,19 +693,29 @@ export class ChatGptService {
     
         this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'variables_training.jsonl'), variablesSplit.training);
         this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'variables_validation.jsonl'), variablesSplit.validation);
+        this.fileUtilService.saveToJsonl(path.join('../', 'testing_data', 'variables_testing.jsonl'), variablesSplit.testing);
         this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'strings_training.jsonl'), stringsSplit.training);
         this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'strings_validation.jsonl'), stringsSplit.validation);
+        this.fileUtilService.saveToJsonl(path.join('../', 'testing_data', 'strings_testing.jsonl'), stringsSplit.testing);
         this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'comments_training.jsonl'), commentsSplit.training);
         this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'comments_validation.jsonl'), commentsSplit.validation);
+        this.fileUtilService.saveToJsonl(path.join('../', 'testing_data', 'comments_testing.jsonl'), commentsSplit.testing);
         this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'sinks_training.jsonl'), sinksSplit.training);
         this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'sinks_validation.jsonl'), sinksSplit.validation);
+        this.fileUtilService.saveToJsonl(path.join('../', 'testing_data', 'sinks_testing.jsonl'), sinksSplit.testing);
         this.fileUtilService.saveToJsonl(path.join('../', 'training_data', 'all_training.jsonl'), allSplit.training);
         this.fileUtilService.saveToJsonl(path.join('../', 'validation_data', 'all_validation.jsonl'), allSplit.validation);
+        this.fileUtilService.saveToJsonl(path.join('../', 'testing_data', 'all_testing.jsonl'), allSplit.testing);
     
-        console.log("Training and validation data saved as .jsonl files.");
+        // Collect the filenames of the testing set
+        const testingFilenames = new Set(allSplit.testing.map(item => item.messages[0].content.match(/"fileName": "([^"]+)"/)[1]));
+    
+        // saveFilenamesToTxt(path.join('../', 'testing_data', 'testing_filenames.txt'), Array.from(testingFilenames));
+    
+        console.log("Training, validation, and testing data saved as .jsonl files.");
         console.log(`Total examples: ${totalExamples}, Included examples: ${includedExamples}`);
     
-        return {variablesTrainingData, stringsTrainingData, commentsTrainingData, sinksTrainingData};
+        return { variablesTrainingData, stringsTrainingData, commentsTrainingData, sinksTrainingData, allTrainingData };
     }
 
 }
@@ -685,6 +735,7 @@ interface JavaParseResult {
     variables: string[];
     comments: string[];
     strings: string[];
+    sinks: string[];
 }
 
 
