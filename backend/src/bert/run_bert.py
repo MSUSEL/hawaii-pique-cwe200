@@ -78,7 +78,7 @@ def Text_Preprocess(feature_text):
     word_tokens = word_tokenize(feature_text)
     if '\n' in word_tokens:
         word_tokens.remove('\n')
-    filtered_sentence = [w for w in word_tokens if not w.lower() in stop_words and w.isalnum()]
+    filtered_sentence = [w for w in word_tokens if not w.lower() in stop_words] # 1, Updated to keep numbers, and Char Lines
     for i in range(len(filtered_sentence)):
         filtered_sentence[i:i + 1] = camel_case_split(filtered_sentence[i])
     tagged_sentence = pos_tag(filtered_sentence)
@@ -111,17 +111,28 @@ def concatNameandContext(nameVec, contextVec):
     return [np.concatenate((nameVec[idx], contextVec[idx]), axis=None) for idx in range(len(nameVec))]
 
 # Process files to extract relevant information and context
-def process_files(varData, files_dict, type, output_list, project_all_vars):
+def process_files(varData, files_dict, type, output_list, project_all_vars, progress_type):
+    total_progress = len(varData) * len(varData[list(varData.keys())[0]][type])
+    progress = 0
     for f in varData:
         fileName = f
         allVariables = varData[f][type]
         for v in allVariables:
             try:
                 context = get_context(files_dict[fileName], v)
-                output_list.append((fileName, Text_Preprocess(v), context))
+                var = Text_Preprocess(v)
+
+                if len(var) == 0 and type == 'strings':
+                    context = ""
+
+                output_list.append((fileName, var, context))
                 project_all_vars.append([fileName, v])
             except Exception as e:
                 print(f"Error processing file {fileName} and {type[:-1]} {v}: {e}")
+            progress += 1
+            # Emit progress after processing each variable
+            print(json.dumps({'type': progress_type, 'progress': ((progress / total_progress)/2) * 100}))
+    
 
 # Get the context of a variable within a file
 def get_context(file, varName):
@@ -129,7 +140,8 @@ def get_context(file, varName):
     for sent in file.split('\n'):
         sent_tokens = word_tokenize(sent)
         if varName in sent_tokens:
-            context += " " + sent
+            sent = sent.replace(varName,'') # 2, Updated to remove the variable name from the context
+            context = context + sent + " "
     return Text_Preprocess(context)
 
 # Read Java files from a directory
@@ -165,17 +177,17 @@ def main():
     parsed_data = read_parsed_data(parsed_data_file_path)
 
     # Process files to extract variables, strings, and comments
-    process_files(parsed_data, files_dict, 'variables', variables, projectAllVariables['variables'])
-    process_files(parsed_data, files_dict, 'strings', strings, projectAllVariables['strings'])
-    process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'])
-    # process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'])
+    process_files(parsed_data, files_dict, 'variables', variables, projectAllVariables['variables'], 'GPTProgress-variables')
+    process_files(parsed_data, files_dict, 'strings', strings, projectAllVariables['strings'], 'GPTProgress-strings')
+    # process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'], 'GPTProgress-comments')
+    # process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'], 'GPTProgress-sinks')
 
     # Combine all data into a single dictionary
     all_data = {
         'variables': variables,
         'strings': strings,
-        # 'comments': comments,
-        # 'sinks': sinks
+        'comments': comments,
+        'sinks': sinks
     }
 
     final_results = {}
@@ -207,13 +219,15 @@ def main():
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
                     final_results[file_name][data_type].append({"name": data})
 
+            # Emit progress after model predictions
+            print(json.dumps({'type': f'GPTProgress-{data_type}', 'progress': 100}))  # 100% after model predictions
+
     # Format results as JSON
     formatted_results = [{"fileName": file_name, **details} for file_name, details in final_results.items()]
     
     # Write results to a JSON file
     with open(os.path.join(project_path, 'data.json'), 'w') as f:
         json.dump(formatted_results, f, indent=4)
-    print("finished")
-
+    
 if __name__ == '__main__':
     main()
