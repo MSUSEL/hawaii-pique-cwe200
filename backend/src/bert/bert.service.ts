@@ -4,10 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { FileUtilService } from 'src/files/fileUtilService';
 import { EventsGateway } from 'src/events/events.gateway';
 import * as path from 'path';
-import async from 'async';
 import { spawn } from 'child_process';
-// import {VariableParser, StringParser, CommentParser, SinkParser} from './JSON-parsers'
-import { json } from 'stream/consumers';
 
 @Injectable()
 export class BertService {
@@ -21,60 +18,74 @@ export class BertService {
         private eventsGateway: EventsGateway,
         private fileUtilService: FileUtilService,
     ) {
-
-        this.projectPath = ""
+        this.projectPath = "";
         this.parsedResults = {};
         this.fileContents = {};
     }
 
-    async bertWrapper(filePaths: string[], sourcePath: string){
-        this.projectPath = sourcePath
+    async bertWrapper(filePaths: string[], sourcePath: string) {
+        this.projectPath = sourcePath;
         await this.getParsedResults(filePaths);
         await this.fileUtilService.writeToFile(path.join(this.projectPath, 'parsedResults.json'), JSON.stringify(this.parsedResults, null, 2));
         await this.getBertResponse(this.projectPath);
-
     }
 
-    async getParsedResults(filePaths: string[]){
-        for (let filePath of filePaths){
+    async getParsedResults(filePaths: string[]) {
+        let completed: number = 0;
+        let total: number = filePaths.length;
+        for (let filePath of filePaths) {
             await this.fileUtilService.parseJavaFile(filePath, this.parsedResults);
+            completed += 1;
+            let progressPercent = Math.floor((completed / total) * 100);
+            this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
         }
-    
     }
 
-    async getBertResponse(project_root) {
+    async getBertResponse(project_root: string) {
         return new Promise((resolve, reject) => {
             const bertProcess = spawn('python', ['src/bert/run_bert.py', project_root]);
-    
+
             let stdoutData = '';
             let stderrData = '';
-    
+
             bertProcess.stdout.on('data', (data) => {
                 stdoutData += data.toString();
+                console.log(data.toString());
+
+                // Parse progress updates
+                const lines = data.toString().split('\n');
+                for (const line of lines) {
+                    if (line.trim()) {
+                        try {
+                            const progressUpdate = JSON.parse(line);
+                            if (progressUpdate.type && progressUpdate.progress !== undefined) {
+                                this.eventsGateway.emitDataToClients(progressUpdate.type, JSON.stringify(progressUpdate));
+                            }
+                        } catch (e) {
+                            // console.error('Failed to parse progress update:', line);
+                        }
+                    }
+                }
             });
-    
+
             bertProcess.stderr.on('data', (data) => {
                 stderrData += data.toString();
             });
-    
+
             bertProcess.on('close', (code) => {
                 if (code === 0) {
                     resolve(stdoutData);
                 } else {
-                    // Only print the error if it's not the specific warning we're ignoring
-                    // if (!stderrData.includes('tf.losses.sparse_softmax_cross_entropy') && !stderrData.includes('Error in loading the saved optimizer state')) {
-                        console.warn(`Warning or error from bertProcess: ${stderrData}`);
-                    // }
-                    resolve(null); // Resolve with null to indicate an issue, but avoid breaking the flow
+                    console.warn(`Warning or error from bertProcess: ${stderrData}`);
+                    resolve(null);
                 }
             });
-    
+
             bertProcess.on('error', (err) => {
                 reject(`Failed to start subprocess: ${err}`);
             });
         });
     }
-    
 }
 
 interface JavaParseResult {
@@ -82,4 +93,5 @@ interface JavaParseResult {
     variables: string[];
     comments: string[];
     strings: string[];
+    sinks: string[];
 }
