@@ -62,7 +62,7 @@ public class ParseJava {
                     jsonOutput.put("variables", new JSONArray(variables));
                     jsonOutput.put("comments", new JSONArray(comments));
                     jsonOutput.put("strings", new JSONArray(strings));
-                    jsonOutput.put("methodCalls", new JSONArray(methodCalls));
+                    jsonOutput.put("sinks", new JSONArray(methodCalls));
 
                     System.out.println(jsonOutput.toString(2));
                 } else {

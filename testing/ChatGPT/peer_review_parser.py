@@ -112,23 +112,24 @@ def find_agreed_classifications(nested_dict, reviewers, classes):
     return agreed_dict
 
 def outputJSON(agreed_dict):
-    json_output = {"files": []}
+    json_output = []
 
     for sheet_name, sheet_data in agreed_dict.items():
         for file_name, file_data in sheet_data.items():
-            file_entry = {"fileName": file_name, "sensitiveVariables": []}
+            file_entry = {"fileName": file_name, "variables": []}
             for class_name, entries in file_data.items():
                 for entry in entries:
                     if entry['classification'] == 'Y' and class_name == 'variables':
-                        file_entry["sensitiveVariables"].append({
+                        file_entry["variables"].append({
                             "name": entry['key'],
                             # "description": entry['label']
                         })
-            if file_entry["sensitiveVariables"]:
-                json_output["files"].append(file_entry)
+            if file_entry["variables"]:
+                json_output.append(file_entry)
 
     # Output the JSON to a file
-    with open('testing/ChatGPT/agreed_classifications.json', 'w') as json_file:
+    output_path = 'testing/ChatGPT/agreed_classifications.json'
+    with open(output_path, 'w') as json_file:
         json.dump(json_output, json_file, indent=4)
 
 
@@ -288,9 +289,9 @@ sheet_names = sheet_names[3:]
 # sheet_names = ['Plugin.java']
 # sheet_names = ['LiveTableResultsTest.java']
 # sheet_names = ['MySQLBackupProcessor.java']
-sheet_names = ['AdvancedBluetoothDetailsHeaderC', 'Analysis.java', 'ArtifactoryChoiceListProvider.j',
-               'GitHubServerConfig.java', 'HttpMethod.java', 'LiveTableResultsTest_#2.java', 'ResetPasswordIT.java', 
-               'WifiEnterpriseConfig.java']
+# sheet_names = ['AdvancedBluetoothDetailsHeaderC', 'Analysis.java', 'ArtifactoryChoiceListProvider.j',
+#                'GitHubServerConfig.java', 'HttpMethod.java', 'LiveTableResultsTest_#2.java', 'ResetPasswordIT.java', 
+#                'WifiEnterpriseConfig.java']
 print(sheet_names)
 
 

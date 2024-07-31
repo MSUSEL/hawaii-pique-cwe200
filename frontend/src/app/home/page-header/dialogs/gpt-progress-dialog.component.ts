@@ -4,7 +4,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-gpt-progress-dialog',
   templateUrl: './gpt-progress-dialog.component.html',
-  styleUrls: ['./gpt-progress-dialog.component.css']
 })
 export class GPTProgressDialogComponent {
   constructor(
