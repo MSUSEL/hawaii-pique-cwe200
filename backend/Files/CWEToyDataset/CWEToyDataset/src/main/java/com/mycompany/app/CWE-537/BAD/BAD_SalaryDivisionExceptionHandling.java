@@ -5,7 +5,7 @@ public class BAD_SalaryDivisionExceptionHandling {
             int totalSalary = getNumberOfEmployees();
             String employeeID = getEmployeeID();
 
-            if (hoursWored == 0) {
+            if (hoursWorked == 0) {
                 throw new ArithmeticException("Attempt to divide by zero - confidential payroll calculation cannot be completed for employee. " + employeeID);
             }
             else{

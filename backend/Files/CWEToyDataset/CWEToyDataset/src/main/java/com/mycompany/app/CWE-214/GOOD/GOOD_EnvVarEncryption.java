@@ -6,7 +6,7 @@ import java.util.Base64;
 public class GOOD_EnvVarEncryption {
 
     public static void main(String[] args) throws Exception {
-        String API_KEY = args[1];
+        String API_KEY = args[0];
         String encryptedApiKey = encryptApiKey(API_KEY);
         
         try {
@@ -27,9 +27,8 @@ public class GOOD_EnvVarEncryption {
 
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, authKey);
-        byte[] encryptedBytes = cipher.doFinal(authKey.getBytes());
+        byte[] encryptedBytes = cipher.doFinal(apiKey.getBytes()); // Corrected line
 
         return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 }
-

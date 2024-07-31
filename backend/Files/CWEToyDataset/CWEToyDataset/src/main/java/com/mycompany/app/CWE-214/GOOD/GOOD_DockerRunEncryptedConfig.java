@@ -28,7 +28,7 @@ public class GOOD_DockerRunEncryptedConfig {
     private static String encryptSecret(String message) throws Exception {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256); // Use AES-256 for encryption
-        SecretKey secretKey = keyGen.generateKey();
+        SecretKey key = keyGen.generateKey();
 
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, key);
