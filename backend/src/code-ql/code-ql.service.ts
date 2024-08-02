@@ -52,6 +52,7 @@ export class CodeQlService {
         // const data = await this.runChatGPT(javaFiles, sourcePath);
 
         await this.runBert(javaFiles, sourcePath);
+        // await this.bertService.getBertResponse(sourcePath) // Use this if the parsing is already been done
         const data = this.useSavedData(sourcePath);
 
         await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
@@ -192,7 +193,19 @@ export class CodeQlService {
         return result;
     }
     
+    formatCommentsMapping(mapping: { [key: string]: string[] }, type): string {
+        let result = "";
     
+        // Iterate over each key (filename) in the mapping object
+        Object.keys(mapping).forEach(key => {
+            // For each variable associated with the key, generate a new line in the output
+            mapping[key].forEach(variable => {
+                result += `    - ["${key}", ${variable.replace(/(?!^)"(?!$)/g, '\\"')}]\n`;
+            });
+        });
+    
+        return result;
+    }
     
      
     formatSinkMappings(mapping: Map<string, string[][]>): string {
@@ -223,7 +236,7 @@ export class CodeQlService {
       
         const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping, "variables");
         const stringsMapping = this.formatMappings(data.sensitiveStringsMapping, "strings");
-        const commentsMapping = this.formatMappings(data.sensitiveCommentsMapping, "comments");
+        const commentsMapping = this.formatCommentsMapping(data.sensitiveCommentsMapping, "comments");
         const sinksMapping = this.formatSinkMappings(data.sinksMapping);
             
         let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
@@ -251,12 +264,12 @@ export class CodeQlService {
     async codeqlProcess(sourcePath: string, createCodeQlDto: any){
         // Remove previous database if it exists
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-        // await this.fileUtilService.removeDir(db);
+        await this.fileUtilService.removeDir(db);
 
-        // // Create new database with codeql
-        // const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        // console.log(createDbCommand);
-        // await this.runChildProcess(createDbCommand);
+        // Create new database with codeql
+        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        console.log(createDbCommand);
+        await this.runChildProcess(createDbCommand);
 
         // Analyze with codeql
         const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';

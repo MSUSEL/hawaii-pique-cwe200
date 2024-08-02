@@ -41,7 +41,7 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
                     mc.getMethod().hasName("getRemoteUser") or
                     mc.getMethod().hasName("getResource") or
                     mc.getMethod().hasName("getResourceAsStream") or
-                    (mc.getMethod().hasName("addRequestProperty") and mc.getArgument(0) = this)
+                    (mc.getMethod().hasName("addRequestProperty") and mc.getAnArgument() = this)
                 )
             ) or
             this.getValue().regexpMatch(".*example.*") or
