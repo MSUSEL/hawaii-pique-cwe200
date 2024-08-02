@@ -60,7 +60,7 @@ def load_stop_words():
                 stop_words.append(new_keyword)
         return stop_words
     except FileNotFoundError as e:
-        print(f"Error: {e}")
+        # print(f"Error: {e}")
         return stop_words
 
 # Split camel case words
@@ -122,11 +122,19 @@ def process_files(varData, files_dict, type, output_list, project_all_vars, prog
                 context = get_context(files_dict[fileName], v)
                 var = Text_Preprocess(v)
 
-                if len(var) == 0 and type == 'strings':
-                    context = ""
+                if type == 'variables':
+                    output_list.append((fileName, var, context))
 
-                output_list.append((fileName, var, context))
+                elif type == 'strings':
+                    if len(var) == 0:
+                        context = ""
+                    output_list.append((fileName, var, context))
+
+                elif type == 'comments':
+                    output_list.append((fileName, var))
+
                 project_all_vars.append([fileName, v])
+
             except Exception as e:
                 print(f"Error processing file {fileName} and {type[:-1]} {v}: {e}")
             progress += 1
@@ -179,7 +187,7 @@ def main():
     # Process files to extract variables, strings, and comments
     process_files(parsed_data, files_dict, 'variables', variables, projectAllVariables['variables'], 'GPTProgress-variables')
     process_files(parsed_data, files_dict, 'strings', strings, projectAllVariables['strings'], 'GPTProgress-strings')
-    # process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'], 'GPTProgress-comments')
+    process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'], 'GPTProgress-comments')
     # process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'], 'GPTProgress-sinks')
 
     # Combine all data into a single dictionary
@@ -187,7 +195,7 @@ def main():
         'variables': variables,
         'strings': strings,
         'comments': comments,
-        'sinks': sinks
+        # 'sinks': sinks
     }
 
     final_results = {}
@@ -198,8 +206,12 @@ def main():
             data_array = np.array(data_list)
             file_info = data_array[:, 0]
             name_vectors = calculate_SentBert_Vectors(data_array[:, 1])
-            context_vectors = calculate_SentBert_Vectors(data_array[:, 2])
-            concatenated_vectors = concatNameandContext(name_vectors, context_vectors)
+
+            if data_type != 'comments':
+                context_vectors = calculate_SentBert_Vectors(data_array[:, 2])
+                concatenated_vectors = concatNameandContext(name_vectors, context_vectors)
+            else:
+                concatenated_vectors = name_vectors
 
             # Load the model
             model = load_model(os.path.join(os.getcwd(),"src", "bert", "models", f"{data_type}.h5"))
@@ -208,7 +220,10 @@ def main():
             # model = load_model(os.path.join(os.getcwd(),"backend" ,"src", "bert", "models", f"{data_type}.h5"))
 
             # Run the model to get predictions
-            test_x = np.reshape(concatenated_vectors, (-1, DIM))
+            if data_type == 'comments':
+                test_x = concatenated_vectors
+            else:
+                test_x = np.reshape(concatenated_vectors, (-1, DIM))
             yPredict = model.predict(test_x)
 
             # Collect predictions
