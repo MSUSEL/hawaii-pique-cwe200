@@ -1,12 +1,15 @@
 public class BAD_SecurityException {
-    public void handleRequest(String requestData) throws SecurityException{
+    public void handleRequest(String requestData) {
+        try {
             if (requestData == null) {
-                throw new SecurityException("Your request " + requestData + " is not authorized. Please provide valid request data.");
-            }
-            // Process the request
-            else{
+                throw new SecurityException();
+            } else {
+                // Process the request
                 this.processRequest(requestData);
             }
+        } catch (SecurityException e) {
+            System.err.println("Your request " + requestData + " is not authorized. Please provide valid request data.");
+        }
     }
 
     private void processRequest(String requestData) {

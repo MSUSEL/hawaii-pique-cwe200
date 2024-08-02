@@ -8,12 +8,11 @@ public class BAD_BufferOverflowException {
     }
 
     public void allocateSpace(byte[] AWSKey) {
-        
-        if (AWSKey.length > dataBuffer.capacity()) {
-            throw new RuntimeException("Buffer overflow detected, failed to save AWS Key" + AWSKey); // Throw an exception if the data size exceeds the buffer capacity
-        }
-        else{
+        try{
             dataBuffer.put(AWSKey);
+        }
+        catch (RuntimeException e){
+            System.out.println("Buffer overflow detected, failed to save AWS Key" + AWSKey);
         }
     }
     public static void main(String[] args) {
