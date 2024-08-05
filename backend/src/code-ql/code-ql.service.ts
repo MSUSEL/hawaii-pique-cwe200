@@ -12,6 +12,7 @@ import { SensitiveComments } from './SensitiveComments';
 import { SensitiveStrings } from './SensitiveStrings';
 import { Sinks } from './Sinks';
 import { BertService } from 'src/bert/bert.service';
+import { LLMService } from 'src/llm/llm.service';
 
 import { EventsGateway } from 'src/events/events.gateway';
 @Injectable()
@@ -24,7 +25,8 @@ export class CodeQlService {
         private eventsGateway: EventsGateway,
         private fileUtilService: FileUtilService,
         private gptService: ChatGptService,
-        private bertService: BertService
+        private bertService: BertService,
+        private llmService: LLMService
     ) {
         this.projectsPath = this.configService.get<string>(
             'CODEQL_PROJECTS_DIR',
@@ -49,9 +51,10 @@ export class CodeQlService {
         // let slice = javaFiles.slice(177, 187);  
         // const data = await this.runChatGPT(slice, sourcePath);
 
-        // const data = await this.runChatGPT(javaFiles, sourcePath);
+        // const data = await this.runChatGPT(sourcePath);
 
-        await this.runBert(javaFiles, sourcePath);
+        // await this.runBert(javaFiles, sourcePath);
+        await this.runLLM(javaFiles, sourcePath);
         // await this.bertService.getBertResponse(sourcePath) // Use this if the parsing is already been done
         const data = this.useSavedData(sourcePath);
 
@@ -63,9 +66,9 @@ export class CodeQlService {
 
     }
 
-    async runChatGPT(javaFiles, sourcePath){
+    async runChatGPT(sourcePath){
         // Get Sensitive variables from gpt
-        const data = await this.gptService.LLMWrapper(javaFiles);
+        const data = await this.gptService.LLMWrapper(sourcePath);
 
         // Write response to file
         await this.writeFilesGptResponseToJson(data.fileList, sourcePath);
@@ -76,6 +79,11 @@ export class CodeQlService {
     async runBert(javaFiles, sourcePath){
         // Get Sensitive variables from gpt
         await this.bertService.bertWrapper(javaFiles, sourcePath);
+    }
+
+    async runLLM(javaFiles, sourcePath){
+        // Get Sensitive variables from gpt
+        await this.llmService.llmWrapper(javaFiles, sourcePath);
     }
 
     useSavedData(sourcePath){

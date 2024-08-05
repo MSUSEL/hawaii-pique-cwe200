@@ -12,7 +12,6 @@ import { response } from 'express';
 import { get_encoding } from 'tiktoken';
 import async from 'async';
 import { spawn } from 'child_process';
-import { Ollama } from 'ollama-node';
 import {VariableParser, StringParser, CommentParser, SinkParser} from './JSON-parsers'
 import { json } from 'stream/consumers';
 
@@ -50,7 +49,7 @@ export class ChatGptService {
      *
      * @param files files to include in GPT prompt
      */
-    async LLMWrapper(files: string[]) {
+    async LLMWrapper(files) {
         let variables: string[] = [], strings: string[] = [], comments: string[] = [], sinks: string[] = [];
         const fileList: any[] = [];
         
@@ -62,13 +61,14 @@ export class ChatGptService {
         
         const prompts = [
             { type: 'variables', mapping: sensitiveVariablesMapping, result: variables, input: this.variablesInput , parser: new VariableParser()},
-            // { type: 'strings', mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput, parser: new StringParser()},
-            // { type: 'comments', mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput, parser: new CommentParser()},
-            // { type: 'sinks', mapping: sinksMapping, result: sinks, input: this.sinksInput, parser: new SinkParser() }
+            { type: 'strings', mapping: sensitiveStringsMapping, result: strings, input: this.stringsInput, parser: new StringParser()},
+            { type: 'comments', mapping: sensitiveCommentsMapping, result: comments, input: this.commentsInput, parser: new CommentParser()},
+            { type: 'sinks', mapping: sinksMapping, result: sinks, input: this.sinksInput, parser: new SinkParser() }
         ];
         
         // Dictionary to store results by file name
         const JSONOutput = {};
+        await this.getCostEstimate(files)
     
         for (const { type, mapping, result, input, parser } of prompts) {
             let completedBatches = 0;
@@ -198,14 +198,14 @@ export class ChatGptService {
      * @param prompt GPT prompt
      */
     async createGptFourCompletion(prompt: string) {
-        console.log(prompt);
+        // console.log(prompt);
         try {
             // Break the prompt into sections, for better api usage
             let sections = this.extractSections(prompt);
 
             const response = await this.openai.chat.completions.create({
-                model: 'ft:gpt-4o-mini-2024-07-18:software-assurance-laboratory::9oh4HvD0',
-                // model: 'gpt-4o',
+                // model: 'ft:gpt-4o-mini-2024-07-18:software-assurance-laboratory::9oh4HvD0',
+                model: 'gpt-4o',
                 // temperature: 0.0,
                 top_p: 0.05,
                 messages: [
@@ -220,24 +220,6 @@ export class ChatGptService {
 
         } catch (error) {
             
-            throw error;
-        }
-    }
-
-
-    async createLlama3Completion(prompt: string) {
-        try {
-            const ollama = new Ollama();
-            await ollama.setModel("llama3");
-            
-            // callback to print each word 
-            const print = (word: string) => {
-              process.stdout.write(word);
-            }
-            let response = await ollama.streamingGenerate(prompt, print);
-            return { message: response };
-
-        } catch (error) {
             throw error;
         }
     }
@@ -405,12 +387,12 @@ export class ChatGptService {
         }
     }
 
-    async getCostEstimate(projectPath: string) {
+    async getCostEstimate(sourcePath: string) {
         const INPUT_COST = (5 / 1000000); // GPT-4o pricing is $5 per 1 million input tokens
         const OUTPUT_COST = (15 / 1000000) * .15; // GPT-4o pricing is $15 per 1 million output tokens
 
         // Get the source path and Java files
-        const sourcePath = path.join(this.projectsPath, projectPath);
+        // const sourcePath = path.join(this.projectsPath, projectPath);
         const javaFiles: string[] = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
 
         // Parse the Java files to get the variables, strings, and comments
@@ -438,14 +420,6 @@ export class ChatGptService {
         const processPrompt = async (promptObj: { type: string; prompt: string; output: Map<string, string> }) => {
             let tokenCount = 0;
             await this.simpleBatching(javaFiles, promptObj.prompt, promptObj.type, promptObj.output, progress);
-
-            // Calculate tokens for the current prompt
-            const outputArray = Array.from(promptObj.output.values());
-            for (const batch of outputArray) {
-                totalTokenCount += this.encode.encode(batch).length;
-                tokenCount += this.encode.encode(batch).length;
-            }
-            console.log(`Token count for ${promptObj.type}: ${(tokenCount).toFixed(2)}`);
         };
 
         // Calculate the cost of each prompt concurrently
@@ -453,18 +427,7 @@ export class ChatGptService {
         
         // this.createTrainingData()
         
-        // Calculate cost
-        const inputCost = totalTokenCount * INPUT_COST;
-        const outputCost = totalTokenCount * OUTPUT_COST;
-        const totalCost = inputCost + outputCost;
-
-        console.log(`Estimated cost for project ${projectPath}: $${totalCost.toFixed(2)}`);
-        return {
-            totalCost: totalCost,
-            tokenCount: totalTokenCount,
-            inputCost: inputCost,
-            totalFiles: javaFiles.length,
-        };
+       
     }
     extractSections(text: string): { prompt: string, values: string, code: string } {
         const regex = /^(.*?)\+{5}(.*?)\+{5}(.*)$/s;
