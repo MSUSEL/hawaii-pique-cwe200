@@ -30,7 +30,7 @@ module RuntimeSensitiveInfoExposureConfig implements DataFlow::ConfigSig {
       cc.getACaughtType().getASupertype*().hasQualifiedName("java.lang", "RuntimeException") and
       mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock() and
       (
-        CommonSinks::isPrintSink(sink) or
+        CommonSinks::isErrPrintSink(sink) or
         CommonSinks::isErrorSink(sink) or
         CommonSinks::isServletSink(sink) or
         getSinkAny(sink)

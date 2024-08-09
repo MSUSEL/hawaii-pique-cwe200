@@ -47,7 +47,7 @@ module SqlExceptionToConsoleConfig implements DataFlow::ConfigSig {
   }
   
   predicate isSink(DataFlow::Node sink) {
-    CommonSinks::isPrintSink(sink) or
+    CommonSinks::isErrPrintSink(sink) or
     CommonSinks::isServletSink(sink) or
     CommonSinks::isErrorSink(sink) or
     CommonSinks::isIOSink(sink) or

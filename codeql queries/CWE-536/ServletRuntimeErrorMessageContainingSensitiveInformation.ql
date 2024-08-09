@@ -34,8 +34,7 @@ module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
       mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock() and
       // Ensure the sink matches one of the known sensitive sinks
       (
-        CommonSinks::isLoggingSink(sink) or
-        CommonSinks::isPrintSink(sink) or
+        CommonSinks::isErrPrintSink(sink) or
         CommonSinks::isServletSink(sink) or
         CommonSinks::isErrorSink(sink) or
         CommonSinks::isIOSink(sink) or

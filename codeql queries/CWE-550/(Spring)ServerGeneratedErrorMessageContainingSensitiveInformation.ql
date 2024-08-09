@@ -43,7 +43,7 @@ module SpringBootSensitiveInfoExposureConfig implements DataFlow::ConfigSig{
         logMa.getEnclosingCallable().getDeclaringType().getAnAnnotation().getType().hasQualifiedName("org.springframework.stereotype", "Component")
       ) and 
       (
-        CommonSinks::isPrintSink(sink) or
+        CommonSinks::isErrPrintSink(sink) or
         CommonSinks::isErrorSink(sink) or
         CommonSinks::isIOSink(sink) or
         getSinkAny(sink) 

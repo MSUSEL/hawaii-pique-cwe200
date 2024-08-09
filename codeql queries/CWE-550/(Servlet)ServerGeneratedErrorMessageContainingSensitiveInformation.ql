@@ -52,7 +52,7 @@ module HttpServletExceptionSourceConfig implements DataFlow::ConfigSig {
 
   // Defines sinks where sensitive information could be exposed to clients
   predicate isSink(DataFlow::Node sink) {
-    CommonSinks::isPrintSink(sink) or
+    CommonSinks::isErrPrintSink(sink) or
     CommonSinks::isServletSink(sink) or
     getSinkAny(sink)
   }

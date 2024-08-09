@@ -40,7 +40,7 @@ module ShellErrorExposureConfig implements DataFlow::ConfigSig {
   }
 
   predicate isSink(DataFlow::Node sink) {
-    CommonSinks::isPrintSink(sink) or
+    CommonSinks::isErrPrintSink(sink) or
     CommonSinks::isErrorSink(sink) or
     CommonSinks::isServletSink(sink) or
     // Use the LLM response to indentify sinks

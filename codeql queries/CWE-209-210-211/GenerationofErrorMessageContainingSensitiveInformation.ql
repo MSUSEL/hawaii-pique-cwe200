@@ -23,7 +23,6 @@
    predicate isSource(DataFlow::Node source) {
     // Broad definition, consider refining
     exists(SensitiveVariableExpr sve | source.asExpr() = sve) or 
-    // exists(SensitiveStringLiteral ssl |source.asExpr() = ssl) or
     // Direct access to the exception variable itself
     exists(CatchClause cc | source.asExpr() = cc.getVariable().getAnAccess()) or
     // Consider any method call on the exception object as a source
@@ -32,7 +31,7 @@
 
    predicate isSink(DataFlow::Node sink) {
      // Identifying common error message generation points
-     CommonSinks::isPrintSink(sink) or 
+     CommonSinks::isErrPrintSink(sink) or 
      CommonSinks::isErrorSink(sink) or
      getSinkAny(sink)
 
