@@ -1,18 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import OpenAI from "openai";
 import { ConfigService } from '@nestjs/config';
 import { FileUtilService } from 'src/files/fileUtilService';
 import { EventsGateway } from 'src/events/events.gateway';
 import * as path from 'path';
-import { Ollama } from 'ollama-node';
 import axios from 'axios';
 import { variablesPrompt } from './prompts/variablesPrompt';
 import { stringsPrompt } from './prompts/stringsPrompt';
 import { commentsPrompt } from './prompts/commentsPrompt';
 import { sinksPrompt } from './prompts/sinksPrompt';
-
 import { VariableParser, StringParser, CommentParser, SinkParser } from '../chat-gpt/JSON-parsers';
-import async from 'async';
+import seedrandom from 'seedrandom';
+
 
 @Injectable()
 export class LLMService {
@@ -73,49 +71,21 @@ export class LLMService {
         // Create all prompts first
         await Promise.all(prompts.map(category => this.createPrompts(category.input, category.type)));
 
-        // Send all prompts to LLM concurrently and process responses
-        const llamaPromises = [];
+        await this.generate_training_data(prompts);
+
+        // Process prompts in batches
         for (let category of prompts) {
+            const requests: Promise<void>[] = [];
+
             for (let [fileName, promptMap] of category.input) {
                 for (let [valueName, prompt] of promptMap) {
-                    llamaPromises.push(this.callLlama(prompt).then(response => {
-                        console.log(`Results for ${category.type}: ${response}`);
-
-                        // Process the response
-                        let jsonResponse = JSON.parse(response);
-                        let file = jsonResponse.files[0];
-                        if (file && file.fileName === fileName) {
-                            let item = file[category.type][0]; // Assume only one entry per response
-                            if (item.name === valueName) {
-                                const isSensitive = category.type === 'sinks' ? item.isSink : item.isSensitive;
-                                if (isSensitive === 'yes') {
-                                    // Save data for JSON output (data.json)
-                                    if (category.type === 'sinks') {
-                                        JSONOutput[file.fileName][category.type].push({ name: item.name, type: item.type, reason: item.reason });
-                                    } else {
-                                        JSONOutput[file.fileName][category.type].push({ name: item.name, reason: item.reason });
-                                    }
-                                    // Save data as a mapping for YAML file, used for CodeQL
-                                    category.parser.saveToMapping(category.mapping, file.fileName, file);
-                                    // Save data as a list
-                                    category.result.push(item.name);
-                                }
-                            }
-                        }
-
-                        // Emit progress to clients
-                        this.eventsGateway.emitDataToClients('GPTProgress-' + category.type, JSON.stringify({
-                            type: 'GPTProgress-' + category.type,
-                            GPTProgress: Math.floor((category.result.length / category.input.size) * 100)
-                        }));
-                    }).catch(error => {
-                        console.error(`Error processing ${category.type} response:`, error);
-                    }));
+                    requests.push(this.processPrompt(fileName, valueName, prompt, category, JSONOutput));
                 }
             }
-        }
 
-        await Promise.all(llamaPromises);
+            // Process the requests in batches of 5
+            await this.processInBatches(requests, 5);
+        }
 
         for (const fileName in JSONOutput) {
             fileList.push(JSONOutput[fileName]);
@@ -128,6 +98,50 @@ export class LLMService {
         sinks = [...new Set(sinks)];
 
         return { variables, strings, comments, sinks, fileList, sensitiveVariablesMapping, sensitiveStringsMapping, sensitiveCommentsMapping, sinksMapping };
+    }
+
+    async processPrompt(fileName: string, valueName: string, prompt: string, category: any, JSONOutput: any) {
+        try {
+            const response = await this.callLlama(prompt);
+            console.log(`Results for ${category.type}: ${response}`);
+
+            // Process the response
+            let jsonResponse = JSON.parse(response);
+            let file = jsonResponse.files[0];
+            if (file && file.fileName === fileName) {
+                let item = file[category.type][0]; // Assume only one entry per response
+                if (item.name === valueName) {
+                    const isSensitive = category.type === 'sinks' ? item.isSink : item.isSensitive;
+                    if (isSensitive === 'yes') {
+                        // Save data for JSON output (data.json)
+                        if (category.type === 'sinks') {
+                            JSONOutput[file.fileName][category.type].push({ name: item.name, type: item.type, reason: item.reason });
+                        } else {
+                            JSONOutput[file.fileName][category.type].push({ name: item.name, reason: item.reason });
+                        }
+                        // Save data as a mapping for YAML file, used for CodeQL
+                        category.parser.saveToMapping(category.mapping, file.fileName, file);
+                        // Save data as a list
+                        category.result.push(item.name);
+                    }
+                }
+            }
+
+            // Emit progress to clients
+            this.eventsGateway.emitDataToClients('GPTProgress-' + category.type, JSON.stringify({
+                type: 'GPTProgress-' + category.type,
+                GPTProgress: Math.floor((category.result.length / category.input.size) * 100)
+            }));
+        } catch (error) {
+            console.error(`Error processing ${category.type} response:`, error);
+        }
+    }
+
+    async processInBatches(requests: Promise<void>[], batchSize: number) {
+        for (let i = 0; i < requests.length; i += batchSize) {
+            const batch = requests.slice(i, i + batchSize);
+            await Promise.all(batch);
+        }
     }
 
     async getParsedResults(filePaths: string[]) {
@@ -156,16 +170,22 @@ export class LLMService {
             let fileContents = await this.fileContents[fileName];
 
             for (let item of items) {
-                let context = "";
-                // Get all of the lines where the item is mentioned to be used as the context
-                for (let line of fileContents.split('\n')) {
-                    if (line.includes(item)) {
-                        context += line + " ";
-                    }
-                }
+                let context = this.extractContext(fileContents, item);
                 this.addToContextMap(fileName, type, item, context);
             }
         }
+    }
+
+    extractContext(fileContents: string, target: string): string {
+        const lines = fileContents.split('\n');
+        const targetIndex = lines.findIndex(line => line.includes(target));
+        const contextRadius = 5; // Number of lines before and after the target
+
+        let context = "";
+        for (let i = Math.max(0, targetIndex - contextRadius); i <= Math.min(lines.length - 1, targetIndex + contextRadius); i++) {
+            context += lines[i] + "\n";
+        }
+        return context;
     }
 
     addToContextMap(fileName: string, type: string, valueName: string, context: string) {
@@ -196,11 +216,11 @@ export class LLMService {
                             switch (type) {
                                 case 'variables':
                                     promptTemplate = variablesPrompt;
-                                    prompt = `Determine if the ${singularType} "${valueName}" in file "${fileName}" is sensitive:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName}"`;
+                                    prompt = `Determine if the ${singularType} "${valueName}" in file "${fileName}" is sensitive:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName} If it fits into any of the 9 categories provided, please respond with 'yes'. I want to reduce the false negatives as much as possible. If you are unsure, please respond with 'no'."`;
                                     break;
                                 case 'strings':
                                     promptTemplate = stringsPrompt;
-                                    prompt = `Determine if the ${singularType} "${valueName}" in file "${fileName}" is sensitive:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName}"`;
+                                    prompt = `Determine if the ${singularType} "${valueName}" in file "${fileName}" is sensitive:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName} The main rule is if the string has actual hard-coded sensitive information, it is sensitive. If it is a generic string like "hello world" or "foo bar", it is not sensitive. If you are unsure, please respond with 'no'.`;
                                     break;
                                 case 'comments':
                                     promptTemplate = commentsPrompt;
@@ -208,7 +228,7 @@ export class LLMService {
                                     break;
                                 case 'sinks':
                                     promptTemplate = sinksPrompt;
-                                    prompt = `Determine if the ${singularType} "${valueName}" in file "${fileName}" is a sink:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName}"`;
+                                    prompt = `Determine if the method "${valueName}" in file "${fileName}" is a sink:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName}"`;
                                     break;
                             }
                             // Store the prompt in the nested map
@@ -224,7 +244,6 @@ export class LLMService {
     }
 
     async callLlama(prompt: string) {
-        // const llamaEndPoint = 'http://localhost:11434/api/generate';
         const llamaEndPoint = 'http://128.171.215.14:5000/generate';
 
         const requestBody = {
@@ -236,7 +255,6 @@ export class LLMService {
 
         try {
             const response = await axios.post(llamaEndPoint, requestBody);
-            console.log(response.data.response);
             return response.data.response;
         } catch (err) {
             console.error(err);
@@ -246,12 +264,174 @@ export class LLMService {
 
     extractAndParseJSON(responseMessage: string): any {
         // Use regex or a JSON parser to extract and parse JSON from the response message
-        // Example:
         const jsonMatch = responseMessage.match(/\{.*\}/);
         if (jsonMatch) {
             return JSON.parse(jsonMatch[0]);
         }
         return {};
+    }
+
+    async generate_training_data(prompts) {
+        const labeledData = await this.loadLabeledData();
+        const jsonlData = [];
+    
+        // Counters for positive and negative samples
+        const sampleCounters = {
+            variables: { positive: 0, negative: 0 },
+            strings: { positive: 0, negative: 0 },
+            comments: { positive: 0, negative: 0 },
+            sinks: { positive: 0, negative: 0 },
+        };
+    
+        for (let category of prompts) {
+            const { type, input } = category;
+    
+            for (let [fileName, promptMap] of input) {
+                for (let [valueName, prompt] of promptMap) {
+                    const output = this.findMatchingLabel(labeledData, fileName, type, valueName);
+    
+                    // Track positive and negative samples
+                    if (output) {
+                        sampleCounters[type].positive++;
+                    } else {
+                        sampleCounters[type].negative++;
+                    }
+    
+                    // Create a JSON object with the prompt and output
+                    const jsonlEntry = {
+                        input: prompt,
+                        output: this.formatOutput(fileName, type, valueName, output)
+                    };
+    
+                    jsonlData.push(jsonlEntry);
+                }
+            }
+        }
+    
+        // Shuffle and split the data into training, validation, and testing sets
+        const { trainingData, validationData, testingData } = this.shuffleAndSplitData(jsonlData, 'mySeed');
+    
+        // Save the datasets to JSONL files
+        this.saveToJsonlFile(trainingData, 'training_data.jsonl');
+        this.saveToJsonlFile(validationData, 'validation_data.jsonl');
+        this.saveToJsonlFile(testingData, 'testing_data.jsonl');
+    
+        // Print the counts of positive and negative samples
+        console.log('Sample Summary:');
+        for (const type in sampleCounters) {
+            console.log(`${type}: ${sampleCounters[type].positive} positive, ${sampleCounters[type].negative} negative`);
+        }
+    }
+    
+    shuffleAndSplitData(data, seed = 'mySeed') {
+        const rng = seedrandom(seed); // Initialize a seeded random number generator
+    
+        // Shuffle the data using Fisher-Yates (Knuth) shuffle algorithm
+        for (let i = data.length - 1; i > 0; i--) {
+            const j = Math.floor(rng() * (i + 1));
+            [data[i], data[j]] = [data[j], data[i]];
+        }
+    
+        // Calculate the sizes of the datasets
+        const trainSize = Math.floor(data.length * 0.7);
+        const validationSize = Math.floor(data.length * 0.15);
+    
+        // Split the data into training, validation, and testing sets
+        const trainingData = data.slice(0, trainSize);
+        const validationData = data.slice(trainSize, trainSize + validationSize);
+        const testingData = data.slice(trainSize + validationSize);
+    
+        return { trainingData, validationData, testingData };
+    }
+    
+    saveToJsonlFile(data, filename) {
+        const jsonlContent = data.map(entry => JSON.stringify(entry)).join('\n');
+        this.fileUtilService.writeToFile(path.join(this.projectPath, filename), jsonlContent);
+    }
+    
+    findMatchingLabel(labeledData, fileName, type, valueName) {
+        const fileData = labeledData.find(data => data.fileName === fileName);
+        if (!fileData) return null;
+    
+        const typeData = fileData[type];
+        if (!typeData) return null;
+    
+        const matchedItem = typeData.find(item => item.name === valueName);
+        return matchedItem || null;
+    }
+    
+    formatOutput(fileName, type, valueName, output) {
+        const isSensitiveOrSink = output ? "yes" : "no";
+        const reason = output?.description || "No description provided.";
+    
+        // Start with the common structure
+        let formattedOutput = {
+            files: [
+                {
+                    fileName: fileName
+                }
+            ]
+        };
+    
+        // Dynamically add the appropriate type
+        const typeEntry = {};
+        switch (type) {
+            case 'variables':
+                typeEntry['variables'] = [
+                    {
+                        name: valueName,
+                        isSensitive: isSensitiveOrSink,
+                        reason: reason
+                    }
+                ];
+                break;
+    
+            case 'strings':
+                typeEntry['strings'] = [
+                    {
+                        name: valueName,
+                        isSensitive: isSensitiveOrSink,
+                        reason: reason
+                    }
+                ];
+                break;
+    
+            case 'comments':
+                typeEntry['comments'] = [
+                    {
+                        name: valueName,
+                        isSensitive: isSensitiveOrSink,
+                        reason: reason
+                    }
+                ];
+                break;
+    
+            case 'sinks':
+                typeEntry['sinks'] = [
+                    {
+                        name: valueName,
+                        isSink: isSensitiveOrSink,
+                        type: output?.type || "Unknown type",
+                        reason: reason
+                    }
+                ];
+                break;
+    
+            default:
+                throw new Error(`Unknown type: ${type}`);
+        }
+    
+        // Merge the type-specific entry into the formatted output
+        Object.assign(formattedOutput.files[0], typeEntry);
+    
+        return formattedOutput;
+    }
+    
+    
+    async loadLabeledData() {
+        const labeledDataPath = path.join(this.projectPath, 'labeledData.json');
+        const labeledDataContent = await this.fileUtilService.readFileAsync(labeledDataPath);
+        return JSON.parse(labeledDataContent);
     }
 }
 
