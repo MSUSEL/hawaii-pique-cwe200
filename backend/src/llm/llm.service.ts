@@ -9,8 +9,8 @@ import { stringsPrompt } from './prompts/stringsPrompt';
 import { commentsPrompt } from './prompts/commentsPrompt';
 import { sinksPrompt } from './prompts/sinksPrompt';
 import { VariableParser, StringParser, CommentParser, SinkParser } from '../chat-gpt/JSON-parsers';
-import seedrandom from 'seedrandom';
-
+import { Semaphore } from 'async-mutex'; // Import the Semaphore class
+import { shuffle } from 'lodash'; // Import lodash for shuffling
 
 @Injectable()
 export class LLMService {
@@ -23,6 +23,7 @@ export class LLMService {
     stringsInput = new Map<string, Map<string, string>>();
     commentsInput = new Map<string, Map<string, string>>();
     sinksInput = new Map<string, Map<string, string>>();
+    semaphore: Semaphore; // Declare the semaphore
 
     constructor(
         private configService: ConfigService,
@@ -33,6 +34,7 @@ export class LLMService {
         this.parsedResults = {};
         this.fileContents = {};
         this.contextMap = {};
+        this.semaphore = new Semaphore(5); // Initialize the semaphore with a max concurrency of 5
     }
 
     async llmWrapper(filePaths: string[], sourcePath: string) {
@@ -70,8 +72,7 @@ export class LLMService {
 
         // Create all prompts first
         await Promise.all(prompts.map(category => this.createPrompts(category.input, category.type)));
-
-        await this.generate_training_data(prompts);
+        // this.generate_training_data(prompts);
 
         // Process prompts in batches
         for (let category of prompts) {
@@ -83,8 +84,8 @@ export class LLMService {
                 }
             }
 
-            // Process the requests in batches of 5
-            await this.processInBatches(requests, 5);
+            // Process the requests with concurrency control
+            await this.processWithConcurrencyControl(requests);
         }
 
         for (const fileName in JSONOutput) {
@@ -101,6 +102,8 @@ export class LLMService {
     }
 
     async processPrompt(fileName: string, valueName: string, prompt: string, category: any, JSONOutput: any) {
+        // Use the semaphore to limit the number of concurrent requests
+        await this.semaphore.acquire();
         try {
             const response = await this.callLlama(prompt);
             console.log(`Results for ${category.type}: ${response}`);
@@ -112,18 +115,26 @@ export class LLMService {
                 let item = file[category.type][0]; // Assume only one entry per response
                 if (item.name === valueName) {
                     const isSensitive = category.type === 'sinks' ? item.isSink : item.isSensitive;
-                    if (isSensitive === 'yes') {
+                    
+                    // if (isSensitive === 'yes') {
                         // Save data for JSON output (data.json)
-                        if (category.type === 'sinks') {
-                            JSONOutput[file.fileName][category.type].push({ name: item.name, type: item.type, reason: item.reason });
-                        } else {
-                            JSONOutput[file.fileName][category.type].push({ name: item.name, reason: item.reason });
-                        }
-                        // Save data as a mapping for YAML file, used for CodeQL
-                        category.parser.saveToMapping(category.mapping, file.fileName, file);
-                        // Save data as a list
-                        category.result.push(item.name);
+                        // if (category.type === 'sinks') {
+                        //     JSONOutput[file.fileName][category.type].push({ name: item.name, type: item.type, reason: item.reason });
+                        // } else {
+                        //     JSONOutput[file.fileName][category.type].push({ name: item.name, reason: item.reason });
+                        // }
+
+                    if (category.type === 'sinks') {
+                        JSONOutput[file.fileName][category.type].push({ name: item.name, type: item.type, isSink: item.isSink, reason: item.reason });
+                    } else {
+                        JSONOutput[file.fileName][category.type].push({ name: item.name, isSensitive: item.isSensitive, reason: item.reason });
                     }
+
+                    // Save data as a mapping for YAML file, used for CodeQL
+                    category.parser.saveToMapping(category.mapping, file.fileName, file);
+                    // Save data as a list
+                    category.result.push(item.name);
+                    // }
                 }
             }
 
@@ -134,13 +145,15 @@ export class LLMService {
             }));
         } catch (error) {
             console.error(`Error processing ${category.type} response:`, error);
+        } finally {
+            // Release the semaphore after processing
+            this.semaphore.release();
         }
     }
 
-    async processInBatches(requests: Promise<void>[], batchSize: number) {
-        for (let i = 0; i < requests.length; i += batchSize) {
-            const batch = requests.slice(i, i + batchSize);
-            await Promise.all(batch);
+    async processWithConcurrencyControl(requests: Promise<void>[]) {
+        for (let i = 0; i < requests.length; i++) {
+            await requests[i];
         }
     }
 
@@ -179,7 +192,7 @@ export class LLMService {
     extractContext(fileContents: string, target: string): string {
         const lines = fileContents.split('\n');
         const targetIndex = lines.findIndex(line => line.includes(target));
-        const contextRadius = 5; // Number of lines before and after the target
+        const contextRadius = 10; // Number of lines before and after the target
 
         let context = "";
         for (let i = Math.max(0, targetIndex - contextRadius); i <= Math.min(lines.length - 1, targetIndex + contextRadius); i++) {
@@ -210,25 +223,25 @@ export class LLMService {
                         if (values.hasOwnProperty(valueName)) {
                             const context = values[valueName];
                             let promptTemplate = '';
-                            let prompt = ''
+                            let prompt = '';
                             let singularType = type.substring(0, type.length - 1);
 
                             switch (type) {
                                 case 'variables':
                                     promptTemplate = variablesPrompt;
-                                    prompt = `Determine if the ${singularType} "${valueName}" in file "${fileName}" is sensitive:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName} If it fits into any of the 9 categories provided, please respond with 'yes'. I want to reduce the false negatives as much as possible. If you are unsure, please respond with 'no'."`;
+                                    prompt = `Please carefully review the ${singularType} "${valueName}" in file "${fileName}" to determine if it is sensitive. Here is the context in which it is used:\n\n${context}\n\n${promptTemplate}\n\nIf the ${singularType} falls into any of the categories provided, respond with 'yes'. If unsure, please provide your reasoning and lean towards caution.`;
                                     break;
                                 case 'strings':
                                     promptTemplate = stringsPrompt;
-                                    prompt = `Determine if the ${singularType} "${valueName}" in file "${fileName}" is sensitive:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName} The main rule is if the string has actual hard-coded sensitive information, it is sensitive. If it is a generic string like "hello world" or "foo bar", it is not sensitive. If you are unsure, please respond with 'no'.`;
+                                    prompt = `Determine if the ${singularType} "${valueName}" in file "${fileName}" is sensitive:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName}". The main rule is if the string has actual hard-coded sensitive information, it is sensitive. If it is a generic string like "hello world" or "foo bar", it is not sensitive. If you are unsure, please respond with 'no'.`;
                                     break;
                                 case 'comments':
                                     promptTemplate = commentsPrompt;
-                                    prompt = `Determine if the ${singularType} "${valueName}" in file "${fileName}" is sensitive:\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName}"`;
+                                    prompt = `Determine if the ${singularType} "${valueName}" in file "${fileName}" is sensitive:\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName}".`;
                                     break;
                                 case 'sinks':
                                     promptTemplate = sinksPrompt;
-                                    prompt = `Determine if the method "${valueName}" in file "${fileName}" is a sink:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the ${singularType} "${valueName}" in file "${fileName}"`;
+                                    prompt = `Determine if the method "${valueName}" in file "${fileName}" is a sink:\n\n${context}\n\n${promptTemplate} \n\n Once again this is only for the method "${valueName}" in file "${fileName}".`;
                                     break;
                             }
                             // Store the prompt in the nested map
@@ -297,56 +310,39 @@ export class LLMService {
                         sampleCounters[type].negative++;
                     }
     
-                    // Create a JSON object with the prompt and output
+                    // Create a JSON object with the prompt and stringified output
                     const jsonlEntry = {
                         input: prompt,
-                        output: this.formatOutput(fileName, type, valueName, output)
+                        output: JSON.stringify(this.formatOutput(fileName, type, valueName, output)).replace(/\\n/g, "\\n").replace(/\\r/g, "\\r")
                     };
     
                     jsonlData.push(jsonlEntry);
                 }
             }
         }
-    
-        // Shuffle and split the data into training, validation, and testing sets
-        const { trainingData, validationData, testingData } = this.shuffleAndSplitData(jsonlData, 'mySeed');
-    
-        // Save the datasets to JSONL files
-        this.saveToJsonlFile(trainingData, 'training_data.jsonl');
-        this.saveToJsonlFile(validationData, 'validation_data.jsonl');
-        this.saveToJsonlFile(testingData, 'testing_data.jsonl');
+
+        // Shuffle the data to ensure random distribution
+        const shuffledData = shuffle(jsonlData);
+
+        // Split the shuffled data into training (80%), validation (10%), and testing (10%) sets
+        const totalData = shuffledData.length;
+        const trainSize = Math.floor(totalData * 0.8);
+        const validSize = Math.floor(totalData * 0.1);
+        
+        const trainData = shuffledData.slice(0, trainSize);
+        const validData = shuffledData.slice(trainSize, trainSize + validSize);
+        const testData = shuffledData.slice(trainSize + validSize);
+
+        // Save the JSONL data to files
+        // this.fileUtilService.writeToFile(path.join(this.projectPath, 'training_data.jsonl'), trainData.map(entry => JSON.stringify(entry)).join('\n'));
+        // this.fileUtilService.writeToFile(path.join(this.projectPath, 'validation_data.jsonl'), validData.map(entry => JSON.stringify(entry)).join('\n'));
+        // this.fileUtilService.writeToFile(path.join(this.projectPath, 'testing_data.jsonl'), testData.map(entry => JSON.stringify(entry)).join('\n'));
     
         // Print the counts of positive and negative samples
         console.log('Sample Summary:');
         for (const type in sampleCounters) {
             console.log(`${type}: ${sampleCounters[type].positive} positive, ${sampleCounters[type].negative} negative`);
         }
-    }
-    
-    shuffleAndSplitData(data, seed = 'mySeed') {
-        const rng = seedrandom(seed); // Initialize a seeded random number generator
-    
-        // Shuffle the data using Fisher-Yates (Knuth) shuffle algorithm
-        for (let i = data.length - 1; i > 0; i--) {
-            const j = Math.floor(rng() * (i + 1));
-            [data[i], data[j]] = [data[j], data[i]];
-        }
-    
-        // Calculate the sizes of the datasets
-        const trainSize = Math.floor(data.length * 0.7);
-        const validationSize = Math.floor(data.length * 0.15);
-    
-        // Split the data into training, validation, and testing sets
-        const trainingData = data.slice(0, trainSize);
-        const validationData = data.slice(trainSize, trainSize + validationSize);
-        const testingData = data.slice(trainSize + validationSize);
-    
-        return { trainingData, validationData, testingData };
-    }
-    
-    saveToJsonlFile(data, filename) {
-        const jsonlContent = data.map(entry => JSON.stringify(entry)).join('\n');
-        this.fileUtilService.writeToFile(path.join(this.projectPath, filename), jsonlContent);
     }
     
     findMatchingLabel(labeledData, fileName, type, valueName) {
@@ -426,7 +422,6 @@ export class LLMService {
     
         return formattedOutput;
     }
-    
     
     async loadLabeledData() {
         const labeledDataPath = path.join(this.projectPath, 'labeledData.json');

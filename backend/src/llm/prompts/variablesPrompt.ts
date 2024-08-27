@@ -14,9 +14,17 @@ Sensitive variables are those that, if exposed, could lead to a vulnerability or
 
 Please respond in this format 
 {
-    fileName : {
-        variableName : yes/no,
-        reason: reason for the decision
+  "files": [
+    {
+      "fileName": "FileName1.java",
+      "variables": [
+        {
+          "name": "variableName",
+          "isSensitive": "yes/no",
+          "reason": "reason for the decision"
+        }
+      ]
     }
+  ]
 }`
 
