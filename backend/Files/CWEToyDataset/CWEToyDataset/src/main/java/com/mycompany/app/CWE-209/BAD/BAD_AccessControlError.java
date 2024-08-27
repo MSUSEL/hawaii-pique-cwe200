@@ -7,7 +7,6 @@ public class BAD_AccessControlError {
             // Access validation logic
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
-            throw new SecurityException("Invalid access attempt detected for user: " + userName);
         }
     }
 

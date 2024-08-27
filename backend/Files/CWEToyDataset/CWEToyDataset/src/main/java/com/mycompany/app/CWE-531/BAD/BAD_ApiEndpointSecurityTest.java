@@ -1,11 +1,17 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.logging.*;
 
 public class BAD_ApiEndpointSecurityTest {
+    private static final Logger logger = Logger.getLogger("APIAccessLogger");
+
     @Test
     public void testSecureEndpoint() {
         ApiClient client = new ApiClient();
         String validationToken = "XYZ-780320-BHDM";
+        String test = "test";
+        logger.warning(test);
+
         client.setAuthToken(validationToken);
         Response response = client.makeSecureRequest();
         assertEquals(response.getStatusCode(), 200); // Assert successful response
