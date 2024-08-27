@@ -2,16 +2,25 @@ import os
 import zipfile
 import subprocess
 import json
+import backslicing
 
 # Directory paths
 db_dir = os.path.join("testing", "Dataflow", "db_dir")
 query_path = os.path.join("codeql", "codeql-custom-queries-java", "testing", "Backall.ql")
 query_results_dir = os.path.join("testing", "Dataflow", "query_results")
 processed_json_dir = "processed_jsons"
+labeled_dataset_path = os.path.join("testing", "Merge_JSONs", "Labeled_JSONs", "Labeled_dataset.json")
 
 # Ensure the query_results and processed_json directories exist
 os.makedirs(query_results_dir, exist_ok=True)
 os.makedirs(processed_json_dir, exist_ok=True)
+
+# Load the labeled dataset
+with open(labeled_dataset_path, 'r') as labeled_file:
+    labeled_dataset = json.load(labeled_file)
+
+# Convert labeled dataset to a dictionary for faster lookup
+labeled_dict = {entry["fileName"]: {var["name"] for var in entry["variables"]} for entry in labeled_dataset}
 
 # List of filenames
 filenames = [
@@ -28,6 +37,9 @@ filenames = [
     "TestlabNotifier.java", "TinfoilScanRecorder.java", "UnsafeAccess.java", "ViewOptionHandler.java",
     "WifiEnterpriseConfig.java", "WifiNetworkDetailsFragment.java"
 ]
+
+# Dictionary to hold all filtered and processed results
+all_filtered_results = []
 
 # Function to unzip a file and remove the zip
 def unzip_file(zip_path, extract_to):
@@ -64,49 +76,38 @@ for filename in filenames:
         print(f"Failed to run query on {base_name}: {e}")
         continue
 
-    # Pass the SARIF result to backslicing.py
-    backslicing_cmd = [
-        "python3", "backslicing.py", "--input", output_sarif
-    ]
+    # Pass the SARIF result to backslicing.py and get the JSON result
+    backslicing_json = backslicing.run(output_sarif)
+    filtered_results = [result for result in backslicing_json if result['fileName'] == filename]
+
     
-    try:
-        subprocess.run(backslicing_cmd, check=True)
-        print(f"Backslicing completed for {base_name}.")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to run backslicing on {base_name}: {e}")
+    # Process each result to determine if it's sensitive
+    processed_results = {
+        "fileName": filename,
+        "variables": []
+    }
 
-    # Process the resulting JSON from backslicing.py
-    backslicing_json = os.path.join(processed_json_dir, f"{base_name}_results.json")
+    for result in filtered_results:
+        for variable in result["variables"]:
+            variable_name = variable["name"]
+            is_sensitive = "yes" if variable_name in labeled_dict.get(filename, set()) else "no"
+            variable["isSensitive"] = is_sensitive
+            processed_variable = {
+                "name": variable_name,
+                "isSensitive": is_sensitive,
+                "graph": variable["graph"]
+        
+        }
+        processed_results["variables"].append(processed_variable)
     
-    if os.path.exists(backslicing_json):
-        with open(backslicing_json, 'r') as file:
-            data = json.load(file)
-        
-        # Extract only the results for the corresponding filename (including .java)
-        filtered_results = [result for result in data if result['filename'] == filename]
-        
-        # Save the filtered results into a new JSON file
-        filtered_json_path = os.path.join(processed_json_dir, f"{base_name}_filtered.json")
-        with open(filtered_json_path, 'w') as file:
-            json.dump(filtered_results, file, indent=4)
-        
-        print(f"Filtered results saved for {filename} to {filtered_json_path}")
+    all_filtered_results.append(processed_results)
+    print(f"Filtered and processed results saved for {filename}")
 
-# Final output JSON file containing all filtered results
-final_output = os.path.join(processed_json_dir, "final_results.json")
-all_filtered_results = []
+# Final output JSON file containing all processed results
+final_output = os.path.join(processed_json_dir, "CVE.json")
 
-for filename in filenames:
-    base_name = filename.replace(".java", "")
-    filtered_json_path = os.path.join(processed_json_dir, f"{base_name}_filtered.json")
-    
-    if os.path.exists(filtered_json_path):
-        with open(filtered_json_path, 'r') as file:
-            filtered_results = json.load(file)
-            all_filtered_results.extend(filtered_results)
-
-# Save the final combined JSON file
+# Save the final dictionary as a single JSON file
 with open(final_output, 'w') as file:
     json.dump(all_filtered_results, file, indent=4)
 
-print(f"All filtered results combined and saved to {final_output}")
+print(f"All processed results combined and saved to {final_output}")
