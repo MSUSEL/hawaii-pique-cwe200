@@ -45,10 +45,10 @@ def calculate_metrics(predictions, labeled_data):
     }
 
 def main():
-    with open("backend/Files/ReviewSensFiles/chatGPT-data-final.json", "r", encoding='UTF-8') as f:
+    with open("backend/Files/CWEToyDataset/ChatGPT-data-final.json", "r", encoding='UTF-8') as f:
         predictions = json.load(f)
 
-    with open("testing/ChatGPT/labeled_sinks.json", "r") as f:
+    with open("testing/ChatGPT/Sinks/ToySinkLabel.json", "r") as f:
         labeled_data = json.load(f)
 
     metrics = calculate_metrics(predictions, labeled_data)
