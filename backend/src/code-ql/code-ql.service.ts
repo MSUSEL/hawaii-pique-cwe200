@@ -54,9 +54,9 @@ export class CodeQlService {
         // const data = await this.runChatGPT(sourcePath);
 
         // await this.runBert(javaFiles, sourcePath);
-        await this.runLLM(javaFiles, sourcePath);
+        const data = await this.runLLM(javaFiles, sourcePath);
         // await this.bertService.getBertResponse(sourcePath) // Use this if the parsing is already been done
-        const data = this.useSavedData(sourcePath);
+        // const data = this.useSavedData(sourcePath);
 
         await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
 
@@ -83,7 +83,10 @@ export class CodeQlService {
 
     async runLLM(javaFiles, sourcePath){
         // Get Sensitive variables from gpt
-        await this.llmService.llmWrapper(javaFiles, sourcePath);
+        const data = await this.llmService.llmWrapper(javaFiles, sourcePath);
+        await this.writeFilesGptResponseToJson(data.fileList, sourcePath);
+        return data;
+
     }
 
     useSavedData(sourcePath){
@@ -208,7 +211,7 @@ export class CodeQlService {
         Object.keys(mapping).forEach(key => {
             // For each variable associated with the key, generate a new line in the output
             mapping[key].forEach(variable => {
-                result += `    - ["${key}", ${variable.replace(/(?!^)"(?!$)/g, '\\"')}]\n`;
+                result += `    - ["${key}", "${variable.replace(/(?!^)"(?!$)/g, '\\"')}"]\n`;
             });
         });
     
@@ -222,7 +225,7 @@ export class CodeQlService {
         for (const [key, sinks] of mapping.entries()) {
           // For each array associated with the key, generate a new line in the output
           for (const sink of sinks) {
-            result += `    - ["${key}", ${sink[0]}, ${sink[1]}]\n`;
+            result += `    - ["${key}", "${sink[0]}", "${sink[1]}"]\n`;
           }
         }
         return result;
