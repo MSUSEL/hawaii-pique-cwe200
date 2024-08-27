@@ -58,6 +58,8 @@ codeql
 backend/Files/*
 !backend/Files/CWEToyDataset
 backend/Files/CWEToyDataset/CWEToyDatasetdb
+testing/Dataflow/db_dir/
+testing/Dataflow/query_results/
 
 !files/*.gitkeep
 
