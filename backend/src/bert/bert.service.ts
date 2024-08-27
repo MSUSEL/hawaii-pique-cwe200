@@ -10,9 +10,10 @@ import { spawn } from 'child_process';
 export class BertService {
     projectPath: string;
     encode: any;
-    parsedResults:{ [key: string]: JavaParseResult };
+    parsedResults: { [key: string]: JavaParseResult };
     fileContents = {};
-    
+    contextMap = {};
+
     constructor(
         private configService: ConfigService,
         private eventsGateway: EventsGateway,
@@ -21,6 +22,7 @@ export class BertService {
         this.projectPath = "";
         this.parsedResults = {};
         this.fileContents = {};
+        this.contextMap = {};
     }
 
     async bertWrapper(filePaths: string[], sourcePath: string) {
@@ -87,6 +89,7 @@ export class BertService {
         });
     }
 }
+
 
 interface JavaParseResult {
     filename: string;

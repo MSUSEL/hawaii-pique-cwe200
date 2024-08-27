@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CodeQlModule } from './code-ql/code-ql.module';
 import { EventsGateway } from './events/events.gateway';
 import { EventsModule } from './events/events.module';
+import { LLMModule } from './llm/llm.module';
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -18,7 +19,9 @@ import { EventsModule } from './events/events.module';
         EventsModule,
         ChatGptModule,
         CodeQlModule,
-        BertModule
+        BertModule,
+        LLMModule
+
     ],
     controllers: [AppController],
     providers: [AppService],

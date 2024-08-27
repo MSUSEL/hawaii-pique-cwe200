@@ -172,15 +172,22 @@ async def read_java_files(directory):
         for file in files:
             if file.endswith(".java"):
                 file_path = os.path.join(root, file)
-                async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
-                    file_content = await f.read()
-                java_files_with_content[os.path.basename(file_path)] = file_content
+                try:
+                    async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
+                        file_content = await f.read()
+                    java_files_with_content[os.path.basename(file_path)] = file_content
+                except Exception as e:
+                    print(f"Failed to read file {file_path}: {e}")
     return java_files_with_content
 
 # Read parsed data from a JSON file asynchronously
 async def read_parsed_data(file_path):
-    async with aiofiles.open(file_path, 'r', encoding='utf-8') as json_vars:
-        return json.loads(await json_vars.read())
+    try:
+        async with aiofiles.open(file_path, 'r', encoding='utf-8') as json_vars:
+            return json.loads(await json_vars.read())
+    except Exception as e:
+        print(f"Failed to read parsed data from {file_path}: {e}")
+        return {}
 
 # Load stop words
 stop_words = load_stop_words()
@@ -206,9 +213,9 @@ async def process_data_type(data_type, data_list, project_all_vars, final_result
         processing_tracker.complete()
 
         # Load the model
-        # model = load_model(os.path.join(os.getcwd(), "src", "bert", "models", f"{data_type}.h5"))
+        model = load_model(os.path.join(os.getcwd(), "src", "bert", "models", f"{data_type}.h5"))
         # For testing
-        model = load_model(os.path.join(os.getcwd(), "backend", "src", "bert", "models", f"{data_type}.h5"))
+        # model = load_model(os.path.join(os.getcwd(), "backend", "src", "bert", "models", f"{data_type}.h5"))
 
         # Run the model to get predictions
         test_x = np.reshape(concatenated_vectors, (-1, DIM)) if data_type != 'comments' else concatenated_vectors
@@ -232,9 +239,9 @@ async def process_data_type(data_type, data_list, project_all_vars, final_result
 # Main function
 async def main():
     # Set the project path and parsed data file path
-    # project_path = sys.argv[1]
+    project_path = sys.argv[1]
     # For testing 
-    project_path = os.path.join(os.getcwd(), "backend", "src", "bert", "testdata")
+    # project_path = os.path.join(os.getcwd(), "backend", "src", "bert", "testdata")
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
 
     # Read Java files and parsed data asynchronously
@@ -245,7 +252,7 @@ async def main():
     await asyncio.gather(
         process_files(parsed_data, files_dict, 'variables', variables, projectAllVariables['variables'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['variables']), 'variables-processing')),
         process_files(parsed_data, files_dict, 'strings', strings, projectAllVariables['strings'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['strings']), 'strings-processing')),
-        process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['comments']), 'comments-processing')),
+        # process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['comments']), 'comments-processing')),
         # process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['sinks']), 'sinks-processing'))
     )
 
@@ -253,7 +260,7 @@ async def main():
     all_data = {
         'variables': variables,
         'strings': strings,
-        'comments': comments,
+        # 'comments': comments,
         # 'sinks': sinks
     }
 
