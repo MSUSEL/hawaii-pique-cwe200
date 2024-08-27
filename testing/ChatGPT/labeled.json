@@ -1,176 +1,1308 @@
 {
     "files": [
-      {
-        "fileName": "FileUploader.java",
-        "sensitiveVariables": [
-            "mNotification?", "mServiceLooper", "mServiceHandler", "mCurrentAccount", "mStorageManager", 
-            "mBinder", "mUploadsStorageManager", "accountManager", "startId", "account ", "optionalUser", 
-            "user", "msg", "localPaths?", "remotePaths?", "files", "ocUpload?", "newUpload", "uploadKey", 
-            "mCurrentUpload", "ocAccount ",  "mUploadClient", "uploadResult", "remoteId",  "tickerId?", 
-            "start", "accountName", "upload", "targetKey"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "TemporaryFolder.java",
-        "sensitiveVariables": [],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "ResetPasswordIT.java",
-        "sensitiveVariables": [
-            "userName", "password", "newPassword"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "DefaultResetPasswordRequestResponse.java",
-        "sensitiveVariables": [
-            "userEmail", "userReference", "verificationCode"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "ModelFactory.java",
-        "sensitiveVariables": [
-            "baseUri", "self", "doc", "spaceUri ", "spaceLink", "parentUri", "originalAuthor"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "AttachmentProvider.java",
-        "sensitiveVariables": [
-            "id", "accountId", "filename ", "uri", "segments", "c?", "file", "saveIn", "newFile", 
-            "callingId?", "format?", "attachmentUri", "name"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "AttachmentProvider.java",
-        "sensitiveVariables": [
-            "id", "accountId", "filename ", "uri", "segments", "c?", "file", "saveIn", "newFile", 
-            "callingId?", "format?", "attachmentUri", "name"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": [
-            "THIS HAS ONE"
-        ]
-      },
-      {
-        "fileName": "GhprbGitHubAuth.java",
-        "sensitiveVariables": [
-            "credentialsId", "id", "username", "password"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "DetectPostBuildStepDescriptor.java",
-        "sensitiveVariables": [
-            "hubCredentialsId"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "GitHubTokenCredentialsCreator.java",
-        "sensitiveVariables": [
-            "credentialsId", "login", "password", "username", "token", "credentials"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "BasicSSHUserPrivateKey.java",
-        "sensitiveVariables": [
-            "passphrase", "privateKeySource", "privateKeys", "username", "id", "secret", 
-            "privateKeyFile", "key", "files ", "sshHome", "keyName"
-        ],
-        "sensitiveStrings": [
-            "id_ecdsa", "id_ed25519", "id_rsa", "id_dsa", "identity"
-        ],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "AWSCodeDeployPublisher.java",
-        "sensitiveVariables": [
-            "awsAccessKey", "awsSecretKey" , "credentials"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "TinfoilScanRecorder.java",
-        "sensitiveVariables": [
-            "apiAccessKey", "apiSecretKey"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "TestlabNotifier.java",
-        "sensitiveVariables": [
-            "companyId", "apiKey"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "ArtifactoryChoiceListProvider.java",
-        "sensitiveVariables": [
-            "url", "credentialsId", "c", "groupId", "artifactId", "serialVersionUID"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "OpenstackCredentials.java",
-        "sensitiveVariables": [
-            "credentialId", "credential"
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "ViewOptionHandler.java",
-        "sensitiveVariables": [
-            "tok", "viewName" 
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "CLICommand.java",
-        "sensitiveVariables": [
-            "name", "id", "auth", "errorMsg", "stderr", "p", "cmd ", "logfiles", "newLocation"  
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "Computer.java",
-        "sensitiveVariables": [
-            "cachedHostName", "serialVersionUID ", "nodeName", "rootUrl ", "ia", "address", 
-            "result?", "item", "names?", "url", "sb", "c"   
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      },
-      {
-        "fileName": "Descriptor.java",
-        "sensitiveVariables": [
-            "formData", "owner", "helpRedirect","fieldNameToRedirectTo","formField", "fieldNameToRedirectTo"   
-        ],
-        "sensitiveStrings": [],
-        "sensitiveComments": []
-      }
-
-
+        {
+            "fileName": "AWSCodeDeployPublisher.java",
+            "variables": [
+                "awsAccessKey",
+                "awsSecretKey",
+                "credentials"
+            ],
+            "strings": [],
+            "comments": [
+                "/**\r\n     *\r\n     * Descriptor for {@link AWSCodeDeployPublisher}. Used as a singleton.\r\n     * The class is marked as public so that it can be accessed from views.\r\n     *\r\n     * See <tt>src/main/resources/com/amazonaws/codedeploy/AWSCodeDeployPublisher/*.jelly</tt>\r\n     * for the actual HTML fragment for the configuration screen.\r\n     */"
+            ]
+        },
+        {
+            "fileName": "AbstractQueryProtocolModelTest.java",
+            "variables": [
+                "server",
+                "ses",
+                "destination",
+                "sub",
+                "body",
+                "msg",
+                "emailRequest",
+                "uri"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "AbstractSolrMetadataExtractor.java",
+            "variables": [
+                "solrDocument",
+                "document",
+                "originalDocument",
+                "documentReference",
+                "xdocument",
+                "path",
+                "metadata",
+                "in"
+            ],
+            "strings": [],
+            "comments": [
+                "/*\r\n * See the NOTICE file distributed with this work for additional\r\n * information regarding copyright ownership.\r\n *\r\n * This is free software; you can redistribute it and/or modify it\r\n * under the terms of the GNU Lesser General Public License as\r\n * published by the Free Software Foundation; either version 2.1 of\r\n * the License",
+                "or (at your option) any later version.\r\n *\r\n * This software is distributed in the hope that it will be useful",
+                "* but WITHOUT ANY WARRANTY; without even the implied warranty of\r\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU\r\n * Lesser General Public License for more details.\r\n *\r\n * You should have received a copy of the GNU Lesser General Public\r\n * License along with this software; if not",
+                "write to the Free\r\n * Software Foundation",
+                "Inc.",
+                "51 Franklin St",
+                "Fifth Floor",
+                "Boston",
+                "MA\r\n * 02110-1301 USA",
+                "or see the FSF site: http://www.fsf.org.\r\n */"
+            ]
+        },
+        {
+            "fileName": "AdvancedBluetoothDetailsHeaderController.java",
+            "variables": [
+                "device",
+                "key",
+                "prefKey",
+                "iconMetaKey",
+                "batteryMetaKey",
+                "lowBatteryMetaKey",
+                "chargeMetaKey",
+                "titleResId",
+                "deviceId",
+                "iconUri",
+                "bluetoothDevice",
+                "batteryId",
+                "contentUri"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "Analysis.java",
+            "variables": [
+                "filePath",
+                "settingPath",
+                "env"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "ArtifactoryChoiceListProvider.java",
+            "variables": [
+                "url",
+                "credentialsId",
+                "c",
+                "service"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "Assistant.java",
+            "variables": [
+                "key",
+                "keys"
+            ],
+            "strings": [],
+            "comments": [
+                "// SBN key : entry"
+            ]
+        },
+        {
+            "fileName": "AttachmentProvider.java",
+            "variables": [
+                "id",
+                "accountId",
+                "uri",
+                "attachmentUri",
+                "name"
+            ],
+            "strings": [],
+            "comments": [
+                "/*\n * A simple ContentProvider that allows file access to Email's attachments.\n *\n * The URI scheme is as follows.  For raw file access:\n *   content://com.android.mail.attachmentprovider/acct#/attach#/RAW\n *\n * And for access to thumbnails:\n *   content://com.android.mail.attachmentprovider/acct#/attach#/THUMBNAIL/width#/height#\n *\n * The on-disk (storage) schema is as follows.\n *\n * Attachments are stored at:  <database-path>/account#.db_att/item#\n * Thumbnails are stored at:   <cache-path>/thmb_account#_item#\n *\n * Using the standard application context",
+                "account #10 and attachment # 20",
+                "this would be:\n *      /data/data/com.android.email/databases/10.db_att/20\n *      /data/data/com.android.email/cache/thmb_10_20\n */"
+            ]
+        },
+        {
+            "fileName": "AugmentedLoginActivityTest.java",
+            "variables": [
+                "username",
+                "usernameId",
+                "usernameNode",
+                "passwordNode",
+                "expectedFocusedId",
+                "expectedMessage",
+                "actualMessage",
+                "usernameValue",
+                "password",
+                "passwordId",
+                "passwordValue",
+                "mActivity"
+            ],
+            "strings": [
+                "malkovich"
+            ],
+            "comments": []
+        },
+        {
+            "fileName": "BaseUserController.java",
+            "variables": [
+                "baseUserService",
+                "user",
+                "userId",
+                "userid"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "BasicSSHUserPrivateKey.java",
+            "variables": [
+                "passphrase",
+                "privateKeySource",
+                "privateKeys",
+                "scope",
+                "username",
+                "id",
+                "secret",
+                "privateKeyFile",
+                "key",
+                "keys",
+                "files",
+                "file",
+                "sshHome",
+                "keyName",
+                "privateKey"
+            ],
+            "strings": [
+                "id_ecdsa",
+                "id_ed25519",
+                "id_rsa",
+                "id_dsa",
+                "identity",
+                "icon-ssh-credentials-ssh-key",
+                "ssh-credentials/images/16x16/%png",
+                "ssh-credentials/images/24x24/%png",
+                "ssh-credentials/images/32x32/%png",
+                "ssh-credentials/images/48x48/%png",
+                "user.home",
+                ".ssh"
+            ],
+            "comments": []
+        },
+        {
+            "fileName": "BondStateMachine.java",
+            "variables": [
+                "msg",
+                "dev",
+                "mRemoteDevices",
+                "oobData",
+                "passkey",
+                "pin",
+                "device"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "CLICommand.java",
+            "variables": [
+                "name",
+                "id",
+                "auth",
+                "errorMsg",
+                "transportAuth"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "CallActivity.java",
+            "variables": [
+                "userUtils",
+                "roomId",
+                "baseUrl",
+                "conversationPassword",
+                "roomToken",
+                "conversationUser",
+                "apiVersion",
+                "deviceNames",
+                "credentials",
+                "turnServers",
+                "url",
+                "callSession",
+                "webSocketClient",
+                "updateRoomToken",
+                "jobId",
+                "users",
+                "currentSessionId",
+                "sessionId",
+                "iceServers",
+                "userId"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "ComposeActivity.java",
+            "variables": [
+                "mRefMessage",
+                "refMessage",
+                "mRefMessageUri",
+                "mDraftAccount",
+                "accountScheme",
+                "mAccounts",
+                "mAccount",
+                "account",
+                "allAccounts",
+                "a",
+                "lastAccountUri",
+                "mSignature",
+                "message",
+                "toAddress",
+                "address",
+                "messageUri",
+                "conversationUri",
+                "body",
+                "selectedReplyFromAccount",
+                "email",
+                "senderName",
+                "accountString",
+                "mReplyFromAccount",
+                "tokens",
+                "recipientsMap",
+                "entry",
+                "draftFroms",
+                "fromAccount",
+                "mCcBccView",
+                "mAttachmentsView",
+                "mTo",
+                "mCc",
+                "mBcc",
+                "mSubject",
+                "mBodyView",
+                "mFromStaticText"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "ComposeActivity_#2.java",
+            "variables": [
+                "EXTRA_IN_REFERENCE_TO_MESSAGE",
+                "EXTRA_IN_REFERENCE_TO_MESSAGE_URI",
+                "DATA_DIRECTORY_ROOT",
+                "sRequestMessageIdMap",
+                "mAccount",
+                "mReplyFromAccount",
+                "mDraft",
+                "mDraftId",
+                "mDraftAccount",
+                "mRefMessage",
+                "mRefMessageUri",
+                "refMessageUri",
+                "mRequestId",
+                "mSignature",
+                "event",
+                "keyCode",
+                "messageUri",
+                "message",
+                "mAccount",
+                "quotedText",
+                "conversationUri",
+                "dataUri",
+                "dataScheme ",
+                "accountScheme",
+                "remoteInput",
+                "wearReply",
+                "input",
+                "allRecipients\"  \"tokens",
+                "recipientsMap",
+                "msg",
+                "sender",
+                "mSubject",
+                "mScrollView",
+                "mCcBccView",
+                "mFromStaticText",
+                "mAttachmentsView",
+                "mTo",
+                "mCc",
+                "mBcc",
+                "mBodyView ",
+                "mFromStatic ",
+                "mFromStaticText",
+                "mFromSpinnerWrapper",
+                "mFromSpinner",
+                "r",
+                "body",
+                "toText",
+                "uri",
+                "cc",
+                "otherTo",
+                "bcc",
+                "subject",
+                "t",
+                "a",
+                "sentToAddresses",
+                "toAddresses",
+                "fromAddresses",
+                "replyToAddresses",
+                "from",
+                "tokenized",
+                "recipientAddress",
+                "accountName",
+                "account",
+                "id",
+                "messageId",
+                "messageIdToSave",
+                "ccAddresses",
+                "bccAddresses",
+                "recipients",
+                "messageUri",
+                "key",
+                "confirmTextId",
+                "refMessageId",
+                "recipAddresses"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "Computer.java",
+            "variables": [
+                "cachedHostName",
+                "serialVersionUID ",
+                "nodeName",
+                "rootUrl ",
+                "ia",
+                "address",
+                "result",
+                "item",
+                "names",
+                "url",
+                "sb",
+                "c"
+            ],
+            "strings": [],
+            "comments": [
+                "/**\n     * Relocate log files in the old location to the new location.\n     *\n     * Files were used to be $JENKINS_ROOT/slave-NAME.log (and .1",
+                ".2",
+                "...)\n     * but now they are at $JENKINS_ROOT/logs/slaves/NAME/slave.log (and .1",
+                ".2",
+                "...)\n     *\n     */"
+            ]
+        },
+        {
+            "fileName": "ContainerExecDecorator.java",
+            "variables": [
+                "client",
+                "ws",
+                "path",
+                "pwd"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "ContentService.java",
+            "variables": [
+                "mRootNode",
+                "fd",
+                "identityToken",
+                "data",
+                "code",
+                "uri",
+                "userHandle",
+                "userId",
+                "account",
+                "provider",
+                "providerName",
+                "callerUid",
+                "message",
+                "userHandle",
+                "callingUser",
+                "uid",
+                "pid",
+                "name",
+                "innerName",
+                "segment"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "DefaultResetPasswordRequestResponse.java",
+            "variables": [
+                "userEmail",
+                "userReference",
+                "verificationCode"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "Descriptor.java",
+            "variables": [
+                "formData",
+                "owner",
+                "helpRedirect",
+                "fieldNameToRedirectTo",
+                "formField",
+                "fieldNameToRedirectTo"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "DetectPostBuildStepDescriptor.java",
+            "variables": [
+                "hubCredentialsId",
+                "proxyInfo",
+                "credentialUserName",
+                "credentialPassword",
+                "hubApiToken",
+                "credential",
+                "credentials",
+                "c",
+                "creds",
+                "hubServerConfigBuilder",
+                "hubServerConfig",
+                "connection"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "DirectoryBrowserSupport.java",
+            "variables": [
+                "fileName",
+                "pathTokens"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "EasAutoDiscover.java",
+            "variables": [
+                "mUsername",
+                "mPassword",
+                "mHostAuth",
+                "mRedirectUri",
+                "hostAuth",
+                "account",
+                "username",
+                "password",
+                "uri",
+                "domain",
+                "login",
+                "hostAuthCompat",
+                "url",
+                "dn",
+                "addr"
+            ],
+            "strings": [
+                "http://schemas.microsoft.com/exchange/autodiscover/mobilesync/",
+                "/autodiscover/autodiscover.xml",
+                "requestschema/2006"
+            ],
+            "comments": [
+                "http://msdn.microsoft.com/en-us/library/office/jj900169(v=exchg.150).aspx"
+            ]
+        },
+        {
+            "fileName": "FileDownloader.java",
+            "variables": [
+                "FOREGROUND_SERVICE_ID",
+                "mDownloadClient",
+                "currentUser",
+                "mStorageManager",
+                "mCurrentDownload",
+                "conflictUploadId",
+                "accountManager",
+                "builder",
+                "user",
+                "file",
+                "packageName",
+                "downloadKey",
+                "startId",
+                "accounts",
+                "fileId",
+                "fileName",
+                "mService",
+                "service",
+                "ocAccount",
+                "mDownloadClient",
+                "text",
+                "tickerId",
+                "account",
+                "added"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "FileUploader_Nextcloud_.java",
+            "variables": [
+                "mNotification",
+                "mCurrentAccount",
+                "mStorageManager",
+                "mBinder",
+                "mUploadsStorageManager",
+                "accountManager",
+                "startId",
+                "account ",
+                "optionalUser",
+                "user",
+                "msg",
+                "localPaths",
+                "remotePaths",
+                "files",
+                "ocUpload",
+                "newUpload",
+                "uploadKey",
+                "mCurrentUpload",
+                "ocAccount ",
+                "mUploadClient",
+                "uploadResult",
+                "remoteId",
+                "tickerId",
+                "start",
+                "accountName",
+                "upload",
+                "targetKey"
+            ],
+            "strings": [],
+            "comments": [
+                "/**\n * Service for uploading files. Invoke using context.startService(...).\n *\n * Files to be uploaded are stored persistently using {@link UploadsStorageManager}.\n *\n * On next invocation of {@link FileUploader} uploaded files which previously failed will be uploaded again until either\n * upload succeeded or a fatal error occurred.\n *\n * Every file passed to this service is uploaded. No filtering is performed. However",
+                "Intent keys (e.g.",
+                "KEY_WIFI_ONLY)\n * are obeyed.\n */",
+                "/**\n *  ownCloud Android client application\n *\n *  @author Bartek Przybylski\n *  @author masensio\n *  @author LukeOwnCloud\n *  @author David A. Velasco\n *  @author Chris Narkiewicz\n *\n *  Copyright (C) 2012 Bartek Przybylski\n *  Copyright (C) 2012-2016 ownCloud Inc.\n *  Copyright (C) 2020 Chris Narkiewicz <hello@ezaquarii.com>\n *\n *  This program is free software: you can redistribute it and/or modify\n *  it under the terms of the GNU General Public License version 2",
+                "*  as published by the Free Software Foundation.\n *\n *  This program is distributed in the hope that it will be useful",
+                "*  but WITHOUT ANY WARRANTY; without even the implied warranty of\n *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n *  GNU General Public License for more details.\n *\n *  You should have received a copy of the GNU General Public License\n *  along with this program.  If not",
+                "see <http://www.gnu.org/licenses/>.\n */"
+            ]
+        },
+        {
+            "fileName": "FileUploader_Xwiki_.java",
+            "variables": [
+                "FOREGROUND_SERVICE_ID",
+                "mUploadClient",
+                "mCurrentAccount",
+                "mStorageManager",
+                "accountManager",
+                "mUploadsStorageManager",
+                "mPendingUploads",
+                "mCurrentUpload",
+                "mNotificationManager",
+                "mNotificationBuilder",
+                "am",
+                "startId",
+                "account ",
+                "optionalUser",
+                "user",
+                "msg",
+                "localPaths",
+                "remotePaths",
+                "files",
+                "files_temp",
+                "createdBy\". \"ocUpload",
+                "newUpload",
+                "putResult",
+                "id",
+                "uploadKey",
+                "removeResult",
+                "uploadResult",
+                "task",
+                "fileName",
+                "text",
+                "tickerId",
+                "unlinkedFromRemotePath",
+                "accountName",
+                "storedUpload",
+                "remotePath",
+                "file",
+                "targetKey",
+                "key",
+                "service",
+                "mService"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "GeneralMailConfigurationUpdatedEvent.java",
+            "variables": [
+                "wikiId"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "GhprbGitHubAuth.java",
+            "variables": [
+                "credentialsId",
+                "id",
+                "username",
+                "password"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "GitHubServerConfig.java",
+            "variables": [
+                "credentialsId",
+                "creds"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "GitHubTokenCredentialsCreator.java",
+            "variables": [
+                "credentialsId",
+                "login",
+                "password",
+                "username",
+                "token",
+                "credentials"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "GithubConfig.java",
+            "variables": [
+                "githubEndpoint",
+                "githubClient",
+                "retrofitClient"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "GnssNetworkConnectivityHandler.java",
+            "variables": [
+                "mAGpsDataConnectionIpAddr",
+                "mActiveSubId",
+                "WAKELOCK_KEY ",
+                "mApn",
+                "mCapabilities",
+                "mSubId",
+                "subId",
+                "subscriptionInfoList",
+                "subInfo",
+                "subIdTelManager",
+                "subIdPhoneStateListener",
+                "activeNetworkInfo",
+                "suplIpAddr",
+                "mAvailableNetworkCapabilities",
+                "network",
+                "apn",
+                "message",
+                "linkAddresses"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "HttpMethod.java",
+            "variables": [
+                "name",
+                "statusCode"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "HudsonPrivateSecurityRealm.java",
+            "variables": [
+                "groupname",
+                "username",
+                "u",
+                "password",
+                "message",
+                "identity",
+                "si",
+                "FEDERATED_IDENTITY_SESSION_KEY",
+                "user ",
+                "r",
+                "id",
+                "password1",
+                "password2",
+                "fullname",
+                "email",
+                "captcha",
+                "passwordHash",
+                "rawPassword",
+                "d",
+                "formData",
+                "pwd",
+                "pwd2",
+                "data",
+                "passwordEncoder",
+                "rawPass",
+                "encPass",
+                "i",
+                "salt"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "LiveTableResultsTest.java",
+            "variables": [
+                "query",
+                "xClass",
+                "rows ",
+                "tagPluginApi",
+                "location",
+                "className"
+            ],
+            "strings": [
+                "password",
+                "Password",
+                "abcd"
+            ],
+            "comments": []
+        },
+        {
+            "fileName": "LiveTableResultsTest_#2.java",
+            "variables": [
+                "query",
+                "className"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "ModelFactory.java",
+            "variables": [
+                "baseUri",
+                "self",
+                "doc",
+                "spaceUri ",
+                "spaceLink",
+                "parentUri ",
+                "originalAuthor"
+            ],
+            "strings": [],
+            "comments": [
+                "https://jira.xwiki.org/browse/XWIKI-17463\">XWIKI-17463"
+            ]
+        },
+        {
+            "fileName": "MySQLBackupProcessor.java",
+            "variables": [
+                "targetDir",
+                "dataSource",
+                "dbProperties",
+                "processResult",
+                "url",
+                "connectionUrlInstance",
+                "env",
+                "argv"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "NfcService.java",
+            "variables": [
+                "mUserManager",
+                "mObjectMap",
+                "mState",
+                "mDeviceHost",
+                "mUserId",
+                "data",
+                "device",
+                "mHandoverDataParser",
+                "mKeyguard",
+                "mUserManager",
+                "um",
+                "luh",
+                "uh",
+                "msg",
+                "fd",
+                "binder",
+                "token",
+                "unlockHandler",
+                "unlockHandler",
+                "techCodeToMask",
+                "mask",
+                "response",
+                "threadName",
+                "key",
+                "sap",
+                "route",
+                "aid",
+                "ndefMsg",
+                "tag",
+                "userId",
+                "mOwnerReceiver"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "NotificationStackScrollLayout.java",
+            "variables": [
+                "mActivePointerId",
+                "LockscreenGestureLogger",
+                "mNotificationPanel",
+                "pointerId",
+                "newPointerIndex",
+                "pointerIndex",
+                "mLockscreenUserManager",
+                "fd",
+                "notificationPanelView",
+                "mShelf",
+                "mEntryManager",
+                "mNotificationGutsManager",
+                "mSectionsManager"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "OHttpSessionManager.java",
+            "variables": [
+                "sessions",
+                "iId",
+                "id",
+                "s",
+                "iDatabaseName",
+                "iUserName",
+                "iUserPassword",
+                "iSessionId"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "OpenstackCredentials.java",
+            "variables": [
+                "credentialId",
+                "credential"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "PhoneInterfaceManager.java",
+            "variables": [
+                "mApp",
+                "mAppOps",
+                "mUserManager",
+                "mSubscriptionController",
+                "mPm",
+                "mCarrierPrivilegeTestOverrideSubIds\" \"data",
+                "command",
+                "subId",
+                "subIds",
+                "phone",
+                "callId",
+                "callerDisplayName",
+                "msg",
+                "uiccPort",
+                "iccArgument",
+                "defaultPhone",
+                "ussdObject",
+                "ussdRequest",
+                "returnData",
+                "channelId",
+                "openChannelResp",
+                "errorCode",
+                "callForwardInfos",
+                "callForwardingInfo",
+                "callback",
+                "command",
+                "app",
+                "pm",
+                "mCM",
+                "mPhoneConfigurationManager",
+                "mRadioInterfaceCapabilities",
+                "thePhone",
+                "identity",
+                "url",
+                "number",
+                "slist",
+                "resultArray",
+                "pin",
+                "puk",
+                "mPhoneId",
+                "phoneId",
+                "simCard",
+                "workSource",
+                "port ",
+                "callingFeatureId",
+                "dialString",
+                "ussdObject",
+                "targetSdk",
+                "info",
+                "mccmnc",
+                "callingFeatureId",
+                "tm",
+                "smsController",
+                "token",
+                "controller",
+                "key",
+                "fileID",
+                "filePath",
+                "fplmns",
+                "itemID",
+                "item",
+                "operatorInfo",
+                "locationResult",
+                "request",
+                "callingUid",
+                "callingPid",
+                "scanId",
+                "uid",
+                "cpt",
+                "pkgName",
+                "privilegedPackages",
+                "imsPhone",
+                "callingFeatureId",
+                "featureId",
+                "iccId",
+                "tele",
+                "sub",
+                "activeSubscriberIds",
+                "prefs",
+                "subscriberId",
+                "numberKey",
+                "telephonyManager",
+                "info",
+                "groupUuid",
+                "groupInfos",
+                "gsmRoamingList",
+                "gsmNonRoamingList",
+                "cdmaRoamingList",
+                "cdmaNonRoamingList",
+                "oemReq",
+                "oemResp",
+                "imageData",
+                "parcelUuid",
+                "imageData",
+                "callingPackage",
+                "uri",
+                "workSource",
+                "ss",
+                "aid",
+                "esn",
+                "args",
+                "in",
+                "out",
+                "packageName",
+                "profile",
+                "uiccController",
+                "cardInfos",
+                "cardInfo",
+                "card",
+                "portInfos",
+                "slots",
+                "infos",
+                "cardId",
+                "portInfos",
+                "iccId",
+                "uiccProfile",
+                "imsi",
+                "apn",
+                "gid1",
+                "gid2",
+                "number",
+                "imsPhoneCallTracker",
+                "imsPhone",
+                "registry"
+            ],
+            "strings": [
+                "154934934?",
+                "186776740?"
+            ],
+            "comments": [
+                "// Safetynet logging for b/154934934?"
+            ]
+        },
+        {
+            "fileName": "PhoneSubInfoController.java",
+            "variables": [
+                "mPhone",
+                "phone",
+                "phoneId",
+                "subId",
+                "phoneSubInfoProxy"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "Plugin.java",
+            "variables": [
+                "formData"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "ReceiveExternalFilesActivity.java",
+            "variables": [
+                "mAccountManager",
+                "mParents",
+                "mUploadPath",
+                "mFile",
+                "mSubjectText",
+                "mExtraText",
+                "mEmptyListMessage",
+                "mEmptyListHeadline",
+                "binding",
+                "parentPath",
+                "mAccountManager",
+                "account",
+                "savedAccount",
+                "accounts",
+                "dialog",
+                "outState",
+                "builder",
+                "mFilenameBase",
+                "args",
+                "mText",
+                "subjectText",
+                "extraText",
+                "filename",
+                "userInput",
+                "userInputContainer",
+                "parent",
+                "view",
+                "id",
+                "texts",
+                "url",
+                "fw",
+                "full_path",
+                "tmpFiles",
+                "v",
+                "files",
+                "mUploadPath",
+                "mParents",
+                "p",
+                "themeToolbarUtils",
+                "current_dir",
+                "data",
+                "sa",
+                "sortOrder ",
+                "headline",
+                "remotePath ",
+                "message",
+                "folder",
+                "a",
+                "tmpName",
+                "uploader",
+                "resultCode",
+                "messageResTitle",
+                "messageResId",
+                "lastPath",
+                "dir_names",
+                "item",
+                "itemId",
+                "root",
+                "accountName",
+                "currentFile",
+                "currentDir",
+                "callerTag"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "RegisteredServicesCache.java",
+            "variables": [
+                "mMetaDataName",
+                "mServicesLock ",
+                "mUserServices",
+                "userId",
+                "services",
+                "user",
+                "file",
+                "userFilter",
+                "uids",
+                "service",
+                "userFile",
+                "userDir"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "RequestIgnoreBatteryOptimizations.java",
+            "variables": [
+                "mPackageName",
+                "data",
+                "ai"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "ResetPasswordIT.java",
+            "variables": [
+                "userName",
+                "password",
+                "newPassword"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "SubscriptionInfo.java",
+            "variables": [
+                "mId",
+                "mIccId",
+                "mSimSlotIndex",
+                "mDisplayName",
+                "mCarrierName",
+                "mCarrierId",
+                "mNameSource",
+                "mNumber",
+                "mDataRoaming",
+                "mMcc",
+                "mMnc",
+                "mEhplmns",
+                "mHplmns",
+                "mCountryIso",
+                "mNativeAccessRules",
+                "mCarrierConfigAccessRules",
+                "mCardString",
+                "mCardId",
+                "mGroupUUID",
+                "mGroupOwner",
+                "info",
+                "id",
+                "iccId",
+                "simSlotIndex",
+                "carrierName",
+                "nameSource",
+                "number",
+                "roaming",
+                "mcc",
+                "mnc",
+                "countryIso",
+                "nativeAccessRules",
+                "cardString",
+                "carrierId",
+                "groupUUID",
+                "groupOwner",
+                "carrierConfigAccessRules",
+                "ehplmns",
+                "hplmns",
+                "merged"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "TemporaryFolder.java",
+            "variables": [
+                "parentFolder",
+                "folder",
+                "builder",
+                "fileName",
+                "file",
+                "path",
+                "paths",
+                "root",
+                "relativePath",
+                "tempDir",
+                "tmpFile",
+                "tmpName",
+                "folderName",
+                "createdFolder",
+                "files"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "TestlabNotifier.java",
+            "variables": [
+                "companyId",
+                "apiKey"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "TinfoilScanRecorder.java",
+            "variables": [
+                "apiAccessKey",
+                "apiSecretKey"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "UnsafeAccess.java",
+            "variables": [],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "ViewOptionHandler.java",
+            "variables": [
+                "tok",
+                "viewName"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "WifiEnterpriseConfig.java",
+            "variables": [
+                "PHASE2_KEY",
+                "IDENTITY_KEY",
+                "ANON_IDENTITY_KEY",
+                "PASSWORD_KEY",
+                "SUBJECT_MATCH_KEY",
+                "ALTSUBJECT_MATCH_KEY",
+                "DOM_SUFFIX_MATCH_KEY",
+                "OPP_KEY_CACHING",
+                "ENGINE_ID_KEYSTORE",
+                "KEYSTORE_URI",
+                "CA_CERT_PREFIX",
+                "CLIENT_CERT_PREFIX",
+                "CLIENT_CERT_KEY",
+                "PRIVATE_KEY_ID_KEY",
+                "REALM_KEY",
+                "PLMN_KEY",
+                "PHASE1_KEY ",
+                "ENABLE_TLS_1_2",
+                "DISABLE_TLS_1_2",
+                "mClientPrivateKey",
+                "key",
+                "userKeyBytes ",
+                "userKey",
+                "keyFactory",
+                "cert",
+                "eapMethod",
+                "realm",
+                "plmn",
+                "sb"
+            ],
+            "strings": [],
+            "comments": []
+        },
+        {
+            "fileName": "WifiNetworkDetailsFragment.java",
+            "variables": [
+                "mAccessPoint",
+                "mWifiDetailPreferenceController",
+                "icicle",
+                "dialogId",
+                "mWifiDetailPreferenceController",
+                "privacyController",
+                "meteredPreferenceController",
+                "mWifiDialogListeners",
+                "dialog"
+            ],
+            "strings": [],
+            "comments": []
+        }
     ]
-  }
+}

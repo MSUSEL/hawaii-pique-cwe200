@@ -1,2015 +1,1576 @@
-{
-    "files": [
-        {
-            "fileName": "BasicSSHUserPrivateKey.java",
-            "sensitiveVariables": [
-                {
-                    "name": "passphrase",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "privateKeySource",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "privateKeys",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "username",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "secret",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "privateKey",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "privateKeyFile",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "key",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "file",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "files",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "sshHome",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "keyName",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "keys",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "id_ecdsa",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "id_ed25519",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "id_rsa",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "id_dsa",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "identity",
-                    "description": "6 : Security and Encryption Information"
-                }
-            ]
-        },
-        {
-            "fileName": "DetectPostBuildStepDescriptor.java",
-            "sensitiveVariables": [
-                {
-                    "name": "hubUrl",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "hubCredentialsId",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "detectArtifactUrl",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "proxyInfo",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "credentialUserName",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "credentialPassword",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "hubApiToken",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "credential",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "credentials",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "c",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "creds",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "hubServerConfigBuilder",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "hubServerConfig",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "connection",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "Must call assertProxyValid to complete setup of proxyInfo on this object",
-                    "description": "6 : Security and Encryption Information"
-                }
-            ]
-        },
-        {
-            "fileName": "EasAutoDiscover.java",
-            "sensitiveVariables": [
-                {
-                    "name": "mUsername",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "mPassword",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "mHostAuth",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "mRedirectUri",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "hostAuth",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "account",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "username",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "password",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "uri",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "login",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "hostAuthCompat",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "dn",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "addr",
-                    "description": "2 : Personal Identifiable Information"
-                }
-            ]
-        },
-        {
-            "fileName": "AWSCodeDeployPublisher.java",
-            "sensitiveVariables": [
-                {
-                    "name": "s3bucket",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "applicationName",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "externalId",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "iamRoleArn",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "region",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "subdirectory",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "proxyHost",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "proxyPort",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "awsAccessKey",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "awsSecretKey",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "credentials",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "envVars",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "aws",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "revisionLocation",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "workspace",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "key",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "appspec",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "dest",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "s3result",
-                    "description": "5 : Sensitive System and Configuration Information:"
-                },
-                {
-                    "name": "s3Location",
-                    "description": "5 : Sensitive System and Configuration Information:"
-                },
-                {
-                    "name": "formData",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "awsClients",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                }
-            ]
-        },
-        {
-            "fileName": "AbstractQueryProtocolModelTest.java",
-            "sensitiveVariables": [
-                {
-                    "name": "ses",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "destination",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "sub",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "body",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "msg",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "emailRequest",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "uri",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                }
-            ]
-        },
-        {
-            "fileName": "AbstractSolrMetadataExtractor.java",
-            "sensitiveVariables": [
-                {
-                    "name": "componentManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "generalMailConfiguration",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "metadata",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "attachment",
-                    "description": "7 : Application-Specific Sensitive Data"
-                }
-            ]
-        },
-        {
-            "fileName": "AdvancedBluetoothDetailsHeaderController.java",
-            "sensitiveVariables": [
-                {
-                    "name": "QUERY_PARAMETER_ADDRESS",
-                    "description": "8 : Query Parameters"
-                },
-                {
-                    "name": "QUERY_PARAMETER_BATTERY_ID",
-                    "description": "8 : Query Parameters"
-                },
-                {
-                    "name": "DATABASE_ID",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "DATABASE_BLUETOOTH",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "LEFT_DEVICE_ID",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "RIGHT_DEVICE_ID",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "CASE_DEVICE_ID",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "MAIN_DEVICE_ID",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "cachedBluetoothDevice",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "bluetoothDevice",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "deviceId",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "contentUri",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                }
-            ]
-        },
-        {
-            "fileName": "Analysis.java",
-            "sensitiveVariables": [
-                {
-                    "name": "settings",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "env",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "settingsPrefix",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "settingPrefix",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "ex",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "settingPath",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "settingList",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "path",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "ioe",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "filePath",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                }
-            ]
-        },
-        {
-            "fileName": "ArtifactoryChoiceListProvider.java",
-            "sensitiveVariables": [
-                {
-                    "name": "url",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "credentialsId",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "pItem",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "service",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "c",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "pService",
-                    "description": "5 : Sensitive System and Configuration Information"
-                }
-            ]
-        },
-        {
-            "fileName": "Assistant.java",
-            "sensitiveVariables": [
-                {
-                    "name": "mLiveNotifications",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "mPackageManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mSettings",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "sbn",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "entry",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "e",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "keys",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "key",
-                    "description": "5 : Sensitive System and Configuration Information"
-                }
-            ]
-        },
-        {
-            "fileName": "BaseUserController.java",
-            "sensitiveVariables": [
-                {
-                    "name": "user",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "ug",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "any",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "sourceId",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "userId",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "authUserIssueRequest",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "userid",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "/ws/current/member/list",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/switch/source/ws/{sourceId}",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/update/current",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/update/password",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/project/member/list",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/project/member/option",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/project/member/{projectId}",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/info",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/get/ws-pj/{userId}",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/update/selenium-server",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "issue/auth",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/update/current-by-resource/{resourceId}",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/is/super/{userid}",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "/user",
-                    "description": "6 : Security and Encryption Information"
-                }
-            ]
-        },
-        {
-            "fileName": "BondStateMachine.java",
-            "sensitiveVariables": [
-                {
-                    "name": "mRemoteDevices",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "OOBDATA",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "remoteDevices",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "dev",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "oobData",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "msg",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "mDevices",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "passkey",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "pin",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "addr",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "address",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "name",
-                    "description": "7 : Application-Specific Sensitive Data"
-                }
-            ]
-        },
-        {
-            "fileName": "CLICommand.java",
-            "sensitiveVariables": [
-                {
-                    "name": "transportAuth",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "old",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "id",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "authenticator",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "auth",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "TRANSPORT_AUTHENTICATION",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "* Connected to stdout and stderr of the CLI agent that initiated the session.\n     * IOW, if you write to these streams, the person who launched the CLI command\n     * will see the messages in his terminal.\n     *\n     * <p>\n     * (In contrast, calling {@code System.out.println(...)} would print out\n     * the message to the server log file, which is probably not what you want.",
-                    "description": "6 : Security and Encryption Information"
-                }
-            ]
-        },
-        {
-            "fileName": "ContainerExecDecorator.java",
-            "sensitiveVariables": [
-                {
-                    "name": "COOKIE_VAR",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "client",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "globalVars",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "ws",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "rcEnvVars",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "path",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "rcVars",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "envVars",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "resultEnvVar",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "environment",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "envs",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "keyValue",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "msg",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "ie",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "cmdEnv",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "pid",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "cmdEnvs",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "pwd",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "entry",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "vars",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "pidFilePath",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "pidFile",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "x",
-                    "description": "7 : Application-Specific Sensitive Data"
-                }
-            ]
-        },
-        {
-            "fileName": "DefaultResetPasswordRequestResponse.java",
-            "sensitiveVariables": [
-                {
-                    "name": "userReference",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "userEmail",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "verificationCode",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "reference",
-                    "description": "2 : Personal Identifiable Information"
-                }
-            ]
-        },
-        {
-            "fileName": "DirectoryBrowserSupport.java",
-            "sensitiveVariables": [
-                {
-                    "name": "base",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "req",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "rsp",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "root",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "path",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "baseFile",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "kid",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "parentPaths",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "csp",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "r",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "pathList",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "relativePath",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "f",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "dir",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "href",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "ex",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "cur",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "files",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "p",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "l",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "relPath",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "sub",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "vf",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "file",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "match",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "baseDir",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "baseRef",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "filePath",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "parent",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                }
-            ]
-        },
-        {
-            "fileName": "FileDownloader.java",
-            "sensitiveVariables": [
-                {
-                    "name": "mDownloadClient",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "currentUser",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "mStorageManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mNotificationManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mNotification",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "accountManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "uploadsStorageManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "localBroadcastManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "user",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "file",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "downloadKey",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "accounts",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "account",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "currentDownloadAccount",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "currentDownloadUser",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "ocAccount",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "filePath",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "updateAccountCredentials",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                }
-            ]
-        },
-        {
-            "fileName": "GhprbGitHubAuth.java",
-            "sensitiveVariables": [
-                {
-                    "name": "jenkinsUrl",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "credentialsId",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "secret",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "expected",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "algorithm",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "keySpec",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "mac",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "localSignatureBytes",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "localSignature",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "body",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "signature",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "credentials",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "tokenCredentials",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "upCredentials",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "ex",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "token",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "tokenId",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "username",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "password",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "me",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "email",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "login",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "comment",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "sha1",
-                    "description": "6 : Security and Encryption Information"
-                }
-            ]
-        },
-        {
-            "fileName": "GithubConfig.java",
-            "sensitiveVariables": [
-                {
-                    "name": "githubClient",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "retrofitClient",
-                    "description": "5 : Sensitive System and Configuration Information"
-                }
-            ]
-        },
-        {
-            "fileName": "GitHubServerConfig.java",
-            "sensitiveVariables": [
-                {
-                    "name": "apiUrl",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "credentialsId",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "cachedClient",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "gitHubUrl",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "creds",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "input",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "github",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "config",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "gitHub",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "value",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                }
-            ]
-        },
-        {
-            "fileName": "GitHubTokenCredentialsCreator.java",
-            "sensitiveVariables": [
-                {
-                    "name": "apiUrl",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "credentialsId",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "creds",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "token",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "credentials",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "login",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "password",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "username",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "url",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "serverAPIUrl",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "serverUri",
-                    "description": "5 : Sensitive System and Configuration Information"
-                }
-            ]
-        },
-        {
-            "fileName": "GnssNetworkConnectivityHandler.java",
-            "sensitiveVariables": [
-                {
-                    "name": "mConnMgr",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mHandler",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mAGpsDataConnectionIpAddr",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mActiveSubId",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mApn",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "capability",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "subManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "powerManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mSubId",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "subId",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "telManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "subscriptionInfoList",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "activeSubIds",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "subIdTelManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "subInfo",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "activeNetworkInfo",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "suplIpAddr",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "network",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "telephonyManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "apn",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "info",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "message",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "linkAddresses",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "inetAddress",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "linkAddress",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "Limit initial capacity to 5 as the number of connected networks will likely be small.",
-                    "description": "5 : Sensitive System and Configuration Information"
-                }
-            ]
-        },
-        {
-            "fileName": "HttpMethod.java",
-            "sensitiveVariables": [
-                {
-                    "name": "configuration",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "params",
-                    "description": "8 : Query Parameters"
-                },
-                {
-                    "name": "authenticator",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "param",
-                    "description": "8 : Query Parameters"
-                },
-                {
-                    "name": "bearer",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                }
-            ]
-        },
-        {
-            "fileName": "LiveTableResultsTest.java",
-            "sensitiveVariables": [
-                {
-                    "name": "query",
-                    "description": "8 : Query Parameters"
-                },
-                {
-                    "name": "document",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "obfuscated",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "xwikiDocument",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "location",
-                    "description": "8 : Query Parameters"
-                }
-            ]
-        },
-        {
-            "fileName": "LiveTableResultsTest_#2.java",
-            "sensitiveVariables": [
-                {
-                    "name": "query",
-                    "description": "8 : Query Parameters"
-                },
-                {
-                    "name": "document",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "obfuscated",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "http://localhost:8080/xwiki/bin/get/XWiki/LiveTableResults?outputSyntax=plain&collist=doc.location",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                }
-            ]
-        },
-        {
-            "fileName": "MySQLBackupProcessor.java",
-            "sensitiveVariables": [
-                {
-                    "name": "targetDir",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "dataSource",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "dbProperties",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "url",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "connectionUrlInstance",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "env",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "dbName",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mainHost",
-                    "description": "5 : Sensitive System and Configuration Information"
-                }
-            ]
-        },
-        {
-            "fileName": "OHttpSessionManager.java",
-            "sensitiveVariables": [
-                {
-                    "name": "sessions",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "s",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "sess",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "iId",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "id",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "iDatabaseName",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "iUserName",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "iUserPassword",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "iSessionId",
-                    "description": "7 : Application-Specific Sensitive Data"
-                }
-            ]
-        },
-        {
-            "fileName": "OpenstackCredentials.java",
-            "sensitiveVariables": [
-                {
-                    "name": "credentials",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "credentialId",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "openstackCredential",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                }
-            ]
-        },
-        {
-            "fileName": "PhoneSubInfoController.java",
-            "sensitiveVariables": [
-                {
-                    "name": "mPhone",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "phone",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "phoneId",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "phoneSubInfoProxy",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                }
-            ]
-        },
-        {
-            "fileName": "Plugin.java",
-            "sensitiveVariables": [
-                {
-                    "name": "formData",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "path",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "pathUC",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "requestPath",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "config",
-                    "description": "5 : Sensitive System and Configuration Information"
-                }
-            ]
-        },
-        {
-            "fileName": "RequestIgnoreBatteryOptimizations.java",
-            "sensitiveVariables": [
-                {
-                    "name": "mPowerWhitelistManager",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mPackageName",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "data",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                }
-            ]
-        },
-        {
-            "fileName": "ResetPasswordIT.java",
-            "sensitiveVariables": [
-                {
-                    "name": "mail",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "testConfiguration",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "logCaptureConfiguration",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "userName",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "password",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "newPassword",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "receivedEmails",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "receivedEmail",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "receivedMailContent",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "passwordResetLink",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "messageMap",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "addresses",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "mp",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "plain",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "message",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "part",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "out",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "messageContent",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "emailContent",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "foo@bar.com",
-                    "description": "2 : Personal Identifiable Information"
-                }
-            ]
-        },
-        {
-            "fileName": "TemporaryFolder.java",
-            "sensitiveVariables": [
-                {
-                    "name": "parentFolder",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "folder",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "file",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "fileName",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "path",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "root",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "relativePath",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "paths",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "createdFolder",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "tmpFile",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "tmpName",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "folderName",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "files",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "each",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                }
-            ]
-        },
-        {
-            "fileName": "TestlabNotifier.java",
-            "sensitiveVariables": [
-                {
-                    "name": "projectKey",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "companyId",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "apiKey",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "runApiKey",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "runCompanyId",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "runOnpremiseurl",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "envVars",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "runProjectKey",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "cors",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "se",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "onpremiseurl",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                }
-            ]
-        },
-        {
-            "fileName": "TinfoilScanRecorder.java",
-            "sensitiveVariables": [
-                {
-                    "name": "apiAccessKey",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "apiSecretKey",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "apiHost",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "proxyHost",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "proxyPort",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "accessKey",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "secretKey",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "environment",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "tinfoilAPI",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "client",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                }
-            ]
-        },
-        {
-            "fileName": "UnsafeAccess.java",
-            "sensitiveVariables": [
-                {
-                    "name": "INSTANCE",
-                    "description": "5 : Sensitive System and Configuration Information"
-                }
-            ]
-        },
-        {
-            "fileName": "ViewOptionHandler.java",
-            "sensitiveVariables": [
-                {
-                    "name": "view",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "viewName",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "name",
-                    "description": "7 : Application-Specific Sensitive Data"
-                }
-            ]
-        },
-        {
-            "fileName": "WifiEnterpriseConfig.java",
-            "sensitiveVariables": [
-                {
-                    "name": "KEYSTORE_URI",
-                    "description": "4 : Files Containing Sensitive Information, Sensitive File Paths, URLs"
-                },
-                {
-                    "name": "CA_CERT_PREFIX",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "CLIENT_CERT_PREFIX",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "mCaCert",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "mClientPrivateKey",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "mClientCertificate",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "key",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "source",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "algorithm",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "userKeyBytes",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "e",
-                    "description": "7 : Application-Specific Sensitive Data"
-                },
-                {
-                    "name": "certBytes",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "cert",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "enterpriseConfig",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "userKey",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "identity",
-                    "description": "2 : Personal Identifiable Information"
-                },
-                {
-                    "name": "anonymousIdentity",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "password",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "privateKey",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "clientCertificate",
-                    "description": "1 : Authentication and Authorization and Credentials Information"
-                },
-                {
-                    "name": "eap",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "sb",
-                    "description": "6 : Security and Encryption Information"
-                },
-                {
-                    "name": "By default, we enable TLS1.2. However, due to a known bug on some radius, we may disable it to",
-                    "description": "5 : Sensitive System and Configuration Information"
-                }
-            ]
-        },
-        {
-            "fileName": "WifiNetworkDetailsFragment.java",
-            "sensitiveVariables": [
-                {
-                    "name": "mAccessPoint",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "mWifiDetailPreferenceController",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "controllers",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "cm",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "meteredPreferenceController",
-                    "description": "5 : Sensitive System and Configuration Information"
-                },
-                {
-                    "name": "privacyController",
-                    "description": "5 : Sensitive System and Configuration Information"
-                }
-            ]
-        }
-    ]
-}
+[
+    {
+        "fileName": "BasicSSHUserPrivateKey.java",
+        "variables": [
+            {
+                "name": "passphrase"
+            },
+            {
+                "name": "privateKeySource"
+            },
+            {
+                "name": "privateKeys"
+            },
+            {
+                "name": "privateKeysLastModified"
+            },
+            {
+                "name": "username"
+            },
+            {
+                "name": "secret"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "privateKey"
+            },
+            {
+                "name": "privateKeyFile"
+            },
+            {
+                "name": "key"
+            },
+            {
+                "name": "file"
+            },
+            {
+                "name": "files"
+            },
+            {
+                "name": "sshHome"
+            },
+            {
+                "name": "keyName"
+            },
+            {
+                "name": "keys"
+            }
+        ]
+    },
+    {
+        "fileName": "DetectPostBuildStepDescriptor.java",
+        "variables": [
+            {
+                "name": "hubUrl"
+            },
+            {
+                "name": "hubCredentialsId"
+            },
+            {
+                "name": "detectArtifactUrl"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "proxyInfo"
+            },
+            {
+                "name": "credentialUserName"
+            },
+            {
+                "name": "credentialPassword"
+            },
+            {
+                "name": "hubApiToken"
+            },
+            {
+                "name": "credential"
+            },
+            {
+                "name": "credentials"
+            },
+            {
+                "name": "c"
+            },
+            {
+                "name": "creds"
+            },
+            {
+                "name": "hubServerConfigBuilder"
+            },
+            {
+                "name": "hubServerConfig"
+            },
+            {
+                "name": "connection"
+            }
+        ]
+    },
+    {
+        "fileName": "EasAutoDiscover.java",
+        "variables": [
+            {
+                "name": "mUri"
+            },
+            {
+                "name": "mUsername"
+            },
+            {
+                "name": "mPassword"
+            },
+            {
+                "name": "mHostAuth"
+            },
+            {
+                "name": "mRedirectUri"
+            },
+            {
+                "name": "hostAuth"
+            },
+            {
+                "name": "account"
+            },
+            {
+                "name": "username"
+            },
+            {
+                "name": "password"
+            },
+            {
+                "name": "context"
+            },
+            {
+                "name": "uri"
+            },
+            {
+                "name": "domain"
+            },
+            {
+                "name": "attemptNumber"
+            },
+            {
+                "name": "login"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "requestUri"
+            },
+            {
+                "name": "req"
+            },
+            {
+                "name": "loc"
+            },
+            {
+                "name": "response"
+            },
+            {
+                "name": "hostAuthCompat"
+            },
+            {
+                "name": "url"
+            },
+            {
+                "name": "dn"
+            },
+            {
+                "name": "addr"
+            }
+        ]
+    },
+    {
+        "fileName": "AWSCodeDeployPublisher.java",
+        "variables": [
+            {
+                "name": "s3bucket"
+            },
+            {
+                "name": "s3prefix"
+            },
+            {
+                "name": "applicationName"
+            },
+            {
+                "name": "deploymentGroupName"
+            },
+            {
+                "name": "deploymentConfig"
+            },
+            {
+                "name": "externalId"
+            },
+            {
+                "name": "iamRoleArn"
+            },
+            {
+                "name": "region"
+            },
+            {
+                "name": "subdirectory"
+            },
+            {
+                "name": "proxyHost"
+            },
+            {
+                "name": "proxyPort"
+            },
+            {
+                "name": "awsAccessKey"
+            },
+            {
+                "name": "awsSecretKey"
+            },
+            {
+                "name": "credentials"
+            },
+            {
+                "name": "envVars"
+            },
+            {
+                "name": "aws"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "sourceDirectory"
+            },
+            {
+                "name": "revisionLocation"
+            },
+            {
+                "name": "deploymentId"
+            },
+            {
+                "name": "workspace"
+            },
+            {
+                "name": "key"
+            },
+            {
+                "name": "appspec"
+            },
+            {
+                "name": "dest"
+            },
+            {
+                "name": "s3result"
+            },
+            {
+                "name": "s3Location"
+            },
+            {
+                "name": "formData"
+            },
+            {
+                "name": "awsClients"
+            }
+        ]
+    },
+    {
+        "fileName": "AbstractQueryProtocolModelTest.java",
+        "variables": [
+            {
+                "name": "server"
+            },
+            {
+                "name": "ses"
+            },
+            {
+                "name": "destination"
+            },
+            {
+                "name": "sub"
+            },
+            {
+                "name": "body"
+            },
+            {
+                "name": "msg"
+            },
+            {
+                "name": "emailRequest"
+            },
+            {
+                "name": "uri"
+            }
+        ]
+    },
+    {
+        "fileName": "AbstractSolrMetadataExtractor.java",
+        "variables": [
+            {
+                "name": "parametersSerializer"
+            },
+            {
+                "name": "xcontextProvider"
+            },
+            {
+                "name": "componentManager"
+            },
+            {
+                "name": "generalMailConfiguration"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "metadata"
+            },
+            {
+                "name": "attachment"
+            }
+        ]
+    },
+    {
+        "fileName": "AdvancedBluetoothDetailsHeaderController.java",
+        "variables": [
+            {
+                "name": "QUERY_PARAMETER_ADDRESS"
+            },
+            {
+                "name": "QUERY_PARAMETER_BATTERY_ID"
+            },
+            {
+                "name": "DATABASE_ID"
+            },
+            {
+                "name": "DATABASE_BLUETOOTH"
+            },
+            {
+                "name": "LEFT_DEVICE_ID"
+            },
+            {
+                "name": "RIGHT_DEVICE_ID"
+            },
+            {
+                "name": "CASE_DEVICE_ID"
+            },
+            {
+                "name": "MAIN_DEVICE_ID"
+            },
+            {
+                "name": "cachedBluetoothDevice"
+            },
+            {
+                "name": "bluetoothDevice"
+            },
+            {
+                "name": "deviceId"
+            },
+            {
+                "name": "contentUri"
+            },
+            {
+                "name": "e"
+            }
+        ]
+    },
+    {
+        "fileName": "Analysis.java",
+        "variables": [
+            {
+                "name": "settings"
+            },
+            {
+                "name": "env"
+            },
+            {
+                "name": "settingsPrefix"
+            },
+            {
+                "name": "settingPrefix"
+            },
+            {
+                "name": "ex"
+            },
+            {
+                "name": "settingPath"
+            },
+            {
+                "name": "settingList"
+            },
+            {
+                "name": "path"
+            },
+            {
+                "name": "ioe"
+            },
+            {
+                "name": "filePath"
+            }
+        ]
+    },
+    {
+        "fileName": "ArtifactoryChoiceListProvider.java",
+        "variables": [
+            {
+                "name": "url"
+            },
+            {
+                "name": "credentialsId"
+            },
+            {
+                "name": "pItem"
+            },
+            {
+                "name": "service"
+            },
+            {
+                "name": "c"
+            },
+            {
+                "name": "pService"
+            }
+        ]
+    },
+    {
+        "fileName": "Assistant.java",
+        "variables": [
+            {
+                "name": "mLiveNotifications"
+            },
+            {
+                "name": "mPackageManager"
+            },
+            {
+                "name": "mSettings"
+            },
+            {
+                "name": "sbn"
+            },
+            {
+                "name": "entry"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "keys"
+            },
+            {
+                "name": "key"
+            }
+        ]
+    },
+    {
+        "fileName": "AttachmentProvider.java",
+        "variables": [
+            {
+                "name": "files"
+            },
+            {
+                "name": "filename"
+            },
+            {
+                "name": "file"
+            },
+            {
+                "name": "segments"
+            },
+            {
+                "name": "id"
+            },
+            {
+                "name": "fileName"
+            },
+            {
+                "name": "uri"
+            },
+            {
+                "name": "accountId"
+            },
+            {
+                "name": "saveIn"
+            },
+            {
+                "name": "newFile"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "dir"
+            },
+            {
+                "name": "attachmentUri"
+            },
+            {
+                "name": "ioe"
+            },
+            {
+                "name": "oome"
+            }
+        ]
+    },
+    {
+        "fileName": "BaseUserController.java",
+        "variables": [
+            {
+                "name": "user"
+            },
+            {
+                "name": "ug"
+            },
+            {
+                "name": "any"
+            },
+            {
+                "name": "sourceId"
+            },
+            {
+                "name": "userId"
+            },
+            {
+                "name": "authUserIssueRequest"
+            },
+            {
+                "name": "userid"
+            }
+        ]
+    },
+    {
+        "fileName": "BondStateMachine.java",
+        "variables": [
+            {
+                "name": "mRemoteDevices"
+            },
+            {
+                "name": "OOBDATA"
+            },
+            {
+                "name": "remoteDevices"
+            },
+            {
+                "name": "dev"
+            },
+            {
+                "name": "oobData"
+            },
+            {
+                "name": "msg"
+            },
+            {
+                "name": "mDevices"
+            },
+            {
+                "name": "passkey"
+            },
+            {
+                "name": "pin"
+            },
+            {
+                "name": "addr"
+            },
+            {
+                "name": "address"
+            },
+            {
+                "name": "name"
+            }
+        ]
+    },
+    {
+        "fileName": "CLICommand.java",
+        "variables": [
+            {
+                "name": "transportAuth"
+            },
+            {
+                "name": "old"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "id"
+            },
+            {
+                "name": "authenticator"
+            },
+            {
+                "name": "auth"
+            },
+            {
+                "name": "TRANSPORT_AUTHENTICATION"
+            }
+        ]
+    },
+    {
+        "fileName": "ContainerExecDecorator.java",
+        "variables": [
+            {
+                "name": "COOKIE_VAR"
+            },
+            {
+                "name": "client"
+            },
+            {
+                "name": "globalVars"
+            },
+            {
+                "name": "ws"
+            },
+            {
+                "name": "rcEnvVars"
+            },
+            {
+                "name": "path"
+            },
+            {
+                "name": "rcVars"
+            },
+            {
+                "name": "envVars"
+            },
+            {
+                "name": "resultEnvVar"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "environment"
+            },
+            {
+                "name": "envs"
+            },
+            {
+                "name": "keyValue"
+            },
+            {
+                "name": "msg"
+            },
+            {
+                "name": "ie"
+            },
+            {
+                "name": "cmdEnv"
+            },
+            {
+                "name": "pid"
+            },
+            {
+                "name": "cmdEnvs"
+            },
+            {
+                "name": "pwd"
+            },
+            {
+                "name": "entry"
+            },
+            {
+                "name": "vars"
+            },
+            {
+                "name": "pidFilePath"
+            },
+            {
+                "name": "pidFile"
+            },
+            {
+                "name": "x"
+            }
+        ]
+    },
+    {
+        "fileName": "DefaultResetPasswordRequestResponse.java",
+        "variables": [
+            {
+                "name": "userReference"
+            },
+            {
+                "name": "userEmail"
+            },
+            {
+                "name": "verificationCode"
+            },
+            {
+                "name": "reference"
+            }
+        ]
+    },
+    {
+        "fileName": "DirectoryBrowserSupport.java",
+        "variables": [
+            {
+                "name": "base"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "req"
+            },
+            {
+                "name": "rsp"
+            },
+            {
+                "name": "root"
+            },
+            {
+                "name": "path"
+            },
+            {
+                "name": "baseFile"
+            },
+            {
+                "name": "kid"
+            },
+            {
+                "name": "parentPaths"
+            },
+            {
+                "name": "csp"
+            },
+            {
+                "name": "r"
+            },
+            {
+                "name": "pathList"
+            },
+            {
+                "name": "relativePath"
+            },
+            {
+                "name": "f"
+            },
+            {
+                "name": "dir"
+            },
+            {
+                "name": "href"
+            },
+            {
+                "name": "ex"
+            },
+            {
+                "name": "cur"
+            },
+            {
+                "name": "files"
+            },
+            {
+                "name": "p"
+            },
+            {
+                "name": "l"
+            },
+            {
+                "name": "relPath"
+            },
+            {
+                "name": "sub"
+            },
+            {
+                "name": "vf"
+            },
+            {
+                "name": "file"
+            },
+            {
+                "name": "match"
+            },
+            {
+                "name": "baseDir"
+            },
+            {
+                "name": "baseRef"
+            },
+            {
+                "name": "filePath"
+            },
+            {
+                "name": "parent"
+            }
+        ]
+    },
+    {
+        "fileName": "FileDownloader.java",
+        "variables": [
+            {
+                "name": "mDownloadClient"
+            },
+            {
+                "name": "currentUser"
+            },
+            {
+                "name": "mStorageManager"
+            },
+            {
+                "name": "mNotificationManager"
+            },
+            {
+                "name": "mNotification"
+            },
+            {
+                "name": "accountManager"
+            },
+            {
+                "name": "uploadsStorageManager"
+            },
+            {
+                "name": "localBroadcastManager"
+            },
+            {
+                "name": "user"
+            },
+            {
+                "name": "file"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "downloadKey"
+            },
+            {
+                "name": "accounts"
+            },
+            {
+                "name": "account"
+            },
+            {
+                "name": "currentDownloadAccount"
+            },
+            {
+                "name": "currentDownloadUser"
+            },
+            {
+                "name": "ocAccount"
+            },
+            {
+                "name": "filePath"
+            },
+            {
+                "name": "updateAccountCredentials"
+            }
+        ]
+    },
+    {
+        "fileName": "GhprbGitHubAuth.java",
+        "variables": [
+            {
+                "name": "jenkinsUrl"
+            },
+            {
+                "name": "credentialsId"
+            },
+            {
+                "name": "secret"
+            },
+            {
+                "name": "expected"
+            },
+            {
+                "name": "algorithm"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "keySpec"
+            },
+            {
+                "name": "mac"
+            },
+            {
+                "name": "localSignatureBytes"
+            },
+            {
+                "name": "localSignature"
+            },
+            {
+                "name": "body"
+            },
+            {
+                "name": "signature"
+            },
+            {
+                "name": "credentials"
+            },
+            {
+                "name": "tokenCredentials"
+            },
+            {
+                "name": "upCredentials"
+            },
+            {
+                "name": "ex"
+            },
+            {
+                "name": "token"
+            },
+            {
+                "name": "tokenId"
+            },
+            {
+                "name": "username"
+            },
+            {
+                "name": "password"
+            },
+            {
+                "name": "me"
+            },
+            {
+                "name": "email"
+            },
+            {
+                "name": "login"
+            },
+            {
+                "name": "comment"
+            },
+            {
+                "name": "sha1"
+            }
+        ]
+    },
+    {
+        "fileName": "GithubConfig.java",
+        "variables": [
+            {
+                "name": "githubClient"
+            },
+            {
+                "name": "retrofitClient"
+            }
+        ]
+    },
+    {
+        "fileName": "GitHubServerConfig.java",
+        "variables": [
+            {
+                "name": "apiUrl"
+            },
+            {
+                "name": "credentialsId"
+            },
+            {
+                "name": "cachedClient"
+            },
+            {
+                "name": "creds"
+            },
+            {
+                "name": "input"
+            },
+            {
+                "name": "github"
+            },
+            {
+                "name": "config"
+            },
+            {
+                "name": "gitHub"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "value"
+            }
+        ]
+    },
+    {
+        "fileName": "GitHubTokenCredentialsCreator.java",
+        "variables": [
+            {
+                "name": "apiUrl"
+            },
+            {
+                "name": "credentialsId"
+            },
+            {
+                "name": "creds"
+            },
+            {
+                "name": "token"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "credentials"
+            },
+            {
+                "name": "login"
+            },
+            {
+                "name": "password"
+            },
+            {
+                "name": "username"
+            },
+            {
+                "name": "url"
+            },
+            {
+                "name": "serverAPIUrl"
+            },
+            {
+                "name": "serverUri"
+            }
+        ]
+    },
+    {
+        "fileName": "GnssNetworkConnectivityHandler.java",
+        "variables": [
+            {
+                "name": "mConnMgr"
+            },
+            {
+                "name": "mHandler"
+            },
+            {
+                "name": "mAGpsDataConnectionIpAddr"
+            },
+            {
+                "name": "mActiveSubId"
+            },
+            {
+                "name": "mApn"
+            },
+            {
+                "name": "capability"
+            },
+            {
+                "name": "subManager"
+            },
+            {
+                "name": "powerManager"
+            },
+            {
+                "name": "mSubId"
+            },
+            {
+                "name": "subId"
+            },
+            {
+                "name": "telManager"
+            },
+            {
+                "name": "subscriptionInfoList"
+            },
+            {
+                "name": "activeSubIds"
+            },
+            {
+                "name": "subIdTelManager"
+            },
+            {
+                "name": "subInfo"
+            },
+            {
+                "name": "activeNetworkInfo"
+            },
+            {
+                "name": "suplIpAddr"
+            },
+            {
+                "name": "network"
+            },
+            {
+                "name": "telephonyManager"
+            },
+            {
+                "name": "apn"
+            },
+            {
+                "name": "info"
+            },
+            {
+                "name": "message"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "linkAddresses"
+            },
+            {
+                "name": "inetAddress"
+            },
+            {
+                "name": "linkAddress"
+            }
+        ]
+    },
+    {
+        "fileName": "HttpMethod.java",
+        "variables": [
+            {
+                "name": "configuration"
+            },
+            {
+                "name": "params"
+            },
+            {
+                "name": "authenticator"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "param"
+            },
+            {
+                "name": "bearer"
+            }
+        ]
+    },
+    {
+        "fileName": "LiveTableResultsTest.java",
+        "variables": [
+            {
+                "name": "query"
+            },
+            {
+                "name": "document"
+            },
+            {
+                "name": "obfuscated"
+            },
+            {
+                "name": "xwikiDocument"
+            },
+            {
+                "name": "location"
+            }
+        ]
+    },
+    {
+        "fileName": "LiveTableResultsTest_#2.java",
+        "variables": [
+            {
+                "name": "query"
+            },
+            {
+                "name": "document"
+            },
+            {
+                "name": "obfuscated"
+            }
+        ]
+    },
+    {
+        "fileName": "MySQLBackupProcessor.java",
+        "variables": [
+            {
+                "name": "targetDir"
+            },
+            {
+                "name": "dataSource"
+            },
+            {
+                "name": "dbProperties"
+            },
+            {
+                "name": "url"
+            },
+            {
+                "name": "connectionUrlInstance"
+            },
+            {
+                "name": "env"
+            },
+            {
+                "name": "dbName"
+            },
+            {
+                "name": "mainHost"
+            }
+        ]
+    },
+    {
+        "fileName": "OHttpSessionManager.java",
+        "variables": [
+            {
+                "name": "sessions"
+            },
+            {
+                "name": "s"
+            },
+            {
+                "name": "sess"
+            },
+            {
+                "name": "iId"
+            },
+            {
+                "name": "id"
+            },
+            {
+                "name": "iDatabaseName"
+            },
+            {
+                "name": "iUserName"
+            },
+            {
+                "name": "iUserPassword"
+            },
+            {
+                "name": "iSessionId"
+            }
+        ]
+    },
+    {
+        "fileName": "OpenstackCredentials.java",
+        "variables": [
+            {
+                "name": "credentials"
+            },
+            {
+                "name": "credentialId"
+            },
+            {
+                "name": "openstackCredential"
+            }
+        ]
+    },
+    {
+        "fileName": "PhoneSubInfoController.java",
+        "variables": [
+            {
+                "name": "mPhone"
+            },
+            {
+                "name": "phone"
+            },
+            {
+                "name": "phoneId"
+            },
+            {
+                "name": "phoneSubInfoProxy"
+            },
+            {
+                "name": "e"
+            }
+        ]
+    },
+    {
+        "fileName": "Plugin.java",
+        "variables": [
+            {
+                "name": "formData"
+            },
+            {
+                "name": "path"
+            },
+            {
+                "name": "pathUC"
+            },
+            {
+                "name": "requestPath"
+            },
+            {
+                "name": "config"
+            }
+        ]
+    },
+    {
+        "fileName": "RequestIgnoreBatteryOptimizations.java",
+        "variables": [
+            {
+                "name": "mPowerWhitelistManager"
+            },
+            {
+                "name": "mPackageName"
+            },
+            {
+                "name": "data"
+            },
+            {
+                "name": "e"
+            }
+        ]
+    },
+    {
+        "fileName": "ResetPasswordIT.java",
+        "variables": [
+            {
+                "name": "mail"
+            },
+            {
+                "name": "testConfiguration"
+            },
+            {
+                "name": "logCaptureConfiguration"
+            },
+            {
+                "name": "userName"
+            },
+            {
+                "name": "password"
+            },
+            {
+                "name": "newPassword"
+            },
+            {
+                "name": "receivedEmails"
+            },
+            {
+                "name": "receivedEmail"
+            },
+            {
+                "name": "receivedMailContent"
+            },
+            {
+                "name": "passwordResetLink"
+            },
+            {
+                "name": "messageMap"
+            },
+            {
+                "name": "addresses"
+            },
+            {
+                "name": "mp"
+            },
+            {
+                "name": "plain"
+            },
+            {
+                "name": "messageContent"
+            },
+            {
+                "name": "emailContent"
+            }
+        ]
+    },
+    {
+        "fileName": "TemporaryFolder.java",
+        "variables": [
+            {
+                "name": "parentFolder"
+            },
+            {
+                "name": "folder"
+            },
+            {
+                "name": "file"
+            },
+            {
+                "name": "fileName"
+            },
+            {
+                "name": "path"
+            },
+            {
+                "name": "root"
+            },
+            {
+                "name": "relativePath"
+            },
+            {
+                "name": "paths"
+            },
+            {
+                "name": "createdFolder"
+            },
+            {
+                "name": "tmpFile"
+            },
+            {
+                "name": "tmpName"
+            },
+            {
+                "name": "folderName"
+            },
+            {
+                "name": "files"
+            },
+            {
+                "name": "each"
+            }
+        ]
+    },
+    {
+        "fileName": "TestlabNotifier.java",
+        "variables": [
+            {
+                "name": "projectKey"
+            },
+            {
+                "name": "companyId"
+            },
+            {
+                "name": "apiKey"
+            },
+            {
+                "name": "runApiKey"
+            },
+            {
+                "name": "runCompanyId"
+            },
+            {
+                "name": "runOnpremiseurl"
+            },
+            {
+                "name": "envVars"
+            },
+            {
+                "name": "runProjectKey"
+            },
+            {
+                "name": "se"
+            },
+            {
+                "name": "onpremiseurl"
+            }
+        ]
+    },
+    {
+        "fileName": "TinfoilScanRecorder.java",
+        "variables": [
+            {
+                "name": "apiAccessKey"
+            },
+            {
+                "name": "apiSecretKey"
+            },
+            {
+                "name": "apiHost"
+            },
+            {
+                "name": "proxyHost"
+            },
+            {
+                "name": "proxyPort"
+            },
+            {
+                "name": "accessKey"
+            },
+            {
+                "name": "secretKey"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "environment"
+            },
+            {
+                "name": "tinfoilAPI"
+            },
+            {
+                "name": "client"
+            }
+        ]
+    },
+    {
+        "fileName": "UnsafeAccess.java",
+        "variables": [
+            {
+                "name": "INSTANCE"
+            }
+        ]
+    },
+    {
+        "fileName": "ViewOptionHandler.java",
+        "variables": [
+            {
+                "name": "group"
+            },
+            {
+                "name": "view"
+            },
+            {
+                "name": "viewName"
+            },
+            {
+                "name": "name"
+            }
+        ]
+    },
+    {
+        "fileName": "WifiEnterpriseConfig.java",
+        "variables": [
+            {
+                "name": "KEYSTORE_URI"
+            },
+            {
+                "name": "CA_CERT_PREFIX"
+            },
+            {
+                "name": "CLIENT_CERT_PREFIX"
+            },
+            {
+                "name": "mCaCert"
+            },
+            {
+                "name": "mClientPrivateKey"
+            },
+            {
+                "name": "mClientCertificate"
+            },
+            {
+                "name": "key"
+            },
+            {
+                "name": "source"
+            },
+            {
+                "name": "algorithm"
+            },
+            {
+                "name": "userKeyBytes"
+            },
+            {
+                "name": "e"
+            },
+            {
+                "name": "certBytes"
+            },
+            {
+                "name": "cert"
+            },
+            {
+                "name": "enterpriseConfig"
+            },
+            {
+                "name": "userKey"
+            },
+            {
+                "name": "identity"
+            },
+            {
+                "name": "anonymousIdentity"
+            },
+            {
+                "name": "password"
+            },
+            {
+                "name": "privateKey"
+            },
+            {
+                "name": "clientCertificate"
+            },
+            {
+                "name": "eap"
+            },
+            {
+                "name": "sb"
+            }
+        ]
+    },
+    {
+        "fileName": "WifiNetworkDetailsFragment.java",
+        "variables": [
+            {
+                "name": "mAccessPoint"
+            },
+            {
+                "name": "mWifiDetailPreferenceController"
+            },
+            {
+                "name": "controllers"
+            },
+            {
+                "name": "cm"
+            },
+            {
+                "name": "meteredPreferenceController"
+            },
+            {
+                "name": "privacyController"
+            }
+        ]
+    }
+]
