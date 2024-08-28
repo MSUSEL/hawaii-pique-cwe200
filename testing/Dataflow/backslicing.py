@@ -47,7 +47,7 @@ def build_flow_graph(results):
                 graphs[key+" ---"+file_path].append(nodes)    
     return graphs
 
-def build_json(graphs, file_name):
+def build_json(graphs, main_file_name):
     data = defaultdict(list)
     for main_variable in graphs:
         variable_name = main_variable.split(" ---")[0]
@@ -108,7 +108,7 @@ def build_json(graphs, file_name):
             "fileName": file_name,
             "variables": variables
         })
-    with open(os.path.join("testing", "Dataflow", "graphs", file_name + ".json"), "w") as file:
+    with open(os.path.join("testing", "Dataflow", "graphs", main_file_name + ".json"), "w") as file:
         json.dump(final_data, file, indent=4)
     return final_data
 

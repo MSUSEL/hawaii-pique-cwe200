@@ -64,10 +64,11 @@ for filename in filenames:
     
     # Run the CodeQL query
     output_sarif = os.path.join(query_results_dir, f"{base_name}.sarif")
+    file_path = os.path.join("backend", "Files", "ReviewSensFiles", "ReviewSensFiles", filename)
     query_cmd = [
         "codeql", "database", "analyze", db_path, query_path,
         "--format=sarif-latest", "--output", output_sarif,
-        "--max-paths=100", "--sarif-add-snippets=true", "--no-group-results", "--threads=12"
+        "--max-paths=100", "--sarif-add-snippets=true", "--no-group-results", "--threads=12",
     ]
     
     try:
@@ -99,7 +100,7 @@ for filename in filenames:
                 "graph": variable["graph"]
         
         }
-        processed_results["variables"].append(processed_variable)
+            processed_results["variables"].append(processed_variable)
     
     all_filtered_results.append(processed_results)
     print(f"Filtered and processed results saved for {filename}")
