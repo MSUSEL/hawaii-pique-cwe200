@@ -22,11 +22,13 @@ with open(labeled_dataset_path, 'r') as labeled_file:
 # Convert labeled dataset to a dictionary for faster lookup
 labeled_dict = {entry["fileName"]: {var["name"] for var in entry["variables"]} for entry in labeled_dataset}
 
+s = "AbstractQueryProtocolModelTest.java", "Analysis.java",
+
 # List of filenames
 filenames = [
     "BasicSSHUserPrivateKey.java", "DetectPostBuildStepDescriptor.java", "EasAutoDiscover.java",
-    "AWSCodeDeployPublisher.java", "AbstractQueryProtocolModelTest.java", "AbstractSolrMetadataExtractor.java",
-    "AdvancedBluetoothDetailsHeaderController.java", "Analysis.java", "ArtifactoryChoiceListProvider.java",
+    "AWSCodeDeployPublisher.java",  "AbstractSolrMetadataExtractor.java",
+    "AdvancedBluetoothDetailsHeaderController.java",  "ArtifactoryChoiceListProvider.java",
     "Assistant.java", "AttachmentProvider.java", "BaseUserController.java", "BondStateMachine.java",
     "CLICommand.java", "ContainerExecDecorator.java", "DefaultResetPasswordRequestResponse.java",
     "DirectoryBrowserSupport.java", "FileDownloader.java", "GithubConfig.java", "GitHubServerConfig.java",
@@ -51,6 +53,8 @@ def unzip_file(zip_path, extract_to):
 for filename in filenames:
     base_name = filename.replace(".java", "")
     db_path = os.path.join(db_dir, base_name)
+    print(f"Processing {base_name}")
+
     
     # Check if a db exists
     zip_path = f"{db_path}.zip"
@@ -66,7 +70,7 @@ for filename in filenames:
     query_cmd = [
         "codeql", "database", "analyze", db_path, query_path,
         "--format=sarif-latest", "--output", output_sarif,
-        "--max-paths=100", "--sarif-add-snippets=true", "--no-group-results"
+        "--max-paths=100", "--sarif-add-snippets=true", "--no-group-results", "--threads=12"
     ]
     
     try:
