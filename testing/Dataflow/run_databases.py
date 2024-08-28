@@ -22,13 +22,10 @@ with open(labeled_dataset_path, 'r') as labeled_file:
 # Convert labeled dataset to a dictionary for faster lookup
 labeled_dict = {entry["fileName"]: {var["name"] for var in entry["variables"]} for entry in labeled_dataset}
 
-s = "AbstractQueryProtocolModelTest.java", "Analysis.java",
-
-# List of filenames
 filenames = [
     "BasicSSHUserPrivateKey.java", "DetectPostBuildStepDescriptor.java", "EasAutoDiscover.java",
-    "AWSCodeDeployPublisher.java",  "AbstractSolrMetadataExtractor.java",
-    "AdvancedBluetoothDetailsHeaderController.java",  "ArtifactoryChoiceListProvider.java",
+    "AWSCodeDeployPublisher.java", "AbstractQueryProtocolModelTest.java", "AbstractSolrMetadataExtractor.java",
+    "AdvancedBluetoothDetailsHeaderController.java", "Analysis.java", "ArtifactoryChoiceListProvider.java",
     "Assistant.java", "AttachmentProvider.java", "BaseUserController.java", "BondStateMachine.java",
     "CLICommand.java", "ContainerExecDecorator.java", "DefaultResetPasswordRequestResponse.java",
     "DirectoryBrowserSupport.java", "FileDownloader.java", "GithubConfig.java", "GitHubServerConfig.java",
