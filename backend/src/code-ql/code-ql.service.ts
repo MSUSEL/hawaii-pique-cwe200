@@ -53,14 +53,12 @@ export class CodeQlService {
 
         // const data = await this.runChatGPT(sourcePath);
 
-        // await this.runBert(javaFiles, sourcePath);
-        const data = await this.runLLM(javaFiles, sourcePath);
+        await this.runBert(javaFiles, sourcePath, createCodeQlDto);
+        // const data = await this.runLLM(javaFiles, sourcePath);
         // await this.bertService.getBertResponse(sourcePath) // Use this if the parsing is already been done
-        // const data = this.useSavedData(sourcePath);
+       
 
-        await this.saveSensitiveInfo(data); // Saves all the sensitive info to .yml files
-
-        await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
+        // await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
 
         return await this.parserService.getSarifResults(sourcePath);
 
@@ -76,9 +74,25 @@ export class CodeQlService {
         return data;
     }
 
-    async runBert(javaFiles, sourcePath){
-        // Get Sensitive variables from gpt
+    async runBert(javaFiles, sourcePath, createCodeQlDto: any){
+        // 1) Use BERT to detect sensitive info (variables, strings, comments, and sinks)
         await this.bertService.bertWrapper(javaFiles, sourcePath);
+        // 2) Read the results from data.json that was created by BERT
+        const data = this.useSavedData(sourcePath);
+        // 3) Save the sensitive info to .yml files for use in the queries
+        await this.saveSensitiveInfo(data);
+        // 4) Run the backslice query for all of the sensitive variables that BERT found
+        await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath, 'Program Slicing', 'BackwardSlice.ql'), 'backwardslice');
+        // 5) Parse the results to create the backslice graph for each variable as a JSON file
+        await this.bertService.parseBackwardSlice(sourcePath);
+        // 6) Run BERT again using the backslice graph as context
+        await this.bertService.getBertResponse(sourcePath)
+        // 7) Update the sensitiveVariables.yml file with the new results
+        const sensitiveVariables = this.useSavedData(sourcePath, 'sensitiveVariables.json');
+        this.saveUpdatedSensitiveVariables(sensitiveVariables);
+        // 8) Run the all of the queries
+        await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath), 'result');
+
     }
 
     async runLLM(javaFiles, sourcePath){
@@ -89,8 +103,8 @@ export class CodeQlService {
 
     }
 
-    useSavedData(sourcePath){
-        return this.fileUtilService.parseJSONFile(path.join(sourcePath, "data.json"));
+    useSavedData(sourcePath, fileName = 'data.json'){
+        return this.fileUtilService.parseJSONFile(path.join(sourcePath, fileName));
     }
 
 
@@ -272,7 +286,16 @@ export class CodeQlService {
 
     }
 
-    async codeqlProcess(sourcePath: string, createCodeQlDto: any){
+    async saveUpdatedSensitiveVariables(data){
+      
+        const variablesMapping = this.formatMappings(data.sensitiveVariablesMapping, "variables");
+        let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
+        await this.writeVariablesToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
+        await this.writeVariablesToFile(variablesFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveVariables.yml")
+
+    }
+
+    async codeqlProcess(sourcePath: string, createCodeQlDto: any, queryPath: string, outputFileName: string = 'result') {
         // Remove previous database if it exists
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
         await this.fileUtilService.removeDir(db);
@@ -286,8 +309,8 @@ export class CodeQlService {
         const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';
         const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
 
-        const outputPath = path.join(sourcePath, `result.${extension}`);
-        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${this.queryPath}`;
+        const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
+        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath}`;
         await this.runChildProcess(analyzeDbCommand);
     }
 

@@ -45,7 +45,7 @@ export class BertService {
 
     async getBertResponse(project_root: string) {
         return new Promise((resolve, reject) => {
-            const bertProcess = spawn('python', ['src/bert/run_bert.py', project_root]);
+            const bertProcess = spawn('python', [path.join("src", "bert", "run_bert.py"), project_root]);
 
             let stdoutData = '';
             let stderrData = '';
@@ -88,7 +88,35 @@ export class BertService {
             });
         });
     }
+
+    async parseBackwardSlice(sourcePath: string) {
+        const inputPath = path.join(sourcePath, 'backwardslice.sarif');
+        const outputPath = path.join(sourcePath, 'variables_graph.json');
+        
+        // Parse the results to create the backslice graph for each variable
+        return new Promise<void>((resolve, reject) => {
+            // Spawn the Python process
+            const backsliceProcess = spawn('python', [path.join("src", "bert", "backslicing.py"), inputPath, outputPath]);
+    
+            // Capture stderr data
+            backsliceProcess.stderr.on('data', (data) => {
+                console.error(`stderr: ${data}`);
+            });
+    
+            // Handle the process exit
+            backsliceProcess.on('close', (code) => {
+                if (code === 0) {
+                    console.log('backslicing.py executed successfully.');
+                    resolve();
+                } else {
+                    console.error(`backslicing.py process exited with code ${code}`);
+                    reject(new Error(`backslicing.py process exited with code ${code}`));
+                }
+            });
+        });    
+    }
 }
+
 
 
 interface JavaParseResult {
