@@ -28,6 +28,7 @@ def extract_snippet_with_context(file_path, start_line, start_column, end_line=N
 # Function to build the graph from the SARIF data
 def build_flow_graph(results):
     graphs = defaultdict(list)
+    variables = defaultdict(list)
     for result in results:
         if 'codeFlows' in result:
             for thread_flow in result['codeFlows'][0]['threadFlows']:
@@ -39,12 +40,27 @@ def build_flow_graph(results):
                         type = result['message']['text']
                     else:
                         type = locations[i]['location']['message']['text'].split(":")[-1].strip()
-                    context = locations[i]['location']['physicalLocation']['contextRegion']['snippet']['text']
+                    context = locations[i]['location']['physicalLocation']['contextRegion']['snippet']['text'].strip()
                     node = (value, context, type)
                     nodes.append(node)
                 file_path = locations[-1]['location']['physicalLocation']['artifactLocation']['uri']
                 key = (locations[-1]['location']['message']['text'])
-                graphs[key+" ---"+file_path].append(nodes)    
+                graphs[key+" ---"+file_path].append(nodes) 
+        elif '|' in result['message']['text']:
+            # This is for the case where there is no code flow (e.g. an exception, parameter, etc.), but I still want to capture the context
+            message = result['message']['text']
+            key = message.split("|")[0].strip()
+            if key.startswith('this.'):
+                key = key.replace('this.', '')
+            context = result['locations'][0]['physicalLocation']['contextRegion']['snippet']['text'].strip()
+            file_path = result['locations'][0]['physicalLocation']['artifactLocation']['uri']
+            type = message.split("|")[1].strip()
+            nodes = [(key, context, type)]
+            variables[key+" ---"+file_path].append(nodes)
+    # Add only the variables that don't have data flow
+    for variable in variables:
+        if not variable in graphs:
+            graphs[variable].extend(variables[variable])   
     return graphs
 
 def build_json(graphs, main_file_name):
@@ -60,7 +76,8 @@ def build_json(graphs, main_file_name):
                 node_context = node[1]
                 type = node[2]
                 if node_name in combined_graph:
-                    combined_graph[node_name]["contexts"].append(node_context)
+                    if node_context not in combined_graph[node_name]["contexts"]:
+                        combined_graph[node_name]["contexts"].append(node_context)
                 else:
                     combined_graph[node_name] = {
                         "name": node_name,
@@ -113,7 +130,7 @@ def build_json(graphs, main_file_name):
     return final_data
 
 def run(file_path='slice.sarif'):
-    file_name = os.path.basename(file_path)
+    file_name = os.path.basename(file_path).split(".")[0]
     # Extract results from SARIF data
     sarif_data = load_sarif(file_path)
     results_data = sarif_data['runs'][0]['results']
