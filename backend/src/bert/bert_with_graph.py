@@ -98,16 +98,14 @@ def listToString(lst):
 
 def readToyData(jsonFile):
     with open(jsonFile, "r", encoding='UTF-8') as jsonVars:
-        positives=0
-        negatives=0
         varData = json.load(jsonVars)
         for f in varData:
             fileName=f['fileName']
             allVariables = f['variables']
 
             for v in allVariables:
-                isSensitive = v["isSensitive"]
                 VarName= v['name']
+                projectAllVariables['variables'].append([fileName, VarName])
                 graph = v['graph']
                 context = ""
                 for node in graph:
@@ -118,15 +116,7 @@ def readToyData(jsonFile):
                         context = context + node['name'] + ' '
                     else: #add variable type to the context
                         context=context+node['type']+' '
-                # print("context: ",context)
-            if str(isSensitive).strip()=='yes':
-                variables.append([Text_Preprocess(VarName), Text_Preprocess(context), 1])
-                positives=positives+1
-            else:
-                variables.append([Text_Preprocess(VarName), Text_Preprocess(context), 0])
-                negatives=negatives+1
-        # print("toy data variables -->", "  positives-samples:", positives, " negativesamples: ", negatives)
-
+                variables.append([Text_Preprocess(VarName), Text_Preprocess(context)])
 
 def calculate_SentBert_Vectors(API_Lines):
     model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
@@ -151,14 +141,14 @@ stop_words = load_stop_words()
 
 def main():
     # For normal use
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 1:
         project_path = sys.argv[1]
-        json_input_path = os.path.join(project_path, "bert","Combined_JSON_Toy.json")
+        json_input_path = os.path.join(project_path, "variables_graph.json")
 
     # For testing purposes
     else:
         project_path = os.getcwd()
-        json_input_path = os.path.join(os.getcwd(), "backend", "src", "bert","Combined_JSON_Toy.json")
+        json_input_path = os.path.join(os.getcwd(), "backend", "Files","SmallTest", "variables_graph.json")
 
     readToyData(json_input_path)
     variableArray=np.array(variables)
@@ -166,7 +156,7 @@ def main():
     variable_context_vectors=calculate_SentBert_Vectors(variableArray[:,1])
     concatenated_variable_vectors=concatNameandContext(variable_vectors,variable_context_vectors)
 
-    model = load_model(os.path.join(os.getcwd(), "src", "bert", "models", "variables_with_graph.h5"))
+    model = load_model(os.path.join(os.getcwd(), "backend", "src", "bert", "models", "variables_dfg.h5"))
     x_test = np.reshape(concatenated_variable_vectors, (-1, DIM))
     y_predict = model.predict(x_test)
 

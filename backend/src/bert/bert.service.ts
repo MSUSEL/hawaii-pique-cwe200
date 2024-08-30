@@ -29,7 +29,7 @@ export class BertService {
         this.projectPath = sourcePath;
         await this.getParsedResults(filePaths);
         await this.fileUtilService.writeToFile(path.join(this.projectPath, 'parsedResults.json'), JSON.stringify(this.parsedResults, null, 2));
-        await this.getBertResponse(this.projectPath);
+        await this.getBertResponse(this.projectPath, "run_bert.py");
     }
 
     async getParsedResults(filePaths: string[]) {
@@ -43,9 +43,9 @@ export class BertService {
         }
     }
 
-    async getBertResponse(project_root: string) {
+    async getBertResponse(project_root: string, bertScript: string) {
         return new Promise((resolve, reject) => {
-            const bertProcess = spawn('python', [path.join("src", "bert", "run_bert.py"), project_root]);
+            const bertProcess = spawn('python', [path.join("src", "bert", bertScript), project_root]);
 
             let stdoutData = '';
             let stderrData = '';

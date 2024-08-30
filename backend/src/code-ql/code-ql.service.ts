@@ -82,11 +82,11 @@ export class CodeQlService {
         // 3) Save the sensitive info to .yml files for use in the queries
         await this.saveSensitiveInfo(data);
         // 4) Run the backslice query for all of the sensitive variables that BERT found
-        await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath, 'Program Slicing', 'BackwardSlice.ql'), 'backwardslice');
-        // 5) Parse the results to create the backslice graph for each variable as a JSON file
+        await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath, 'ProgramSlicing'), 'backwardslice', true);
+        // 5) Parse the results to create the backslice graph for each variable that BERT marked as sensitive
         await this.bertService.parseBackwardSlice(sourcePath);
         // 6) Run BERT again using the backslice graph as context
-        await this.bertService.getBertResponse(sourcePath)
+        await this.bertService.getBertResponse(sourcePath, 'bert_with_graph.py');
         // 7) Update the sensitiveVariables.yml file with the new results
         const sensitiveVariables = this.useSavedData(sourcePath, 'sensitiveVariables.json');
         this.saveUpdatedSensitiveVariables(sensitiveVariables);
@@ -295,9 +295,15 @@ export class CodeQlService {
 
     }
 
-    async codeqlProcess(sourcePath: string, createCodeQlDto: any, queryPath: string, outputFileName: string = 'result') {
-        // Remove previous database if it exists
+    async codeqlProcess(sourcePath: string, createCodeQlDto: any, queryPath: string, outputFileName: string = 'result', slicing=false) {
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+        const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';
+        const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
+        const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
+
+        // This is for building the db and running the slicing query
+        if (slicing){
+        // Remove previous database if it exists
         await this.fileUtilService.removeDir(db);
 
         // Create new database with codeql
@@ -305,13 +311,15 @@ export class CodeQlService {
         console.log(createDbCommand);
         await this.runChildProcess(createDbCommand);
 
-        // Analyze with codeql
-        const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';
-        const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
-
-        const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
-        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath}`;
+        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --max-paths=100 --sarif-add-snippets=true --no-group-results`;
         await this.runChildProcess(analyzeDbCommand);
+
+        // This is for running all of the queries
+        } else {
+            const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath}`;
+            await this.runChildProcess(analyzeDbCommand);
+        }
+
     }
 
     async getSarifResults(project: string){
