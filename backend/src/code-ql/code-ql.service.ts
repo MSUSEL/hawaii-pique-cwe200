@@ -13,6 +13,7 @@ import { SensitiveStrings } from './SensitiveStrings';
 import { Sinks } from './Sinks';
 import { BertService } from 'src/bert/bert.service';
 import { LLMService } from 'src/llm/llm.service';
+import os from 'os';
 
 import { EventsGateway } from 'src/events/events.gateway';
 @Injectable()
@@ -77,7 +78,7 @@ export class CodeQlService {
     async runBert(javaFiles, sourcePath, createCodeQlDto: any){
         // 1) Use BERT to detect sensitive info (variables, strings, comments, and sinks)
         await this.bertService.bertWrapper(javaFiles, sourcePath);
-        // 2) Read the results from data.json that was created by BERT
+        // // 2) Read the results from data.json that was created by BERT
         const data = this.useSavedData(sourcePath);
         // 3) Save the sensitive info to .yml files for use in the queries
         await this.saveSensitiveInfo(data);
@@ -300,23 +301,23 @@ export class CodeQlService {
         const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';
         const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
         const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
-
+        const threads = 12;
         // This is for building the db and running the slicing query
         if (slicing){
         // Remove previous database if it exists
-        await this.fileUtilService.removeDir(db);
+        // await this.fileUtilService.removeDir(db);
 
         // Create new database with codeql
-        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        console.log(createDbCommand);
-        await this.runChildProcess(createDbCommand);
+        // const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        // console.log(createDbCommand);
+        // await this.runChildProcess(createDbCommand);
 
-        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --max-paths=100 --sarif-add-snippets=true --no-group-results`;
+        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --max-paths=100 --sarif-add-snippets=true --no-group-results --threads=${threads}`;
         await this.runChildProcess(analyzeDbCommand);
 
         // This is for running all of the queries
         } else {
-            const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath}`;
+            const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --threads=${threads}`;
             await this.runChildProcess(analyzeDbCommand);
         }
 

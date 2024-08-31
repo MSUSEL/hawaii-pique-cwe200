@@ -226,7 +226,7 @@ async def process_data_type(data_type, data_list, project_all_vars, final_result
 
         # Collect predictions and update saving progress
         for idx, prediction in enumerate(y_predict):
-            if prediction.round() > 0:
+            if prediction > .8:
                 file_name, data = project_all_vars[data_type][idx]
                 if file_name not in final_results:
                     final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}

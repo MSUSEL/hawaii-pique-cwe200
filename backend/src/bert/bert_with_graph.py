@@ -100,22 +100,25 @@ def readToyData(jsonFile):
     with open(jsonFile, "r", encoding='UTF-8') as jsonVars:
         varData = json.load(jsonVars)
         for f in varData:
-            fileName=f['fileName']
+            fileName = f['fileName']
             allVariables = f['variables']
 
             for v in allVariables:
-                VarName= v['name']
+                VarName = v['name']
                 projectAllVariables['variables'].append([fileName, VarName])
                 graph = v['graph']
                 context = ""
                 for node in graph:
-                    if str(node['name']).strip()!=str(VarName).strip():
-                        dnodeName=str(node['name'])
+                    if str(node['name']).strip() != str(VarName).strip():
+                        context = context + node['type'] + ' '
+                        # ------split parameters------
+                        dnodeName = str(node['name'])
                         if '(' in dnodeName:
-                            dnodeName=dnodeName.split('(')[1].split(')')[0]
-                        context = context + node['name'] + ' '
-                    else: #add variable type to the context
-                        context=context+node['type']+' '
+                            dnodeName = dnodeName.split('(')[1].split(')')[0]
+                        context = context + dnodeName + ' '
+                    else:  # add variable type to the context
+                        context = context + node['type'] + ' '
+                # print("context: ", context)
                 variables.append([Text_Preprocess(VarName), Text_Preprocess(context)])
 
 def calculate_SentBert_Vectors(API_Lines):
@@ -144,11 +147,15 @@ def main():
     if len(sys.argv) > 1:
         project_path = sys.argv[1]
         json_input_path = os.path.join(project_path, "variables_graph.json")
+        model = load_model(os.path.join(os.getcwd(), "src", "bert", "models", "variables_dfg.h5"))
+
 
     # For testing purposes
     else:
         project_path = os.getcwd()
         json_input_path = os.path.join(os.getcwd(), "backend", "Files","SmallTest", "variables_graph.json")
+        model = load_model(os.path.join(os.getcwd(), "backend", "src", "bert", "models", "variables_dfg.h5"))
+
 
     readToyData(json_input_path)
     variableArray=np.array(variables)
@@ -156,7 +163,6 @@ def main():
     variable_context_vectors=calculate_SentBert_Vectors(variableArray[:,1])
     concatenated_variable_vectors=concatNameandContext(variable_vectors,variable_context_vectors)
 
-    model = load_model(os.path.join(os.getcwd(), "backend", "src", "bert", "models", "variables_dfg.h5"))
     x_test = np.reshape(concatenated_variable_vectors, (-1, DIM))
     y_predict = model.predict(x_test)
 
@@ -170,6 +176,10 @@ def main():
                         if file_name not in final_results:
                             final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
                         final_results[file_name]['variables'].append({"name": data})
+                    else: 
+                        file_name, data = projectAllVariables['variables'][idx]
+                        print(f"{data} removed")
+    print("done")
 
     # Format results as JSON
     formatted_results = [{"fileName": file_name, **details} for file_name, details in final_results.items()]
