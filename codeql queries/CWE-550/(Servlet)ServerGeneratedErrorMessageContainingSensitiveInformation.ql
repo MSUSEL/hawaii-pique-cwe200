@@ -52,9 +52,19 @@ module HttpServletExceptionSourceConfig implements DataFlow::ConfigSig {
 
   // Defines sinks where sensitive information could be exposed to clients
   predicate isSink(DataFlow::Node sink) {
-    CommonSinks::isErrPrintSink(sink) or
-    CommonSinks::isServletSink(sink) or
-    getSinkAny(sink)
+
+    exists(CatchClause cc, MethodCall mc |
+      // Ensure the MethodCall is within the CatchClause
+      mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock() and
+      // Ensure the sink matches one of the known sensitive sinks
+      (
+        CommonSinks::isErrPrintSink(sink) or
+        CommonSinks::isServletSink(sink) or
+        getSinkAny(sink)
+      ) and
+      // Link the sink to the argument of the MethodCall
+      sink.asExpr() = mc.getAnArgument()
+    )
   }
 
   
