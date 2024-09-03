@@ -3,7 +3,7 @@
  * @description Detects sensitive information being sent in query strings over GET requests, which could be exposed in server logs or browser history.
  * @kind path-problem
  * @problem.severity warning
- * @id ava/sensitive-get-query2/598
+ * @id java/sensitive-get-query2/598
  * @tags security
  *       external/cwe/cwe-598
  * @cwe CWE-598
@@ -53,6 +53,7 @@
        urlConstructor.getAnArgument() = sink.asExpr() and
        // Ensure the URL instance flows to an openConnection method
        DataFlow::localExprFlow(urlConstructor, openConnectionCall.getQualifier()) and
+       // The default request method is GET
        openConnectionCall.getMethod().hasName("openConnection") and
        openConnectionCall.getMethod().getDeclaringType().hasQualifiedName("java.net", "URL")
      ) 

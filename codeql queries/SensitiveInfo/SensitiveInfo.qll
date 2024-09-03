@@ -13,9 +13,7 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
       exists(Variable v, File f |
         this = v.getAnAccess() and
         f = v.getCompilationUnit().getFile() and
-        sensitiveVariables(f.getBaseName(), v.getName()) and
-        not this instanceof CompileTimeConstantExpr and
-        not v.getName().toLowerCase().matches("%encrypted%")
+        sensitiveVariables(f.getBaseName(), v.getName()) 
         )
     }
   }
@@ -27,6 +25,7 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
             f = this.getCompilationUnit().getFile() and
             sensitiveStrings(f.getBaseName(), this.getValue())) and
         not (
+            // Exclude specific method calls
             exists(MethodCall mc |
                 mc.getAnArgument() = this and
                 (
@@ -44,16 +43,24 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
                     (mc.getMethod().hasName("addRequestProperty") and mc.getAnArgument() = this)
                 )
             ) or
+            // Exclude common non-sensitive patterns
             this.getValue().regexpMatch(".*example.*") or
             this.getValue().regexpMatch(".*test.*") or
             this.getValue().regexpMatch(".*demo.*") or
             this.getValue().regexpMatch(".*foo.*") or 
             this.getValue().regexpMatch(".*bar.*") or
             this.getValue().regexpMatch(".*baz.*") or
-            this.getValue().regexpMatch(".*secret.*")
+            this.getValue().regexpMatch(".*secret.*") or
+            // Exclude empty strings
+            this.getValue() = "" or
+            // Exclude whitespace-only strings
+            this.getValue().regexpMatch("^\\s*$") or
+            // Exclude strings with exactly one dot followed by a digit
+            this.getValue().regexpMatch("^[^.]*\\.[0-9]+$")
         )
     }   
 }
+
 
 
 
