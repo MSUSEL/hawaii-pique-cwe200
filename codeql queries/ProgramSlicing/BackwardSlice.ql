@@ -60,9 +60,9 @@
      exists(SensitiveVariableExpr sve | sink.asExpr() = sve)
    }
  
-   predicate neverSkip(DataFlow::Node node) {
-     any()
-   }
+  //  predicate neverSkip(DataFlow::Node node) {
+  //    any()
+  //  }
    
    predicate isAdditionalFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
     exists(MethodCall call |
@@ -77,14 +77,19 @@
    //    pred.asExpr() = call and
    //    succ.asExpr() = va
    //  )
-   // any()
+  //  any()
   }
  }
  
  from Flow::PathNode source, Flow::PathNode sink
- where Flow::flowPath(source, sink) 
- select sink.getNode(), source, sink, 
- source.getNode().getType().toString(),
- sink.getNode().getType().toString(),
- "Dataflow from `" + source.getNode().toString() + "` to `" + sink.getNode().toString() + "`"
+ where
+   // Capture flows between source and sink
+   Flow::flowPath(source, sink)
+ select
+   sink.getNode(),
+   source,
+   sink,
+   source.getNode().getType().toString(),
+   sink.getNode().getType().toString(),
+   "Dataflow from `" + source.getNode().toString() + "` to `" + sink.getNode().toString() + "`"
  
