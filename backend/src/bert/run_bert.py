@@ -133,18 +133,21 @@ async def process_files(var_data, files_dict, data_type, output_list, project_al
         all_variables = var_data[file_name][data_type]
         for v in all_variables:
             try:
-                context = get_context(files_dict[file_name], v)
                 var = text_preprocess(v)
 
                 if data_type == 'variables':
+                    context = get_context(files_dict[file_name], v)
                     output_list.append((file_name, var, context))
 
                 elif data_type == 'strings':
                     if len(var) == 0:
                         context = ""
+                    else:
+                        context = get_context_str(files_dict[file_name], v)
                     output_list.append((file_name, var, context))
 
                 elif data_type == 'comments':
+                    context = get_context(files_dict[file_name], v)
                     output_list.append((file_name, var))
 
                 project_all_vars.append([file_name, v])
@@ -163,6 +166,17 @@ def get_context(file, var_name):
         if var_name in sent_tokens:
             sent = sent.replace(var_name, '')  # 2, Updated to remove the variable name from the context
             context = context + sent + " "
+    return text_preprocess(context)
+
+def get_context_str(file, var_name):
+    context=" "
+    for sent in file:
+        #check comments
+        if len(sent.strip())<=2 or sent.strip()[0]=='*' or (sent.strip()[0]=='\\' and sent.strip()[1]=='\\') or (sent.strip()[0]=='\\' and sent.strip()[1]=='\*'):
+            continue
+        if  '\''+var_name+'\'' in sent or '"'+var_name+'"' in sent:
+            sent=sent.replace(var_name,' ')
+            context=context+sent+" "
     return text_preprocess(context)
 
 # Read Java files from a directory asynchronously
@@ -193,7 +207,7 @@ async def read_parsed_data(file_path):
 stop_words = load_stop_words()
 
 # Process each type of data
-async def process_data_type(data_type, data_list, project_all_vars, final_results):
+async def process_data_type(data_type, data_list, project_all_vars, final_results, threshold):
     if data_list:
         data_array = np.array(data_list)
         processing_tracker = ProgressTracker(len(data_array), f'{data_type}-processing')
@@ -226,12 +240,13 @@ async def process_data_type(data_type, data_list, project_all_vars, final_result
 
         # Collect predictions and update saving progress
         for idx, prediction in enumerate(y_predict):
-            if prediction > .8:
+            if prediction >= threshold:
                 file_name, data = project_all_vars[data_type][idx]
+                # print(f"Prediction for {data_type[:-1]} {data}: {prediction}")
                 if file_name not in final_results:
                     final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
                 final_results[file_name][data_type].append({"name": data})
-            saving_tracker.update_progress(1)
+            # saving_tracker.update_progress(1)
 
         # Ensure progress reaches 100%
         saving_tracker.complete()
@@ -264,11 +279,18 @@ async def main():
         # 'sinks': sinks
     }
 
+    thresholds = {
+        'variables': 0.6,
+        'strings': 0.8,
+        'comments': 0.5,
+        'sinks': 0.65
+    }
+
     final_results = {}
 
     # Process each type of data concurrently
     await asyncio.gather(
-        *[process_data_type(data_type, data_list, projectAllVariables, final_results) for data_type, data_list in all_data.items()]
+        *[process_data_type(data_type, data_list, projectAllVariables, final_results, thresholds.get(data_type)) for data_type, data_list in all_data.items()]
     )
 
     # Format results as JSON
