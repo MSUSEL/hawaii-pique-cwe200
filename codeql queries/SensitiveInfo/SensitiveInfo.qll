@@ -56,10 +56,17 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
             // Exclude whitespace-only strings
             this.getValue().regexpMatch("^\\s*$") or
             // Exclude strings with exactly one dot followed by a digit
-            this.getValue().regexpMatch("^[^.]*\\.[0-9]+$")
+            this.getValue().regexpMatch("^[^.]*\\.[0-9]+$") 
+        ) and
+        not exists(Annotation ann |
+            ann = this.getParent() 
+            // and
+            // ann.getType().hasQualifiedName(_, "Issue")
         )
-    }   
+    }
 }
+
+
 
 
 
