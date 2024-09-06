@@ -75,26 +75,84 @@ export class CodeQlService {
         return data;
     }
 
-    async runBert(javaFiles, sourcePath, createCodeQlDto: any){
+    async runBert(javaFiles, sourcePath, createCodeQlDto: any) {
+        const times = {};
+    
+        // Helper function to format time in minutes and seconds
+        const formatTime = (seconds: number) => {
+            if (seconds > 60) {
+                const minutes = Math.floor(seconds / 60); // Get the whole minutes
+                const remainingSeconds = Math.floor(seconds % 60); // Get the remaining seconds
+                return `${minutes} minute${minutes > 1 ? 's' : ''} and ${remainingSeconds} second${remainingSeconds > 1 ? 's' : ''}`;
+            } else {
+                return `${Math.floor(seconds)} second${seconds > 1 ? 's' : ''}`; // Show seconds
+            }
+        };
+    
+        // Helper function to record the time taken for each step
+        const recordTime = async (stepName: string, fn: () => Promise<void>) => {
+            const start = Date.now();
+            await fn();
+            const end = Date.now();
+            times[stepName] = (end - start) / 1000; // Time in seconds
+        };
+    
         // 1) Use BERT to detect sensitive info (variables, strings, comments, and sinks)
-        await this.bertService.bertWrapper(javaFiles, sourcePath);
-        // // 2) Read the results from data.json that was created by BERT
-        const data = this.useSavedData(sourcePath);
-        // 3) Save the sensitive info to .yml files for use in the queries
-        await this.saveSensitiveInfo(data);
-        // 4) Run the backslice query for all of the sensitive variables that BERT found
-        await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath, 'ProgramSlicing'), 'backwardslice', true);
-        // 5) Parse the results to create the backslice graph for each variable that BERT marked as sensitive
-        await this.bertService.parseBackwardSlice(sourcePath);
-        // 6) Run BERT again using the backslice graph as context
-        await this.bertService.getBertResponse(sourcePath, 'bert_with_graph.py');
-        // 7) Update the sensitiveVariables.yml file with the new results
-        const sensitiveVariables = this.useSavedData(sourcePath, 'sensitiveVariables.json');
-        this.saveUpdatedSensitiveVariables(sensitiveVariables);
-        // 8) Run the all of the queries
-        await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath), 'result');
-
+        await recordTime('Step 1: Parse the files for variables, strings, comments, and method calls', async () => {
+            await this.bertService.bertWrapper(javaFiles, sourcePath);
+        });
+    
+        // 2) Use BERT to detect sensitive info (variables, strings, comments, and sinks)
+        await recordTime('Step 2: BERT to detect sensitive info', async () => {
+            await this.bertService.getBertResponse(sourcePath, "run_bert.py");
+        });
+    
+        // 3) Read the results from data.json that was created by BERT
+        let data = null;
+        await recordTime('Step 3: Read the results from data.json', async () => {
+            data = this.useSavedData(sourcePath);
+        });
+    
+        // 4) Save the sensitive info to .yml files for use in the queries
+        await recordTime('Step 4: Save the sensitive info to .yml files', async () => {
+            await this.saveSensitiveInfo(data);
+        });
+    
+        // 5) Run the backslice query for all of the sensitive variables that BERT found
+        await recordTime('Step 5: Run the backslice query', async () => {
+            await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath, 'ProgramSlicing'), 'backwardslice', true);
+        });
+    
+        // 6) Parse the results to create the backslice graph for each variable that BERT marked as sensitive
+        await recordTime('Step 6: Parse the backslice graph', async () => {
+            await this.bertService.parseBackwardSlice(sourcePath);
+        });
+    
+        // 7) Run BERT again using the backslice graph as context
+        await recordTime('Step 7: Run BERT with backslice graph', async () => {
+            await this.bertService.getBertResponse(sourcePath, 'bert_with_graph.py');
+        });
+    
+        // 8) Update the sensitiveVariables.yml file with the new results
+        await recordTime('Step 8: Update sensitiveVariables.yml', async () => {
+            const sensitiveVariables = this.useSavedData(sourcePath, 'sensitiveVariables.json');
+            this.saveUpdatedSensitiveVariables(sensitiveVariables);
+        });
+    
+        // 9) Run all of the queries
+        await recordTime('Step 9: Run all queries', async () => {
+            await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath), 'result');
+        });
+    
+        // Print all the times at the end
+        console.log("Time taken for each step:");
+        Object.keys(times).forEach(step => {
+            console.log(`${step}: ${formatTime(times[step])}`);
+        });
     }
+    
+    
+    
 
     async runLLM(javaFiles, sourcePath){
         // Get Sensitive variables from gpt
@@ -175,7 +233,7 @@ export class CodeQlService {
     }
 
 
-    formatMappings(mapping: { [key: string]: string[] }, type): string {
+    formatMappings(mapping: { [key: string]: string[] }, type: string): string {
         let result = "";
     
         // Iterate over each key (filename) in the mapping object
@@ -185,6 +243,26 @@ export class CodeQlService {
                 // Remove Unicode characters, double quotes, single quotes, and newlines from the variable
                 // Ensure backslashes are escaped
                 variable = variable.replace(/[^\x00-\x7F]/g, '').replace(/["'\n]/g, '').replace(/\\/g, '\\\\');
+    
+                // Apply exclusion rules
+                if (
+                    // Exclude common non-sensitive patterns
+                    /example/i.test(variable) ||
+                    /test/i.test(variable) ||
+                    /demo/i.test(variable) ||
+                    /foo/i.test(variable) ||
+                    /bar/i.test(variable) ||
+                    /baz/i.test(variable) ||
+                    /secret/i.test(variable) ||
+                    // Exclude empty strings
+                    variable === "" ||
+                    // Exclude whitespace-only strings
+                    /^\s*$/.test(variable) ||
+                    // Exclude strings with exactly one dot followed by a digit
+                    /^[^.]*\.[0-9]+$/.test(variable)
+                ) {
+                    return; // Skip this variable if it matches any exclusion criteria
+                }
     
                 // Check if the variable is in the format {key: value, key: value}
                 const regex = /{([^}]+)}/;
@@ -217,7 +295,7 @@ export class CodeQlService {
         });
     
         return result;
-    }
+    }    
     
     formatCommentsMapping(mapping: { [key: string]: string[] }, type): string {
         let result = "";
@@ -312,12 +390,41 @@ export class CodeQlService {
         // console.log(createDbCommand);
         // await this.runChildProcess(createDbCommand);
 
-        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --max-paths=100 --sarif-add-snippets=true --no-group-results --threads=${threads}`;
+        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --max-paths=10 --sarif-add-snippets=true --threads=${threads}`;
         await this.runChildProcess(analyzeDbCommand);
 
         // This is for running all of the queries
         } else {
-            const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --threads=${threads}`;
+            
+            const queryDir = path.resolve(queryPath);
+            const excludeDir = path.resolve(path.join(queryPath, 'ProgramSlicing'));
+            
+            function collectQlFiles(dir) {
+                let results = [];
+                const list = fs.readdirSync(dir);
+                list.forEach(file => {
+                    const filePath = path.join(dir, file);
+                    const stat = fs.statSync(filePath);
+                    if (stat && stat.isDirectory()) {
+                        // Recursively collect .ql files from subdirectories
+                        results = results.concat(collectQlFiles(filePath));
+                    } else if (filePath.endsWith('.ql') && !filePath.startsWith(excludeDir)) {
+                        // Include only .ql files and exclude those in the ProgramSlicing directory
+                        results.push(filePath);
+                    }
+                });
+                return results;
+            }
+            
+            // Collect all .ql files from the queryDir, excluding ProgramSlicing subdir
+            let queriesToRun = collectQlFiles(queryDir);
+            
+                    
+            // Join the selected queries into a single string
+            const queryList = queriesToRun.join(' ');
+            
+            // Build the command with the filtered list of queries
+            const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryList} --threads=${threads}`;
             await this.runChildProcess(analyzeDbCommand);
         }
 
