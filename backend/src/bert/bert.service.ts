@@ -29,7 +29,6 @@ export class BertService {
         this.projectPath = sourcePath;
         await this.getParsedResults(filePaths);
         await this.fileUtilService.writeToFile(path.join(this.projectPath, 'parsedResults.json'), JSON.stringify(this.parsedResults, null, 2));
-        await this.getBertResponse(this.projectPath, "run_bert.py");
     }
 
     async getParsedResults(filePaths: string[]) {
@@ -42,52 +41,64 @@ export class BertService {
             this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
         }
     }
+    
 
     async getBertResponse(project_root: string, bertScript: string) {
         return new Promise((resolve, reject) => {
             const bertProcess = spawn('python', [path.join("src", "bert", bertScript), project_root]);
-
+    
             let stdoutData = '';
             let stderrData = '';
-
+    
+            // Handle standard output (stdout)
             bertProcess.stdout.on('data', (data) => {
                 stdoutData += data.toString();
-                console.log(data.toString());
-
-                // Parse progress updates
+                console.log(data.toString());  // Print script's output
+    
                 const lines = data.toString().split('\n');
                 for (const line of lines) {
                     if (line.trim()) {
                         try {
-                            const progressUpdate = JSON.parse(line);
-                            if (progressUpdate.type && progressUpdate.progress !== undefined) {
-                                this.eventsGateway.emitDataToClients(progressUpdate.type, JSON.stringify(progressUpdate));
+                            // Only try to parse if the line starts with '{' and ends with '}'
+                            if (line.trim().startsWith('{') && line.trim().endsWith('}')) {
+                                const progressUpdate = JSON.parse(line);
+                                if (progressUpdate.type && progressUpdate.progress !== undefined) {
+                                    this.eventsGateway.emitDataToClients(progressUpdate.type, JSON.stringify(progressUpdate));
+                                }
+                            } else {
+                                console.log('Non-JSON output:', line); // Log non-JSON lines like progress bars
                             }
                         } catch (e) {
-                            // console.error('Failed to parse progress update:', line);
+                            console.error('Failed to parse progress update:', line);  // Log parse errors
                         }
                     }
                 }
             });
-
-            bertProcess.stderr.on('data', (data) => {
-                stderrData += data.toString();
-            });
-
+    
+            // Handle standard error (stderr)
+            // bertProcess.stderr.on('data', (data) => {
+            //     stderrData += data.toString();
+            //     console.error('Python script error output:', data.toString());  // Print script's error output
+            // });
+    
+            // Handle when the process closes
             bertProcess.on('close', (code) => {
                 if (code === 0) {
+                    console.log('Python script finished successfully');
                     resolve(stdoutData);
                 } else {
                     console.warn(`Warning or error from bertProcess: ${stderrData}`);
                     resolve(null);
                 }
             });
-
+    
+            // Handle process errors (e.g., failure to start)
             bertProcess.on('error', (err) => {
                 reject(`Failed to start subprocess: ${err}`);
             });
         });
     }
+    
 
     async parseBackwardSlice(sourcePath: string) {
         const inputPath = path.join(sourcePath, 'backwardslice.sarif');
