@@ -33,23 +33,42 @@ for package in packages:
 variables = []
 strings = []
 comments = []
-sinks = []
+sinks = []  # Added for sinks
 
 # Dictionary to hold all variables for different types
 projectAllVariables = {
     'variables': [],
     'strings': [],
     'comments': [],
-    'sinks': []
+    'sinks': []  # Added for sinks
 }
 
 # Constants
 BATCH_SIZE = 32
 EPOCHS = 500
 DIM = 768
+NUM_CLASSES = 14  # Including non-sink
 
 # Initialize lemmatizer
 lemmatizer = WordNetLemmatizer()
+
+# Sink Type Mapping
+sink_type_mapping = {
+    0: "non-sink",  # Non-sink class
+    1: "I/O Sink",
+    2: "Print Sink",
+    3: "Network Sink",
+    4: "Log Sink",
+    5: "Database Sink",
+    6: "Email Sink",
+    7: "IPC Sink",
+    8: "Clipboard Sink",
+    9: "GUI Display Sink",
+    10: "RPC Sink",
+    11: "Environment Variable Sink",
+    12: "Command Execution Sink",
+    13: "Configuration Sink"
+}
 
 # Load stop words and add Java keywords to stop words
 def load_stop_words():
@@ -116,11 +135,17 @@ class ProgressTracker:
         self.total_steps = total_steps
         self.current_progress = 0
         self.progress_type = progress_type
+        self.last_progress_percentage = -1  # Keep track of the last printed progress percentage
 
     def update_progress(self, step_increment):
-        self.current_progress += step_increment
-        progress_percentage = min(round((self.current_progress / self.total_steps) * 100), 100)
-        print(json.dumps({'type': self.progress_type, 'progress': progress_percentage}))
+        if self.total_steps > 0:
+            self.current_progress += step_increment
+            progress_percentage = min(round((self.current_progress / self.total_steps) * 100), 100)
+            if progress_percentage != self.last_progress_percentage:  # Only print if the percentage has changed
+                print(json.dumps({'type': self.progress_type, 'progress': progress_percentage}), flush=True)
+                self.last_progress_percentage = progress_percentage  # Update the last progress percentage
+        else:
+            print(json.dumps({'type': self.progress_type, 'progress': 100}))
 
     def complete(self):
         self.current_progress = self.total_steps
@@ -128,7 +153,12 @@ class ProgressTracker:
 
 # Process files to extract relevant information and context
 async def process_files(var_data, files_dict, data_type, output_list, project_all_vars, progress_tracker):
-    total_progress = len(var_data) * len(var_data[list(var_data.keys())[0]][data_type])
+    total_progress = 0
+    for file_name in var_data:
+        total_progress += len(var_data[file_name][data_type])
+
+    progress_tracker.total_steps = total_progress  # Make sure total_steps is accurate
+
     for file_name in var_data:
         all_variables = var_data[file_name][data_type]
         for v in all_variables:
@@ -150,12 +180,15 @@ async def process_files(var_data, files_dict, data_type, output_list, project_al
                     context = get_context(files_dict[file_name], v)
                     output_list.append((file_name, var))
 
+                elif data_type == 'sinks': 
+                    context = get_context(files_dict[file_name], v)
+                    output_list.append((file_name, var, context))
+
                 project_all_vars.append([file_name, v])
 
             except Exception as e:
                 print(f"Error processing file {file_name} and {data_type[:-1]} {v}: {e}")
             progress_tracker.update_progress(1)
-    # Ensure progress reaches 100%
     progress_tracker.complete()
 
 # Get the context of a variable within a file
@@ -164,19 +197,18 @@ def get_context(file, var_name):
     for sent in file.split('\n'):
         sent_tokens = word_tokenize(sent)
         if var_name in sent_tokens:
-            sent = sent.replace(var_name, '')  # 2, Updated to remove the variable name from the context
+            sent = sent.replace(var_name, '')  # Remove the variable name from the context
             context = context + sent + " "
     return text_preprocess(context)
 
 def get_context_str(file, var_name):
-    context=" "
+    context = " "
     for sent in file:
-        #check comments
-        if len(sent.strip())<=2 or sent.strip()[0]=='*' or (sent.strip()[0]=='\\' and sent.strip()[1]=='\\') or (sent.strip()[0]=='\\' and sent.strip()[1]=='\*'):
+        if len(sent.strip()) <= 2 or sent.strip()[0] == '*' or (sent.strip()[0] == '\\' and sent.strip()[1] == '\\') or (sent.strip()[0] == '\\' and sent.strip()[1] == '*'):
             continue
-        if  '\''+var_name+'\'' in sent or '"'+var_name+'"' in sent:
-            sent=sent.replace(var_name,' ')
-            context=context+sent+" "
+        if '\''+var_name+'\'' in sent or '"'+var_name+'"' in sent:
+            sent = sent.replace(var_name, ' ')
+            context = context + sent + " "
     return text_preprocess(context)
 
 # Read Java files from a directory asynchronously
@@ -207,7 +239,7 @@ async def read_parsed_data(file_path):
 stop_words = load_stop_words()
 
 # Process each type of data
-async def process_data_type(data_type, data_list, project_all_vars, final_results, threshold):
+async def process_data_type(data_type, data_list, project_all_vars, final_results, threshold, model_path):
     if data_list:
         data_array = np.array(data_list)
         processing_tracker = ProgressTracker(len(data_array), f'{data_type}-processing')
@@ -227,9 +259,11 @@ async def process_data_type(data_type, data_list, project_all_vars, final_result
         processing_tracker.complete()
 
         # Load the model
-        model = load_model(os.path.join(os.getcwd(), "src", "bert", "models", f"{data_type}.h5"))
-        # For testing
-        # model = load_model(os.path.join(os.getcwd(), "backend", "src", "bert", "models", f"{data_type}.h5"))
+        if data_type == 'sinks':
+            model = load_model(os.path.join(model_path, f"{data_type}.keras"))
+        else:
+            model = load_model(os.path.join(model_path, f"{data_type}.h5"))
+
 
         # Run the model to get predictions
         test_x = np.reshape(concatenated_vectors, (-1, DIM)) if data_type != 'comments' else concatenated_vectors
@@ -240,34 +274,43 @@ async def process_data_type(data_type, data_list, project_all_vars, final_result
 
         # Collect predictions and update saving progress
         for idx, prediction in enumerate(y_predict):
-            if prediction >= threshold:
-                file_name, data = project_all_vars[data_type][idx]
-                # print(f"Prediction for {data_type[:-1]} {data}: {prediction}")
-                if file_name not in final_results:
-                    final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
-                final_results[file_name][data_type].append({"name": data})
-            # saving_tracker.update_progress(1)
+            if data_type == "sinks":  # Special handling for sinks (categorical)
+                predicted_category = np.argmax(prediction)  # Get the predicted class
+                if predicted_category != 0:  # Ignore "non-sink" class (0)
+                    sink_type = sink_type_mapping[predicted_category]  # Convert the index to a sink category
+                    file_name, sink_name, context = data_array[idx]
+                    if file_name not in final_results:
+                        final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
+                    final_results[file_name]["sinks"].append({"name": sink_name, "type": sink_type})
+            else:  # Handle non-sink types (strings, variables, comments)
+                if prediction >= threshold:
+                    file_name, data = project_all_vars[data_type][idx]
+                    if file_name not in final_results:
+                        final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
+                    final_results[file_name][data_type].append({"name": data})
 
-        # Ensure progress reaches 100%
         saving_tracker.complete()
 
 # Main function
 async def main():
     # Set the project path and parsed data file path
-    project_path = sys.argv[1]
-    # For testing 
-    # project_path = os.path.join(os.getcwd(), "backend", "src", "bert", "testdata")
+    if len(sys.argv) > 1:
+        project_path = sys.argv[1]
+        model_path = os.path.join(os.getcwd(), "src", "bert", "models")
+    else:
+        project_name = "SmallTest"
+        project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
+        model_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
 
     # Read Java files and parsed data asynchronously
     files_dict = await read_java_files(project_path)
     parsed_data = await read_parsed_data(parsed_data_file_path)
 
-    # Process files to extract variables, strings, and comments concurrently
+    # Process files to extract variables, strings, comments, and sinks concurrently
     await asyncio.gather(
         process_files(parsed_data, files_dict, 'variables', variables, projectAllVariables['variables'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['variables']), 'variables-processing')),
         process_files(parsed_data, files_dict, 'strings', strings, projectAllVariables['strings'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['strings']), 'strings-processing')),
-        # process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['comments']), 'comments-processing')),
         # process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['sinks']), 'sinks-processing'))
     )
 
@@ -275,22 +318,21 @@ async def main():
     all_data = {
         'variables': variables,
         'strings': strings,
-        # 'comments': comments,
-        # 'sinks': sinks
+        # 'sinks': sinks  # Added sinks
     }
 
     thresholds = {
         'variables': 0.6,
         'strings': 0.8,
         'comments': 0.5,
-        'sinks': 0.65
+        'sinks': None  # Categorical, not threshold based
     }
 
     final_results = {}
 
     # Process each type of data concurrently
     await asyncio.gather(
-        *[process_data_type(data_type, data_list, projectAllVariables, final_results, thresholds.get(data_type)) for data_type, data_list in all_data.items()]
+        *[process_data_type(data_type, data_list, projectAllVariables, final_results, thresholds.get(data_type), model_path) for data_type, data_list in all_data.items()]
     )
 
     # Format results as JSON
