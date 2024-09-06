@@ -171,14 +171,14 @@ def main():
     # Collect predictions and update saving progress
 
     for idx, prediction in enumerate(y_predict):
-                    if prediction.round() > 0:
+                    if prediction >= .7:
                         file_name, data = projectAllVariables['variables'][idx]
                         if file_name not in final_results:
                             final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
                         final_results[file_name]['variables'].append({"name": data})
                     else: 
                         file_name, data = projectAllVariables['variables'][idx]
-                        print(f"{data} removed")
+                        # print(f"{data} removed")
     print("done")
 
     # Format results as JSON
