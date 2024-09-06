@@ -150,9 +150,6 @@ export class CodeQlService {
             console.log(`${step}: ${formatTime(times[step])}`);
         });
     }
-    
-    
-    
 
     async runLLM(javaFiles, sourcePath){
         // Get Sensitive variables from gpt
@@ -383,12 +380,12 @@ export class CodeQlService {
         // This is for building the db and running the slicing query
         if (slicing){
         // Remove previous database if it exists
-        // await this.fileUtilService.removeDir(db);
+        await this.fileUtilService.removeDir(db);
 
         // Create new database with codeql
-        // const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        // console.log(createDbCommand);
-        // await this.runChildProcess(createDbCommand);
+        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        console.log(createDbCommand);
+        await this.runChildProcess(createDbCommand);
 
         const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --max-paths=10 --sarif-add-snippets=true --threads=${threads}`;
         await this.runChildProcess(analyzeDbCommand);
