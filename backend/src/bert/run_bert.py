@@ -278,7 +278,7 @@ async def process_data_type(data_type, data_list, project_all_vars, final_result
                 predicted_category = np.argmax(prediction)  # Get the predicted class
                 if predicted_category != 0:  # Ignore "non-sink" class (0)
                     sink_type = sink_type_mapping[predicted_category]  # Convert the index to a sink category
-                    file_name, sink_name, context = data_array[idx]
+                    file_name, sink_name = project_all_vars[data_type][idx]
                     if file_name not in final_results:
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
                     final_results[file_name]["sinks"].append({"name": sink_name, "type": sink_type})
@@ -311,21 +311,24 @@ async def main():
     await asyncio.gather(
         process_files(parsed_data, files_dict, 'variables', variables, projectAllVariables['variables'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['variables']), 'variables-processing')),
         process_files(parsed_data, files_dict, 'strings', strings, projectAllVariables['strings'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['strings']), 'strings-processing')),
-        # process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['sinks']), 'sinks-processing'))
+        process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['comments']), 'comments-processing')),
+        process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['sinks']), 'sinks-processing'))
     )
 
     # Combine all data into a single dictionary
     all_data = {
         'variables': variables,
         'strings': strings,
-        # 'sinks': sinks  # Added sinks
+        'sinks': sinks, 
+        'comments': comments
+
     }
 
     thresholds = {
         'variables': 0.6,
         'strings': 0.8,
-        'comments': 0.5,
-        'sinks': None  # Categorical, not threshold based
+        'comments': 0.95,
+        'sinks': 0.9 
     }
 
     final_results = {}
