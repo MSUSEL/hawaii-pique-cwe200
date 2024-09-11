@@ -24,6 +24,7 @@ def extract_snippet_with_context(file_path, start_line, start_column, end_line=N
         lines = file.readlines()
         value = lines[start_line - 1][start_column-1:end_column] if start_column and end_column else lines[start_line - 1].strip()
         return clean_value(value.strip())
+        
 
 # Function to build the graph from the SARIF data
 def build_flow_graph(results):
