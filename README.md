@@ -32,10 +32,10 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 ### How do I get set up? ###
 
 #### Dependencies
-1. [Node.js](https://nodejs.org/en?ref=altcademy.com) You will need to add Node as a system env variable
+1. [Node.js](https://nodejs.org/en?ref=altcademy.com)20+ You will need to add Node as a system env variable
 2. [CodeQL CLI](https://github.com/github/codeql-cli-binaries/releases) You will need to add CodeQL as a system env variable
 
-Your project's build tool
+Your project's build tool (Ensure that your project builds before using our tool)
 [Maven](https://maven.apache.org/install.html), [Gradle](https://gradle.org/)
 
 #### In the Root Directory
@@ -57,14 +57,12 @@ npm run codeql-setup
 
 4. To launch backend:
 ```bash
-npm run build-backend
 npm run start-backend
 ```
 
 5. To launch frontend:
 Open a second terminal 
 ```bash
-npm run build-frontend
 npm run start-frontend
 ```
 
