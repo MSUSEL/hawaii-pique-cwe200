@@ -42,7 +42,7 @@ Your project's build tool
 
 1. Install dependencies
 ```bash 
-npm ci
+npm i
 ```
 
 2. Build backend and frontend
@@ -57,16 +57,20 @@ npm run codeql-setup
 
 4. To launch backend:
 ```bash
+npm run build-backend
 npm run start-backend
 ```
 
 5. To launch frontend:
+Open a second terminal 
 ```bash
+npm run build-frontend
 npm run start-frontend
 ```
 
 **Note: ** 4 and 5 may be need to run in separate shells / consoles
-
+6. 
+Navigate to http://localhost:4200/
 
 ### Query Testing ###
 There is a labeled toy dataset located in `backend/Files/CWEToyDataset` that includes 333 test cases.
