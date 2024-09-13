@@ -112,6 +112,36 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
         )
     }
 
+    class SensitiveMethodCall extends MethodCall {
+      SensitiveMethodCall() {
+        // Check for matches against the sinks
+        exists(File f |
+          this.getEnclosingCallable().getFile() = f and
+          sinks(f.getBaseName(), this.getMethod().getName(), _)
+        )
+      }
+    }
+    
+
+    predicate getAllSinks(DataFlow::Node sink) { 
+      exists(File f, MethodCall mc | 
+        f = mc.getFile() and
+        (sinks(f.getBaseName(), mc.getMethod().getName(), "I/O Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Print Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Network Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Log Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Database Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Email Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "IPC Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Clipboard Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "GUI Display Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "RPC Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Environment Variable Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Command Execution Sink") or
+        sinks(f.getBaseName(), mc.getMethod().getName(), "Configuration File Sink"))
+        )
+    }
+
 string getSinkName() { 
   exists(File f, MethodCall mc | 
     f = mc.getFile() and
