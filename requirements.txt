@@ -1,0 +1,11 @@
+aiofiles==24.1.0
+nltk==3.8.1
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.5.1
+sentence-transformers==3.0.1
+tensorflow==2.17.0
+keras==3.4.1
+torch==2.2.2
+transformers==4.43.3
+tf_keras==2.17.0

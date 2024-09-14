@@ -4,5 +4,5 @@ frontend/node_modules/
 .vscode
 .angular
 codeql
-backend/Files/ # This folder is too big 
+backend/Files
 
