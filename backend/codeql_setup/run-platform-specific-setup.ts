@@ -11,7 +11,7 @@ function runPlatformSpecificCommand() {
         if (platform === 'win32') {
             execSync('ts-node backend/codeql_setup/windows-setup.ts', { stdio: 'inherit' });
         } else {
-            execSync('sh backend/codeql_setup/linux-setup.sh', { stdio: 'inherit' });
+            execSync('ts-node backend/codeql_setup/linux-setup.ts', { stdio: 'inherit' });
         }
     } catch (error) {
         console.error('Error occurred while running platform-specific command:', error);
