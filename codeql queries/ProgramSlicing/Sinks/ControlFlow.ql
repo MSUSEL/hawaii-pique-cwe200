@@ -10,6 +10,6 @@ predicate controlFlowPath(MethodCall start, MethodCall end) {
   )
 }
 
-from MethodCall normalCall, SensitiveMethodCall sensitiveCall
+from MethodCall normalCall, DetectedMethodCall sensitiveCall
 where controlFlowPath(normalCall, sensitiveCall) 
 select normalCall, sensitiveCall, "Control flow path from normal method call to sensitive method call."

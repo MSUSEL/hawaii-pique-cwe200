@@ -112,8 +112,8 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
         )
     }
 
-    class SensitiveMethodCall extends MethodCall {
-      SensitiveMethodCall() {
+    class DetectedMethodCall extends MethodCall {
+      DetectedMethodCall() {
         // Check for matches against the sinks
         exists(File f |
           this.getEnclosingCallable().getFile() = f and
