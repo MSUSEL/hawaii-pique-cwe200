@@ -55,10 +55,8 @@ export class CodeQlService {
         // const data = await this.runChatGPT(sourcePath);
 
         await this.runBert(javaFiles, sourcePath, createCodeQlDto);
-        // const data = await this.runLLM(javaFiles, sourcePath);
-        // await this.bertService.getBertResponse(sourcePath) // Use this if the parsing is already been done
-       
 
+       
         // await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
 
         return await this.parserService.getSarifResults(sourcePath);
@@ -120,7 +118,7 @@ export class CodeQlService {
     
         // 5) Run the backslice query for all of the sensitive variables that BERT found
         await recordTime('Step 5: Run the backslice query', async () => {
-            await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath, 'ProgramSlicing'), 'backwardslice', true);
+            await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath, 'ProgramSlicing', 'Variables'), 'backwardslice', true);
         });
     
         // 6) Parse the results to create the backslice graph for each variable that BERT marked as sensitive
