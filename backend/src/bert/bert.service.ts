@@ -76,10 +76,10 @@ export class BertService {
             });
     
             // Handle standard error (stderr)
-            // bertProcess.stderr.on('data', (data) => {
-            //     stderrData += data.toString();
-            //     console.error('Python script error output:', data.toString());  // Print script's error output
-            // });
+            bertProcess.stderr.on('data', (data) => {
+                stderrData += data.toString();
+                console.error('Python script error output:', data.toString());  // Print script's error output
+            });
     
             // Handle when the process closes
             bertProcess.on('close', (code) => {
