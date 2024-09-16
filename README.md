@@ -31,6 +31,19 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 
 ### How do I get set up? ###
 
+#### Using Docker
+1. 
+```bash
+docker build -t cwe-200 --build-arg JAVA_VERSION=<VERSION> . 
+``` 
+2. 
+``bash
+docker run -p 4200:4200 -p 5400:5400 cwe-200
+```
+3. http://localhost:4200/
+
+#### Manual Install
+
 #### Dependencies
 1. [Node.js](https://nodejs.org/en?ref=altcademy.com)20+ You will need to add Node as a system env variable
 2. [CodeQL CLI](https://github.com/github/codeql-cli-binaries/releases) You will need to add CodeQL as a system env variable
@@ -42,7 +55,7 @@ Your project's build tool (Ensure that your project builds before using our tool
 
 1. Install dependencies
 ```bash 
-npm i
+npm install
 ```
 
 2. Build backend and frontend
@@ -55,19 +68,11 @@ npm run build
 npm run codeql-setup
 ```
 
-4. To launch backend:
+4. Run the Front-end and Back-end Servers
 ```bash
-npm run start-backend
+npm run start
 ```
-
-5. To launch frontend:
-Open a second terminal 
-```bash
-npm run start-frontend
-```
-
-**Note: ** 4 and 5 may be need to run in separate shells / consoles
-6. 
+5. 
 Navigate to http://localhost:4200/
 
 ### Query Testing ###
