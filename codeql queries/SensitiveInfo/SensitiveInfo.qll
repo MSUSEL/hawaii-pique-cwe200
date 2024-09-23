@@ -121,6 +121,18 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
         )
       }
     }
+
+    class DetectedMethod extends Method {
+      DetectedMethod() {
+        // Match methods based on their simple name and the base name of the file where they are called
+        exists(MethodCall mc, File f |
+          mc.getMethod() = this and
+          mc.getLocation().getFile().getBaseName() = f.getLocation().getFile().getBaseName() and
+          sinks(f.getBaseName(), this.getName(), _)
+        )
+      }
+    }
+    
     
 
     predicate getAllSinks(DataFlow::Node sink) { 
