@@ -37,7 +37,7 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 docker build -t cwe-200 --build-arg JAVA_VERSION=<VERSION> . 
 ``` 
 2. 
-``bash
+```bash
 docker run -p 4200:4200 -p 5400:5400 cwe-200
 ```
 3. http://localhost:4200/
