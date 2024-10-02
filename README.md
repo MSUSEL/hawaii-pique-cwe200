@@ -1,7 +1,5 @@
 # CWE-200 Web App Tool Repo #
 
-## What is this repository for? ##
-
 ### Quick summary ###
 
 This tool is designed to detect and identify vulnerabilities related to CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor) within Java projects. 
@@ -45,7 +43,7 @@ docker run -p 4200:4200 -p 5400:5400 cwe-200
 #### Manual Install
 
 #### Dependencies
-1. [Node.js](https://nodejs.org/en?ref=altcademy.com)20+ You will need to add Node as a system env variable
+1. [Node.js](https://nodejs.org/en?ref=altcademy.com) 20+ You will need to add Node as a system env variable
 2. [CodeQL CLI](https://github.com/github/codeql-cli-binaries/releases) You will need to add CodeQL as a system env variable
 
 Your project's build tool (Ensure that your project builds before using our tool)
