@@ -53,7 +53,8 @@ class MailSendMethod extends DataFlow::Node {
  
  module ExposureInTransmittedDataConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source){
-    source.asExpr() instanceof SensitiveVariableExpr or source instanceof GetMessageFlowSource
+    source.asExpr() instanceof SensitiveVariableExpr 
+    // or source instanceof GetMessageFlowSource
   }
 
   predicate isSink(DataFlow::Node sink) {
