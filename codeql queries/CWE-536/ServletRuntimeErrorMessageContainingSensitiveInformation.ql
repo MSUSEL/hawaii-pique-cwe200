@@ -9,56 +9,82 @@
  * @cwe CWE-536
  */
 
-import java
-import semmle.code.java.dataflow.TaintTracking
-import semmle.code.java.frameworks.Servlets
-import semmle.code.java.dataflow.FlowSources
-import semmle.code.java.dataflow.DataFlow
-import CommonSinks.CommonSinks
-import SensitiveInfo.SensitiveInfo
-
-module Flow = TaintTracking::Global<SensitiveInfoLeakServletConfig>;
-
-import Flow::PathGraph
-
-module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
-  predicate isSource(DataFlow::Node source) {
-    exists(SensitiveVariableExpr sve | source.asExpr() = sve)
-  }
-
-  predicate isSink(DataFlow::Node sink) {
-    exists(CatchClause cc, MethodCall mc |
-      // Ensure the CatchClause is catching ServletException
-      cc.getACaughtType().hasQualifiedName("javax.servlet", "ServletException") and
-      // Ensure the MethodCall is within the CatchClause for the ServletException
-      mc.getEnclosingStmt().getEnclosingStmt*() = cc.getBlock() and
-      // Ensure the sink matches one of the known sensitive sinks
+ import java
+ import semmle.code.java.dataflow.TaintTracking
+ import semmle.code.java.dataflow.DataFlow
+ import DataFlow::PathGraph
+ import SensitiveInfo.SensitiveInfo
+ import CommonSinks.CommonSinks
+ 
+ // Define sensitive variables
+//  class SensitiveVariable extends VarAccess {
+//    SensitiveVariable() {
+//      this.getVariable().getName() = "username" or
+//      this.getVariable().getName() = "email" or
+//      this.getVariable().getName() = "password" or
+//      this.getVariable().getName() = "apiKey"
+//    }
+//  }
+ 
+ // Define flow states
+ class State1 extends DataFlow::FlowState { State1() { this = "State1" } }
+ class State2 extends DataFlow::FlowState { State2() { this = "State2" } }
+ class State3 extends DataFlow::FlowState { State3() { this = "State3" } }
+ 
+ // Dataflow configuration using a manual link for throw/catch
+ class ExceptionDataFlowConfig extends TaintTracking::Configuration {
+   ExceptionDataFlowConfig() { this = "ExceptionDataFlowConfig" }
+ 
+   // Track sensitive variables as the source in State1
+   override predicate isSource(DataFlow::Node source, DataFlow::FlowState state) {
+     state instanceof State1 and
+     exists(SensitiveVariableExpr sve | sve = source.asExpr())
+   }
+ 
+   // Track sinks like `println`, `sendError`, etc. in State3
+   override predicate isSink(DataFlow::Node sink, DataFlow::FlowState state) {
+     state instanceof State3 and
+     exists(MethodCall mcSink |
       (
+        // mcSink.getMethod().getName() in ["println", "sendError", "write", "sendError"] or
+        CommonSinks::isPrintSink(sink) or
         CommonSinks::isErrPrintSink(sink) or
         CommonSinks::isServletSink(sink) or
-        CommonSinks::isErrorSink(sink) or
-        CommonSinks::isIOSink(sink) or
-        getSinkAny(sink)
-      ) and
-      // Link the sink to the argument of the MethodCall
-      sink.asExpr() = mc.getAnArgument()
-    )
-  }
-
-  predicate isBarrier(DataFlow::Node node) {
-    exists(MethodCall mc |
-      // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
-      (
-        mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
-        mc.getMethod().getName().toLowerCase().matches("%encrypt%")
-      ) and
-      // Consider both arguments and the return of sanitization/encryption methods as barriers
-      (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
-    )
-  }
-}
-
-from Flow::PathNode source, Flow::PathNode sink
-where Flow::flowPath(source, sink)
-select sink.getNode(), source, sink,
-  "CWE-536: Servlet Runtime Error Message Containing Sensitive Information."
+        CommonSinks::isLoggingSink(sink)
+      ) and 
+        sink.asExpr() = mcSink.getAnArgument() 
+     )
+   }
+ 
+   // Define transitions between flow states
+   override predicate isAdditionalTaintStep(
+     DataFlow::Node node1, DataFlow::FlowState state1,
+     DataFlow::Node node2, DataFlow::FlowState state2
+   ) {
+     // Transition from State1 to State2: sensitive data flows into a runtime exception constructor
+     state1 instanceof State1 and
+     state2 instanceof State2 and
+     exists(ConstructorCall cc |
+       cc.getAnArgument() = node1.asExpr() and
+       cc.getConstructor().getDeclaringType().(RefType).getASupertype+().hasQualifiedName("javax.servlet", "ServletException") and
+       cc = node2.asExpr()
+     ) or
+ 
+     // Transition from State2 to State3: manually link throw to catch when in the same method
+     state1 instanceof State2 and
+     state2 instanceof State3 and
+     exists(ThrowStmt t, CatchClause catchClause, MethodCall mcGetMessage |
+       t.getExpr() = node1.asExpr() and
+       catchClause.getEnclosingCallable() = t.getEnclosingCallable() and
+       catchClause.getVariable().getAnAccess() = mcGetMessage.getQualifier() and
+       mcGetMessage.getMethod().getName() = "getMessage" and
+       node2.asExpr() = mcGetMessage
+     )
+   }
+ }
+ 
+ // Query for sensitive information flow from source to sink with path visualization
+ from DataFlow::PathNode source, DataFlow::PathNode sink, ExceptionDataFlowConfig cfg
+ where cfg.hasFlowPath(source, sink)
+ select sink, source, sink, "Sensitive information flows into exception and is exposed via getMessage."
+ 
