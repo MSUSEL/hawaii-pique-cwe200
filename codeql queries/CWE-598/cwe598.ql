@@ -16,6 +16,7 @@ import semmle.code.java.dataflow.FlowSources
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.security.SensitiveActions
 import SensitiveGetQueryFlow::PathGraph
+import SensitiveInfo.SensitiveInfo
 
 /** A variable that holds sensitive information judging by its name. */
 class SensitiveInfoExpr extends Expr {
@@ -23,6 +24,12 @@ class SensitiveInfoExpr extends Expr {
     exists(Variable v | this = v.getAnAccess() |
       v.getName().regexpMatch(getCommonSensitiveInfoRegex()) and
       not v.getName().matches("token%") // exclude ^token.* since sensitive tokens are usually in the form of accessToken, authToken, ...
+      and not v.getName().matches("%encrypt%") 
+    )
+    or 
+    exists(SensitiveVariableExpr sve |
+      this = sve and
+      not sve.toString().matches(".*encrypt.*")
     )
   }
 }
