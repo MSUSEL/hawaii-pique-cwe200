@@ -13,16 +13,18 @@
  import semmle.code.java.dataflow.TaintTracking
  import semmle.code.java.dataflow.DataFlow
  import DataFlow::PathGraph
+ import SensitiveInfo.SensitiveInfo
+ import CommonSinks.CommonSinks
  
  // Define sensitive variables
- class SensitiveVariable extends VarAccess {
-   SensitiveVariable() {
-     this.getVariable().getName() = "username" or
-     this.getVariable().getName() = "email" or
-     this.getVariable().getName() = "password" or
-     this.getVariable().getName() = "apiKey"
-   }
- }
+//  class SensitiveVariable extends VarAccess {
+//    SensitiveVariable() {
+//      this.getVariable().getName() = "username" or
+//      this.getVariable().getName() = "email" or
+//      this.getVariable().getName() = "password" or
+//      this.getVariable().getName() = "apiKey"
+//    }
+//  }
  
  // Define flow states
  class State1 extends DataFlow::FlowState { State1() { this = "State1" } }
@@ -36,17 +38,21 @@
    // Track sensitive variables as the source in State1
    override predicate isSource(DataFlow::Node source, DataFlow::FlowState state) {
      state instanceof State1 and
-     exists(SensitiveVariable var |
-       source.asExpr() = var
-     )
+     exists(SensitiveVariableExpr sve | sve = source.asExpr())
    }
  
    // Track sinks like `println`, `sendError`, etc. in State3
    override predicate isSink(DataFlow::Node sink, DataFlow::FlowState state) {
      state instanceof State3 and
      exists(MethodCall mcSink |
-       mcSink.getMethod().getName() in ["println", "sendError", "write", "sendError"] and
-       mcSink.getAnArgument() = sink.asExpr()
+      (
+        // mcSink.getMethod().getName() in ["println", "sendError", "write", "sendError"] or
+        CommonSinks::isPrintSink(sink) or
+        CommonSinks::isErrPrintSink(sink) or
+        CommonSinks::isServletSink(sink) or
+        CommonSinks::isLoggingSink(sink)
+      ) and 
+        sink.asExpr() = mcSink.getAnArgument() 
      )
    }
  
@@ -55,7 +61,7 @@
      DataFlow::Node node1, DataFlow::FlowState state1,
      DataFlow::Node node2, DataFlow::FlowState state2
    ) {
-     // Transition from State1 to State2: sensitive data flows into an exception constructor
+     // Transition from State1 to State2: sensitive data flows into a runtime exception constructor
      state1 instanceof State1 and
      state2 instanceof State2 and
      exists(ConstructorCall cc |
