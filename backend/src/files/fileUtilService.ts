@@ -269,67 +269,72 @@ export class FileUtilService {
         return '\n\n-----BEGIN FILE: [' + id + ']----- \n' + file + '\n-----END FILE: [' + id + ']-----'
 
     }
-        
-    parseJavaFile(filePath: string, aggregatedResults: { [key: string]: JavaParseResult }): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const cwd = process.cwd();
-            const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
-            filePath = path.resolve(cwd, filePath);
-            
-            // Check if JAR exists, if not build it
-            if (!fs.existsSync(jarPath)) {
+
+    async buildJarIfNeeded() {
+        const cwd = process.cwd();
+        const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
+    
+        if (!fs.existsSync(jarPath)) {
+            // Build the JAR file
+            await new Promise<void>((resolve, reject) => {
                 exec('mvn clean package', { cwd: path.resolve(cwd, 'ParseJava') }, (error, stdout, stderr) => {
                     if (error) {
                         reject(`Error building JAR: ${stderr}`);
                         return;
                     }
-                    // Run the Java program
-                    this.runJavaProgram(jarPath, filePath, aggregatedResults).then(resolve).catch(reject);
+                    resolve();
                 });
-            } else {
-                this.runJavaProgram(jarPath, filePath, aggregatedResults).then(resolve).catch(reject);
-            }
-        });
+            });
+        }
     }
     
-    runJavaProgram(jarPath: string, filePath: string, aggregatedResults: { [key: string]: JavaParseResult }): Promise<void> {
+        
+    async parseJavaFile(filePath: string): Promise<JavaParseResult> {
+        const cwd = process.cwd();
+        const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
+        filePath = path.resolve(cwd, filePath);
+    
+        // Run the Java program
+        const result = await this.runJavaProgram(jarPath, filePath);
+        return result;
+    }
+    
+    
+    async runJavaProgram(jarPath: string, filePath: string): Promise<JavaParseResult> {
         return new Promise((resolve, reject) => {
             const command = `java -jar ${jarPath} ${filePath}`;
     
             exec(command, (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Error executing command for file ${filePath}: ${stderr}`);
-                    // Add empty result to aggregated results
-                    aggregatedResults[path.basename(filePath)] = {
+                    // Return an empty result for this file
+                    resolve({
                         filename: path.basename(filePath),
                         variables: [],
                         comments: [],
                         strings: [],
                         sinks: []
-                    };
-                    resolve();
+                    });
                     return;
                 }
     
                 try {
                     const result: JavaParseResult = JSON.parse(stdout);
-                    console.log(result);
-                    aggregatedResults[path.basename(result.filename)] = result;
-                    resolve();
+                    resolve(result);
                 } catch (e) {
                     console.error(`Failed to parse JSON: ${e}`);
-                    aggregatedResults[path.basename(filePath)] = {
+                    resolve({
                         filename: path.basename(filePath),
                         variables: [],
                         comments: [],
                         strings: [],
                         sinks: []
-                    };
-                    resolve();
+                    });
                 }
             });
         });
     }
+    
 
 
     convertLabeledDataToMap(labeledData: any): Map<string, Map<string, string[]>> {

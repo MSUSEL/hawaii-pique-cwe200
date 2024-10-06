@@ -27,20 +27,41 @@ export class BertService {
 
     async bertWrapper(filePaths: string[], sourcePath: string) {
         this.projectPath = sourcePath;
+        await this.fileUtilService.buildJarIfNeeded();
         await this.getParsedResults(filePaths);
         await this.fileUtilService.writeToFile(path.join(this.projectPath, 'parsedResults.json'), JSON.stringify(this.parsedResults, null, 2));
     }
 
     async getParsedResults(filePaths: string[]) {
-        let completed: number = 0;
-        let total: number = filePaths.length;
-        for (let filePath of filePaths) {
-            await this.fileUtilService.parseJavaFile(filePath, this.parsedResults);
-            completed += 1;
-            let progressPercent = Math.floor((completed / total) * 100);
-            this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
-        }
+        const total = filePaths.length;
+        let completed = 0;
+    
+        // Limit the number of concurrent tasks
+        const concurrencyLimit = 8; // Adjust based on your system's capabilities
+        const queue = filePaths.slice(); // Create a copy of the file paths
+        const results: { [key: string]: JavaParseResult } = {};
+    
+        const workers = Array.from({ length: concurrencyLimit }, async () => {
+            while (queue.length > 0) {
+                const filePath = queue.shift();
+                if (!filePath) break;
+    
+                const result = await this.fileUtilService.parseJavaFile(filePath);
+                results[path.basename(result.filename)] = result;
+    
+                completed += 1;
+                const progressPercent = Math.floor((completed / total) * 100);
+                console.log(`Parsing progress: ${progressPercent}%`);
+                this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
+            }
+        });
+    
+        await Promise.all(workers);
+    
+        // Assign the aggregated results
+        this.parsedResults = results;
     }
+    
     
 
     async getBertResponse(project_root: string, bertScript: string) {
@@ -65,8 +86,8 @@ export class BertService {
                                 if (progressUpdate.type && progressUpdate.progress !== undefined) {
                                     this.eventsGateway.emitDataToClients(progressUpdate.type, JSON.stringify(progressUpdate));
                                 }
-                            } else {
-                                console.log('Non-JSON output:', line); // Log non-JSON lines like progress bars
+                            // } else {
+                            //     console.log('Non-JSON output:', line); // Log non-JSON lines like progress bars
                             }
                         } catch (e) {
                             console.error('Failed to parse progress update:', line);  // Log parse errors
@@ -76,10 +97,10 @@ export class BertService {
             });
     
             // Handle standard error (stderr)
-            bertProcess.stderr.on('data', (data) => {
-                stderrData += data.toString();
-                console.error('Python script error output:', data.toString());  // Print script's error output
-            });
+            // bertProcess.stderr.on('data', (data) => {
+            //     stderrData += data.toString();
+            //     console.error('Python script error output:', data.toString());  // Print script's error output
+            // });
     
             // Handle when the process closes
             bertProcess.on('close', (code) => {

@@ -160,12 +160,12 @@ export class LLMService {
     async getParsedResults(filePaths: string[]) {
         let completed: number = 0;
         let total: number = filePaths.length;
-        for (let filePath of filePaths) {
-            await this.fileUtilService.parseJavaFile(filePath, this.parsedResults);
-            completed += 1;
-            let progressPercent = Math.floor((completed / total) * 100);
-            this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
-        }
+        // for (let filePath of filePaths) {
+        //     await this.fileUtilService.parseJavaFile(filePath, this.parsedResults);
+        //     completed += 1;
+        //     let progressPercent = Math.floor((completed / total) * 100);
+        //     this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
+        // }
     }
 
     async readFiles(filePaths: string[]) {

@@ -318,12 +318,12 @@ export class ChatGptService {
         let completed: number = 0;
         let total: number = files.length;
         for (const file of files) {
-            try{
-                await this.fileUtilService.parseJavaFile(file, this.parsedResults);
-            }
-            catch(e){
-                console.log(e); 
-        }
+        //     try{
+        //         await this.fileUtilService.parseJavaFile(file, this.parsedResults);
+        //     }
+        //     catch(e){
+        //         console.log(e); 
+        // }
         completed += 1;
         let progressPercent = Math.floor((completed / total) * 100);
         this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
@@ -343,7 +343,7 @@ export class ChatGptService {
 
             if (!this.parsedResults[path.basename(file)]){
                 // console.log(`Parsing file ${file}`);
-                await this.fileUtilService.parseJavaFile(file, this.parsedResults);
+                // await this.fileUtilService.parseJavaFile(file, this.parsedResults);
             }
 
             try {
