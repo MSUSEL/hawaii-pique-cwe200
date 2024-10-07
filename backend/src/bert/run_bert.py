@@ -51,6 +51,8 @@ NUM_CLASSES = 14  # Including non-sink
 
 # Initialize lemmatizer
 lemmatizer = WordNetLemmatizer()
+model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+
 
 # Sink Type Mapping
 sink_type_mapping = {
@@ -113,7 +115,6 @@ def text_preprocess(feature_text):
 
 # Calculate sentence embeddings using SentenceTransformer
 async def calculate_sentbert_vectors(api_lines):
-    model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
     sentences = []
     for api in api_lines:
         preprocessed_tokens = text_preprocess(api)
@@ -189,7 +190,6 @@ async def process_files(var_data, files_dict, data_type, output_list, project_al
             except Exception as e:
                 print(f"Error processing file {file_name} and {data_type[:-1]} {v}: {e}")
             progress_tracker.update_progress(1)
-    progress_tracker.complete()
 
 # Get the context of a variable within a file
 def get_context(file, var_name):
@@ -242,21 +242,17 @@ stop_words = load_stop_words()
 async def process_data_type(data_type, data_list, project_all_vars, final_results, threshold, model_path):
     if data_list:
         data_array = np.array(data_list)
-        processing_tracker = ProgressTracker(len(data_array), f'{data_type}-processing')
         prediction_tracker = ProgressTracker(len(data_array), f'{data_type}-prediction')
         saving_tracker = ProgressTracker(len(data_array), f'{data_type}-saving')
 
         file_info = data_array[:, 0]
         name_vectors = await calculate_sentbert_vectors(data_array[:, 1])
-        processing_tracker.update_progress(len(data_array))
 
         if data_type != 'comments':
             context_vectors = await calculate_sentbert_vectors(data_array[:, 2])
             concatenated_vectors = concat_name_and_context(name_vectors, context_vectors)
         else:
             concatenated_vectors = name_vectors
-
-        processing_tracker.complete()
 
         # Load the model
         if data_type == 'sinks':
@@ -267,6 +263,7 @@ async def process_data_type(data_type, data_list, project_all_vars, final_result
 
         # Run the model to get predictions
         test_x = np.reshape(concatenated_vectors, (-1, DIM)) if data_type != 'comments' else concatenated_vectors
+        prediction_tracker.total_steps =  test_x.shape[0]
         y_predict = await asyncio.to_thread(model.predict, test_x)
 
         prediction_tracker.update_progress(len(data_array))
@@ -310,25 +307,25 @@ async def main():
     # Process files to extract variables, strings, comments, and sinks concurrently
     await asyncio.gather(
         process_files(parsed_data, files_dict, 'variables', variables, projectAllVariables['variables'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['variables']), 'variables-processing')),
-        process_files(parsed_data, files_dict, 'strings', strings, projectAllVariables['strings'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['strings']), 'strings-processing')),
+        # process_files(parsed_data, files_dict, 'strings', strings, projectAllVariables['strings'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['strings']), 'strings-processing')),
         # process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['comments']), 'comments-processing')),
-        process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['sinks']), 'sinks-processing'))
+        # process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['sinks']), 'sinks-processing'))
     )
 
     # Combine all data into a single dictionary
     all_data = {
         'variables': variables,
-        'strings': strings,
+        # 'strings': strings,
         # 'comments': comments,
-        'sinks': sinks
+        # 'sinks': sinks
 
     }
 
     thresholds = {
-        'variables': 0.6,
-        'strings': 0.8,
+        'variables': 0.7,
+        'strings': 0.95,
         'comments': 0.95,
-        'sinks': 0.9 
+        'sinks': 0.99 
     }
 
     final_results = {}
