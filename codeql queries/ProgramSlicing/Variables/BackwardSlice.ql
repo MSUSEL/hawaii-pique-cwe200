@@ -44,24 +44,14 @@
        assign.getRhs() = source.asExpr() and
        source.asExpr() instanceof FieldAccess
      )
-    //  or
-    // //  Track variables initialized with method calls, field accesses, or new object instantiations
-    //  exists(Variable v |
-    //    source.asExpr() = v.getAnAccess() and
-    //    (
-    //      v.getInitializer() instanceof MethodCall or
-    //      v.getInitializer() instanceof FieldAccess or
-    //      v.getInitializer() instanceof NewClassExpr
-    //    )
-    //  )
      or
      // Include constructor arguments as sources to capture flow into objects
      exists(NewClassExpr newExpr |
        newExpr.getAnArgument() = source.asExpr()
      )
-     or
-     // Include cast expressions where sensitive data might flow between different types
-     source.asExpr() instanceof CastExpr
+    //  or
+    //  // Include cast expressions where sensitive data might flow between different types
+    //  source.asExpr() instanceof CastExpr
    }
  
    // Sink predicate remains unchanged; all sensitive variables are considered sinks
@@ -70,24 +60,24 @@
    }
  
    // Optimize additional flow steps by capturing key flow connections but limiting unnecessary links
-   predicate isAdditionalFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
-     // Limit tracking from method arguments to method calls and constructor arguments to objects
-     exists(MethodCall call |
-       pred.asExpr() = call.getArgument(_) and
-       succ.asExpr() = call
-     )
-     or
-     exists(NewClassExpr newExpr |
-       pred.asExpr() = newExpr.getArgument(_) and
-       succ.asExpr() = newExpr
-     )
-     or
-     // Capture flows involving cast expressions
-     exists(CastExpr cast |
-       pred.asExpr() = cast.getUnderlyingExpr() and
-       succ.asExpr() = cast
-     )
-   }
+  //  predicate isAdditionalFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
+  //    // Limit tracking from method arguments to method calls and constructor arguments to objects
+  //    exists(MethodCall call |
+  //      pred.asExpr() = call.getArgument(_) and
+  //      succ.asExpr() = call
+  //    )
+  //    or
+  //    exists(NewClassExpr newExpr |
+  //      pred.asExpr() = newExpr.getArgument(_) and
+  //      succ.asExpr() = newExpr
+  //    )
+  //    or
+  //    // Capture flows involving cast expressions
+  //    exists(CastExpr cast |
+  //      pred.asExpr() = cast.getUnderlyingExpr() and
+  //      succ.asExpr() = cast
+  //    )
+  //  }
  }
  
  from Flow::PathNode source, Flow::PathNode sink
@@ -100,5 +90,4 @@
    sink,
    source.getNode().getType().toString(),
    sink.getNode().getType().toString(),
-   "Dataflow from `" + source.getNode().toString() + "` to `" + sink.getNode().toString() + "`"
- 
+   "Dataflow from " + source.getNode().toString() + " to " + sink.getNode().toString() + ""
