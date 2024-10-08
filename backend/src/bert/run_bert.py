@@ -13,6 +13,8 @@ from keras.models import load_model
 import tensorflow as tf
 import asyncio
 import aiofiles
+from collections import deque
+
 
 # Reconfigure stdout and stderr to handle UTF-8 encoding
 sys.stdout.reconfigure(encoding='utf-8')
@@ -29,18 +31,19 @@ def check_and_download_nltk_data(package):
 for package in packages:
     check_and_download_nltk_data(package)
 
-# Initialize lists to hold different types of data
-variables = []
-strings = []
-comments = []
-sinks = []  # Added for sinks
-
 # Dictionary to hold all variables for different types
 projectAllVariables = {
     'variables': [],
     'strings': [],
     'comments': [],
     'sinks': []  # Added for sinks
+}
+
+thresholds = {
+    'variables': 0.7,
+    'strings': 0.95,
+    'comments': 0.95,
+    'sinks': 0.99 
 }
 
 # Constants
@@ -115,6 +118,7 @@ def text_preprocess(feature_text):
 
 # Calculate sentence embeddings using SentenceTransformer
 async def calculate_sentbert_vectors(api_lines):
+    model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
     sentences = []
     for api in api_lines:
         preprocessed_tokens = text_preprocess(api)
@@ -153,55 +157,61 @@ class ProgressTracker:
         print(json.dumps({'type': self.progress_type, 'progress': 100}))
 
 # Process files to extract relevant information and context
-async def process_files(var_data, files_dict, data_type, output_list, project_all_vars, progress_tracker):
-    total_progress = 0
-    for file_name in var_data:
-        total_progress += len(var_data[file_name][data_type])
+def process_files(data, files_dict, data_type):
+    # Set up the progress tracker
+    total_progress = sum(len(data[file_name][data_type]) for file_name in data)
+    progress_tracker = ProgressTracker((total_progress), f"{data_type}-processing")
 
-    progress_tracker.total_steps = total_progress  # Make sure total_steps is accurate
-
-    for file_name in var_data:
-        all_variables = var_data[file_name][data_type]
-        for v in all_variables:
+    # Process each file and extract relevant information
+    output = deque()
+    temp = 0 
+    for file_name in data:
+        items = data[file_name][data_type]
+        for item in items:
             try:
-                var = text_preprocess(v)
+                preprocessed_item = text_preprocess(item)
 
                 if data_type == 'variables':
-                    context = get_context(files_dict[file_name], v)
-                    output_list.append((file_name, var, context))
+                    context = get_context(files_dict[file_name], item)
+                    # output.append((file_name, preprocessed_item, context))
 
                 elif data_type == 'strings':
-                    if len(var) == 0:
+                    if len(preprocessed_item) == 0:
                         context = ""
                     else:
-                        context = get_context_str(files_dict[file_name], v)
-                    output_list.append((file_name, var, context))
+                        context = get_context_str(files_dict[file_name], item)
+                    output.append((file_name, preprocessed_item, context))
 
                 elif data_type == 'comments':
-                    context = get_context(files_dict[file_name], v)
-                    output_list.append((file_name, var))
+                    context = get_context(files_dict[file_name], item)
+                    output.append((file_name, preprocessed_item))
 
                 elif data_type == 'sinks': 
-                    context = get_context(files_dict[file_name], v)
-                    output_list.append((file_name, var, context))
+                    context = get_context(files_dict[file_name], item)
+                    output.append((file_name, preprocessed_item, context))
 
-                project_all_vars.append([file_name, v])
+                projectAllVariables['variables'].append([file_name, item])
 
             except Exception as e:
-                print(f"Error processing file {file_name} and {data_type[:-1]} {v}: {e}")
+                print(f"Error processing file {file_name} and {data_type[:-1]} {item}: {e}")
+            temp += 1
             progress_tracker.update_progress(1)
+    print(total_progress)
+    print(temp)
+    return list(output)
+
 
 # Get the context of a variable within a file
 def get_context(file, var_name):
     context = ""
-    for sent in file.split('\n'):
-        sent_tokens = word_tokenize(sent)
-        if var_name in sent_tokens:
-            sent = sent.replace(var_name, '')  # Remove the variable name from the context
-            context = context + sent + " "
+    for sentence in file.split('\n'):
+        sentence_tokens = word_tokenize(sentence)
+        if var_name in sentence_tokens:
+            sentence = sentence.replace(var_name, '')  # Remove the variable name from the context
+            context = context + sentence + " "
     return text_preprocess(context)
 
-def get_context_str(file, var_name):
+async def get_context_str(file, var_name):
     context = " "
     for sent in file:
         if len(sent.strip()) <= 2 or sent.strip()[0] == '*' or (sent.strip()[0] == '\\' and sent.strip()[1] == '\\') or (sent.strip()[0] == '\\' and sent.strip()[1] == '*'):
@@ -209,10 +219,11 @@ def get_context_str(file, var_name):
         if '\''+var_name+'\'' in sent or '"'+var_name+'"' in sent:
             sent = sent.replace(var_name, ' ')
             context = context + sent + " "
-    return text_preprocess(context)
+    return await text_preprocess(context)
 
 # Read Java files from a directory asynchronously
 async def read_java_files(directory):
+    print(directory)
     java_files_with_content = {}
     for root, _, files in os.walk(directory):
         for file in files:
@@ -223,7 +234,7 @@ async def read_java_files(directory):
                         file_content = await f.read()
                     java_files_with_content[os.path.basename(file_path)] = file_content
                 except Exception as e:
-                    print(f"Failed to read file {file_path}: {e}")
+                    print(e)
     return java_files_with_content
 
 # Read parsed data from a JSON file asynchronously
@@ -233,15 +244,15 @@ async def read_parsed_data(file_path):
             return json.loads(await json_vars.read())
     except Exception as e:
         print(f"Failed to read parsed data from {file_path}: {e}")
-        return {}
+        pass
 
 # Load stop words
 stop_words = load_stop_words()
 
 # Process each type of data
-async def process_data_type(data_type, data_list, project_all_vars, final_results, threshold, model_path):
+async def process_data_type(data_type, data_list, final_results, model_path):
     if data_list:
-        data_array = np.array(data_list)
+        data_array = np.squeeze(np.array(data_list))
         prediction_tracker = ProgressTracker(len(data_array), f'{data_type}-prediction')
         saving_tracker = ProgressTracker(len(data_array), f'{data_type}-saving')
 
@@ -275,13 +286,13 @@ async def process_data_type(data_type, data_list, project_all_vars, final_result
                 predicted_category = np.argmax(prediction)  # Get the predicted class
                 if predicted_category != 0:  # Ignore "non-sink" class (0)
                     sink_type = sink_type_mapping[predicted_category]  # Convert the index to a sink category
-                    file_name, sink_name = project_all_vars[data_type][idx]
+                    file_name, sink_name = projectAllVariables[data_type][idx]
                     if file_name not in final_results:
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
                     final_results[file_name]["sinks"].append({"name": sink_name, "type": sink_type})
             else:  # Handle non-sink types (strings, variables, comments)
-                if prediction >= threshold:
-                    file_name, data = project_all_vars[data_type][idx]
+                if prediction >= thresholds.get(data_type):
+                    file_name, data = projectAllVariables[data_type][idx]
                     if file_name not in final_results:
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
                     final_results[file_name][data_type].append({"name": data})
@@ -293,6 +304,8 @@ async def main():
     # Set the project path and parsed data file path
     if len(sys.argv) > 1:
         project_path = sys.argv[1]
+        project_path = os.path.abspath(os.path.join(os.getcwd(), project_path))
+
         model_path = os.path.join(os.getcwd(), "src", "bert", "models")
     else:
         project_name = "SmallTest"
@@ -301,39 +314,30 @@ async def main():
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
 
     # Read Java files and parsed data asynchronously
+    print(project_path)
     files_dict = await read_java_files(project_path)
     parsed_data = await read_parsed_data(parsed_data_file_path)
 
+    print(len(parsed_data))
+    print(len(files_dict))
+
+
+    print("processing files")
     # Process files to extract variables, strings, comments, and sinks concurrently
-    await asyncio.gather(
-        process_files(parsed_data, files_dict, 'variables', variables, projectAllVariables['variables'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['variables']), 'variables-processing')),
-        # process_files(parsed_data, files_dict, 'strings', strings, projectAllVariables['strings'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['strings']), 'strings-processing')),
-        # process_files(parsed_data, files_dict, 'comments', comments, projectAllVariables['comments'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['comments']), 'comments-processing')),
-        # process_files(parsed_data, files_dict, 'sinks', sinks, projectAllVariables['sinks'], ProgressTracker(len(parsed_data) * len(parsed_data[list(parsed_data.keys())[0]]['sinks']), 'sinks-processing'))
-    )
+    variables = process_files(parsed_data, files_dict, 'variables'),
 
-    # Combine all data into a single dictionary
-    all_data = {
-        'variables': variables,
-        # 'strings': strings,
-        # 'comments': comments,
-        # 'sinks': sinks
-
-    }
-
-    thresholds = {
-        'variables': 0.7,
-        'strings': 0.95,
-        'comments': 0.95,
-        'sinks': 0.99 
-    }
 
     final_results = {}
 
+    print("Predicting data")
+    await process_data_type('variables', variables, final_results, model_path)
+
     # Process each type of data concurrently
-    await asyncio.gather(
-        *[process_data_type(data_type, data_list, projectAllVariables, final_results, thresholds.get(data_type), model_path) for data_type, data_list in all_data.items()]
-    )
+    # await asyncio.gather(
+    #     *[process_data_type(data_type, data_list, projectAllVariables, final_results, thresholds.get(data_type), model_path) for data_type, data_list in all_data.items()]
+    # )
+    print("Predicting data done")
+
 
     # Format results as JSON
     formatted_results = [{"fileName": file_name, **details} for file_name, details in final_results.items()]
