@@ -20,6 +20,16 @@ from collections import deque
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
 
+# Constants
+BATCH_SIZE = 32
+EPOCHS = 500
+DIM = 768
+NUM_CLASSES = 14  # Including non-sink
+
+# Initialize lemmatizer
+lemmatizer = WordNetLemmatizer()
+model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+
 # Ensure the necessary NLTK data packages are downloaded
 packages = ['punkt', 'averaged_perceptron_tagger', 'wordnet', 'stopwords']
 def check_and_download_nltk_data(package):
@@ -45,17 +55,6 @@ thresholds = {
     'comments': 0.95,
     'sinks': 0.99 
 }
-
-# Constants
-BATCH_SIZE = 32
-EPOCHS = 500
-DIM = 768
-NUM_CLASSES = 14  # Including non-sink
-
-# Initialize lemmatizer
-lemmatizer = WordNetLemmatizer()
-model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
-
 
 # Sink Type Mapping
 sink_type_mapping = {
@@ -135,26 +134,6 @@ def list_to_string(lst):
 def concat_name_and_context(name_vec, context_vec):
     return [np.concatenate((name_vec[idx], context_vec[idx]), axis=None) for idx in range(len(name_vec))]
 
-class ProgressTracker:
-    def __init__(self, total_steps, progress_type):
-        self.total_steps = total_steps
-        self.current_progress = 0
-        self.progress_type = progress_type
-        self.last_progress_percentage = -1  # Keep track of the last printed progress percentage
-
-    def update_progress(self, step_increment):
-        if self.total_steps > 0:
-            self.current_progress += step_increment
-            progress_percentage = min(round((self.current_progress / self.total_steps) * 100), 100)
-            if progress_percentage != self.last_progress_percentage:  # Only print if the percentage has changed
-                print(json.dumps({'type': self.progress_type, 'progress': progress_percentage}), flush=True)
-                self.last_progress_percentage = progress_percentage  # Update the last progress percentage
-        else:
-            print(json.dumps({'type': self.progress_type, 'progress': 100}))
-
-    def complete(self):
-        self.current_progress = self.total_steps
-        print(json.dumps({'type': self.progress_type, 'progress': 100}))
 
 # Process files to extract relevant information and context
 def process_files(data, files_dict, data_type):
@@ -162,9 +141,10 @@ def process_files(data, files_dict, data_type):
     total_progress = sum(len(data[file_name][data_type]) for file_name in data)
     progress_tracker = ProgressTracker((total_progress), f"{data_type}-processing")
 
-    # Process each file and extract relevant information
-    output = deque()
-    temp = 0 
+    # Preallocate the list with the required size
+    output = [None] * total_progress
+    index = 0  # To keep track of the current index in the preallocated list
+
     for file_name in data:
         items = data[file_name][data_type]
         for item in items:
@@ -173,32 +153,32 @@ def process_files(data, files_dict, data_type):
 
                 if data_type == 'variables':
                     context = get_context(files_dict[file_name], item)
-                    # output.append((file_name, preprocessed_item, context))
+                    output[index] = (file_name, preprocessed_item, context)
 
                 elif data_type == 'strings':
                     if len(preprocessed_item) == 0:
                         context = ""
                     else:
                         context = get_context_str(files_dict[file_name], item)
-                    output.append((file_name, preprocessed_item, context))
+                    output[index] = (file_name, preprocessed_item, context)
 
                 elif data_type == 'comments':
                     context = get_context(files_dict[file_name], item)
-                    output.append((file_name, preprocessed_item))
+                    output[index] = (file_name, preprocessed_item)
 
                 elif data_type == 'sinks': 
                     context = get_context(files_dict[file_name], item)
-                    output.append((file_name, preprocessed_item, context))
+                    output[index] = (file_name, preprocessed_item, context)
 
-                projectAllVariables['variables'].append([file_name, item])
+                projectAllVariables[data_type].append([file_name, item])
+                index += 1  # Move to the next position in the preallocated list
 
             except Exception as e:
                 print(f"Error processing file {file_name} and {data_type[:-1]} {item}: {e}")
-            temp += 1
             progress_tracker.update_progress(1)
-    print(total_progress)
-    print(temp)
-    return list(output)
+
+    return output
+
 
 
 # Get the context of a variable within a file
@@ -245,6 +225,19 @@ async def read_parsed_data(file_path):
     except Exception as e:
         print(f"Failed to read parsed data from {file_path}: {e}")
         pass
+
+def filter_parsed_data(parsed_data, files_dict):
+    # Create a set of keys from files_dict for fast lookups
+    files_dict_keys = set(files_dict.keys())
+
+    # Loop through parsed_data and remove any items not present in files_dict
+    keys_to_remove = [key for key in parsed_data if key not in files_dict_keys]
+
+    # Remove the keys from parsed_data
+    for key in keys_to_remove:
+        del parsed_data[key]
+
+    return parsed_data
 
 # Load stop words
 stop_words = load_stop_words()
@@ -318,9 +311,11 @@ async def main():
     files_dict = await read_java_files(project_path)
     parsed_data = await read_parsed_data(parsed_data_file_path)
 
+    # In case a file can't be found in the directory, remove it from the parsed data
+    parsed_data = filter_parsed_data(parsed_data, files_dict)
+
     print(len(parsed_data))
     print(len(files_dict))
-
 
     print("processing files")
     # Process files to extract variables, strings, comments, and sinks concurrently
@@ -331,11 +326,6 @@ async def main():
 
     print("Predicting data")
     await process_data_type('variables', variables, final_results, model_path)
-
-    # Process each type of data concurrently
-    # await asyncio.gather(
-    #     *[process_data_type(data_type, data_list, projectAllVariables, final_results, thresholds.get(data_type), model_path) for data_type, data_list in all_data.items()]
-    # )
     print("Predicting data done")
 
 
@@ -345,6 +335,28 @@ async def main():
     # Write results to a JSON file asynchronously
     async with aiofiles.open(os.path.join(project_path, 'data.json'), 'w') as f:
         await f.write(json.dumps(formatted_results, indent=4))
+
+class ProgressTracker:
+    def __init__(self, total_steps, progress_type):
+        self.total_steps = total_steps
+        self.current_progress = 0
+        self.progress_type = progress_type
+        self.last_progress_percentage = -1  # Keep track of the last printed progress percentage
+
+    def update_progress(self, step_increment):
+        if self.total_steps > 0:
+            self.current_progress += step_increment
+            progress_percentage = min(round((self.current_progress / self.total_steps) * 100), 100)
+            if progress_percentage != self.last_progress_percentage:  # Only print if the percentage has changed
+                print(json.dumps({'type': self.progress_type, 'progress': progress_percentage}), flush=True)
+                self.last_progress_percentage = progress_percentage  # Update the last progress percentage
+        else:
+            print(json.dumps({'type': self.progress_type, 'progress': 100}))
+
+    def complete(self):
+        self.current_progress = self.total_steps
+        print(json.dumps({'type': self.progress_type, 'progress': 100}))
+
 
 if __name__ == '__main__':
     asyncio.run(main())
