@@ -35,6 +35,7 @@ export class BertService {
     async getParsedResults(filePaths: string[]) {
         const total = filePaths.length;
         let completed = 0;
+        let previousProgress = 0;
     
         // Limit the number of concurrent tasks
         const concurrencyLimit = 8; // Adjust based on your system's capabilities
@@ -50,9 +51,15 @@ export class BertService {
                 results[path.basename(result.filename)] = result;
     
                 completed += 1;
+                
                 const progressPercent = Math.floor((completed / total) * 100);
-                console.log(`Parsing progress: ${progressPercent}%`);
-                this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
+                if (progressPercent !== previousProgress) {
+                    previousProgress = progressPercent;
+                    console.log(`Parsing progress: ${progressPercent}%`);
+                    this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
+                }
+                // console.log(`Parsing progress: ${progressPercent}%`);
+                // this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
             }
         });
     

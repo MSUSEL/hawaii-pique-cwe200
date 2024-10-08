@@ -322,7 +322,7 @@ export class FileUtilService {
                     const result: JavaParseResult = JSON.parse(stdout);
                     resolve(result);
                 } catch (e) {
-                    console.error(`Failed to parse JSON: ${e}`);
+                    // console.error(`Failed to parse JSON: ${e}`);
                     resolve({
                         filename: path.basename(filePath),
                         variables: [],
