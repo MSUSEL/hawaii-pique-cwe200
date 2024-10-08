@@ -37,9 +37,15 @@
  
    // Track sensitive variables as the source in State1
    override predicate isSource(DataFlow::Node source, DataFlow::FlowState state) {
-     state instanceof State1 and
-     exists(SensitiveVariableExpr sve | sve = source.asExpr())
-   }
+    state instanceof State1 and
+    exists(SensitiveVariableExpr sve |
+      source.asExpr() = sve and
+      (
+       sve.toString() != "e" and
+       sve.toString() != "ex"
+      )
+    )
+  }
  
    // Track sinks like `println`, `sendError`, etc. in State3
    override predicate isSink(DataFlow::Node sink, DataFlow::FlowState state) {

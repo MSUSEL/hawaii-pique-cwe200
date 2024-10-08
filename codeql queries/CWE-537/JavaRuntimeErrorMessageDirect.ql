@@ -20,10 +20,17 @@
  import Flow::PathGraph
  
  module RuntimeSensitiveInfoExposureConfig implements DataFlow::ConfigSig {
-   predicate isSource(DataFlow::Node source) {
-     exists(SensitiveVariableExpr sve | source.asExpr() = sve)
-   }
+  predicate isSource(DataFlow::Node source) {
+    exists(SensitiveVariableExpr sve |
+      source.asExpr() = sve and
+      (
+        sve.toString() != "e" and
+        sve.toString() != "ex"
+       )
+    )
+  }
  
+  
    predicate isSink(DataFlow::Node sink) {
      // Consider the case where the sink exposes sensitive info within a catch clause of type RuntimeException
      exists(MethodCall mc, CatchClause cc |

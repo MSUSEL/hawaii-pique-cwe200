@@ -15,17 +15,7 @@
  import DataFlow::PathGraph
  import SensitiveInfo.SensitiveInfo
  import CommonSinks.CommonSinks
- 
- // Define sensitive variables
-//  class SensitiveVariable extends VarAccess {
-//    SensitiveVariable() {
-//      this.getVariable().getName() = "username" or
-//      this.getVariable().getName() = "email" or
-//      this.getVariable().getName() = "password" or
-//      this.getVariable().getName() = "apiKey"
-//    }
-//  }
- 
+  
  // Define flow states
  class State1 extends DataFlow::FlowState { State1() { this = "State1" } }
  class State2 extends DataFlow::FlowState { State2() { this = "State2" } }
@@ -37,9 +27,15 @@
  
    // Track sensitive variables as the source in State1
    override predicate isSource(DataFlow::Node source, DataFlow::FlowState state) {
-     state instanceof State1 and
-     exists(SensitiveVariableExpr sve | sve = source.asExpr())
-   }
+    state instanceof State1 and
+    exists(SensitiveVariableExpr sve |
+      source.asExpr() = sve and
+      (
+       sve.toString() != "e" and
+       sve.toString() != "ex"
+      )
+    )
+  }
  
    // Track sinks like `println`, `sendError`, etc. in State3
    override predicate isSink(DataFlow::Node sink, DataFlow::FlowState state) {
