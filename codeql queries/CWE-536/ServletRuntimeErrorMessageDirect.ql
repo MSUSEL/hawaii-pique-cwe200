@@ -23,12 +23,7 @@
  
  module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
    predicate isSource(DataFlow::Node source) {
-     exists(SensitiveVariableExpr sve | source.asExpr() = sve and
-     (
-      sve.toString() != "e" and
-      sve.toString() != "ex"
-     )
-     )
+     exists(SensitiveVariableExpr sve | source.asExpr() = sve)
    }
  
    predicate isSink(DataFlow::Node sink) {

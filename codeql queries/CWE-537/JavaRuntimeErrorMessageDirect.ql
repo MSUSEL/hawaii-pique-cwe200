@@ -22,11 +22,7 @@
  module RuntimeSensitiveInfoExposureConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source) {
     exists(SensitiveVariableExpr sve |
-      source.asExpr() = sve and
-      (
-        sve.toString() != "e" and
-        sve.toString() != "ex"
-       )
+      source.asExpr() = sve
     )
   }
  
