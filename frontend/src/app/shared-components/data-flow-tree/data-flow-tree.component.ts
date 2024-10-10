@@ -39,17 +39,27 @@ export class DataFlowTreeComponent implements OnInit {
 
   // Handle node click to navigate to the relevant file and line in the editor
   onNodeClick(node: FlowNode): void {
-    // console.log('Node clicked:', node);
+    console.log('Node clicked:', node);
 
-    // Construct an ItemFlatNode with the necessary properties
+    // Split the file path and extract the project name from the 0th index
+    const pathComponents = node.uri.split(/[/\\]+/);
+    const projectName = pathComponents[0];  // Always use the first component as the project name
+
+    // Normalize the full path, adding the dynamically extracted project name
+    let fullPath = node.uri;
+    if (!fullPath.startsWith('Files/')) {
+        fullPath = `Files/${projectName}/${fullPath}`;
+    }
+
+    // Create the file node object for the editor
     const fileNode: ItemFlatNode = {
-      name: node.uri.split(/[/\\]+/).pop(),      
-      fullPath: node.uri,
-      level: 0,  // Set the appropriate level if needed
-      type: 'file',  // Set the type (you can adjust this if needed)
+      name: fullPath.split(/[/\\]+/).pop(),  // Extract the filename
+      fullPath: fullPath,  // Full path including "Files/<projectName>/"
+      level: 0,  // Set level if needed
+      type: 'file',  // The type, in this case, is 'file'
       expandable: false,  // Files aren't expandable
       code: '',  // Empty code as it's loaded dynamically
-      region: {  // Set the region for scrolling
+      region: {  // Pass region for scrolling
         startLine: node.Line,
         startColumn: node.Column,
         endLine: node.Line,
@@ -57,8 +67,7 @@ export class DataFlowTreeComponent implements OnInit {
       }
     };
 
-
-    // Call findFile from the editor service to open the file at the correct line and column
+    // Pass the normalized file node to the editor service
     this.editorService.findFile(fileNode);
-  }
+ }
 }

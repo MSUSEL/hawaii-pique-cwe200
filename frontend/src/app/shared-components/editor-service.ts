@@ -30,7 +30,10 @@ export class EditorService {
 
     // Method to find the file in the opened files or open it if it's not
     findFile(node: ItemFlatNode) {
-        let file = this.openedFiles.find((item) => item.fullPath == node.fullPath);
+
+        const normalizedFullPath = this.correctPath(node.fullPath);
+
+        let file = this.openedFiles.find((item) => item.fullPath == normalizedFullPath);
         let line = node.region?.startLine;
         let column = node.region?.startColumn;
 
@@ -43,8 +46,8 @@ export class EditorService {
                 this.scrollToLine(line, column); // Scroll to the specified line and column
             }
         } else {
-            this.fileService.getFileContents({ filePath: node.fullPath }).subscribe((response) => {
-                this.activeFile = new SourceFile(node.name, node.fullPath, response.code);
+            this.fileService.getFileContents({ filePath: normalizedFullPath }).subscribe((response) => {
+                this.activeFile = new SourceFile(node.name, normalizedFullPath, response.code);
                 this.openedFiles.push(this.activeFile);
                 this.fileChangedEventEmitter();
                 if (line && column) {
@@ -74,4 +77,20 @@ export class EditorService {
             file.editorInstance = editorInstance; // Attach the editor instance to the file
         }
     }
+
+    correctPath(filePath: string): string {
+        // Replace backslashes with forward slashes
+        filePath = filePath.replace(/\\/g, '/');
+    
+        // Extract project name dynamically using the first component of the path
+        const pathComponents = filePath.split(/[/\\]+/);
+        const projectName = pathComponents[0];  // Always use the first component as the project name
+    
+        if (!filePath.startsWith('Files/')) {
+            filePath = `Files/${projectName}/${filePath}`;
+        }
+    
+        return filePath;
+    }
+    
 }
