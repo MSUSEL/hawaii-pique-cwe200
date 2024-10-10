@@ -163,3 +163,8 @@
 .clear:hover {
     color: #f50000;
 }
+
+.highlight-line {
+    background-color: rgba(255, 255, 0, 0.3) !important;  /* Light yellow highlight */
+    // border-left: 3px solid rgba(255, 200, 0, 1) !important;
+}

@@ -112,8 +112,9 @@ export class RuleTreeComponent extends RuleTree implements OnInit, OnChanges {
     findFile(node: any) {
         // Find the file in the editor
         this.editorService.findFile(node);
-        console.log('Node clicked in rule:', node);
         this.dataFlowService.findFlow(node)
+        console.log('Node clicked in rule:', node);
+
 
         // Emit the selected node
         this.nodeSelected.emit(node);

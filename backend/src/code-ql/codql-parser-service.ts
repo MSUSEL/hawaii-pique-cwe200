@@ -50,7 +50,7 @@ export class CodeQlParserService {
                 const startLine = physicalLocation.region.startLine;
                 const startColumn = physicalLocation.region.startColumn;
                 const endColumn = physicalLocation.region.endColumn;
-                const endLine = physicalLocation.region.endLine;
+                const endLine = physicalLocation.region.endLine || startLine;
     
                 // Create a key-value pair for this location
                 flowMap[flowIndex] = {
@@ -224,4 +224,5 @@ export interface Region {
     startLine: number;
     startColumn: number;
     endColumn: number;
+    endLine: number;
   }

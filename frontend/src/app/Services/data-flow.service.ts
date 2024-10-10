@@ -60,8 +60,10 @@ export class DataFlowService {
     return Object.keys(data).map(key => ({
       message: `${data[key].message}`,
       uri: data[key].uri,
-      Line: data[key].Line,
-      Column: data[key].Column
+      startLine: data[key].startLine,
+      startColumn: data[key].startColumn,
+      endColumn: data[key].endColumn,
+      endLine: data[key].endLine
     }));
   }
 

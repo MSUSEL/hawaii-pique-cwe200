@@ -6,8 +6,10 @@ import { ItemFlatNode } from 'src/app/shared-components/tree/tree.component'; //
 export interface FlowNode {
   message: string;  // The message to display
   uri: string;      // The file URI (not displayed, but kept for navigation)
-  Line: number;     // The line number (not displayed, but kept for navigation)
-  Column: number;   // The column number (not displayed, but kept for navigation)
+  startLine: number;     // The line number (not displayed, but kept for navigation)
+  startColumn: number;
+  endColumn: number;   // The column number (not displayed, but kept for navigation)
+  endLine: number;
 }
 
 @Component({
@@ -60,10 +62,10 @@ export class DataFlowTreeComponent implements OnInit {
       expandable: false,  // Files aren't expandable
       code: '',  // Empty code as it's loaded dynamically
       region: {  // Pass region for scrolling
-        startLine: node.Line,
-        startColumn: node.Column,
-        endLine: node.Line,
-        endColumn: node.Column
+        startLine: node.startLine,
+        startColumn: node.startColumn,
+        endLine: node.endLine,
+        endColumn: node.endColumn
       }
     };
 
