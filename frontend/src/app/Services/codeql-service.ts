@@ -20,14 +20,11 @@ export class CodeQlService {
         return this.http.get(this.url, { params });
     }
 
-    getDataFlowTree(vulnerabilityId: string, project: string, region: Region): Observable<any> {
+    getDataFlowTree(vulnerabilityId: string, project: string, index: string): Observable<any> {
         const params = new HttpParams()
             .set('vulnerabilityId', vulnerabilityId)
             .set('project', project)
-            .set('startLine', region.startLine.toString())
-            .set('startColumn', region.startColumn.toString())
-            .set('endColumn', region.endColumn.toString());
-
+            .set('index', index);
             console.log(this.http.get(this.url + 'vulnerabilityTree'))
     
         return this.http.get(this.url + 'vulnerabilityTree', { params });

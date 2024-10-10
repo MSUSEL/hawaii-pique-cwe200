@@ -24,6 +24,7 @@ export interface CodeQlNode {
     message: string;
     region: any;
     location: any;
+    index: string;
 }
 
 export class RuleFlatNode {
@@ -35,6 +36,7 @@ export class RuleFlatNode {
     expandable: boolean;
     size: number = 0;
     location: string;
+    index: string;
 }
 
 @Directive()
@@ -75,7 +77,8 @@ export class RuleTree {
             fullPath: node.fullPath ? node.fullPath : '',
             size: node.files ? node.files.length : 0,
             region: node.region,
-            location: node.location
+            location: node.location,
+            index: node.index
         };
     };
 }

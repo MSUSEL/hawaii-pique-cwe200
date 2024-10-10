@@ -18,34 +18,22 @@ export class CodeQlParserService {
         return {rulesTree,locationsTree};
     }
 
-    async getDataFlowTree(filePath: string, project: string, region: Region) {
+    async getDataFlowTree(filePath: string, project: string, index: string) {
         var sarifPath = path.join(project, 'result.sarif');
         var data = await this.fileService.readJsonFile(sarifPath);
-        var results = data.runs[0].results;
-        var locations = results[0].locations[0].physicalLocation.artifactLocation.uri;
-
-
-        // Find the result that matches the file path, and location
-        var filteredResults = results.filter((result) => 
-            result.locations[0].physicalLocation.artifactLocation.uri == filePath &&
-            result.locations[0].physicalLocation.region.startLine == region.startLine && 
-            result.locations[0].physicalLocation.region.startColumn == region.startColumn && 
-            result.locations[0].physicalLocation.region.endColumn == region.endColumn
-        );
-
-        // Check if the result has a code flow
-        if (filteredResults[0].codeFlows) {
-            // If it does, extract the code flow and build a data flow map
-            var codeFlows = filteredResults[0].codeFlows[0].threadFlows[0].locations;
+        var result = data.runs[0].results[index]; 
+    
+        try {
+            // Try to access codeFlows
+            var codeFlows = result.codeFlows[0].threadFlows[0].locations;
             const FlowMap = this.buildDataFlowMap(codeFlows);
             return FlowMap;
-        }
-
-        else{
-            // Return an empty object if the result does not have a code flow
+        } catch (error) {
+            // Return an empty object if there is are codeFlows for the given result
             return {};
         }
     }
+    
 
     buildDataFlowMap(codeFlows: any[]): { [key: number]: FlowNode } {
         const flowMap: { [key: number]: FlowNode } = {};
@@ -83,25 +71,33 @@ export class CodeQlParserService {
     parseRules(rules: any[], results: any[], sourcePath: string) {
         const rulesMap = new Map();
         const fileMap = new Map();  // Map to track files and their associated rules
+        let overallIndex = 0;  // To track the index across all results
     
         for (let i = 0; i < rules.length; i++) {
             let rule = rules[i];
             let ruleKey = `CWE-${rule.id.split("/").pop()}`;
     
+            // Filter results based on ruleIndex
             var files = results
                 .filter((item) => item.ruleIndex == i)
-                .map((file) => ({
-                    name: this.fileService.getFilenameFromPath(
-                        file.locations[0]?.physicalLocation.artifactLocation.uri,
-                ),
-                    fullPath: this.correctPath(this.fileService.processFilePath(
-                        sourcePath,
-                        file.locations[0]?.physicalLocation.artifactLocation.uri),
-                    ),
-                    message: file.message.text,
-                    region: file.locations[0]?.physicalLocation.region,
-                    location: file.locations[0]?.physicalLocation.region.startLine.toString(),
-                }))
+                .map((file) => {
+                    const mappedFile = {
+                        name: this.fileService.getFilenameFromPath(
+                            file.locations[0]?.physicalLocation.artifactLocation.uri
+                        ),
+                        fullPath: this.correctPath(this.fileService.processFilePath(
+                            sourcePath,
+                            file.locations[0]?.physicalLocation.artifactLocation.uri
+                        )),
+                        message: file.message.text,
+                        region: file.locations[0]?.physicalLocation.region,
+                        location: file.locations[0]?.physicalLocation.region.startLine.toString(),
+                        index: overallIndex.toString(),  // Set the index over all results
+                    };
+    
+                    overallIndex++;  // Increment after each result is processed
+                    return mappedFile;
+                })
                 .filter(file => {
                     // Construct a unique identifier for the file based on its location and line
                     const fileIdentifier = `${file.fullPath}:${file.region.startLine}`;
@@ -135,6 +131,8 @@ export class CodeQlParserService {
         // Convert the Map values to an array since the final result expects an array
         return Array.from(rulesMap.values());
     }
+    
+    
     
     
     

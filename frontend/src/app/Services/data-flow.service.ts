@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CodeQlService } from './codeql-service'; // Assuming this is where your CodeQl API calls are
 
 @Injectable({
   providedIn: 'root',
@@ -10,34 +11,30 @@ export class DataFlowService {
   // Expose the observable
   public dataFlowChangeObservable = this.dataFlowChange.asObservable();
 
+  constructor(private codeQlService: CodeQlService) {}
+
   // Method to update the data flow
   findFlow(node: any) {
     console.log(JSON.stringify(node, null, 2));  // Pretty print the node object
     const pathComponents: string[] = node.fullPath.split(/[/\\]+/);
-    const project = pathComponents[1];
-    const vulnerabilityId = node.fullPath;
-    const region = node.region;
+    const project = pathComponents[1]; // Extract project from path
+    const vulnerabilityId = node.fullPath; // Use the full path as the vulnerability ID
+    const region = node.region; // Get the region from the node
 
-    // Commenting out the real API call for now and using dummy data for testing
-    /*
-    this.codeQlService.getDataFlowTree(vulnerabilityId, project, region)  // Call the CodeQlService method
-      .pipe(
-        map(response => {
-          console.log('Vulnerability Tree Response:', response);
-          return response;  // Process the response as needed
-        })
-      )
+    // Call the CodeQlService to get the data flow tree
+    this.codeQlService.getDataFlowTree(vulnerabilityId, project, node.index)
       .subscribe({
         next: (data) => {
-          this.dataFlowChange.next(data);  // Update the data flow with the API response
+          console.log('Vulnerability Tree Response:', data);
+          this.dataFlowChange.next(this.convertDataToTree(data));  // Update the data flow with the real data
         },
         error: (error) => {
           console.error('Error fetching data flow:', error);
         }
       });
-    */
 
-    // Dummy data for testing
+    // Dummy data for testing (commented out)
+    /*
     const dummyData = {
       "0": {
         "message": "doFinal(...) : byte[]",
@@ -55,9 +52,21 @@ export class DataFlowService {
 
     // Simulating an API response with dummy data
     this.dataFlowChange.next(this.convertDummyDataToTree(dummyData));  // Update the data flow with dummy data
+    */
   }
 
-  // Helper function to format the dummy data into the tree structure expected by the component
+  // Helper function to format the real data into the tree structure expected by the component
+  private convertDataToTree(data: any) {
+    return Object.keys(data).map(key => ({
+      message: `${data[key].message}`,
+      uri: data[key].uri,
+      Line: data[key].Line,
+      Column: data[key].Column
+    }));
+  }
+
+  // Helper function for dummy data (commented out)
+  /*
   private convertDummyDataToTree(data: any) {
     return Object.keys(data).map(key => ({
       message: `${data[key].message}`,
@@ -66,4 +75,5 @@ export class DataFlowService {
       Column: data[key].Column
     }));
   }
+  */
 }

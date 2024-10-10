@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DataFlowService } from 'src/app/Services/data-flow.service'; 
+import { DataFlowService } from 'src/app/Services/data-flow.service';
+import { EditorService } from 'src/app/shared-components/editor-service';  // Import the EditorService
+import { ItemFlatNode } from 'src/app/shared-components/tree/tree.component'; // Import ItemFlatNode
 
 export interface FlowNode {
   message: string;  // The message to display
@@ -18,7 +20,10 @@ export class DataFlowTreeComponent implements OnInit {
   hoveredIndex: number = -1;  // Track hovered item
   isSubscribed: boolean = false;
 
-  constructor(private dataFlowService: DataFlowService) {}
+  constructor(
+    private dataFlowService: DataFlowService,
+    private editorService: EditorService  // Inject the EditorService
+  ) {}
 
   ngOnInit(): void {
     // Subscribe to the data flow change observable and update the tree
@@ -32,14 +37,28 @@ export class DataFlowTreeComponent implements OnInit {
     }
   }
 
-  // Handle node click to eventually navigate to the relevant file and line
+  // Handle node click to navigate to the relevant file and line in the editor
   onNodeClick(node: FlowNode): void {
-    console.log('Node clicked:', node);
-    this.navigateToCode(node.uri, node.Line, node.Column);
-  }
+    // console.log('Node clicked:', node);
 
-  navigateToCode(uri: string, line: number, column: number): void {
-    console.log(`Navigating to file: ${uri}, Line: ${line}, Column: ${column}`);
-    // Logic to navigate to file and line in code editor (e.g., using a service)
+    // Construct an ItemFlatNode with the necessary properties
+    const fileNode: ItemFlatNode = {
+      name: node.uri.split(/[/\\]+/).pop(),      
+      fullPath: node.uri,
+      level: 0,  // Set the appropriate level if needed
+      type: 'file',  // Set the type (you can adjust this if needed)
+      expandable: false,  // Files aren't expandable
+      code: '',  // Empty code as it's loaded dynamically
+      region: {  // Set the region for scrolling
+        startLine: node.Line,
+        startColumn: node.Column,
+        endLine: node.Line,
+        endColumn: node.Column
+      }
+    };
+
+
+    // Call findFile from the editor service to open the file at the correct line and column
+    this.editorService.findFile(fileNode);
   }
 }

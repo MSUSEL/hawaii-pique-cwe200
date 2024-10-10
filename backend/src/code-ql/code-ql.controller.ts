@@ -38,16 +38,11 @@ export class CodeQlController {
     async getDataFlowTree(
         @Query('vulnerabilityId') vulnerabilityId: string, 
         @Query('project') project: string, 
-        @Query('startLine') startLine: number, 
-        @Query('startColumn') startColumn: number, 
-        @Query('endColumn') endColumn: number
+        @Query('index') index: string
+
     ) {
-        const region = {
-            startLine,
-            startColumn,
-            endColumn
-        };
-        return await this.codeQlService.getDataFlowTree(vulnerabilityId, project, region);
+    
+        return await this.codeQlService.getDataFlowTree(vulnerabilityId, project, index);
     }
     
 }

@@ -29,14 +29,21 @@ export class ItemNode {
         this.children=children;
     }
 }
+export interface Region {
+    startLine: number;
+    startColumn: number;
+    endLine: number;
+    endColumn: number;
+}
 
 export class ItemFlatNode {
     name: string;
     level: number;
-    type:string;
-    fullPath:string;
+    type: string;
+    fullPath: string;
     expandable: boolean;
-    code:string='';
+    code: string = '';
+    region?: Region;  // Adding region property
 }
 @Directive()
 export class Tree {
