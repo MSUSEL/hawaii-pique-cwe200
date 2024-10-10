@@ -18,6 +18,68 @@ export class CodeQlParserService {
         return {rulesTree,locationsTree};
     }
 
+    async getDataFlowTree(filePath: string, project: string, region: Region) {
+        var sarifPath = path.join(project, 'result.sarif');
+        var data = await this.fileService.readJsonFile(sarifPath);
+        var results = data.runs[0].results;
+        var locations = results[0].locations[0].physicalLocation.artifactLocation.uri;
+
+
+        // Find the result that matches the file path, and location
+        var filteredResults = results.filter((result) => 
+            result.locations[0].physicalLocation.artifactLocation.uri == filePath &&
+            result.locations[0].physicalLocation.region.startLine == region.startLine && 
+            result.locations[0].physicalLocation.region.startColumn == region.startColumn && 
+            result.locations[0].physicalLocation.region.endColumn == region.endColumn
+        );
+
+        // Check if the result has a code flow
+        if (filteredResults[0].codeFlows) {
+            // If it does, extract the code flow and build a data flow map
+            var codeFlows = filteredResults[0].codeFlows[0].threadFlows[0].locations;
+            const FlowMap = this.buildDataFlowMap(codeFlows);
+            return FlowMap;
+        }
+
+        else{
+            // Return an empty object if the result does not have a code flow
+            return {};
+        }
+    }
+
+    buildDataFlowMap(codeFlows: any[]): { [key: number]: FlowNode } {
+        const flowMap: { [key: number]: FlowNode } = {};
+    
+        codeFlows.forEach((codeFlow, flowIndex) => {
+            console.log(`Processing Code Flow #${flowIndex + 1}`);
+    
+            // Assuming each codeFlow is directly a location
+            const location = codeFlow.location;
+            if (location) {
+                const message = location.message.text;
+                const physicalLocation = location.physicalLocation;
+                const uri = physicalLocation.artifactLocation.uri;
+                const startLine = physicalLocation.region.startLine;
+                const startColumn = physicalLocation.region.startColumn;
+                const endColumn = physicalLocation.region.endColumn;
+                const endLine = physicalLocation.region.endLine;
+    
+                // Create a key-value pair for this location
+                flowMap[flowIndex] = {
+                    message: message,
+                    uri: uri,
+                    startLine: startLine,
+                    startColumn: startColumn,
+                    endColumn: endColumn,
+                    endLine: endLine,
+                };    
+            }
+        });
+    
+        return flowMap;
+    }
+    
+
     parseRules(rules: any[], results: any[], sourcePath: string) {
         const rulesMap = new Map();
         const fileMap = new Map();  // Map to track files and their associated rules
@@ -150,3 +212,18 @@ const cweDescriptions = new Map([
     ["CWE-615", "Inclusion of Sensitive Information in Source Code Comments"],
     ["CWE-651", "Exposure of WSDL File Containing Sensitive Information"],
 ]);
+
+export interface FlowNode {
+    message: string
+    uri: string,
+    startLine: string,
+    startColumn: string,
+    endColumn: string,
+    endLine: string,
+}
+
+export interface Region {
+    startLine: number;
+    startColumn: number;
+    endColumn: number;
+  }

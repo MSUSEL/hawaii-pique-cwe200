@@ -4,6 +4,8 @@ import { exec, spawn } from 'child_process';
 import { CodeQlParserService } from './codql-parser-service';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as os from 'os';
+
 import { ConfigService } from '@nestjs/config';
 import { ChatGptService } from 'src/chat-gpt/chat-gpt.service';
 import { SensitiveVariablesContents } from './data';
@@ -13,7 +15,8 @@ import { SensitiveStrings } from './SensitiveStrings';
 import { Sinks } from './Sinks';
 import { BertService } from 'src/bert/bert.service';
 import { LLMService } from 'src/llm/llm.service';
-import os from 'os';
+import { Region } from './codql-parser-service';
+import { FlowNode } from './codql-parser-service';
 
 import { EventsGateway } from 'src/events/events.gateway';
 @Injectable()
@@ -375,6 +378,9 @@ export class CodeQlService {
         const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
         const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
         const threads = 12;
+        const totalMemoryMB = os.totalmem() / (1024 * 1024);  // Total system memory in MB
+        const ramAllocationMB = Math.floor(totalMemoryMB * 0.8);  // 80% of total memory
+
         // This is for building the db and running the slicing query
         if (slicing){
         // Remove previous database if it exists
@@ -385,7 +391,7 @@ export class CodeQlService {
         console.log(createDbCommand);
         await this.runChildProcess(createDbCommand);
 
-        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --max-paths=10 --sarif-add-snippets=true --threads=${threads}`;
+        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --max-paths=1 --sarif-add-snippets=true --threads=${threads} --ram=${ramAllocationMB}`;
         await this.runChildProcess(analyzeDbCommand);
 
         // This is for running all of the queries
@@ -419,7 +425,7 @@ export class CodeQlService {
             const queryList = queriesToRun.join(' ');
             
             // Build the command with the filtered list of queries
-            const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryList} --threads=${threads}`;
+            const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryList} --threads=${threads} --ram=${ramAllocationMB}`;
             await this.runChildProcess(analyzeDbCommand);
         }
 
@@ -435,6 +441,10 @@ export class CodeQlService {
         return await this.parserService.getSarifResults(sourcePath);
     }
 
+    async getDataFlowTree(vulnerabilityId: string, project: string, region: Region) {
+        console.log('In getDataFlowTree');
+        const sourcePath = path.join(this.projectsPath, project);
+        return await this.parserService.getDataFlowTree(vulnerabilityId, sourcePath, region);
+    }
 }
-
 
