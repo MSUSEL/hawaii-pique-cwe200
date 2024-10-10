@@ -1,8 +1,9 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { Output, EventEmitter } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';  // Import these
 import { CodeQlService } from 'src/app/Services/codeql-service';
+
 
 interface FlowNode {
   name: string;
@@ -27,8 +28,8 @@ export class DataFlowTreeComponent implements OnInit {
     treeControl: FlatTreeControl<FlatFlowNode>;
     treeFlattener: MatTreeFlattener<FlowNode, FlatFlowNode>;
     dataSource: MatTreeFlatDataSource<FlowNode, FlatFlowNode>;
-
-    constructor(private codeQlService: CodeQlService) {
+  
+    constructor() {
       this.treeFlattener = new MatTreeFlattener(
         this.transformer,
         (node) => node.level,
@@ -60,18 +61,12 @@ export class DataFlowTreeComponent implements OnInit {
     hasChild = (_: number, node: FlatFlowNode) => node.expandable;
 
     onNodeClick(node: FlowNode) {
-        this.nodeClicked.emit(node.name); // Emit the node name when clicked
+        // if (node.filePath) {
+        //     this.nodeClicked.emit(node.filePath); // Emit the filePath when clicked
+        // }
     }
-
-    getResults(node: any) {
-        // Call the CodeQL Service to fetch the data flow for the selected node
-        const project = 'your_project_name'; // Add your project name here or pass it from the component using this
-        this.codeQlService.getVulnerabilityTree(node.fullPath, project)
-            .subscribe((response: FlowNode[]) => {
-                this.treeData = response;  // Update the treeData with the response
-                this.dataSource.data = this.treeData;  // Update the data source
-            }, error => {
-                console.error('Error fetching data flow tree:', error);
-            });
+    getResults(node: FlowNode) {
+    
     }
-}
+  }
+  
