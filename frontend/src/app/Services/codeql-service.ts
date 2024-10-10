@@ -19,4 +19,12 @@ export class CodeQlService {
         const params = new HttpParams().set('project', project);
         return this.http.get(this.url, { params });
     }
+
+    getVulnerabilityTree(vulnerabilityId: string, project: string): Observable<any> {
+        const params = new HttpParams()
+            .set('vulnerabilityId', vulnerabilityId)
+            .set('project', project);  // Adding the project parameter
+    
+        return this.http.get(this.url + 'vulnerabilityTree', { params });
+    }
 }

@@ -6,10 +6,14 @@ import { CodeEditorComponent, TerminalComponent } from './code-editor/code-edito
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { FormsModule } from '@angular/forms';
 import { LocationsTreeComponent, RuleTreeComponent } from './tree/codeql-tree';
+import { DataFlowTreeComponent } from './data-flow-tree/data-flow-tree.component';
+import { MatTreeModule } from '@angular/material/tree';
+import { CdkTreeModule } from '@angular/cdk/tree';
+
 
 @NgModule({
-    declarations: [DirectoryTreeComponent, CodeEditorComponent, RuleTreeComponent, LocationsTreeComponent,TerminalComponent],
-    imports: [CommonModule, FormsModule, MaterialModule, MonacoEditorModule.forRoot()],
-    exports: [DirectoryTreeComponent, CodeEditorComponent, RuleTreeComponent, LocationsTreeComponent,TerminalComponent],
+    declarations: [DirectoryTreeComponent, CodeEditorComponent, RuleTreeComponent, LocationsTreeComponent, TerminalComponent, DataFlowTreeComponent],
+    imports: [CommonModule, FormsModule, MaterialModule, MonacoEditorModule.forRoot(), MatTreeModule, CdkTreeModule,],
+    exports: [DirectoryTreeComponent, CodeEditorComponent, RuleTreeComponent, LocationsTreeComponent,TerminalComponent, DataFlowTreeComponent],
 })
 export class SharedComponentsModule { }

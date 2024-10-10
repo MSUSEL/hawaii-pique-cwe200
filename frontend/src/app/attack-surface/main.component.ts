@@ -8,6 +8,7 @@ import { ItemFlatNode } from '../shared-components/tree/tree.component';
 import { FilesService } from '../Services/fileService';
 import { HelpDialogComponent } from './dialogs/help-dialog.component';
 
+
 declare var $: any;
 @Component({
     selector: 'app-cwe',
@@ -15,6 +16,8 @@ declare var $: any;
 })
 export class AttackSurfaceComponent {
     SearchTerm: string = '';
+    dataFlowTree: any[] = []; // Initialize data flow tree
+
     constructor(
         public utilService: CVEUtilService,
         public fileService:FilesService,
