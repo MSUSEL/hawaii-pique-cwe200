@@ -5,13 +5,16 @@
     perspective: 1500px;
     font-family: Cairo;
     overflow-x: hidden; /* Add this line */
-    overflow-y: hidden; 
+    overflow-y: hidden;
 }
 
 .left-sidebar {
+    display: flex;
+    flex-direction: column;
     min-width: 320px;
     max-width: 320px;
-
+    position: relative;  /* Ensure the data flow box is positioned relative to the sidebar */
+    overflow: hidden; /* Prevent content overflow */
     background: $card-bg-color;
     border-right: 2px solid $card-border-color;
     color: $standard-fontcolor;
@@ -22,15 +25,30 @@
         margin-left: -320px;
         width: 0px !important;
     }
+    
     .close-sidebar-button {
         display: none;
     }
 }
 
+/* Flex-grow for content above the data-flow-box */
+.left-sidebar > *:not(.flow-tree-box) {
+    flex-grow: 1; /* Ensure content above can take available space */
+    overflow-y: auto; /* Allow scrolling for content */
+}
+
+.flow-tree-box {
+    height: 25%; /* Data Flow takes up the bottom quarter */
+    width: 100%;
+    overflow-y: auto; /* Scrollable if content is too much */
+    padding: 10px;
+    background-color: #f5f5f5;
+    flex-shrink: 0; /* Prevent shrinking so it stays at the bottom */
+}
+
 .right-sidebar {
     min-width: 400px;
     max-width: 400px;
-
     width: 300px; /* Set a fixed width for the sidebar */
     height: 100vh; /* Full viewport height */
     overflow-y: auto; /* Enable vertical scrolling */
@@ -38,12 +56,12 @@
     position: fixed; /* Fix the sidebar in place */
     right: 0; /* Align the sidebar to the right */
     top: 0; /* Align the sidebar to the top */
-
     background: $card-bg-color;
     border-left: 2px solid $card-border-color;
     color: $standard-fontcolor;
     transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665);
     transform-origin: top left;
+
     &.active {
         margin-right: -400px;
         width: 0px !important;
@@ -52,18 +70,20 @@
     .close-sidebar-button {
         display: none;
     }
+
     .right-tab {
         margin-top: 0 !important;
         margin-bottom: 5px !important;
         height: 46px !important;
         line-height: 46px !important;
+
         .active {
             color: $danger !important;
             border-radius: 25px !important;
-
             border: 1px solid $card-border-color;
             background: darken($light, 5%);
         }
+
         .nav-item {
             .nav-link {
                 position: absolute;
@@ -118,7 +138,6 @@
     transform-origin: bottom left;
     overflow-x: hidden;
     overflow-y: scroll;
-    
 }
 
 .middle-sidebar.active {

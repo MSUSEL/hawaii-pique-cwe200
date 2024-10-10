@@ -1,72 +1,45 @@
-import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Input, OnInit } from '@angular/core';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { Output, EventEmitter } from '@angular/core';  // Import these
-import { CodeQlService } from 'src/app/Services/codeql-service';
+import { DataFlowService } from 'src/app/Services/data-flow.service'; 
 
-
-interface FlowNode {
-  name: string;
-  children?: FlowNode[];
+export interface FlowNode {
+  message: string;  // The message to display
+  uri: string;      // The file URI (not displayed, but kept for navigation)
+  Line: number;     // The line number (not displayed, but kept for navigation)
+  Column: number;   // The column number (not displayed, but kept for navigation)
 }
 
-interface FlatFlowNode {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
-
-@Component({ 
+@Component({
   selector: 'app-data-flow-tree',
   templateUrl: './data-flow-tree.component.html',
   styleUrls: ['./data-flow-tree.component.scss']
 })
 export class DataFlowTreeComponent implements OnInit {
-    @Input() treeData: FlowNode[] = []; // Receive the tree data as input
-    @Output() nodeClicked = new EventEmitter<string>();
-  
-    treeControl: FlatTreeControl<FlatFlowNode>;
-    treeFlattener: MatTreeFlattener<FlowNode, FlatFlowNode>;
-    dataSource: MatTreeFlatDataSource<FlowNode, FlatFlowNode>;
-  
-    constructor() {
-      this.treeFlattener = new MatTreeFlattener(
-        this.transformer,
-        (node) => node.level,
-        (node) => node.expandable,
-        (node) => node.children
-      );
-  
-      this.treeControl = new FlatTreeControl<FlatFlowNode>(
-        (node) => node.level,
-        (node) => node.expandable
-      );
-  
-      this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-    }
-  
-    ngOnInit(): void {
-      // Update the data source whenever treeData changes
-      this.dataSource.data = this.treeData;
-    }
-  
-    transformer = (node: FlowNode, level: number) => {
-      return {
-        expandable: !!node.children && node.children.length > 0,
-        name: node.name,
-        level: level
-      };
-    };
-  
-    hasChild = (_: number, node: FlatFlowNode) => node.expandable;
+  @Input() treeData: FlowNode[] = [];  // Full tree data with the FlowNode interface
+  hoveredIndex: number = -1;  // Track hovered item
+  isSubscribed: boolean = false;
 
-    onNodeClick(node: FlowNode) {
-        // if (node.filePath) {
-        //     this.nodeClicked.emit(node.filePath); // Emit the filePath when clicked
-        // }
-    }
-    getResults(node: FlowNode) {
-    
+  constructor(private dataFlowService: DataFlowService) {}
+
+  ngOnInit(): void {
+    // Subscribe to the data flow change observable and update the tree
+    if (!this.isSubscribed) {
+      this.dataFlowService.dataFlowChangeObservable.subscribe((data) => {
+        if (data) {
+          this.treeData = data;  // Update tree data with the response
+        }
+      });
+      this.isSubscribed = true;
     }
   }
-  
+
+  // Handle node click to eventually navigate to the relevant file and line
+  onNodeClick(node: FlowNode): void {
+    console.log('Node clicked:', node);
+    this.navigateToCode(node.uri, node.Line, node.Column);
+  }
+
+  navigateToCode(uri: string, line: number, column: number): void {
+    console.log(`Navigating to file: ${uri}, Line: ${line}, Column: ${column}`);
+    // Logic to navigate to file and line in code editor (e.g., using a service)
+  }
+}

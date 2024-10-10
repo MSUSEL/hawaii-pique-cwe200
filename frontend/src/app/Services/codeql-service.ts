@@ -20,11 +20,22 @@ export class CodeQlService {
         return this.http.get(this.url, { params });
     }
 
-    getVulnerabilityTree(vulnerabilityId: string, project: string): Observable<any> {
+    getDataFlowTree(vulnerabilityId: string, project: string, region: Region): Observable<any> {
         const params = new HttpParams()
             .set('vulnerabilityId', vulnerabilityId)
-            .set('project', project);  // Adding the project parameter
+            .set('project', project)
+            .set('startLine', region.startLine.toString())
+            .set('startColumn', region.startColumn.toString())
+            .set('endColumn', region.endColumn.toString());
+
+            console.log(this.http.get(this.url + 'vulnerabilityTree'))
     
         return this.http.get(this.url + 'vulnerabilityTree', { params });
     }
 }
+
+export interface Region {
+    startLine: number;
+    startColumn: number;
+    endColumn: number;
+  }
