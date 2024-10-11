@@ -19,7 +19,7 @@
     background: $card-bg-color;
     border-right: 2px solid $card-border-color;
     color: $standard-fontcolor;
-    transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665);
+    transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665); /* Smooth transition for sidebar */
     transform-origin: bottom right;
     overflow-x: hidden; /* Prevent horizontal scrolling */
 
@@ -41,7 +41,7 @@
 
 .files-list {
     flex-grow: 1;
-    overflow-y: hidden; /* Enable scrolling for file list */
+    overflow-y: auto; /* Enable scrolling for file list */
     padding-left: 10px;
     font-size: 17px;
     font-family: "Times New Roman", Times, serif;
@@ -58,6 +58,7 @@
     flex-shrink: 0;
 }
 
+/* Right Sidebar Styling */
 .right-sidebar {
     min-width: 400px;
     max-width: 400px;
@@ -71,7 +72,7 @@
     background: $card-bg-color;
     border-left: 2px solid $card-border-color;
     color: $standard-fontcolor;
-    transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665);
+    transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665); /* Smooth transition for sidebar */
     transform-origin: top left;
 
     &.active {
@@ -118,22 +119,19 @@
     }
 }
 
+/* Contents area */
 .contents {
-    width: 100%;
+    flex-grow: 1; /* Ensure it grows to take up remaining space */
+    width: calc(100% - 320px); /* Adjust based on sidebar widths */
     min-height: 87vh;
-    transition: all 0.1s;
+    transition: all 0.1s ease-in-out; /* Smooth transition for content */
     padding-bottom: 100px;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
     overflow: hidden !important;
 }
 
-.threshold {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-}
-
+/* Middle Sidebar */
 .middle-sidebar {
     position: fixed;
     z-index: 10;
@@ -172,6 +170,145 @@
     color: #f50000;
 }
 
+/* Highlighted line styling */
 .highlight-line {
     background-color: rgba(255, 255, 0, 0.3) !important; /* Light yellow highlight */
+}
+
+/* Flow Tab Container (scalable with viewport) */
+.flow-tab-container {
+    display: block;
+    max-height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+    background-color: #f5f5f5;
+}
+
+/* Flow (group) tab styles */
+.flow-tab {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    width: 100%; /* Ensure full width */
+}
+
+.flow-tab-header {
+    background-color: #e7e7e7;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Ensure overflow is hidden */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
+}
+
+.flow-tab-header.active-flow {
+    background-color: #d0e7ff;  /* Light blue background when clicked */
+}
+
+.flow-tab-header.active-flow:hover {
+    background-color: #0390fc;  /* Dark blue on hover for active tabs */
+}
+
+.flow-tab-header:hover {
+    background-color: #d7d7d7;  /* Lighter gray on hover for inactive tabs */
+}
+
+/* Node tab styles within the flow */
+.node-tab {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #f7f7f7;
+    width: 100%; /* Ensure full width */
+}
+
+.node-tab-header {
+    background-color: #e7e7e7;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.node-tab-header:hover {
+    background-color: #d7d7d7;
+}
+
+.node-tab-header.active-header {
+    background-color: rgba(255, 255, 0, 0.3);
+}
+
+.node-tab-content {
+    padding: 10px;
+    background-color: #f1f1f1;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.node-tab-content p {
+    margin: 0;
+    padding: 5px 0; /* Consistent spacing */
+    display: flex;
+    align-items: center;
+}
+
+.node-tab-content span {
+    margin-left: 5px;
+    line-height: 1.5;
+}
+
+/* Scrollable vertical container */
+.flow-tab-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.flow-tab-container::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.flow-tab-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+/* Truncate long text */
+.truncate {
+    display: inline-block;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .left-sidebar, .right-sidebar {
+        min-width: 250px;
+        max-width: 280px;
+    }
+    .contents {
+        width: calc(100% - 250px);
+    }
+}
+
+@media (max-width: 992px) {
+    .left-sidebar, .right-sidebar {
+        min-width: 200px;
+        max-width: 250px;
+    }
+    .contents {
+        width: calc(100% - 200px);
+    }
+}
+
+@media (max-width: 768px) {
+    .left-sidebar, .right-sidebar {
+        min-width: 180px;
+        max-width: 220px;
+    }
+    .contents {
+        width: calc(100% - 180px);
+    }
 }
