@@ -113,7 +113,7 @@ export class RuleTreeComponent extends RuleTree implements OnInit, OnChanges {
         // Find the file in the editor
         this.editorService.findFile(node);
         this.dataFlowService.findFlow(node)
-        console.log('Node clicked in rule:', node);
+        console.log('Codeql Tree:', node);
 
 
         // Emit the selected node

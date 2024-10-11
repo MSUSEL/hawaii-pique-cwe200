@@ -41,8 +41,8 @@ export class CodeEditorComponent implements OnInit {
                 this.view = 'code';
                 this.chatGptResponse = '';
 
-                // Highlight the specific line and column when the file changes
-                if (file.startLine && file.startColumn && file.endLine && file.endColumn) { 
+                // Apply highlighting once the file is active and ready
+                if (file.startLine && file.startColumn && file.endLine && file.endColumn && this.monacoEditor) {
                     this.highlightLine(file.startLine, file.startColumn, file.endLine, file.endColumn);
                 }
             }
@@ -51,125 +51,59 @@ export class CodeEditorComponent implements OnInit {
 
     ngOnInit(): void {}
 
-    getFileDecorations() {
-        this.fileDecorations = [];
-        var file = this.editorService.locationsTree.find(
-            (item) => item.fullPath == this.editorService.activeFile.fullPath
-        );
-        if (file) {
-            this.fileDecorations = file.files;
-        }
-    }
-
-    highLightEditor() {
-        this.getFileDecorations();
-        this.decorations = this.monacoEditor.deltaDecorations(
-            this.decorations,
-            []
-        );
-        var decorationRanges = [];
-        this.fileDecorations.forEach((file) => {
-            decorationRanges.push({
-                range: new monaco.Range(
-                    file.region.startLine,
-                    file.region.startColumn,
-                    file.region.endLine,
-                    file.region.endColumn
-                ),
-                options: {
-                    className: 'bg-creamy radius-25 level-' + file.type,
-                },
-            });
-        });
-        this.decorations = this.monacoEditor.deltaDecorations([], decorationRanges);
-        this.updateHoverProvider(this.monacoEditor.getModel().getValue());
-    }
-
-    hoverProvider: any = null;
-
-    updateHoverProvider(content: string) {
-        if (this.hoverProvider) {
-            this.hoverProvider.dispose();
-        }
-        this.hoverProvider = monaco.languages.registerHoverProvider('java', {
-            provideHover: (model, position) => {
-                for (let range of this.fileDecorations) {
-                    if (
-                        position.lineNumber >= range.region.startLine &&
-                        position.column >= range.region.startColumn &&
-                        position.lineNumber <= range.region.endLine &&
-                        position.column <= range.region.endColumn
-                    ) {
-                        return {
-                            range: new monaco.Range(
-                                range.region.startLine,
-                                range.region.startColumn,
-                                range.region.endLine,
-                                range.region.endColumn
-                            ),
-                            contents: [
-                                {
-                                    value: range.name,
-                                    isTrusted: true,
-                                },
-                                {
-                                    value: range.message,
-                                },
-                            ],
-                        };
-                    }
-                }
-                return null;
-            },
-        });
-    }
-
     // Method to highlight a specific line in the editor
     highlightLine(startLine: number, startColumn: number, endLine: number, endColumn: number) {
         console.log('Highlighting line:', startLine, startColumn, endLine, endColumn);
+
         if (this.monacoEditor) {
             const model = this.monacoEditor.getModel();
             const totalLines = model.getLineCount();
 
-            // Ensure the lines are within bounds
             if (startLine > totalLines || endLine > totalLines || startLine < 1 || endLine < 1) {
                 console.error('Line numbers out of bounds');
                 return;
             }
 
-            // Create a range using the provided start and end line and column values
-            const range = new monaco.Range(startLine, startColumn, endLine, endColumn);
+            this.monacoEditor.revealLineInCenter(startLine);
 
-            // Create the decoration using the range and apply the CSS class for the highlight
+            const range = new monaco.Range(startLine, startColumn, endLine, endColumn);
             const decoration = {
                 range: range,
                 options: {
-                    inlineClassName: 'highlight-line',  // Use a CSS class for the highlight
+                    inlineClassName: 'highlight-line',
                 },
             };
 
-            // Apply the decoration to highlight the specific range
             this.decorations = this.monacoEditor.deltaDecorations(this.decorations, [decoration]);
 
-            // Log the decorations to see what is applied
             console.log('Applied decorations:', this.decorations);
-
-            // Scroll to the specified start position
-            this.monacoEditor.revealPositionInCenter({ lineNumber: startLine, column: startColumn });
         }
     }
 
     // Handle Monaco editor initialization
     onInitEditor(event: any) {
         this.monacoEditor = event;
-        // Set the editor instance in the active file for reference
         this.editorService.setEditorInstance(this.editorService.activeFile.fullPath, this.monacoEditor);
-        this.highLightEditor();
+        
+        // Highlight the line once the editor is initialized and the file is active
+        if (this.editorService.activeFile && this.editorService.activeFile.startLine && this.editorService.activeFile.startColumn) {
+            this.highlightLine(
+                this.editorService.activeFile.startLine, 
+                this.editorService.activeFile.startColumn, 
+                this.editorService.activeFile.endLine, 
+                this.editorService.activeFile.endColumn
+            );
+        }
     }
 
     onCodeChange(value: string) {
         const model: MEditor.editor.ITextModel = this.monacoEditor.getModel();
-        this.highLightEditor();
+        this.highlightLine(
+            this.editorService.activeFile.startLine, 
+            this.editorService.activeFile.startColumn, 
+            this.editorService.activeFile.endLine, 
+            this.editorService.activeFile.endColumn
+        );
     }
 
     onFileTabSelected(item: SourceFile) {

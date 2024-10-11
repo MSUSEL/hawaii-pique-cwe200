@@ -32,27 +32,6 @@ export class DataFlowService {
           console.error('Error fetching data flow:', error);
         }
       });
-
-    // Dummy data for testing (commented out)
-    /*
-    const dummyData = {
-      "0": {
-        "message": "doFinal(...) : byte[]",
-        "uri": "CWEToyDataset/src/main/java/com/mycompany/app/CWE-208/AttackAgainstSigniture/BAD_AAS_unsafeCheckCiphertext.java",
-        "Line": 15,
-        "Column": 26
-      },
-      "1": {
-        "message": "tag",
-        "uri": "CWEToyDataset/src/main/java/com/mycompany/app/CWE-208/AttackAgainstSigniture/BAD_AAS_unsafeCheckCiphertext.java",
-        "Line": 17,
-        "Column": 49
-      }
-    };
-
-    // Simulating an API response with dummy data
-    this.dataFlowChange.next(this.convertDummyDataToTree(dummyData));  // Update the data flow with dummy data
-    */
   }
 
   // Helper function to format the real data into the tree structure expected by the component
@@ -66,16 +45,4 @@ export class DataFlowService {
       endLine: data[key].endLine
     }));
   }
-
-  // Helper function for dummy data (commented out)
-  /*
-  private convertDummyDataToTree(data: any) {
-    return Object.keys(data).map(key => ({
-      message: `${data[key].message}`,
-      uri: data[key].uri,
-      Line: data[key].Line,
-      Column: data[key].Column
-    }));
-  }
-  */
 }

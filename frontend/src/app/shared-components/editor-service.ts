@@ -39,34 +39,54 @@ export class EditorService {
     constructor(private fileService: FilesService) {}
 
     // Method to find the file in the opened files or open it if it's not
-    findFile(node: ItemFlatNode) {
+    findFile(node: ItemFlatNode, callback?: () => void) {
         const normalizedFullPath = this.correctPath(node.fullPath);
-
-        let file = this.openedFiles.find((item) => item.fullPath == normalizedFullPath);
+    
+        let file = this.openedFiles.find((item) => item.fullPath === normalizedFullPath);
         let startLine = node.region?.startLine;
-        let startColum = node.region?.startColumn;
+        let startColumn = node.region?.startColumn;
         let endLine = node.region?.endLine;
         let endColumn = node.region?.endColumn;
-
+    
         console.log('Editor Service', node); // Log the clicked node for debugging
-
+    
         if (file) {
-            // Update the file with line and column information
+            // File is already open; update the line and column information
             file.startLine = startLine;
-            file.startColumn = startColum;
+            file.startColumn = startColumn;
             file.endLine = endLine;
             file.endColumn = endColumn;
             this.activeFile = file;
             this.fileChangedEventEmitter();
+            
+            // Trigger the callback (highlight) only after the file is active
+            if (callback) {
+                callback();
+            }
         } else {
+            // File is not open yet, load it and then store the line and column information
             this.fileService.getFileContents({ filePath: normalizedFullPath }).subscribe((response) => {
-                // Create a new file and pass the line and column for highlighting
-                this.activeFile = new SourceFile(node.name, normalizedFullPath, response.code, null, startLine, startColum, endLine, endColumn);
+                this.activeFile = new SourceFile(
+                    node.name,
+                    normalizedFullPath,
+                    response.code,
+                    null,
+                    startLine,
+                    startColumn,
+                    endLine,
+                    endColumn
+                );
                 this.openedFiles.push(this.activeFile);
                 this.fileChangedEventEmitter();
+    
+                // Ensure the callback (highlight) is called after the file is fully loaded
+                if (callback) {
+                    callback();
+                }
             });
         }
     }
+    
 
     // Method to emit the active file change event
     fileChangedEventEmitter() {
