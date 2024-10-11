@@ -19,18 +19,26 @@ export class CodeQlParserService {
     }
 
     async getDataFlowTree(filePath: string, project: string, index: string) {
-        var sarifPath = path.join(project, 'result.sarif');
-        var data = await this.fileService.readJsonFile(sarifPath);
-        var result = data.runs[0].results[index]; 
+        const sarifPath = path.join(project, 'result.sarif');
+        const data = await this.fileService.readJsonFile(sarifPath);
+        const result = data.runs[0].results[index];
     
         try {
-            // Try to access codeFlows
-            var codeFlows = result.codeFlows[0].threadFlows[0].locations;
-            const FlowMap = this.buildDataFlowMap(codeFlows, project);
-            return FlowMap;
+            // Try to access all codeFlows
+            const codeFlowsList = result.codeFlows || [];
+            const flowMaps = [];
+    
+            // Loop through each codeFlow and build the flow map for each
+            for (let i = 0; i < codeFlowsList.length; i++) {
+                const codeFlows = codeFlowsList[i].threadFlows[0].locations;
+                const flowMap = await this.buildDataFlowMap(codeFlows, project);
+                flowMaps.push(flowMap);
+            }
+    
+            return flowMaps; // Return all flow maps (one for each codeFlow)
         } catch (error) {
-            // Return an empty object if there is are codeFlows for the given result
-            return {};
+            console.error('Error processing code flows:', error);
+            return [];
         }
     }
     

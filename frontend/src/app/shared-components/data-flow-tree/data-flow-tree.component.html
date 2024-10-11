@@ -1,18 +1,34 @@
-<div class="node-tab-container">
-  <div *ngFor="let node of treeData; let index = index" class="node-tab">
+<div class="flow-tab-container">
+  <!-- Scrollable container for both flow tabs and content -->
+  <div class="scrollable-content">
+    <!-- Loop over each flow -->
+    <div *ngFor="let flow of treeData; let flowIndex = index" class="flow-tab">
+      <!-- Flow Tab Header (click to expand/collapse) -->
+      <div class="flow-tab-header" 
+           [ngClass]="{'active-flow': flowIndex === activeFlowIndex}" 
+           (click)="toggleFlow(flowIndex)">
+        <strong>Flow {{ flowIndex + 1 }}</strong>: 
+        <span class="flow-message">{{ flow[0].message.split(':')[0] }}</span> <!-- Truncate message -->
+      </div>
 
-    <!-- Tab Header (click to expand), highlight only the header -->
-    <div class="node-tab-header" 
-         [ngClass]="{'active-header': index === activeTabIndex}" 
-         (click)="onNodeClick(node, index)">
-      <strong>{{ index + 1 }}</strong> {{ node.message.split(':')[0] }}
-    </div>
+      <!-- Collapsible Content for Nodes within the Flow -->
+      <div class="node-tab-container" *ngIf="flowIndex === activeFlowIndex">
+        <div *ngFor="let node of flow; let nodeIndex = index" class="node-tab">
+          <!-- Node Header (click to expand), highlight only the header -->
+          <div class="node-tab-header" 
+               [ngClass]="{'active-header': nodeIndex === activeNodeIndex}" 
+               (click)="onNodeClick(flowIndex, nodeIndex)">
+            <strong>{{ nodeIndex + 1 }}</strong> {{ node.message.split(':')[0] }}
+          </div>
 
-    <!-- Collapsible Content -->
-    <div class="node-tab-content" *ngIf="node.isExpanded">
-      <p><strong>File Name:</strong> {{ node.uri.split('/').pop() }}</p>
-      <p><strong>Line Number:</strong> {{ node.startLine }}</p>
-      <p><strong>Type:</strong> {{ node.type }}</p>
+          <!-- Collapsible Content -->
+          <div class="node-tab-content" *ngIf="node.isExpanded">
+            <p><strong>File Name:</strong> {{ node.uri.split('/').pop() }}</p>
+            <p><strong>Line Number:</strong> {{ node.startLine }}</p>
+            <p><strong>Type:</strong> {{ node.type }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

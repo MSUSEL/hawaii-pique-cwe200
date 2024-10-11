@@ -19,7 +19,6 @@ export class DataFlowService {
     const pathComponents: string[] = node.fullPath.split(/[/\\]+/);
     const project = pathComponents[1]; // Extract project from path
     const vulnerabilityId = node.fullPath; // Use the full path as the vulnerability ID
-    const region = node.region; // Get the region from the node
 
     // Call the CodeQlService to get the data flow tree
     this.codeQlService.getDataFlowTree(vulnerabilityId, project, node.index)
@@ -35,15 +34,31 @@ export class DataFlowService {
   }
 
   // Helper function to format the real data into the tree structure expected by the component
-  private convertDataToTree(data: any) {
-    return Object.keys(data).map(key => ({
-      message: `${data[key].message}`,
-      uri: data[key].uri,
-      startLine: data[key].startLine,
-      startColumn: data[key].startColumn,
-      endColumn: data[key].endColumn,
-      endLine: data[key].endLine,
-      type: data[key].type,
-    }));
+  private convertDataToTree(data: any[]): any[] {
+    console.log('Converting Data:', data);
+
+    // Group flows separately into their own arrays
+    return data.map((flow, flowIndex) => {
+      console.log(`Processing Flow ${flowIndex}`);
+
+      // Map each node in the current flow to its respective FlowNode structure
+      const flowNodes = Object.keys(flow).map(key => {
+        const node = flow[key];
+        console.log(`Flow ${flowIndex}, Node ${key}:`, node);
+
+        return {
+          message: node.message || '',
+          uri: node.uri || '',
+          startLine: node.startLine || 0,
+          startColumn: node.startColumn || 0,
+          endColumn: node.endColumn || 0,
+          endLine: node.endLine || node.startLine || 0,
+          type: node.type || '',
+        };
+      });
+
+      // Return each flow as an array of nodes
+      return flowNodes;
+    });
   }
 }

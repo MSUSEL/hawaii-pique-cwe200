@@ -1,13 +1,38 @@
-/* Ensure the node tab container allows vertical scrolling */
-.node-tab-container {
+/* Styling for the flow tab container */
+.flow-tab-container {
     display: block;
     max-height: 450px;
-    overflow-y: auto;
+    overflow-y: auto;  /* Enable vertical scrolling for the entire container */
     padding: 10px;
     background-color: #f5f5f5;
 }
 
-/* Individual tab styles */
+/* Flow (group) tab styles */
+.flow-tab {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.flow-tab-header {
+    background-color: #e7e7e7;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.flow-tab-header.active-flow {
+    background-color: #d0e7ff;  /* Light blue background when clicked */
+}
+
+.flow-tab-header.active-flow:hover {
+    background-color: #0057d9;  /* Dark blue on hover for active tabs */
+}
+
+.flow-tab-header:hover {
+    background-color: #d7d7d7;  /* Lighter gray on hover for inactive tabs */
+}
+
+/* Styling for individual node tabs within the flow */
 .node-tab {
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -15,46 +40,41 @@
     background-color: #f7f7f7;
 }
 
-/* Default tab header */
 .node-tab-header {
     background-color: #e7e7e7;
     padding: 10px;
     border-bottom: 1px solid #ccc;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-/* Hover effect for the tab header, changes to light grey */
 .node-tab-header:hover {
-    background-color: #d7d7d7;
+    background-color: #d7d7d7;  /* Lighter gray on hover */
 }
 
-/* Highlight only the tab header when active */
-.active-header {
-    background-color: rgba(255, 255, 0, 0.3);  /* Light yellow background for active tab */
+.node-tab-header.active-header {
+    background-color: rgba(255, 255, 0, 0.3);  /* Light yellow background when clicked */
 }
 
-/* When hovering over the active tab, make it a darker yellow */
-.active-header:hover {
-    background-color: rgba(255, 255, 0, 0.6);  /* Darker yellow background on hover for active tab */
-}
-
-/* Content for expanded tabs */
 .node-tab-content {
+    padding: 10px;
     background-color: #f1f1f1;
 }
 
-/* Optional custom scrollbar for better aesthetics */
-.node-tab-container::-webkit-scrollbar {
+/* Scrollable vertical container */
+.flow-tab-container {
+    max-height: 500px;  /* Ensure the overall height limit */
+    overflow-y: auto;   /* Enable vertical scrolling */
+}
+
+/* Optional custom scrollbar */
+.flow-tab-container::-webkit-scrollbar {
     width: 8px;
 }
 
-.node-tab-container::-webkit-scrollbar-thumb {
+.flow-tab-container::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 10px;
 }
 
-.node-tab-container::-webkit-scrollbar-track {
+.flow-tab-container::-webkit-scrollbar-track {
     background-color: #f1f1f1;
 }

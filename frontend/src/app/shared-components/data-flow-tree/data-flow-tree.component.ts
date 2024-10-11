@@ -20,10 +20,9 @@ export interface FlowNode {
   styleUrls: ['./data-flow-tree.component.scss']
 })
 export class DataFlowTreeComponent implements OnInit {
-  @Input() treeData: FlowNode[] = [];  // Full tree data with the FlowNode interface
-  hoveredIndex: number = -1;  // Track hovered item
-  isSubscribed: boolean = false;
-  activeTabIndex: number = -1;  // Track the last clicked tab
+  @Input() treeData: FlowNode[][] = [];  // Now an array of arrays for separate flows
+  activeFlowIndex: number = -1;  // Track the last clicked flow tab
+  activeNodeIndex: number = -1;  // Track the last clicked node within a flow
 
   constructor(
     private dataFlowService: DataFlowService,
@@ -32,45 +31,58 @@ export class DataFlowTreeComponent implements OnInit {
 
   ngOnInit(): void {
     // Subscribe to the data flow change observable and update the tree
-    if (!this.isSubscribed) {
-      this.dataFlowService.dataFlowChangeObservable.subscribe((data) => {
-        if (data) {
-          this.treeData = data.map(node => ({ ...node, isExpanded: false }));  // Initialize all nodes as collapsed
-        }
-      });
-      this.isSubscribed = true;
+    this.dataFlowService.dataFlowChangeObservable.subscribe((data) => {
+      if (data) {
+        this.treeData = data.map(flow => flow.map(node => ({ ...node, isExpanded: false })));  // Initialize all nodes as collapsed
+        this.activeFlowIndex = -1; // Reset the active flow when a new vulnerability is clicked
+        this.activeNodeIndex = -1; // Reset the active node when a new vulnerability is clicked
+      }
+    });
+  }
+
+  // Toggle flow tab expansion and allow collapsing
+  toggleFlow(flowIndex: number): void {
+    if (this.activeFlowIndex === flowIndex) {
+      this.activeFlowIndex = -1;  // Collapse if already expanded
+    } else {
+      this.activeFlowIndex = flowIndex;  // Expand the selected flow
+      this.activeNodeIndex = -1;  // Reset node highlight when switching flows
     }
   }
 
   // Toggle node expansion and trigger highlight in editor
-  onNodeClick(node: FlowNode, index: number): void {
+  onNodeClick(flowIndex: number, nodeIndex: number): void {
+    // Collapse previously expanded nodes if needed
+    if (this.activeNodeIndex !== -1 && this.activeFlowIndex === flowIndex) {
+      this.treeData[flowIndex][this.activeNodeIndex].isExpanded = false;
+    }
+
+    const node = this.treeData[flowIndex][nodeIndex];
     node.isExpanded = !node.isExpanded;  // Toggle expansion
 
-    // Set active tab index to apply highlighting
-    this.activeTabIndex = index;
+    // Set active node index to apply highlighting
+    this.activeNodeIndex = nodeIndex;
 
     const fullPath = this.correctPath(node.uri);
 
-    console.log('Data Flow Tree', node);  // Log the clicked node for debugging
-
     const fileNode: ItemFlatNode = {
-        name: fullPath.split('/').pop(),
-        fullPath: fullPath,
-        level: 0,
-        type: node.type,
-        expandable: false,
-        code: '',
-        region: {
-            startLine: node.startLine,
-            startColumn: node.startColumn,
-            endLine: node.endLine,
-            endColumn: node.endColumn
-        }
+      name: fullPath.split('/').pop(),
+      fullPath: fullPath,
+      level: 0,
+      type: node.type,
+      expandable: false,
+      code: '',
+      region: {
+        startLine: node.startLine,
+        startColumn: node.startColumn,
+        endLine: node.endLine,
+        endColumn: node.endColumn
+      }
     };
 
     // Find and highlight the file in the editor
     this.editorService.findFile(fileNode, () => {
-        // The actual highlight is handled in the CodeEditorComponent
+      // The actual highlight is handled in the CodeEditorComponent
     });
   }
 
@@ -80,7 +92,7 @@ export class DataFlowTreeComponent implements OnInit {
     const projectName = pathComponents[0];
     let fullPath = uri;
     if (!fullPath.startsWith('Files/')) {
-        fullPath = `Files/${projectName}/${fullPath}`;
+      fullPath = `Files/${projectName}/${fullPath}`;
     }
     return fullPath;
   }
