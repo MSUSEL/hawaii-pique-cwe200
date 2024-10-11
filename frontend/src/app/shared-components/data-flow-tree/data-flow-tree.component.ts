@@ -6,10 +6,12 @@ import { ItemFlatNode } from 'src/app/shared-components/tree/tree.component'; //
 export interface FlowNode {
   message: string;  // The message to display
   uri: string;      // The file URI (not displayed, but kept for navigation)
-  startLine: number;     // The line number (not displayed, but kept for navigation)
-  startColumn: number;
-  endColumn: number;   // The column number (not displayed, but kept for navigation)
-  endLine: number;
+  startLine: number; // The starting line number for the highlight
+  startColumn: number; // The starting column number for the highlight
+  endLine: number; // The ending line number for the highlight
+  endColumn: number; // The ending column number for the highlight
+  isExpanded?: boolean; // To track the expansion state of the node
+  type: string; // The type of the node
 }
 
 @Component({
@@ -21,6 +23,7 @@ export class DataFlowTreeComponent implements OnInit {
   @Input() treeData: FlowNode[] = [];  // Full tree data with the FlowNode interface
   hoveredIndex: number = -1;  // Track hovered item
   isSubscribed: boolean = false;
+  activeTabIndex: number = -1;  // Track the last clicked tab
 
   constructor(
     private dataFlowService: DataFlowService,
@@ -32,30 +35,29 @@ export class DataFlowTreeComponent implements OnInit {
     if (!this.isSubscribed) {
       this.dataFlowService.dataFlowChangeObservable.subscribe((data) => {
         if (data) {
-          this.treeData = data;  // Update tree data with the response
+          this.treeData = data.map(node => ({ ...node, isExpanded: false }));  // Initialize all nodes as collapsed
         }
       });
       this.isSubscribed = true;
     }
   }
 
-  // Handle node click to navigate to the relevant file and line in the editor
-  onNodeClick(node: FlowNode): void {
-    console.log('Node clicked:', node);
+  // Toggle node expansion and trigger highlight in editor
+  onNodeClick(node: FlowNode, index: number): void {
+    node.isExpanded = !node.isExpanded;  // Toggle expansion
 
-    const pathComponents = node.uri.split(/[/\\]+/);
-    const projectName = pathComponents[0];  
+    // Set active tab index to apply highlighting
+    this.activeTabIndex = index;
 
-    let fullPath = node.uri;
-    if (!fullPath.startsWith('Files/')) {
-        fullPath = `Files/${projectName}/${fullPath}`;
-    }
+    const fullPath = this.correctPath(node.uri);
+
+    console.log('Data Flow Tree', node);  // Log the clicked node for debugging
 
     const fileNode: ItemFlatNode = {
-        name: fullPath.split(/[/\\]+/).pop(),
+        name: fullPath.split('/').pop(),
         fullPath: fullPath,
         level: 0,
-        type: 'file',
+        type: node.type,
         expandable: false,
         code: '',
         region: {
@@ -66,9 +68,20 @@ export class DataFlowTreeComponent implements OnInit {
         }
     };
 
-    // Pass the callback to highlight after the file is loaded
+    // Find and highlight the file in the editor
     this.editorService.findFile(fileNode, () => {
-        // Highlight logic will be handled by the CodeEditorComponent
+        // The actual highlight is handled in the CodeEditorComponent
     });
+  }
+
+  // Helper to correct file path format
+  correctPath(uri: string): string {
+    const pathComponents = uri.split(/[/\\]+/);
+    const projectName = pathComponents[0];
+    let fullPath = uri;
+    if (!fullPath.startsWith('Files/')) {
+        fullPath = `Files/${projectName}/${fullPath}`;
+    }
+    return fullPath;
   }
 }

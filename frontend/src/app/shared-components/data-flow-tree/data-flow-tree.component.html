@@ -1,13 +1,18 @@
-<div class="data-flow-container" *ngIf="treeData.length > 0">
-  <h5>Data Flow</h5>
-  <ul class="data-flow-list">
-    <li *ngFor="let node of treeData; let i = index"
-        class="data-flow-item"
-        (mouseenter)="hoveredIndex = i"
-        (mouseleave)="hoveredIndex = -1"
-        (click)="onNodeClick(node)"
-        [ngClass]="{ 'highlight': hoveredIndex === i }">
-      {{ i }}: {{ node.message }}  <!-- Display the index and message only -->
-    </li>
-  </ul>
+<div class="node-tab-container">
+  <div *ngFor="let node of treeData; let index = index" class="node-tab">
+
+    <!-- Tab Header (click to expand), highlight only the header -->
+    <div class="node-tab-header" 
+         [ngClass]="{'active-header': index === activeTabIndex}" 
+         (click)="onNodeClick(node, index)">
+      <strong>{{ index + 1 }}</strong> {{ node.message.split(':')[0] }}
+    </div>
+
+    <!-- Collapsible Content -->
+    <div class="node-tab-content" *ngIf="node.isExpanded">
+      <p><strong>File Name:</strong> {{ node.uri.split('/').pop() }}</p>
+      <p><strong>Line Number:</strong> {{ node.startLine }}</p>
+      <p><strong>Type:</strong> {{ node.type }}</p>
+    </div>
+  </div>
 </div>

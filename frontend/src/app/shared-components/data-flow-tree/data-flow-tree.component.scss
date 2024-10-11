@@ -1,29 +1,60 @@
-.data-flow-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 35vh;  /* Start at the lower quarter of the sidebar */
-    width: 100%;
-    overflow-y: auto;  /* Scrollable if there are too many items */
-    background-color: #f5f5f5;
+/* Ensure the node tab container allows vertical scrolling */
+.node-tab-container {
+    display: block;
+    max-height: 450px;
+    overflow-y: auto;
     padding: 10px;
+    background-color: #f5f5f5;
 }
 
-.data-flow-list {
-    list-style-type: none; /* Removes bullet points */
-    padding-left: 0; /* Removes default padding */
-    margin: 0; /* Removes any margin */
-}
-
-.data-flow-item {
-    padding: 1px 0; /* Adjusts the space between lines */
+/* Individual tab styles */
+.node-tab {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
     cursor: pointer;
+    background-color: #f7f7f7;
 }
 
-.data-flow-item:hover {
-    background-color: #e0e0e0; /* Highlight on hover */
+/* Default tab header */
+.node-tab-header {
+    background-color: #e7e7e7;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.highlight {
-    background-color: #d3d3d3;
+/* Hover effect for the tab header, changes to light grey */
+.node-tab-header:hover {
+    background-color: #d7d7d7;
+}
+
+/* Highlight only the tab header when active */
+.active-header {
+    background-color: rgba(255, 255, 0, 0.3);  /* Light yellow background for active tab */
+}
+
+/* When hovering over the active tab, make it a darker yellow */
+.active-header:hover {
+    background-color: rgba(255, 255, 0, 0.6);  /* Darker yellow background on hover for active tab */
+}
+
+/* Content for expanded tabs */
+.node-tab-content {
+    background-color: #f1f1f1;
+}
+
+/* Optional custom scrollbar for better aesthetics */
+.node-tab-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.node-tab-container::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.node-tab-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
 }

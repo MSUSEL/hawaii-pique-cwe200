@@ -26,7 +26,7 @@ export class CodeQlParserService {
         try {
             // Try to access codeFlows
             var codeFlows = result.codeFlows[0].threadFlows[0].locations;
-            const FlowMap = this.buildDataFlowMap(codeFlows);
+            const FlowMap = this.buildDataFlowMap(codeFlows, project);
             return FlowMap;
         } catch (error) {
             // Return an empty object if there is are codeFlows for the given result
@@ -34,17 +34,16 @@ export class CodeQlParserService {
         }
     }
     
-
-    buildDataFlowMap(codeFlows: any[]): { [key: number]: FlowNode } {
+    async buildDataFlowMap(codeFlows: any[], project): Promise<{ [key: number]: FlowNode }> {
         const flowMap: { [key: number]: FlowNode } = {};
     
-        codeFlows.forEach((codeFlow, flowIndex) => {
+        // Use a loop with `await` to ensure file loading is awaited for each code flow
+        for (let flowIndex = 0; flowIndex < codeFlows.length; flowIndex++) {
+            const codeFlow = codeFlows[flowIndex];
             console.log(`Processing Code Flow #${flowIndex + 1}`);
     
-            // Assuming each codeFlow is directly a location
             const location = codeFlow.location;
             if (location) {
-                const message = location.message.text;
                 const physicalLocation = location.physicalLocation;
                 const uri = physicalLocation.artifactLocation.uri;
                 const startLine = physicalLocation.region.startLine;
@@ -52,20 +51,55 @@ export class CodeQlParserService {
                 const endColumn = physicalLocation.region.endColumn;
                 const endLine = physicalLocation.region.endLine || startLine;
     
+                // Normalize the file path for the current OS
+                const normalizedUri = path.normalize(uri);
+                const fullPath = path.join(project, normalizedUri);
+    
+                let message = location.message.text;  // Default message from SARIF file
+                const type = message.length > 1 ? message.split(':').slice(1).join(':').trim() : '';
+                console.log(`Message: ${message}`);
+
+                // Await the file read to ensure we get the file data before continuing
+                try {
+                    const data = await this.fileService.readFileAsync(fullPath);
+    
+                    // Extract the specific line from the file
+                    const line = data.split('\n')[startLine - 1];
+    
+                    // Ensure startColumn and endColumn are within valid bounds
+                    const validStartColumn = Math.max(0, startColumn - 1);
+                    const validEndColumn = Math.min(endColumn - 1, line.length );
+    
+                    // Extract the substring between validStartColumn and validEndColumn
+                    if (validStartColumn <= validEndColumn) {
+                        message = line.slice(validStartColumn, validEndColumn);
+                    } else {
+                    }
+    
+                } catch (error) {
+                    console.error(`Error reading file ${fullPath}:`, error);
+                    // Optionally handle the error here
+                }
+    
                 // Create a key-value pair for this location
                 flowMap[flowIndex] = {
-                    message: message,
-                    uri: uri,
+                    message: message,  // Use the updated message (either from SARIF or extracted from the file)
+                    uri: uri,  // Keep the original URI for reference
                     startLine: startLine,
                     startColumn: startColumn,
                     endColumn: endColumn,
                     endLine: endLine,
-                };    
+                    type: type,
+                };
             }
-        });
+        }
     
-        return flowMap;
+        return flowMap; // Return the flow map after all files have been read
     }
+    
+    
+
+    
     
 
     parseRules(rules: any[], results: any[], sourcePath: string) {
@@ -218,6 +252,7 @@ export interface FlowNode {
     startColumn: string,
     endColumn: string,
     endLine: string,
+    type: string
 }
 
 export interface Region {

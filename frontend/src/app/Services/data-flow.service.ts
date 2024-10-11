@@ -42,7 +42,8 @@ export class DataFlowService {
       startLine: data[key].startLine,
       startColumn: data[key].startColumn,
       endColumn: data[key].endColumn,
-      endLine: data[key].endLine
+      endLine: data[key].endLine,
+      type: data[key].type,
     }));
   }
 }
