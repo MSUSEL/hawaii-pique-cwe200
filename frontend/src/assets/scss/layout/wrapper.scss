@@ -4,22 +4,24 @@
     align-items: stretch;
     perspective: 1500px;
     font-family: Cairo;
-    overflow-x: hidden; /* Add this line */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
     overflow-y: hidden;
 }
 
 .left-sidebar {
     display: flex;
     flex-direction: column;
+    max-height: 100vh; /* Ensure sidebar takes full viewport height */
     min-width: 320px;
     max-width: 320px;
-    position: relative;  /* Ensure the data flow box is positioned relative to the sidebar */
+    position: relative; /* Ensure the data flow box is positioned relative to the sidebar */
     overflow: hidden; /* Prevent content overflow */
     background: $card-bg-color;
     border-right: 2px solid $card-border-color;
     color: $standard-fontcolor;
     transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665);
     transform-origin: bottom right;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 
     &.active {
         margin-left: -320px;
@@ -37,13 +39,23 @@
     overflow-y: auto; /* Allow scrolling for content */
 }
 
+.files-list {
+    flex-grow: 1;
+    overflow-y: hidden; /* Enable scrolling for file list */
+    padding-left: 10px;
+    font-size: 17px;
+    font-family: "Times New Roman", Times, serif;
+    border-top: 1px solid white;
+    max-height: 50%; /* Ensure it takes up to 50% of the height */
+}
+
 .flow-tree-box {
-    height: 50%; /* Data Flow takes up the bottom quarter */
+    max-height: 50%; /* Ensure the data flow takes the bottom half */
     width: 100%;
-    // overflow-y: auto; /* Scrollable if content is too much */
+    overflow-y: auto; /* Scrollable if content overflows */
     padding: 10px;
     background-color: #f5f5f5;
-    flex-shrink: 0; /* Prevent shrinking so it stays at the bottom */
+    flex-shrink: 0;
 }
 
 .right-sidebar {
@@ -90,7 +102,6 @@
                 font-size: 17px;
                 color: $standard-fontcolor;
                 min-width: 150px;
-                top: 0px !important;
                 padding-top: 0;
                 margin: 5px;
                 font-family: "Times New Roman", Times, serif;
@@ -132,9 +143,7 @@
     bottom: 0px;
     background: #1e1e1e;
     color: #e6e6e6;
-    -webkit-transition: all 0.6s cubic-bezier(0.945, 0.02, 0.27, 0.665);
     transition: all 0.6s cubic-bezier(0.945, 0.02, 0.27, 0.665);
-    -webkit-transform-origin: bottom left;
     transform-origin: bottom left;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -142,7 +151,6 @@
 
 .middle-sidebar.active {
     margin-bottom: -100vh;
-    -webkit-transform: rotateX(180deg);
     transform: rotateX(180deg);
 }
 
@@ -165,6 +173,5 @@
 }
 
 .highlight-line {
-    background-color: rgba(255, 255, 0, 0.3) !important;  /* Light yellow highlight */
-    // border-left: 3px solid rgba(255, 200, 0, 1) !important;
+    background-color: rgba(255, 255, 0, 0.3) !important; /* Light yellow highlight */
 }

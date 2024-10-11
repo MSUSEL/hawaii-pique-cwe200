@@ -1,10 +1,10 @@
 /* Styling for the flow tab container */
 .flow-tab-container {
     display: block;
-    max-height: 450px;
-    overflow-y: auto;  /* Enable vertical scrolling for the entire container */
+    max-height: none;  /* Remove the height restriction to avoid internal scrolling */
     padding: 10px;
     background-color: #f5f5f5;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Flow (group) tab styles */
@@ -12,12 +12,16 @@
     margin-bottom: 10px;
     border: 1px solid #ccc;
     cursor: pointer;
+    width: 100%; /* Ensure full width */
 }
 
 .flow-tab-header {
     background-color: #e7e7e7;
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Ensure overflow is hidden */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
 }
 
 .flow-tab-header.active-flow {
@@ -25,7 +29,7 @@
 }
 
 .flow-tab-header.active-flow:hover {
-    background-color: #0057d9;  /* Dark blue on hover for active tabs */
+    background-color: #0390fc;  /* Dark blue on hover for active tabs */
 }
 
 .flow-tab-header:hover {
@@ -38,12 +42,16 @@
     border: 1px solid #ccc;
     cursor: pointer;
     background-color: #f7f7f7;
+    width: 100%; /* Ensure full width */
 }
 
 .node-tab-header {
     background-color: #e7e7e7;
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Ensure overflow is hidden */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
 }
 
 .node-tab-header:hover {
@@ -57,24 +65,63 @@
 .node-tab-content {
     padding: 10px;
     background-color: #f1f1f1;
+    width: 100%; /* Ensure content takes up full width */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-/* Scrollable vertical container */
-.flow-tab-container {
-    max-height: 500px;  /* Ensure the overall height limit */
-    overflow-y: auto;   /* Enable vertical scrolling */
+.node-tab-content p {
+    margin: 0;
+    padding: 5px 0; /* Ensure consistent spacing */
+    display: flex; /* Use flexbox to align elements */
+    align-items: center; /* Vertically center the text */
+}
+
+.node-tab-content span {
+    margin-left: 5px;
+    line-height: 1.5; /* Ensure proper vertical alignment */
+}
+
+/* Manage overflow and scrolling for the entire data flow */
+.flow-tree-box {
+    max-height: 50%; /* Ensure the data flow takes the bottom half */
+    width: 100%;
+    overflow-y: auto; /* Enable scrolling for data flow if it overflows */
+    padding: 10px;
+    background-color: #f5f5f5;
+    flex-shrink: 0; /* Prevent shrinking */
 }
 
 /* Optional custom scrollbar */
+.flow-tree-box::-webkit-scrollbar,
 .flow-tab-container::-webkit-scrollbar {
     width: 8px;
 }
 
+.flow-tree-box::-webkit-scrollbar-thumb,
 .flow-tab-container::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 10px;
 }
 
+.flow-tree-box::-webkit-scrollbar-track,
 .flow-tab-container::-webkit-scrollbar-track {
     background-color: #f1f1f1;
 }
+
+/* Truncate long text */
+.truncate {
+    display: inline-block;
+    max-width: 150px; /* Adjust the width as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Title styling for Data Flow Graph */
+.dataflow-title {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+    color: #333; /* Optional: change the color to match your design */
+  }

@@ -90,6 +90,7 @@ input[type=select]:focus,
 .sticky{
     position: sticky !important;
     top:0 !important;
+    overflow-x: hidden !important;
 }
 
 .hover-green:hover{

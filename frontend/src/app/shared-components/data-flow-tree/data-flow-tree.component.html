@@ -1,6 +1,9 @@
-<div class="flow-tab-container">
-  <!-- Scrollable container for both flow tabs and content -->
-  <div class="scrollable-content">
+<div class="flow-tree-box">
+  <!-- Conditionally show the title if there are flows -->
+  <h5 class="dataflow-title" *ngIf="treeData && treeData.length > 0">Data Flow Graph</h5> 
+
+  <!-- Scrollable container for flow tabs and content -->
+  <div class="flow-tab-container" *ngIf="treeData && treeData.length > 0">
     <!-- Loop over each flow -->
     <div *ngFor="let flow of treeData; let flowIndex = index" class="flow-tab">
       <!-- Flow Tab Header (click to expand/collapse) -->
@@ -23,9 +26,15 @@
 
           <!-- Collapsible Content -->
           <div class="node-tab-content" *ngIf="node.isExpanded">
-            <p><strong>File Name:</strong> {{ node.uri.split('/').pop() }}</p>
-            <p><strong>Line Number:</strong> {{ node.startLine }}</p>
-            <p><strong>Type:</strong> {{ node.type }}</p>
+            <p><strong>File Name:</strong> 
+              <span class="truncate">{{ node.uri.split('/').pop() }}</span>
+            </p>
+            <p><strong>Line Number:</strong> 
+              <span class="truncate">{{ node.startLine }}</span>
+            </p>
+            <p><strong>Type:</strong> 
+              <span class="truncate">{{ node.type }}</span>
+            </p>
           </div>
         </div>
       </div>
