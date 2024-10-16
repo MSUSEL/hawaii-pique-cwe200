@@ -34,7 +34,7 @@ model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
 packages = ['punkt', 'averaged_perceptron_tagger', 'wordnet', 'stopwords']
 def check_and_download_nltk_data(package):
     try:
-        find(f'tokenizers/{package}')
+        find(f'{package}')
     except LookupError:
         nltk.download(package)
 
@@ -117,7 +117,6 @@ def text_preprocess(feature_text):
 
 # Calculate sentence embeddings using SentenceTransformer
 async def calculate_sentbert_vectors(api_lines):
-    model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
     sentences = []
     for api in api_lines:
         preprocessed_tokens = text_preprocess(api)
@@ -191,7 +190,7 @@ def get_context(file, var_name):
             context = context + sentence + " "
     return text_preprocess(context)
 
-async def get_context_str(file, var_name):
+def get_context_str(file, var_name):
     context = " "
     for sent in file:
         if len(sent.strip()) <= 2 or sent.strip()[0] == '*' or (sent.strip()[0] == '\\' and sent.strip()[1] == '\\') or (sent.strip()[0] == '\\' and sent.strip()[1] == '*'):
@@ -199,7 +198,7 @@ async def get_context_str(file, var_name):
         if '\''+var_name+'\'' in sent or '"'+var_name+'"' in sent:
             sent = sent.replace(var_name, ' ')
             context = context + sent + " "
-    return await text_preprocess(context)
+    return text_preprocess(context)
 
 # Read Java files from a directory asynchronously
 async def read_java_files(directory):
