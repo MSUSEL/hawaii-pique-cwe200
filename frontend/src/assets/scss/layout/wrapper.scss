@@ -8,6 +8,7 @@
     overflow-y: hidden;
 }
 
+/* Left Sidebar Styling */
 .left-sidebar {
     display: flex;
     flex-direction: column;
@@ -19,7 +20,7 @@
     background: $card-bg-color;
     border-right: 2px solid $card-border-color;
     color: $standard-fontcolor;
-    transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665); /* Smooth transition for sidebar */
+    transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665);
     transform-origin: bottom right;
     overflow-x: hidden; /* Prevent horizontal scrolling */
 
@@ -49,6 +50,7 @@
     max-height: 50%; /* Ensure it takes up to 50% of the height */
 }
 
+/* Data flow tree box */
 .flow-tree-box {
     max-height: 50%; /* Ensure the data flow takes the bottom half */
     width: 100%;
@@ -72,7 +74,7 @@
     background: $card-bg-color;
     border-left: 2px solid $card-border-color;
     color: $standard-fontcolor;
-    transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665); /* Smooth transition for sidebar */
+    transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665);
     transform-origin: top left;
 
     &.active {
@@ -124,7 +126,7 @@
     flex-grow: 1; /* Ensure it grows to take up remaining space */
     width: calc(100% - 320px); /* Adjust based on sidebar widths */
     min-height: 87vh;
-    transition: all 0.1s ease-in-out; /* Smooth transition for content */
+    transition: all 0.1s;
     padding-bottom: 100px;
     padding-left: 0;
     padding-right: 0;
@@ -283,32 +285,12 @@
 }
 
 /* Responsive Adjustments */
-@media (max-width: 1200px) {
-    .left-sidebar, .right-sidebar {
-        min-width: 250px;
-        max-width: 280px;
-    }
-    .contents {
-        width: calc(100% - 250px);
-    }
-}
-
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     .left-sidebar, .right-sidebar {
         min-width: 200px;
         max-width: 250px;
     }
     .contents {
         width: calc(100% - 200px);
-    }
-}
-
-@media (max-width: 768px) {
-    .left-sidebar, .right-sidebar {
-        min-width: 180px;
-        max-width: 220px;
-    }
-    .contents {
-        width: calc(100% - 180px);
     }
 }

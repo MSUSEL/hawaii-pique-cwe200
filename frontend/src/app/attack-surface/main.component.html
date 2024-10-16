@@ -48,7 +48,7 @@
 </header>
 
 <div class="wrapper">
-    <div class="left-sidebar ">
+    <div class="left-sidebar">
         <nav id="bugs-list" class="sticky">
             <div class="searchbox border-bottom">
                 <i class="fa fa-search fa-lg"></i>
@@ -57,21 +57,28 @@
             <div class="files-list" style="border-top:1px solid white;">
                 <directory-tree [treeData]="utilService.directoryFilesTree"></directory-tree>
             </div>
-                   <!-- New Section for Data Flow Tree -->
-        <div class="flow-tree-box mt-4">
-            <app-data-flow-tree [treeData]="dataFlowTree"></app-data-flow-tree>
-        </div>
+            <div class="flow-tree-box mt-4">
+                <app-data-flow-tree [treeData]="dataFlowTree"></app-data-flow-tree>
+            </div>
         </nav>
     </div>
+
+    <!-- Resizer between left-sidebar and contents -->
+    <div class="resizer resizer-left"></div>
+
     <div class="contents">
         <app-page-header></app-page-header>
-        <div class="content-container  h-100 " id="weaknesses">
-            <app-editor-terminal id="terminal"  class="middle-sidebar d-none"></app-editor-terminal>
+        <div class="content-container h-100" id="weaknesses">
+            <app-editor-terminal id="terminal" class="middle-sidebar d-none"></app-editor-terminal>
             <app-code-editor></app-code-editor>
         </div>
     </div>
+
+    <!-- Resizer between contents and right-sidebar -->
+    <div class="resizer resizer-right"></div>
+
     <div class="right-sidebar" id="bugs-list">
-        <div class="sticky ">
+        <div class="sticky">
             <app-code-ql></app-code-ql>
         </div>
     </div>
