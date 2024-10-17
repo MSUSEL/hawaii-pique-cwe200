@@ -1,4 +1,4 @@
-public class BAD_IllegalArgumentException {
+public class BAD_getMessage {
 
     public void registerUser(String username, String email, String password) {
         try {

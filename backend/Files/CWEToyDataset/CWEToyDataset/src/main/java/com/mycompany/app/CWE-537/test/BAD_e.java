@@ -1,6 +1,6 @@
-public class BAD_IllegalArgumentException {
-
-    public void registerUser(String username, String email, String password) {
+public class BAD_e {
+    
+    public void registerUser2(String username, String email, String password) {
         try {
             if (!email.contains("@")) {
                 throw new IllegalArgumentException("Invalid credentials provided." + email + password + username);
@@ -8,8 +8,7 @@ public class BAD_IllegalArgumentException {
                 System.out.println("User registered successfully.");
             }
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
     }
-
 }
