@@ -65,11 +65,13 @@ def format_for_excel(output_data, src_dir, file_paths):
 
     for file_name, data in output_data.items():
         # Find the file path recursively in the src directory
-        if file_name not in file_paths:
+        result = find_file_in_lookup(file_paths, file_name)
+        if result:
+            file_path = result
+        else:
             print(f"Warning: File '{file_name}' not found in {src_dir}")
             continue  # Skip if file not found
-        else:
-            file_path = file_paths[file_name]
+
 
         # Add the file name and file path as a header row
         formatted_rows.append([f"{file_name}", f"{file_path}", "", "", ""])
@@ -160,6 +162,7 @@ def main():
 
     # Restructure BERT data to use fileName as the key
     bert_data_dict = restructure_bert_data(bert_data)
+    print("Data loaded successfully")
     
     # Dictionary to store the final output
     output_data = {}
@@ -176,18 +179,23 @@ def main():
         if has_relevant_data(classified_data):
             output_data[file_name] = classified_data
     
+    print("Data classified successfully")
     # Load file paths for the source directory
     file_paths = load_file_paths(src_dir, project_dir)
+    print("File paths loaded successfully")
 
 
     # Format the output for Excel and include the file path
     excel_output = format_for_excel(output_data, src_dir, file_paths)
+    print("Data formatted successfully")
     
     # Save the output to an Excel file
     save_to_excel(excel_output, output_file_path)
+    print("Data saved to Excel successfully")
     
     # Finalize the workbook: apply validation, formatting, and highlighting in one pass
     finalize_workbook(output_file_path)
+    print("Workbook finalized successfully")
 
     print(f"Results saved to {output_file_path}")
 
