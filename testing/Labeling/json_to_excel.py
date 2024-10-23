@@ -1,3 +1,7 @@
+"""
+This script is used to convert the parsed results and BERT classification data into an Excel file for manual labeling.
+"""
+
 import json
 import os
 import pandas as pd
@@ -112,6 +116,7 @@ def finalize_workbook(output_file):
 
     # Loop through all rows, applying formatting, validation, and headers in one pass
     for row in range(1, ws.max_row + 1):
+        print(row)
         # Highlight headers
         if ws.cell(row=row, column=1).value == "Category":
             for col in range(1, 6):
@@ -146,7 +151,7 @@ def save_to_excel(output_data, output_file):
 # Main logic
 def main():
     # File paths for parsed and BERT classification files
-    project_name = 'rocketmq-rocketmq-all-5.3.1'
+    project_name = 'CWEToyDataset'
     project_dir = os.path.join('backend', 'Files', project_name)
     src_dir = os.path.join(project_dir, project_name)  # Assume the source files are inside 'src' directory
     

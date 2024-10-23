@@ -1,3 +1,8 @@
+"""
+This script reads in the Excel files containing the labeled data and converts it to a JSON file. 
+The JSON file will be used to train the model for the next iteration.
+"""
+
 import pandas as pd
 import json
 import os
