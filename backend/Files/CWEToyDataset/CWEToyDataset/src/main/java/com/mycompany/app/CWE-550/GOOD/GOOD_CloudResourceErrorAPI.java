@@ -8,11 +8,11 @@ public class GOOD_CloudResourceErrorAPI {
 
     @GetMapping("/api/resource")
     public String getResourceDetails() {
-        String username = "CWE-200-test";
-        String resourseID = "12345";
+        String username = "Canary";
+        String resourceID = "12345";
         try {
             // Attempt to retrieve cloud resource that may fail
-            return getCloudResource(username, resourseID);
+            return getCloudResource(username, resourceID);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve cloud resource.");
         }

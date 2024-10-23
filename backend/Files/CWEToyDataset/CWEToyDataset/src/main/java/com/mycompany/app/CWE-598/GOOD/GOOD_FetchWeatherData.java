@@ -3,7 +3,7 @@ import java.net.URL;
 
 public class GOOD_FetchWeatherData {
     
-    public static void submitSportsCategory(String city) {
+    public static void getWeatherData(String city) {
         try {
             String urlString = "http://weather.com/getWeather?city=" + city;
                                
@@ -17,6 +17,6 @@ public class GOOD_FetchWeatherData {
     }
     
     public static void main(String[] args) {
-        submitSportsCategory("Honolulu");
+        getWeatherData("Honolulu");
     }
 }

@@ -2,8 +2,10 @@ public class GOOD_DataProcessor {
     private static final boolean DATA_PROCESSING_DEBUG = Boolean.parseBoolean(System.getProperty("DATA_PROCESSING_DEBUG", "false"));
 
     public static void main(String[] args) {
+        String ssn = "SSN: 123-45-6789";
+
         try {
-            processData("sensitiveDataString");
+            processData(ssn);
         } catch (DataProcessingException e) {
             if (DATA_PROCESSING_DEBUG) {
                 System.err.println("DEBUG: Error processing data.");

@@ -4,11 +4,10 @@ public class GOOD_MessagingSystem {
             throw new Exception("Messaging service interruption.");
         } catch (Exception e) {
             System.err.println("Messaging service error.");
-            throw new RuntimeException("Messaging service currently unavailable.");
         }
     }
 
     public static void main(String[] args) {
-        new GOOD_MessagingSystem().sendMessage("user42", "Confidential content.");
+        new GOOD_MessagingSystem().sendMessage("user42", "The money was transferred to acount 7430187");
     }
 }

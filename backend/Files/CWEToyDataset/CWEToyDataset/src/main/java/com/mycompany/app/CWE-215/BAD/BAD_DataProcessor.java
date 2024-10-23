@@ -2,8 +2,9 @@ public class BAD_DataProcessor {
     private static final boolean DATA_PROCESSING_DEBUG = Boolean.parseBoolean(System.getProperty("DATA_PROCESSING_DEBUG", "false"));
 
     public static void main(String[] args) {
+        String taxInformation = "Tax data: 1234567890";
         try {
-            processData("sensitiveDataString");
+            processData(taxInformation);
         } catch (DataProcessingException e) {
             if (DATA_PROCESSING_DEBUG) {
                 System.err.println("DEBUG: Error processing data: " + e.getDataSnippet());

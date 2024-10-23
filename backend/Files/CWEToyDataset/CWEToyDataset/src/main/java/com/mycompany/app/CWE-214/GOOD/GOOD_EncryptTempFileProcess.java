@@ -13,7 +13,7 @@ public class GOOD_EncryptTempFileProcess {
         SecretKey key = keyGen.generateKey();
 
         // Prepare data to encrypt
-        String sensitiveData = "Highly confidential information";
+        String sensitiveData = "Welcome your account has been created successfully. Your default password is: TheRainInSpainFallsMainlyInThePlain";
         byte[] dataToEncrypt = sensitiveData.getBytes();
 
         // Encrypt data

@@ -37,7 +37,7 @@ public class GOOD_PersonalDetailsPOST_Encrypted {
             fullName = URLEncoder.encode(encrypt(fullName), StandardCharsets.UTF_8.name());
             dateOfBirth = URLEncoder.encode(encrypt(dateOfBirth), StandardCharsets.UTF_8.name());
 
-            String url = "https://example.com/register";
+            String url = "https://healthservices.com/register";
             
             CloseableHttpClient httpClient = HttpClients.createDefault();
             HttpPost httpPost = new HttpPost(url);

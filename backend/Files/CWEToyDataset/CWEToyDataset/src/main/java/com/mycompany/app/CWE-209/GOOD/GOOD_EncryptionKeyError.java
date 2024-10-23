@@ -12,6 +12,6 @@ public class GOOD_EncryptionKeyError {
     }
 
     public static void main(String[] args) {
-        new GOOD_EncryptionKeyError().useEncryptionKey("12345", "Sensitive data to encrypt");
+        new GOOD_EncryptionKeyError().useEncryptionKey("12345", "9887731210");
     }
 }

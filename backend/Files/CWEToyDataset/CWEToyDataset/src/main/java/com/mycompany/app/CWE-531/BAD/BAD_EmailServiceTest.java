@@ -11,7 +11,7 @@ class EmailService {
 public class BAD_EmailServiceTest {
     @Test
     public void testSendEmail() {
-        String recipientEmail = "user@example.com";
+        String recipientEmail = "auser@Hawaii.edu";
         String message = "Your password is password123!";
         EmailService emailService = new EmailService();
         assertTrue(emailService.sendEmail(recipientEmail, message));
