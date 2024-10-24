@@ -65,10 +65,10 @@ def parse_excel_to_json(excel_file):
                 if pd.isna(df.iloc[i, 1]):
                     continue
                 item = str(df.iloc[i, 1])
-                classification = str(df.iloc[i, 3]).strip().lower() if pd.notna(df.iloc[i, 3]) else 'no'
-                is_sensitive = 'Yes' if classification == 'yes' else 'No'
+                classification = str(df.iloc[i, 3]).strip().lower()
 
-                if pd.notna(item):
+                if pd.notna(item) and classification != 'nan':
+                    is_sensitive = 'Yes' if classification == 'yes' else 'No'
                     current_file['variables'].append({"name": item.strip(), "IsSensitive": is_sensitive})
 
             # Collect strings
@@ -76,10 +76,10 @@ def parse_excel_to_json(excel_file):
                 if pd.isna(df.iloc[i, 1]):
                     continue
                 item = str(df.iloc[i, 1])
-                classification = str(df.iloc[i, 3]).strip().lower() if pd.notna(df.iloc[i, 3]) else 'no'
-                is_sensitive = 'Yes' if classification == 'yes' else 'No'
+                classification = str(df.iloc[i, 3]).strip().lower()
 
-                if pd.notna(item):
+                if pd.notna(item) and classification != 'nan':
+                    is_sensitive = 'Yes' if classification == 'yes' else 'No'
                     current_file['strings'].append({"name": item.strip(), "IsSensitive": is_sensitive})
             
             # Collect comments
@@ -87,10 +87,10 @@ def parse_excel_to_json(excel_file):
                 if pd.isna(df.iloc[i, 1]):
                     continue
                 item = str(df.iloc[i, 1])
-                classification = str(df.iloc[i, 3]).strip().lower() if pd.notna(df.iloc[i, 3]) else 'no'
-                is_sensitive = 'Yes' if classification == 'yes' else 'No'
+                classification = str(df.iloc[i, 3]).strip().lower()
 
-                if pd.notna(item):
+                if pd.notna(item) and classification != 'nan':
+                    is_sensitive = 'Yes' if classification == 'yes' else 'No'
                     current_file['comments'].append({"name": item.strip(), "IsSensitive": is_sensitive})
 
             # Collect sinks
@@ -98,16 +98,17 @@ def parse_excel_to_json(excel_file):
                 if pd.isna(df.iloc[i, 1]):
                     continue
                 item = str(df.iloc[i, 1])
-                sink_type = str(df.iloc[i, 0]).strip() if pd.notna(df.iloc[i, 0]) else 'N/A'
-                classification = str(df.iloc[i, 3]).strip().lower() if pd.notna(df.iloc[i, 3]) else 'no'
-                is_sensitive = 'Yes' if classification == 'yes' else 'No'
+                sink_type = str(df.iloc[i, 0]).strip()
+                classification = str(df.iloc[i, 3]).strip().lower() 
 
-                if pd.notna(item):
+                if pd.notna(item) and classification != 'nan' and classification != 'kyler':
+                    is_sensitive = 'Yes' if classification == 'yes' else 'No'
                     current_file['sinks'].append({"name": item.strip(), "type": sink_type, "IsSensitive": is_sensitive})
 
         
             # Add the current file info to the json_data list
-            json_data.append(current_file)
+            if current_file['variables'] or current_file['strings'] or current_file['comments'] or current_file['sinks']:
+                json_data.append(current_file)
         else:
             file_start += 1
 
