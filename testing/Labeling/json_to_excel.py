@@ -8,6 +8,7 @@ import pandas as pd
 from openpyxl import load_workbook
 from openpyxl.worksheet.datavalidation import DataValidation
 from openpyxl.styles import PatternFill
+import math
 
 # Predefined Sink Categories
 SINK_CATEGORIES = [
@@ -114,9 +115,14 @@ def finalize_workbook(output_file):
     # Define fill color for headers
     blue_fill = PatternFill(start_color="008cff", end_color="008cff", fill_type="solid")
 
+    progress = 0
+    print(f"Total rows: {ws.max_row}")
     # Loop through all rows, applying formatting, validation, and headers in one pass
     for row in range(1, ws.max_row + 1):
-        print(row)
+        result = math.ceil(100 * row / ws.max_row)
+        if result > progress:
+            print(f"Progress: {result}%")
+            progress = result
         # Highlight headers
         if ws.cell(row=row, column=1).value == "Category":
             for col in range(1, 6):
@@ -151,7 +157,7 @@ def save_to_excel(output_data, output_file):
 # Main logic
 def main():
     # File paths for parsed and BERT classification files
-    project_name = 'CWEToyDataset'
+    project_name = 'jenkins-jenkins-2.476'
     project_dir = os.path.join('backend', 'Files', project_name)
     src_dir = os.path.join(project_dir, project_name)  # Assume the source files are inside 'src' directory
     
