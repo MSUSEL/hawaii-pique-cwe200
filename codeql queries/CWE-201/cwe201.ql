@@ -66,7 +66,7 @@ class MailSendMethod extends DataFlow::Node {
 
     exists(MethodCall mc | 
       sink.asExpr() = mc.getAnArgument() and 
-      mc.getMethod().hasName("sendRedirect") or
+      // mc.getMethod().hasName("sendRedirect") or
       mc.getMethod().hasName("write") and
       mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("javax.servlet.http", "HttpServletResponse"))
 
