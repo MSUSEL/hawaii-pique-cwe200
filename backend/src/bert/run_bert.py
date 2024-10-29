@@ -14,6 +14,7 @@ import tensorflow as tf
 import asyncio
 import aiofiles
 from collections import deque
+from progress_tracker import ProgressTracker
 
 
 # Reconfigure stdout and stderr to handle UTF-8 encoding
@@ -300,7 +301,7 @@ async def main():
 
         model_path = os.path.join(os.getcwd(), "src", "bert", "models")
     else:
-        project_name = "SmallTest"
+        project_name = "spring-security-6.3.3"
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
         model_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
@@ -319,12 +320,20 @@ async def main():
     print("processing files")
     # Process files to extract variables, strings, comments, and sinks concurrently
     variables = process_files(parsed_data, files_dict, 'variables'),
+    strings = process_files(parsed_data, files_dict, 'strings'),
+    comments = process_files(parsed_data, files_dict, 'comments'),
+    sinks = process_files(parsed_data, files_dict, 'sinks'),
+
 
 
     final_results = {}
 
     print("Predicting data")
     await process_data_type('variables', variables, final_results, model_path)
+    await process_data_type('strings', strings, final_results, model_path)
+    await process_data_type('comments', comments, final_results, model_path)
+    await process_data_type('sinks', sinks, final_results, model_path)
+
     print("Predicting data done")
 
 
@@ -335,26 +344,7 @@ async def main():
     async with aiofiles.open(os.path.join(project_path, 'data.json'), 'w') as f:
         await f.write(json.dumps(formatted_results, indent=4))
 
-class ProgressTracker:
-    def __init__(self, total_steps, progress_type):
-        self.total_steps = total_steps
-        self.current_progress = 0
-        self.progress_type = progress_type
-        self.last_progress_percentage = -1  # Keep track of the last printed progress percentage
 
-    def update_progress(self, step_increment):
-        if self.total_steps > 0:
-            self.current_progress += step_increment
-            progress_percentage = min(round((self.current_progress / self.total_steps) * 100), 100)
-            if progress_percentage != self.last_progress_percentage:  # Only print if the percentage has changed
-                print(json.dumps({'type': self.progress_type, 'progress': progress_percentage}), flush=True)
-                self.last_progress_percentage = progress_percentage  # Update the last progress percentage
-        else:
-            print(json.dumps({'type': self.progress_type, 'progress': 100}))
-
-    def complete(self):
-        self.current_progress = self.total_steps
-        print(json.dumps({'type': self.progress_type, 'progress': 100}))
 
 
 if __name__ == '__main__':
