@@ -91,6 +91,44 @@ public class helperFunctions {
             e.printStackTrace();
         }
 	}
+
+	public static String getOutputFromProgramAsString(String[] command) {
+		ProcessBuilder processBuilder = new ProcessBuilder(command);
+		processBuilder.redirectErrorStream(true); // Redirect error stream to the output stream
+	
+		StringBuilder jsonOutput = new StringBuilder();
+		boolean jsonStarted = false; // Flag to track if JSON has started
+	
+		try {
+			Process process = processBuilder.start(); // Start the process
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+	
+			String line;
+			while ((line = reader.readLine()) != null) {
+				// Check if JSON output has started and skip progress lines
+				if (!jsonStarted) {
+					if (line.trim().startsWith("{")) {
+						jsonStarted = true;
+					} else {
+						continue; // Skip progress lines
+					}
+				}
+				// Accumulate JSON lines
+				jsonOutput.append(line);
+			}
+	
+			int exitCode = process.waitFor(); // Wait for the process to complete
+			System.out.println("\nExited with error code : " + exitCode);
+	
+		} catch (IOException | InterruptedException e) {
+			System.out.println("Failed to run tool ");
+			e.printStackTrace();
+		}
+		
+		return jsonOutput.toString(); // Return only the JSON data
+	}
+	
+
 	
 	 /**
 	  * 

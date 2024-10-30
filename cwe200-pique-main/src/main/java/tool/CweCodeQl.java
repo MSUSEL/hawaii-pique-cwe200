@@ -58,11 +58,19 @@ import java.util.Properties;
  */
 public class CweCodeQl extends Tool implements ITool {
     private static final Logger LOGGER = LoggerFactory.getLogger(CweCodeQl.class);
-    private String openAiTokenPath;
+    private String backendAddress;
 
-    public CweCodeQl(String openAiTokenPath) {
+    public static void main(String[] args) {
+        CweCodeQl test = new CweCodeQl(PiqueProperties.getProperties().getProperty("backend.server"));
+        // test.initialize(null);
+        test.analyze(Paths.get("SmallTest"));
+
+    }
+
+
+    public CweCodeQl(String backendAddress) {
         super("CweCodeQl", null);
-        this.openAiTokenPath = openAiTokenPath;
+        this.backendAddress = backendAddress;
     }
 
     // Methods
@@ -73,28 +81,33 @@ public class CweCodeQl extends Tool implements ITool {
      */
     @Override
     public Path analyze(Path projectLocation) {
-        String projectName = projectLocation.toString();
+        String projectName = projectLocation.getFileName().toString();
         LOGGER.info(this.getName() + "  Analyzing " + projectName);
         System.out.println("Analyzing " + projectName + " with " + this.getName());
 
         // set up results dir
 
         String workingDirectoryPrefix = "";
-        String outpuFilePath = "";
-        String queriesDir = "";
+        String outputFilePath = "";
+        
         try {
+            // Load properties
             Properties prop = PiqueProperties.getProperties("src/main/resources/pique-properties.properties");
             Path resultsDir = Paths.get(prop.getProperty("results.directory"));
-            queriesDir = prop.getProperty("queries.directory");
 
+            // Set up working directory
             workingDirectoryPrefix = resultsDir + "/tool-out/CWE-200/";
             Files.createDirectories(Paths.get(workingDirectoryPrefix));
-            outpuFilePath = workingDirectoryPrefix + "result.csv";
+            // Set up output file path
+            outputFilePath = workingDirectoryPrefix + "result.csv";
+        
         } catch (java.io.IOException e) {
             e.printStackTrace();
             LOGGER.debug("Error creating directory to save CweQodeQl tool results");
             System.out.println("Error creating directory to save CweQodeQl tool results");
         }
+        
+        // Check if the results file already exists
         File tempResults = new File(workingDirectoryPrefix + "CweQodeQl " + projectName + ".json");
         if (tempResults.exists()) {
             LOGGER.info("Already ran CweQodeQl on: " + projectName + ", results stored in: " + tempResults.toString());
@@ -103,41 +116,28 @@ public class CweCodeQl extends Tool implements ITool {
                     + tempResults.toString());
             tempResults.getParentFile().mkdirs();
 
-            String[] createDatabaseCmd = {
-                    "codeql", "database", "create", workingDirectoryPrefix + "projectDb",
-                    "--language=java",
-                    "--source-root=" + projectName
-            };
-            LOGGER.info(Arrays.toString(createDatabaseCmd));
+            // Check to see if the server is running
+            if (isServerRunning(backendAddress)){
+                LOGGER.info("Server is running at: " + backendAddress);
+                // Upload the project to the server
+                // uploadProjectToServer(backendAddress, projectName);
+                
+                // Perform the analysis
+                String toolResults = sendPostRequestToServer(backendAddress, projectName);
+                
+                // Convert the results to a CSV file, and save it
+                Path finalResults = saveToolResultsToFile(toolResults, outputFilePath);
+                parseAnalysis(finalResults);
+                return finalResults;
 
-            try {
-                //helperFunctions.getOutputFromProgram(createDatabaseCmd);
-            } catch (Exception e) {
-                LOGGER.error("Failed to Create CodeQl Database");
-                LOGGER.error(e.toString());
-                e.printStackTrace();
+            } else {
+                // TODO: Start the server
+                LOGGER.error("Server is not running at: " + backendAddress);
+                return null;
             }
-
-            String[] analyzeDatabaseCmd = {
-                    "codeql", "database",
-                    "analyze", workingDirectoryPrefix + "projectDb",
-                    "--format=csv",
-                    "-o=" + outpuFilePath, queriesDir
-            };
-
-            LOGGER.info(Arrays.toString(analyzeDatabaseCmd));
-            try {
-                //helperFunctions.getOutputFromProgram(analyzeDatabaseCmd);
-            } catch (Exception e) {
-                LOGGER.error("Failed to analyze CodeQl Databse");
-                LOGGER.error(e.toString());
-                e.printStackTrace();
-            }
-
         }
-
-        File finalResults = new File(outpuFilePath);
-        return finalResults.toPath();
+        // Something went wrong 
+        return null;
     }
 
     /**
@@ -221,5 +221,67 @@ public class CweCodeQl extends Tool implements ITool {
 
         return severityInt;
     }
+
+    private boolean isServerRunning(String backendAddress) {
+        try {
+            String[] cmd = { "curl", backendAddress };
+            helperFunctions.getOutputFromProgram(cmd);
+        } catch (Exception e) {
+            LOGGER.error("Server is not running at: " + backendAddress);
+            return false;
+        }
+        return true;
+    }
+
+    private String sendPostRequestToServer(String backendAddress, String projectName) {
+        String toolResults = null;
+        try {
+            // Properly format the JSON data with extra escaping
+            String jsonData = "\"{\\\"project\\\":\\\"" + projectName + 
+            "\\\", \\\"extension\\\":\\\"csv\\\", \\\"format\\\":\\\"csv\\\"}\"";
+            
+            // Define the command array with properly escaped JSON
+            String[] cmd = {
+                "curl", 
+                "-X", "POST",
+                "-H", "Content-Type: application/json",
+                "-d", jsonData,
+                backendAddress + "/codeql/"
+            };
+            
+            // Execute the command
+            toolResults = helperFunctions.getOutputFromProgramAsString(cmd);
+            
+        } catch (Exception e) {
+            LOGGER.error("Failed to send POST request to server at: " + backendAddress);
+            e.printStackTrace();
+        }
+        return toolResults;
+    }
+    
+    private Path saveToolResultsToFile(String toolResults, String outputFilePath) {
+        try {
+            // Parse JSON response to extract "data" field
+            JSONObject jsonResponse = new JSONObject(toolResults);
+            String data = jsonResponse.getString("data");
+    
+            // Clean up the CSV string if it has extra quotes at the beginning or end
+            data = data.replaceAll("^\"|\"$", ""); // Remove surrounding quotes if present
+            Path outputPath = Paths.get(outputFilePath);
+            // Write the extracted data to the specified file path
+            Files.write(outputPath, data.getBytes());
+            
+            LOGGER.info("Tool results saved to file successfully: " + outputFilePath);
+            return outputPath;
+        } catch (IOException e) {
+            LOGGER.error("Failed to save tool results to file: " + outputFilePath);
+            e.printStackTrace();
+        } catch (Exception e) {
+            LOGGER.error("Failed to parse JSON or process tool results.");
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 
 }

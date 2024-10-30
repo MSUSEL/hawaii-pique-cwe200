@@ -55,7 +55,7 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
 
         Path qmLocation = Paths.get(prop.getProperty("blankqm.filepath"));
 
-        ITool cweQodeQl = new CweCodeQl(prop.getProperty("github-token-path"));
+        ITool cweQodeQl = new CweCodeQl(prop.getProperty("backend.server"));
         Set<ITool> tools = Stream.of(cweQodeQl).collect(Collectors.toSet());
 
         Path outputPath = runEvaluator(projectFilePath, resultsDir, qmLocation, tools).getParent();
