@@ -1,0 +1,1 @@
+codeql database analyze --format="csv" -o="results.csv" --threads=5  ./projectDb  "./codeql/codeql-custom-queries-java"

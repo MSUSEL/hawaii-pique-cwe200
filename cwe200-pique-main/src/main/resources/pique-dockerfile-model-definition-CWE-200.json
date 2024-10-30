@@ -1,0 +1,724 @@
+{
+  "name": "PIQUE Cloud-dockerfile quality model",
+  "additionalData": {},
+  "global_config": {
+    "benchmark_strategy": "pique.calibration.NaiveBenchmarker",
+    "normalizer": "pique.evaluation.NoNormalizer",
+    "weights_strategy": "pique.calibration.NaiveWeighter"
+  },
+  "factors": {
+    "tqi": {
+      "PIQUE Cloud-dockerfile quality model": {
+        "description": "Model description, replace with a description of your model"
+      }
+    },
+    "quality_aspects": {
+      "Functional Suitability": {
+        "description": "Degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions",
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator"
+      },
+      "Performance Efficiency": {
+        "description": "Performance relative to the amount of resources used under stated conditions",
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator"
+      },
+      "Usability": {
+        "description": "Degree to which a product or system can be used by specified users to achieve specified goals with effectiveness, efficiency and satisfaction in a specified context of use",
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator"
+      },
+      "Compatibility": {
+        "description": "Degree to which a product, system or component can exchange information with other products, systems or components, and/or perform its required functions, while sharing the same hardware or software environment",
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator"
+      },
+      "Reliability": {
+        "description": "Degree to which a system, product or component performs specified functions under specified conditions for a specified period of time",
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator"
+      },
+      "Security": {
+        "description": "Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization",
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator"
+      },
+      "Maintainability": {
+        "description": "Degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers",
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator"
+      },
+      "Portability": {
+        "description": "degree of effectiveness and efficiency with which a system, product or component can be transferred from one hardware, software or other operational or usage environment to another",
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator"
+      }
+    },
+    "product_factors": {
+      "Pillar CWE-200": {
+        "name": "Exposure of Sensitive Information to an Unauthorized Actor",
+        "positive": "false",
+        "weakness_abstraction": "Class",
+        "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
+        "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
+        "children": {
+          "CWE-201": {},
+          "CWE-203": {},
+          "CWE-209": {},
+          "CWE-213": {},
+          "CWE-215": {},
+          "CWE-359": {},
+          "CWE-497": {},
+          "CWE-538": {},
+          "CWE-1258": {},
+          "CWE-1273": {},
+          "CWE-1295": {},
+          "CWE-498": {},
+          "CWE-499": {},
+          "CWE-1272": {}
+        }
+      }
+    }
+  },
+  "measures": {
+    "CWE-201": {
+      "name": "Insertion of Sensitive Information Into Sent Data",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The code transmits data to another actor, but a portion of the data includes sensitive information that should not be accessible to that actor.",
+      "children": {
+        "CWE-598": {}
+      }
+    },
+    "CWE-598": {
+      "name": "Use of GET Request Method With Sensitive Query Strings",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
+      "children": {
+        "CWE-598 Diagnostic Grype": {},
+        "CWE-598 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-203": {
+      "name": "Observable Discrepancy",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product behaves differently or sends different responses under different circumstances in a way that is observable to an unauthorized actor, which exposes security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
+      "children": {
+        "CWE-204": {},
+        "CWE-205": {},
+        "CWE-208": {},
+        "CWE-1300": {},
+        "CWE-1303": {}
+      }
+    },
+    "CWE-204": {
+      "name": "Observable Response Discrepancy",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
+      "children": {
+        "CWE-204 Diagnostic Grype": {},
+        "CWE-204 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-205": {
+      "name": "Observable Behavioral Discrepancy",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product's behaviors indicate important differences that may be observed by unauthorized actors in a way that reveals (1) its internal state or decision process, or (2) differences from other products with equivalent functionality.",
+      "children": {
+        "CWE-205 Diagnostic Grype": {},
+        "CWE-205 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-208": {
+      "name": "Observable Timing Discrepancy",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
+      "children": {
+        "CWE-208 Diagnostic Grype": {},
+        "CWE-208 Diagnostic Trivy": {}
+      }
+    },
+
+    "CWE-1300": {
+      "name": "Improper Protection of Physical Side Channels",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The device does not contain sufficient protection mechanisms to prevent physical side channels from exposing sensitive information due to patterns in physically observable phenomena such as variations in power consumption, electromagnetic emissions (EME), or acoustic emissions.",
+      "children": {
+        "CWE-1255": {}
+      }
+    },
+    "CWE-1255": {
+      "name": "Comparison Logic is Vulnerable to Power Side-Channel Attacks",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "A device's real time power consumption may be monitored during security token evaluation and the information gleaned may be used to determine the value of the reference token.",
+      "children": {
+        "CWE-1255 Diagnostic Grype": {},
+        "CWE-1255 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-1303": {
+      "name": "Non-Transparent Sharing of Microarchitectural Resources",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "Hardware structures shared across execution contexts (e.g., caches and branch predictors) can violate the expected architecture isolation between contexts.",
+      "children": {
+        "CWE-1303 Diagnostic Grype": {},
+        "CWE-1303 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-209": {
+      "name": "Generation of Error Message Containing Sensitive Information",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
+      "children": {
+        "CWE-211": {},
+        "CWE-211": {}
+      }
+    },
+    "CWE-210": {
+      "name": "Self-generated Error Message Containing Sensitive Information",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product identifies an error condition and creates its own diagnostic or error messages that contain sensitive information.",
+      "children": {
+        "CWE-210 Diagnostic Grype": {},
+        "CWE-210 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-211": {
+      "name": "Externally-Generated Error Message Containing Sensitive Information",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product performs an operation that triggers an external diagnostic or error message that is not directly generated or controlled by the product, such as an error generated by the programming language interpreter that a software application uses. The error can contain sensitive system information.",
+      "children": {
+        "CWE-535": {},
+        "CWE-536": {},
+        "CWE-537": {},
+        "CWE-550": {}
+      }
+    },
+    "CWE-535": {
+      "name": "Exposure of Information Through Shell Error Message",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
+      "children": {
+        "CWE-535 Diagnostic Grype": {},
+        "CWE-535 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-536": {
+      "name": "Servlet Runtime Error Message Containing Sensitive Information",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
+      "children": {
+        "CWE-536 Diagnostic Grype": {},
+        "CWE-536 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-537": {
+      "name": "Java Runtime Error Message Containing Sensitive Information",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
+      "children": {
+        "CWE-537 Diagnostic Grype": {},
+        "CWE-537 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-550": {
+      "name": "Server-generated Error Message Containing Sensitive Information",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
+      "children": {
+        "CWE-550 Diagnostic Grype": {},
+        "CWE-550 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-213": {
+      "name": "Exposure of Sensitive Information Due to Incompatible Policies",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product's intended functionality exposes information to certain actors in accordance with the developer's security policy, but this information is regarded as sensitive according to the intended security policies of other stakeholders such as the product's administrator, users, or others whose information is being processed.",
+      "children": {
+        "CWE-213 Diagnostic Grype": {},
+        "CWE-213 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-214": {
+      "name": "Invocation of Process Using Visible Sensitive Information",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
+      "children": {
+        "CWE-214 Diagnostic Grype": {},
+        "CWE-214 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-215": {
+      "name": "Insertion of Sensitive Information Into Debugging Code",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
+      "children": {
+        "CWE-215 Diagnostic Grype": {},
+        "CWE-215 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-497": {
+      "name": "Exposure of Sensitive System Information to an Unauthorized Control Sphere",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
+      "children": {
+        "CWE-214": {},
+        "CWE-548": {}
+      }
+    },
+    "CWE-548": {
+      "name": "Exposure of Information Through Directory Listing",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
+      "children": {
+        "CWE-548 Diagnostic Grype": {},
+        "CWE-548 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-359": {
+      "name": "Exposure of Private Personal Information to an Unauthorized Actor",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product does not properly prevent a person's private, personal information from being accessed by actors who either (1) are not explicitly authorized to access the information or (2) do not have the implicit consent of the person about whom the information is collected.",
+      "children": {
+        "CWE-359 Diagnostic Grype": {},
+        "CWE-359 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-531": {
+      "name": "Inclusion of Sensitive Information in Test Code",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
+      "children": {
+        "CWE-531 Diagnostic Grype": {},
+        "CWE-531 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-538": {
+      "name": "Insertion of Sensitive Information into Externally-Accessible File or Directory",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
+      "children": {
+        "CWE-540": {},
+        "CWE-651": {}
+      }
+    },
+    "CWE-540": {
+      "name": "Inclusion of Sensitive Information in Source Code",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
+      "children": {
+        "CWE-531": {},
+        "CWE-541": {},
+        "CWE-615": {}
+      }
+    },
+    "CWE-541": {
+      "name": "Inclusion of Sensitive Information in an Include File",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
+      "children": {
+        "CWE-541 Diagnostic Grype": {},
+        "CWE-541 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-615": {
+      "name": "Inclusion of Sensitive Information in Source Code Comments",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
+      "children": {
+        "CWE-615 Diagnostic Grype": {},
+        "CWE-615 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-651": {
+      "name": "Exposure of WSDL File Containing Sensitive Information",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The Web services architecture may require exposing a Web Service Definition Language (WSDL) file that contains information on the publicly accessible services and how callers of these services should interact with them (e.g. what parameters they expect and what types they return).",
+      "children": {
+        "CWE-651 Diagnostic Grype": {},
+        "CWE-651 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-1258": {
+      "name": "Exposure of Sensitive System Information Due to Uncleared Debug Information",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The hardware does not fully clear security-sensitive values, such as keys and intermediate values in cryptographic operations, when debug mode is entered.",
+      "children": {
+        "CWE-1258 Diagnostic Grype": {},
+        "CWE-1258 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-1273": {
+      "name": "Device Unlock Credential Sharing",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The credentials necessary for unlocking a device are shared across multiple parties and may expose sensitive information.",
+      "children": {
+        "CWE-1273 Diagnostic Grype": {},
+        "CWE-1273 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-1295": {
+      "name": "Debug Messages Revealing Unnecessary Information",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product fails to adequately prevent the revealing of unnecessary and potentially sensitive system information within debugging messages.",
+      "children": {
+        "CWE-1295 Diagnostic Grype": {},
+        "CWE-1295 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-498": {
+      "name": "Cloneable Class Containing Sensitive Information",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The code contains a class with sensitive data, but the class is cloneable. The data can then be accessed by cloning the class.",
+      "children": {
+        "CWE-498 Diagnostic Grype": {},
+        "CWE-498 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-499": {
+      "name": "Serializable Class Containing Sensitive Data",
+      "positive": "false",
+      "weakness_abstraction": "Variant",
+      "description": "The code contains a class with sensitive data, but the class does not explicitly deny serialization. The data can be accessed by serializing the class through another class.",
+      "children": {
+        "CWE-499 Diagnostic Grype": {},
+        "CWE-499 Diagnostic Trivy": {}
+      }
+    },
+    "CWE-1272": {
+      "name": "Sensitive Information Uncleared Before Debug/Power State Transition",
+      "positive": "false",
+      "weakness_abstraction": "Base",
+      "description": "The product performs a power or debug state transition, but it does not clear sensitive information that should no longer be accessible due to changes to information access restrictions.",
+      "children": {
+        "CWE-1272 Diagnostic Grype": {},
+        "CWE-1272 Diagnostic Trivy": {}
+      }
+    }
+  },
+
+  "diagnostics": {
+    "CWE-598 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-598"
+    },
+    "CWE-204 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-204"
+    },
+    "CWE-205 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-205"
+    },
+    "CWE-208 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-208"
+    },
+    "CWE-1255 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-1255"
+    },
+    "CWE-1159 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-1159"
+    },
+    "CWE-210 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-210"
+    },
+    "CWE-535 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-535"
+    },
+    "CWE-536 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-536"
+    },
+    "CWE-537 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-537"
+    },
+    "CWE-550 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-550"
+    },
+    "CWE-213 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-213"
+    },
+    "CWE-215 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-215"
+    },
+    "CWE-214 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-214"
+    },
+    "CWE-548 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-548"
+    },
+    "CWE-359 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-359"
+    },
+    "CWE-532 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-532"
+    },
+    "CWE-531 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-531"
+    },
+    "CWE-541 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-541"
+    },
+    "CWE-615 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-615"
+    },
+    "CWE-651 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-651"
+    },
+    "CWE-1258 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-1258"
+    },
+    "CWE-1273 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-1273"
+    },
+    "CWE-1295 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-1295"
+    },
+    "CWE-498 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-498"
+    },
+    "CWE-499 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-499"
+    },
+    "CWE-1272 Diagnostic Grype": {
+      "toolName": "Grype",
+      "description": "Sum of findings of type CWE-1272"
+    }
+  },
+  "Tool": {
+    "CWE-598 Tool Grype": {
+      "exitPoint": "Get Query String",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "201; 200"
+    },
+    "CWE-204 Tool Grype": {
+      "exitPoint": "Log File",
+      "sensitiveInformation": "",
+      "Mechanism": "Program Design",
+      "lineofCode": "",
+      "CWEParents": "203; 200"
+    },
+    "CWE-205 Tool Grype": {
+      "exitPoint": "Log File",
+      "sensitiveInformation": "",
+      "Mechanism": "Program Design",
+      "lineofCode": "",
+      "CWEParents": "203; 200"
+    },
+    "CWE-208 Tool Grype": {
+      "exitPoint": "",
+      "sensitiveInformation": "",
+      "Mechanism": "Program Design",
+      "lineofCode": "",
+      "CWEParents": "203; 200"
+    },
+    "CWE-1255 Tool Grype": {
+      "exitPoint": "",
+      "sensitiveInformation": "",
+      "Mechanism": "Program Design",
+      "lineofCode": "",
+      "CWEParents": "1300, 203; 200"
+    },
+    "CWE-1203 Tool Grype": {
+      "exitPoint": "",
+      "sensitiveInformation": "",
+      "Mechanism": "Device",
+      "lineofCode": "",
+      "CWEParents": "203; 200"
+    },
+    "CWE-210 Tool Grype": {
+      "exitPoint": "Self Generated Error Message",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "209; 200"
+    },
+    "CWE-535 Tool Grype": {
+      "exitPoint": "Command Shell Error Message",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "211; 209; 200"
+    },
+    "CWE-536 Tool Grype": {
+      "exitPoint": "Servlet Runtime Error Message",
+      "sensitiveInformation": "SSN",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "211; 209; 200"
+    },
+    "CWE-537 Tool Grype": {
+      "exitPoint": "Java Runtime Error Message",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "211; 209; 200"
+    },
+    "CWE-550 Tool Grype": {
+      "exitPoint": "Server Generated Error Message",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "211; 209; 200"
+    },
+    "CWE-213 Tool Grype": {
+      "exitPoint": "",
+      "sensitiveInformation": "",
+      "Mechanism": "Program Design",
+      "lineofCode": "",
+      "CWEParents": "200"
+    },
+    "CWE-215 Tool Grype": {
+      "exitPoint": "Debug Code",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "200"
+    },
+    "CWE-214 Tool Grype": {
+      "exitPoint": "",
+      "sensitiveInformation": "Environment Variables",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "497; 200"
+    },
+    "CWE-548 Tool Grype": {
+      "exitPoint": "Directory Listing",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "497; 200"
+    },
+    "CWE-359 Tool Grype": {
+      "exitPoint": "",
+      "sensitiveInformation": "",
+      "Mechanism": "Program Design",
+      "lineofCode": "",
+      "CWEParents": "200"
+    },
+    "CWE-532 Tool Grype": {
+      "exitPoint": "Log File",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "540; 538; 200"
+    },
+    "CWE-531 Tool Grype": {
+      "exitPoint": "Test code",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "540; 538; 200"
+    },
+    "CWE-541 Tool Grype": {
+      "exitPoint": "Included Code",
+      "sensitiveInformation": "",
+      "Mechanism": "Accessible Server",
+      "lineofCode": "",
+      "CWEParents": "540; 538; 200"
+    },
+    "CWE-615 Tool Grype": {
+      "exitPoint": "Comments",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "540; 538; 200"
+    },
+    "CWE-651 Tool Grype": {
+      "exitPoint": "WSDL File",
+      "sensitiveInformation": "",
+      "Mechanism": "Accessible Server",
+      "lineofCode": "",
+      "CWEParents": "538; 200"
+    },
+    "CWE-1258 Tool Grype": {
+      "exitPoint": "Log File",
+      "sensitiveInformation": "SSN",
+      "Mechanism": "",
+      "lineofCode": "521",
+      "CWEParents": "538; 200"
+    },
+    "CWE-1273 Tool Grype": {
+      "exitPoint": "",
+      "sensitiveInformation": "",
+      "Mechanism": "Device",
+      "lineofCode": "",
+      "CWEParents": "200"
+    },
+    "CWE-1295 Tool Grype": {
+      "exitPoint": "Debug Message",
+      "sensitiveInformation": "",
+      "Mechanism": "",
+      "lineofCode": "",
+      "CWEParents": "200"
+    },
+    "CWE-498 Tool Grype": {
+      "exitPoint": "Clonable Class",
+      "sensitiveInformation": "",
+      "Mechanism": "Program Design",
+      "lineofCode": "",
+      "CWEParents": "200"
+    },
+    "CWE-499 Tool Grype": {
+      "exitPoint": "Serializable Class",
+      "sensitiveInformation": "",
+      "Mechanism": "Program Design",
+      "lineofCode": "",
+      "CWEParents": "200"
+    },
+    "CWE-1272 Tool Grype": {
+      "exitPoint": "",
+      "sensitiveInformation": "",
+      "Mechanism": "Program Design",
+      "lineofCode": "521",
+      "CWEParents": "200"
+    }
+  }
+}

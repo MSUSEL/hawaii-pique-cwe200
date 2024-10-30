@@ -1,0 +1,948 @@
+{
+  "name": "PIQUE Cloud-dockerfile quality model",
+  "additionalData": {
+    "projectName": "java projrct"
+  },
+  "global_config": {
+    "benchmark_strategy": "pique.calibration.NaiveBenchmarker",
+    "weights_strategy": "pique.calibration.NaiveWeighter"
+  },
+  "factors": {
+    "product_factors": {
+      "Pillar CWE-200": {
+        "name": "Pillar CWE-200",
+        "value": 0.0,
+        "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
+        "weights": {},
+        "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
+        "normalizer": "pique.evaluation.DefaultNormalizer",
+        "utility_function": {
+          "name": "pique.evaluation.DefaultUtility",
+          "description": "Simple linear utility function based on min and max of threshold data"
+        }
+      }
+    },
+    "quality_aspects": {
+      "Performance Efficiency": {
+        "name": "Performance Efficiency",
+        "value": 0.00,
+        "description": "Performance relative to the amount of resources used under stated conditions",
+        "weights": {},
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
+        "normalizer": "pique.evaluation.DefaultNormalizer",
+        "utility_function": {
+          "name": "pique.evaluation.DefaultUtility",
+          "description": "Simple linear utility function based on min and max of threshold data"
+        }
+      },
+      "Portability": {
+        "name": "Portability",
+        "value": 0.00,
+        "description": "degree of effectiveness and efficiency with which a system, product or component can be transferred from one hardware, software or other operational or usage environment to another",
+        "weights": {},
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
+        "normalizer": "pique.evaluation.DefaultNormalizer",
+        "utility_function": {
+          "name": "pique.evaluation.DefaultUtility",
+          "description": "Simple linear utility function based on min and max of threshold data"
+        }
+      },
+      "Functional Suitability": {
+        "name": "Functional Suitability",
+        "value": 0.00,
+        "description": "Degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions",
+        "weights": {},
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
+        "normalizer": "pique.evaluation.DefaultNormalizer",
+        "utility_function": {
+          "name": "pique.evaluation.DefaultUtility",
+          "description": "Simple linear utility function based on min and max of threshold data"
+        }
+      },
+      "Maintainability": {
+        "name": "Maintainability",
+        "value": 0.00,
+        "description": "Degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers",
+        "weights": {},
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
+        "normalizer": "pique.evaluation.DefaultNormalizer",
+        "utility_function": {
+          "name": "pique.evaluation.DefaultUtility",
+          "description": "Simple linear utility function based on min and max of threshold data"
+        }
+      },
+      "Compatibility": {
+        "name": "Compatibility",
+        "value": 0.00,
+        "description": "Degree to which a product, system or component can exchange information with other products, systems or components, and/or perform its required functions, while sharing the same hardware or software environment",
+        "weights": {},
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
+        "normalizer": "pique.evaluation.DefaultNormalizer",
+        "utility_function": {
+          "name": "pique.evaluation.DefaultUtility",
+          "description": "Simple linear utility function based on min and max of threshold data"
+        }
+      },
+      "Reliability": {
+        "name": "Reliability",
+        "value": 0.00,
+        "description": "Degree to which a system, product or component performs specified functions under specified conditions for a specified period of time",
+        "weights": {},
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
+        "normalizer": "pique.evaluation.DefaultNormalizer",
+        "utility_function": {
+          "name": "pique.evaluation.DefaultUtility",
+          "description": "Simple linear utility function based on min and max of threshold data"
+        }
+      },
+      "Security": {
+        "name": "Security",
+        "value": 0.00,
+        "description": "Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization",
+        "weights": {},
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
+        "normalizer": "pique.evaluation.DefaultNormalizer",
+        "utility_function": {
+          "name": "pique.evaluation.DefaultUtility",
+          "description": "Simple linear utility function based on min and max of threshold data"
+        }
+      },
+      "Usability": {
+        "name": "Usability",
+        "value": 0.00,
+        "description": "Degree to which a product or system can be used by specified users to achieve specified goals with effectiveness, efficiency and satisfaction in a specified context of use",
+        "weights": {},
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
+        "normalizer": "pique.evaluation.DefaultNormalizer",
+        "utility_function": {
+          "name": "pique.evaluation.DefaultUtility",
+          "description": "Simple linear utility function based on min and max of threshold data"
+        }
+      }
+    },
+    "tqi": {
+      "PIQUE Cloud-dockerfile quality model": {
+        "name": "PIQUE Cloud-dockerfile quality model",
+        "value": 0.000,
+        "description": "Model description, replace with a description of your model",
+        "weights": {},
+        "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
+        "normalizer": "pique.evaluation.DefaultNormalizer",
+        "utility_function": {
+          "name": "pique.evaluation.DefaultUtility",
+          "description": "Simple linear utility function based on min and max of threshold data"
+        }
+      }
+    }
+  },
+  "measures": {
+    "CWE-213": {
+      "positive": false,
+      "name": "CWE-213",
+      "value": 0.0,
+      "description": "The product's intended functionality exposes information to certain actors in accordance with the developer's security policy, but this information is regarded as sensitive according to the intended security policies of other stakeholders such as the product's administrator, users, or others whose information is being processed.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-499": {
+      "positive": false,
+      "name": "CWE-499",
+      "value": 0.0,
+      "description": "The code contains a class with sensitive data, but the class does not explicitly deny serialization. The data can be accessed by serializing the class through another class.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-598": {
+      "positive": false,
+      "name": "CWE-598",
+      "value": 0.0,
+      "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-214": {
+      "positive": false,
+      "name": "CWE-214",
+      "value": 0.0,
+      "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1255": {
+      "positive": false,
+      "name": "CWE-1255",
+      "value": 0.0,
+      "description": "A device's real time power consumption may be monitored during security token evaluation and the information gleaned may be used to determine the value of the reference token.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-215": {
+      "positive": false,
+      "name": "CWE-215",
+      "value": 0.0,
+      "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-359": {
+      "positive": false,
+      "name": "CWE-359",
+      "value": 0.0,
+      "description": "The product does not properly prevent a person's private, personal information from being accessed by actors who either (1) are not explicitly authorized to access the information or (2) do not have the implicit consent of the person about whom the information is collected.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-535": {
+      "positive": false,
+      "name": "CWE-535",
+      "value": 0.0,
+      "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1272": {
+      "positive": false,
+      "name": "CWE-1272",
+      "value": 0.0,
+      "description": "The product performs a power or debug state transition, but it does not clear sensitive information that should no longer be accessible due to changes to information access restrictions.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-536": {
+      "positive": false,
+      "name": "CWE-536",
+      "value": 0.0,
+      "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1273": {
+      "positive": false,
+      "name": "CWE-1273",
+      "value": 0.0,
+      "description": "The credentials necessary for unlocking a device are shared across multiple parties and may expose sensitive information.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1295": {
+      "positive": false,
+      "name": "CWE-1295",
+      "value": 0.0,
+      "description": "The product fails to adequately prevent the revealing of unnecessary and potentially sensitive system information within debugging messages.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-537": {
+      "positive": false,
+      "name": "CWE-537",
+      "value": 0.0,
+      "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-538": {
+      "positive": false,
+      "name": "CWE-538",
+      "value": 0.0,
+      "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-615": {
+      "positive": false,
+      "name": "CWE-615",
+      "value": 0.0,
+      "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-550": {
+      "positive": false,
+      "name": "CWE-550",
+      "value": 0.0,
+      "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-210": {
+      "positive": false,
+      "name": "CWE-210",
+      "value": 0.0,
+      "description": "The product identifies an error condition and creates its own diagnostic or error messages that contain sensitive information.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-497": {
+      "positive": false,
+      "name": "CWE-497",
+      "value": 0.0,
+      "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-651": {
+      "positive": false,
+      "name": "CWE-651",
+      "value": 0.0,
+      "description": "The Web services architecture may require exposing a Web Service Definition Language (WSDL) file that contains information on the publicly accessible services and how callers of these services should interact with them (e.g. what parameters they expect and what types they return).",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-211": {
+      "positive": false,
+      "name": "CWE-211",
+      "value": 0.0,
+      "description": "The product performs an operation that triggers an external diagnostic or error message that is not directly generated or controlled by the product, such as an error generated by the programming language interpreter that a software application uses. The error can contain sensitive system information.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-498": {
+      "positive": false,
+      "name": "CWE-498",
+      "value": 0.0,
+      "description": "The code contains a class with sensitive data, but the class is cloneable. The data can then be accessed by cloning the class.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-531": {
+      "positive": false,
+      "name": "CWE-531",
+      "value": 0.0,
+      "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1303": {
+      "positive": false,
+      "name": "CWE-1303",
+      "value": 0.0,
+      "description": "Hardware structures shared across execution contexts (e.g., caches and branch predictors) can violate the expected architecture isolation between contexts.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-203": {
+      "positive": false,
+      "name": "CWE-203",
+      "value": 0.0,
+      "description": "The product behaves differently or sends different responses under different circumstances in a way that is observable to an unauthorized actor, which exposes security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-204": {
+      "positive": false,
+      "name": "CWE-204",
+      "value": 0.0,
+      "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1300": {
+      "positive": false,
+      "name": "CWE-1300",
+      "value": 0.0,
+      "description": "The device does not contain sufficient protection mechanisms to prevent physical side channels from exposing sensitive information due to patterns in physically observable phenomena such as variations in power consumption, electromagnetic emissions (EME), or acoustic emissions.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-205": {
+      "positive": false,
+      "name": "CWE-205",
+      "value": 0.0,
+      "description": "The product's behaviors indicate important differences that may be observed by unauthorized actors in a way that reveals (1) its internal state or decision process, or (2) differences from other products with equivalent functionality.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-548": {
+      "positive": false,
+      "name": "CWE-548",
+      "value": 0.0,
+      "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-208": {
+      "positive": false,
+      "name": "CWE-208",
+      "value": 0.0,
+      "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-209": {
+      "positive": false,
+      "name": "CWE-209",
+      "value": 0.0,
+      "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-540": {
+      "positive": false,
+      "name": "CWE-540",
+      "value": 0.0,
+      "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-541": {
+      "positive": false,
+      "name": "CWE-541",
+      "value": 0.0,
+      "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-201": {
+      "positive": false,
+      "name": "CWE-201",
+      "value": 0.0,
+      "description": "The code transmits data to another actor, but a portion of the data includes sensitive information that should not be accessible to that actor.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1258": {
+      "positive": false,
+      "name": "CWE-1258",
+      "value": 0.0,
+      "description": "The hardware does not fully clear security-sensitive values, such as keys and intermediate values in cryptographic operations, when debug mode is entered.",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    }
+  },
+  "diagnostics": {
+    "CWE-208 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-208 Diagnostic CweCodeQl",
+      "value": 27.0,
+      "description": "Sum of findings of type CWE-208",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-215 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-215 Diagnostic CweCodeQl",
+      "value": 9.0,
+      "description": "Sum of findings of type CWE-215",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-359 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-359 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-359",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-498 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-498 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-498",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-615 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-615 Diagnostic CweCodeQl",
+      "value": 9.0,
+      "description": "Sum of findings of type CWE-615",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1273 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-1273 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-1273",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-210 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-210 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-210",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-535 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-535 Diagnostic CweCodeQl",
+      "value": 9.0,
+      "description": "Sum of findings of type CWE-535",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-205 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-205 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-205",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-537 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-537 Diagnostic CweCodeQl",
+      "value": 9.0,
+      "description": "Sum of findings of type CWE-537",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-214 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-214 Diagnostic CweCodeQl",
+      "value": 9.0,
+      "description": "Sum of findings of type CWE-214",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-499 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-499 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-499",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1258 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-1258 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-1258",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-209 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-209 Diagnostic CweCodeQl",
+      "value": 18.0,
+      "description": "Sum of findings of type CWE-209",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-536 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-536 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-536",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-598 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-598 Diagnostic CweCodeQl",
+      "value": 9.0,
+      "description": "Sum of findings of type CWE-598",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-204 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-204 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-204",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1303 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-1303 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-1272",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1272 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-1272 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-1272",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-541 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-541 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-541",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-548 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-548 Diagnostic CweCodeQl",
+      "value": 9.0,
+      "description": "Sum of findings of type CWE-548",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-201 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-201 Diagnostic CweCodeQl",
+      "value": 9.0,
+      "description": "Sum of findings of type CWE-201",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-651 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-651 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-651",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1255 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-1255 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-1255",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-531 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-531 Diagnostic CweCodeQl",
+      "value": 9.0,
+      "description": "Sum of findings of type CWE-531",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-550 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-550 Diagnostic CweCodeQl",
+      "value": 27.0,
+      "description": "Sum of findings of type CWE-550",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-1295 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-1295 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-1295",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    },
+    "CWE-213 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "name": "CWE-213 Diagnostic CweCodeQl",
+      "value": 0.0,
+      "description": "Sum of findings of type CWE-213",
+      "weights": {},
+      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.DefaultUtility",
+        "description": "Simple linear utility function based on min and max of threshold data"
+      }
+    }
+  }
+}
