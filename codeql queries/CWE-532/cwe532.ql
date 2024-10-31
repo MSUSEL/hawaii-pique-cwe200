@@ -51,8 +51,12 @@ private class TypeType extends RefType {
 
 
 module SensitiveLoggerConfig implements DataFlow::ConfigSig {
-  predicate isSource(DataFlow::Node source) { source.asExpr() instanceof SensitiveVariableExpr }
-
+  predicate isSource(DataFlow::Node source) { 
+    exists(SensitiveVariableExpr sve |  
+      source.asExpr() = sve and 
+      sve.toString().toLowerCase().regexpMatch(".*name.*"))
+   }
+  
   predicate isSink(DataFlow::Node sink) { sinkNode(sink, "log-injection") }
 
 
