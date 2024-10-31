@@ -17,6 +17,11 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag
 from sentence_transformers import SentenceTransformer
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../utils')))
+
+
 
 # ------------------------------ Parameters ------------------------------------
 BATCH_SIZE = 32
@@ -171,14 +176,13 @@ model = KerasClassifier(model=create_model, verbose=0)  # Updated for scikeras
 
 # Define the grid search parameters
 param_grid = {
-    'model__optimizer': ['adam', 'rmsprop', 'sgd'],
-    'model__learning_rate': [0.01, 0.001, 0.0001, 0.00001],
-    'model__dropout_rate': [0.2, 0.3, 0.5, 0.7],
-    'model__weight_decay': [0.01, 0.001, 0.0001, 0.00001],
-    'model__units': [64, 128, 256, 512],
-    # 'model__activation': ['relu', 'tanh'],
-    'batch_size': [16, 32, 64],
-    'epochs': [10, 20, 50]
+    'model__optimizer': ['adam'],
+    'model__learning_rate': [5e-5, 1e-4, 2e-4],  # Around 0.0001
+    'model__dropout_rate': [0.15, 0.2, 0.25],    # Around 0.2
+    'model__weight_decay': [5e-5, 1e-4, 2e-4],   # Around 0.0001
+    'model__units': [192, 256, 320],             # Around 256
+    'batch_size': [32, 64, 128],                 # Around 64
+    'epochs': [40, 50, 60]                       # Around 50
 }
 
 # Stratified k-fold cross-validation
