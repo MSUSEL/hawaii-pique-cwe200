@@ -14,7 +14,6 @@ import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
-import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,7 +34,6 @@ public class ParseJava {
         }
 
         String filePath = args[0];
-        // String filePath = "src/sensFiles/TemporaryFolder.java"; // Adjust the path as needed
         // String filePath = "src/sensFiles/ClassicPluginStrategy.java"; // Adjust the path as needed
 
         String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
@@ -55,7 +53,6 @@ public class ParseJava {
                     CompilationUnit cu = result.getResult().get();
 
                     Set<String> comments = new HashSet<>();
-                    Set<String> strings = new HashSet<>();
                     Set<String> methodCalls = new HashSet<>();
 
                     // New data structures
@@ -65,55 +62,104 @@ public class ParseJava {
                     // Variables now include name, type, methods
                     Map<String, JSONObject> variables = new HashMap<>(); // Map from variable name to its details
 
-                    // Collect methods and variables within them
-                    cu.accept(new MethodCollector(methodNames, methodCodeMap, variables), null);
+                    // Strings include name, methods
+                    Map<String, JSONObject> strings = new HashMap<>(); // Map from string value to its details
+
+                    // Collect methods, variables, and strings within them
+                    cu.accept(new MethodCollector(methodNames, methodCodeMap, variables, strings), null);
 
                     // Collect variables outside methods (e.g., global variables)
                     cu.accept(new GlobalVariableCollector(variables), null);
 
+                    // Collect strings outside methods (global scope)
+                    cu.accept(new GlobalStringCollector(strings), null);
+
                     // Existing collectors
                     cu.accept(new CommentCollector(), comments);
-                    cu.accept(new StringLiteralCollector(), strings);
                     cu.accept(new MethodCallCollector(), methodCalls);
 
-                    // For global variables that only appear in "global", create custom method mappings
+                    // Process variables with global scope
                     for (Map.Entry<String, JSONObject> entry : variables.entrySet()) {
                         JSONObject varInfo = entry.getValue();
                         JSONArray methods = varInfo.getJSONArray("methods");
-                        if (methods.length() == 1 && methods.getString(0).equals("global")) {
-                            String variableName = entry.getKey();
-                            // Collect lines of code where this variable appears
+                        String variableName = entry.getKey();
+
+                        if (methods.toList().contains("global")) {
+                            // Collect lines of code where this variable appears in the global scope
                             Set<String> codeLines = new HashSet<>();
-                            cu.accept(new VariableUsageCollector(variableName), codeLines);
+                            cu.accept(new VariableUsageCollector(variableName, true), codeLines);
 
-                            // Create custom method name
-                            String customMethodName = variableName + "_lines";
+                            if (!codeLines.isEmpty()) {
+                                // Create custom method name
+                                String customMethodName = variableName + "_global_lines_variable";
 
-                            // Replace "global" in methods array with custom method name
-                            methods.remove(0);
-                            methods.put(customMethodName);
+                                // Replace "global" in methods array with custom method name
+                                JSONArray updatedMethods = new JSONArray();
+                                for (int i = 0; i < methods.length(); i++) {
+                                    String methodName = methods.getString(i);
+                                    if (!methodName.equals("global")) {
+                                        updatedMethods.put(methodName);
+                                    }
+                                }
+                                updatedMethods.put(customMethodName);
+                                varInfo.put("methods", updatedMethods);
 
-                            // Concatenate code lines
-                            StringBuilder codeBuilder = new StringBuilder();
-                            for (String codeLine : codeLines) {
-                                codeBuilder.append(codeLine).append("\n");
+                                // Concatenate code lines
+                                StringBuilder codeBuilder = new StringBuilder();
+                                for (String codeLine : codeLines) {
+                                    codeBuilder.append(codeLine).append("\n");
+                                }
+
+                                // Add to methodCodeMap
+                                methodCodeMap.put(customMethodName, codeBuilder.toString());
                             }
+                        }
+                    }
 
-                            // Add to methodCodeMap
-                            methodCodeMap.put(customMethodName, codeBuilder.toString());
+                    // Process strings with global scope
+                    for (Map.Entry<String, JSONObject> entry : strings.entrySet()) {
+                        JSONObject strInfo = entry.getValue();
+                        JSONArray methods = strInfo.getJSONArray("methods");
+                        String stringValue = entry.getKey();
 
-                            // Remove "codeLines" from varInfo if it exists
-                            varInfo.remove("codeLines");
+                        if (methods.toList().contains("global")) {
+                            // Collect lines of code where this string appears in the global scope
+                            Set<String> codeLines = new HashSet<>();
+                            cu.accept(new StringUsageCollector(stringValue, true), codeLines);
+
+                            if (!codeLines.isEmpty()) {
+                                // Create custom method name
+                                String customMethodName = stringValue + "_global_lines_string";
+
+                                // Replace "global" in methods array with custom method name
+                                JSONArray updatedMethods = new JSONArray();
+                                for (int i = 0; i < methods.length(); i++) {
+                                    String methodName = methods.getString(i);
+                                    if (!methodName.equals("global")) {
+                                        updatedMethods.put(methodName);
+                                    }
+                                }
+                                updatedMethods.put(customMethodName);
+                                strInfo.put("methods", updatedMethods);
+
+                                // Concatenate code lines
+                                StringBuilder codeBuilder = new StringBuilder();
+                                for (String codeLine : codeLines) {
+                                    codeBuilder.append(codeLine).append("\n");
+                                }
+
+                                // Add to methodCodeMap
+                                methodCodeMap.put(customMethodName, codeBuilder.toString());
+                            }
                         }
                     }
 
                     JSONObject jsonOutput = new JSONObject();
                     jsonOutput.put("filename", fileName);
 
-                    // Convert variables map to JSON array, ensuring fields are ordered as name, type, methods
+                    // Convert variables map to JSON array
                     JSONArray variablesArray = new JSONArray();
                     for (JSONObject varInfo : variables.values()) {
-                        // Reorder the keys
                         JSONObject orderedVarInfo = new JSONObject();
                         orderedVarInfo.put("name", varInfo.get("name"));
                         orderedVarInfo.put("type", varInfo.get("type"));
@@ -122,10 +168,15 @@ public class ParseJava {
                     }
                     jsonOutput.put("variables", variablesArray);
 
-                    jsonOutput.put("comments", new JSONArray(comments));
-                    jsonOutput.put("strings", new JSONArray(strings));
-                    jsonOutput.put("methodCalls", new JSONArray(methodCalls));
-                    jsonOutput.put("methodNames", new JSONArray(methodNames));
+                    // Convert strings map to JSON array
+                    JSONArray stringsArray = new JSONArray();
+                    for (JSONObject strInfo : strings.values()) {
+                        JSONObject orderedStrInfo = new JSONObject();
+                        orderedStrInfo.put("name", strInfo.get("name"));
+                        orderedStrInfo.put("methods", strInfo.get("methods"));
+                        stringsArray.put(orderedStrInfo);
+                    }
+                    jsonOutput.put("strings", stringsArray);
 
                     // Convert methodCodeMap to JSON
                     JSONObject methodCodeJson = new JSONObject();
@@ -146,16 +197,18 @@ public class ParseJava {
         }
     }
 
-    // Visitor class to collect method names and code, and variables within methods
+    // Visitor class to collect method names and code, variables, and strings within methods
     private static class MethodCollector extends VoidVisitorAdapter<Void> {
         private Set<String> methodNames;
         private Map<String, String> methodCodeMap;
         private Map<String, JSONObject> variables;
+        private Map<String, JSONObject> strings;
 
-        public MethodCollector(Set<String> methodNames, Map<String, String> methodCodeMap, Map<String, JSONObject> variables) {
+        public MethodCollector(Set<String> methodNames, Map<String, String> methodCodeMap, Map<String, JSONObject> variables, Map<String, JSONObject> strings) {
             this.methodNames = methodNames;
             this.methodCodeMap = methodCodeMap;
             this.variables = variables;
+            this.strings = strings;
         }
 
         @Override
@@ -172,6 +225,10 @@ public class ParseJava {
                 // Collect variables within this method
                 VariableCollector variableCollector = new VariableCollector(variables, methodName);
                 md.accept(variableCollector, null);
+
+                // Collect strings within this method
+                StringCollector stringCollector = new StringCollector(strings, methodName);
+                md.accept(stringCollector, null);
             } catch (Exception e) {
                 System.err.println("Error collecting method: " + e.getMessage());
             }
@@ -191,6 +248,10 @@ public class ParseJava {
                 // Collect variables within this constructor
                 VariableCollector variableCollector = new VariableCollector(variables, methodName);
                 cd.accept(variableCollector, null);
+
+                // Collect strings within this constructor
+                StringCollector stringCollector = new StringCollector(strings, methodName);
+                cd.accept(stringCollector, null);
             } catch (Exception e) {
                 System.err.println("Error collecting constructor: " + e.getMessage());
             }
@@ -283,6 +344,40 @@ public class ParseJava {
         }
     }
 
+    // Visitor class to collect strings within methods
+    private static class StringCollector extends VoidVisitorAdapter<Void> {
+        private Map<String, JSONObject> strings;
+        private String currentMethodName;
+
+        public StringCollector(Map<String, JSONObject> strings, String currentMethodName) {
+            this.strings = strings;
+            this.currentMethodName = currentMethodName != null ? currentMethodName : "global";
+        }
+
+        @Override
+        public void visit(StringLiteralExpr sle, Void arg) {
+            try {
+                super.visit(sle, arg);
+                String value = sle.getValue().trim();
+
+                // Update string info
+                JSONObject strInfo = strings.getOrDefault(value, new JSONObject());
+                strInfo.put("name", value);
+
+                // Add method to the methods list
+                JSONArray methods = strInfo.has("methods") ? strInfo.getJSONArray("methods") : new JSONArray();
+                if (!methods.toList().contains(currentMethodName)) {
+                    methods.put(currentMethodName);
+                }
+                strInfo.put("methods", methods);
+
+                strings.put(value, strInfo);
+            } catch (Exception e) {
+                System.err.println("Error collecting string in method: " + e.getMessage());
+            }
+        }
+    }
+
     // Visitor class to collect global variables (outside methods)
     private static class GlobalVariableCollector extends VoidVisitorAdapter<Void> {
         private Map<String, JSONObject> variables;
@@ -319,20 +414,73 @@ public class ParseJava {
         }
     }
 
+    // Visitor class to collect strings in the global scope
+    private static class GlobalStringCollector extends VoidVisitorAdapter<Void> {
+        private Map<String, JSONObject> strings;
+
+        public GlobalStringCollector(Map<String, JSONObject> strings) {
+            this.strings = strings;
+        }
+
+        @Override
+        public void visit(StringLiteralExpr sle, Void arg) {
+            try {
+                super.visit(sle, arg);
+                if (isInGlobalScope(sle)) {
+                    String value = sle.getValue().trim();
+
+                    // Update string info
+                    JSONObject strInfo = strings.getOrDefault(value, new JSONObject());
+                    strInfo.put("name", value);
+
+                    // Add "global" to the methods list
+                    JSONArray methods = strInfo.has("methods") ? strInfo.getJSONArray("methods") : new JSONArray();
+                    if (!methods.toList().contains("global")) {
+                        methods.put("global");
+                    }
+                    strInfo.put("methods", methods);
+
+                    strings.put(value, strInfo);
+                }
+            } catch (Exception e) {
+                System.err.println("Error collecting global string: " + e.getMessage());
+            }
+        }
+
+        private boolean isInGlobalScope(com.github.javaparser.ast.Node node) {
+            boolean inMethodOrConstructor = node.findAncestor(MethodDeclaration.class).isPresent() ||
+                                            node.findAncestor(ConstructorDeclaration.class).isPresent();
+
+            boolean inClass = node.findAncestor(ClassOrInterfaceDeclaration.class).isPresent();
+
+            boolean inInitializerBlock = node.findAncestor(BlockStmt.class)
+                .map(block -> block.getParentNode()
+                    .filter(parent -> parent instanceof ClassOrInterfaceDeclaration)
+                    .isPresent())
+                .orElse(false);
+
+            return !inMethodOrConstructor && inClass && !inInitializerBlock;
+        }
+    }
+
     // Visitor class to collect usages of variables, including declarations
     private static class VariableUsageCollector extends VoidVisitorAdapter<Set<String>> {
         private String variableName;
+        private boolean onlyGlobalScope;
 
-        public VariableUsageCollector(String variableName) {
+        public VariableUsageCollector(String variableName, boolean onlyGlobalScope) {
             this.variableName = variableName;
+            this.onlyGlobalScope = onlyGlobalScope;
         }
 
         @Override
         public void visit(NameExpr ne, Set<String> codeLines) {
             super.visit(ne, codeLines);
             if (ne.getNameAsString().equals(variableName)) {
-                // Get the line of code where the variable is used
-                codeLines.add(getFullLine(ne));
+                if (!onlyGlobalScope || isInGlobalScope(ne)) {
+                    // Get the line of code where the variable is used
+                    codeLines.add(getFullLine(ne));
+                }
             }
         }
 
@@ -340,9 +488,83 @@ public class ParseJava {
         public void visit(VariableDeclarator vd, Set<String> codeLines) {
             super.visit(vd, codeLines);
             if (vd.getNameAsString().equals(variableName)) {
-                // Get the line of code where the variable is declared
-                codeLines.add(getFullLine(vd));
+                if (!onlyGlobalScope || isInGlobalScope(vd)) {
+                    // Get the line of code where the variable is declared
+                    codeLines.add(getFullLine(vd));
+                }
             }
+        }
+
+        private boolean isInGlobalScope(com.github.javaparser.ast.Node node) {
+            boolean inMethodOrConstructor = node.findAncestor(MethodDeclaration.class).isPresent() ||
+                                            node.findAncestor(ConstructorDeclaration.class).isPresent();
+
+            boolean inClass = node.findAncestor(ClassOrInterfaceDeclaration.class).isPresent();
+
+            boolean inInitializerBlock = node.findAncestor(BlockStmt.class)
+                .map(block -> block.getParentNode()
+                    .filter(parent -> parent instanceof ClassOrInterfaceDeclaration)
+                    .isPresent())
+                .orElse(false);
+
+            return !inMethodOrConstructor && inClass && !inInitializerBlock;
+        }
+
+        private String getFullLine(com.github.javaparser.ast.Node node) {
+            int line = node.getBegin().map(pos -> pos.line).orElse(-1);
+            String codeLine = node.findCompilationUnit()
+                    .flatMap(cu -> cu.getStorage())
+                    .flatMap(storage -> {
+                        try {
+                            Path path = storage.getPath();
+                            java.util.List<String> lines = Files.readAllLines(path);
+                            if (line > 0 && line <= lines.size()) {
+                                return java.util.Optional.of(lines.get(line - 1));
+                            } else {
+                                return java.util.Optional.empty();
+                            }
+                        } catch (Exception e) {
+                            return java.util.Optional.empty();
+                        }
+                    }).orElse(node.toString());
+            return codeLine.trim();
+        }
+    }
+
+    // Visitor class to collect usages of strings, including declarations
+    private static class StringUsageCollector extends VoidVisitorAdapter<Set<String>> {
+        private String stringValue;
+        private boolean onlyGlobalScope;
+
+        public StringUsageCollector(String stringValue, boolean onlyGlobalScope) {
+            this.stringValue = stringValue;
+            this.onlyGlobalScope = onlyGlobalScope;
+        }
+
+        @Override
+        public void visit(StringLiteralExpr sle, Set<String> codeLines) {
+            super.visit(sle, codeLines);
+            if (sle.getValue().trim().equals(stringValue)) {
+                if (!onlyGlobalScope || isInGlobalScope(sle)) {
+                    // Get the line of code where the string is used
+                    codeLines.add(getFullLine(sle));
+                }
+            }
+        }
+
+        private boolean isInGlobalScope(com.github.javaparser.ast.Node node) {
+            boolean inMethodOrConstructor = node.findAncestor(MethodDeclaration.class).isPresent() ||
+                                            node.findAncestor(ConstructorDeclaration.class).isPresent();
+
+            boolean inClass = node.findAncestor(ClassOrInterfaceDeclaration.class).isPresent();
+
+            boolean inInitializerBlock = node.findAncestor(BlockStmt.class)
+                .map(block -> block.getParentNode()
+                    .filter(parent -> parent instanceof ClassOrInterfaceDeclaration)
+                    .isPresent())
+                .orElse(false);
+
+            return !inMethodOrConstructor && inClass && !inInitializerBlock;
         }
 
         private String getFullLine(com.github.javaparser.ast.Node node) {
@@ -377,24 +599,6 @@ public class ParseJava {
                 }
             } catch (Exception e) {
                 System.err.println("Error collecting comments in CompilationUnit: " + e.getMessage());
-            }
-        }
-
-        // ... [Rest of your existing CommentCollector methods]
-    }
-
-    // Visitor class to collect string literals from the AST
-    private static class StringLiteralCollector extends VoidVisitorAdapter<Set<String>> {
-        @Override
-        public void visit(StringLiteralExpr sle, Set<String> collector) {
-            try {
-                super.visit(sle, collector);
-                String value = sle.getValue().replace("\\", "").replace("'", "").trim();
-                if (!value.isEmpty() && !value.equals(" ")) {
-                    collector.add(value);
-                }
-            } catch (Exception e) {
-                System.err.println("Error collecting string literal: " + e.getMessage());
             }
         }
     }
