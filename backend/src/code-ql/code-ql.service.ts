@@ -52,18 +52,12 @@ export class CodeQlService {
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
-        // let slice = javaFiles.slice(177, 187);  
-        // const data = await this.runChatGPT(slice, sourcePath);
-
-        // const data = await this.runChatGPT(sourcePath);
-
+    
         await this.runBert(javaFiles, sourcePath, createCodeQlDto);
 
-       
-        // await this.codeqlProcess(sourcePath, createCodeQlDto); // Creates a codeql database and runs the queries
+        return createCodeQlDto.extension == 'csv' ? await this.parserService.getcsvResults(sourcePath) : await this.parserService.getSarifResults(sourcePath);
 
-        return await this.parserService.getSarifResults(sourcePath);
-
+        return await this.parserService.getSarifResults(sourcePath); 
     }
 
     async runChatGPT(sourcePath){
