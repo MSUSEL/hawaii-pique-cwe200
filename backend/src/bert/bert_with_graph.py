@@ -171,7 +171,7 @@ def main():
     # Collect predictions and update saving progress
 
     for idx, prediction in enumerate(y_predict):
-                    if prediction >= .7:
+                    if prediction >= .8:
                         file_name, data = projectAllVariables['variables'][idx]
                         if file_name not in final_results:
                             final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
