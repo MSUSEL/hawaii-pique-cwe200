@@ -22,9 +22,10 @@ sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
 
 # Constants
-NUM_CLASSES = 14  # Including non-sink
+BATCH_SIZE = 32
+EPOCHS = 500
 DIM = 768
-
+NUM_CLASSES = 14  # Including non-sink
 
 # Initialize lemmatizer
 lemmatizer = WordNetLemmatizer()
@@ -50,7 +51,7 @@ projectAllVariables = {
 }
 
 thresholds = {
-    'variables': 0.5,
+    'variables': 0.7,
     'strings': 0.95,
     'comments': 0.95,
     'sinks': 0.99 
@@ -98,29 +99,22 @@ def camel_case_split(s):
     return [''.join(word) for word in words]
 
 # Preprocess text by tokenizing, removing stop words, and lemmatizing
-# def text_preprocess(feature_text):
-#     word_tokens = word_tokenize(feature_text)
-#     if '\n' in word_tokens:
-#         word_tokens.remove('\n')
-#     filtered_sentence = [w for w in word_tokens if not w.lower() in stop_words]
-#     for i in range(len(filtered_sentence)):
-#         filtered_sentence[i:i + 1] = camel_case_split(filtered_sentence[i])
-#     tagged_sentence = pos_tag(filtered_sentence)
-#     lemmatized_sentence = []
-#     for word, tag in tagged_sentence:
-#         ntag = tag[0].lower()
-#         if ntag in ['a', 'r', 'n', 'v']:
-#             lemmatized_sentence.append(lemmatizer.lemmatize(word.lower(), ntag))
-#         else:
-#             lemmatized_sentence.append(lemmatizer.lemmatize(word.lower()))
-#     return list_to_string(lemmatized_sentence)
-
 def text_preprocess(feature_text):
-    # Split camel case
-    words = camel_case_split(feature_text)
-    # Join words back into a string and convert to lowercase
-    preprocessed_text = ' '.join(words).lower()
-    return preprocessed_text
+    word_tokens = word_tokenize(feature_text)
+    if '\n' in word_tokens:
+        word_tokens.remove('\n')
+    filtered_sentence = [w for w in word_tokens if not w.lower() in stop_words]
+    for i in range(len(filtered_sentence)):
+        filtered_sentence[i:i + 1] = camel_case_split(filtered_sentence[i])
+    tagged_sentence = pos_tag(filtered_sentence)
+    lemmatized_sentence = []
+    for word, tag in tagged_sentence:
+        ntag = tag[0].lower()
+        if ntag in ['a', 'r', 'n', 'v']:
+            lemmatized_sentence.append(lemmatizer.lemmatize(word.lower(), ntag))
+        else:
+            lemmatized_sentence.append(lemmatizer.lemmatize(word.lower()))
+    return list_to_string(lemmatized_sentence)
 
 # Calculate sentence embeddings using SentenceTransformer
 async def calculate_sentbert_vectors(api_lines):
@@ -142,7 +136,7 @@ def concat_name_and_context(name_vec, context_vec):
 
 
 # Process files to extract relevant information and context
-def process_files(data, data_type):
+def process_files(data, files_dict, data_type):
     # Set up the progress tracker
     total_progress = sum(len(data[file_name][data_type]) for file_name in data)
     progress_tracker = ProgressTracker((total_progress), f"{data_type}-processing")
@@ -154,21 +148,12 @@ def process_files(data, data_type):
     for file_name in data:
         items = data[file_name][data_type]
         for item in items:
-            item_name = item['name']
-            item_methods = item['methods']
             try:
-                preprocessed_item = text_preprocess(item_name)
+                preprocessed_item = text_preprocess(item)
 
                 if data_type == 'variables':
-                    item_type = item['type']
-                    context = f"Type: {item_type}, Context: "
-                    for method in item_methods:
-                        if method in data[file_name]['methodCodeMap']:
-                            context += data[file_name]['methodCodeMap'][method]
-                    
-                    context = text_preprocess(context)
+                    context = get_context(files_dict[file_name], item)
                     output[index] = (file_name, preprocessed_item, context)
-
 
                 elif data_type == 'strings':
                     if len(preprocessed_item) == 0:
@@ -185,7 +170,7 @@ def process_files(data, data_type):
                     context = get_context(files_dict[file_name], item)
                     output[index] = (file_name, preprocessed_item, context)
 
-                projectAllVariables[data_type].append([file_name, item['name']])
+                projectAllVariables[data_type].append([file_name, item])
                 index += 1  # Move to the next position in the preallocated list
 
             except Exception as e:
@@ -194,6 +179,17 @@ def process_files(data, data_type):
 
     return output
 
+
+
+# Get the context of a variable within a file
+def get_context(file, var_name):
+    context = ""
+    for sentence in file.split('\n'):
+        sentence_tokens = word_tokenize(sentence)
+        if var_name in sentence_tokens:
+            sentence = sentence.replace(var_name, '')  # Remove the variable name from the context
+            context = context + sentence + " "
+    return text_preprocess(context)
 
 def get_context_str(file, var_name):
     context = " "
@@ -205,6 +201,21 @@ def get_context_str(file, var_name):
             context = context + sent + " "
     return text_preprocess(context)
 
+# Read Java files from a directory asynchronously
+async def read_java_files(directory):
+    print(directory)
+    java_files_with_content = {}
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith(".java"):
+                file_path = os.path.join(root, file)
+                try:
+                    async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
+                        file_content = await f.read()
+                    java_files_with_content[os.path.basename(file_path)] = file_content
+                except Exception as e:
+                    print(e)
+    return java_files_with_content
 
 # Read parsed data from a JSON file asynchronously
 async def read_parsed_data(file_path):
@@ -215,6 +226,18 @@ async def read_parsed_data(file_path):
         print(f"Failed to read parsed data from {file_path}: {e}")
         pass
 
+def filter_parsed_data(parsed_data, files_dict):
+    # Create a set of keys from files_dict for fast lookups
+    files_dict_keys = set(files_dict.keys())
+
+    # Loop through parsed_data and remove any items not present in files_dict
+    keys_to_remove = [key for key in parsed_data if key not in files_dict_keys]
+
+    # Remove the keys from parsed_data
+    for key in keys_to_remove:
+        del parsed_data[key]
+
+    return parsed_data
 
 # Load stop words
 stop_words = load_stop_words()
@@ -236,13 +259,10 @@ async def process_data_type(data_type, data_list, final_results, model_path):
             concatenated_vectors = name_vectors
 
         # Load the model
-        # if data_type == 'sinks':
-        #     model = load_model(os.path.join(model_path, f"{data_type}.keras"))
-        # else:
-        #     model = load_model(os.path.join(model_path, f"{data_type}.h5"))
-
-        model = load_model(os.path.join(model_path, f"{data_type}2.keras"))
-
+        if data_type == 'sinks':
+            model = load_model(os.path.join(model_path, f"{data_type}.keras"))
+        else:
+            model = load_model(os.path.join(model_path, f"{data_type}.h5"))
 
 
         # Run the model to get predictions
@@ -281,24 +301,28 @@ async def main():
 
         model_path = os.path.join(os.getcwd(), "src", "bert", "models")
     else:
-        project_name = "SmallTest"
+        project_name = "spring-security-6.3.3"
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
         model_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
 
     # Read Java files and parsed data asynchronously
     print(project_path)
-
+    files_dict = await read_java_files(project_path)
     parsed_data = await read_parsed_data(parsed_data_file_path)
 
     # In case a file can't be found in the directory, remove it from the parsed data
+    parsed_data = filter_parsed_data(parsed_data, files_dict)
+
+    print(len(parsed_data))
+    print(len(files_dict))
 
     print("processing files")
     # Process files to extract variables, strings, comments, and sinks concurrently
-    variables = process_files(parsed_data, 'variables'),
-    # strings = process_files(parsed_data, 'strings'),
-    # comments = process_files(parsed_data, 'comments'),
-    # sinks = process_files(parsed_data, 'sinks'),
+    variables = process_files(parsed_data, files_dict, 'variables'),
+    strings = process_files(parsed_data, files_dict, 'strings'),
+    comments = process_files(parsed_data, files_dict, 'comments'),
+    sinks = process_files(parsed_data, files_dict, 'sinks'),
 
 
 
@@ -306,9 +330,9 @@ async def main():
 
     print("Predicting data")
     await process_data_type('variables', variables, final_results, model_path)
-    # await process_data_type('strings', strings, final_results, model_path)
-    # await process_data_type('comments', comments, final_results, model_path)
-    # await process_data_type('sinks', sinks, final_results, model_path)
+    await process_data_type('strings', strings, final_results, model_path)
+    await process_data_type('comments', comments, final_results, model_path)
+    await process_data_type('sinks', sinks, final_results, model_path)
 
     print("Predicting data done")
 
