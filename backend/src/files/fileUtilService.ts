@@ -155,7 +155,7 @@ export class FileUtilService {
                     variables: sensitiveVariables,
                     strings: sensitiveStrings,
                     comments: sensitiveComments,
-                    sinks: sensitiveSinks
+                    sinks: sensitiveSinks,
                 });
 
                 variables = variables.concat(sensitiveVariables);
@@ -313,7 +313,8 @@ export class FileUtilService {
                         variables: [],
                         comments: [],
                         strings: [],
-                        sinks: []
+                        sinks: [],
+                        methodCodeMap:[]
                     });
                     return;
                 }
@@ -328,7 +329,8 @@ export class FileUtilService {
                         variables: [],
                         comments: [],
                         strings: [],
-                        sinks: []
+                        sinks: [],
+                        methodCodeMap: []
                     });
                 }
             });
@@ -387,5 +389,6 @@ interface JavaParseResult {
     comments: string[];
     strings: string[];
     sinks: string[];
+    methodCodeMap: string[];
 }
 

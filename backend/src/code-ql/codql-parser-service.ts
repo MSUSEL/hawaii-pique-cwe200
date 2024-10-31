@@ -34,6 +34,8 @@ export class CodeQlParserService {
                 const flowMap = await this.buildDataFlowMap(codeFlows, project);
                 flowMaps.push(flowMap);
             }
+
+            console.log(flowMaps)
     
             return flowMaps; // Return all flow maps (one for each codeFlow)
         } catch (error) {
@@ -174,6 +176,11 @@ export class CodeQlParserService {
         return Array.from(rulesMap.values());
     }
     
+    async getcsvResults(sourcePath:string) {
+        var csvPath = path.join(sourcePath,'result.csv');
+        var data = await this.fileService.readFileAsync(csvPath);
+        return {data};
+    }
     
     
     
