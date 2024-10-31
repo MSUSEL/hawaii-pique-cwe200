@@ -40,6 +40,11 @@ class DebugFlagCheck extends IfStmt {
 // excluding those that are sanitized or in scopes with sanitization methods
 from DebugFlagCheck dfc, SensitiveVariableExpr sve
 where 
+(
+  sve.toString() != "e" and
+  sve.toString() != "ex"
+ ) and
+ 
   dfc.isInThenBranch(sve) and
   dfc.noSanitizationInScope()
 select sve, "Sensitive variable exposed in debug code."

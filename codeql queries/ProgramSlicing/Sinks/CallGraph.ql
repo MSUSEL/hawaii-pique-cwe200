@@ -1,5 +1,6 @@
 /**
  * @kind path-problem
+ * @id java/sinks/call-graph
  */
 
  import java
