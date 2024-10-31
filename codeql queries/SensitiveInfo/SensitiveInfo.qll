@@ -13,10 +13,19 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
       exists(Variable v, File f |
         this = v.getAnAccess() and
         f = v.getCompilationUnit().getFile() and
-        sensitiveVariables(f.getBaseName(), v.getName()) 
+        sensitiveVariables(f.getBaseName(), v.getName()) and
+        /* Exclude exceptions, if an exception is sensitive, then it will have a different source flow into it. 
+        That source should be the sensitive source, not the exception. */
+        not (
+          this.getType() instanceof RefType and
+          this.getType().(RefType).getASupertype+().hasQualifiedName("java.lang", "Throwable")
+        )
         )
     }
   }
+  
+
+  
 
   class SensitiveStringLiteral extends StringLiteral {
     SensitiveStringLiteral() {
@@ -116,7 +125,7 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
       DetectedMethodCall() {
         // Check for matches against the sinks
         exists(File f |
-          this.getEnclosingCallable().getFile() = f and
+          // this.getEnclosingCallable().getFile() = f and
           sinks(f.getBaseName(), this.getMethod().getName(), _)
         )
       }
