@@ -154,13 +154,16 @@ public class CweCodeQl extends Tool implements ITool {
             for (String[] record : results) {
                 String cweId = record[0].split(":")[0];
                 String cweDescription = record[0].split(":")[1].trim();
+                String filePath = record[4];
+                int lineNumber = Integer.parseInt(record[5]);
+                int characterNumber = Integer.parseInt(record[6]);
+                int severity = this.cweToSeverity(cweId);
                
                 Diagnostic diag = diagnostics.get((cweId + " Diagnostic CweCodeQl"));
                 if (diag != null) {
-                    int severity=this.severityToInt("high");
-                    Finding finding = new Finding(record[4], 
-                                            Integer.parseInt(record[5]), 
-                                            Integer.parseInt(record[6]),
+                    Finding finding = new Finding(filePath, 
+                                            lineNumber, 
+                                            characterNumber,
                                             severity);
                     finding.setName(cweDescription);
                     diag.setChild(finding);
@@ -190,30 +193,26 @@ public class CweCodeQl extends Tool implements ITool {
         return toolRoot;
     }
 
-    // maps low-critical to numeric values based on the highest value for each
-    // range.
-    private Integer severityToInt(String severity) {
-        Integer severityInt = 1;
-        switch (severity.toLowerCase()) {
-            case "low": {
-                severityInt = 4;
-                break;
-            }
-            case "medium": {
-                severityInt = 7;
-                break;
-            }
-            case "high": {
-                severityInt = 9;
-                break;
-            }
-            case "critical": {
-                severityInt = 10;
-                break;
-            }
+    private int cweToSeverity(String cweId){
+        switch (cweId) {
+            case "CWE-201": return 9;
+            case "CWE-208": return 7;
+            case "CWE-214": return 9;
+            case "CWE-215": return 7;
+            case "CWE-531": return 7;
+            case "CWE-532": return 9;
+            case "CWE-535": return 7;
+            case "CWE-536": return 9;
+            case "CWE-537": return 7;
+            case "CWE-538": return 9;
+            case "CWE-540": return 9;
+            case "CWE-548": return 7;
+            case "CWE-550": return 9;
+            case "CWE-598": return 9;
+            case "CWE-615": return 7;
+            default: return 4;
+            
         }
-
-        return severityInt;
     }
 
     private boolean isServerRunning(String backendAddress) {
@@ -260,7 +259,7 @@ public class CweCodeQl extends Tool implements ITool {
             String data = jsonResponse.getString("data");
     
             // Clean up the CSV string if it has extra quotes at the beginning or end
-            data = data.replaceAll("^\"|\"$", ""); // Remove surrounding quotes if present
+            // data = data.replaceAll("^\"|\"$", ""); // Remove surrounding quotes if present
             Path outputPath = Paths.get(outputFilePath);
             // Write the extracted data to the specified file path
             Files.write(outputPath, data.getBytes());
