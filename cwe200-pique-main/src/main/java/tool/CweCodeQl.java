@@ -108,14 +108,8 @@ public class CweCodeQl extends Tool implements ITool {
         }
         
         // Check if the results file already exists
-        File tempResults = new File(workingDirectoryPrefix + "CweQodeQl " + projectName + ".json");
-        if (tempResults.exists()) {
-            LOGGER.info("Already ran CweQodeQl on: " + projectName + ", results stored in: " + tempResults.toString());
-        } else {
-            LOGGER.info("Have not run CweQodeQl on: " + projectName + ", running now and storing in:"
-                    + tempResults.toString());
-            tempResults.getParentFile().mkdirs();
-
+        if (!doesExist(workingDirectoryPrefix, projectName)){
+        
             // Check to see if the server is running
             if (isServerRunning(backendAddress)){
                 LOGGER.info("Server is running at: " + backendAddress);
@@ -283,5 +277,16 @@ public class CweCodeQl extends Tool implements ITool {
         return null;
     }
     
+    private boolean doesExist(String workingDirectoryPrefix, String projectName) {
+        File tempResults = new File(workingDirectoryPrefix + "CweQodeQl " + projectName + ".json");
+        if (tempResults.exists()) {
+            LOGGER.info("Already ran CweQodeQl on: " + projectName + ", results stored in: " + tempResults.toString());
+            return true;
+        }
+        LOGGER.info("Have not run CweQodeQl on: " + projectName + ", running now and storing in:"
+                    + tempResults.toString());
+            tempResults.getParentFile().mkdirs();
+        return false;
+    }
 
 }
