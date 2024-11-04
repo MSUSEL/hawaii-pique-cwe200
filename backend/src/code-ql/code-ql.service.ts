@@ -55,9 +55,10 @@ export class CodeQlService {
     
         await this.runBert(javaFiles, sourcePath, createCodeQlDto);
 
-        return createCodeQlDto.extension == 'csv' ? await this.parserService.getcsvResults(sourcePath) : await this.parserService.getSarifResults(sourcePath);
-
-        return await this.parserService.getSarifResults(sourcePath); 
+        return createCodeQlDto.extension === 'csv' 
+        ? await this.parserService.getcsvResults(sourcePath) 
+        : await this.parserService.getSarifResults(sourcePath);
+    
     }
 
     async runChatGPT(sourcePath){
@@ -83,6 +84,23 @@ export class CodeQlService {
                 return `${Math.floor(seconds)} second${seconds > 1 ? 's' : ''}`; // Show seconds
             }
         };
+
+        async function executeStep(stepName, stepFunction) {
+            console.log('-----------------------------------')
+            console.log(stepName)
+            console.log('-----------------------------------')
+
+
+            try {
+                await recordTime(stepName, stepFunction);
+            } catch (error) {
+                console.error(`Error in ${stepName}:`, error);
+                // Notify the client about the error
+                console.log(`Error in ${stepName}: ${error.message}`);
+                // Stop further execution by re-throwing the error
+                throw error(error.message);
+            }
+        }
     
         // Helper function to record the time taken for each step
         const recordTime = async (stepName: string, fn: () => Promise<void>) => {
@@ -91,52 +109,46 @@ export class CodeQlService {
             const end = Date.now();
             times[stepName] = (end - start) / 1000; // Time in seconds
         };
-    
-        // 1) Use BERT to detect sensitive info (variables, strings, comments, and sinks)
-        await recordTime('Step 1: Parse the files for variables, strings, comments, and method calls', async () => {
+
+        await executeStep('Parsing files for variables, strings, comments, and method calls.', async () => {
             await this.bertService.bertWrapper(javaFiles, sourcePath);
         });
     
-        // 2) Use BERT to detect sensitive info (variables, strings, comments, and sinks)
-        await recordTime('Step 2: BERT to detect sensitive info', async () => {
+        await executeStep('Detecting sensitive info using BERT.', async () => {
             await this.bertService.getBertResponse(sourcePath, "run_bert.py");
         });
-    
-        // 3) Read the results from data.json that was created by BERT
         let data = null;
-        await recordTime('Step 3: Read the results from data.json', async () => {
+        await executeStep('Reading in BERT results from data.json.', async () => {
             data = this.useSavedData(sourcePath);
         });
     
-        // 4) Save the sensitive info to .yml files for use in the queries
-        await recordTime('Step 4: Save the sensitive info to .yml files', async () => {
+        await executeStep('Saving the sensitive info to .yml files.', async () => {
             await this.saveSensitiveInfo(data);
         });
     
-        // 5) Run the backslice query for all of the sensitive variables that BERT found
-        await recordTime('Step 5: Run the backslice query', async () => {
-            await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath, 'ProgramSlicing', 'Variables'), 'backwardslice', true);
+        await executeStep('Creating CodeQL database.', async () => {
+            await this.createDatabase(sourcePath, createCodeQlDto);
         });
     
-        // 6) Parse the results to create the backslice graph for each variable that BERT marked as sensitive
-        await recordTime('Step 6: Parse the backslice graph', async () => {
+        await executeStep('Running the backward slice queries.', async () => {
+            await this.performBackwardSlicing(sourcePath, createCodeQlDto);
+        });
+    
+        await executeStep('Parsing the backward slice graphs.', async () => {
             await this.bertService.parseBackwardSlice(sourcePath);
         });
     
-        // 7) Run BERT again using the backslice graph as context
-        await recordTime('Step 7: Run BERT with backslice graph', async () => {
+        await executeStep('Running BERT with backward slice graphs.', async () => {
             await this.bertService.getBertResponse(sourcePath, 'bert_with_graph.py');
         });
     
-        // 8) Update the sensitiveVariables.yml file with the new results
-        await recordTime('Step 8: Update sensitiveVariables.yml', async () => {
+        await executeStep('Updating sensitiveVariables.yml.', async () => {
             const sensitiveVariables = this.useSavedData(sourcePath, 'sensitiveVariables.json');
             this.saveUpdatedSensitiveVariables(sensitiveVariables);
         });
     
-        // 9) Run all of the queries
-        await recordTime('Step 9: Run all queries', async () => {
-            await this.codeqlProcess(sourcePath, createCodeQlDto, path.join(this.queryPath), 'result');
+        await executeStep('Running CWE queries.', async () => {
+            await this.runCWEQueries(sourcePath, createCodeQlDto);
         });
     
         // Print all the times at the end
@@ -366,31 +378,48 @@ export class CodeQlService {
 
     }
 
-    async codeqlProcess(sourcePath: string, createCodeQlDto: any, queryPath: string, outputFileName: string = 'result', slicing=false) {
+    async createDatabase(sourcePath: string, createCodeQlDto: any){
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-        const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';
-        const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
+        await this.fileUtilService.removeDir(db);
+        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
+        console.log(createDbCommand);
+        await this.runChildProcess(createDbCommand);
+    }
+
+    async performBackwardSlicing(sourcePath: string, createCodeQlDto: any){
+        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+        const extension = 'sarif';
+        const format = 'sarifv2.1.0';
+        const outputFileName = 'backwardslice';
         const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
         const threads = 12;
         const totalMemoryMB = os.totalmem() / (1024 * 1024);  // Total system memory in MB
         const ramAllocationMB = Math.floor(totalMemoryMB * 0.8);  // 80% of total memory
+        const queryPath = path.join(this.queryPath, 'ProgramSlicing', 'Variables');
 
-        // This is for building the db and running the slicing query
-        if (slicing){
-        // Remove previous database if it exists
-        await this.fileUtilService.removeDir(db);
-
-        // Create new database with codeql
-        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        console.log(createDbCommand);
-        await this.runChildProcess(createDbCommand);
-
-        const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryPath} --max-paths=1 --sarif-add-snippets=true --threads=${threads} --ram=${ramAllocationMB}`;
+        // Command to run backward slicing
+        const analyzeDbCommand = 
+        `database analyze ${db} ` + 
+        `--format=${format} --rerun ` + 
+        `--output=${outputPath} ${queryPath} ` + 
+        `--max-paths=1 --sarif-add-snippets=true ` +
+        `--threads=${threads} --ram=${ramAllocationMB}`;
         await this.runChildProcess(analyzeDbCommand);
 
+    }
+
+    async runCWEQueries(sourcePath: string, createCodeQlDto: any) {
+        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+        const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';
+        const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
+        const outputFileName = 'result';
+        const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
+        const threads = 12;
+        const totalMemoryMB = os.totalmem() / (1024 * 1024);  // Total system memory in MB
+        const ramAllocationMB = Math.floor(totalMemoryMB * 0.8);  // 80% of total memory
+        const queryPath = this.queryPath;
+
         // This is for running all of the queries
-        } else {
-            
             const queryDir = path.resolve(queryPath);
             const excludeDir = path.resolve(path.join(queryPath, 'ProgramSlicing'));
             
@@ -414,15 +443,18 @@ export class CodeQlService {
             // Collect all .ql files from the queryDir, excluding ProgramSlicing subdir
             let queriesToRun = collectQlFiles(queryDir);
             
-                    
             // Join the selected queries into a single string
             const queryList = queriesToRun.join(' ');
             
             // Build the command with the filtered list of queries
-            const analyzeDbCommand = `database analyze ${db} --format=${format} --rerun --output=${outputPath} ${queryList} --threads=${threads} --ram=${ramAllocationMB}`;
+            const analyzeDbCommand = 
+            `database analyze ${db} ` +
+            `--format=${format} ` + 
+            `--rerun ` + 
+            `--output=${outputPath} ${queryList} ` + 
+            `--threads=${threads} ` + 
+            `--ram=${ramAllocationMB}`;
             await this.runChildProcess(analyzeDbCommand);
-        }
-
     }
 
     async getSarifResults(project: string){
@@ -452,7 +484,7 @@ export class CodeQlService {
             }
         }
         
-        console.log(vulnerabilityId, project, index);
+        // console.log(vulnerabilityId, project, index);
 
         const sourcePath = path.join(this.projectsPath, project);
         return await this.parserService.getDataFlowTree(vulnerabilityId, sourcePath, index);

@@ -26,7 +26,14 @@ export class CodeQlController {
      */
     @Post()
     async runCodeQl(@Body() createCodeQlDto: any) {
-        return await this.codeQlService.runCodeQl(createCodeQlDto);
+        try {
+            return await this.codeQlService.runCodeQl(createCodeQlDto);
+        }
+
+        catch (error){
+            console.log('Project analysis stopped')
+            return {'error': error.message}
+        }
     }
 
     @Get()
