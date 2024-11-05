@@ -105,10 +105,6 @@ else:
     model_transformer = SentenceTransformer(model_save_path)
     print("Model loaded successfully.")
 
-
-
-# model_transformer = SentenceTransformer('microsoft/codebert-base')
-
 def calculate_sentbert_vectors(sentences, batch_size=64):
     embeddings = model_transformer.encode(sentences, batch_size=batch_size, show_progress_bar=True)
     return embeddings
@@ -143,7 +139,7 @@ def create_model(optimizer='adam', learning_rate=0.0001, dropout_rate=0.2,
                  weight_decay=0.0001, units=256, activation='elu'):
     model = Sequential()
     model.add(Dense(units, kernel_regularizer=regularizers.l2(weight_decay),
-                    input_dim=DIM))
+                    input_dim=DIM * 2))
     model.add(BatchNormalization())
     model.add(Activation(activation))
     model.add(Dropout(dropout_rate))
@@ -177,12 +173,12 @@ model = KerasClassifier(model=create_model, verbose=0)
 # Updated param_grid for fine-tuning
 param_grid = {
     'model__learning_rate': [5e-5, 1e-4, 2e-4],
-    'model__dropout_rate': [0.15, 0.2, 0.25],
+    'model__dropout_rate': [0.2],
     'model__weight_decay': [5e-5, 1e-4, 2e-4],
     'model__units': [192, 256, 320],
     'model__activation': ['elu', 'relu'],
-    'batch_size': [32, 64, 128],
-    'epochs': [40, 50, 60]
+    'batch_size': [32, 64],
+    'epochs': [50, 60]
 }
 
 # Stratified k-fold cross-validation
@@ -233,7 +229,7 @@ lr_reduction = ReduceLROnPlateau(monitor='val_loss', factor=0.5,
 if not os.path.exists(model_dir):
     os.makedirs(model_dir)
 
-checkpoint_filepath = os.path.join(model_dir, 'best_model.keras')
+checkpoint_filepath = os.path.join(model_dir, 'best_model_code.keras')
 model_checkpoint = ModelCheckpoint(filepath=checkpoint_filepath,
                                    monitor='val_loss',
                                    verbose=1, save_best_only=True)
