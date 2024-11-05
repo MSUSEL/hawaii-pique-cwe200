@@ -28,7 +28,7 @@ DIM = 768
 
 # Initialize lemmatizer
 lemmatizer = WordNetLemmatizer()
-model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+bert_model = None
 
 # Ensure the necessary NLTK data packages are downloaded
 packages = ['punkt', 'averaged_perceptron_tagger', 'wordnet', 'stopwords']
@@ -87,6 +87,19 @@ def load_stop_words():
     except FileNotFoundError as e:
         return stop_words
 
+def load_bert_model(code_bert_path):
+        # Initialize the SentenceTransformer model (CodeBERT)
+    global bert_model
+    if not os.path.exists(code_bert_path):
+        bert_model = SentenceTransformer('microsoft/codebert-base')
+        # Save the model for future use
+        bert_model.save(code_bert_path)
+        print("Model saved successfully.")
+    else:
+        print("Loading CodeBERT model...")
+        bert_model = SentenceTransformer(code_bert_path)
+        print("Model loaded successfully.")
+
 # Split camel case words
 def camel_case_split(s):
     words = [[s[0]]]
@@ -130,7 +143,7 @@ def calculate_sentbert_vectors(sentences, data_type, item_type, batch_size=64):
 
     for batch_num, i in enumerate(range(0, len(sentences), batch_size), start=1):
         batch_texts = sentences[i:i+batch_size]
-        batch_embeddings = model.encode(batch_texts)
+        batch_embeddings = bert_model.encode(batch_texts)
         embeddings.extend(batch_embeddings)
         progress_tracker.update_progress(1)
     
@@ -211,11 +224,11 @@ def get_context_str(file, var_name):
     return text_preprocess(context)
 
 
-# Read parsed data from a JSON file asynchronously
-async def read_parsed_data(file_path):
+# Read parsed data from a JSON file
+def read_parsed_data(file_path):
     try:
-        async with aiofiles.open(file_path, 'r', encoding='utf-8') as json_vars:
-            return json.loads(await json_vars.read())
+        with open(file_path, 'r', encoding='utf-8') as json_vars:
+            return json.loads(json_vars.read())
     except Exception as e:
         print(f"Failed to read parsed data from {file_path}: {e}")
         pass
@@ -225,7 +238,7 @@ async def read_parsed_data(file_path):
 stop_words = load_stop_words()
 
 # Process each type of data
-async def process_data_type(data_type, data_list, final_results, model_path):
+def process_data_type(data_type, data_list, final_results, model_path):
     if data_list:
         data_array = np.squeeze(np.array(data_list))
         prediction_tracker = ProgressTracker(len(data_array), f'{data_type}-prediction')
@@ -236,9 +249,9 @@ async def process_data_type(data_type, data_list, final_results, model_path):
         name_vectors = calculate_sentbert_vectors(data_array[:, 1], data_type, "name")
 
         if data_type != 'comments':
-           context_vectors = calculate_sentbert_vectors(data_array[:, 2], data_type, "context")
-           print(f"Encoding {data_type} context data")
-           concatenated_vectors = concat_name_and_context(name_vectors, context_vectors)
+            context_vectors = calculate_sentbert_vectors(data_array[:, 2], data_type, "context")
+            print(f"Encoding {data_type} context data")
+            concatenated_vectors = concat_name_and_context(name_vectors, context_vectors)
         else:
             concatenated_vectors = name_vectors
 
@@ -248,14 +261,14 @@ async def process_data_type(data_type, data_list, final_results, model_path):
         # else:
         #     model = load_model(os.path.join(model_path, f"{data_type}.h5"))
 
-        model = load_model(os.path.join(model_path, f"{data_type}2.keras"))
+        model = load_model(os.path.join(model_path, f"{data_type}3.keras"))
 
 
 
         # Run the model to get predictions
-        test_x = np.reshape(concatenated_vectors, (-1, DIM)) if data_type != 'comments' else concatenated_vectors
+        test_x = np.reshape(concatenated_vectors, (-1, DIM * 2)) if data_type != 'comments' else concatenated_vectors
         prediction_tracker.total_steps =  test_x.shape[0]
-        y_predict = await asyncio.to_thread(model.predict, test_x)
+        y_predict = model.predict(test_x)
 
         prediction_tracker.update_progress(len(data_array))
         prediction_tracker.complete()
@@ -280,23 +293,29 @@ async def process_data_type(data_type, data_list, final_results, model_path):
         saving_tracker.complete()
 
 # Main function
-async def main():
+def main():
     # Set the project path and parsed data file path
     if len(sys.argv) > 1:
         project_path = sys.argv[1]
         project_path = os.path.abspath(os.path.join(os.getcwd(), project_path))
 
         model_path = os.path.join(os.getcwd(), "src", "bert", "models")
+        code_bert_path = os.path.join(os.getcwd(), "src", "bert", "models", "codebert-base-mean-pooling")
     else:
         project_name = "SmallTest"
+        project_name = "spring-security-6.3.3"
+
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
         model_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
+        code_bert_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models", "codebert-base-mean-pooling")
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
 
-    # Read Java files and parsed data asynchronously
+    load_bert_model(code_bert_path)
+
+    # Read Java files and parsed data 
     print(project_path)
 
-    parsed_data = await read_parsed_data(parsed_data_file_path)
+    parsed_data = read_parsed_data(parsed_data_file_path)
 
     # In case a file can't be found in the directory, remove it from the parsed data
 
@@ -312,7 +331,7 @@ async def main():
     final_results = {}
 
     print("Predicting data")
-    await process_data_type('variables', variables, final_results, model_path)
+    process_data_type('variables', variables, final_results, model_path)
     # await process_data_type('strings', strings, final_results, model_path)
     # await process_data_type('comments', comments, final_results, model_path)
     # await process_data_type('sinks', sinks, final_results, model_path)
@@ -323,12 +342,10 @@ async def main():
     # Format results as JSON
     formatted_results = [{"fileName": file_name, **details} for file_name, details in final_results.items()]
 
-    # Write results to a JSON file asynchronously
-    async with aiofiles.open(os.path.join(project_path, 'data.json'), 'w') as f:
-        await f.write(json.dumps(formatted_results, indent=4))
-
-
+    # Write results to a JSON file
+    with open(os.path.join(project_path, 'data.json'), 'w') as f:
+        f.write(json.dumps(formatted_results, indent=4))
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    main()
