@@ -150,7 +150,7 @@ def train(category, data, param_grid, create_model):
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
 
-    checkpoint_filepath = os.path.join(model_dir, f'best_model_sent{category}.keras')
+    checkpoint_filepath = os.path.join(model_dir, f'best_model_sent_{category}.keras')
     model_checkpoint = ModelCheckpoint(filepath=checkpoint_filepath,
                                     monitor='val_loss',
                                     verbose=1, save_best_only=True)
