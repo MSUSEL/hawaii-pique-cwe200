@@ -9,7 +9,6 @@ from utils import train, read_json, text_preprocess
 
 # ------------------------------ Parameters ------------------------------------
 DIM = 768 # Sent BERT dims = 384 * 2 (Value + Context)
-category = 'variables'
 # -----------------------------------------------------------------------------
 sink_type_mapping = {
     "N/A": 0,
@@ -154,11 +153,6 @@ base_path = os.path.join(os.getcwd(), "backend", "src", "bert")
 context = read_json(os.path.join(base_path, 'parsedResults.json'))
 labels = read_json(os.path.join(base_path, 'labels.json'))
 
-# Parse input data
-# variables_data = get_context(labels, context, 'variables')
-# strings_data = get_context(labels, context, 'strings')
-sinks_data = get_context(labels, context, 'sinks')
-
 
 # Updated param_grid for fine-tuning
 variables_param_grid = {
@@ -181,6 +175,36 @@ strings_param_grid = {
     'epochs': [50, 60]
 }
 
-# train('variables', variables_data, variables_param_grid, create_model)
-# train('strings', strings_data, strings_param_grid, create_model)
-train('sinks', sinks_data, strings_param_grid, create_model_sinks)
+sinks_param_grid = {
+    'model__learning_rate': [0.1, 0.01, 0.001, 0.0001], 
+    'model__dropout_rate': [0.2],
+    'model__weight_decay': [5e-5, 1e-4, 2e-4],
+    'model__units': [192, 256, 320],
+    'model__activation': ['elu', 'relu'],
+    'batch_size': [32, 64],
+    'epochs': [50, 60]
+}
+
+params_map = {
+    "variables": variables_param_grid,
+    "strings": strings_param_grid,
+    "comments": None,
+    "sinks": sinks_param_grid
+}
+
+categories = [
+    # "variables",
+    "strings",
+    # "comments",
+    # "sinks"
+]
+
+for category in categories:
+    # Parse input data
+    data = get_context(labels, context, category)
+    if category == 'sinks':
+        model = create_model_sinks
+    else:
+        model = create_model
+    # Train the model 
+    train(category, data, params_map.get(category), model)
