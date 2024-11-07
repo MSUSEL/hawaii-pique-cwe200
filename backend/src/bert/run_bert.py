@@ -50,27 +50,21 @@ projectAllVariables = {
 
 thresholds = {
     'variables': 0.5,
-    'strings': 0.95,
+    'strings': 0.5,
     'comments': 0.95,
     'sinks': 0.99 
 }
 
 # Sink Type Mapping
 sink_type_mapping = {
-    0: "non-sink",  # Non-sink class
+    0: "N/A",
     1: "I/O Sink",
     2: "Print Sink",
     3: "Network Sink",
     4: "Log Sink",
     5: "Database Sink",
     6: "Email Sink",
-    7: "IPC Sink",
-    8: "Clipboard Sink",
-    9: "GUI Display Sink",
-    10: "RPC Sink",
-    11: "Environment Variable Sink",
-    12: "Command Execution Sink",
-    13: "Configuration Sink"
+    7: "IPC Sink"
 }
 
 # Load stop words and add Java keywords to stop words
@@ -189,23 +183,27 @@ def process_files(data, data_type):
 
 
                 elif data_type == 'strings':
-                    if len(preprocessed_item) == 0:
-                        context = ""
+                    if len(preprocessed_item) < 1:
+                        continue
                     else:
                         context = f"Context: "
                         for method in item_methods:
-                        if method in data[file_name]['methodCodeMap']:
-                            context += data[file_name]['methodCodeMap'][method]
+                            if method in data[file_name]['methodCodeMap']:
+                                context += data[file_name]['methodCodeMap'][method]
 
                         context = text_preprocess(context)
-                    output[index] = (file_name, preprocessed_item, context)
+                        output[index] = (file_name, preprocessed_item, context)
 
                 elif data_type == 'comments':
-                    context = get_context(files_dict[file_name], item)
                     output[index] = (file_name, preprocessed_item)
 
                 elif data_type == 'sinks': 
-                    context = get_context(files_dict[file_name], item)
+                    context = f"Context: "
+                    for method in item_methods:
+                        if method in data[file_name]['methodCodeMap']:
+                            context += data[file_name]['methodCodeMap'][method]
+
+                    context = text_preprocess(context)
                     output[index] = (file_name, preprocessed_item, context)
 
                 projectAllVariables[data_type].append([file_name, item['name']])
@@ -264,7 +262,7 @@ async def process_data_type(data_type, data_list, final_results, model_path):
         # else:
         #     model = load_model(os.path.join(model_path, f"{data_type}.h5"))
 
-        model = load_model(os.path.join(model_path, f"{data_type}2.keras"))
+        model = load_model(os.path.join(model_path, f"{data_type}.keras"))
 
         # Run the model to get predictions
         test_x = np.reshape(concatenated_vectors, (-1, DIM)) if data_type != 'comments' else concatenated_vectors
@@ -274,6 +272,7 @@ async def process_data_type(data_type, data_list, final_results, model_path):
         for idx, prediction in enumerate(y_predict):
             if data_type == "sinks":  # Special handling for sinks (categorical)
                 predicted_category = np.argmax(prediction)  # Get the predicted class
+                print(predicted_category)
                 if predicted_category != 0:  # Ignore "non-sink" class (0)
                     sink_type = sink_type_mapping[predicted_category]  # Convert the index to a sink category
                     file_name, sink_name = projectAllVariables[data_type][idx]
@@ -311,20 +310,19 @@ async def main():
 
     print("processing files")
     # Process files to extract variables, strings, comments, and sinks concurrently
-    variables = process_files(parsed_data, 'variables'),
+    # variables = process_files(parsed_data, 'variables'),
     # strings = process_files(parsed_data, 'strings'),
     # comments = process_files(parsed_data, 'comments'),
-    # sinks = process_files(parsed_data, 'sinks'),
+    sinks = process_files(parsed_data, 'sinks'),
 
 
 
     final_results = {}
 
-    print("Predicting data")
-    await process_data_type('variables', variables, final_results, model_path)
+    # await process_data_type('variables', variables, final_results, model_path)
     # await process_data_type('strings', strings, final_results, model_path)
     # await process_data_type('comments', comments, final_results, model_path)
-    # await process_data_type('sinks', sinks, final_results, model_path)
+    await process_data_type('sinks', sinks, final_results, model_path)
 
     print("Predicting data done")
 
