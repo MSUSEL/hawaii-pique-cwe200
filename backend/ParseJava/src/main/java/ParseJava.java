@@ -65,6 +65,9 @@ public class ParseJava {
                     // Strings include name, methods
                     Map<String, JSONObject> strings = new HashMap<>(); // Map from string value to its details
 
+                    // **New data structure for sinks**
+                    Map<String, JSONObject> sinks = new HashMap<>(); // Map from sink name to its details
+
                     // Collect methods, variables, and strings within them
                     cu.accept(new MethodCollector(methodNames, methodCodeMap, variables, strings), null);
 
@@ -76,7 +79,9 @@ public class ParseJava {
 
                     // Existing collectors
                     cu.accept(new CommentCollector(), comments);
-                    cu.accept(new MethodCallCollector(), methodCalls);
+
+                    // **Collect sinks (method calls)**
+                    cu.accept(new SinkCollector(sinks, methodCodeMap, cu), null);
 
                     // Process variables with global scope
                     for (Map.Entry<String, JSONObject> entry : variables.entrySet()) {
@@ -154,6 +159,44 @@ public class ParseJava {
                         }
                     }
 
+                    // **Process sinks with global scope**
+                    for (Map.Entry<String, JSONObject> entry : sinks.entrySet()) {
+                        JSONObject sinkInfo = entry.getValue();
+                        JSONArray methods = sinkInfo.getJSONArray("methods");
+                        String sinkName = entry.getKey();
+
+                        if (methods.toList().contains("global")) {
+                            // Collect lines of code where this sink appears in the global scope
+                            Set<String> codeLines = new HashSet<>();
+                            cu.accept(new SinkUsageCollector(sinkName, true), codeLines);
+
+                            if (!codeLines.isEmpty()) {
+                                // Create custom method name
+                                String customMethodName = sinkName + "_global_lines_sink";
+
+                                // Replace "global" in methods array with custom method name
+                                JSONArray updatedMethods = new JSONArray();
+                                for (int i = 0; i < methods.length(); i++) {
+                                    String methodName = methods.getString(i);
+                                    if (!methodName.equals("global")) {
+                                        updatedMethods.put(methodName);
+                                    }
+                                }
+                                updatedMethods.put(customMethodName);
+                                sinkInfo.put("methods", updatedMethods);
+
+                                // Concatenate code lines
+                                StringBuilder codeBuilder = new StringBuilder();
+                                for (String codeLine : codeLines) {
+                                    codeBuilder.append(codeLine).append("\n");
+                                }
+
+                                // Add to methodCodeMap
+                                methodCodeMap.put(customMethodName, codeBuilder.toString());
+                            }
+                        }
+                    }
+
                     JSONObject jsonOutput = new JSONObject();
                     jsonOutput.put("filename", fileName);
 
@@ -184,6 +227,27 @@ public class ParseJava {
                         methodCodeJson.put(entry.getKey(), entry.getValue());
                     }
                     jsonOutput.put("methodCodeMap", methodCodeJson);
+
+                    // Convert comments to JSON array
+
+                    JSONArray commentsArray = new JSONArray();
+                    for (String comment : comments) {
+                        JSONObject commentObj = new JSONObject();
+                        commentObj.put("name", comment);
+                        commentObj.put("methods", "");
+                        commentsArray.put(commentObj);
+                    }
+                    jsonOutput.put("comments", commentsArray);
+
+                    // Convert sinks map to JSON array
+                    JSONArray sinksArray = new JSONArray();
+                    for (JSONObject sinkInfo : sinks.values()) {
+                        JSONObject orderedSinkInfo = new JSONObject();
+                        orderedSinkInfo.put("name", sinkInfo.get("name"));
+                        orderedSinkInfo.put("methods", sinkInfo.get("methods"));
+                        sinksArray.put(orderedSinkInfo);
+                    }
+                    jsonOutput.put("sinks", sinksArray);
 
                     System.out.println(jsonOutput.toString(2));
                 } else {
@@ -358,7 +422,7 @@ public class ParseJava {
         public void visit(StringLiteralExpr sle, Void arg) {
             try {
                 super.visit(sle, arg);
-                String value = sle.getValue().trim();
+                String value = sle.getValue();
 
                 // Update string info
                 JSONObject strInfo = strings.getOrDefault(value, new JSONObject());
@@ -427,7 +491,7 @@ public class ParseJava {
             try {
                 super.visit(sle, arg);
                 if (isInGlobalScope(sle)) {
-                    String value = sle.getValue().trim();
+                    String value = sle.getValue();
 
                     // Update string info
                     JSONObject strInfo = strings.getOrDefault(value, new JSONObject());
@@ -544,7 +608,7 @@ public class ParseJava {
         @Override
         public void visit(StringLiteralExpr sle, Set<String> codeLines) {
             super.visit(sle, codeLines);
-            if (sle.getValue().trim().equals(stringValue)) {
+            if (sle.getValue().equals(stringValue)) {
                 if (!onlyGlobalScope || isInGlobalScope(sle)) {
                     // Get the line of code where the string is used
                     codeLines.add(getFullLine(sle));
@@ -595,7 +659,7 @@ public class ParseJava {
             try {
                 super.visit(cu, collector);
                 for (Comment comment : cu.getAllContainedComments()) {
-                    collector.add(comment.getContent().trim());
+                    collector.add(comment.getContent());
                 }
             } catch (Exception e) {
                 System.err.println("Error collecting comments in CompilationUnit: " + e.getMessage());
@@ -603,16 +667,131 @@ public class ParseJava {
         }
     }
 
-    // Visitor class to collect method calls from the AST
-    private static class MethodCallCollector extends VoidVisitorAdapter<Set<String>> {
+    // **Visitor class to collect sinks (method calls)**
+    private static class SinkCollector extends VoidVisitorAdapter<Void> {
+        private Map<String, JSONObject> sinks;
+        private String currentMethodName;
+        private Map<String, String> methodCodeMap;
+        private CompilationUnit cu;
+
+        public SinkCollector(Map<String, JSONObject> sinks, Map<String, String> methodCodeMap, CompilationUnit cu) {
+            this.sinks = sinks;
+            this.currentMethodName = "global";
+            this.methodCodeMap = methodCodeMap;
+            this.cu = cu;
+        }
+
         @Override
-        public void visit(MethodCallExpr mce, Set<String> collector) {
-            try {
-                super.visit(mce, collector);
-                collector.add(mce.getNameAsString());
-            } catch (Exception e) {
-                System.err.println("Error collecting method call: " + e.getMessage());
+        public void visit(MethodDeclaration md, Void arg) {
+            String previousMethodName = currentMethodName;
+            currentMethodName = md.getNameAsString();
+            super.visit(md, arg);
+            currentMethodName = previousMethodName;
+        }
+
+        @Override
+        public void visit(ConstructorDeclaration cd, Void arg) {
+            String previousMethodName = currentMethodName;
+            currentMethodName = cd.getNameAsString();
+            super.visit(cd, arg);
+            currentMethodName = previousMethodName;
+        }
+
+        @Override
+        public void visit(MethodCallExpr mce, Void arg) {
+            super.visit(mce, arg);
+            String sinkName = mce.getNameAsString();
+
+            // Update sink info
+            JSONObject sinkInfo = sinks.getOrDefault(sinkName, new JSONObject());
+            sinkInfo.put("name", sinkName);
+
+            String methodName = currentMethodName;
+
+            if (isInGlobalScope(mce)) {
+                methodName = "global";
             }
+
+            // Add method to the methods list
+            JSONArray methods = sinkInfo.has("methods") ? sinkInfo.getJSONArray("methods") : new JSONArray();
+            if (!methods.toList().contains(methodName)) {
+                methods.put(methodName);
+            }
+            sinkInfo.put("methods", methods);
+
+            sinks.put(sinkName, sinkInfo);
+        }
+
+        private boolean isInGlobalScope(com.github.javaparser.ast.Node node) {
+            boolean inMethodOrConstructor = node.findAncestor(MethodDeclaration.class).isPresent() ||
+                                            node.findAncestor(ConstructorDeclaration.class).isPresent();
+
+            boolean inClass = node.findAncestor(ClassOrInterfaceDeclaration.class).isPresent();
+
+            boolean inInitializerBlock = node.findAncestor(BlockStmt.class)
+                .map(block -> block.getParentNode()
+                    .filter(parent -> parent instanceof ClassOrInterfaceDeclaration)
+                    .isPresent())
+                .orElse(false);
+
+            return !inMethodOrConstructor && inClass && !inInitializerBlock;
+        }
+    }
+
+    // **Visitor class to collect sink usages in global scope**
+    private static class SinkUsageCollector extends VoidVisitorAdapter<Set<String>> {
+        private String sinkName;
+        private boolean onlyGlobalScope;
+
+        public SinkUsageCollector(String sinkName, boolean onlyGlobalScope) {
+            this.sinkName = sinkName;
+            this.onlyGlobalScope = onlyGlobalScope;
+        }
+
+        @Override
+        public void visit(MethodCallExpr mce, Set<String> codeLines) {
+            super.visit(mce, codeLines);
+            if (mce.getNameAsString().equals(sinkName)) {
+                if (!onlyGlobalScope || isInGlobalScope(mce)) {
+                    // Get the line of code where the sink is used
+                    codeLines.add(getFullLine(mce));
+                }
+            }
+        }
+
+        private boolean isInGlobalScope(com.github.javaparser.ast.Node node) {
+            boolean inMethodOrConstructor = node.findAncestor(MethodDeclaration.class).isPresent() ||
+                                            node.findAncestor(ConstructorDeclaration.class).isPresent();
+
+            boolean inClass = node.findAncestor(ClassOrInterfaceDeclaration.class).isPresent();
+
+            boolean inInitializerBlock = node.findAncestor(BlockStmt.class)
+                .map(block -> block.getParentNode()
+                    .filter(parent -> parent instanceof ClassOrInterfaceDeclaration)
+                    .isPresent())
+                .orElse(false);
+
+            return !inMethodOrConstructor && inClass && !inInitializerBlock;
+        }
+
+        private String getFullLine(com.github.javaparser.ast.Node node) {
+            int line = node.getBegin().map(pos -> pos.line).orElse(-1);
+            String codeLine = node.findCompilationUnit()
+                    .flatMap(cu -> cu.getStorage())
+                    .flatMap(storage -> {
+                        try {
+                            Path path = storage.getPath();
+                            java.util.List<String> lines = Files.readAllLines(path);
+                            if (line > 0 && line <= lines.size()) {
+                                return java.util.Optional.of(lines.get(line - 1));
+                            } else {
+                                return java.util.Optional.empty();
+                            }
+                        } catch (Exception e) {
+                            return java.util.Optional.empty();
+                        }
+                    }).orElse(node.toString());
+            return codeLine.trim();
         }
     }
 }
