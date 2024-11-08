@@ -1,7 +1,7 @@
 /**
  * @name CWE-201: Information exposure through transmitted data
  * @description Transmitting sensitive information to the user is a potential security risk.
- * @kind problem
+ * @kind path-problem
  * @problem.severity error
  * @security-severity 4.3
  * @precision high
@@ -21,6 +21,9 @@
  import SensitiveInfo.SensitiveInfo
  
  module ExposureInTransmittedData = TaintTracking::Global<ExposureInTransmittedDataConfig>;
+//  module Flow = TaintTracking::Global<HttpServletExceptionSourceConfig>;
+
+import ExposureInTransmittedData::PathGraph
 
  module ExposureInTransmittedDataConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source){source.asExpr() instanceof SensitiveVariableExpr}
@@ -56,5 +59,8 @@
 
  from ExposureInTransmittedData::PathNode source, ExposureInTransmittedData::PathNode sink
  where ExposureInTransmittedData::flowPath(source, sink)
- select sink.getNode(), "Transmission of Sensitive information might be exposed here."
+  select sink.getNode(), source, sink,
+  "CWE-201: Transmissions of sensitive information"
  
+
+  
