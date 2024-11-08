@@ -16,7 +16,6 @@ import aiofiles
 from collections import deque
 from progress_tracker import ProgressTracker
 
-
 # Reconfigure stdout and stderr to handle UTF-8 encoding
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
@@ -161,11 +160,7 @@ def process_files(data, data_type):
                     context = text_preprocess(context)
                     output.append((file_name, preprocessed_item, context))
 
-
                 elif data_type == 'strings':
-                    # if len(preprocessed_item) < 1:
-                    #     continue
-                    # else:
                     context = f"Context: "
                     for method in item_methods:
                         if method in data[file_name]['methodCodeMap']:
@@ -176,7 +171,6 @@ def process_files(data, data_type):
 
                 elif data_type == 'comments':
                     output.append((file_name, preprocessed_item))
-
 
                 elif data_type == 'sinks': 
                     context = f"Context: "
@@ -195,7 +189,6 @@ def process_files(data, data_type):
 
     return output
 
-
 def get_context_str(file, var_name):
     context = " "
     for sent in file:
@@ -206,7 +199,6 @@ def get_context_str(file, var_name):
             context = context + sent + " "
     return text_preprocess(context)
 
-
 # Read parsed data from a JSON file asynchronously
 async def read_parsed_data(file_path):
     try:
@@ -216,14 +208,13 @@ async def read_parsed_data(file_path):
         print(f"Failed to read parsed data from {file_path}: {e}")
         pass
 
-
 # Load stop words
 stop_words = load_stop_words()
 
 # Process each type of data
-async def process_data_type(data_type, data_list, final_results, model_path):
+def process_data_type(data_type, data_list, final_results, model_path):
     if data_list:
-        data_array = np.squeeze(np.array(data_list))
+        data_array = np.squeeze(np.array(data_list, dtype=object))
 
         file_info = data_array[:, 0]
         print(f"Encoding {data_type} name data")
@@ -253,18 +244,17 @@ async def process_data_type(data_type, data_list, final_results, model_path):
                 predicted_category = np.argmax(prediction)  # Get the predicted class
                 # print(predicted_category)
                 if predicted_category != 0:  # Ignore "non-sink" class (0)
-                    sink_type = sink_type_mapping[predicted_category]  # Convert the index to a sink category
+                    sink_type = sink_type_mapping[int(predicted_category)]  # Convert the index to a sink category
                     file_name, sink_name = projectAllVariables[data_type][idx]
                     if file_name not in final_results:
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
-                    final_results[file_name]["sinks"].append({"name": sink_name, "type": sink_type})
+                    final_results[file_name]["sinks"].append({"name": sink_name, "type": sink_type, "confidence": str(prediction[predicted_category])})
             else:  # Handle non-sink types (strings, variables, comments)
                 if prediction >= thresholds.get(data_type):
                     file_name, data = projectAllVariables[data_type][idx]
                     if file_name not in final_results:
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
-                    final_results[file_name][data_type].append({"name": data})
-
+                    final_results[file_name][data_type].append({"name": data, "confidence": str(prediction[0])})
 
 # Main function
 async def main():
@@ -275,26 +265,28 @@ async def main():
 
         model_path = os.path.join(os.getcwd(), "src", "bert", "models")
     else:
-        project_name = "CWEToyDataset"
+        project_name = "kafka-trunk"
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
         model_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
 
     parsed_data = await read_parsed_data(parsed_data_file_path)
-
-    print("processing files")
-    # Process files to extract variables, strings, comments, and sinks concurrently
-    variables = process_files(parsed_data, 'variables')
-    # strings = process_files(parsed_data, 'strings')
-    # comments = process_files(parsed_data, 'comments')
-    sinks = process_files(parsed_data, 'sinks')
-
     final_results = {}
 
-    await process_data_type('variables', variables, final_results, model_path)
-    # await process_data_type('strings', strings, final_results, model_path)
-    # await process_data_type('comments', comments, final_results, model_path)
-    await process_data_type('sinks', sinks, final_results, model_path)
+    print("processing files")
+    
+    # Process files to extract variables, strings, comments, and sinks concurrently
+    variables = process_files(parsed_data, 'variables')
+    process_data_type('variables', variables, final_results, model_path)
+
+    # strings = process_files(parsed_data, 'strings')
+    # process_data_type('strings', strings, final_results, model_path)
+
+    # comments = process_files(parsed_data, 'comments')
+    # process_data_type('comments', comments, final_results, model_path)
+
+    sinks = process_files(parsed_data, 'sinks')
+    process_data_type('sinks', sinks, final_results, model_path)
 
     print("Predicting data done")
 
