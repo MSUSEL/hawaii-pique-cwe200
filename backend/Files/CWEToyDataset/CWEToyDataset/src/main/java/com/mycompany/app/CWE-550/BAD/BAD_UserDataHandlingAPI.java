@@ -17,6 +17,6 @@ public class BAD_UserDataHandlingAPI {
     }
 
     private void processUserData(String userData) throws Exception {
-        throw new Exception("User data validation failed due to invalid credentials - " + userdata + "field in input data");
+        throw new Exception("User data validation failed due to invalid credentials - " + userData + "field in input data");
     }
 }
