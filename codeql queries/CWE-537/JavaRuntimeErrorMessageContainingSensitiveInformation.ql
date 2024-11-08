@@ -38,11 +38,10 @@
      state instanceof State3 and
      exists(MethodCall mcSink |
        (
-         // mcSink.getMethod().getName() in ["println", "sendError", "write", "sendError"] or
          CommonSinks::isPrintSink(sink) or
          CommonSinks::isErrPrintSink(sink) or
          CommonSinks::isServletSink(sink) or
-         CommonSinks::isLoggingSink(sink)
+         getSinkAny(sink) 
        ) and 
          sink.asExpr() = mcSink.getAnArgument() 
       )

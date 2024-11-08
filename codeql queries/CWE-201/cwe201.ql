@@ -20,53 +20,17 @@
  private import semmle.code.java.security.InformationLeak
  import SensitiveInfo.SensitiveInfo
  
-private class GetMessageFlowSource extends DataFlow::Node {
-  GetMessageFlowSource() {
-    exists(Method method | this.asExpr().(MethodCall).getMethod() = method |
-      method.hasName("getMessage") and
-      method.hasNoParameters() and
-      method.getDeclaringType().hasQualifiedName("java.lang", "Throwable")
-    )
-  }
-}
+ module ExposureInTransmittedData = TaintTracking::Global<ExposureInTransmittedDataConfig>;
 
-
-
-class MailSendMethod extends DataFlow::Node {
-  MailSendMethod() {
-    exists(MethodCall mailCall | 
-      this.asExpr() = mailCall.getAnArgument() and  
-      (mailCall.getMethod().hasName("setText") or
-      mailCall.getMethod().hasName("setContent") or
-      mailCall.getMethod().hasName("setSubject") or 
-      mailCall.getMethod().hasName("addRecipient") or
-      mailCall.getMethod().hasName("setFrom") or
-      mailCall.getMethod().hasName("addHeader"))
-      
-      and
-
-      mailCall.getMethod().getDeclaringType().hasQualifiedName("javax.mail.internet", _) 
-      
-    )
-  }
-}
- 
  module ExposureInTransmittedDataConfig implements DataFlow::ConfigSig {
-  predicate isSource(DataFlow::Node source){
-    source.asExpr() instanceof SensitiveVariableExpr 
-    // or source instanceof GetMessageFlowSource
-  }
+  predicate isSource(DataFlow::Node source){source.asExpr() instanceof SensitiveVariableExpr}
 
   predicate isSink(DataFlow::Node sink) {
     sink instanceof InformationLeakSink or 
-    sink instanceof MailSendMethod or 
-    getSink(sink, "Email Sink") or
-    getSink(sink, "HTTP Sink") or
-
+    // getSink(sink, "Email Sink") or
 
     exists(MethodCall mc | 
       sink.asExpr() = mc.getAnArgument() and 
-      // mc.getMethod().hasName("sendRedirect") or
       mc.getMethod().hasName("write") and
       mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("javax.servlet.http", "HttpServletResponse"))
 
@@ -75,8 +39,8 @@ class MailSendMethod extends DataFlow::Node {
     exists(MethodCall mc | 
       sink.asExpr() = mc.getAnArgument() and 
       mc.getMethod().hasName("write") and
-      mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.io", "OutputStream") or
-      mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.net", "Socket"))
+      (mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.io", "OutputStream") or
+      mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.net", "Socket")))
  }
 
   predicate isBarrier(DataFlow::Node node) {
@@ -90,10 +54,6 @@ class MailSendMethod extends DataFlow::Node {
   }
 }
 
- 
-
- module ExposureInTransmittedData =TaintTracking::Global<ExposureInTransmittedDataConfig>;
- 
  from ExposureInTransmittedData::PathNode source, ExposureInTransmittedData::PathNode sink
  where ExposureInTransmittedData::flowPath(source, sink)
  select sink.getNode(), "Transmission of Sensitive information might be exposed here."

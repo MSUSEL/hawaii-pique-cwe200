@@ -16,17 +16,6 @@
  import SensitiveInfo.SensitiveInfo
  import CommonSinks.CommonSinks
  
- // Define sensitive variables
-//  class SensitiveVariable extends VarAccess {
-//    SensitiveVariable() {
-//      this.getVariable().getName() = "username" or
-//      this.getVariable().getName() = "email" or
-//      this.getVariable().getName() = "password" or
-//      this.getVariable().getName() = "apiKey"
-//    }
-//  }
- 
- // Define flow states
  class State1 extends DataFlow::FlowState { State1() { this = "State1" } }
  class State2 extends DataFlow::FlowState { State2() { this = "State2" } }
  class State3 extends DataFlow::FlowState { State3() { this = "State3" } }
@@ -46,11 +35,10 @@
      state instanceof State3 and
      exists(MethodCall mcSink |
       (
-        // mcSink.getMethod().getName() in ["println", "sendError", "write", "sendError"] or
         CommonSinks::isPrintSink(sink) or
         CommonSinks::isErrPrintSink(sink) or
         CommonSinks::isServletSink(sink) or
-        CommonSinks::isLoggingSink(sink)
+        getSinkAny(sink)
       ) and 
         sink.asExpr() = mcSink.getAnArgument() 
      )
