@@ -21,6 +21,9 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
         v.getName().toLowerCase() != "text" and
         v.getName().toLowerCase() != "texts" and
         v.getName().toLowerCase() != "data" and
+        v.getName().toLowerCase() != "body" and
+        v.getName().toLowerCase() != "request" and
+
         /* Exclude exceptions, if an exception is sensitive, then it will have a different source flow into it. 
         That source should be the sensitive source, not the exception. */
         not (
