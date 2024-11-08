@@ -50,9 +50,9 @@ projectAllVariables = {
 
 thresholds = {
     'variables': 0.5,
-    'strings': 0.5,
+    'strings': 0.95,
     'comments': 0.95,
-    'sinks': 0.99 
+    'sinks': 0.5, 
 }
 
 # Sink Type Mapping
@@ -90,24 +90,6 @@ def camel_case_split(s):
             words[-1].append(c)
     return [''.join(word) for word in words]
 
-# Preprocess text by tokenizing, removing stop words, and lemmatizing
-# def text_preprocess(feature_text):
-#     word_tokens = word_tokenize(feature_text)
-#     if '\n' in word_tokens:
-#         word_tokens.remove('\n')
-#     filtered_sentence = [w for w in word_tokens if not w.lower() in stop_words]
-#     for i in range(len(filtered_sentence)):
-#         filtered_sentence[i:i + 1] = camel_case_split(filtered_sentence[i])
-#     tagged_sentence = pos_tag(filtered_sentence)
-#     lemmatized_sentence = []
-#     for word, tag in tagged_sentence:
-#         ntag = tag[0].lower()
-#         if ntag in ['a', 'r', 'n', 'v']:
-#             lemmatized_sentence.append(lemmatizer.lemmatize(word.lower(), ntag))
-#         else:
-#             lemmatized_sentence.append(lemmatizer.lemmatize(word.lower()))
-#     return list_to_string(lemmatized_sentence)
-
 def text_preprocess(feature_text):
     # Split camel case
     words = camel_case_split(feature_text)
@@ -127,7 +109,6 @@ def calculate_sentbert_vectors(sentences, data_type, item_type, batch_size=64):
         embeddings.extend(batch_embeddings)
         progress_tracker.update_progress(1)
     
-    # embeddings = bert_model.encode(sentences, batch_size=batch_size, show_progress_bar=True)
     return embeddings
 
 # Convert list to string
@@ -160,8 +141,7 @@ def process_files(data, data_type):
     progress_tracker = ProgressTracker((total_progress), f"{data_type}-processing")
 
     # Preallocate the list with the required size
-    output = [None] * total_progress
-    index = 0  # To keep track of the current index in the preallocated list
+    output = []
 
     for file_name in data:
         items = data[file_name][data_type]
@@ -179,23 +159,24 @@ def process_files(data, data_type):
                             context += data[file_name]['methodCodeMap'][method]
                     
                     context = text_preprocess(context)
-                    output[index] = (file_name, preprocessed_item, context)
+                    output.append((file_name, preprocessed_item, context))
 
 
                 elif data_type == 'strings':
-                    if len(preprocessed_item) < 1:
-                        continue
-                    else:
-                        context = f"Context: "
-                        for method in item_methods:
-                            if method in data[file_name]['methodCodeMap']:
-                                context += data[file_name]['methodCodeMap'][method]
+                    # if len(preprocessed_item) < 1:
+                    #     continue
+                    # else:
+                    context = f"Context: "
+                    for method in item_methods:
+                        if method in data[file_name]['methodCodeMap']:
+                            context += data[file_name]['methodCodeMap'][method]
 
-                        context = text_preprocess(context)
-                        output[index] = (file_name, preprocessed_item, context)
+                    context = text_preprocess(context)
+                    output.append((file_name, preprocessed_item, context))
 
                 elif data_type == 'comments':
-                    output[index] = (file_name, preprocessed_item)
+                    output.append((file_name, preprocessed_item))
+
 
                 elif data_type == 'sinks': 
                     context = f"Context: "
@@ -204,10 +185,9 @@ def process_files(data, data_type):
                             context += data[file_name]['methodCodeMap'][method]
 
                     context = text_preprocess(context)
-                    output[index] = (file_name, preprocessed_item, context)
+                    output.append((file_name, preprocessed_item, context))
 
                 projectAllVariables[data_type].append([file_name, item['name']])
-                index += 1  # Move to the next position in the preallocated list
 
             except Exception as e:
                 print(f"Error processing file {file_name} and {data_type[:-1]} {item}: {e}")
@@ -254,15 +234,14 @@ async def process_data_type(data_type, data_list, final_results, model_path):
            print(f"Encoding {data_type} context data")
            concatenated_vectors = concat_name_and_context(name_vectors, context_vectors)
         else:
-            concatenated_vectors = name_vectors
+            concatenated_vectors = np.asarray(name_vectors)
 
         # Load the model
-        # if data_type == 'sinks':
-        #     model = load_model(os.path.join(model_path, f"{data_type}.keras"))
-        # else:
-        #     model = load_model(os.path.join(model_path, f"{data_type}.h5"))
+        if data_type != 'comments':
+            model = load_model(os.path.join(model_path, f"{data_type}.keras"))
+        else:
+            model = load_model(os.path.join(model_path, f"{data_type}.h5"))
 
-        model = load_model(os.path.join(model_path, f"{data_type}.keras"))
 
         # Run the model to get predictions
         test_x = np.reshape(concatenated_vectors, (-1, DIM)) if data_type != 'comments' else concatenated_vectors
@@ -272,7 +251,7 @@ async def process_data_type(data_type, data_list, final_results, model_path):
         for idx, prediction in enumerate(y_predict):
             if data_type == "sinks":  # Special handling for sinks (categorical)
                 predicted_category = np.argmax(prediction)  # Get the predicted class
-                print(predicted_category)
+                # print(predicted_category)
                 if predicted_category != 0:  # Ignore "non-sink" class (0)
                     sink_type = sink_type_mapping[predicted_category]  # Convert the index to a sink category
                     file_name, sink_name = projectAllVariables[data_type][idx]
@@ -296,36 +275,28 @@ async def main():
 
         model_path = os.path.join(os.getcwd(), "src", "bert", "models")
     else:
-        project_name = "SmallTest"
+        project_name = "CWEToyDataset"
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
         model_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
 
-    # Read Java files and parsed data asynchronously
-    print(project_path)
-
     parsed_data = await read_parsed_data(parsed_data_file_path)
-
-    # In case a file can't be found in the directory, remove it from the parsed data
 
     print("processing files")
     # Process files to extract variables, strings, comments, and sinks concurrently
-    # variables = process_files(parsed_data, 'variables'),
-    # strings = process_files(parsed_data, 'strings'),
-    # comments = process_files(parsed_data, 'comments'),
-    sinks = process_files(parsed_data, 'sinks'),
-
-
+    variables = process_files(parsed_data, 'variables')
+    # strings = process_files(parsed_data, 'strings')
+    # comments = process_files(parsed_data, 'comments')
+    sinks = process_files(parsed_data, 'sinks')
 
     final_results = {}
 
-    # await process_data_type('variables', variables, final_results, model_path)
+    await process_data_type('variables', variables, final_results, model_path)
     # await process_data_type('strings', strings, final_results, model_path)
     # await process_data_type('comments', comments, final_results, model_path)
     await process_data_type('sinks', sinks, final_results, model_path)
 
     print("Predicting data done")
-
 
     # Format results as JSON
     formatted_results = [{"fileName": file_name, **details} for file_name, details in final_results.items()]
@@ -333,9 +304,6 @@ async def main():
     # Write results to a JSON file asynchronously
     async with aiofiles.open(os.path.join(project_path, 'data.json'), 'w') as f:
         await f.write(json.dumps(formatted_results, indent=4))
-
-
-
 
 if __name__ == '__main__':
     asyncio.run(main())
