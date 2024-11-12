@@ -13,6 +13,7 @@ import java
 import semmle.code.java.dataflow.TaintTracking
 import CommonSinks.CommonSinks
 import SensitiveInfo.SensitiveInfo
+import Barrier.Barrier
 
 module Flow = TaintTracking::Global<ShellErrorExposureConfig>;
 import Flow::PathGraph
