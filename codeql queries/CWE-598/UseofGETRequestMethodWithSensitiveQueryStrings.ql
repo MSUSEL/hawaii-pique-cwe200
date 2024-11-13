@@ -28,66 +28,49 @@
    }
  
    predicate isSink(DataFlow::Node sink) {
-     exists(ConstructorCall urlConstructor |
-       urlConstructor.getConstructedType().hasQualifiedName("java.net", "URL") and
-       urlConstructor.getAnArgument() = sink.asExpr() and
-       // Find the usage of the URL in an openConnection call
-       exists(MethodCall openConnection |
-         openConnection.getMethod().hasName("openConnection") and
-         DataFlow::localExprFlow(urlConstructor, openConnection.getQualifier()) and
-         // Ensure this connection is used in a setRequestMethod call with "GET"
-         exists(MethodCall setRequestMethod |
-           setRequestMethod.getMethod().hasName("setRequestMethod") and
-           setRequestMethod.getArgument(0).(StringLiteral).getValue() = "GET" and
-           DataFlow::localExprFlow(openConnection, setRequestMethod.getQualifier())
-         )
-       )
-     ) 
-     or
-     // Detect use of Apache HttpGet that flows into an execute method call
-     exists(ConstructorCall httpGetCall |
-       httpGetCall.getConstructedType().hasQualifiedName("org.apache.http.client.methods", "HttpGet") and
-       httpGetCall.getAnArgument() = sink.asExpr() 
-     ) 
-     or
-     // Detect use of java.net.URL that flows into an openConnection method call
-     exists(ConstructorCall urlConstructor, MethodCall openConnectionCall |
-       urlConstructor.getConstructedType().hasQualifiedName("java.net", "URL") and
-       urlConstructor.getAnArgument() = sink.asExpr() and
-       // Ensure the URL instance flows to an openConnection method
-       DataFlow::localExprFlow(urlConstructor, openConnectionCall.getQualifier()) and
-       // The default request method is GET
-       openConnectionCall.getMethod().hasName("openConnection") and
-       openConnectionCall.getMethod().getDeclaringType().hasQualifiedName("java.net", "URL")
-     ) 
-     or
-     // Handling cases where URI is converted to URL and used in HttpURLConnection
-     exists(ConstructorCall uriConstructor, MethodCall toUrlCall, MethodCall openConnectionCall, MethodCall setRequestMethod |
-       uriConstructor.getConstructedType().hasQualifiedName("java.net", "URI") and
-       uriConstructor.getAnArgument() = sink.asExpr() and
-       toUrlCall.getMethod().hasName("toURL") and
-       toUrlCall.getMethod().getDeclaringType().hasQualifiedName("java.net", "URI") and
-       DataFlow::localExprFlow(uriConstructor, toUrlCall.getQualifier()) and
-       DataFlow::localExprFlow(toUrlCall, openConnectionCall.getQualifier()) and
-       openConnectionCall.getMethod().hasName("openConnection") and
-       openConnectionCall.getMethod().getDeclaringType().hasQualifiedName("java.net", "URL") and
-       setRequestMethod.getMethod().hasName("setRequestMethod") and
-       ((StringLiteral)setRequestMethod.getArgument(0)).getValue() = "GET" and
-       DataFlow::localExprFlow(openConnectionCall, setRequestMethod.getQualifier())
-     ) 
-     or
-     exists(ConstructorCall urlConstructor, MethodCall openConnectionCall, MethodCall setRequestMethod |
+    // Direct use of URL with openConnection followed by setRequestMethod("GET")
+    exists(ConstructorCall urlConstructor, MethodCall openConnectionCall, MethodCall setRequestMethod |
       urlConstructor.getConstructedType().hasQualifiedName("java.net", "URL") and
       urlConstructor.getAnArgument() = sink.asExpr() and
-      DataFlow::localExprFlow(urlConstructor, openConnectionCall.getQualifier()) and
       openConnectionCall.getMethod().hasName("openConnection") and
       openConnectionCall.getMethod().getDeclaringType().hasQualifiedName("java.net", "URL") and
+      DataFlow::localExprFlow(urlConstructor, openConnectionCall.getQualifier()) and
       setRequestMethod.getMethod().hasName("setRequestMethod") and
-      setRequestMethod.getArgument(0) instanceof StringLiteral and
       ((StringLiteral)setRequestMethod.getArgument(0)).getValue() = "GET" and
       DataFlow::localExprFlow(openConnectionCall, setRequestMethod.getQualifier())
     )
-   }
+    or
+    // Handling URI -> URL conversion and subsequent GET request
+    exists(ConstructorCall uriConstructor, MethodCall toUrlCall, MethodCall openConnectionCall, MethodCall setRequestMethod |
+      uriConstructor.getConstructedType().hasQualifiedName("java.net", "URI") and
+      uriConstructor.getAnArgument() = sink.asExpr() and
+      toUrlCall.getMethod().hasName("toURL") and
+      toUrlCall.getMethod().getDeclaringType().hasQualifiedName("java.net", "URI") and
+      DataFlow::localExprFlow(uriConstructor, toUrlCall.getQualifier()) and
+      openConnectionCall.getMethod().hasName("openConnection") and
+      openConnectionCall.getMethod().getDeclaringType().hasQualifiedName("java.net", "URL") and
+      DataFlow::localExprFlow(toUrlCall, openConnectionCall.getQualifier()) and
+      setRequestMethod.getMethod().hasName("setRequestMethod") and
+      ((StringLiteral)setRequestMethod.getArgument(0)).getValue() = "GET" and
+      DataFlow::localExprFlow(openConnectionCall, setRequestMethod.getQualifier())
+    )
+    or
+    // Apache HttpClient usage with HttpGet and execute method call
+    exists(ConstructorCall httpGetCall |
+      httpGetCall.getConstructedType().hasQualifiedName("org.apache.http.client.methods", "HttpGet") and
+      httpGetCall.getAnArgument() = sink.asExpr()
+    )
+    or
+    // HttpURLConnection directly initialized with GET method
+    exists(MethodCall openConnectionCall, MethodCall setRequestMethod |
+      openConnectionCall.getMethod().hasName("openConnection") and
+      openConnectionCall.getMethod().getDeclaringType().hasQualifiedName("java.net", "HttpURLConnection") and
+      DataFlow::localExprFlow(sink.asExpr(), openConnectionCall.getQualifier()) and
+      setRequestMethod.getMethod().hasName("setRequestMethod") and
+      ((StringLiteral)setRequestMethod.getArgument(0)).getValue() = "GET" and
+      DataFlow::localExprFlow(openConnectionCall, setRequestMethod.getQualifier())
+    )
+  }
  
    predicate isBarrier(DataFlow::Node node) {
     Barrier::barrier(node)
