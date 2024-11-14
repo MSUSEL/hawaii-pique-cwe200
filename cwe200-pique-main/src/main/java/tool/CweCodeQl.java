@@ -36,14 +36,20 @@ import utilities.helperFunctions;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * CODE TAKEN FROM PIQUE-BIN-DOCKER AND MODIFIED FOR PIQUE-SBOM-CONTENT and
@@ -64,6 +70,8 @@ public class CweCodeQl extends Tool implements ITool {
         CweCodeQl test = new CweCodeQl(PiqueProperties.getProperties().getProperty("backend.server"));
         // test.initialize(null);
         test.analyze(Paths.get("SmallTest"));
+        // test.analyze(Paths.get("s"));
+
 
     }
 
@@ -114,13 +122,26 @@ public class CweCodeQl extends Tool implements ITool {
             if (isServerRunning(backendAddress)){
                 LOGGER.info("Server is running at: " + backendAddress);
                 // Upload the project to the server
-                // uploadProjectToServer(backendAddress, projectName);
+                Path zipPath = zipProject(projectLocation);
+                uploadProjectToServer(backendAddress, zipPath);
                 
                 // Perform the analysis
                 String toolResults = sendPostRequestToServer(backendAddress, projectName);
+                JSONObject jsonResponse = responseToJSON(toolResults);
+
+                try {
+                    if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
+                        System.out.println("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
+                        LOGGER.error("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
+                        return null;
+                    }
+                } catch (JSONException e) {
+                    return null;
+                }
                 
                 // Convert the results to a CSV file, and save it
-                Path finalResults = saveToolResultsToFile(toolResults, outputFilePath);
+                Path finalResults = saveToolResultsToFile(jsonResponse, outputFilePath);
+                
                 parseAnalysis(finalResults);
                 return finalResults;
 
@@ -192,6 +213,17 @@ public class CweCodeQl extends Tool implements ITool {
 
         return toolRoot;
     }
+    
+    private JSONObject responseToJSON(String response) {
+        try {
+            JSONObject jsonResponse = new JSONObject(response);
+            return jsonResponse;
+        } catch (JSONException e) {
+            LOGGER.error("Failed to parse JSON response from server.");
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     private int cweToSeverity(String cweId){
         switch (cweId) {
@@ -226,6 +258,75 @@ public class CweCodeQl extends Tool implements ITool {
         return true;
     }
 
+    private Path zipProject(Path projectLocation) {
+        // Validate that projectLocation exists and is a directory
+        if (!Files.exists(projectLocation)) {
+            LOGGER.error("The project location does not exist: {}", projectLocation.toAbsolutePath());
+            return null;
+        }
+        if (!Files.isDirectory(projectLocation)) {
+            LOGGER.error("The project location is not a directory: {}", projectLocation.toAbsolutePath());
+            return null;
+        }
+
+        Path zipFilePath = Paths.get("zipped-repos/" + projectLocation.getFileName().toString());
+
+        try {
+            // Ensure the base directory for zipFilePath exists
+            if (!Files.exists(zipFilePath.getParent())) {
+                Files.createDirectories(zipFilePath.getParent());
+            }
+
+            // Zip the project directory
+            try (ZipOutputStream zos = new ZipOutputStream(Files.newOutputStream(zipFilePath))) {
+                Files.walkFileTree(projectLocation, new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        ZipEntry zipEntry = new ZipEntry(projectLocation.relativize(file).toString());
+                        zos.putNextEntry(zipEntry);
+                        Files.copy(file, zos);
+                        zos.closeEntry();
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                    @Override
+                    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                        if (!projectLocation.equals(dir)) { // Avoid adding the root directory itself as an entry
+                            ZipEntry zipEntry = new ZipEntry(projectLocation.relativize(dir).toString() + "/");
+                            zos.putNextEntry(zipEntry);
+                            zos.closeEntry();
+                        }
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+            }
+
+            LOGGER.info("Project successfully zipped at {}", zipFilePath);
+            return zipFilePath;  // Return the path to the zip file
+        } catch (IOException e) {
+            LOGGER.error("Failed to zip project.", e);
+            return null;
+        }
+    }
+
+    private void uploadProjectToServer(String backendAddress, Path zipPath) {
+        try {
+            // Define the command array with properly escaped JSON
+            String[] cmd = {
+                "curl", 
+                "-X", "POST",
+                "-F", "file=@" + zipPath.toString(),
+                backendAddress + "/files"
+            };
+            
+            // Execute the command
+            helperFunctions.getOutputFromProgram(cmd);
+        } catch (Exception e) {
+            LOGGER.error("Failed to upload project to server at: " + backendAddress);
+            e.printStackTrace();
+        }
+    }
+
     private String sendPostRequestToServer(String backendAddress, String projectName) {
         String toolResults = null;
         try {
@@ -252,10 +353,9 @@ public class CweCodeQl extends Tool implements ITool {
         return toolResults;
     }
     
-    private Path saveToolResultsToFile(String toolResults, String outputFilePath) {
+    private Path saveToolResultsToFile(JSONObject jsonResponse, String outputFilePath) {
         try {
             // Parse JSON response to extract "data" field
-            JSONObject jsonResponse = new JSONObject(toolResults);
             String data = jsonResponse.getString("data");
     
             // Clean up the CSV string if it has extra quotes at the beginning or end

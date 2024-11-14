@@ -180,9 +180,9 @@ public abstract class AbstractBenchmarker implements IBenchmarker {
             System.out.println(benchmarkRepository.toString());
             File[] binaryFiles = benchmarkRepository.toFile().listFiles();
             for (File file : binaryFiles) {
-                if (file.isFile()) {
+                // if (file.isFile()) {
                     projectRoots.add(file.toPath());
-                }
+                // }
             }
     	}
     	//otherwise, we should use what David originally used for PIQUE-C#

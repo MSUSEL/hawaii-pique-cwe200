@@ -54,7 +54,7 @@ public class QualityModelDeriver extends AQualityModelDeriver {
 
         //ITool gyrpeWrapper = new GrypeWrapper(prop.getProperty("github-token-path"));
 
-        ITool cweCodeQl = new CweCodeQl(prop.getProperty("openai-api-token-path"));
+        ITool cweCodeQl = new CweCodeQl(prop.getProperty("backend.server"));
         Set<ITool> tools = Stream.of(cweCodeQl).collect(Collectors.toSet());
         QualityModelImport qmImport = new QualityModelImport(blankqmFilePath);
         QualityModel qmDescription = qmImport.importQualityModel();
