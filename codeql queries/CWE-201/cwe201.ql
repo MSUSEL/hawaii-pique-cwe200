@@ -19,6 +19,7 @@
  import semmle.code.java.frameworks.Networking
  private import semmle.code.java.security.InformationLeak
  import SensitiveInfo.SensitiveInfo
+ import Barrier.Barrier
  
  module ExposureInTransmittedData = TaintTracking::Global<ExposureInTransmittedDataConfig>;
 //  module Flow = TaintTracking::Global<HttpServletExceptionSourceConfig>;
@@ -47,14 +48,7 @@ import ExposureInTransmittedData::PathGraph
  }
 
   predicate isBarrier(DataFlow::Node node) {
-    exists(MethodCall mc |
-      // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
-      (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
-      mc.getMethod().getName().toLowerCase().matches("%encrypt%")) and
-    // Consider both arguments and the return of sanitization/encryption methods as barriers
-    (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
-    )
-  }
+    Barrier::isBarrier(node)
 }
 
  from ExposureInTransmittedData::PathNode source, ExposureInTransmittedData::PathNode sink

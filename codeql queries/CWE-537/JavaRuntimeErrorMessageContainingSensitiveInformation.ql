@@ -15,6 +15,7 @@
  import DataFlow::PathGraph
  import SensitiveInfo.SensitiveInfo
  import CommonSinks.CommonSinks
+ import Barrier.Barrier
  
  // Define flow states
  class State1 extends DataFlow::FlowState { State1() { this = "State1" } }
@@ -80,6 +81,10 @@
        catchClause.getEnclosingCallable() = t.getEnclosingCallable() and
        node2.asExpr() = catchClause.getVariable().getAnAccess()
      )
+   }
+
+   override predicate isBarrier(DataFlow::Node node) {
+    Barrier::isBarrier(node)
    }
  }
  

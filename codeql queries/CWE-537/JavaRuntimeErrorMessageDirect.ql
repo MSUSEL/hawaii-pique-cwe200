@@ -14,6 +14,7 @@
  import semmle.code.java.dataflow.FlowSources
  import CommonSinks.CommonSinks
  import SensitiveInfo.SensitiveInfo
+ import Barrier.Barrier
  
  module Flow = TaintTracking::Global<RuntimeSensitiveInfoExposureConfig>;
  
@@ -52,6 +53,10 @@
        // Consider both arguments and the return of sanitization/encryption methods as barriers
        (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
      )
+   }
+
+   override predicate isBarrier(DataFlow::Node node) {
+    Barrier::isBarrier(node)
    }
  }
  

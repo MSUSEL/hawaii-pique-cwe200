@@ -9,12 +9,11 @@
  *       external/cwe/cwe-200
  * @cwe CWE-214
  */
-
-
 import java
 import semmle.code.java.dataflow.FlowSources
 import semmle.code.java.dataflow.TaintTracking
 import SensitiveInfo.SensitiveInfo
+import Barrier.Barrier
 
 module Flow = TaintTracking::Global<ProcessExecutionWithSensitiveInfoConfig>;
 import Flow::PathGraph
@@ -60,17 +59,9 @@ module ProcessExecutionWithSensitiveInfoConfig implements DataFlow::ConfigSig {
     getSink(sink, "Command Execution Sink")
   }
 
-predicate isBarrier(DataFlow::Node node) {
-  exists(MethodCall mc |
-    // Check if the method name contains 'sanitize' or 'encrypt', case-insensitive
-    (mc.getMethod().getName().toLowerCase().matches("%sanitize%") or
-    mc.getMethod().getName().toLowerCase().matches("%encrypt%"))
-    and
-  // Consider both arguments and the return of sanitization/encryption methods as barriers
-  (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
-  )
-}
-
+  predicate isBarrier(DataFlow::Node node) {
+    Barrier::isBarrier(node)
+  }
 }
 
 from Flow::PathNode source, Flow::PathNode sink

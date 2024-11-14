@@ -13,6 +13,7 @@ import java
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.frameworks.Servlets
 import CommonSinks.CommonSinks
+import Barrier.Barrier
 
 module Flow = TaintTracking::Global<DirectoryListingExposureConfig>;
 import Flow::PathGraph
@@ -33,6 +34,10 @@ module DirectoryListingExposureConfig implements DataFlow::ConfigSig {
     CommonSinks::isPrintSink(sink) or
     CommonSinks::isServletSink(sink)
   }
+
+  override predicate isBarrier(DataFlow::Node node) {
+    Barrier::isBarrier(node)
+   }
 }
 
 from Flow::PathNode source, Flow::PathNode sink
