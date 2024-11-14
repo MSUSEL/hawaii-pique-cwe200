@@ -15,15 +15,13 @@ import asyncio
 import aiofiles
 from collections import deque
 from progress_tracker import ProgressTracker
-import concurrent.futures
-import time
-
 
 # Reconfigure stdout and stderr to handle UTF-8 encoding
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
 
 # Constants
+NUM_CLASSES = 14  # Including non-sink
 DIM = 768
 
 # Initialize lemmatizer
@@ -46,7 +44,7 @@ projectAllVariables = {
     'variables': [],
     'strings': [],
     'comments': [],
-    'sinks': [] 
+    'sinks': []  # Added for sinks
 }
 
 thresholds = {
@@ -98,40 +96,19 @@ def text_preprocess(feature_text):
     preprocessed_text = ' '.join(words).lower()
     return preprocessed_text
 
-# Define the function to encode a single batch
-def encode_batch(batch_texts, identifier):
-    batch_embeddings = model.encode(batch_texts)
-    return identifier, batch_embeddings
-
-def calculate_sentbert_vectors_concurrent(data_list, data_type, item_type, batch_size=64):
-    embeddings = {}
-    total_batches = len(data_list) // batch_size + int(len(data_list) % batch_size != 0)
+# Calculate sentence embeddings using SentenceTransformer
+def calculate_sentbert_vectors(sentences, data_type, item_type, batch_size=64):
+    embeddings = []
+    total_batches = len(sentences) // batch_size + int(len(sentences) % batch_size != 0)
     progress_tracker = ProgressTracker(total_batches, f"{data_type}-{item_type}-encoding")
 
-    index = "preprocessed_item" if item_type == "name" else "context"
-    data_batches = [data_list[i:i+batch_size] for i in range(0, len(data_list), batch_size)]
-    batch_texts_list = [[item[index] for item in batch] for batch in data_batches]
+    for batch_num, i in enumerate(range(0, len(sentences), batch_size), start=1):
+        batch_texts = sentences[i:i+batch_size]
+        batch_embeddings = model.encode(batch_texts)
+        embeddings.extend(batch_embeddings)
+        progress_tracker.update_progress(1)
     
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        # Submit encoding tasks for each precomputed batch
-        futures = {
-            executor.submit(encode_batch, batch_texts, identifier): identifier
-            for identifier, batch_texts in enumerate(batch_texts_list)
-        }
-
-        for future in concurrent.futures.as_completed(futures):
-            identifier, batch_embeddings = future.result()
-            # Store embeddings by their identifier for ordered retrieval later
-            for j, embedding in enumerate(batch_embeddings):
-                idx = identifier * batch_size + j
-                embeddings[data_list[idx]["identifier"]] = embedding
-
-            # Optionally offload progress tracking to another thread
-            progress_tracker.update_progress(1)
-
-    # Convert embeddings dictionary to a list, maintaining the original order
-    return [embeddings[item["identifier"]] for item in data_list]
-
+    return embeddings
 
 # Convert list to string
 def list_to_string(lst):
@@ -164,15 +141,12 @@ def process_files(data, data_type):
 
     # Preallocate the list with the required size
     output = []
-    identifier = 0
 
     for file_name in data:
         items = data[file_name][data_type]
         for item in items:
             item_name = item['name']
             item_methods = item['methods']
-            context = None
-
             try:
                 preprocessed_item = text_preprocess(item_name)
 
@@ -184,6 +158,7 @@ def process_files(data, data_type):
                             context += data[file_name]['methodCodeMap'][method]
                     
                     context = text_preprocess(context)
+                    output.append((file_name, preprocessed_item, context))
 
                 elif data_type == 'strings':
                     context = f"Context: "
@@ -192,9 +167,10 @@ def process_files(data, data_type):
                             context += data[file_name]['methodCodeMap'][method]
 
                     context = text_preprocess(context)
+                    output.append((file_name, preprocessed_item, context))
 
-                # elif data_type == 'comments':
-                #     output.append((file_name, preprocessed_item))
+                elif data_type == 'comments':
+                    output.append((file_name, preprocessed_item))
 
                 elif data_type == 'sinks': 
                     context = f"Context: "
@@ -203,16 +179,9 @@ def process_files(data, data_type):
                             context += data[file_name]['methodCodeMap'][method]
 
                     context = text_preprocess(context)
-                    # output.append((file_name, preprocessed_item, context))
+                    output.append((file_name, preprocessed_item, context))
 
-                output.append({
-                "identifier": identifier,
-                "file_name": file_name,
-                "preprocessed_item": preprocessed_item,
-                "context": context,
-                "original_name": item_name
-                })
-                identifier += 1
+                projectAllVariables[data_type].append([file_name, item['name']])
 
             except Exception as e:
                 print(f"Error processing file {file_name} and {data_type[:-1]} {item}: {e}")
@@ -247,16 +216,12 @@ def process_data_type(data_type, data_list, final_results, model_path):
     if data_list:
         data_array = np.squeeze(np.array(data_list, dtype=object))
 
-        # file_info = data_array[:, 0]
+        file_info = data_array[:, 0]
         print(f"Encoding {data_type} name data")
-        start = time.time()
-        name_vectors = calculate_sentbert_vectors_concurrent(data_list, data_type, "name")
-        # name_vectors = calculate_sentbert_vectors(data_array[:, 1], data_type, "name")
-        print(f"Encoding {data_type} name data took {time.time() - start} seconds")
-        
+        name_vectors = calculate_sentbert_vectors(data_array[:, 1], data_type, "name")
+
         if data_type != 'comments':
-           context_vectors = calculate_sentbert_vectors_concurrent(data_list, data_type, "context")
-           
+           context_vectors = calculate_sentbert_vectors(data_array[:, 2], data_type, "context")
            print(f"Encoding {data_type} context data")
            concatenated_vectors = concat_name_and_context(name_vectors, context_vectors)
         else:
@@ -274,24 +239,22 @@ def process_data_type(data_type, data_list, final_results, model_path):
         y_predict = get_predictions(model, test_x, data_type)
 
         # Collect predictions and update saving progress
-        # Collect predictions and save with correct links
         for idx, prediction in enumerate(y_predict):
-            item = data_list[idx]
-            file_name, original_name = item["file_name"], item["original_name"]
-            confidence = str(prediction[0]) if data_type != "sinks" else str(prediction[np.argmax(prediction)])
-            
-            if data_type == "sinks":
-                prediction = np.argmax(prediction)
-                if prediction != 0:  # Ignore "non-sink" class
-                    sink_type = sink_type_mapping[int(prediction)]
+            if data_type == "sinks":  # Special handling for sinks (categorical)
+                predicted_category = np.argmax(prediction)  # Get the predicted class
+                # print(predicted_category)
+                if predicted_category != 0:  # Ignore "non-sink" class (0)
+                    sink_type = sink_type_mapping[int(predicted_category)]  # Convert the index to a sink category
+                    file_name, sink_name = projectAllVariables[data_type][idx]
                     if file_name not in final_results:
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
-                    final_results[file_name]["sinks"].append({"name": original_name, "type": sink_type, "confidence": confidence})
-            else: 
+                    final_results[file_name]["sinks"].append({"name": sink_name, "type": sink_type, "confidence": str(prediction[predicted_category])})
+            else:  # Handle non-sink types (strings, variables, comments)
                 if prediction >= thresholds.get(data_type):
+                    file_name, data = projectAllVariables[data_type][idx]
                     if file_name not in final_results:
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
-                    final_results[file_name][data_type].append({"name": original_name, "confidence": confidence})
+                    final_results[file_name][data_type].append({"name": data, "confidence": str(prediction[0])})
 
 # Main function
 async def main():
@@ -302,7 +265,7 @@ async def main():
 
         model_path = os.path.join(os.getcwd(), "src", "bert", "models")
     else:
-        project_name = "CWEToyDataset"
+        project_name = "kafka-trunk"
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
         model_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
