@@ -83,8 +83,8 @@
      )
    }
 
-   override predicate isBarrier(DataFlow::Node node) {
-    Barrier::isBarrier(node)
+   override predicate isSanitizer(DataFlow::Node node) {
+    Barrier::barrier(node)
    }
  }
  

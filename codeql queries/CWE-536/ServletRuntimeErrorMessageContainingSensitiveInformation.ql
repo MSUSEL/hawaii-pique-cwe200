@@ -79,8 +79,8 @@
       node2.asExpr() = catchClause.getVariable().getAnAccess()
     )
   }
-  override predicate isBarrier(DataFlow::Node node) {
-   Barrier::isBarrier(node)
+  override predicate isSanitizer(DataFlow::Node node) {
+   Barrier::barrier(node)
   }
  }
  

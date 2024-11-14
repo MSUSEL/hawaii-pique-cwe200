@@ -48,7 +48,8 @@ import ExposureInTransmittedData::PathGraph
  }
 
   predicate isBarrier(DataFlow::Node node) {
-    Barrier::isBarrier(node)
+    Barrier::barrier(node)
+  }
 }
 
  from ExposureInTransmittedData::PathNode source, ExposureInTransmittedData::PathNode sink

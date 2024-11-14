@@ -46,8 +46,8 @@
      )
    }
  
-   override predicate isBarrier(DataFlow::Node node) {
-    Barrier::isBarrier(node)
+  predicate isBarrier(DataFlow::Node node) {
+    Barrier::barrier(node)
    }
  }
  

@@ -49,7 +49,7 @@ module ShellErrorExposureConfig implements DataFlow::ConfigSig {
   }
 
   predicate isBarrier(DataFlow::Node node) {
-    Barrier::isBarrier(node)
+    Barrier::barrier(node)
   } 
 }
 
