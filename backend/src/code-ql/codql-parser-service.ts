@@ -22,6 +22,8 @@ export class CodeQlParserService {
         const sarifPath = path.join(project, 'result.sarif');
         const data = await this.fileService.readJsonFile(sarifPath);
         const result = data.runs[0].results[index];
+
+        // this.saveDataFlowTree(filePath, project)
     
         try {
             // Try to access all codeFlows
@@ -35,23 +37,79 @@ export class CodeQlParserService {
                 flowMaps.push(flowMap);
             }
 
-            console.log(flowMaps)
-    
+            console.log(flowMaps)            
             return flowMaps; // Return all flow maps (one for each codeFlow)
         } catch (error) {
             console.error('Error processing code flows:', error);
             return [];
         }
     }
+
+    async saveDataFlowTree(filePath: string, project: string) {
+        const sarifPath = path.join(project, 'result.sarif');
+        const data = await this.fileService.readJsonFile(sarifPath);
+        const results = data.runs[0].results;
+        const flowMapsByCWE: { [cwe: string]: any[] } = {}; // Group by CWE
     
-    async buildDataFlowMap(codeFlows: any[], project): Promise<{ [key: number]: FlowNode }> {
+        try {
+            for (let i = 0; i < results.length; i++) {
+                const result = results[i];
+                const cwe = result.ruleId.split('/').pop(); // Extract CWE from ruleId
+                
+                if (!cwe) continue; // Skip if no CWE is found
+    
+                if (result.codeFlows) {
+                    const codeFlowsList = result.codeFlows || [];
+                    for (let j = 0; j < codeFlowsList.length; j++) {
+                        const codeFlows = codeFlowsList[j].threadFlows[0].locations;
+    
+                        // Retrieve the flow map for each code flow
+                        const flowMap = await this.buildDataFlowMap(codeFlows, project);
+    
+                        // Format the flow map to be more human-readable
+                        const humanReadableFlowMap = Object.entries(flowMap).map(([index, node]) => ({
+                            step: Number(index) + 1,  // Step number for readability
+                            variableName: node.message,
+                            uri: node.uri,
+                            // lineRange: `${node.startLine}-${node.endLine}`,
+                            // columnRange: `${node.startColumn}-${node.endColumn}`,
+                            type: node.type,
+                            code: node.code
+                        }));
+    
+                        // Add the flow map to the relevant CWE group
+                        if (!flowMapsByCWE[cwe]) {
+                            flowMapsByCWE[cwe] = [];
+                        }
+    
+                        flowMapsByCWE[cwe].push({
+                            resultIndex: i + 1, 
+                            codeFlowIndex: j + 1,
+                            fileName : humanReadableFlowMap.pop().uri.split('/').pop(),
+                            flow: humanReadableFlowMap,
+                        });
+                    }
+                }
+            }
+    
+            // Save the grouped flow maps in human-readable format
+            const outputFilePath = path.join(project, 'flowMapsByCWE.json');
+            await this.fileService.writeToFile(outputFilePath, JSON.stringify(flowMapsByCWE, null, 2));
+            console.log(`Data flow map grouped by CWE saved to ${outputFilePath}`);
+    
+        } catch (error) {
+            console.error('Error processing code flows:', error);
+        }
+    }
+
+    async buildDataFlowMap(codeFlows: any[], project: string): Promise<{ [key: number]: FlowNode }> {
         const flowMap: { [key: number]: FlowNode } = {};
-    
+
         // Use a loop with `await` to ensure file loading is awaited for each code flow
         for (let flowIndex = 0; flowIndex < codeFlows.length; flowIndex++) {
             const codeFlow = codeFlows[flowIndex];
             console.log(`Processing Code Flow #${flowIndex + 1}`);
-    
+
             const location = codeFlow.location;
             if (location) {
                 const physicalLocation = location.physicalLocation;
@@ -60,11 +118,11 @@ export class CodeQlParserService {
                 const startColumn = physicalLocation.region.startColumn;
                 const endColumn = physicalLocation.region.endColumn;
                 const endLine = physicalLocation.region.endLine || startLine;
-    
+
                 // Normalize the file path for the current OS
                 const normalizedUri = path.normalize(uri);
                 const fullPath = path.join(project, normalizedUri);
-    
+
                 let message = location.message.text;  // Default message from SARIF file
                 const type = message.length > 1 ? message.split(':').slice(1).join(':').trim() : '';
                 console.log(`Message: ${message}`);
@@ -72,45 +130,50 @@ export class CodeQlParserService {
                 // Await the file read to ensure we get the file data before continuing
                 try {
                     const data = await this.fileService.readFileAsync(fullPath);
-    
-                    // Extract the specific line from the file
-                    const line = data.split('\n')[startLine - 1];
-    
-                    // Ensure startColumn and endColumn are within valid bounds
+                    const lines = data.split('\n');
+
+                    // Calculate the range of lines we need (3 lines above and 3 below)
+                    const startExtractLine = Math.max(0, startLine - 4); // 3 lines above (0-based index)
+                    const endExtractLine = Math.min(lines.length, startLine + 2); // 3 lines below (inclusive)
+
+                    // Extract the required lines
+                    const surroundingLines = lines.slice(startExtractLine, endExtractLine + 1);
+
+                    // Ensure startColumn and endColumn are within valid bounds on the specified line
+                    const targetLine = surroundingLines[3]; // The actual line (3rd in extracted array)
                     const validStartColumn = Math.max(0, startColumn - 1);
-                    const validEndColumn = Math.min(endColumn - 1, line.length );
-    
-                    // Extract the substring between validStartColumn and validEndColumn
+                    const validEndColumn = Math.min(endColumn - 1, targetLine.length);
+
+                    // Update message if valid columns are provided
                     if (validStartColumn <= validEndColumn) {
-                        message = line.slice(validStartColumn, validEndColumn);
-                    } else {
+                        message = targetLine.slice(validStartColumn, validEndColumn);
                     }
-    
+
+                    // Join surrounding lines for full context
+                    const codeContext = surroundingLines.join('\n');
+
+                    // Store this in the flow map
+                    flowMap[flowIndex] = {
+                        message: message,  // Use the updated message (either from SARIF or extracted from the file)
+                        uri: uri,  // Keep the original URI for reference
+                        startLine: startLine,
+                        startColumn: startColumn,
+                        endColumn: endColumn,
+                        endLine: endLine,
+                        type: type,
+                        code: codeContext  // Add surrounding code as the context
+                    };
+
                 } catch (error) {
                     console.error(`Error reading file ${fullPath}:`, error);
                     // Optionally handle the error here
                 }
-    
-                // Create a key-value pair for this location
-                flowMap[flowIndex] = {
-                    message: message,  // Use the updated message (either from SARIF or extracted from the file)
-                    uri: uri,  // Keep the original URI for reference
-                    startLine: startLine,
-                    startColumn: startColumn,
-                    endColumn: endColumn,
-                    endLine: endLine,
-                    type: type,
-                };
             }
         }
-    
+
         return flowMap; // Return the flow map after all files have been read
     }
-    
-    
 
-    
-    
 
     parseRules(rules: any[], results: any[], sourcePath: string) {
         const rulesMap = new Map();
@@ -267,7 +330,8 @@ export interface FlowNode {
     startColumn: string,
     endColumn: string,
     endLine: string,
-    type: string
+    type: string,
+    code: string
 }
 
 export interface Region {
