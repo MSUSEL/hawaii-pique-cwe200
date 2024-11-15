@@ -24,8 +24,8 @@
    predicate isSource(DataFlow::Node source) {
      exists(SensitiveVariableExpr sve |  
       source.asExpr() = sve and 
-      sve.toString().toLowerCase() != "url")
-   }
+      not sve.toString().toLowerCase().matches("%url%"))
+    }
  
    predicate isSink(DataFlow::Node sink) {
     // Direct use of URL with openConnection followed by setRequestMethod("GET")
