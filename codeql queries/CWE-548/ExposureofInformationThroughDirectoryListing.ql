@@ -35,8 +35,8 @@ module DirectoryListingExposureConfig implements DataFlow::ConfigSig {
     CommonSinks::isServletSink(sink)
   }
 
-  override predicate isBarrier(DataFlow::Node node) {
-    Barrier::isBarrier(node)
+  predicate isBarrier(DataFlow::Node node) {
+    Barrier::barrier(node)
    }
 }
 
