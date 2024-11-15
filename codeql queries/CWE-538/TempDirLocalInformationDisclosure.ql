@@ -25,6 +25,16 @@
  }
  
  /**
+  * A predicate to check if the file name of the source or sink contains "test" (case-insensitive).
+  */
+ predicate isTestFile(DataFlow::Node node) {
+   exists(File file |
+     file = node.asExpr().getFile() and
+     file.getBaseName().matches("(?i).*test.*")
+   )
+ }
+ 
+ /**
   * We include use of inherently insecure methods, which don't have any associated
   * flow path, in with results describing a path from reading `java.io.tmpdir` or similar to use
   * in a file creation op.
@@ -40,8 +50,8 @@
    }
  
    predicate nodes(MethodCallInsecureFileCreation n, string key, string val) {
-    key = "semmle.label" and val = n.toString()
-  }
+     key = "semmle.label" and val = n.toString()
+   }
  
    predicate subpaths(
      MethodCallInsecureFileCreation n1, MethodCallInsecureFileCreation n2,
@@ -73,5 +83,9 @@
    not isPermissionsProtectedTempDirUse(sink.getNode()) 
    and
    isSensitiveNode(source.getNode()) // Only consider sensitive information nodes
+   and
+   not isTestFile(source.getNode()) // Exclude files with "test" in the name
+   and
+   not isTestFile(sink.getNode())   // Exclude files with "test" in the name
  select source.getNode(), source, sink, message, source.getNode(), "system temp directory"
  
