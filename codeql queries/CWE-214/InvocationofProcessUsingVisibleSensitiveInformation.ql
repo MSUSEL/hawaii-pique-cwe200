@@ -82,7 +82,7 @@ module ProcessExecutionWithSensitiveInfoConfig implements DataFlow::ConfigSig {
     )
     or
     // Use the LLM response to indentify command execution sinks
-    getSink(sink, "Command Execution Sink")
+    getSink(sink, "IPC Sink")
   }
 
   predicate isBarrier(DataFlow::Node node) { Barrier::barrier(node) }
