@@ -18,6 +18,8 @@ import semmle.code.java.security.SensitiveActions
 import SensitiveGetQueryFlow::PathGraph
 import SensitiveInfo.SensitiveInfo
 
+module SensitiveGetQueryFlow = TaintTracking::Global<SensitiveGetQueryConfig>;
+
 /** A variable that holds sensitive information judging by its name. */
 class SensitiveInfoExpr extends Expr {
   SensitiveInfoExpr() {
@@ -79,7 +81,6 @@ module SensitiveGetQueryConfig implements DataFlow::ConfigSig {
   }
 }
 
-module SensitiveGetQueryFlow = TaintTracking::Global<SensitiveGetQueryConfig>;
 
 from SensitiveGetQueryFlow::PathNode source, SensitiveGetQueryFlow::PathNode sink
 where SensitiveGetQueryFlow::flowPath(source, sink)
