@@ -39,7 +39,6 @@ module Barrier {
         exists(MethodCall frameworkSanitize |
             (
                 // OWASP ESAPI
-                frameworkSanitize.getMethod().getDeclaringType() instanceof RefType and
                 (
                     frameworkSanitize.getMethod().getDeclaringType().(RefType).hasQualifiedName("org.owasp.esapi", "ESAPI") or
                     frameworkSanitize.getMethod().getDeclaringType().(RefType).hasQualifiedName("org.apache.commons.codec.binary", "Base64") or
@@ -66,7 +65,6 @@ module Barrier {
         // Hashing or digest creation methods as barriers for sensitive information
         exists(MethodCall hashMethod |
             hashMethod.getMethod().getName().toLowerCase().matches("%hash%") and
-            hashMethod.getMethod().getDeclaringType() instanceof RefType and
             hashMethod.getMethod().getDeclaringType().(RefType).hasQualifiedName("java.security", "MessageDigest") and
             (node.asExpr() = hashMethod.getAnArgument() or node.asExpr() = hashMethod)
         )
