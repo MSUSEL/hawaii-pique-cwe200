@@ -16,6 +16,8 @@
  import SensitiveInfo.SensitiveInfo
  import CommonSinks.CommonSinks
  import Barrier.Barrier
+ private import semmle.code.java.security.InformationLeak
+
  
  // Define flow states
  class State1 extends DataFlow::FlowState { State1() { this = "State1" } }
@@ -39,7 +41,8 @@
        (
          CommonSinks::isPrintSink(sink) or
          CommonSinks::isErrPrintSink(sink) or
-         CommonSinks::isServletSink(sink)
+         CommonSinks::isServletSink(sink) or
+         sink instanceof InformationLeakSink
        ) and 
        sink.asExpr() = mcSink.getAnArgument()
      )
