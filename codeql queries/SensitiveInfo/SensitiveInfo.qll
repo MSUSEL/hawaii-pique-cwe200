@@ -27,7 +27,13 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
         v.getName().toLowerCase() != "req" and
         v.getName().toLowerCase() != "context" and
         v.getName().toLowerCase() != "contents" and
-        v.getName().toLowerCase() != "id"
+        v.getName().toLowerCase() != "id" and
+        v.getName().toLowerCase() != "operation" and
+        v.getName().toLowerCase() != "op" and
+        v.getName().toLowerCase() != "value" and
+        v.getName().toLowerCase() != "val" and
+        v.getName().toLowerCase() != "parent" and
+        v.getName().toLowerCase() != "child" 
         ) and
 
         /* Exclude exceptions, if an exception is sensitive, then it will have a different source flow into it. 
@@ -90,10 +96,6 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
 }
 
 
-
-
-
-
   // class SensitiveComment extends StringLiteral {
   //   SensitiveComment() {
   //     exists(File f, string pattern |
@@ -118,21 +120,6 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
         f = mc.getFile() and
         (sinks(f.getBaseName(), mc.getMethod().getName(), _) and
         not sinks(f.getBaseName(), mc.getMethod().getName(), "Log Sink"))
-
-        // (sinks(f.getBaseName(), mc.getMethod().getName(), "I/O Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "Print Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "Network Sink") or
-        // // sinks(f.getBaseName(), mc.getMethod().getName(), "Log Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "Database Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "Email Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "IPC Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "Clipboard Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "GUI Display Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "RPC Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "Environment Variable Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "Command Execution Sink") or
-        // sinks(f.getBaseName(), mc.getMethod().getName(), "Configuration File Sink"))
-
         and
         sink.asExpr() = mc.getAnArgument()
         )
@@ -159,26 +146,6 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
       }
     }
     
-    
-
-    predicate getAllSinks(DataFlow::Node sink) { 
-      exists(File f, MethodCall mc | 
-        f = mc.getFile() and
-        (sinks(f.getBaseName(), mc.getMethod().getName(), "I/O Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "Print Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "Network Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "Log Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "Database Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "Email Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "IPC Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "Clipboard Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "GUI Display Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "RPC Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "Environment Variable Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "Command Execution Sink") or
-        sinks(f.getBaseName(), mc.getMethod().getName(), "Configuration File Sink"))
-        )
-    }
 
 string getSinkName() { 
   exists(File f, MethodCall mc | 
