@@ -22,9 +22,7 @@
  import Barrier.Barrier
  
  module ExposureInTransmittedData = TaintTracking::Global<ExposureInTransmittedDataConfig>;
-//  module Flow = TaintTracking::Global<HttpServletExceptionSourceConfig>;
-
-import ExposureInTransmittedData::PathGraph
+ import ExposureInTransmittedData::PathGraph
 
  module ExposureInTransmittedDataConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source){source.asExpr() instanceof SensitiveVariableExpr}
