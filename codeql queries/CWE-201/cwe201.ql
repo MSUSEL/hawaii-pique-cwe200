@@ -32,19 +32,15 @@ import ExposureInTransmittedData::PathGraph
   predicate isSink(DataFlow::Node sink) {
     sink instanceof InformationLeakSink or 
     // getSink(sink, "Email Sink") or
-
-    exists(MethodCall mc | 
-      sink.asExpr() = mc.getAnArgument() and 
-      mc.getMethod().hasName("write") and
-      mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("javax.servlet.http", "HttpServletResponse"))
-
-    or
       
     exists(MethodCall mc | 
       sink.asExpr() = mc.getAnArgument() and 
       mc.getMethod().hasName("write") and
       (mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.io", "OutputStream") or
-      mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.net", "Socket")))
+      mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.net", "Socket") or
+      mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("javax.servlet.http", "HttpServletResponse")
+      )
+    )
  }
 
   predicate isBarrier(DataFlow::Node node) {
