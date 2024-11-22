@@ -32,7 +32,6 @@ public class DefaultFactorEvaluator extends Evaluator {
 
     @Override
     public BigDecimal evaluate(ModelNode inNode) {
-
         // TODO (1.0): Some redesign needed to better handle quality model description where there are not yet weights,
         //  values, etc...
 
@@ -41,8 +40,12 @@ public class DefaultFactorEvaluator extends Evaluator {
         // Apply weighted sums
         for (ModelNode child : inNode.getChildren().values()) {
             outValue = outValue.add(child.getValue().multiply(inNode.getWeight(child.getName()),BigDecimalWithContext.getMC()));
+            System.out.println("Evaluating Factor: " + inNode.getName() + 
+                           ", Child: " + child.getName() + 
+                           ", Value: " + child.getValue() + 
+                           ", Weight: " + inNode.getWeight(child.getName()));
         }
-
+        // System.out.println("DefaultFactorEvaluator - " + inNode.getName() + " - " + outValue);
         return outValue;
     }
 }

@@ -48,7 +48,7 @@ public class DefaultMeasureEvaluator extends Evaluator {
 
         // Normalize
         value = node.getNormalizerObj().normalize(value);
-
+        System.out.println("DefaultMeasureEvaluator - " + inNode.getName() + " - " + value);
         // Apply utility function
         return node.getUtility_function().utilityFunction(value, node.getThresholds(), node.isPositive());
     }

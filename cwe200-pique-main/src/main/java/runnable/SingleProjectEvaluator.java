@@ -47,7 +47,7 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
         }
 
         //projectLocation is a json file, need to parse. 
-        Path projectFilePath = Paths.get(projectsToAnalyze);
+        Path projectFilePath = Paths.get(prop.getProperty("benchmark.repo"));
         Path resultsDir = Paths.get(prop.getProperty("results.directory"));
 
         LOGGER.info("Projects to analyze from file: " + projectFilePath.toString());
@@ -78,7 +78,7 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
         // Initialize data structures
         QualityModelImport qmImport = new QualityModelImport(qmLocation);
         QualityModel qualityModel = qmImport.importQualityModel();
-        project = new Project("java projrct", projectDir, qualityModel);
+        project = new Project("CWE-200", projectDir, qualityModel);
 
         // Validate State
         // TODO: validate more objects such as if the quality model has thresholds and weights, are there expected diagnostics, etc

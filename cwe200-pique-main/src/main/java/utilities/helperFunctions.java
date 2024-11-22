@@ -107,7 +107,7 @@ public class helperFunctions {
 			while ((line = reader.readLine()) != null) {
 				// Check if JSON output has started and skip progress lines
 				if (!jsonStarted) {
-					if (line.trim().startsWith("{")) {
+					if (line.trim().contains("{")) {
 						jsonStarted = true;
 					} else {
 						continue; // Skip progress lines

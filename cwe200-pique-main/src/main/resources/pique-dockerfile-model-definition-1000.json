@@ -2,7 +2,7 @@
   "name": "PIQUE Cloud-dockerfile quality model",
   "additionalData": {},
   "global_config": {
-    "benchmark_strategy": "calibration.NaiveCloudBenchmarker",
+    "benchmark_strategy": "pique.calibration.NaiveBenchmarker",
     "normalizer": "pique.evaluation.NoNormalizer",
     "weights_strategy": "pique.calibration.NaiveWeighter"
   },

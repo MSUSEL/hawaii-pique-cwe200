@@ -48,8 +48,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * CODE TAKEN FROM PIQUE-BIN-DOCKER AND MODIFIED FOR PIQUE-SBOM-CONTENT and
@@ -65,13 +68,12 @@ import java.util.zip.ZipOutputStream;
 public class CweCodeQl extends Tool implements ITool {
     private static final Logger LOGGER = LoggerFactory.getLogger(CweCodeQl.class);
     private String backendAddress;
-
+    
     public static void main(String[] args) {
         CweCodeQl test = new CweCodeQl(PiqueProperties.getProperties().getProperty("backend.server"));
         // test.initialize(null);
         test.analyze(Paths.get("SmallTest"));
         // test.analyze(Paths.get("s"));
-
 
     }
 
@@ -141,8 +143,6 @@ public class CweCodeQl extends Tool implements ITool {
                 
                 // Convert the results to a CSV file, and save it
                 Path finalResults = saveToolResultsToFile(jsonResponse, outputFilePath);
-                
-                parseAnalysis(finalResults);
                 return finalResults;
 
             } else {
@@ -186,7 +186,7 @@ public class CweCodeQl extends Tool implements ITool {
                                             lineNumber, 
                                             characterNumber,
                                             severity);
-                    finding.setName(cweDescription);
+                    finding.setName(cweId);
                     diag.setChild(finding);
                     System.out.println(cweId + " Diagnostic CweCodeQl");
                 }
@@ -215,22 +215,35 @@ public class CweCodeQl extends Tool implements ITool {
     }
     
     private JSONObject responseToJSON(String response) {
-        try {
-            JSONObject jsonResponse = new JSONObject(response);
-            return jsonResponse;
-        } catch (JSONException e) {
-            LOGGER.error("Failed to parse JSON response from server.");
-            e.printStackTrace();
-        }
+    if (response == null || response.trim().isEmpty()) {
+        LOGGER.error("Response is null or empty, cannot parse to JSON.");
         return null;
     }
+
+    try {
+        // Use regex to extract the JSON part
+        Pattern jsonPattern = Pattern.compile("\\{.*");
+        Matcher matcher = jsonPattern.matcher(response);
+
+        if (matcher.find()) {
+            String jsonPart = matcher.group(); // Extract the JSON substring
+            return new JSONObject(jsonPart);  // Parse it into a JSONObject
+        } else {
+            LOGGER.error("No JSON found in response: {}", response);
+        }
+    } catch (JSONException e) {
+        LOGGER.error("Failed to parse JSON response: {}", response, e);
+    }
+
+    return null;
+}
 
     private int cweToSeverity(String cweId){
         switch (cweId) {
             case "CWE-201": return 9;
             case "CWE-208": return 7;
             case "CWE-214": return 9;
-            case "CWE-215": return 7;
+            case "CWE-215": return 9;
             case "CWE-531": return 7;
             case "CWE-532": return 9;
             case "CWE-535": return 7;
@@ -259,6 +272,7 @@ public class CweCodeQl extends Tool implements ITool {
     }
 
     private Path zipProject(Path projectLocation) {
+        String parentFolderName = projectLocation.getFileName().toString();
         // Validate that projectLocation exists and is a directory
         if (!Files.exists(projectLocation)) {
             LOGGER.error("The project location does not exist: {}", projectLocation.toAbsolutePath());
@@ -268,31 +282,35 @@ public class CweCodeQl extends Tool implements ITool {
             LOGGER.error("The project location is not a directory: {}", projectLocation.toAbsolutePath());
             return null;
         }
-
+    
         Path zipFilePath = Paths.get("zipped-repos/" + projectLocation.getFileName().toString());
-
+    
         try {
             // Ensure the base directory for zipFilePath exists
             if (!Files.exists(zipFilePath.getParent())) {
                 Files.createDirectories(zipFilePath.getParent());
             }
-
-            // Zip the project directory
+    
+            // Zip the project directory with an additional parent folder
             try (ZipOutputStream zos = new ZipOutputStream(Files.newOutputStream(zipFilePath))) {
                 Files.walkFileTree(projectLocation, new SimpleFileVisitor<Path>() {
                     @Override
                     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                        ZipEntry zipEntry = new ZipEntry(projectLocation.relativize(file).toString());
+                        // Prepend the parent folder to the file path
+                        String zipEntryName = parentFolderName + "/" + projectLocation.relativize(file).toString();
+                        ZipEntry zipEntry = new ZipEntry(zipEntryName);
                         zos.putNextEntry(zipEntry);
                         Files.copy(file, zos);
                         zos.closeEntry();
                         return FileVisitResult.CONTINUE;
                     }
-
+    
                     @Override
                     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                        // Prepend the parent folder to the directory path
                         if (!projectLocation.equals(dir)) { // Avoid adding the root directory itself as an entry
-                            ZipEntry zipEntry = new ZipEntry(projectLocation.relativize(dir).toString() + "/");
+                            String zipEntryName = parentFolderName + "/" + projectLocation.relativize(dir).toString() + "/";
+                            ZipEntry zipEntry = new ZipEntry(zipEntryName);
                             zos.putNextEntry(zipEntry);
                             zos.closeEntry();
                         }
@@ -300,7 +318,7 @@ public class CweCodeQl extends Tool implements ITool {
                     }
                 });
             }
-
+    
             LOGGER.info("Project successfully zipped at {}", zipFilePath);
             return zipFilePath;  // Return the path to the zip file
         } catch (IOException e) {
@@ -308,6 +326,7 @@ public class CweCodeQl extends Tool implements ITool {
             return null;
         }
     }
+    
 
     private void uploadProjectToServer(String backendAddress, Path zipPath) {
         try {
