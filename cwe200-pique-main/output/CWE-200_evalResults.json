@@ -96,23 +96,9 @@
               "CWE-215 Diagnostic CweCodeQl": {
                 "toolName": "CweCodeQl",
                 "name": "CWE-215 Diagnostic CweCodeQl",
-                "value": 9.0,
+                "value": 0.0,
                 "description": "Sum of findings of type CWE-215",
-                "children": {
-                  "Sensitive data exposure in debug code": {
-                    "name": "Sensitive data exposure in debug code",
-                    "value": 9,
-                    "description": "",
-                    "children": {},
-                    "weights": {},
-                    "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                    "normalizer": "pique.evaluation.DefaultNormalizer",
-                    "utility_function": {
-                      "name": "Probability Density Function (PDF) Utility Function",
-                      "description": "TODO -- Redempta - Write description in ProbabilityDensityFunctionUtilityFunction class"
-                    }
-                  }
-                },
+                "children": {},
                 "weights": {},
                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -122,9 +108,7 @@
                 }
               }
             },
-            "weights": {
-              "CWE-215 Diagnostic CweCodeQl": 1.0
-            },
+            "weights": {},
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
@@ -541,14 +525,7 @@
             }
           }
         },
-        "weights": {
-          "CWE-203": 0.0,
-          "CWE-215": 1.0,
-          "CWE-538": 0.0,
-          "CWE-209": 0.0,
-          "CWE-497": 0.0,
-          "CWE-201": 0.0
-        },
+        "weights": {},
         "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
         "normalizer": "pique.evaluation.DefaultNormalizer",
         "utility_function": {
@@ -650,23 +627,9 @@
                   "CWE-215 Diagnostic CweCodeQl": {
                     "toolName": "CweCodeQl",
                     "name": "CWE-215 Diagnostic CweCodeQl",
-                    "value": 9.0,
+                    "value": 0.0,
                     "description": "Sum of findings of type CWE-215",
-                    "children": {
-                      "Sensitive data exposure in debug code": {
-                        "name": "Sensitive data exposure in debug code",
-                        "value": 9,
-                        "description": "",
-                        "children": {},
-                        "weights": {},
-                        "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "Probability Density Function (PDF) Utility Function",
-                          "description": "TODO -- Redempta - Write description in ProbabilityDensityFunctionUtilityFunction class"
-                        }
-                      }
-                    },
+                    "children": {},
                     "weights": {},
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -676,9 +639,7 @@
                     }
                   }
                 },
-                "weights": {
-                  "CWE-215 Diagnostic CweCodeQl": 1.0
-                },
+                "weights": {},
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -1095,14 +1056,7 @@
                 }
               }
             },
-            "weights": {
-              "CWE-203": 0.0,
-              "CWE-215": 1.0,
-              "CWE-538": 0.0,
-              "CWE-209": 0.0,
-              "CWE-497": 0.0,
-              "CWE-201": 0.0
-            },
+            "weights": {},
             "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
@@ -1211,23 +1165,9 @@
                   "CWE-215 Diagnostic CweCodeQl": {
                     "toolName": "CweCodeQl",
                     "name": "CWE-215 Diagnostic CweCodeQl",
-                    "value": 9.0,
+                    "value": 0.0,
                     "description": "Sum of findings of type CWE-215",
-                    "children": {
-                      "Sensitive data exposure in debug code": {
-                        "name": "Sensitive data exposure in debug code",
-                        "value": 9,
-                        "description": "",
-                        "children": {},
-                        "weights": {},
-                        "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "Probability Density Function (PDF) Utility Function",
-                          "description": "TODO -- Redempta - Write description in ProbabilityDensityFunctionUtilityFunction class"
-                        }
-                      }
-                    },
+                    "children": {},
                     "weights": {},
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1237,9 +1177,7 @@
                     }
                   }
                 },
-                "weights": {
-                  "CWE-215 Diagnostic CweCodeQl": 1.0
-                },
+                "weights": {},
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -1656,14 +1594,7 @@
                 }
               }
             },
-            "weights": {
-              "CWE-203": 0.0,
-              "CWE-215": 1.0,
-              "CWE-538": 0.0,
-              "CWE-209": 0.0,
-              "CWE-497": 0.0,
-              "CWE-201": 0.0
-            },
+            "weights": {},
             "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
@@ -1779,23 +1710,9 @@
                       "CWE-215 Diagnostic CweCodeQl": {
                         "toolName": "CweCodeQl",
                         "name": "CWE-215 Diagnostic CweCodeQl",
-                        "value": 9.0,
+                        "value": 0.0,
                         "description": "Sum of findings of type CWE-215",
-                        "children": {
-                          "Sensitive data exposure in debug code": {
-                            "name": "Sensitive data exposure in debug code",
-                            "value": 9,
-                            "description": "",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "Probability Density Function (PDF) Utility Function",
-                              "description": "TODO -- Redempta - Write description in ProbabilityDensityFunctionUtilityFunction class"
-                            }
-                          }
-                        },
+                        "children": {},
                         "weights": {},
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1805,9 +1722,7 @@
                         }
                       }
                     },
-                    "weights": {
-                      "CWE-215 Diagnostic CweCodeQl": 1.0
-                    },
+                    "weights": {},
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -2224,14 +2139,7 @@
                     }
                   }
                 },
-                "weights": {
-                  "CWE-203": 0.0,
-                  "CWE-215": 1.0,
-                  "CWE-538": 0.0,
-                  "CWE-209": 0.0,
-                  "CWE-497": 0.0,
-                  "CWE-201": 0.0
-                },
+                "weights": {},
                 "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -2340,23 +2248,9 @@
                       "CWE-215 Diagnostic CweCodeQl": {
                         "toolName": "CweCodeQl",
                         "name": "CWE-215 Diagnostic CweCodeQl",
-                        "value": 9.0,
+                        "value": 0.0,
                         "description": "Sum of findings of type CWE-215",
-                        "children": {
-                          "Sensitive data exposure in debug code": {
-                            "name": "Sensitive data exposure in debug code",
-                            "value": 9,
-                            "description": "",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "Probability Density Function (PDF) Utility Function",
-                              "description": "TODO -- Redempta - Write description in ProbabilityDensityFunctionUtilityFunction class"
-                            }
-                          }
-                        },
+                        "children": {},
                         "weights": {},
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2366,9 +2260,7 @@
                         }
                       }
                     },
-                    "weights": {
-                      "CWE-215 Diagnostic CweCodeQl": 1.0
-                    },
+                    "weights": {},
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -2785,14 +2677,7 @@
                     }
                   }
                 },
-                "weights": {
-                  "CWE-203": 0.0,
-                  "CWE-215": 1.0,
-                  "CWE-538": 0.0,
-                  "CWE-209": 0.0,
-                  "CWE-497": 0.0,
-                  "CWE-201": 0.0
-                },
+                "weights": {},
                 "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -2961,23 +2846,9 @@
         "CWE-215 Diagnostic CweCodeQl": {
           "toolName": "CweCodeQl",
           "name": "CWE-215 Diagnostic CweCodeQl",
-          "value": 9.0,
+          "value": 0.0,
           "description": "Sum of findings of type CWE-215",
-          "children": {
-            "Sensitive data exposure in debug code": {
-              "name": "Sensitive data exposure in debug code",
-              "value": 9,
-              "description": "",
-              "children": {},
-              "weights": {},
-              "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-              "normalizer": "pique.evaluation.DefaultNormalizer",
-              "utility_function": {
-                "name": "Probability Density Function (PDF) Utility Function",
-                "description": "TODO -- Redempta - Write description in ProbabilityDensityFunctionUtilityFunction class"
-              }
-            }
-          },
+          "children": {},
           "weights": {},
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2987,9 +2858,7 @@
           }
         }
       },
-      "weights": {
-        "CWE-215 Diagnostic CweCodeQl": 1.0
-      },
+      "weights": {},
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -3947,23 +3816,9 @@
     "CWE-215 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "name": "CWE-215 Diagnostic CweCodeQl",
-      "value": 9.0,
+      "value": 0.0,
       "description": "Sum of findings of type CWE-215",
-      "children": {
-        "Sensitive data exposure in debug code": {
-          "name": "Sensitive data exposure in debug code",
-          "value": 9,
-          "description": "",
-          "children": {},
-          "weights": {},
-          "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-          "normalizer": "pique.evaluation.DefaultNormalizer",
-          "utility_function": {
-            "name": "Probability Density Function (PDF) Utility Function",
-            "description": "TODO -- Redempta - Write description in ProbabilityDensityFunctionUtilityFunction class"
-          }
-        }
-      },
+      "children": {},
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",

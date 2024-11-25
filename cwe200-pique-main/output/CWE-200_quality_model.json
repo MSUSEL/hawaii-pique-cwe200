@@ -42,10 +42,6 @@
                 "weights": {
                   "CWE-204 Diagnostic CweCodeQl": 1.0
                 },
-                "thresholds": [
-                  0,
-                  0
-                ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -77,10 +73,6 @@
                 "weights": {
                   "CWE-208 Diagnostic CweCodeQl": 1.0
                 },
-                "thresholds": [
-                  0,
-                  0
-                ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -94,8 +86,8 @@
               "CWE-208": 0.5
             },
             "thresholds": [
-              0,
-              11
+              10,
+              10
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -334,10 +326,6 @@
                     "weights": {
                       "CWE-535 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -369,10 +357,6 @@
                     "weights": {
                       "CWE-536 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -404,10 +388,6 @@
                     "weights": {
                       "CWE-537 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -439,10 +419,6 @@
                     "weights": {
                       "CWE-550 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -457,10 +433,6 @@
                   "CWE-537": 0.25,
                   "CWE-550": 0.25
                 },
-                "thresholds": [
-                  0,
-                  0
-                ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -473,10 +445,6 @@
               "CWE-209 Diagnostic CweCodeQl": 0.5,
               "CWE-211": 0.5
             },
-            "thresholds": [
-              0,
-              0
-            ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
@@ -514,10 +482,6 @@
                 "weights": {
                   "CWE-214 Diagnostic CweCodeQl": 1.0
                 },
-                "thresholds": [
-                  0,
-                  0
-                ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -549,10 +513,6 @@
                 "weights": {
                   "CWE-548 Diagnostic CweCodeQl": 1.0
                 },
-                "thresholds": [
-                  0,
-                  0
-                ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -566,7 +526,7 @@
               "CWE-548": 0.5
             },
             "thresholds": [
-              0,
+              16,
               16
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -620,10 +580,6 @@
                 "weights": {
                   "CWE-598 Diagnostic CweCodeQl": 1.0
                 },
-                "thresholds": [
-                  0,
-                  0
-                ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -636,10 +592,6 @@
               "CWE-201 Diagnostic CweCodeQl": 0.5,
               "CWE-598": 0.5
             },
-            "thresholds": [
-              0,
-              0
-            ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
@@ -705,10 +657,6 @@
                     "weights": {
                       "CWE-204 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -740,10 +688,6 @@
                     "weights": {
                       "CWE-208 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -757,8 +701,8 @@
                   "CWE-208": 0.5
                 },
                 "thresholds": [
-                  0,
-                  11
+                  10,
+                  10
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -997,10 +941,6 @@
                         "weights": {
                           "CWE-535 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -1032,10 +972,6 @@
                         "weights": {
                           "CWE-536 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -1067,10 +1003,6 @@
                         "weights": {
                           "CWE-537 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -1102,10 +1034,6 @@
                         "weights": {
                           "CWE-550 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -1120,10 +1048,6 @@
                       "CWE-537": 0.25,
                       "CWE-550": 0.25
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -1136,10 +1060,6 @@
                   "CWE-209 Diagnostic CweCodeQl": 0.5,
                   "CWE-211": 0.5
                 },
-                "thresholds": [
-                  0,
-                  0
-                ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -1177,10 +1097,6 @@
                     "weights": {
                       "CWE-214 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -1212,10 +1128,6 @@
                     "weights": {
                       "CWE-548 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -1229,7 +1141,7 @@
                   "CWE-548": 0.5
                 },
                 "thresholds": [
-                  0,
+                  16,
                   16
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1283,10 +1195,6 @@
                     "weights": {
                       "CWE-598 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -1299,10 +1207,6 @@
                   "CWE-201 Diagnostic CweCodeQl": 0.5,
                   "CWE-598": 0.5
                 },
-                "thresholds": [
-                  0,
-                  0
-                ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -1377,10 +1281,6 @@
                     "weights": {
                       "CWE-204 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -1412,10 +1312,6 @@
                     "weights": {
                       "CWE-208 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -1429,8 +1325,8 @@
                   "CWE-208": 0.5
                 },
                 "thresholds": [
-                  0,
-                  11
+                  10,
+                  10
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1669,10 +1565,6 @@
                         "weights": {
                           "CWE-535 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -1704,10 +1596,6 @@
                         "weights": {
                           "CWE-536 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -1739,10 +1627,6 @@
                         "weights": {
                           "CWE-537 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -1774,10 +1658,6 @@
                         "weights": {
                           "CWE-550 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -1792,10 +1672,6 @@
                       "CWE-537": 0.25,
                       "CWE-550": 0.25
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -1808,10 +1684,6 @@
                   "CWE-209 Diagnostic CweCodeQl": 0.5,
                   "CWE-211": 0.5
                 },
-                "thresholds": [
-                  0,
-                  0
-                ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -1849,10 +1721,6 @@
                     "weights": {
                       "CWE-214 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -1884,10 +1752,6 @@
                     "weights": {
                       "CWE-548 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -1901,7 +1765,7 @@
                   "CWE-548": 0.5
                 },
                 "thresholds": [
-                  0,
+                  16,
                   16
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1955,10 +1819,6 @@
                     "weights": {
                       "CWE-598 Diagnostic CweCodeQl": 1.0
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -1971,10 +1831,6 @@
                   "CWE-201 Diagnostic CweCodeQl": 0.5,
                   "CWE-598": 0.5
                 },
-                "thresholds": [
-                  0,
-                  0
-                ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
@@ -2056,10 +1912,6 @@
                         "weights": {
                           "CWE-204 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -2091,10 +1943,6 @@
                         "weights": {
                           "CWE-208 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -2108,8 +1956,8 @@
                       "CWE-208": 0.5
                     },
                     "thresholds": [
-                      0,
-                      11
+                      10,
+                      10
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2348,10 +2196,6 @@
                             "weights": {
                               "CWE-535 Diagnostic CweCodeQl": 1.0
                             },
-                            "thresholds": [
-                              0,
-                              0
-                            ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
@@ -2383,10 +2227,6 @@
                             "weights": {
                               "CWE-536 Diagnostic CweCodeQl": 1.0
                             },
-                            "thresholds": [
-                              0,
-                              0
-                            ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
@@ -2418,10 +2258,6 @@
                             "weights": {
                               "CWE-537 Diagnostic CweCodeQl": 1.0
                             },
-                            "thresholds": [
-                              0,
-                              0
-                            ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
@@ -2453,10 +2289,6 @@
                             "weights": {
                               "CWE-550 Diagnostic CweCodeQl": 1.0
                             },
-                            "thresholds": [
-                              0,
-                              0
-                            ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
@@ -2471,10 +2303,6 @@
                           "CWE-537": 0.25,
                           "CWE-550": 0.25
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -2487,10 +2315,6 @@
                       "CWE-209 Diagnostic CweCodeQl": 0.5,
                       "CWE-211": 0.5
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -2528,10 +2352,6 @@
                         "weights": {
                           "CWE-214 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -2563,10 +2383,6 @@
                         "weights": {
                           "CWE-548 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -2580,7 +2396,7 @@
                       "CWE-548": 0.5
                     },
                     "thresholds": [
-                      0,
+                      16,
                       16
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2634,10 +2450,6 @@
                         "weights": {
                           "CWE-598 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -2650,10 +2462,6 @@
                       "CWE-201 Diagnostic CweCodeQl": 0.5,
                       "CWE-598": 0.5
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -2728,10 +2536,6 @@
                         "weights": {
                           "CWE-204 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -2763,10 +2567,6 @@
                         "weights": {
                           "CWE-208 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -2780,8 +2580,8 @@
                       "CWE-208": 0.5
                     },
                     "thresholds": [
-                      0,
-                      11
+                      10,
+                      10
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3020,10 +2820,6 @@
                             "weights": {
                               "CWE-535 Diagnostic CweCodeQl": 1.0
                             },
-                            "thresholds": [
-                              0,
-                              0
-                            ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
@@ -3055,10 +2851,6 @@
                             "weights": {
                               "CWE-536 Diagnostic CweCodeQl": 1.0
                             },
-                            "thresholds": [
-                              0,
-                              0
-                            ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
@@ -3090,10 +2882,6 @@
                             "weights": {
                               "CWE-537 Diagnostic CweCodeQl": 1.0
                             },
-                            "thresholds": [
-                              0,
-                              0
-                            ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
@@ -3125,10 +2913,6 @@
                             "weights": {
                               "CWE-550 Diagnostic CweCodeQl": 1.0
                             },
-                            "thresholds": [
-                              0,
-                              0
-                            ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
@@ -3143,10 +2927,6 @@
                           "CWE-537": 0.25,
                           "CWE-550": 0.25
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -3159,10 +2939,6 @@
                       "CWE-209 Diagnostic CweCodeQl": 0.5,
                       "CWE-211": 0.5
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -3200,10 +2976,6 @@
                         "weights": {
                           "CWE-214 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -3235,10 +3007,6 @@
                         "weights": {
                           "CWE-548 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -3252,7 +3020,7 @@
                       "CWE-548": 0.5
                     },
                     "thresholds": [
-                      0,
+                      16,
                       16
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3306,10 +3074,6 @@
                         "weights": {
                           "CWE-598 Diagnostic CweCodeQl": 1.0
                         },
-                        "thresholds": [
-                          0,
-                          0
-                        ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
@@ -3322,10 +3086,6 @@
                       "CWE-201 Diagnostic CweCodeQl": 0.5,
                       "CWE-598": 0.5
                     },
-                    "thresholds": [
-                      0,
-                      0
-                    ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
@@ -3399,10 +3159,6 @@
       "weights": {
         "CWE-598 Diagnostic CweCodeQl": 1.0
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -3440,10 +3196,6 @@
           "weights": {
             "CWE-204 Diagnostic CweCodeQl": 1.0
           },
-          "thresholds": [
-            0,
-            0
-          ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
@@ -3475,10 +3227,6 @@
           "weights": {
             "CWE-208 Diagnostic CweCodeQl": 1.0
           },
-          "thresholds": [
-            0,
-            0
-          ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
@@ -3492,8 +3240,8 @@
         "CWE-208": 0.5
       },
       "thresholds": [
-        0,
-        11
+        10,
+        10
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3526,10 +3274,6 @@
       "weights": {
         "CWE-214 Diagnostic CweCodeQl": 1.0
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -3592,10 +3336,6 @@
       "weights": {
         "CWE-204 Diagnostic CweCodeQl": 1.0
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -3627,10 +3367,6 @@
       "weights": {
         "CWE-535 Diagnostic CweCodeQl": 1.0
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -3662,10 +3398,6 @@
       "weights": {
         "CWE-536 Diagnostic CweCodeQl": 1.0
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -3697,10 +3429,6 @@
       "weights": {
         "CWE-548 Diagnostic CweCodeQl": 1.0
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -3732,10 +3460,6 @@
       "weights": {
         "CWE-537 Diagnostic CweCodeQl": 1.0
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -3916,10 +3640,6 @@
       "weights": {
         "CWE-208 Diagnostic CweCodeQl": 1.0
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -4012,10 +3732,6 @@
               "weights": {
                 "CWE-535 Diagnostic CweCodeQl": 1.0
               },
-              "thresholds": [
-                0,
-                0
-              ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
@@ -4047,10 +3763,6 @@
               "weights": {
                 "CWE-536 Diagnostic CweCodeQl": 1.0
               },
-              "thresholds": [
-                0,
-                0
-              ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
@@ -4082,10 +3794,6 @@
               "weights": {
                 "CWE-537 Diagnostic CweCodeQl": 1.0
               },
-              "thresholds": [
-                0,
-                0
-              ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
@@ -4117,10 +3825,6 @@
               "weights": {
                 "CWE-550 Diagnostic CweCodeQl": 1.0
               },
-              "thresholds": [
-                0,
-                0
-              ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
@@ -4135,10 +3839,6 @@
             "CWE-537": 0.25,
             "CWE-550": 0.25
           },
-          "thresholds": [
-            0,
-            0
-          ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
@@ -4151,10 +3851,6 @@
         "CWE-209 Diagnostic CweCodeQl": 0.5,
         "CWE-211": 0.5
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -4186,10 +3882,6 @@
       "weights": {
         "CWE-550 Diagnostic CweCodeQl": 1.0
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -4355,10 +4047,6 @@
           "weights": {
             "CWE-214 Diagnostic CweCodeQl": 1.0
           },
-          "thresholds": [
-            0,
-            0
-          ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
@@ -4390,10 +4078,6 @@
           "weights": {
             "CWE-548 Diagnostic CweCodeQl": 1.0
           },
-          "thresholds": [
-            0,
-            0
-          ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
@@ -4407,7 +4091,7 @@
         "CWE-548": 0.5
       },
       "thresholds": [
-        0,
+        16,
         16
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4447,10 +4131,6 @@
           "weights": {
             "CWE-535 Diagnostic CweCodeQl": 1.0
           },
-          "thresholds": [
-            0,
-            0
-          ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
@@ -4482,10 +4162,6 @@
           "weights": {
             "CWE-536 Diagnostic CweCodeQl": 1.0
           },
-          "thresholds": [
-            0,
-            0
-          ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
@@ -4517,10 +4193,6 @@
           "weights": {
             "CWE-537 Diagnostic CweCodeQl": 1.0
           },
-          "thresholds": [
-            0,
-            0
-          ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
@@ -4552,10 +4224,6 @@
           "weights": {
             "CWE-550 Diagnostic CweCodeQl": 1.0
           },
-          "thresholds": [
-            0,
-            0
-          ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
@@ -4570,10 +4238,6 @@
         "CWE-537": 0.25,
         "CWE-550": 0.25
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -4660,10 +4324,6 @@
           "weights": {
             "CWE-598 Diagnostic CweCodeQl": 1.0
           },
-          "thresholds": [
-            0,
-            0
-          ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
@@ -4676,10 +4336,6 @@
         "CWE-201 Diagnostic CweCodeQl": 0.5,
         "CWE-598": 0.5
       },
-      "thresholds": [
-        0,
-        0
-      ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {

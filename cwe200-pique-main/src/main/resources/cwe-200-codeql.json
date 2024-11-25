@@ -35,14 +35,6 @@
           "CWE-215": {},
           "CWE-497": {},
           "CWE-538": {}
-        },
-        "weights": {
-          "CWE-201": 0.0,
-          "CWE-203": 0.0,
-          "CWE-209": 0.0,
-          "CWE-215": 1.0,
-          "CWE-497": 0.0,
-          "CWE-538": 0.0
         }
       }
     }
@@ -124,10 +116,7 @@
       "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
       "children": {
         "CWE-215 Diagnostic CweCodeQl": {}
-      },
-      "weights": {
-      "CWE-215 Diagnostic CweCodeQl": 1.0    
-    }
+      }
       
     },
     "CWE-497": {

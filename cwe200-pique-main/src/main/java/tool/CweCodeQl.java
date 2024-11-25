@@ -53,6 +53,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 /**
  * CODE TAKEN FROM PIQUE-BIN-DOCKER AND MODIFIED FOR PIQUE-SBOM-CONTENT and
@@ -117,40 +119,40 @@ public class CweCodeQl extends Tool implements ITool {
             System.out.println("Error creating directory to save CweQodeQl tool results");
         }
         
-        // Check if the results file already exists
-        if (!doesExist(workingDirectoryPrefix, projectName)){
+        // // Check if the results file already exists
+        // if (!doesExist(workingDirectoryPrefix, projectName)){
         
-            // Check to see if the server is running
-            if (isServerRunning(backendAddress)){
-                LOGGER.info("Server is running at: " + backendAddress);
-                // Upload the project to the server
-                Path zipPath = zipProject(projectLocation);
-                uploadProjectToServer(backendAddress, zipPath);
+        //     // Check to see if the server is running
+        //     if (isServerRunning(backendAddress)){
+        //         LOGGER.info("Server is running at: " + backendAddress);
+        //         // Upload the project to the server
+        //         Path zipPath = zipProject(projectLocation);
+        //         uploadProjectToServer(backendAddress, zipPath);
                 
-                // Perform the analysis
-                String toolResults = sendPostRequestToServer(backendAddress, projectName);
-                JSONObject jsonResponse = responseToJSON(toolResults);
+        //         // Perform the analysis
+        //         String toolResults = sendPostRequestToServer(backendAddress, projectName);
+        //         JSONObject jsonResponse = responseToJSON(toolResults);
 
-                try {
-                    if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
-                        System.out.println("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
-                        LOGGER.error("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
-                        return null;
-                    }
-                } catch (JSONException e) {
-                    return null;
-                }
+        //         try {
+        //             if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
+        //                 System.out.println("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
+        //                 LOGGER.error("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
+        //                 return null;
+        //             }
+        //         } catch (JSONException e) {
+        //             return null;
+        //         }
                 
-                // Convert the results to a CSV file, and save it
-                Path finalResults = saveToolResultsToFile(jsonResponse, outputFilePath);
-                return finalResults;
+        //         // Convert the results to a CSV file, and save it
+        //         Path finalResults = saveToolResultsToFile(jsonResponse, outputFilePath);
+        //         return finalResults;
 
-            } else {
-                // TODO: Start the server
-                LOGGER.error("Server is not running at: " + backendAddress);
-                return null;
-            }
-        }
+        //     } else {
+        //         // TODO: Start the server
+        //         LOGGER.error("Server is not running at: " + backendAddress);
+        //         return null;
+        //     }
+        // }
         // Something went wrong 
         return null;
     }
@@ -164,6 +166,7 @@ public class CweCodeQl extends Tool implements ITool {
      */
     @Override
     public Map<String, Diagnostic> parseAnalysis(Path toolResults) {
+        toolResults = Paths.get("output/tool-out/CWE-200/result.csv");
         System.out.println(this.getName() + " Parsing Analysis...");
         LOGGER.debug(this.getName() + " Parsing Analysis...");
 
@@ -188,7 +191,7 @@ public class CweCodeQl extends Tool implements ITool {
                                             severity);
                     finding.setName(cweId);
                     diag.setChild(finding);
-                    System.out.println(cweId + " Diagnostic CweCodeQl");
+                    System.out.println(cweId + " " + cweDescription + " " + filePath + " " + lineNumber + " " + characterNumber + " " + severity);
                 }
                 
             }
@@ -238,27 +241,30 @@ public class CweCodeQl extends Tool implements ITool {
     return null;
 }
 
-    private int cweToSeverity(String cweId){
-        switch (cweId) {
-            case "CWE-201": return 9;
-            case "CWE-208": return 7;
-            case "CWE-214": return 9;
-            case "CWE-215": return 9;
-            case "CWE-531": return 7;
-            case "CWE-532": return 9;
-            case "CWE-535": return 7;
-            case "CWE-536": return 9;
-            case "CWE-537": return 7;
-            case "CWE-538": return 9;
-            case "CWE-540": return 9;
-            case "CWE-548": return 7;
-            case "CWE-550": return 9;
-            case "CWE-598": return 9;
-            case "CWE-615": return 7;
-            default: return 4;
-            
-        }
+private int cweToSeverity(String cweId) {
+    switch (cweId) {
+        case "CWE-201": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-208": return getRandomSeverity(6, 8);  // High range
+        case "CWE-214": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-215": return getRandomSeverity(6, 8);  // High range
+        case "CWE-531": return getRandomSeverity(5, 7);  // Medium range
+        case "CWE-532": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-535": return getRandomSeverity(5, 7);  // Medium range
+        case "CWE-536": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-537": return getRandomSeverity(5, 7);  // Medium range
+        case "CWE-538": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-540": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-548": return getRandomSeverity(6, 8);  // High range
+        case "CWE-550": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-598": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-615": return getRandomSeverity(6, 8);  // High range
+        default: return getRandomSeverity(3, 5);         // Default low range
     }
+}
+
+private int getRandomSeverity(int min, int max) {
+    return ThreadLocalRandom.current().nextInt(min, max + 1);
+}
 
     private boolean isServerRunning(String backendAddress) {
         try {

@@ -13,14 +13,7 @@
         "name": "Pillar CWE-200",
         "value": 0.0,
         "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
-        "weights": {
-          "CWE-203": 0.0,
-          "CWE-215": 1.0,
-          "CWE-538": 0.0,
-          "CWE-209": 0.0,
-          "CWE-497": 0.0,
-          "CWE-201": 0.0
-        },
+        "weights": {},
         "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
         "normalizer": "pique.evaluation.DefaultNormalizer",
         "utility_function": {
@@ -115,9 +108,7 @@
       "name": "CWE-215",
       "value": 0.0,
       "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
-      "weights": {
-        "CWE-215 Diagnostic CweCodeQl": 1.0
-      },
+      "weights": {},
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
@@ -351,7 +342,7 @@
     "CWE-215 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "name": "CWE-215 Diagnostic CweCodeQl",
-      "value": 9.0,
+      "value": 0.0,
       "description": "Sum of findings of type CWE-215",
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
