@@ -168,7 +168,19 @@ def get_cwe(items):
             return item
 
 def count_nulls(codeql_results, cwe_specific_results):
-    cwes_queries = list(set([c['properties']['cwe'] for c in codeql_results['runs'][0]['tool']['driver']['rules']]))
+    # cwes_queries = list(set([c['properties']['cwe'] for c in codeql_results['runs'][0]['tool']['driver']['rules']]))
+    queries_to_skip = set( ["java/sinks/call-graph", "java/backward-slice-extended", "java/find-sensitive-variable-expr"])
+    cwes_queries = set()
+
+    for res in codeql_results['runs'][0]['tool']['driver']['rules']:
+        try:
+            cwe = res['properties']['cwe']
+            cwes_queries.add(cwe)
+        except KeyError:
+            if res['id'] not in queries_to_skip:
+                print("CWE not found in properties for " + res['id'])
+        
+    
     for cwe_query in cwes_queries:
         if cwe_query not in cwe_specific_results:
             cwe_specific_results[cwe_query] = {
