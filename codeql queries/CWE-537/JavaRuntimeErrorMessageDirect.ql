@@ -36,8 +36,9 @@
        (
          CommonSinks::isPrintSink(sink) or
          CommonSinks::isErrorSink(sink) or
-         CommonSinks::isServletSink(sink) or
-         getSinkAny(sink)
+         CommonSinks::isServletSink(sink) 
+        //  or
+        //  getSinkAny(sink)
        ) and
        sink.asExpr() = mc.getAnArgument()
      )
