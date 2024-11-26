@@ -16,12 +16,14 @@
  import CommonSinks.CommonSinks
  import SensitiveInfo.SensitiveInfo
  import Barrier.Barrier
+ private import semmle.code.java.security.InformationLeak
+
  
- module Flow = TaintTracking::Global<RuntimeSensitiveInfoExposureConfig>;
+ module Flow = TaintTracking::Global<GenerationOfErrorMessageWithSensInfoConfig>;
  
  import Flow::PathGraph
  
- module RuntimeSensitiveInfoExposureConfig implements DataFlow::ConfigSig {
+ module GenerationOfErrorMessageWithSensInfoConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source) {
     exists(SensitiveVariableExpr sve |
       source.asExpr() = sve
@@ -56,4 +58,4 @@
  from Flow::PathNode source, Flow::PathNode sink
  where Flow::flowPath(source, sink)
  select sink.getNode(), source, sink,
-   "CWE-209: Sensitive information included in error messages.";
+   "CWE-209: Sensitive information included in error messages."
