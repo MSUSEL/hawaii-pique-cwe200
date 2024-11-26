@@ -56,10 +56,13 @@ Thumbs.db
 node_modules
 codeql
 backend/Files/*
-!backend/Files/CWEToyDataset
-backend/Files/CWEToyDataset/CWEToyDatasetdb
+!backend/Files/CWEToyDataset/CWEToyDataset/
+backend/Files/CWEToyDataset/*
 testing/Dataflow/db_dir/
 testing/Dataflow/query_results/
+model/*
+
+backend/src/bert/models/codebert-base-mean-pooling
 
 !files/*.gitkeep
 
@@ -72,3 +75,4 @@ codeql-pack.lock.yml
 backend/Files/CWEToyDataset/data.json
 testing/codeql_results.json
 testing/codeql_results.json
+pyrightconfig.json
