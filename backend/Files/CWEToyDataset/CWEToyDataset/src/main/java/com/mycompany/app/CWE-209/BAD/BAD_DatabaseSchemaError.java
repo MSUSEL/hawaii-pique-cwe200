@@ -2,11 +2,11 @@ public class BAD_DatabaseSchemaError {
     public void updateDatabaseSchema(String sqlUpdateCommand) {
         try {
             if (!sqlUpdateCommand.startsWith("ALTER TABLE")) {
-                throw new UnsupportedOperationException("Only table alterations are supported.");
+                throw new Exception("Only table alterations are supported." + sqlUpdateCommand);
             }
             // Database schema update logic
-        } catch (UnsupportedOperationException e) {
-            System.err.println("Database schema update failed with command: " + sqlUpdateCommand);
+        } catch (Exception e) {
+            System.err.println("Database schema update failed " + e.getMessage());
         }
     }
 
