@@ -8,13 +8,27 @@ extensible predicate sensitiveStrings(string fileName, string variableName);
 extensible predicate sensitiveComments(string fileName, string variableName);
 extensible predicate sinks(string fileName, string sinkName, string sinkType); 
   
-  class SensitiveVariableExpr extends Expr {
-    SensitiveVariableExpr() {
-      exists(Variable v, File f |
-        this = v.getAnAccess() and
-        f = v.getCompilationUnit().getFile() and
-        sensitiveVariables(f.getBaseName(), v.getName()) and
+class SensitiveVariableExpr extends Expr {
+  SensitiveVariableExpr() {
+    exists(Variable v, Field f, File file |
+      (
         (
+          // Handle local variables
+        this = v.getAnAccess() and
+        file = v.getCompilationUnit().getFile() and
+        sensitiveVariables(file.getBaseName(), v.getName()) 
+        )
+        // or
+
+        // (
+        // Handle fields
+        // this = f.getAnAccess() and
+        // file = f.getDeclaringType().getCompilationUnit().getFile() and
+        // sensitiveVariables(file.getBaseName(), f.getName())
+        // )
+      ) and
+      (
+        // Exclude variables or fields with generic, non-sensitive names
         v.getName().toLowerCase() != "message" and
         v.getName().toLowerCase() != "messages" and
         v.getName().toLowerCase() != "msg" and
@@ -33,19 +47,26 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
         v.getName().toLowerCase() != "value" and
         v.getName().toLowerCase() != "val" and
         v.getName().toLowerCase() != "parent" and
-        v.getName().toLowerCase() != "child" 
-        ) and
+        v.getName().toLowerCase() != "parents" and
+        v.getName().toLowerCase() != "child" and
+        v.getName().toLowerCase() != "children" and
+        v.getName().toLowerCase() != "xml" and
+        v.getName().toLowerCase() != "json" and
+        v.getName().toLowerCase() != "html" and
+        v.getName().toLowerCase() != "entity" and
+        v.getName().toLowerCase() != "entities" and
+        not v.toString().toLowerCase().matches("%name%")
+      ) and
 
-        /* Exclude exceptions, if an exception is sensitive, then it will have a different source flow into it. 
-        That source should be the sensitive source, not the exception. */
-        not (
-          this.getType() instanceof RefType and
-          this.getType().(RefType).getASupertype+().hasQualifiedName("java.lang", "Throwable")
-        )
+      // Exclude exceptions as sensitive variables
+      not (
+        this.getType() instanceof RefType and
+        this.getType().(RefType).getASupertype+().hasQualifiedName("java.lang", "Throwable")
       )
-    }
+    )
   }
-  
+}
+
 
   class SensitiveStringLiteral extends StringLiteral {
     SensitiveStringLiteral() {
