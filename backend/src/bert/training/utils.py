@@ -2,6 +2,8 @@ import json
 import os
 from sentence_transformers import SentenceTransformer
 import numpy as np
+from tqdm import tqdm
+
 import tensorflow as tf
 from sklearn import metrics
 from tensorflow.keras.callbacks import (EarlyStopping, ModelCheckpoint,
@@ -11,6 +13,8 @@ from scikeras.wrappers import KerasClassifier
 from sklearn.model_selection import (StratifiedKFold, RandomizedSearchCV)
 from imblearn.over_sampling import SMOTE
 from tensorflow.keras.utils import to_categorical
+from transformers import T5Tokenizer, TFT5Model
+from transformers import RobertaTokenizer, TFRobertaModel
 
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
@@ -61,7 +65,6 @@ def concat_name_and_context(name_vecs, context_vecs):
             np.concatenate((name_vecs[idx], context_vecs[idx]), axis=None)
         )
     return total_vecs
-
 
 def evaluate_model(final_model, checkpoint_filepath, X_test, y_test, category):
     # Load the best weights
@@ -125,111 +128,165 @@ def evaluate_model(final_model, checkpoint_filepath, X_test, y_test, category):
         print('Confusion Matrix:')
         print(metrics.confusion_matrix(y_test, predicted_classes))
 
-
-def train(category, data, param_grid, create_model):
+def train(category, data, param_grid, create_model, embedding_model='sentbert', embedding_dim=384):
     # Convert data to NumPy array
     variable_array = np.array(data)
 
+    if embedding_model == 'sentbert':
+        get_embeddings = calculate_sentbert_vectors
+    elif embedding_model == 't5':
+        get_embeddings = calculate_t5_vectors
+    elif embedding_model == 'roberta':
+        get_embeddings = calculate_roberta_vectors
+
     # Calculate embeddings
     print("Encoding values")
-    variable_vectors = calculate_sentbert_vectors(variable_array[:, 0])
+    variable_vectors = get_embeddings(variable_array[:, 0])
     print("Encoding context")
-    variable_context_vectors = calculate_sentbert_vectors(variable_array[:, 1])
+    variable_context_vectors = get_embeddings(variable_array[:, 1])  # Assuming shared embeddings
+
+    # variable_context_vectors = variable_vectors
 
     # Concatenate name and context embeddings
     concatenated_variable_vectors = concat_name_and_context(
         variable_vectors, variable_context_vectors
     )
 
+    print(f"Width of the input array {concatenated_variable_vectors[0].shape[1]}")
+
     # Prepare data for training
     X = np.array(concatenated_variable_vectors)
-    y = variable_array[:, 2].astype(np.int32)  # Use integer labels
+    y = variable_array[:, 2].astype(np.int32)
 
-    # Set model loss function and scoring based on category
-    if category == 'sinks':
-        loss = 'categorical_crossentropy' # Sinks used multi-class classification 
-        scoring = 'f1_weighted'
-    else:
-        loss = 'binary_crossentropy'
-        scoring = 'f1'
-        # Handle class imbalance using SMOTE
+    # Handle class imbalance using SMOTE
+    if category != 'sinks':
         smote = SMOTE(random_state=42)
         X, y = smote.fit_resample(X, y)
 
-    # Wrap the model using KerasClassifier with adjusted loss function
-    model = KerasClassifier(model=create_model, verbose=0, loss=loss)
+    # Define scoring metric
+    scoring = 'f1_weighted' if category == 'sinks' else 'f1'
+
+    # Wrap model in KerasClassifier
+    model = KerasClassifier(
+        model=create_model,  # Pass the model factory
+        verbose=0,
+        embedding_dim=embedding_dim
+    )
 
     # Stratified k-fold cross-validation
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
-    # Grid Search with RandomizedSearchCV
-    n_iter_search = 50  # Adjust based on computational resources
+    # Randomized Search for Hyperparameter Tuning
     random_search = RandomizedSearchCV(
         estimator=model,
         param_distributions=param_grid,
-        n_iter=n_iter_search,
+        n_iter=50,
         cv=kfold,
         scoring=scoring,
         n_jobs=-1,
         random_state=42
     )
 
-    # Perform grid search with integer labels (not one-hot encoded)
+    # Perform the search
     random_search_result = random_search.fit(X, y)
 
-    # Summarize results
-    print("Best: %f using %s" % (random_search_result.best_score_,
-                                random_search_result.best_params_))
+    # Summarize the best parameters
+    print(f"Best: {random_search_result.best_score_} using {random_search_result.best_params_}")
 
-    # Build the final model with the best parameters
+    # Build and train the final model using best parameters
     best_params = random_search_result.best_params_
-
-    # Create final model with the best parameters
     final_model = create_model(
         learning_rate=best_params['model__learning_rate'],
         dropout_rate=best_params['model__dropout_rate'],
+        # weight_decay=best_params['model__weight_decay'],
         units=best_params['model__units'],
-        activation=best_params['model__activation']
+        activation=best_params['model__activation'],
+        embedding_dim=embedding_dim
     )
 
-    # Split data into train and test
+    # Train/test split for evaluation
     train_index, test_index = next(kfold.split(X, y))
     X_train, X_test = X[train_index], X[test_index]
     y_train, y_test = y[train_index], y[test_index]
 
-    # One-hot encode labels if the category is `sinks`
+    # One-hot encode labels if necessary
     if category == 'sinks':
         y_train = to_categorical(y_train, num_classes=8)
         y_test = to_categorical(y_test, num_classes=8)
 
-    # Early stopping, learning rate reduction, and model checkpointing
-    early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
-    lr_reduction = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=1e-6, verbose=1)
+    # Define callbacks
+    checkpoint_filepath = os.path.join(model_dir, f'{embedding_model}_best_model_{category}.keras')
+    callbacks = [
+        EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True),
+        ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=1e-6, verbose=1),
+        ModelCheckpoint(filepath=checkpoint_filepath, monitor='val_loss', save_best_only=True)
+    ]
 
-    if not os.path.exists(model_dir):
-        os.makedirs(model_dir)
-
-    checkpoint_filepath = os.path.join(model_dir, f'best_model_sent_{category}.keras')
-    model_checkpoint = ModelCheckpoint(filepath=checkpoint_filepath,
-                                       monitor='val_loss',
-                                       verbose=1, save_best_only=True)
-
-    callbacks = [early_stopping, lr_reduction, model_checkpoint]
-
-    # Fit the final model
-    history = final_model.fit(X_train, y_train,
-                              validation_split=0.1,
-                              epochs=best_params['epochs'],
-                              batch_size=best_params['batch_size'],
-                              callbacks=callbacks,
-                              verbose=2)
+    # Train the final model
+    history = final_model.fit(
+        X_train, y_train,
+        validation_split=0.1,
+        epochs=best_params['epochs'],
+        batch_size=best_params['batch_size'],
+        callbacks=callbacks,
+        verbose=2
+    )
 
     # Evaluate the model
-    print('------------------------------------------------')
     print('Evaluating the Model...')
     evaluate_model(final_model, checkpoint_filepath, X_test, y_test, category)
-
-    # Clear session to free memory
     tf.keras.backend.clear_session()
 
+def calculate_t5_vectors(sentences, model_name='t5-small', batch_size=32):
+    """
+    Calculate fixed-size embeddings using T5 as an encoder with TensorFlow.
+    """
+    tokenizer = T5Tokenizer.from_pretrained(model_name)
+    model = TFT5Model.from_pretrained(model_name)    
+    print("T5 model loaded successfully.")
 
+    embeddings = []
+    for i in tqdm(range(0, len(sentences), batch_size), desc="Processing batches"):
+        batch_sentences = sentences[i:i+batch_size]
+
+        # Ensure input is a list of strings
+        if isinstance(batch_sentences, np.ndarray):  # If it's a NumPy array, convert it
+            batch_sentences = batch_sentences.tolist()
+        elif not isinstance(batch_sentences, list):  # Ensure it's a list
+            batch_sentences = [str(batch_sentences)]
+
+        inputs = tokenizer(batch_sentences, return_tensors="tf", padding=True, truncation=True, max_length=512)
+        outputs = model(inputs["input_ids"], decoder_input_ids=inputs["input_ids"])
+        hidden_states = outputs.last_hidden_state
+        pooled_embeddings = tf.reduce_mean(hidden_states, axis=1)  # Mean pooling to get fixed-size embeddings
+        embeddings.append(pooled_embeddings.numpy())
+
+    return np.vstack(embeddings)
+
+def calculate_roberta_vectors(sentences, model_name='roberta-base', batch_size=32):
+    """
+    Calculate fixed-size embeddings using RoBERTa as an encoder with TensorFlow.
+    """
+    from transformers import RobertaTokenizer, TFRobertaModel
+
+    tokenizer = RobertaTokenizer.from_pretrained(model_name)
+    model = TFRobertaModel.from_pretrained(model_name)
+    print("RoBERTa model loaded successfully.")
+
+    embeddings = []
+    for i in tqdm(range(0, len(sentences), batch_size), desc="Processing batches"):
+        batch_sentences = sentences[i:i+batch_size]
+
+        # Ensure input is a list of strings
+        if isinstance(batch_sentences, np.ndarray):  # If it's a NumPy array, convert it
+            batch_sentences = batch_sentences.tolist()
+        elif not isinstance(batch_sentences, list):  # Ensure it's a list
+            batch_sentences = [str(batch_sentences)]
+
+        inputs = tokenizer(batch_sentences, return_tensors="tf", padding=True, truncation=True, max_length=512)
+        outputs = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])
+        hidden_states = outputs.last_hidden_state
+        pooled_embeddings = tf.reduce_mean(hidden_states, axis=1)  # Mean pooling to get fixed-size embeddings
+        embeddings.append(pooled_embeddings.numpy())
+
+    return np.vstack(embeddings)

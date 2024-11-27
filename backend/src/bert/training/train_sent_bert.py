@@ -84,9 +84,13 @@ def get_context(labels, context, category):
 
 
 
-def create_model(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.0001, units=256, activation='elu'):
+def create_model(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.0001, units=256, activation='elu',  embedding_dim=None):
+    if embedding_dim == None:
+        raise ValueError("Embedding dimension not found")
+    
+    
     model = Sequential()
-    model.add(Input(shape=(DIM,)))
+    model.add(Input(shape=(embedding_dim,)))
     model.add(Dense(units, kernel_regularizer=regularizers.l2(weight_decay)))
     model.add(BatchNormalization())
     model.add(Activation(activation))
@@ -158,12 +162,13 @@ labels = read_json(os.path.join(base_path, 'labels.json'))
 variables_param_grid = {
     'model__learning_rate': [5e-5, 1e-4, 2e-4],
     'model__dropout_rate': [0.2],
-    'model__weight_decay': [5e-5, 1e-4, 2e-4],
+    # 'model__weight_decay': [5e-5, 1e-4, 2e-4],
     'model__units': [192, 256, 320],
     'model__activation': ['elu', 'relu'],
     'batch_size': [32, 64],
     'epochs': [50, 60]
 }
+
 
 strings_param_grid = {
     'model__learning_rate': [5e-5, 1e-4, 2e-4],
@@ -193,18 +198,36 @@ params_map = {
 }
 
 categories = [
-    # "variables",
-    "strings",
+    "variables",
+    # "strings",
     # "comments",
     # "sinks"
 ]
 
-for category in categories:
-    # Parse input data
-    data = get_context(labels, context, category)
-    if category == 'sinks':
-        model = create_model_sinks
-    else:
-        model = create_model
-    # Train the model 
-    train(category, data, params_map.get(category), model)
+# Embedding models, and their respective output dimensions
+embedding_models = {
+    't5': 1024,
+    # 'roberta': 768 * 2,
+    # 'sent_bert': 768,
+    # 'DistilBERT' : 768,
+}
+
+
+for embedding_model, embedding_dim in embedding_models.items():
+    for category in categories:
+        # Parse input data
+        data = get_context(labels, context, category)
+        
+        if category == 'sinks':
+            model = create_model_sinks
+        else:
+            if embedding_dim is None:
+                raise ValueError(f"Embedding model {embedding_model} not found in embedding_models.")
+            model = create_model
+        # Train the model 
+        train(category, 
+              data, 
+              params_map.get(category), 
+              model, 
+              embedding_model=embedding_model, 
+              embedding_dim=embedding_dim)
