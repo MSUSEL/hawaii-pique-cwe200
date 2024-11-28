@@ -161,8 +161,8 @@ labels = read_json(os.path.join(base_path, 'labels.json'))
 
 # Updated param_grid for fine-tuning
 variables_param_grid = {
-    'model__learning_rate': [1e-5, 1e-4, 1e-3, 1e-2, 1e-1],
-    'model__dropout_rate': [0.2],
+    'model__learning_rate': [1e-4, 1e-3, 1e-2, 1e-1],
+    'model__dropout_rate': [0.2, 0.3],
     # 'model__weight_decay': [5e-5, 1e-4, 2e-4],
     # 'model__units': [192, 256, 320],
     'model__activation': ['elu', 'relu'],
@@ -172,8 +172,8 @@ variables_param_grid = {
 
 
 strings_param_grid = {
-    'model__learning_rate': [1e-5, 1e-4, 1e-3, 1e-2, 1e-1],
-    'model__dropout_rate': [0.2],
+    'model__learning_rate': [1e-4, 1e-3, 1e-2, 1e-1],
+    'model__dropout_rate': [0.2, 0.3],
     # 'model__weight_decay': [5e-5, 1e-4, 2e-4],
     # 'model__units': [192, 256, 320],
     'model__activation': ['elu', 'relu'],
@@ -199,20 +199,20 @@ params_map = {
 }
 
 categories = [
-    "variables",
-    # "strings",
+    # "variables",
+    "strings",
     # "comments",
     # "sinks"
 ]
 
 # Embedding models, and their respective output dimensions
 embedding_models = {
-    # 't5': 512 * 2,           # T5 model produces 512-dimensional embeddings; concatenating value and context.
+    't5': 512 * 2,           # T5 model produces 512-dimensional embeddings; concatenating value and context.
     # 'roberta': 768 * 2,       # RoBERTa model produces 768-dimensional embeddings; concatenating value and context.
     # 'sent_bert': 384 * 2,     # Sentence-BERT produces 384-dimensional embeddings; concatenating value and context.
     # 'codellama': 4096 * 2,    # Code LLaMA produces 4096-dimensional embeddings; concatenating value and context.
     # 'codebert': 768 * 2,      # CodeBERT produces 768-dimensional embeddings; concatenating value and context.
-    'albert': 768 * 2,        # ALBERT produces 768-dimensional embeddings; concatenating value and context.
+    # 'albert': 768 * 2,        # ALBERT produces 768-dimensional embeddings; concatenating value and context.
 }
 
 

@@ -138,6 +138,15 @@ def train(category, data, param_grid, create_model, embedding_model='sentbert', 
         get_embeddings = calculate_t5_vectors
     elif embedding_model == 'roberta':
         get_embeddings = calculate_roberta_vectors
+    elif embedding_model == 'codebert':
+        get_embeddings = calculate_codebert_vectors
+    elif embedding_model == 'codellama':
+        get_embeddings = calculate_codellama_vectors
+    elif embedding_model == 'distilbert':
+        get_embeddings = calculate_distilbert_vectors
+    elif embedding_model == 'albert':
+        get_embeddings = calculate_albert_vectors
+
 
     # Calculate embeddings
     print("Encoding values")
@@ -152,7 +161,9 @@ def train(category, data, param_grid, create_model, embedding_model='sentbert', 
         variable_vectors, variable_context_vectors
     )
 
-    print(f"Width of the input array {concatenated_variable_vectors[0].shape[1]}")
+    print(f"Width of the name vector {variable_vectors.shape[1]}")
+    print(f"Width of the context vector {variable_context_vectors.shape[1]}")
+    print(f"Width of the concatenated vector {concatenated_variable_vectors[0].size}")
 
     # Prepare data for training
     X = np.array(concatenated_variable_vectors)
@@ -177,7 +188,7 @@ def train(category, data, param_grid, create_model, embedding_model='sentbert', 
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
     # Randomized Search for Hyperparameter Tuning
-    random_search = RandomizedSearchCV(
+    random_search = TqdmRandomizedSearchCV(
         estimator=model,
         param_distributions=param_grid,
         n_iter=50,
@@ -185,6 +196,7 @@ def train(category, data, param_grid, create_model, embedding_model='sentbert', 
         scoring=scoring,
         n_jobs=-1,
         random_state=42
+
     )
 
     # Perform the search
@@ -199,7 +211,7 @@ def train(category, data, param_grid, create_model, embedding_model='sentbert', 
         learning_rate=best_params['model__learning_rate'],
         dropout_rate=best_params['model__dropout_rate'],
         # weight_decay=best_params['model__weight_decay'],
-        units=best_params['model__units'],
+        # units=best_params['model__units'],
         activation=best_params['model__activation'],
         embedding_dim=embedding_dim
     )
@@ -290,3 +302,168 @@ def calculate_roberta_vectors(sentences, model_name='roberta-base', batch_size=3
         embeddings.append(pooled_embeddings.numpy())
 
     return np.vstack(embeddings)
+
+def calculate_codebert_vectors(sentences, model_name='microsoft/codebert-base', batch_size=32):
+    """
+    Calculate fixed-size embeddings using CodeBERT as an encoder with TensorFlow.
+    """
+    from transformers import AutoTokenizer, TFAutoModel
+
+    # Load CodeBERT tokenizer and model
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = TFAutoModel.from_pretrained(model_name)
+    print("CodeBERT model loaded successfully.")
+
+    embeddings = []
+    for i in tqdm(range(0, len(sentences), batch_size), desc="Processing batches"):
+        batch_sentences = sentences[i:i+batch_size]
+
+        # Ensure input is a list of strings
+        if isinstance(batch_sentences, np.ndarray):  # If it's a NumPy array, convert it
+            batch_sentences = batch_sentences.tolist()
+        elif not isinstance(batch_sentences, list):  # Ensure it's a list
+            batch_sentences = [str(batch_sentences)]
+
+        # Tokenize the input batch
+        inputs = tokenizer(batch_sentences, return_tensors="tf", padding=True, truncation=True, max_length=512)
+
+        # Forward pass through CodeBERT
+        outputs = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])
+        hidden_states = outputs.last_hidden_state
+
+        # Apply mean pooling over token embeddings to create sentence embeddings
+        pooled_embeddings = tf.reduce_mean(hidden_states, axis=1)
+        embeddings.append(pooled_embeddings.numpy())
+
+    # Combine all embeddings into a single NumPy array
+    return np.vstack(embeddings)
+
+
+def calculate_codellama_vectors(sentences, model_name='codellama/CodeLlama-7b', batch_size=32):
+    """
+    Calculate fixed-size embeddings using Code LLaMA as an encoder with TensorFlow.
+    """
+    from transformers import AutoTokenizer, TFAutoModel
+
+    # Load Code LLaMA tokenizer and model
+    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+    model = TFAutoModel.from_pretrained(model_name)
+    print("Code LLaMA model loaded successfully.")
+
+    embeddings = []
+    for i in tqdm(range(0, len(sentences), batch_size), desc="Processing batches"):
+        batch_sentences = sentences[i:i+batch_size]
+
+        # Ensure input is a list of strings
+        if isinstance(batch_sentences, np.ndarray):  # If it's a NumPy array, convert it
+            batch_sentences = batch_sentences.tolist()
+        elif not isinstance(batch_sentences, list):  # Ensure it's a list
+            batch_sentences = [str(batch_sentences)]
+
+        # Tokenize the input batch
+        inputs = tokenizer(batch_sentences, return_tensors="tf", padding=True, truncation=True, max_length=512)
+
+        # Forward pass through Code LLaMA
+        outputs = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])
+        hidden_states = outputs.last_hidden_state
+
+        # Apply mean pooling over token embeddings to create sentence embeddings
+        pooled_embeddings = tf.reduce_mean(hidden_states, axis=1)
+        embeddings.append(pooled_embeddings.numpy())
+
+    # Combine all embeddings into a single NumPy array
+    return np.vstack(embeddings)
+
+def calculate_distilbert_vectors(sentences, model_name='distilbert-base-uncased', batch_size=32):
+    """
+    Calculate fixed-size embeddings using DistilBERT as an encoder with TensorFlow.
+    """
+    from transformers import DistilBertTokenizer, TFDistilBertModel
+
+    tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+    model = TFDistilBertModel.from_pretrained(model_name)
+    print("DistilBERT model loaded successfully.")
+
+    embeddings = []
+    for i in tqdm(range(0, len(sentences), batch_size), desc="Processing batches"):
+        batch_sentences = sentences[i:i+batch_size]
+
+        # Ensure input is a list of strings
+        if isinstance(batch_sentences, np.ndarray):  # If it's a NumPy array, convert it
+            batch_sentences = batch_sentences.tolist()
+        elif not isinstance(batch_sentences, list):  # Ensure it's a list
+            batch_sentences = [str(batch_sentences)]
+
+        inputs = tokenizer(batch_sentences, return_tensors="tf", padding=True, truncation=True, max_length=512)
+        outputs = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])
+        hidden_states = outputs.last_hidden_state
+        pooled_embeddings = tf.reduce_mean(hidden_states, axis=1)  # Mean pooling to get fixed-size embeddings
+        embeddings.append(pooled_embeddings.numpy())
+
+    return np.vstack(embeddings)
+
+def calculate_albert_vectors(sentences, model_name='albert-base-v2', batch_size=32):
+    """
+    Calculate fixed-size embeddings using ALBERT as an encoder with TensorFlow.
+    """
+    from transformers import AlbertTokenizer, TFAlbertModel
+
+    tokenizer = AlbertTokenizer.from_pretrained(model_name)
+    model = TFAlbertModel.from_pretrained(model_name)
+    print("ALBERT model loaded successfully.")
+
+    embeddings = []
+    for i in tqdm(range(0, len(sentences), batch_size), desc="Processing batches"):
+        batch_sentences = sentences[i:i+batch_size]
+
+        # Ensure input is a list of strings
+        if isinstance(batch_sentences, np.ndarray):  # If it's a NumPy array, convert it
+            batch_sentences = batch_sentences.tolist()
+        elif not isinstance(batch_sentences, list):  # Ensure it's a list
+            batch_sentences = [str(batch_sentences)]
+
+        inputs = tokenizer(batch_sentences, return_tensors="tf", padding=True, truncation=True, max_length=512)
+        outputs = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])
+        hidden_states = outputs.last_hidden_state
+        pooled_embeddings = tf.reduce_mean(hidden_states, axis=1)  # Mean pooling to get fixed-size embeddings
+        embeddings.append(pooled_embeddings.numpy())
+
+    return np.vstack(embeddings)
+
+# Wrap the RandomizedSearchCV with tqdm
+class TqdmRandomizedSearchCV(RandomizedSearchCV):
+    def __init__(self, estimator, param_distributions, n_iter=10, scoring=None, n_jobs=None,
+                 refit=True, cv=None, verbose=0, pre_dispatch='2*n_jobs',
+                 random_state=None, error_score=np.nan, return_train_score=False):
+        super().__init__(estimator=estimator,
+                         param_distributions=param_distributions,
+                         n_iter=n_iter,
+                         scoring=scoring,
+                         n_jobs=n_jobs,
+                         refit=refit,
+                         cv=cv,
+                         verbose=verbose,
+                         pre_dispatch=pre_dispatch,
+                         random_state=random_state,
+                         error_score=error_score,
+                         return_train_score=return_train_score)
+        self._progress_bar = None
+
+    def fit(self, X, y=None, **fit_params):
+        self._progress_bar = tqdm(total=self.n_iter, desc="Random Search Progress")
+        self._progress_counter = 0
+
+        def on_fit_iter_start():
+            self._progress_counter += 1
+            self._progress_bar.update(1)
+            self._progress_bar.set_description(f"Model {self._progress_counter}/{self.n_iter}")
+
+        self._on_fit_iter_start = on_fit_iter_start
+        result = super().fit(X, y, **fit_params)
+        self._progress_bar.close()
+        return result
+
+    def _fit_and_score(self, *args, **kwargs):
+        if hasattr(self, '_on_fit_iter_start'):
+            self._on_fit_iter_start()
+        return super()._fit_and_score(*args, **kwargs)
