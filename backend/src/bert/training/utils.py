@@ -76,20 +76,20 @@ def evaluate_model(final_model, checkpoint_filepath, X_test, y_test, category):
     if category == 'sinks':
         # Multi-class case with 8 classes
         predicted_classes = np.argmax(predicted_probs, axis=1)
-        true_classes = np.argmax(y_test, axis=1)
+        true_classes = y_test
 
         # Calculate metrics for multi-class
         precision = metrics.precision_score(true_classes, predicted_classes, average='weighted')
         recall = metrics.recall_score(true_classes, predicted_classes, average='weighted')
         f1_score = metrics.f1_score(true_classes, predicted_classes, average='weighted')
         accuracy = metrics.accuracy_score(true_classes, predicted_classes)
-        auc = metrics.roc_auc_score(y_test, predicted_probs, average='weighted', multi_class='ovr')
+        # auc = metrics.roc_auc_score(y_test, predicted_probs, average='weighted', multi_class='ovr')
 
         print(f"Precision: {precision}")
         print(f"Recall: {recall}")
         print(f"F1 Score: {f1_score}")
         print(f"Accuracy: {accuracy}")
-        print(f"AUC: {auc}")
+        # print(f"AUC: {auc}")
 
         # Print classification report and confusion matrix for multi-class
         print('------------------------------------------------')
@@ -151,20 +151,25 @@ def train(category, data, param_grid, create_model, embedding_model='sentbert', 
     # Calculate embeddings
     print("Encoding values")
     variable_vectors = get_embeddings(variable_array[:, 0])
-    print("Encoding context")
-    variable_context_vectors = get_embeddings(variable_array[:, 1])  # Assuming shared embeddings
+    
+    if category != 'comments':
+        print("Encoding context")
+        variable_context_vectors = get_embeddings(variable_array[:, 1])  # Assuming shared embeddings
 
-    # variable_context_vectors = variable_vectors
+        # Concatenate name and context embeddings
+        concatenated_variable_vectors = concat_name_and_context(
+            variable_vectors, variable_context_vectors
+        )
 
-    # Concatenate name and context embeddings
-    concatenated_variable_vectors = concat_name_and_context(
-        variable_vectors, variable_context_vectors
-    )
-
-    print(f"Width of the name vector {variable_vectors.shape[1]}")
-    print(f"Width of the context vector {variable_context_vectors.shape[1]}")
-    print(f"Width of the concatenated vector {concatenated_variable_vectors[0].size}")
-
+        print(f"Width of the name vector {variable_vectors.shape[1]}")
+        print(f"Width of the context vector {variable_context_vectors.shape[1]}")
+        print(f"Width of the concatenated vector {concatenated_variable_vectors[0].size}")
+    
+    else:
+        # Since comments don't have context, use only the name embeddings
+        concatenated_variable_vectors = variable_vectors
+        embedding_dim //= 2
+    
     # Prepare data for training
     X = np.array(concatenated_variable_vectors)
     y = variable_array[:, 2].astype(np.int32)
@@ -188,7 +193,7 @@ def train(category, data, param_grid, create_model, embedding_model='sentbert', 
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
     # Randomized Search for Hyperparameter Tuning
-    random_search = TqdmRandomizedSearchCV(
+    random_search = RandomizedSearchCV(
         estimator=model,
         param_distributions=param_grid,
         n_iter=50,
@@ -222,9 +227,9 @@ def train(category, data, param_grid, create_model, embedding_model='sentbert', 
     y_train, y_test = y[train_index], y[test_index]
 
     # One-hot encode labels if necessary
-    if category == 'sinks':
-        y_train = to_categorical(y_train, num_classes=8)
-        y_test = to_categorical(y_test, num_classes=8)
+    # if category == 'sinks':
+    #     y_train = to_categorical(y_train, num_classes=8)
+    #     y_test = to_categorical(y_test, num_classes=8)
 
     # Define callbacks
     checkpoint_filepath = os.path.join(model_dir, f'{embedding_model}_best_model_{category}.keras')
@@ -430,40 +435,3 @@ def calculate_albert_vectors(sentences, model_name='albert-base-v2', batch_size=
 
     return np.vstack(embeddings)
 
-# Wrap the RandomizedSearchCV with tqdm
-class TqdmRandomizedSearchCV(RandomizedSearchCV):
-    def __init__(self, estimator, param_distributions, n_iter=10, scoring=None, n_jobs=None,
-                 refit=True, cv=None, verbose=0, pre_dispatch='2*n_jobs',
-                 random_state=None, error_score=np.nan, return_train_score=False):
-        super().__init__(estimator=estimator,
-                         param_distributions=param_distributions,
-                         n_iter=n_iter,
-                         scoring=scoring,
-                         n_jobs=n_jobs,
-                         refit=refit,
-                         cv=cv,
-                         verbose=verbose,
-                         pre_dispatch=pre_dispatch,
-                         random_state=random_state,
-                         error_score=error_score,
-                         return_train_score=return_train_score)
-        self._progress_bar = None
-
-    def fit(self, X, y=None, **fit_params):
-        self._progress_bar = tqdm(total=self.n_iter, desc="Random Search Progress")
-        self._progress_counter = 0
-
-        def on_fit_iter_start():
-            self._progress_counter += 1
-            self._progress_bar.update(1)
-            self._progress_bar.set_description(f"Model {self._progress_counter}/{self.n_iter}")
-
-        self._on_fit_iter_start = on_fit_iter_start
-        result = super().fit(X, y, **fit_params)
-        self._progress_bar.close()
-        return result
-
-    def _fit_and_score(self, *args, **kwargs):
-        if hasattr(self, '_on_fit_iter_start'):
-            self._on_fit_iter_start()
-        return super()._fit_and_score(*args, **kwargs)
