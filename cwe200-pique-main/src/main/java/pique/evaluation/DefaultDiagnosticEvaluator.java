@@ -40,8 +40,6 @@ public class DefaultDiagnosticEvaluator extends Evaluator {
     	for (ModelNode x : inNode.getChildren().values()) {
     		rawSum = rawSum.add(x.getValue());
     	}
-        System.out.println("DefaultDiagnosticEvaluator - " + inNode.getName() + " - " + rawSum);
-
         return rawSum;
     }
 

@@ -36,6 +36,7 @@ import pique.evaluation.BenchmarkMeasureEvaluator;
 import pique.evaluation.Project;
 import pique.model.Diagnostic;
 import pique.model.Measure;
+import pique.model.ModelNode;
 import pique.model.QualityModel;
 import pique.utility.FileUtility;
 
@@ -174,7 +175,7 @@ public abstract class AbstractBenchmarker implements IBenchmarker {
     	Set<Path> projectRoots = null;
     	//Check if projectRootFlag has been set. If null or blank, we are looking for binaries or will accept all non-
     	//directory files.
-    	if (projectRootFlag==null ||projectRootFlag.equals("")) {
+        if (projectRootFlag==null || projectRootFlag.equals("")) {
             projectRoots = new HashSet<>();
             System.out.println("=============================");
             System.out.println(benchmarkRepository.toString());
@@ -189,7 +190,6 @@ public abstract class AbstractBenchmarker implements IBenchmarker {
     	else {
     		projectRoots = FileUtility.multiProjectCollector(benchmarkRepository, projectRootFlag);
     	}
-        System.out.println(projectRoots);
     	 return projectRoots;
     }
 

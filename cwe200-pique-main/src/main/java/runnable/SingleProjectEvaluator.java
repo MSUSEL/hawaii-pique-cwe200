@@ -8,12 +8,16 @@ import pique.analysis.ITool;
 import pique.evaluation.Project;
 import pique.model.Diagnostic;
 import pique.model.QualityModel;
+import pique.model.QualityModelCompactExport;
+import pique.model.QualityModelExport;
 import pique.model.QualityModelImport;
 import pique.runnable.ASingleProjectEvaluator;
 import pique.utility.PiqueProperties;
-import tool.CweCodeQl;
+import pique.tool.CweCodeQl;
+import org.apache.commons.lang3.tuple.Pair;
 
-import utilities.helperFunctions;
+
+// import utilities.helperFunctions;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,21 +62,62 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
         ITool cweQodeQl = new CweCodeQl(prop.getProperty("backend.server"));
         Set<ITool> tools = Stream.of(cweQodeQl).collect(Collectors.toSet());
 
-        Path outputPath = runEvaluator(projectFilePath, resultsDir, qmLocation, tools).getParent();
-        try {
-            //create output directory if not exist
-            Files.createDirectories(outputPath);
-        } catch (IOException e) {
-            System.out.println("Could not create output directory");
-            throw new RuntimeException(e);
+        Set<Path> projectRoots = new HashSet<>();
+        File[] projects = projectFilePath.toFile().listFiles();
+        assert projects != null;
+        
+        for (File f : projects){
+            projectRoots.add(f.toPath());
+            
         }
-        LOGGER.info("output: " + outputPath.getFileName());
-        System.out.println("output: " + outputPath.getFileName());
-        System.out.println("exporting compact: " + project.exportToJson(resultsDir, true));
+
+        for (Path projectUnderAnalysisPath : projectRoots){
+            LOGGER.info("Project to analyze: {}", projectUnderAnalysisPath.toString());
+            Path outputPath = runEvaluator(projectUnderAnalysisPath, resultsDir, qmLocation, tools);
+            
+            // try {
+            // //create output directory if not exist
+            //     Files.createDirectories(outputPath);
+            // } catch (IOException e) {
+            //     System.out.println("Could not create output directory");
+            //     throw new RuntimeException(e);
+            // }
+
+            LOGGER.info("output: {}", outputPath.getFileName());
+            System.out.println("output: " + outputPath.getFileName());
+            System.out.println("exporting compact: " + project.exportToJson(resultsDir, true));
+
+            Pair<String, String> name = Pair.of("projectName", project.getName());
+            String fileName = project.getName() + "_compact_evalResults_"+ projectUnderAnalysisPath.getFileName().toString();
+            QualityModelExport qmExport = new QualityModelCompactExport(project.getQualityModel(), name);
+            qmExport.exportToJson(fileName, resultsDir);
+        }
     }
+
+
+
+
+    //     // Path outputPath = runEvaluator(projectFilePath, resultsDir, qmLocation, tools).getParent();
+    //     try {
+    //         //create output directory if not exist
+    //         Files.createDirectories(outputPath);
+    //     } catch (IOException e) {
+    //         System.out.println("Could not create output directory");
+    //         throw new RuntimeException(e);
+    //     }
+    //     LOGGER.info("output: " + outputPath.getFileName());
+    //     System.out.println("output: " + outputPath.getFileName());
+    //     System.out.println("exporting compact: " + project.exportToJson(resultsDir, true));
+    // }
 
     @Override
     public Path runEvaluator(Path projectDir, Path resultsDir, Path qmLocation, Set<ITool> tools){
+        
+        for(Path project: projectDir){
+            System.out.println("project: " + project);
+        }
+
+        
         System.out.println("projectDir="+projectDir);
         System.out.println("qmLocation="+qmLocation.toString());
         // Initialize data structures

@@ -34,8 +34,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -45,8 +45,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-208": {
@@ -65,8 +65,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -76,8 +76,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               }
             },
@@ -86,14 +86,14 @@
               "CWE-208": 0.5
             },
             "thresholds": [
-              10,
-              10
+              11,
+              11
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
-              "name": "pique.evaluation.DefaultUtility",
-              "description": "Simple linear utility function based on min and max of threshold data"
+              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+              "description": "A Probability Density Function to model the distribution of findings"
             }
           },
           "CWE-215": {
@@ -112,8 +112,8 @@
                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               }
             },
@@ -123,8 +123,8 @@
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
-              "name": "pique.evaluation.DefaultUtility",
-              "description": "Simple linear utility function based on min and max of threshold data"
+              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+              "description": "A Probability Density Function to model the distribution of findings"
             }
           },
           "CWE-538": {
@@ -155,8 +155,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -170,8 +170,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-541": {
@@ -190,8 +190,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -205,8 +205,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-531": {
@@ -225,8 +225,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -240,8 +240,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -257,8 +257,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               }
             },
@@ -272,8 +272,8 @@
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
-              "name": "pique.evaluation.DefaultUtility",
-              "description": "Simple linear utility function based on min and max of threshold data"
+              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+              "description": "A Probability Density Function to model the distribution of findings"
             }
           },
           "CWE-209": {
@@ -292,8 +292,8 @@
                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-211": {
@@ -318,8 +318,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -329,8 +329,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-536": {
@@ -349,8 +349,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -360,8 +360,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-537": {
@@ -380,8 +380,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -391,8 +391,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-550": {
@@ -411,8 +411,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -422,8 +422,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -436,8 +436,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               }
             },
@@ -448,8 +448,8 @@
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
-              "name": "pique.evaluation.DefaultUtility",
-              "description": "Simple linear utility function based on min and max of threshold data"
+              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+              "description": "A Probability Density Function to model the distribution of findings"
             }
           },
           "CWE-497": {
@@ -474,8 +474,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -485,8 +485,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-548": {
@@ -505,8 +505,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -516,8 +516,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               }
             },
@@ -526,14 +526,14 @@
               "CWE-548": 0.5
             },
             "thresholds": [
-              16,
-              16
+              15,
+              15
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
-              "name": "pique.evaluation.DefaultUtility",
-              "description": "Simple linear utility function based on min and max of threshold data"
+              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+              "description": "A Probability Density Function to model the distribution of findings"
             }
           },
           "CWE-201": {
@@ -552,8 +552,8 @@
                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-598": {
@@ -572,8 +572,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -583,8 +583,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               }
             },
@@ -595,8 +595,8 @@
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
-              "name": "pique.evaluation.DefaultUtility",
-              "description": "Simple linear utility function based on min and max of threshold data"
+              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+              "description": "A Probability Density Function to model the distribution of findings"
             }
           }
         },
@@ -611,8 +611,8 @@
         "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
         "normalizer": "pique.evaluation.DefaultNormalizer",
         "utility_function": {
-          "name": "pique.evaluation.DefaultUtility",
-          "description": "Simple linear utility function based on min and max of threshold data"
+          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+          "description": "A Probability Density Function to model the distribution of findings"
         }
       }
     },
@@ -649,8 +649,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -660,8 +660,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-208": {
@@ -680,8 +680,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -691,8 +691,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -701,14 +701,14 @@
                   "CWE-208": 0.5
                 },
                 "thresholds": [
-                  10,
-                  10
+                  11,
+                  11
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-215": {
@@ -727,8 +727,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -738,8 +738,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-538": {
@@ -770,8 +770,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -785,8 +785,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-541": {
@@ -805,8 +805,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -820,8 +820,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-531": {
@@ -840,8 +840,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -855,8 +855,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -872,8 +872,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -887,8 +887,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-209": {
@@ -907,8 +907,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-211": {
@@ -933,8 +933,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -944,8 +944,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-536": {
@@ -964,8 +964,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -975,8 +975,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-537": {
@@ -995,8 +995,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1006,8 +1006,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-550": {
@@ -1026,8 +1026,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1037,8 +1037,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1051,8 +1051,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -1063,8 +1063,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-497": {
@@ -1089,8 +1089,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1100,8 +1100,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-548": {
@@ -1120,8 +1120,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1131,8 +1131,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -1141,14 +1141,14 @@
                   "CWE-548": 0.5
                 },
                 "thresholds": [
-                  16,
-                  16
+                  15,
+                  15
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-201": {
@@ -1167,8 +1167,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-598": {
@@ -1187,8 +1187,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1198,8 +1198,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -1210,8 +1210,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               }
             },
@@ -1226,8 +1226,8 @@
             "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
-              "name": "pique.evaluation.DefaultUtility",
-              "description": "Simple linear utility function based on min and max of threshold data"
+              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+              "description": "A Probability Density Function to model the distribution of findings"
             }
           }
         },
@@ -1237,8 +1237,8 @@
         "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
         "normalizer": "pique.evaluation.DefaultNormalizer",
         "utility_function": {
-          "name": "pique.evaluation.DefaultUtility",
-          "description": "Simple linear utility function based on min and max of threshold data"
+          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+          "description": "A Probability Density Function to model the distribution of findings"
         }
       },
       "Maintainability": {
@@ -1273,8 +1273,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1284,8 +1284,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-208": {
@@ -1304,8 +1304,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1315,8 +1315,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -1325,14 +1325,14 @@
                   "CWE-208": 0.5
                 },
                 "thresholds": [
-                  10,
-                  10
+                  11,
+                  11
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-215": {
@@ -1351,8 +1351,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -1362,8 +1362,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-538": {
@@ -1394,8 +1394,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1409,8 +1409,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-541": {
@@ -1429,8 +1429,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1444,8 +1444,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-531": {
@@ -1464,8 +1464,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1479,8 +1479,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1496,8 +1496,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -1511,8 +1511,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-209": {
@@ -1531,8 +1531,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-211": {
@@ -1557,8 +1557,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1568,8 +1568,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-536": {
@@ -1588,8 +1588,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1599,8 +1599,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-537": {
@@ -1619,8 +1619,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1630,8 +1630,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-550": {
@@ -1650,8 +1650,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1661,8 +1661,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1675,8 +1675,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -1687,8 +1687,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-497": {
@@ -1713,8 +1713,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1724,8 +1724,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-548": {
@@ -1744,8 +1744,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1755,8 +1755,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -1765,14 +1765,14 @@
                   "CWE-548": 0.5
                 },
                 "thresholds": [
-                  16,
-                  16
+                  15,
+                  15
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               },
               "CWE-201": {
@@ -1791,8 +1791,8 @@
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-598": {
@@ -1811,8 +1811,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1822,8 +1822,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -1834,8 +1834,8 @@
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               }
             },
@@ -1850,8 +1850,8 @@
             "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
-              "name": "pique.evaluation.DefaultUtility",
-              "description": "Simple linear utility function based on min and max of threshold data"
+              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+              "description": "A Probability Density Function to model the distribution of findings"
             }
           }
         },
@@ -1861,8 +1861,8 @@
         "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
         "normalizer": "pique.evaluation.DefaultNormalizer",
         "utility_function": {
-          "name": "pique.evaluation.DefaultUtility",
-          "description": "Simple linear utility function based on min and max of threshold data"
+          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+          "description": "A Probability Density Function to model the distribution of findings"
         }
       }
     },
@@ -1904,8 +1904,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1915,8 +1915,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-208": {
@@ -1935,8 +1935,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -1946,8 +1946,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1956,14 +1956,14 @@
                       "CWE-208": 0.5
                     },
                     "thresholds": [
-                      10,
-                      10
+                      11,
+                      11
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-215": {
@@ -1982,8 +1982,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -1993,8 +1993,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-538": {
@@ -2025,8 +2025,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2040,8 +2040,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           },
                           "CWE-541": {
@@ -2060,8 +2060,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2075,8 +2075,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           },
                           "CWE-531": {
@@ -2095,8 +2095,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2110,8 +2110,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -2127,8 +2127,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -2142,8 +2142,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-209": {
@@ -2162,8 +2162,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-211": {
@@ -2188,8 +2188,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2199,8 +2199,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           },
                           "CWE-536": {
@@ -2219,8 +2219,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2230,8 +2230,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           },
                           "CWE-537": {
@@ -2250,8 +2250,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2261,8 +2261,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           },
                           "CWE-550": {
@@ -2281,8 +2281,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2292,8 +2292,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -2306,8 +2306,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -2318,8 +2318,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-497": {
@@ -2344,8 +2344,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -2355,8 +2355,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-548": {
@@ -2375,8 +2375,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -2386,8 +2386,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -2396,14 +2396,14 @@
                       "CWE-548": 0.5
                     },
                     "thresholds": [
-                      16,
-                      16
+                      15,
+                      15
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-201": {
@@ -2422,8 +2422,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-598": {
@@ -2442,8 +2442,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -2453,8 +2453,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -2465,8 +2465,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -2481,8 +2481,8 @@
                 "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               }
             },
@@ -2492,8 +2492,8 @@
             "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
-              "name": "pique.evaluation.DefaultUtility",
-              "description": "Simple linear utility function based on min and max of threshold data"
+              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+              "description": "A Probability Density Function to model the distribution of findings"
             }
           },
           "Security": {
@@ -2528,8 +2528,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -2539,8 +2539,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-208": {
@@ -2559,8 +2559,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -2570,8 +2570,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -2580,14 +2580,14 @@
                       "CWE-208": 0.5
                     },
                     "thresholds": [
-                      10,
-                      10
+                      11,
+                      11
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-215": {
@@ -2606,8 +2606,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -2617,8 +2617,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-538": {
@@ -2649,8 +2649,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2664,8 +2664,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           },
                           "CWE-541": {
@@ -2684,8 +2684,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2699,8 +2699,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           },
                           "CWE-531": {
@@ -2719,8 +2719,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2734,8 +2734,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -2751,8 +2751,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -2766,8 +2766,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-209": {
@@ -2786,8 +2786,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-211": {
@@ -2812,8 +2812,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2823,8 +2823,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           },
                           "CWE-536": {
@@ -2843,8 +2843,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2854,8 +2854,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           },
                           "CWE-537": {
@@ -2874,8 +2874,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2885,8 +2885,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           },
                           "CWE-550": {
@@ -2905,8 +2905,8 @@
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
                                 "utility_function": {
-                                  "name": "pique.evaluation.DefaultUtility",
-                                  "description": "Simple linear utility function based on min and max of threshold data"
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
                                 }
                               }
                             },
@@ -2916,8 +2916,8 @@
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -2930,8 +2930,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -2942,8 +2942,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-497": {
@@ -2968,8 +2968,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -2979,8 +2979,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-548": {
@@ -2999,8 +2999,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -3010,8 +3010,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -3020,14 +3020,14 @@
                       "CWE-548": 0.5
                     },
                     "thresholds": [
-                      16,
-                      16
+                      15,
+                      15
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   },
                   "CWE-201": {
@@ -3046,8 +3046,8 @@
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       },
                       "CWE-598": {
@@ -3066,8 +3066,8 @@
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
                             "utility_function": {
-                              "name": "pique.evaluation.DefaultUtility",
-                              "description": "Simple linear utility function based on min and max of threshold data"
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
                             }
                           }
                         },
@@ -3077,8 +3077,8 @@
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
                         "utility_function": {
-                          "name": "pique.evaluation.DefaultUtility",
-                          "description": "Simple linear utility function based on min and max of threshold data"
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
                         }
                       }
                     },
@@ -3089,8 +3089,8 @@
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
                     "utility_function": {
-                      "name": "pique.evaluation.DefaultUtility",
-                      "description": "Simple linear utility function based on min and max of threshold data"
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
                     }
                   }
                 },
@@ -3105,8 +3105,8 @@
                 "eval_strategy": "pique.evaluation.DefaultProductFactorEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
                 "utility_function": {
-                  "name": "pique.evaluation.DefaultUtility",
-                  "description": "Simple linear utility function based on min and max of threshold data"
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
                 }
               }
             },
@@ -3116,8 +3116,8 @@
             "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
             "utility_function": {
-              "name": "pique.evaluation.DefaultUtility",
-              "description": "Simple linear utility function based on min and max of threshold data"
+              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+              "description": "A Probability Density Function to model the distribution of findings"
             }
           }
         },
@@ -3128,8 +3128,8 @@
         "eval_strategy": "pique.evaluation.DefaultFactorEvaluator",
         "normalizer": "pique.evaluation.DefaultNormalizer",
         "utility_function": {
-          "name": "pique.evaluation.DefaultUtility",
-          "description": "Simple linear utility function based on min and max of threshold data"
+          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+          "description": "A Probability Density Function to model the distribution of findings"
         }
       }
     }
@@ -3151,8 +3151,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3162,8 +3162,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-203": {
@@ -3188,8 +3188,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -3199,8 +3199,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         },
         "CWE-208": {
@@ -3219,8 +3219,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -3230,8 +3230,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3240,14 +3240,14 @@
         "CWE-208": 0.5
       },
       "thresholds": [
-        10,
-        10
+        11,
+        11
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-214": {
@@ -3266,8 +3266,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3277,8 +3277,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-215": {
@@ -3297,8 +3297,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3308,8 +3308,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-204": {
@@ -3328,8 +3328,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3339,8 +3339,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-535": {
@@ -3359,8 +3359,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3370,8 +3370,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-536": {
@@ -3390,8 +3390,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3401,8 +3401,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-548": {
@@ -3421,8 +3421,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3432,8 +3432,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-537": {
@@ -3452,8 +3452,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3463,8 +3463,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-538": {
@@ -3495,8 +3495,8 @@
                   "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                   "normalizer": "pique.evaluation.DefaultNormalizer",
                   "utility_function": {
-                    "name": "pique.evaluation.DefaultUtility",
-                    "description": "Simple linear utility function based on min and max of threshold data"
+                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                    "description": "A Probability Density Function to model the distribution of findings"
                   }
                 }
               },
@@ -3510,8 +3510,8 @@
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             },
             "CWE-541": {
@@ -3530,8 +3530,8 @@
                   "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                   "normalizer": "pique.evaluation.DefaultNormalizer",
                   "utility_function": {
-                    "name": "pique.evaluation.DefaultUtility",
-                    "description": "Simple linear utility function based on min and max of threshold data"
+                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                    "description": "A Probability Density Function to model the distribution of findings"
                   }
                 }
               },
@@ -3545,8 +3545,8 @@
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             },
             "CWE-531": {
@@ -3565,8 +3565,8 @@
                   "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                   "normalizer": "pique.evaluation.DefaultNormalizer",
                   "utility_function": {
-                    "name": "pique.evaluation.DefaultUtility",
-                    "description": "Simple linear utility function based on min and max of threshold data"
+                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                    "description": "A Probability Density Function to model the distribution of findings"
                   }
                 }
               },
@@ -3580,8 +3580,8 @@
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -3597,8 +3597,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3612,8 +3612,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-208": {
@@ -3632,8 +3632,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3643,8 +3643,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-615": {
@@ -3663,8 +3663,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3678,8 +3678,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-209": {
@@ -3698,8 +3698,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         },
         "CWE-211": {
@@ -3724,8 +3724,8 @@
                   "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                   "normalizer": "pique.evaluation.DefaultNormalizer",
                   "utility_function": {
-                    "name": "pique.evaluation.DefaultUtility",
-                    "description": "Simple linear utility function based on min and max of threshold data"
+                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                    "description": "A Probability Density Function to model the distribution of findings"
                   }
                 }
               },
@@ -3735,8 +3735,8 @@
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             },
             "CWE-536": {
@@ -3755,8 +3755,8 @@
                   "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                   "normalizer": "pique.evaluation.DefaultNormalizer",
                   "utility_function": {
-                    "name": "pique.evaluation.DefaultUtility",
-                    "description": "Simple linear utility function based on min and max of threshold data"
+                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                    "description": "A Probability Density Function to model the distribution of findings"
                   }
                 }
               },
@@ -3766,8 +3766,8 @@
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             },
             "CWE-537": {
@@ -3786,8 +3786,8 @@
                   "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                   "normalizer": "pique.evaluation.DefaultNormalizer",
                   "utility_function": {
-                    "name": "pique.evaluation.DefaultUtility",
-                    "description": "Simple linear utility function based on min and max of threshold data"
+                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                    "description": "A Probability Density Function to model the distribution of findings"
                   }
                 }
               },
@@ -3797,8 +3797,8 @@
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             },
             "CWE-550": {
@@ -3817,8 +3817,8 @@
                   "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                   "normalizer": "pique.evaluation.DefaultNormalizer",
                   "utility_function": {
-                    "name": "pique.evaluation.DefaultUtility",
-                    "description": "Simple linear utility function based on min and max of threshold data"
+                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                    "description": "A Probability Density Function to model the distribution of findings"
                   }
                 }
               },
@@ -3828,8 +3828,8 @@
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -3842,8 +3842,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3854,8 +3854,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-550": {
@@ -3874,8 +3874,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -3885,8 +3885,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-540": {
@@ -3911,8 +3911,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -3926,8 +3926,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         },
         "CWE-541": {
@@ -3946,8 +3946,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -3961,8 +3961,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         },
         "CWE-531": {
@@ -3981,8 +3981,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -3996,8 +3996,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -4013,8 +4013,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-497": {
@@ -4039,8 +4039,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -4050,8 +4050,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         },
         "CWE-548": {
@@ -4070,8 +4070,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -4081,8 +4081,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -4091,14 +4091,14 @@
         "CWE-548": 0.5
       },
       "thresholds": [
-        16,
-        16
+        15,
+        15
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-211": {
@@ -4123,8 +4123,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -4134,8 +4134,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         },
         "CWE-536": {
@@ -4154,8 +4154,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -4165,8 +4165,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         },
         "CWE-537": {
@@ -4185,8 +4185,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -4196,8 +4196,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         },
         "CWE-550": {
@@ -4216,8 +4216,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -4227,8 +4227,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -4241,8 +4241,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-541": {
@@ -4261,8 +4261,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -4276,8 +4276,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-201": {
@@ -4296,8 +4296,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         },
         "CWE-598": {
@@ -4316,8 +4316,8 @@
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
               "utility_function": {
-                "name": "pique.evaluation.DefaultUtility",
-                "description": "Simple linear utility function based on min and max of threshold data"
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
               }
             }
           },
@@ -4327,8 +4327,8 @@
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -4339,8 +4339,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-531": {
@@ -4359,8 +4359,8 @@
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
           "utility_function": {
-            "name": "pique.evaluation.DefaultUtility",
-            "description": "Simple linear utility function based on min and max of threshold data"
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
           }
         }
       },
@@ -4374,8 +4374,8 @@
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     }
   },
@@ -4390,8 +4390,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-215 Diagnostic CweCodeQl": {
@@ -4404,8 +4404,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-209 Diagnostic CweCodeQl": {
@@ -4418,8 +4418,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-615 Diagnostic CweCodeQl": {
@@ -4432,8 +4432,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-536 Diagnostic CweCodeQl": {
@@ -4446,8 +4446,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-598 Diagnostic CweCodeQl": {
@@ -4460,8 +4460,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-204 Diagnostic CweCodeQl": {
@@ -4474,8 +4474,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-541 Diagnostic CweCodeQl": {
@@ -4488,8 +4488,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-548 Diagnostic CweCodeQl": {
@@ -4502,8 +4502,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-535 Diagnostic CweCodeQl": {
@@ -4516,8 +4516,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-201 Diagnostic CweCodeQl": {
@@ -4530,8 +4530,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-537 Diagnostic CweCodeQl": {
@@ -4544,8 +4544,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-531 Diagnostic CweCodeQl": {
@@ -4558,8 +4558,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-214 Diagnostic CweCodeQl": {
@@ -4572,8 +4572,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     },
     "CWE-550 Diagnostic CweCodeQl": {
@@ -4586,8 +4586,8 @@
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
       "utility_function": {
-        "name": "pique.evaluation.DefaultUtility",
-        "description": "Simple linear utility function based on min and max of threshold data"
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
       }
     }
   }

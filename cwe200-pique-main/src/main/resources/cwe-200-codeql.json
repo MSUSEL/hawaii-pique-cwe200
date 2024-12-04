@@ -35,6 +35,14 @@
           "CWE-215": {},
           "CWE-497": {},
           "CWE-538": {}
+        },
+        "weights": {
+          "CWE-201": 0.20,
+          "CWE-203": 0.15,
+          "CWE-209": 0.20,
+          "CWE-215": 0.10,
+          "CWE-497": 0.15,
+          "CWE-538": 0.20
         }
       }
     }
@@ -48,6 +56,10 @@
       "children": {
         "CWE-201 Diagnostic CweCodeQl":{},
         "CWE-598": {}
+      },
+      "weights": {
+        "CWE-201 Diagnostic CweCodeQl": 0.50,
+        "CWE-598": 0.50
       }
     },
     "CWE-203": {
@@ -58,6 +70,10 @@
       "children": {
         "CWE-204": {},
         "CWE-208": {}
+      },
+      "weights": {
+        "CWE-204": 0.60,
+        "CWE-208": 0.40
       }
     },
     "CWE-204": {
@@ -67,6 +83,9 @@
       "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
       "children": {
         "CWE-204 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-204 Diagnostic CweCodeQl": 1.0
       }
     },
     "CWE-208": {
@@ -76,6 +95,9 @@
       "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
       "children": {
         "CWE-208 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-208 Diagnostic CweCodeQl": 1.0
       }
     },
     "CWE-209": {
@@ -86,6 +108,10 @@
       "children": {
         "CWE-211": {},
         "CWE-209 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-211": 0.70,
+        "CWE-209 Diagnostic CweCodeQl": 0.30
       }
     },
     "CWE-211": {
@@ -98,6 +124,12 @@
         "CWE-536": {},
         "CWE-537": {},
         "CWE-550": {}
+      },
+      "weights": {
+        "CWE-535": 0.25,
+        "CWE-536": 0.25,
+        "CWE-537": 0.25,
+        "CWE-550": 0.25
       }
     },
     "CWE-214": {
@@ -107,6 +139,9 @@
       "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
       "children": {
         "CWE-214 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-214 Diagnostic CweCodeQl": 1.0
       }
     },
     "CWE-215": {
@@ -116,6 +151,9 @@
       "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
       "children": {
         "CWE-215 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-215 Diagnostic CweCodeQl": 1.0
       }
       
     },
@@ -127,6 +165,10 @@
       "children": {
         "CWE-214": {},
         "CWE-548": {}
+      },
+      "weights": {
+        "CWE-214": 0.50,
+        "CWE-548": 0.50
       }
     },
     "CWE-531": {
@@ -136,6 +178,9 @@
       "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
       "children": {
         "CWE-531 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-531 Diagnostic CweCodeQl": 1.0
       }
     },
     "CWE-535": {
@@ -145,6 +190,9 @@
       "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
       "children": {
         "CWE-535 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-535 Diagnostic CweCodeQl": 1.0
       }
     },
     "CWE-536": {
@@ -154,6 +202,9 @@
       "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
       "children": {
         "CWE-536 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-536 Diagnostic CweCodeQl": 1.0
       }
     },
     "CWE-537": {
@@ -163,6 +214,9 @@
       "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
       "children": {
         "CWE-537 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-537 Diagnostic CweCodeQl": 1.0
       }
     },
     "CWE-538": {
@@ -172,6 +226,9 @@
       "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
       "children": {
         "CWE-540": {}
+      },
+      "weights": {
+        "CWE-540": 1.0
       }
     },
     "CWE-540": {
@@ -183,6 +240,11 @@
         "CWE-531": {},
         "CWE-541": {},
         "CWE-615": {}
+      },
+      "weights": {
+        "CWE-531": 0.30,
+        "CWE-541": 0.30,
+        "CWE-615": 0.40
       }
     },
     "CWE-541": {
@@ -192,6 +254,9 @@
       "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
       "children": {
         "CWE-541 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-541 Diagnostic CweCodeQl": 1.0
       }
     },
     "CWE-548": {
@@ -201,6 +266,9 @@
       "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
       "children": {
         "CWE-548 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-548 Diagnostic CweCodeQl": 1.0
       }
     },
     "CWE-550": {
@@ -210,6 +278,9 @@
       "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
       "children": {
         "CWE-550 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-550 Diagnostic CweCodeQl": 1.0
       }
     },
     "CWE-598": {
@@ -219,6 +290,9 @@
       "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
       "children": {
         "CWE-598 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-598 Diagnostic CweCodeQl": 1.0
       }
     },    
     "CWE-615": {
@@ -228,6 +302,9 @@
       "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
       "children": {
         "CWE-615 Diagnostic CweCodeQl": {}
+      },
+      "weights": {
+        "CWE-615 Diagnostic CweCodeQl": 1.0
       }
     }
   },

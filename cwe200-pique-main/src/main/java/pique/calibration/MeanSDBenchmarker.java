@@ -22,19 +22,27 @@
  */
 package pique.calibration;
 
+import java.io.File;
 import java.math.BigDecimal;
-
+import java.nio.file.Path;
 import java.util.ArrayList;
-
+import java.util.Arrays;
 import java.util.HashMap;
-
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-
-
+import pique.analysis.ITool;
+import pique.calibration.AbstractBenchmarker;
+import pique.calibration.IBenchmarker;
+import pique.evaluation.BenchmarkMeasureEvaluator;
+import pique.evaluation.Project;
+import pique.model.Diagnostic;
+import pique.model.Measure;
+import pique.model.QualityModel;
 import pique.utility.BigDecimalWithContext;
 
-public class MeanSDBenchmarker extends AbstractBenchmarker {
+public class MeanSDBenchmarker extends AbstractBenchmarker implements IBenchmarker {
 	
 	@Override
 	public Map<String, BigDecimal[]> calculateThresholds(Map<String, ArrayList<BigDecimal>> measureBenchmarkData) {

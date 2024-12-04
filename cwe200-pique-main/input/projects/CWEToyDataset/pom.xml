@@ -176,6 +176,14 @@
         <artifactId>json</artifactId>
         <version>20210307</version>
     </dependency>
+    <!-- Javaee API -->
+    <dependency>
+    <groupId>javax</groupId>
+    <artifactId>javaee-api</artifactId>
+    <version>8.0</version>
+    <scope>provided</scope>
+</dependency>
+
 
 
 

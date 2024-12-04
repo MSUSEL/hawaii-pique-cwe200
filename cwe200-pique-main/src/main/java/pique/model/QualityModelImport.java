@@ -28,7 +28,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import pique.calibration.IBenchmarker;
 import pique.calibration.IWeighter;
-import pique.calibration.NaiveBenchmarker;
+import pique.calibration.ProbabilityDensityFunctionBenchmarker;
 import pique.calibration.NaiveWeighter;
 import pique.evaluation.*;
 
@@ -102,25 +102,16 @@ public class QualityModelImport {
 
         // Set top-level data
         qualityModel.setName(instanceNameFromJson());
-      
         qualityModel.setBenchmarker(instanceBenchmarkerFromJson());
-       
         qualityModel.setWeighter(instanceWeighterFromJson());
-       
 
         // Instance each node, layer by layer (no edges yet)
         jsonFactors = jsonQm.getAsJsonObject("factors");
-       
         jsonTqi = jsonFactors.getAsJsonObject("tqi");
-     
         jsonQualityAspects = jsonFactors.getAsJsonObject("quality_aspects");
-       
         jsonProductFactors = jsonFactors.getAsJsonObject("product_factors");
-
         jsonMeasures = jsonQm.getAsJsonObject("measures");
-      
         jsonDiagnostics = jsonQm.getAsJsonObject("diagnostics");
-        
 
         tqi = instanceTqiFromJson(jsonTqi);
         qualityAspects = instanceQualityAspectsFromJson(jsonQualityAspects);
@@ -129,9 +120,7 @@ public class QualityModelImport {
         diagnostics = instanceDiagnosticsFromJson(jsonDiagnostics);
 
         // Use ModelNode instances to connect edges using name matching, bottom to top
-        jsonMeasures.entrySet().forEach(jsonEntry ->{
-            connectNodeEdges(jsonEntry, NodeType.MEASURE);
-        });
+        jsonMeasures.entrySet().forEach(jsonEntry -> connectNodeEdges(jsonEntry, NodeType.MEASURE));
         jsonProductFactors.entrySet().forEach(jsonEntry -> connectNodeEdges(jsonEntry, NodeType.PRODUCT_FACTOR));
         jsonQualityAspects.entrySet().forEach(jsonEntry -> connectNodeEdges(jsonEntry, NodeType.QUALITY_ASPECT));
         jsonTqi.entrySet().forEach(jsonEntry -> connectNodeEdges(jsonEntry, NodeType.TQI));
@@ -153,7 +142,7 @@ public class QualityModelImport {
      * @param nodeType
      *      The family of nodes rootNodeJson belongs to.
      */
-    private void connectNodeEdges(Map.Entry<String, JsonElement> targetNodeJson, NodeType nodeType) {
+    protected void connectNodeEdges(Map.Entry<String, JsonElement> targetNodeJson, NodeType nodeType) {
         String targetNodeName = targetNodeJson.getKey();
         JsonObject targetNodeValues = targetNodeJson.getValue().getAsJsonObject();
 
@@ -171,10 +160,8 @@ public class QualityModelImport {
             // Put string values of all listed children name in a list
             List<String> childrenNames = new ArrayList<>();
             JsonObject children = targetNodeValues.get("children").getAsJsonObject();
-            children.entrySet().forEach(childJsonElement -> {
-                childrenNames.add(childJsonElement.getKey());
-                // You can add more statements here if needed.
-            });
+            children.entrySet().forEach(childJsonElement -> childrenNames.add(childJsonElement.getKey()));
+
             // Add the specified children to the ModelNode
             ModelNode rootNode = allModelNodes.get(targetNodeName);
             childrenNames.forEach(name -> rootNode.setChild(allModelNodes.get(name)));
@@ -215,7 +202,7 @@ public class QualityModelImport {
         }
     }
 
-    private IEvaluator getEvaluatorFromConfiguration(JsonObject jsonQmNode, String nodeTypeQm) {
+    protected IEvaluator getEvaluatorFromConfiguration(JsonObject jsonQmNode, String nodeTypeQm) {
         if (jsonQmNode.get("eval_strategy") != null) {
             String fullClassName = jsonQmNode.get("eval_strategy").getAsString();
             try {
@@ -248,7 +235,7 @@ public class QualityModelImport {
         }
     }
 
-    private INormalizer getNormalizerFromConfiguration(JsonObject jsonQmNode) {
+    protected INormalizer getNormalizerFromConfiguration(JsonObject jsonQmNode) {
         if (jsonQmNode.get("normalizer") != null) {
             String fullClassName = jsonQmNode.get("normalizer").getAsString();
             try {
@@ -263,7 +250,7 @@ public class QualityModelImport {
         }
     }
 
-    private BigDecimal[] getThresholdsFromConfiguration(JsonObject jsonQmNode) {
+    protected BigDecimal[] getThresholdsFromConfiguration(JsonObject jsonQmNode) {
         if (jsonQmNode.get("thresholds") != null && jsonQmNode.get("thresholds").getAsJsonArray().size() > 0) {
 
             JsonArray jsonThresholds = jsonQmNode.getAsJsonArray("thresholds");
@@ -279,9 +266,19 @@ public class QualityModelImport {
         }
     }
 
-    private IUtilityFunction getUtilityFunctionFromConfiguration(JsonObject jsonQmNode) {
+    protected IUtilityFunction getUtilityFunctionFromConfiguration(JsonObject jsonQmNode) {
         if (jsonQmNode.get("utility_function") != null) {
-            String fullClassName = jsonQmNode.get("utility_function").getAsString();
+            String fullClassName = "";
+            Object utilFunctionImport = jsonQmNode.get("utility_function");
+            // YAY tech debt to ensure backwards compatibility. I hate using instanceof.....
+            if (utilFunctionImport instanceof JsonObject){
+                fullClassName = ((JsonObject) utilFunctionImport).getAsJsonPrimitive("name").getAsString();
+            } else if (utilFunctionImport instanceof JsonElement){
+                //redundant element cast potentially, but it is whatever
+                fullClassName = ((JsonElement) utilFunctionImport).getAsString();
+            }else{
+                System.out.println("PROBLEM");
+            }
             try {
                 return (IUtilityFunction) Class.forName(fullClassName).getConstructor().newInstance();
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
@@ -290,11 +287,11 @@ public class QualityModelImport {
             }
         }
         else {
-            return new DefaultUtility();
+            return new ProbabilityDensityFunctionUtilityFunction();
         }
     }
 
-    private Map<String, BigDecimal> getWeightsFromConfiguration(JsonObject jsonQmNode) {
+    protected Map<String, BigDecimal> getWeightsFromConfiguration(JsonObject jsonQmNode) {
         if (jsonQmNode.get("weights") != null) {
 
             Map<String, BigDecimal> weightNames = new HashMap<>();
@@ -313,9 +310,9 @@ public class QualityModelImport {
 
     /**
      * Check for 'glocal_config' -> 'benchmark_strategy' and return the benchmark strategy class listed.
-     * If configuration does not exist, return a {@link pique.calibration.NaiveBenchmarker}.
+     * If configuration does not exist, return a {@link pique.calibration.ProbabilityDensityFunctionBenchmarker}.
      */
-    private IBenchmarker instanceBenchmarkerFromJson() {
+    protected IBenchmarker instanceBenchmarkerFromJson() {
         if (jsonQm.getAsJsonObject("global_config") != null && jsonQm.getAsJsonObject("global_config").get("benchmark_strategy") != null) {
             String fullClassName = jsonQm.getAsJsonObject("global_config").get("benchmark_strategy").getAsString();
             try {
@@ -325,7 +322,7 @@ public class QualityModelImport {
                 throw new RuntimeException();
             }
         } else {
-            return new NaiveBenchmarker();
+            return new ProbabilityDensityFunctionBenchmarker();
         }
     }
 
@@ -342,7 +339,7 @@ public class QualityModelImport {
             }
          }
      */
-    private Map<String, ModelNode> instanceDiagnosticsFromJson(JsonObject diagnosticsJson) {
+    protected Map<String, ModelNode> instanceDiagnosticsFromJson(JsonObject diagnosticsJson) {
 
         Map<String, ModelNode> tempDiagnostics = new HashMap<>();
 
@@ -393,7 +390,7 @@ public class QualityModelImport {
          }
      */
     // TODO (1.0): Update to support any combination of non-default mechanisms
-    private Map<String, ModelNode> instanceMeasuresFromJson(JsonObject measuresJson) {
+    protected Map<String, ModelNode> instanceMeasuresFromJson(JsonObject measuresJson) {
 
         Map<String, ModelNode> tempMeasures = new HashMap<>();
 
@@ -425,7 +422,7 @@ public class QualityModelImport {
         return tempMeasures;
     }
 
-    private String instanceNameFromJson() {
+    protected String instanceNameFromJson() {
         return jsonQm.getAsJsonPrimitive("name").getAsString();
     }
 
@@ -446,7 +443,7 @@ public class QualityModelImport {
          }
      */
     // TODO (1.0): Update to support any combination of non-default mechanisms
-    private Map<String, ModelNode> instanceProductFactorsFromJson(JsonObject productFactorsJson) {
+    protected Map<String, ModelNode> instanceProductFactorsFromJson(JsonObject productFactorsJson) {
 
         Map<String, ModelNode> tempProductFactors = new HashMap<>();
 
@@ -490,7 +487,7 @@ public class QualityModelImport {
      * },
      */
     // TODO (1.0): Update to support any combination of non-default mechanisms
-    private Map<String, ModelNode> instanceQualityAspectsFromJson(JsonObject qualityAspectsJson) {
+    protected Map<String, ModelNode> instanceQualityAspectsFromJson(JsonObject qualityAspectsJson) {
 
         Map<String, ModelNode> tempQualityAspects = new HashMap<>();
 
@@ -529,7 +526,7 @@ public class QualityModelImport {
      * },
      * ...
      */
-    private ModelNode instanceTqiFromJson(JsonObject tqiJson) {
+    protected ModelNode instanceTqiFromJson(JsonObject tqiJson) {
 
         Map.Entry<String, JsonElement> tqiEntry = tqiJson.entrySet().iterator().next();
         JsonObject tqiValues = tqiEntry.getValue().getAsJsonObject();
@@ -537,19 +534,19 @@ public class QualityModelImport {
         String tqiName = tqiEntry.getKey();
         String tqiDescription = tqiValues.get("description").getAsString();
         IEvaluator evaluator = getEvaluatorFromConfiguration(tqiValues, "factor");
-        INormalizer normzlier = getNormalizerFromConfiguration(tqiValues);
+        INormalizer normalizer = getNormalizerFromConfiguration(tqiValues);
         IUtilityFunction utilityFunction = getUtilityFunctionFromConfiguration(tqiValues);
         Map<String, BigDecimal> weights = getWeightsFromConfiguration(tqiValues);
         BigDecimal[] thresholds = getThresholdsFromConfiguration(tqiValues);
 
-        return new Tqi(tqiName, tqiDescription, evaluator, normzlier, utilityFunction, weights, thresholds);
+        return new Tqi(tqiName, tqiDescription, evaluator, normalizer, utilityFunction, weights, thresholds);
     }
 
     /**
      * Check for 'glocal_config' -> 'weights_strategy' and return the weighter strategy class listed.
      * If configuration does not exist, return a {@link pique.calibration.NaiveWeighter}.
      */
-    private IWeighter instanceWeighterFromJson() {
+    protected IWeighter instanceWeighterFromJson() {
         if (jsonQm.getAsJsonObject("global_config") != null && jsonQm.getAsJsonObject("global_config").get("weights_strategy") != null) {
             String fullClassName = jsonQm.getAsJsonObject("global_config").get("weights_strategy").getAsString();
             try {

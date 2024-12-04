@@ -15,6 +15,6 @@ public class BAD_UserProfileServlet extends HttpServlet {
 
     private void fetchUserProfile(String userId) throws ServletException {
         // Logic to retrieve user profile that might throw ServletException
-        throw new ServletException("User profile not found for user ID: " + userId);
+        throw new ServletException();
     }
 }

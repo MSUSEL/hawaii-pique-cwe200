@@ -1,0 +1,426 @@
+/**
+* MIT License
+* Copyright (c) 2019 Montana State University Software Engineering Labs
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
+package pique.tool;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pique.analysis.ITool;
+import pique.analysis.Tool;
+import pique.model.Diagnostic;
+import pique.model.Finding;
+import pique.utility.PiqueProperties;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.concurrent.ThreadLocalRandom;
+
+
+/**
+ * CODE TAKEN FROM PIQUE-BIN-DOCKER AND MODIFIED FOR PIQUE-SBOM-CONTENT and
+ * PIQUE-CLOUD-DOCKERFILE.
+ * This tool wrapper will run and analyze the output of the tool.
+ * When parsing the output of the tool, a command line call to run a Python
+ * script is made. This script is responsible for translating from
+ * CVE number to the CWE it is categorized as by the NVD.
+ * 
+ * @author Derek Reimanis
+ *
+ */
+public class CweCodeQl extends Tool implements ITool {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CweCodeQl.class);
+    private String backendAddress;
+    
+    public static void main(String[] args) {
+        CweCodeQl test = new CweCodeQl(PiqueProperties.getProperties().getProperty("backend.server"));
+        // test.initialize(null);
+        test.analyze(Paths.get("SmallTest"));
+        // test.analyze(Paths.get("s"));
+
+    }
+
+
+    public CweCodeQl(String backendAddress) {
+        super("CweCodeQl", null);
+        this.backendAddress = backendAddress;
+    }
+
+    // Methods
+    /**
+     * @param projectLocation The path to a binary file for the desired solution of
+     *                        project to analyze
+     * @return The path to the analysis results file
+     */
+    @Override
+    public Path analyze(Path projectLocation) {
+        String projectName = projectLocation.getFileName().toString();
+        if (projectName == "projects"){
+            LOGGER.info(projectName + " is a directory, not a project. Make sure you are running from the wrapper.");
+            return null;
+
+        }
+        LOGGER.info(this.getName() + "  Analyzing " + projectName);
+        System.out.println("Analyzing " + projectName + " with " + this.getName());
+
+        // set up results dir
+
+        String workingDirectoryPrefix = "";
+        String outputFilePath = "";
+        
+        try {
+            // Load properties
+            Properties prop = PiqueProperties.getProperties("src/main/resources/pique-properties.properties");
+            Path resultsDir = Paths.get(prop.getProperty("results.directory"));
+
+            // Set up working directory
+            workingDirectoryPrefix = resultsDir + "/tool-out/CWE-200/";
+            Files.createDirectories(Paths.get(workingDirectoryPrefix));
+            // Set up output file path
+            outputFilePath = workingDirectoryPrefix + "result.csv";
+        
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            LOGGER.debug("Error creating directory to save CweQodeQl tool results");
+            System.out.println("Error creating directory to save CweQodeQl tool results");
+        }
+        
+        // // Check if the results file already exists
+        // if (!doesExist(workingDirectoryPrefix, projectName)){
+        
+        //     // Check to see if the server is running
+        //     if (isServerRunning(backendAddress)){
+        //         LOGGER.info("Server is running at: " + backendAddress);
+        //         // Upload the project to the server
+        //         LOGGER.info("Zipping project at: zipped-repos/" + projectName);
+        //         Path zipPath = zipProject(projectLocation);
+        //         LOGGER.info("CWE-200 Tool is analyzing " + projectName + " this might take a while.");
+        //         uploadProjectToServer(backendAddress, zipPath);
+                
+        //         // Perform the analysis
+        //         String toolResults = sendPostRequestToServer(backendAddress, projectName);
+        //         JSONObject jsonResponse = responseToJSON(toolResults);
+
+        //         try {
+        //             if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
+        //                 System.out.println("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
+        //                 LOGGER.error("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
+        //                 return null;
+        //             }
+        //         } catch (JSONException e) {
+        //             return null;
+        //         }
+                
+        //         // Convert the results to a CSV file, and save it
+        //         Path finalResults = saveToolResultsToFile(jsonResponse, outputFilePath);
+        //         return finalResults;
+
+        //     } else {
+        //         // TODO: Start the server
+        //         LOGGER.error("Server is not running at: " + backendAddress);
+        //         return null;
+        //     }
+        // }
+        // Something went wrong 
+
+        return Paths.get("output/tool-out/CWE-200/result.csv");
+        // return null;
+    }
+
+    /**
+     * parses output of tool from analyze().
+     *
+     * @param toolResults location of the results, output by analyze()
+     * @return A Map<String,Diagnostic> with findings from the tool attached.
+     *         Returns null if tool failed to run.
+     */
+    @Override
+    public Map<String, Diagnostic> parseAnalysis(Path toolResults) {
+        // Just for testing, remove hardcoded path later
+        toolResults = Paths.get("output/tool-out/CWE-200/result.csv");
+        
+        System.out.println(this.getName() + " Parsing Analysis...");
+        LOGGER.debug(this.getName() + " Parsing Analysis...");
+
+        Map<String, Diagnostic> diagnostics = helperFunctions.initializeDiagnostics(this.getName());
+        List<String[]> results = null;
+
+        try {
+            results = helperFunctions.readFileContent(toolResults);
+            for (String[] record : results) {
+                String cweId = record[0].split(":")[0];
+                String cweDescription = record[0].split(":")[1].trim();
+                String filePath = record[4];
+                int lineNumber = Integer.parseInt(record[5]);
+                int characterNumber = Integer.parseInt(record[6]);
+                int severity = this.cweToSeverity(cweId);
+               
+                Diagnostic diag = diagnostics.get((cweId + " Diagnostic CweCodeQl"));
+                if (diag != null) {
+                    Finding finding = new Finding(filePath, 
+                                            lineNumber, 
+                                            characterNumber,
+                                            severity);
+                    finding.setName(cweId);
+                    diag.setChild(finding);
+                    System.out.println(cweId + " " + cweDescription + " " + filePath + " " + lineNumber + " " + characterNumber + " " + severity);
+                }
+                
+            }
+
+        } catch (IOException e) {
+            LOGGER.info("No results to read from CweQodeQl.");
+        }
+        return diagnostics;
+    }
+
+    @Override
+    public Path initialize(Path toolRoot) {
+        final String[] cmd = { "codeql", "version" };
+
+        try {
+            helperFunctions.getOutputFromProgram(cmd);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("Failed to initialize " + this.getName());
+            LOGGER.error(e.getStackTrace().toString());
+        }
+
+        return toolRoot;
+    }
+    
+    private JSONObject responseToJSON(String response) {
+    if (response == null || response.trim().isEmpty()) {
+        LOGGER.error("Response is null or empty, cannot parse to JSON.");
+        return null;
+    }
+
+    try {
+        // Use regex to extract the JSON part
+        Pattern jsonPattern = Pattern.compile("\\{.*");
+        Matcher matcher = jsonPattern.matcher(response);
+
+        if (matcher.find()) {
+            String jsonPart = matcher.group(); // Extract the JSON substring
+            return new JSONObject(jsonPart);  // Parse it into a JSONObject
+        } else {
+            LOGGER.error("No JSON found in response: {}", response);
+        }
+    } catch (JSONException e) {
+        LOGGER.error("Failed to parse JSON response: {}", response, e);
+    }
+
+    return null;
+}
+
+private int cweToSeverity(String cweId) {
+    switch (cweId) {
+        case "CWE-201": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-208": return getRandomSeverity(6, 8);  // High range
+        case "CWE-214": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-215": return getRandomSeverity(6, 8);  // High range
+        case "CWE-531": return getRandomSeverity(5, 7);  // Medium range
+        case "CWE-532": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-535": return getRandomSeverity(5, 7);  // Medium range
+        case "CWE-536": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-537": return getRandomSeverity(5, 7);  // Medium range
+        case "CWE-538": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-540": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-548": return getRandomSeverity(6, 8);  // High range
+        case "CWE-550": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-598": return getRandomSeverity(8, 10); // Critical range
+        case "CWE-615": return getRandomSeverity(6, 8);  // High range
+        default: return getRandomSeverity(3, 5);         // Default low range
+    }
+}
+
+private int getRandomSeverity(int min, int max) {
+    return ThreadLocalRandom.current().nextInt(min, max + 1);
+}
+
+    private boolean isServerRunning(String backendAddress) {
+        try {
+            String[] cmd = { "curl", backendAddress };
+            helperFunctions.getOutputFromProgram(cmd);
+        } catch (Exception e) {
+            LOGGER.error("Server is not running at: " + backendAddress);
+            return false;
+        }
+        return true;
+    }
+
+    private Path zipProject(Path projectLocation) {
+        String parentFolderName = projectLocation.getFileName().toString();
+        // Validate that projectLocation exists and is a directory
+        if (!Files.exists(projectLocation)) {
+            LOGGER.error("The project location does not exist: {}", projectLocation.toAbsolutePath());
+            return null;
+        }
+        if (!Files.isDirectory(projectLocation)) {
+            LOGGER.error("The project location is not a directory: {}", projectLocation.toAbsolutePath());
+            return null;
+        }
+    
+        Path zipFilePath = Paths.get("zipped-repos/" + projectLocation.getFileName().toString());
+    
+        try {
+            // Ensure the base directory for zipFilePath exists
+            if (!Files.exists(zipFilePath.getParent())) {
+                Files.createDirectories(zipFilePath.getParent());
+            }
+    
+            // Zip the project directory with an additional parent folder
+            try (ZipOutputStream zos = new ZipOutputStream(Files.newOutputStream(zipFilePath))) {
+                Files.walkFileTree(projectLocation, new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        // Prepend the parent folder to the file path
+                        String zipEntryName = parentFolderName + "/" + projectLocation.relativize(file).toString();
+                        ZipEntry zipEntry = new ZipEntry(zipEntryName);
+                        zos.putNextEntry(zipEntry);
+                        Files.copy(file, zos);
+                        zos.closeEntry();
+                        return FileVisitResult.CONTINUE;
+                    }
+    
+                    @Override
+                    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                        // Prepend the parent folder to the directory path
+                        if (!projectLocation.equals(dir)) { // Avoid adding the root directory itself as an entry
+                            String zipEntryName = parentFolderName + "/" + projectLocation.relativize(dir).toString() + "/";
+                            ZipEntry zipEntry = new ZipEntry(zipEntryName);
+                            zos.putNextEntry(zipEntry);
+                            zos.closeEntry();
+                        }
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+            }
+    
+            // LOGGER.info("Project successfully zipped at {}", zipFilePath);
+            return zipFilePath;  // Return the path to the zip file
+        } catch (IOException e) {
+            LOGGER.error("Failed to zip project.", e);
+            return null;
+        }
+    }
+    
+
+    private void uploadProjectToServer(String backendAddress, Path zipPath) {
+        try {
+            // Define the command array with properly escaped JSON
+            String[] cmd = {
+                "curl", 
+                "-X", "POST",
+                "-F", "file=@" + zipPath.toString(),
+                backendAddress + "/files"
+            };
+            
+            // Execute the command
+            helperFunctions.getOutputFromProgram(cmd);
+        } catch (Exception e) {
+            LOGGER.error("Failed to upload project to server at: " + backendAddress);
+            e.printStackTrace();
+        }
+    }
+
+    private String sendPostRequestToServer(String backendAddress, String projectName) {
+        String toolResults = null;
+        try {
+            // Properly format the JSON data with extra escaping
+            String jsonData = "\"{\\\"project\\\":\\\"" + projectName + 
+            "\\\", \\\"extension\\\":\\\"csv\\\", \\\"format\\\":\\\"csv\\\"}\"";
+            
+            // Define the command array with properly escaped JSON
+            String[] cmd = {
+                "curl", 
+                "-X", "POST",
+                "-H", "Content-Type: application/json",
+                "-d", jsonData,
+                backendAddress + "/codeql/"
+            };
+            
+            // Execute the command
+            toolResults = helperFunctions.getOutputFromProgramAsString(cmd);
+            
+        } catch (Exception e) {
+            LOGGER.error("Failed to send POST request to server at: " + backendAddress);
+            e.printStackTrace();
+        }
+        return toolResults;
+    }
+    
+    private Path saveToolResultsToFile(JSONObject jsonResponse, String outputFilePath) {
+        try {
+            // Parse JSON response to extract "data" field
+            String data = jsonResponse.getString("data");
+    
+            // Clean up the CSV string if it has extra quotes at the beginning or end
+            // data = data.replaceAll("^\"|\"$", ""); // Remove surrounding quotes if present
+            Path outputPath = Paths.get(outputFilePath);
+            // Write the extracted data to the specified file path
+            Files.write(outputPath, data.getBytes());
+            
+            LOGGER.info("Tool results saved to file successfully: " + outputFilePath);
+            return outputPath;
+        } catch (IOException e) {
+            LOGGER.error("Failed to save tool results to file: " + outputFilePath);
+            e.printStackTrace();
+        } catch (Exception e) {
+            LOGGER.error("Failed to parse JSON or process tool results.");
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    private boolean doesExist(String workingDirectoryPrefix, String projectName) {
+        File tempResults = new File(workingDirectoryPrefix + "CweQodeQl " + projectName + ".json");
+        if (tempResults.exists()) {
+            LOGGER.info("Already ran CweQodeQl on: " + projectName + ", results stored in: " + tempResults.toString());
+            return true;
+        }
+        LOGGER.info("Have not run CweQodeQl on: " + projectName + ", running now and storing in:"
+                    + tempResults.toString());
+            tempResults.getParentFile().mkdirs();
+        return false;
+    }
+
+}

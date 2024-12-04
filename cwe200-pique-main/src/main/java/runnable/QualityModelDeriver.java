@@ -8,7 +8,7 @@ import pique.model.QualityModelExport;
 import pique.model.QualityModelImport;
 import pique.runnable.AQualityModelDeriver;
 import pique.utility.PiqueProperties;
-import tool.CweCodeQl;
+import pique.tool.CweCodeQl;
 
 
 import java.io.IOException;

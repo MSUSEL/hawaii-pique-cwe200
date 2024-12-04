@@ -134,7 +134,6 @@ public abstract class ASingleProjectEvaluator {
         // TODO: turn this into a temp file that always deletes on/before program exit
         Path analysisOutput = tool.analyze(projectDir);
 
-
         // (2) prase output: make collection of {Key: diagnostic name, Value: diagnostic objects}
         return tool.parseAnalysis(analysisOutput);
     }

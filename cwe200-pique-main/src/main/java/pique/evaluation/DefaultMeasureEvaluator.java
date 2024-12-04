@@ -49,10 +49,6 @@ public class DefaultMeasureEvaluator extends Evaluator {
         // Normalize
         value = node.getNormalizerObj().normalize(value);
 
-        if(node.getName().equals("CWE-214")){
-            System.out.println("DefaultMeasureEvaluator - " + inNode.getName() + " - " + value);
-        }
-        System.out.println("DefaultMeasureEvaluator - " + inNode.getName() + " - " + value);
         // Apply utility function
         return node.getUtility_function().utilityFunction(value, node.getThresholds(), node.isPositive());
     }

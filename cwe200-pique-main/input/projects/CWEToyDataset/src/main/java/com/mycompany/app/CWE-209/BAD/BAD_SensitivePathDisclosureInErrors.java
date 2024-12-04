@@ -13,9 +13,9 @@ public class BAD_SensitivePathDisclosureInErrors{
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            System.err.println("Error: File not found - " + filePath);
+            throw new RuntimeException("Error: File not found - " + filePath);
         } catch (Exception e) {
-            System.err.println("An unexpected error occurred.");
+            System.err.println(e.getMessage());
         }
     }
 }

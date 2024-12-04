@@ -22,7 +22,7 @@
  */
 package pique.calibration;
 
-
+import pique.model.ModelNode;
 import pique.model.QualityModel;
 
 import java.nio.file.Path;

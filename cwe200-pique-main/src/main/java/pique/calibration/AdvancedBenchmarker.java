@@ -25,7 +25,7 @@ package pique.calibration;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class AdvancedBenchmarker extends AbstractBenchmarker {
+public class AdvancedBenchmarker extends AbstractBenchmarker implements IBenchmarker {
 
     @Override
     public String getName() {
