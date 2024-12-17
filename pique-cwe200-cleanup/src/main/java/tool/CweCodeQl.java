@@ -100,7 +100,7 @@ public class CweCodeQl extends Tool implements ITool {
             workingDirectoryPrefix = resultsDir + "/tool-out/CWE-200/";
             Files.createDirectories(Paths.get(workingDirectoryPrefix));
             // Set up output file path
-            this.outputFilePath = workingDirectoryPrefix + this.projectName + "result.csv";
+            this.outputFilePath = workingDirectoryPrefix + this.projectName + "Result.csv";
             System.out.println("Output file path: " + this.outputFilePath);
         
         } catch (IOException e) {

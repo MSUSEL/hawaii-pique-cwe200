@@ -1,0 +1,8 @@
+208,spring-security-6.3.3/core/src/main/java/org/springframework/security/core/userdetails/User.java,110,48
+208,spring-security-6.3.3/web/src/main/java/org/springframework/security/web/authentication/www/DigestAuthUtils.java,114,21
+208,spring-security-6.3.3/web/src/main/java/org/springframework/security/web/authentication/www/DigestAuthenticationFilter.java,163,32
+208,spring-security-6.3.3/web/src/main/java/org/springframework/security/web/authentication/www/DigestAuthenticationFilter.java,177,31
+208,spring-security-6.3.3/web/src/main/java/org/springframework/security/web/authentication/www/DigestAuthenticationFilter.java,353,22
+208,spring-security-6.3.3/web/src/main/java/org/springframework/security/web/authentication/www/DigestAuthenticationFilter.java,362,30
+208,spring-security-6.3.3/web/src/main/java/org/springframework/security/web/authentication/www/DigestAuthenticationFilter.java,397,39
+214,spring-security-6.3.3/itest/context/src/main/java/org/springframework/security/integration/python/PythonInterpreterPreInvocationAdvice.java,54,20
