@@ -55,9 +55,11 @@ export class CodeQlService {
     
         await this.runBert(javaFiles, sourcePath, createCodeQlDto);
 
-        return createCodeQlDto.extension === 'csv' 
-        ? await this.parserService.getcsvResults(sourcePath) 
-        : await this.parserService.getSarifResults(sourcePath);
+        if (createCodeQlDto.extension === 'csv'){
+            return await this.parserService.getcsvResults(sourcePath);
+        }
+        return await this.parserService.getSarifResults(sourcePath);
+
     
     }
 
@@ -198,6 +200,10 @@ export class CodeQlService {
             const self = this;
             childProcess.on('exit', function (code, signal) {
                 const result = "process CodeQl exited with code " + code + " and signal " + signal;
+                // if (code !== 0) {
+                //     reject(result);
+                //     throw new Error(result);
+                // }
                 console.log(result);
                 self.eventsGateway.emitDataToClients('data', result.toString())
                 resolve();
@@ -410,8 +416,8 @@ export class CodeQlService {
 
     async runCWEQueries(sourcePath: string, createCodeQlDto: any) {
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-        const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';
-        const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
+        const extension = 'sarif';
+        const format = 'sarifv2.1.0';
         const outputFileName = 'result';
         const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
         const threads = 12;

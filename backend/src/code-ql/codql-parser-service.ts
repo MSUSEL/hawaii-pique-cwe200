@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { FileUtilService } from 'src/files/fileUtilService';
 import * as path from 'path'
 import * as os from 'os';
+import { parse} from 'csv-parse'
+import { promises as fs } from 'fs';
 
 
 @Injectable()
@@ -23,7 +25,7 @@ export class CodeQlParserService {
         const data = await this.fileService.readJsonFile(sarifPath);
         const result = data.runs[0].results[index];
 
-        // this.saveDataFlowTree(filePath, project)
+        this.saveDataFlowTree(filePath, project)
     
         try {
             // Try to access all codeFlows
@@ -238,17 +240,50 @@ export class CodeQlParserService {
         // Convert the Map values to an array since the final result expects an array
         return Array.from(rulesMap.values());
     }
+    async getcsvResults(sourcePath: string) {
+        // Construct the SARIF file path
+        const sarifPath = path.join(sourcePath, 'result.sarif');
+        const csvPath = path.join(sourcePath, 'result.csv'); // Output CSV file
     
-    async getcsvResults(sourcePath:string) {
-        var csvPath = path.join(sourcePath,'result.csv');
-        var data = await this.fileService.readFileAsync(csvPath);
-        return {data};
+        try {
+            // Read the SARIF file content
+            const fileData = await this.fileService.readJsonFile(sarifPath);
+    
+            // Initialize an array for CSV rows
+            const csvData: any[] = [];
+    
+            // Process SARIF results
+            const results = fileData.runs[0]?.results || [];
+            for (const result of results) {
+                const message = result.message.text.split('\n')[0]; // First line of the message
+                const location = result.locations?.[0]?.physicalLocation;
+                const ruleId = result.ruleId.split('/').pop() || 'N/A';
+    
+                const path = location?.artifactLocation?.uri || 'N/A';
+                const region = location?.region || {};
+                const startLine = region.startLine || 'N/A';
+                const endLine = region.endLine || startLine;
+                const startColumn = region.startColumn || 'N/A';
+                const endColumn = region.endColumn || 'N/A';
+    
+                // Push extracted data as a row
+                const dataString = `${ruleId},${path},${startLine},${startColumn}`;
+                csvData.push(dataString);
+            }
+
+            await fs.writeFile(csvPath, csvData.join('\n'), 'utf-8');
+
+            const csv = path.join(sourcePath, 'result.csv');
+            const data = await this.fileService.readFileAsync(csv);
+            return {data};
+    
+        } catch (error) {
+            console.error('Error processing SARIF file:', error.message);
+            throw error;
+        }
     }
     
     
-    
-    
-
     parseResults(rules: any[], results: any[],sourcePath:string) {
         var resultList: Array<{ name: string; fullPath: string, files:any[] }> = [];
         for (let i = 0; i < results.length; i++) {
