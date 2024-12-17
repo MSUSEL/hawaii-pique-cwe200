@@ -61,6 +61,8 @@ import java.util.zip.ZipOutputStream;
 public class CweCodeQl extends Tool implements ITool {
     private static final Logger LOGGER = LoggerFactory.getLogger(CweCodeQl.class);
     private String backendAddress;
+    private String projectName;
+    private String outputFilePath;
 
 
     public CweCodeQl(String backendAddress) {
@@ -76,19 +78,18 @@ public class CweCodeQl extends Tool implements ITool {
      */
     @Override
     public Path analyze(Path projectLocation) {
-        String projectName = projectLocation.getFileName().toString();
+        this.projectName = projectLocation.getFileName().toString();
         if (projectName == "projects"){
             LOGGER.info(projectName + " is a directory, not a project. Make sure you are running from the wrapper.");
             return null;
 
         }
-        LOGGER.info(this.getName() + "  Analyzing " + projectName);
-        System.out.println("Analyzing " + projectName + " with " + this.getName());
+        LOGGER.info(this.getName() + "  Analyzing " + this.projectName);
+        System.out.println("Analyzing " + this.projectName + " with " + this.getName());
 
         // set up results dir
 
         String workingDirectoryPrefix = "";
-        String outputFilePath = "";
         
         try {
             // Load properties
@@ -99,54 +100,19 @@ public class CweCodeQl extends Tool implements ITool {
             workingDirectoryPrefix = resultsDir + "/tool-out/CWE-200/";
             Files.createDirectories(Paths.get(workingDirectoryPrefix));
             // Set up output file path
-            outputFilePath = workingDirectoryPrefix + "result.csv";
+            this.outputFilePath = workingDirectoryPrefix + this.projectName + "result.csv";
+            System.out.println("Output file path: " + this.outputFilePath);
         
         } catch (IOException e) {
             e.printStackTrace();
             LOGGER.debug("Error creating directory to save CweQodeQl tool results");
             System.out.println("Error creating directory to save CweQodeQl tool results");
         }
+
+        // return runCWE200Tool(workingDirectoryPrefix, projectLocation);
+
+        return null;
         
-        // // Check if the results file already exists
-        // if (!doesExist(workingDirectoryPrefix, projectName)){
-        
-        //     // Check to see if the server is running
-        //     if (isServerRunning(backendAddress)){
-        //         LOGGER.info("Server is running at: " + backendAddress);
-        //         // Upload the project to the server
-        //         LOGGER.info("Zipping project at: zipped-repos/" + projectName);
-        //         Path zipPath = zipProject(projectLocation);
-        //         LOGGER.info("CWE-200 Tool is analyzing " + projectName + " this might take a while.");
-        //         uploadProjectToServer(backendAddress, zipPath);
-                
-        //         // Perform the analysis
-        //         String toolResults = sendPostRequestToServer(backendAddress, projectName);
-        //         JSONObject jsonResponse = responseToJSON(toolResults);
-
-        //         try {
-        //             if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
-        //                 System.out.println("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
-        //                 LOGGER.error("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
-        //                 return null;
-        //             }
-        //         } catch (JSONException e) {
-        //             return null;
-        //         }
-                
-        //         // Convert the results to a CSV file, and save it
-        //         Path finalResults = saveToolResultsToFile(jsonResponse, outputFilePath);
-        //         return finalResults;
-
-        //     } else {
-        //         // TODO: Start the server
-        //         LOGGER.error("Server is not running at: " + backendAddress);
-        //         return null;
-        //     }
-        // }
-        // // Something went wrong 
-
-        return Paths.get("output/tool-out/CWE-200/result.csv");
-        // return null;
     }
 
     /**
@@ -159,7 +125,8 @@ public class CweCodeQl extends Tool implements ITool {
     @Override
     public Map<String, Diagnostic> parseAnalysis(Path toolResults) {
         // Just for testing, remove hardcoded path later
-        toolResults = Paths.get("output/tool-out/CWE-200/result.csv");
+        toolResults = Paths.get(this.outputFilePath);
+        
         
         System.out.println(this.getName() + " Parsing Analysis...");
         LOGGER.debug(this.getName() + " Parsing Analysis...");
@@ -218,6 +185,51 @@ public class CweCodeQl extends Tool implements ITool {
 
     return null;
 }
+
+private Path runCWE200Tool(String workingDirectoryPrefix, Path projectLocation){
+
+            // Check if the results file already exists
+            if (!doesExist(workingDirectoryPrefix, projectName)){
+        
+                // Check to see if the server is running
+                if (isServerRunning(backendAddress)){
+                    LOGGER.info("Server is running at: " + backendAddress);
+                    // Upload the project to the server
+                    LOGGER.info("Zipping project at: zipped-repos/" + projectName);
+                    Path zipPath = zipProject(projectLocation);
+                    LOGGER.info("CWE-200 Tool is analyzing " + projectName + " this might take a while.");
+                    uploadProjectToServer(backendAddress, zipPath);
+                    
+                    // Perform the analysis
+                    String toolResults = sendPostRequestToServer(backendAddress, projectName);
+                    JSONObject jsonResponse = responseToJSON(toolResults);
+    
+                    try {
+                        if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
+                            System.out.println("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
+                            LOGGER.error("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
+                            return null;
+                        }
+                    } catch (JSONException e) {
+                        return null;
+                    }
+                    
+                    // Convert the results to a CSV file, and save it
+                    Path finalResults = saveToolResultsToFile(jsonResponse, this.outputFilePath);
+                    return finalResults;
+    
+                } else {
+                    // TODO: Start the server
+                    LOGGER.error("Server is not running at: " + backendAddress);
+                    return null;
+                }
+            }
+            // Something went wrong 
+    
+            return Paths.get("output/tool-out/CWE-200/result.csv");
+
+}
+
 
 private int cweToSeverity(String cweId) {
     switch (cweId) {
