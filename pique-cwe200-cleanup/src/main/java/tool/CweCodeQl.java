@@ -143,7 +143,7 @@ public class CweCodeQl extends Tool implements ITool {
         //         return null;
         //     }
         // }
-        // Something went wrong 
+        // // Something went wrong 
 
         return Paths.get("output/tool-out/CWE-200/result.csv");
         // return null;
@@ -170,11 +170,10 @@ public class CweCodeQl extends Tool implements ITool {
         try {
             results = HelperFunctions.readFileContent(toolResults);
             for (String[] record : results) {
-                String cweId = record[0].split(":")[0];
-                String cweDescription = record[0].split(":")[1].trim();
-                String filePath = record[4];
-                int lineNumber = Integer.parseInt(record[5]);
-                int characterNumber = Integer.parseInt(record[6]);
+                String cweId = record[0];
+                String filePath = record[1];
+                int lineNumber = Integer.parseInt(record[2]);
+                int characterNumber = Integer.parseInt(record[3]);
                 int severity = this.cweToSeverity(cweId);
                
                 Diagnostic diag = diagnostics.get((cweId + " Diagnostic CweCodeQl"));
@@ -185,7 +184,7 @@ public class CweCodeQl extends Tool implements ITool {
                                             severity);
                     finding.setName(cweId);
                     diag.setChild(finding);
-                    System.out.println(cweId + " " + cweDescription + " " + filePath + " " + lineNumber + " " + characterNumber + " " + severity);
+                    // System.out.println(cweId + " " + cweDescription + " " + filePath + " " + lineNumber + " " + characterNumber + " " + severity);
                 }
                 
             }

@@ -29,7 +29,10 @@ import pique.utility.PiqueProperties;
 
 import java.io.*;
 import java.math.BigDecimal;
+
+import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -137,20 +140,25 @@ public class HelperFunctions {
      * @return the text output of the file content.
      * @throws IOException
      */
-    public static List<String[]> readFileContent(Path filePath) throws IOException
-    {
-        List<String[]> records = new ArrayList<>();
+public static List<String[]> readFileContent(Path filePath) throws IOException {
+    List<String[]> records = new ArrayList<>();
 
-        try (CSVReader reader = new CSVReader(new FileReader(filePath.toFile()))) {
-            String[] nextLine;
-            while ((nextLine = reader.readNext()) != null) {
-                records.add(nextLine);
-            }
-        } catch (Exception e ) {
-            e.printStackTrace();
+    try (CSVReader reader = new CSVReaderBuilder(new FileReader(filePath.toFile()))
+            .withCSVParser(new CSVParserBuilder()
+                    .withSeparator(',') // Set comma as the delimiter
+                    .withQuoteChar('"') // Handle quoted strings
+                    .build())
+            .build()) {
+        String[] nextLine;
+        while ((nextLine = reader.readNext()) != null) {
+            // System.out.println(String.join(",", nextLine)); // Print for debugging
+            records.add(nextLine);
         }
-        return records;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return records;
+}
 
     /**
      * This function finds all diagnostics associated with a certain toolName and returns them in a Map with the diagnostic name as the key.
