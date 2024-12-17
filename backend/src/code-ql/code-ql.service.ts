@@ -55,9 +55,11 @@ export class CodeQlService {
     
         await this.runBert(javaFiles, sourcePath, createCodeQlDto);
 
-        return createCodeQlDto.extension === 'csv' 
-        ? await this.parserService.getcsvResults(sourcePath) 
-        : await this.parserService.getSarifResults(sourcePath);
+        if (createCodeQlDto.extension === 'csv'){
+            return await this.parserService.getcsvResults(sourcePath);
+        }
+        return await this.parserService.getSarifResults(sourcePath);
+
     
     }
 
@@ -130,22 +132,22 @@ export class CodeQlService {
             await this.createDatabase(sourcePath, createCodeQlDto);
         });
     
-        await executeStep('Running the backward slice queries.', async () => {
-            await this.performBackwardSlicing(sourcePath, createCodeQlDto);
-        });
+        // await executeStep('Running the backward slice queries.', async () => {
+        //     await this.performBackwardSlicing(sourcePath, createCodeQlDto);
+        // });
     
-        await executeStep('Parsing the backward slice graphs.', async () => {
-            await this.bertService.parseBackwardSlice(sourcePath);
-        });
+        // await executeStep('Parsing the backward slice graphs.', async () => {
+        //     await this.bertService.parseBackwardSlice(sourcePath);
+        // });
     
-        await executeStep('Running BERT with backward slice graphs.', async () => {
-            await this.bertService.getBertResponse(sourcePath, 'bert_with_graph.py');
-        });
+        // await executeStep('Running BERT with backward slice graphs.', async () => {
+        //     await this.bertService.getBertResponse(sourcePath, 'bert_with_graph.py');
+        // });
     
-        await executeStep('Updating sensitiveVariables.yml.', async () => {
-            const sensitiveVariables = this.useSavedData(sourcePath, 'sensitiveVariables.json');
-            this.saveUpdatedSensitiveVariables(sensitiveVariables);
-        });
+        // await executeStep('Updating sensitiveVariables.yml.', async () => {
+        //     const sensitiveVariables = this.useSavedData(sourcePath, 'sensitiveVariables.json');
+        //     this.saveUpdatedSensitiveVariables(sensitiveVariables);
+        // });
     
         await executeStep('Running CWE queries.', async () => {
             await this.runCWEQueries(sourcePath, createCodeQlDto);
@@ -198,6 +200,10 @@ export class CodeQlService {
             const self = this;
             childProcess.on('exit', function (code, signal) {
                 const result = "process CodeQl exited with code " + code + " and signal " + signal;
+                // if (code !== 0) {
+                //     reject(result);
+                //     throw new Error(result);
+                // }
                 console.log(result);
                 self.eventsGateway.emitDataToClients('data', result.toString())
                 resolve();
@@ -410,8 +416,8 @@ export class CodeQlService {
 
     async runCWEQueries(sourcePath: string, createCodeQlDto: any) {
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-        const extension = createCodeQlDto.extension ? createCodeQlDto.extension : 'sarif';
-        const format = createCodeQlDto.format ? createCodeQlDto.format : 'sarifv2.1.0';
+        const extension = 'sarif';
+        const format = 'sarifv2.1.0';
         const outputFileName = 'result';
         const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
         const threads = 12;
