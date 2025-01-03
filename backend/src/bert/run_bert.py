@@ -50,9 +50,9 @@ projectAllVariables = {
 }
 
 thresholds = {
-    'variables': 0.5,
+    'variables': 0.75,
     'strings': 0.95,
-    'comments': 0.95,
+    'comments': 0.75,
     'sinks': 0.5, 
 }
 
@@ -302,7 +302,7 @@ async def main():
 
         model_path = os.path.join(os.getcwd(), "src", "bert", "models")
     else:
-        project_name = "CWEToyDataset"
+        project_name = "comments"
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
         model_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
