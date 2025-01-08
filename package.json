@@ -22,6 +22,7 @@
     "@angular/forms": "^17.1.2",
     "backend": "file:./backend",
     "concurrently": "^9.0.1",
+    "csv-parse": "^5.6.0",
     "frontend": "file:./frontend"
   },
   "devDependencies": {
