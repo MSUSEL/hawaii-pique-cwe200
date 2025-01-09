@@ -55,7 +55,15 @@ class SensitiveVariableExpr extends Expr {
         v.getName().toLowerCase() != "html" and
         v.getName().toLowerCase() != "entity" and
         v.getName().toLowerCase() != "entities" and
-        not v.toString().toLowerCase().matches("%name%")
+        not v.toString().toLowerCase().matches("%name%") and
+        not v.toString().toLowerCase().matches("%project%") and
+        not v.toString().toLowerCase().matches("%id%") and
+        not v.toString().toLowerCase().matches("%location%") and
+        not v.toString().toLowerCase().matches("%node%") and
+        not v.toString().toLowerCase().matches("%subject%") and
+        not v.toString().toLowerCase().matches("%object%") and 
+        not v.toString().toLowerCase().matches("%script%")
+
       ) and
 
       // Exclude exceptions as sensitive variables

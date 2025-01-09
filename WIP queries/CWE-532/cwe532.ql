@@ -24,7 +24,7 @@ module PermissionBarrier {
   /**
    * Predicate to detect common permission-related methods
    */
-  predicate isPermissionCheck(MethodAccess ma) {
+  predicate isPermissionCheck(MethodCall ma) {
     ma.getMethod().getName().matches("%Permission%") or
     ma.getMethod().getName().matches("%authorize%") or
     ma.getMethod().getName().matches("%canAccess%") or
@@ -54,7 +54,9 @@ module SensitiveLoggerConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source) { 
     exists(SensitiveVariableExpr sve |  
       source.asExpr() = sve and 
-      sve.toString().toLowerCase().regexpMatch(".*name.*"))
+      not sve.toString().toLowerCase().regexpMatch(".*name.*") and
+      not sve.toString().toLowerCase().regexpMatch(".*user.*") and
+      not sve.toString().toLowerCase().regexpMatch("u"))
    }
   
   predicate isSink(DataFlow::Node sink) { sinkNode(sink, "log-injection") }
