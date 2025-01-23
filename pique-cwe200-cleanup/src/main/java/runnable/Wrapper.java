@@ -25,7 +25,7 @@ public class Wrapper {
             ArgumentParser parser = ArgumentParsers.newFor("runnable.Wrapper").build()
                     .defaultHelp(true).description("Entry point for PIQUE-CLOUD-dockerfile analysis");
             parser.addArgument("--run")
-                    .setDefault("derive")
+                    .setDefault("evaluate")
                     .choices("derive", "evaluate")
                     .help("derive: derives a new quality model from the benchmark repository, using --file throws an IllegalArgumentException and print the stack trace" +
                             "\n evaluate: evaluates dockerfile with derived quality model, --file must exist otherwise throw an IllegalArgumentException and print the stack trace");

@@ -43,9 +43,7 @@
                   "CWE-204 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  5
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -79,9 +77,7 @@
                   "CWE-208 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  3
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -96,9 +92,7 @@
               "CWE-208": 0.5
             },
             "thresholds": [
-              0,
-              0,
-              0
+              8
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -132,9 +126,7 @@
               "CWE-215 Diagnostic CweCodeQl": 1.0
             },
             "thresholds": [
-              0,
-              0,
-              0
+              5
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -180,8 +172,6 @@
                       "CWE-615 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -216,8 +206,6 @@
                       "CWE-541 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -252,8 +240,6 @@
                       "CWE-531 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -270,8 +256,6 @@
                   "CWE-531": 0.3333333333333333333333333
                 },
                 "thresholds": [
-                  0,
-                  0,
                   0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -286,8 +270,6 @@
               "CWE-540": 1.0
             },
             "thresholds": [
-              0,
-              0,
               0
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -348,9 +330,7 @@
                       "CWE-535 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      4
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -384,9 +364,7 @@
                       "CWE-536 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      4
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -420,9 +398,7 @@
                       "CWE-537 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      3
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -456,8 +432,6 @@
                       "CWE-550 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -475,9 +449,7 @@
                   "CWE-550": 0.25
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  11
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -492,9 +464,7 @@
               "CWE-211": 0.5
             },
             "thresholds": [
-              0,
-              0,
-              0
+              15
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -534,9 +504,7 @@
                   "CWE-214 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  5
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -570,8 +538,6 @@
                   "CWE-548 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  0,
-                  0,
                   0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -587,9 +553,7 @@
               "CWE-548": 0.5
             },
             "thresholds": [
-              0,
-              0,
-              0
+              5
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -643,9 +607,7 @@
                   "CWE-598 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  5
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -660,9 +622,7 @@
               "CWE-598": 0.5
             },
             "thresholds": [
-              0,
-              0,
-              0
+              9
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -730,9 +690,7 @@
                       "CWE-204 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      5
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -766,9 +724,7 @@
                       "CWE-208 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      3
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -783,9 +739,7 @@
                   "CWE-208": 0.5
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  8
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -819,9 +773,7 @@
                   "CWE-215 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  5
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -867,8 +819,6 @@
                           "CWE-615 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -903,8 +853,6 @@
                           "CWE-541 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -939,8 +887,6 @@
                           "CWE-531 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -957,8 +903,6 @@
                       "CWE-531": 0.3333333333333333333333333
                     },
                     "thresholds": [
-                      0,
-                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -973,8 +917,6 @@
                   "CWE-540": 1.0
                 },
                 "thresholds": [
-                  0,
-                  0,
                   0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1035,9 +977,7 @@
                           "CWE-535 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          4
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1071,9 +1011,7 @@
                           "CWE-536 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          4
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1107,9 +1045,7 @@
                           "CWE-537 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          3
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1143,8 +1079,6 @@
                           "CWE-550 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1162,9 +1096,7 @@
                       "CWE-550": 0.25
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      11
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1179,9 +1111,7 @@
                   "CWE-211": 0.5
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  15
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1221,9 +1151,7 @@
                       "CWE-214 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      5
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1257,8 +1185,6 @@
                       "CWE-548 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1274,9 +1200,7 @@
                   "CWE-548": 0.5
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  5
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1330,9 +1254,7 @@
                       "CWE-598 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      5
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1347,9 +1269,7 @@
                   "CWE-598": 0.5
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  9
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1426,9 +1346,7 @@
                       "CWE-204 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      5
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1462,9 +1380,7 @@
                       "CWE-208 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      3
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1479,9 +1395,7 @@
                   "CWE-208": 0.5
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  8
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1515,9 +1429,7 @@
                   "CWE-215 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  5
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1563,8 +1475,6 @@
                           "CWE-615 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1599,8 +1509,6 @@
                           "CWE-541 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1635,8 +1543,6 @@
                           "CWE-531 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1653,8 +1559,6 @@
                       "CWE-531": 0.3333333333333333333333333
                     },
                     "thresholds": [
-                      0,
-                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1669,8 +1573,6 @@
                   "CWE-540": 1.0
                 },
                 "thresholds": [
-                  0,
-                  0,
                   0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1731,9 +1633,7 @@
                           "CWE-535 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          4
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1767,9 +1667,7 @@
                           "CWE-536 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          4
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1803,9 +1701,7 @@
                           "CWE-537 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          3
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1839,8 +1735,6 @@
                           "CWE-550 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1858,9 +1752,7 @@
                       "CWE-550": 0.25
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      11
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1875,9 +1767,7 @@
                   "CWE-211": 0.5
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  15
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1917,9 +1807,7 @@
                       "CWE-214 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      5
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1953,8 +1841,6 @@
                       "CWE-548 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1970,9 +1856,7 @@
                   "CWE-548": 0.5
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  5
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2026,9 +1910,7 @@
                       "CWE-598 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      5
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2043,9 +1925,7 @@
                   "CWE-598": 0.5
                 },
                 "thresholds": [
-                  0,
-                  0,
-                  0
+                  9
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2129,9 +2009,7 @@
                           "CWE-204 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          5
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2165,9 +2043,7 @@
                           "CWE-208 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          3
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2182,9 +2058,7 @@
                       "CWE-208": 0.5
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      8
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2218,9 +2092,7 @@
                       "CWE-215 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      5
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2266,8 +2138,6 @@
                               "CWE-615 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2302,8 +2172,6 @@
                               "CWE-541 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2338,8 +2206,6 @@
                               "CWE-531 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2356,8 +2222,6 @@
                           "CWE-531": 0.3333333333333333333333333
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2372,8 +2236,6 @@
                       "CWE-540": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2434,9 +2296,7 @@
                               "CWE-535 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
-                              0
+                              4
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2470,9 +2330,7 @@
                               "CWE-536 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
-                              0
+                              4
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2506,9 +2364,7 @@
                               "CWE-537 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
-                              0
+                              3
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2542,8 +2398,6 @@
                               "CWE-550 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2561,9 +2415,7 @@
                           "CWE-550": 0.25
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          11
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2578,9 +2430,7 @@
                       "CWE-211": 0.5
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      15
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2620,9 +2470,7 @@
                           "CWE-214 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          5
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2656,8 +2504,6 @@
                           "CWE-548 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2673,9 +2519,7 @@
                       "CWE-548": 0.5
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      5
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2729,9 +2573,7 @@
                           "CWE-598 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          5
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2746,9 +2588,7 @@
                       "CWE-598": 0.5
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      9
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2825,9 +2665,7 @@
                           "CWE-204 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          5
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2861,9 +2699,7 @@
                           "CWE-208 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          3
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2878,9 +2714,7 @@
                       "CWE-208": 0.5
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      8
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2914,9 +2748,7 @@
                       "CWE-215 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      5
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2962,8 +2794,6 @@
                               "CWE-615 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2998,8 +2828,6 @@
                               "CWE-541 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3034,8 +2862,6 @@
                               "CWE-531 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3052,8 +2878,6 @@
                           "CWE-531": 0.3333333333333333333333333
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3068,8 +2892,6 @@
                       "CWE-540": 1.0
                     },
                     "thresholds": [
-                      0,
-                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3130,9 +2952,7 @@
                               "CWE-535 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
-                              0
+                              4
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3166,9 +2986,7 @@
                               "CWE-536 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
-                              0
+                              4
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3202,9 +3020,7 @@
                               "CWE-537 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
-                              0
+                              3
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3238,8 +3054,6 @@
                               "CWE-550 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0,
-                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3257,9 +3071,7 @@
                           "CWE-550": 0.25
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          11
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3274,9 +3086,7 @@
                       "CWE-211": 0.5
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      15
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3316,9 +3126,7 @@
                           "CWE-214 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          5
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3352,8 +3160,6 @@
                           "CWE-548 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3369,9 +3175,7 @@
                       "CWE-548": 0.5
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      5
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3425,9 +3229,7 @@
                           "CWE-598 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0,
-                          0,
-                          0
+                          5
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3442,9 +3244,7 @@
                       "CWE-598": 0.5
                     },
                     "thresholds": [
-                      0,
-                      0,
-                      0
+                      9
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3520,9 +3320,7 @@
         "CWE-598 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
-        0
+        5
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3562,9 +3360,7 @@
             "CWE-204 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
-            0
+            5
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3598,9 +3394,7 @@
             "CWE-208 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
-            0
+            3
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3615,9 +3409,7 @@
         "CWE-208": 0.5
       },
       "thresholds": [
-        0,
-        0,
-        0
+        8
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3651,9 +3443,7 @@
         "CWE-214 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
-        0
+        5
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3687,9 +3477,7 @@
         "CWE-215 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
-        0
+        5
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3723,9 +3511,7 @@
         "CWE-204 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
-        0
+        5
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3759,9 +3545,7 @@
         "CWE-535 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
-        0
+        4
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3795,9 +3579,7 @@
         "CWE-536 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
-        0
+        4
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3831,8 +3613,6 @@
         "CWE-548 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3867,9 +3647,7 @@
         "CWE-537 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
-        0
+        3
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3915,8 +3693,6 @@
                 "CWE-615 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
-                0,
-                0,
                 0
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3951,8 +3727,6 @@
                 "CWE-541 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
-                0,
-                0,
                 0
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3987,8 +3761,6 @@
                 "CWE-531 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
-                0,
-                0,
                 0
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4005,8 +3777,6 @@
             "CWE-531": 0.3333333333333333333333333
           },
           "thresholds": [
-            0,
-            0,
             0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4021,8 +3791,6 @@
         "CWE-540": 1.0
       },
       "thresholds": [
-        0,
-        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4057,9 +3825,7 @@
         "CWE-208 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
-        0
+        3
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4093,8 +3859,6 @@
         "CWE-615 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4155,9 +3919,7 @@
                 "CWE-535 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
-                0,
-                0,
-                0
+                4
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4191,9 +3953,7 @@
                 "CWE-536 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
-                0,
-                0,
-                0
+                4
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4227,9 +3987,7 @@
                 "CWE-537 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
-                0,
-                0,
-                0
+                3
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4263,8 +4021,6 @@
                 "CWE-550 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
-                0,
-                0,
                 0
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4282,9 +4038,7 @@
             "CWE-550": 0.25
           },
           "thresholds": [
-            0,
-            0,
-            0
+            11
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4299,9 +4053,7 @@
         "CWE-211": 0.5
       },
       "thresholds": [
-        0,
-        0,
-        0
+        15
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4335,8 +4087,6 @@
         "CWE-550 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4377,8 +4127,6 @@
             "CWE-615 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
             0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4413,8 +4161,6 @@
             "CWE-541 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
             0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4449,8 +4195,6 @@
             "CWE-531 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
             0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4467,8 +4211,6 @@
         "CWE-531": 0.3333333333333333333333333
       },
       "thresholds": [
-        0,
-        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4509,9 +4251,7 @@
             "CWE-214 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
-            0
+            5
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4545,8 +4285,6 @@
             "CWE-548 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
             0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4562,9 +4300,7 @@
         "CWE-548": 0.5
       },
       "thresholds": [
-        0,
-        0,
-        0
+        5
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4604,9 +4340,7 @@
             "CWE-535 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
-            0
+            4
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4640,9 +4374,7 @@
             "CWE-536 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
-            0
+            4
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4676,9 +4408,7 @@
             "CWE-537 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
-            0
+            3
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4712,8 +4442,6 @@
             "CWE-550 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
             0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4731,9 +4459,7 @@
         "CWE-550": 0.25
       },
       "thresholds": [
-        0,
-        0,
-        0
+        11
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4767,8 +4493,6 @@
         "CWE-541 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4823,9 +4547,7 @@
             "CWE-598 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0,
-            0,
-            0
+            5
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4840,9 +4562,7 @@
         "CWE-598": 0.5
       },
       "thresholds": [
-        0,
-        0,
-        0
+        9
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4876,8 +4596,6 @@
         "CWE-531 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        0,
-        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",

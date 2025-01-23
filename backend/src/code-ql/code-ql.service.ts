@@ -53,7 +53,7 @@ export class CodeQlService {
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
     
-        await this.runBert(javaFiles, sourcePath, createCodeQlDto);
+        // await this.runBert(javaFiles, sourcePath, createCodeQlDto);
 
         if (createCodeQlDto.extension === 'csv'){
             return await this.parserService.getcsvResults(sourcePath);

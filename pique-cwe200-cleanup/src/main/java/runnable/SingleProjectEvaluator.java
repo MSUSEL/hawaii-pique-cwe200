@@ -49,7 +49,7 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
         LOGGER.info("Projects to analyze from file: " + projectFilePath.toString());
         System.out.println("Projects to analyze from file: " + projectFilePath.toString());
 
-        Path qmLocation = Paths.get(prop.getProperty("blankqm.filepath"));
+        Path qmLocation = Paths.get(prop.getProperty("derived.qm"));
 
         ITool cweQodeQl = new CweCodeQl(prop.getProperty("backend.server"));
         Set<ITool> tools = Stream.of(cweQodeQl).collect(Collectors.toSet());

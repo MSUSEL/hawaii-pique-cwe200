@@ -143,7 +143,7 @@ public class CweCodeQl extends Tool implements ITool {
                 int characterNumber = Integer.parseInt(record[3]);
                 int severity = this.cweToSeverity(cweId);
                
-                Diagnostic diag = diagnostics.get((cweId + " Diagnostic CweCodeQl"));
+                Diagnostic diag = diagnostics.get("CWE-" + cweId + " Diagnostic CweCodeQl");
                 if (diag != null) {
                     Finding finding = new Finding(filePath, 
                                             lineNumber, 
