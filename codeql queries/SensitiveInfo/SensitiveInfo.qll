@@ -41,6 +41,7 @@ class SensitiveVariableExpr extends Expr {
         v.getName().toLowerCase() != "req" and
         v.getName().toLowerCase() != "context" and
         v.getName().toLowerCase() != "contents" and
+        v.getName().toLowerCase() != "content" and
         v.getName().toLowerCase() != "id" and
         v.getName().toLowerCase() != "operation" and
         v.getName().toLowerCase() != "op" and
@@ -62,7 +63,8 @@ class SensitiveVariableExpr extends Expr {
         not v.toString().toLowerCase().matches("%node%") and
         not v.toString().toLowerCase().matches("%subject%") and
         not v.toString().toLowerCase().matches("%object%") and 
-        not v.toString().toLowerCase().matches("%script%")
+        not v.toString().toLowerCase().matches("%script%") and
+        not v.toString().toLowerCase().matches("%path%")
 
       ) and
 
@@ -196,6 +198,3 @@ string getSinkName() {
     and result = mc.getMethod().getName()
   )
 }
-  
-
-
