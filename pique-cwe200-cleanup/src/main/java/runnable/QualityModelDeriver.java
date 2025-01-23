@@ -64,7 +64,4 @@ public class QualityModelDeriver extends AQualityModelDeriver {
 
         LOGGER.info("Quality Model derivation finished. You can find the file at " + jsonOutput.toAbsolutePath().toString());
     }
-
-
-
 }
