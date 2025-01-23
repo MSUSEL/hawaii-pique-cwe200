@@ -1,0 +1,160 @@
+[
+    {
+        "fileName": "BAD_APIEndpointDebugging.java",
+        "variables": [
+            {
+                "name": "println",
+                "graph": [
+                    {
+                        "name": "\"https",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "apiEndpoint"
+                    },
+                    {
+                        "name": "apiEndpoint",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "url"
+                    },
+                    {
+                        "name": "url",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "... + ..."
+                    },
+                    {
+                        "name": "... + ...",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "println"
+                    },
+                    {
+                        "name": "println",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "end"
+                    }
+                ]
+            },
+            {
+                "name": "getenv",
+                "graph": [
+                    {
+                        "name": "\"API_DEBUG\"",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "getenv"
+                    },
+                    {
+                        "name": "getenv",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "end"
+                    }
+                ]
+            },
+            {
+                "name": "testAPI",
+                "graph": [
+                    {
+                        "name": "\"https",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "testAPI"
+                    },
+                    {
+                        "name": "testAPI",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "end"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "fileName": "BAD_DataProcessor.java",
+        "variables": [
+            {
+                "name": "getProperty",
+                "graph": [
+                    {
+                        "name": "\"DATA_PROCESSING_DEBUG\"",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "getProperty"
+                    },
+                    {
+                        "name": "getProperty",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "end"
+                    }
+                ]
+            },
+            {
+                "name": "processData",
+                "graph": [
+                    {
+                        "name": "\"DEBUG",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "processData"
+                    },
+                    {
+                        "name": "processData",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "end"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "fileName": "BAD_DebugFeatureToggle.java",
+        "variables": [
+            {
+                "name": "getProperty",
+                "graph": [
+                    {
+                        "name": "\"DEBUG_FEATURE_TOGGLE\"",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "getProperty"
+                    },
+                    {
+                        "name": "getProperty",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "end"
+                    }
+                ]
+            },
+            {
+                "name": "println",
+                "graph": [
+                    {
+                        "name": "\"123-45-6789\"",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "userSSN"
+                    },
+                    {
+                        "name": "userSSN",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "println"
+                    },
+                    {
+                        "name": "println",
+                        "type": "MethodCall",
+                        "context": "No context available",
+                        "nextNode": "end"
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,33 @@
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-201/BAD/BAD_ExposeSessionIDInHeaders.java","9","42","9","96"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-201/BAD/BAD_SendingofEncryptionKey.java","12","36","12","92"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-201/BAD/BAD_SensitiveDataApiExposureSent.java","20","36","20","58"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-201/BAD/BAD_SensitiveDataHttpServletResponse.java","11","36","11","59"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-536/BAD/BAD_AccountBalanceServlet.java","12","42","12","98"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-536/BAD/BAD_FileReadErrorServlet.java","19","40","19","86"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-536/BAD/BAD_FileReadErrorServlet.java","21","40","21","81"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-536/BAD/BAD_IoTDeviceFirmwareUpdateServlet.java","15","78","15","185"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-536/BAD/BAD_PaymentProcessingServlet.java","11","42","11","97"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-536/BAD/BAD_ProfileUpdateServlet.java","14","42","14","86"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-536/BAD/BAD_TransactionServlet.java","12","42","12","109"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-537/BAD/BAD_SensitiveNullPointerExceptionHandling.java","21","68","21","91"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-548/BAD_DocumentDirectoryListingServlet.java","18","25","18","115"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-548/BAD_InsecureDirectoryListingServlet.java","12","25","12","38"
+"CWE-201: Information exposure through transmitted data.","Transmitting sensitive information to the user is a potential security risk.","error","CWE-201: Transmissions of sensitive info.
+CWE-201: Transmissions of sensitive info.","/CWEToyDataset/src/main/java/com/mycompany/app/CWE-550/BAD/BAD_PaymentErrorExposureServlet.java","13","40","13","113"
