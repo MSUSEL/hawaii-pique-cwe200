@@ -109,9 +109,9 @@ public class CweCodeQl extends Tool implements ITool {
             System.out.println("Error creating directory to save CweQodeQl tool results");
         }
 
-        // return runCWE200Tool(workingDirectoryPrefix, projectLocation);
+        return runCWE200Tool(workingDirectoryPrefix, projectLocation);
 
-        return null;
+        // return null;
         
     }
 
