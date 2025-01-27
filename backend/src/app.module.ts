@@ -9,6 +9,7 @@ import { CodeQlModule } from './code-ql/code-ql.module';
 import { EventsGateway } from './events/events.gateway';
 import { EventsModule } from './events/events.module';
 import { LLMModule } from './llm/llm.module';
+import { JavaParserModule } from './java-parser/java-parser.module';
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -20,7 +21,8 @@ import { LLMModule } from './llm/llm.module';
         ChatGptModule,
         CodeQlModule,
         BertModule,
-        LLMModule
+        LLMModule,
+        JavaParserModule,
 
     ],
     controllers: [AppController],

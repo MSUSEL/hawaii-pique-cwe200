@@ -7,7 +7,7 @@ import { BertController } from './bert.controller';
 @Module({
     imports:[EventsModule],
     controllers: [BertController],
-    providers: [BertService],
+    providers: [BertService,],
     exports:[BertService]
 })
 export class BertModule {}
