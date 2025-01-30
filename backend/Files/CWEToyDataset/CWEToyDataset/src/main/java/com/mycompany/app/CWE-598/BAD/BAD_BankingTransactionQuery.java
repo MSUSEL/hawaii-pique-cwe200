@@ -6,7 +6,7 @@ import org.apache.http.HttpResponse;
 public class BAD_BankingTransactionQuery {
     public static void queryTransactionDetails(String accountNumber) {
         try {
-            String url = "http://services.bankcorp.com/transactions?accountNumber" + accountNumber;
+            String url = "http://services.bankcorp.com/transactions?accountNumber=" + accountNumber;
             CloseableHttpClient httpClient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(url);
             HttpResponse response = httpClient.execute(httpGet);

@@ -7,7 +7,7 @@ import java.net.HttpURLConnection;
 public class BAD_AuthenticationGET {
     public static void authenticateUser(String userId, String authToken) {
         try {
-            String urlString = "http://auth.companyportal.com/auth?userId" + userId + "&token" + authToken;
+            String urlString = "http://auth.companyportal.com/auth?userId=" + userId + "&token=" + authToken;
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
