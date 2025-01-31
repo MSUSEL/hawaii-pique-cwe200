@@ -29,8 +29,8 @@ try {
     console.log('Checked out to specific commit in main repository: 7efe5ac39b288a2775d18f03f7d9135d4ac00c4d.');
 
     // Update the ql submodule to its specific commit
-    execSync(`cd ${qlSubmodulePath} && git fetch origin && git checkout 2daf50500ca8f7eb914c82e88dec36652bfbe8fd`, { stdio: 'inherit' });
-    console.log('Checked out to specific commit in ql submodule: 2daf50500ca8f7eb914c82e88dec36652bfbe8fd.');
+    execSync(`cd ${qlSubmodulePath} && git fetch origin && git checkout e27d8c16729588259f8143c7ed4569d517b0de10`, { stdio: 'inherit' });
+    console.log('Checked out to specific commit in ql submodule: e27d8c16729588259f8143c7ed4569d517b0de10.');
 
     // Update submodules to reflect this change
     execSync(`cd ${codeqlPath} && git submodule update --init --recursive`, { stdio: 'inherit' });
