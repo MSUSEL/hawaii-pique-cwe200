@@ -1,91 +1,69 @@
 /**
- * @name CWE-538: File and Directory Information Exposure with Sensitive Data
- * @description The software exposes sensitive file or directory information (e.g., passwords) to an actor that is not explicitly authorized to have that information.
+ * @name Local information disclosure in a temporary directory with sensitive data
  * @kind path-problem
- * @problem.severity warning
- * @security-severity 8.5
- * @precision medium
- * @id java/temp-dir-info-disclosure/538
- * @tags security
- *       external/cwe/cwe-538
- * @cwe CWE-538
+ * @id java/local-temp-file-sensitive-data-disclosure
  */
 
  import java
+ import semmle.code.java.dataflow.TaintTracking
+ import semmle.code.java.frameworks.Servlets
+ import semmle.code.java.dataflow.FlowSources
  import semmle.code.java.dataflow.DataFlow
- import semmle.code.java.security.TempDirUtils
- import semmle.code.java.security.TempDirLocalInformationDisclosureQuery
+ import Barrier.Barrier
  import SensitiveInfo.SensitiveInfo
- 
- /**
-  * A predicate to check if the node contains sensitive information (e.g., password).
-  */
- predicate isSensitiveNode(DataFlow::Node node) {
-   exists(SensitiveVariableExpr sve | node.asExpr() = sve)
+
+
+ module Flow = TaintTracking::Global<SensitiveInfoLeakServletConfig>;
+
+ module TempFileFlow = TaintTracking::Global<TempFileConfig>;
+
+ module TempFileConfig implements DataFlow::ConfigSig {
+    predicate isSource(DataFlow::Node source) {
+     exists(MethodCall getPropertyCall, NewClassExpr fileCreation |
+        getPropertyCall.getMethod().hasQualifiedName("java.lang","System", "getProperty") and
+        getPropertyCall.getArgument(0).(StringLiteral).getValue() = "java.io.tmpdir" and
+        DataFlow::localExprFlow(getPropertyCall, fileCreation.getArgument(0)) and
+        fileCreation.getConstructedType().hasQualifiedName("java.io", "File") and
+        source.asExpr() = fileCreation
+     )
+    }
+
+    predicate isSink(DataFlow::Node sink) {
+      exists(MethodCall mc |
+        mc.getMethod().hasName("write") and
+        mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "Writer") and
+        sink.asExpr() = mc.getQualifier())
+    }
  }
- 
- /**
-  * A predicate to check if the file name of the source or sink contains "test" (case-insensitive).
-  */
- predicate isTestFile(DataFlow::Node node) {
-   exists(File file |
-     file = node.asExpr().getFile() and
-     file.getBaseName().matches("(?i).*test.*")
-   )
- }
- 
- /**
-  * We include use of inherently insecure methods, which don't have any associated
-  * flow path, in with results describing a path from reading `java.io.tmpdir` or similar to use
-  * in a file creation op.
-  *
-  * We achieve this by making inherently-insecure method invocations into an edge-less graph,
-  * resulting in zero-length paths.
-  */
- module InsecureMethodPathGraph implements DataFlow::PathGraphSig<MethodCallInsecureFileCreation> {
-   predicate edges(
-     MethodCallInsecureFileCreation n1, MethodCallInsecureFileCreation n2, string key, string value
-   ) {
-     none()
-   }
- 
-   predicate nodes(MethodCallInsecureFileCreation n, string key, string val) {
-     key = "semmle.label" and val = n.toString()
-   }
- 
-   predicate subpaths(
-     MethodCallInsecureFileCreation n1, MethodCallInsecureFileCreation n2,
-     MethodCallInsecureFileCreation n3, MethodCallInsecureFileCreation n4
-   ) {
-     none()
-   }
- }
- 
- module Flow =
-   DataFlow::MergePathGraph<TempDirSystemGetPropertyToCreate::PathNode,
-     MethodCallInsecureFileCreation, TempDirSystemGetPropertyToCreate::PathGraph,
-     InsecureMethodPathGraph>;
  
  import Flow::PathGraph
  
- from Flow::PathNode source, Flow::PathNode sink, string message
- where
-   (
-     TempDirSystemGetPropertyToCreate::flowPath(source.asPathNode1(), sink.asPathNode1()) and
-     message =
-       "Local information disclosure vulnerability from $@ due to use of file or directory readable by other local users."
-     or
-     source = sink and
-     message =
-       "Local information disclosure vulnerability due to use of " +
-         source.asPathNode2().getFileSystemEntityType() + " readable by other local users."
-   ) and
-   not isPermissionsProtectedTempDirUse(sink.getNode()) 
-   and
-   isSensitiveNode(source.getNode()) // Only consider sensitive information nodes
-   and
-   not isTestFile(source.getNode()) // Exclude files with "test" in the name
-   and
-   not isTestFile(sink.getNode())   // Exclude files with "test" in the name
- select source.getNode(), source, sink, message, source.getNode(), "system temp directory"
+ module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
+   predicate isSource(DataFlow::Node source) {
+    exists(Variable v | 
+      // Use contains() with % wildcards instead of regex
+      v.getName().matches("%oauthToken%") and  
+      source.asExpr() = v.getAnAccess()
+    )
+    or
+    exists(SensitiveVariableExpr sve | source.asExpr() = sve)
+
+  }
+   predicate isSink(DataFlow::Node sink) {
+    exists(MethodCall mc |
+      mc.getMethod().hasName("write") and
+      mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "Writer") and
+      sink.asExpr() = mc.getAnArgument() and
+      TempFileFlow::flowToExpr(mc.getQualifier())
+    )
+   }
  
+  predicate isBarrier(DataFlow::Node node) {
+    Barrier::barrier(node)
+   }
+ }
+ 
+ from Flow::PathNode source, Flow::PathNode sink
+ where Flow::flowPath(source, sink)
+ select sink.getNode(), source, sink,
+   "CWE-536: Servlet Runtime Error Message Containing Sensitive Information."
