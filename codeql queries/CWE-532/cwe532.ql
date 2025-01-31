@@ -65,7 +65,9 @@ module SensitiveLoggerConfig implements DataFlow::ConfigSig {
        )
         and  
       source.asExpr() = v.getAnAccess()
-    ) or
+    ) 
+    
+    // or
 
 
     // exists(SensitiveVariableExpr sve |  
