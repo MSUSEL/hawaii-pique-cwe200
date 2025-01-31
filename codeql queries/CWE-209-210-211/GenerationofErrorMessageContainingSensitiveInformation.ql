@@ -12,30 +12,30 @@
  import java
  import semmle.code.java.dataflow.TaintTracking
  import semmle.code.java.dataflow.DataFlow
- import DataFlow::PathGraph
+ 
  import SensitiveInfo.SensitiveInfo
  import CommonSinks.CommonSinks
  import Barrier.Barrier
  private import semmle.code.java.security.InformationLeak
-
  
- // Define flow states
- class State1 extends DataFlow::FlowState { State1() { this = "State1" } }
- class State2 extends DataFlow::FlowState { State2() { this = "State2" } }
- class State3 extends DataFlow::FlowState { State3() { this = "State3" } }
+ private newtype MyFlowState =
+   State1() or
+   State2() or
+   State3()
  
- // Dataflow configuration using a manual link for throw/catch
- class SensitiveInfoInErrorMsgConfig extends TaintTracking::Configuration {
-   SensitiveInfoInErrorMsgConfig() { this = "SensitiveInfoInErrorMsgConfig" }
+ module SensitiveInfoInErrorMsgConfig implements DataFlow::StateConfigSig {
  
-   // Track sensitive variables as the source in State1
-   override predicate isSource(DataFlow::Node source, DataFlow::FlowState state) {
+   // Tie the module's FlowState to tje newtype
+   class FlowState = MyFlowState;
+ 
+   // Source is valid only in State1
+   predicate isSource(DataFlow::Node source, FlowState state) {
      state instanceof State1 and
      exists(SensitiveVariableExpr sve | source.asExpr() = sve)
    }
  
-   // Track sinks like `println`, `sendError`, etc. in State3
-   override predicate isSink(DataFlow::Node sink, DataFlow::FlowState state) {
+   // Sink is valid only in State3
+   predicate isSink(DataFlow::Node sink, FlowState state) {
      state instanceof State3 and
      exists(MethodCall mcSink |
        (
@@ -48,52 +48,71 @@
      )
    }
  
-   // Define transitions between flow states
-   override predicate isAdditionalTaintStep(
-    DataFlow::Node node1, DataFlow::FlowState state1,
-    DataFlow::Node node2, DataFlow::FlowState state2
-  ) {
-    // Transition from State1 to State2: sensitive data flows into a runtime exception constructor
-    state1 instanceof State1 and
-    state2 instanceof State2 and
-    exists(ConstructorCall cc |
-      cc.getAnArgument() = node1.asExpr() and
-      cc.getConstructor().getDeclaringType().(RefType).getASupertype+().hasQualifiedName("java.lang", "Throwable") and
-      // Exclude RuntimeException and its subclasses
-      not cc.getConstructor().getDeclaringType().(RefType).getASupertype+().hasQualifiedName("java.lang", "RuntimeException") and
-      // Exclude ServletException and its subclasses
-      not cc.getConstructor().getDeclaringType().(RefType).getASupertype+().hasQualifiedName("javax.servlet", "ServletException") and
-      cc = node2.asExpr()
-    ) or
-
-    // Transition from State2 to State3: link throw to catch for getMessage()
-    state1 instanceof State2 and
-    state2 instanceof State3 and
-    exists(ThrowStmt t, CatchClause catchClause, MethodCall mcGetMessage |
-      t.getExpr() = node1.asExpr() and
-      catchClause.getEnclosingCallable() = t.getEnclosingCallable() and
-      catchClause.getVariable().getAnAccess() = mcGetMessage.getQualifier() and
-      mcGetMessage.getMethod().getName() = "getMessage" and
-      node2.asExpr() = mcGetMessage
-    ) or
-
-    // Handle cases where the exception object itself (e) is passed to a method like print(e)
-    state1 instanceof State2 and
-    state2 instanceof State3 and
-    exists(ThrowStmt t, CatchClause catchClause |
-      t.getExpr() = node1.asExpr() and
-      catchClause.getEnclosingCallable() = t.getEnclosingCallable() and
-      node2.asExpr() = catchClause.getVariable().getAnAccess()
-    )
-  }
-
-  override predicate isSanitizer(DataFlow::Node node) {
-    Barrier::barrier(node)
-  }
+   // Transitions between states
+   predicate isAdditionalFlowStep(
+     DataFlow::Node node1, FlowState state1,
+     DataFlow::Node node2, FlowState state2
+   ) {
+     // Transition from State1 to State2: 
+     // Sensitive data passed into a non-RuntimeException constructor
+     (
+       state1 instanceof State1 and
+       state2 instanceof State2 and
+       exists(ConstructorCall cc |
+         cc.getAnArgument() = node1.asExpr() and
+         cc.getConstructor().getDeclaringType().(RefType).getASupertype+()
+           .hasQualifiedName("java.lang", "Throwable") and
+         not cc.getConstructor().getDeclaringType().(RefType).getASupertype+()
+           .hasQualifiedName("java.lang", "RuntimeException") and
+         not cc.getConstructor().getDeclaringType().(RefType).getASupertype+()
+           .hasQualifiedName("javax.servlet", "ServletException") and
+         cc = node2.asExpr()
+       )
+     )
+     or
+     // Transition from State2 to State3: 
+     // A 'throw' to a 'catch' calling getMessage(), or passing the exception object to a method
+     (
+       state1 instanceof State2 and
+       state2 instanceof State3 and
+       (
+         exists(
+           ThrowStmt t, 
+           CatchClause catchClause, 
+           MethodCall mcGetMessage |
+           t.getExpr() = node1.asExpr() and
+           catchClause.getEnclosingCallable() = t.getEnclosingCallable() and
+           catchClause.getVariable().getAnAccess() = mcGetMessage.getQualifier() and
+           mcGetMessage.getMethod().getName() = "getMessage" and
+           node2.asExpr() = mcGetMessage
+         )
+         or
+         exists(
+           ThrowStmt t, 
+           CatchClause catchClause |
+           t.getExpr() = node1.asExpr() and
+           catchClause.getEnclosingCallable() = t.getEnclosingCallable() and
+           node2.asExpr() = catchClause.getVariable().getAnAccess()
+         )
+       )
+     )
+   }
+ 
+   predicate isBarrier(DataFlow::Node node) {
+     Barrier::barrier(node)
+   }
  }
  
- // Query for sensitive information flow from source to sink with path visualization
- from DataFlow::PathNode source, DataFlow::PathNode sink, SensitiveInfoInErrorMsgConfig cfg
- where cfg.hasFlowPath(source, sink)
- select sink, source, sink, "Sensitive information flows into exception and is exposed via getMessage."
+ // Instantiate a GlobalWithState for taint tracking
+ module SensitiveInfoInErrorMsgFlow = 
+     TaintTracking::GlobalWithState<SensitiveInfoInErrorMsgConfig>;
+ 
+ // Import its PathGraph (not the old DataFlow::PathGraph)
+ import SensitiveInfoInErrorMsgFlow::PathGraph
+ 
+ // Use the flowPath from that module
+ from SensitiveInfoInErrorMsgFlow::PathNode source, SensitiveInfoInErrorMsgFlow::PathNode sink
+ where SensitiveInfoInErrorMsgFlow::flowPath(source, sink)
+ select sink, source, sink,
+   "Sensitive information flows into exception and is exposed via getMessage."
  
