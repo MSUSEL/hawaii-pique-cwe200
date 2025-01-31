@@ -66,4 +66,4 @@
  from Flow::PathNode source, Flow::PathNode sink
  where Flow::flowPath(source, sink)
  select sink.getNode(), source, sink,
-   "CWE-536: Servlet Runtime Error Message Containing Sensitive Information."
+   "CWE-538: Insertion of Sensitive Information into Externally-Accessible File or Directory"
