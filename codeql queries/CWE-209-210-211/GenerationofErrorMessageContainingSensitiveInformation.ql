@@ -114,5 +114,5 @@
  from SensitiveInfoInErrorMsgFlow::PathNode source, SensitiveInfoInErrorMsgFlow::PathNode sink
  where SensitiveInfoInErrorMsgFlow::flowPath(source, sink)
  select sink, source, sink,
-   "Sensitive information flows into exception and is exposed via getMessage."
+   "CWE-209: Sensitive information flows into exception and is exposed via an error message."
  

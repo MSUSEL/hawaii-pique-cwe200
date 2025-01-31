@@ -15,22 +15,23 @@
  import java
  import semmle.code.java.dataflow.TaintTracking
  import semmle.code.java.dataflow.DataFlow
- import DataFlow::PathGraph
  import SensitiveInfo.SensitiveInfo
  import CommonSinks.CommonSinks
  import Barrier.Barrier
  
  // Define flow states
- class State1 extends DataFlow::FlowState { State1() { this = "State1" } }
- class State2 extends DataFlow::FlowState { State2() { this = "State2" } }
- class State3 extends DataFlow::FlowState { State3() { this = "State3" } }
+ private newtype MyFlowState =
+ State1() or
+ State2() or
+ State3()
  
  // Dataflow configuration using a manual link for throw/catch
- class ServerGeneratedErrorMessageConfig extends TaintTracking::Configuration {
-  ServerGeneratedErrorMessageConfig() { this = "ServerGeneratedErrorMessageConfig" }
+ module ServerGeneratedErrorMessageConfig implements DataFlow::StateConfigSig {
  
+  class FlowState = MyFlowState;
+
    // Track sensitive variables as the source in State1
-   override predicate isSource(DataFlow::Node source, DataFlow::FlowState state) {
+  predicate isSource(DataFlow::Node source, FlowState state) {
      state instanceof State1 and
      exists(SensitiveVariableExpr sve |
        source.asExpr() = sve
@@ -38,7 +39,7 @@
    }
  
    // Track sinks like `println`, `sendError`, etc. in State3
-   override predicate isSink(DataFlow::Node sink, DataFlow::FlowState state) {
+  predicate isSink(DataFlow::Node sink, FlowState state) {
      state instanceof State3 and
      exists(MethodCall mcSink |
        (
@@ -53,9 +54,9 @@
     }
  
    // Define transitions between flow states
-   override predicate isAdditionalTaintStep(
-     DataFlow::Node node1, DataFlow::FlowState state1,
-     DataFlow::Node node2, DataFlow::FlowState state2
+   predicate isAdditionalFlowStep(
+     DataFlow::Node node1, FlowState state1,
+     DataFlow::Node node2, FlowState state2
    ) {
      // Transition from State1 to State2: sensitive data flows into a runtime exception constructor
      state1 instanceof State1 and
@@ -101,13 +102,19 @@
      )
    }
 
-   override predicate isSanitizer(DataFlow::Node node) {
+   predicate isBarrier(DataFlow::Node node) {
     Barrier::barrier(node)
    }
  }
  
+
+ module SensitiveInfoInErrorMsgFlow = TaintTracking::GlobalWithState<ServerGeneratedErrorMessageConfig>;
+ import SensitiveInfoInErrorMsgFlow::PathGraph
+ 
+
  // Query for sensitive information flow from source to sink with path visualization
- from DataFlow::PathNode source, DataFlow::PathNode sink, ServerGeneratedErrorMessageConfig cfg
- where cfg.hasFlowPath(source, sink)
- select sink, source, sink, "Sensitive information flows into exception and is exposed via getMessage or the exception object."
+ from SensitiveInfoInErrorMsgFlow::PathNode source, SensitiveInfoInErrorMsgFlow::PathNode sink
+ where SensitiveInfoInErrorMsgFlow::flowPath(source, sink)
+ select sink, source, sink,
+   "CWE-550: Sensitive information is exposed via a server error message."
  
