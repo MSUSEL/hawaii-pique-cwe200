@@ -54,14 +54,14 @@ module SensitiveLoggerConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source) { 
     exists(Variable v | 
       (
-        v.getName().regexpMatch(".*secret.*") or
-        v.getName().regexpMatch(".*token.*") or
-        v.getName().regexpMatch(".*key.*") or
-        v.getName().regexpMatch(".*credential.*") or
-        v.getName().regexpMatch(".*auth.*") or
-        v.getName().regexpMatch(".*pass.*") or
-        v.getName().regexpMatch(".*pwd.*") or
-        v.getName().regexpMatch(".*pin.*")
+        v.getName().toLowerCase().regexpMatch(".*secret.*") or
+        v.getName().toLowerCase().regexpMatch(".*token.*") or
+        // v.getName().toLowerCase().regexpMatch(".*key.*") or
+        v.getName().toLowerCase().regexpMatch(".*credential.*") or
+        v.getName().toLowerCase().regexpMatch(".*auth.*") or
+        v.getName().toLowerCase().regexpMatch(".*pass.*") or
+        v.getName().toLowerCase().regexpMatch(".*pwd.*") or
+        v.getName().toLowerCase().regexpMatch(".*pin.*")
        )
         and  
       source.asExpr() = v.getAnAccess()
