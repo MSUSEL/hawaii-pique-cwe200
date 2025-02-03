@@ -10,7 +10,7 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
   
 class SensitiveVariableExpr extends Expr {
   SensitiveVariableExpr() {
-    exists(Variable v, Field f, File file |
+    exists(Variable v, File file |
       (
         (
           // Handle local variables
@@ -18,14 +18,6 @@ class SensitiveVariableExpr extends Expr {
         file = v.getCompilationUnit().getFile() and
         sensitiveVariables(file.getBaseName(), v.getName()) 
         )
-        // or
-
-        // (
-        // Handle fields
-        // this = f.getAnAccess() and
-        // file = f.getDeclaringType().getCompilationUnit().getFile() and
-        // sensitiveVariables(file.getBaseName(), f.getName())
-        // )
       ) and
       (
         // Exclude variables or fields with generic, non-sensitive names
