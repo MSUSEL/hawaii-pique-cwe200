@@ -24,8 +24,9 @@ export class CodeQlParserService {
         const sarifPath = path.join(project, 'result.sarif');
         const data = await this.fileService.readJsonFile(sarifPath);
         const result = data.runs[0].results[index];
-
-        this.saveDataFlowTree(filePath, project)
+        
+        // This is just used for testing, it will save the data flow tree to a file, but slows everything down.
+        // this.saveDataFlowTree(filePath, project)
     
         try {
             // Try to access all codeFlows
