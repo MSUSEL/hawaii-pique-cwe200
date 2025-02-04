@@ -19,6 +19,7 @@ import semmle.code.java.security.SensitiveActions
 import semmle.code.java.frameworks.android.Compose
 private import semmle.code.java.security.Sanitizers
 import SensitiveInfo.SensitiveInfo
+import Barrier.Barrier
 
 module PermissionBarrier {
   /**
@@ -55,13 +56,13 @@ module SensitiveLoggerConfig implements DataFlow::ConfigSig {
     exists(Variable v | 
       (
         v.getName().toLowerCase().regexpMatch(".*secret.*") or
-        v.getName().toLowerCase().regexpMatch(".*token.*") or
+        v.getName().toLowerCase().regexpMatch(".*token") or
         // v.getName().toLowerCase().regexpMatch(".*key.*") or
         v.getName().toLowerCase().regexpMatch(".*credential.*") or
-        v.getName().toLowerCase().regexpMatch(".*auth.*") or
+        v.getName().toLowerCase().regexpMatch("auth") or
         v.getName().toLowerCase().regexpMatch(".*pass.*") or
         v.getName().toLowerCase().regexpMatch(".*pwd.*") or
-        v.getName().toLowerCase().regexpMatch(".*pin.*")
+        v.getName().toLowerCase().regexpMatch("pin")
        )
         and  
       source.asExpr() = v.getAnAccess()
@@ -84,7 +85,8 @@ module SensitiveLoggerConfig implements DataFlow::ConfigSig {
     sanitizer.asExpr() instanceof LiveLiteral or
     sanitizer instanceof SimpleTypeSanitizer or
     sanitizer.getType() instanceof TypeType or
-    PermissionBarrier::isPermissionBarrier(sanitizer)
+    PermissionBarrier::isPermissionBarrier(sanitizer) or
+    Barrier::barrier(sanitizer)
   }
 
   predicate isBarrierIn(DataFlow::Node node) { isSource(node) }
