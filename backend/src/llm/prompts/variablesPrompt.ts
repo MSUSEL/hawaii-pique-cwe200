@@ -10,7 +10,6 @@ Sensitive variables are those that, if exposed, could lead to a vulnerability or
 6) Security and Encryption Information: Variables holding encryption keys, seeds, or certificates.
 7) Application-Specific Sensitive Data: Variables storing sensitive information such as device details (Names, IDs, properties, objects), Application-specific IDs, email messages, notifications, etc.
 8) Query Parameters: Variables storing sensitive data in HTTP GET requests.
-9) Exceptions: Variables storing exceptions(e), exception messages, error messages, etc.
 
 Please respond in this format 
 {

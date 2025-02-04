@@ -11,6 +11,7 @@ import { sinksPrompt } from './prompts/sinksPrompt';
 import { VariableParser, StringParser, CommentParser, SinkParser } from '../chat-gpt/JSON-parsers';
 import { Semaphore } from 'async-mutex'; // Import the Semaphore class
 import { shuffle } from 'lodash'; // Import lodash for shuffling
+import { JavaParserService } from 'src/java-parser/java-parser.service';
 
 @Injectable()
 export class LLMService {
@@ -29,19 +30,18 @@ export class LLMService {
         private configService: ConfigService,
         private eventsGateway: EventsGateway,
         private fileUtilService: FileUtilService,
+        private javaParserService: JavaParserService,
     ) {
-        this.projectPath = "";
-        this.parsedResults = {};
-        this.fileContents = {};
-        this.contextMap = {};
-        this.semaphore = new Semaphore(5); // Initialize the semaphore with a max concurrency of 5
+        this.semaphore = new Semaphore(2); // Initialize the semaphore with a max concurrency of 2
     }
 
     async llmWrapper(filePaths: string[], sourcePath: string) {
         this.projectPath = sourcePath;
-        await this.getParsedResults(filePaths);
-        await this.readFiles(filePaths);
+        // Parser the java files for variables, strings, comments, and method calls
+        this.parsedResults = await this.javaParserService.getParsedResults(filePaths);
 
+        // Read the files to get the context
+        // await this.readFiles(filePaths);
         const contextPromises = [];
         for (let fileName in this.fileContents) {
             contextPromises.push(this.getContext(fileName, this.parsedResults[fileName]));
@@ -49,6 +49,7 @@ export class LLMService {
 
         await Promise.all(contextPromises);
 
+        // Create the prompts for the LLM that use the parsed results and the context
         let variables: string[] = [], strings: string[] = [], comments: string[] = [], sinks: string[] = [];
         const fileList: any[] = [];
         const JSONOutput = {};
@@ -154,19 +155,13 @@ export class LLMService {
     async processWithConcurrencyControl(requests: Promise<void>[]) {
         for (let i = 0; i < requests.length; i++) {
             await requests[i];
+            
+            // Throttle the requests to avoid rate limiting
+            await new Promise((resolve) => setTimeout(resolve, 300));
+
         }
     }
 
-    async getParsedResults(filePaths: string[]) {
-        let completed: number = 0;
-        let total: number = filePaths.length;
-        // for (let filePath of filePaths) {
-        //     await this.fileUtilService.parseJavaFile(filePath, this.parsedResults);
-        //     completed += 1;
-        //     let progressPercent = Math.floor((completed / total) * 100);
-        //     this.eventsGateway.emitDataToClients('parsingProgress', JSON.stringify({ type: 'parsingProgress', parsingProgress: progressPercent }));
-        // }
-    }
 
     async readFiles(filePaths: string[]) {
         let readPromises = filePaths.map(async (filePath) => {
@@ -175,30 +170,38 @@ export class LLMService {
         await Promise.all(readPromises);
     }
 
-    async getContext(fileName: string, parsedValues: JavaParseResult) {
+    async getContext(fileName: string, parsedValues: JavaParseResult, contextType='Reduced') {
         const types = ['variables', 'comments', 'strings', 'sinks'];
 
         for (let type of types) {
-            let items = parsedValues[type];
-            let fileContents = await this.fileContents[fileName];
+            let items = parsedValues[type].map(item => item.name);
 
-            for (let item of items) {
-                let context = this.extractContext(fileContents, item);
-                this.addToContextMap(fileName, type, item, context);
-            }
+            
+            // Read the whole files context
+
+            switch (contextType) {
+                // The full context is the whole file, which is what GPT used to use.
+                case 'Full':
+                    let fileContext = await this.fileContents[fileName];
+                    // Includes all the items per for each type per prompt
+                    this.addToContextMap(fileName, type, items, fileContext);
+                    break;
+            
+                // The reduced context comes from the Java Parser service, similar to what BERT uses. 
+                case 'Reduced':
+                    for (let item of parsedValues[type]) {
+                        let contextArrayMap = item['methods']
+                        let itemContext = ''
+                        for (let method of contextArrayMap) {
+                            itemContext += parsedValues['methodCodeMap'][method]
+                        }
+                        console.log(item['name'], type, fileName);
+                        // Includes one item per prompt
+                        this.addToContextMap(fileName, type, item['name'], itemContext);
+                    } 
+                break;
+                }
         }
-    }
-
-    extractContext(fileContents: string, target: string): string {
-        const lines = fileContents.split('\n');
-        const targetIndex = lines.findIndex(line => line.includes(target));
-        const contextRadius = 10; // Number of lines before and after the target
-
-        let context = "";
-        for (let i = Math.max(0, targetIndex - contextRadius); i <= Math.min(lines.length - 1, targetIndex + contextRadius); i++) {
-            context += lines[i] + "\n";
-        }
-        return context;
     }
 
     addToContextMap(fileName: string, type: string, valueName: string, context: string) {
