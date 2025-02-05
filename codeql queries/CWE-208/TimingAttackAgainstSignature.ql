@@ -8,7 +8,7 @@
  * @kind path-problem
  * @problem.severity error
  * @precision high
- * @id java/timing-attack-against-signature
+ * @id java/timing-attack-against-signature/208
  * @tags security
  *       experimental
  *       external/cwe/cwe-208
