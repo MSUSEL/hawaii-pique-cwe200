@@ -57,7 +57,6 @@ node_modules
 codeql
 backend/Files/*
 !backend/Files/CWEToyDataset/CWEToyDataset/
-backend/Files/CWEToyDataset/*
 testing/Dataflow/db_dir/
 testing/Dataflow/query_results/
 model/*
