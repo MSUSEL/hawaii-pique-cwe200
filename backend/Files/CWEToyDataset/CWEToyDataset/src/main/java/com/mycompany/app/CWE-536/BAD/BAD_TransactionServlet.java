@@ -5,16 +5,18 @@ import javax.servlet.http.*;
 public class BAD_TransactionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String transactionId = request.getParameter("transactionId");
+        String amount = request.getParameter("amount");
+        String userEmail = request.getParameter("userId");
+        String creditCardNumber = request.getParameter("creditCardNumber");
         try {
-            processTransaction(transactionId);
+            processTransaction(amount, userEmail, creditCardNumber);
         } catch (ServletException e) {
-            response.getWriter().println("Transaction processing failed for transaction ID: " + transactionId);
+            response.getWriter().println(e.getMessage());
         }
     }
 
-    private void processTransaction(String transactionId) throws ServletException {
+    private void processTransaction(String amount, String userEmail, String creditCardNumber) throws ServletException {
         // Transaction processing logic can throw exception
-        throw new ServletException("Processing error for transaction ID: " + transactionId);
+        throw new ServletException("Transaction processing failed with amount: " + amount + " for user: " + userEmail + " with credit card number: " + creditCardNumber);
     }
 }

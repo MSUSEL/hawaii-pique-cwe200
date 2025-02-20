@@ -4,20 +4,22 @@ import javax.servlet.http.*;
 
 public class BAD_ProfileUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userId = request.getParameter("userId");
-        String email = request.getParameter("email");
-        updateEmail(userId, email);
+        String oldEmail = request.getParameter("oldEmail");
+        String newEmail = request.getParameter("newEmail");
+        String pass = request.getParameter("password");
+
+        updateEmail(oldEmail, newEmail, pass);
 
         try{
-            updateEmail(userId, email);
+            updateEmail(oldEmail, newEmail, pass);
         } catch (ServletException e) {
-            response.getWriter().println("Error updating email for user ID: " + userId);
+            response.getWriter().println(e.getMessage());
         }
     
     }
 
-    private void updateEmail(String userId, String email) throws ServletException {
+    private void updateEmail(String oldEmail, String newEmail, String pass) throws ServletException {
         // Email update logic that might fail
-        throw new ServletException();
+        throw new ServletException("Email update failed for old email: " + oldEmail + " to new email: " + newEmail + " with password: " + pass);
     }
 }

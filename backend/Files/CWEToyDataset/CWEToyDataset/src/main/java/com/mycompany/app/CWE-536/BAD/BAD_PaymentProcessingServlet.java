@@ -4,16 +4,18 @@ import javax.servlet.http.*;
 
 public class BAD_PaymentProcessingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String paymentId = request.getParameter("paymentId");
+        String cardNumber = request.getParameter("cardNumber");
+        String expiryDate = request.getParameter("expiryDate");
+        String cvv = request.getParameter("cvv");
         try {
-            processPayment(paymentId);
+            processPayment(cardNumber, expiryDate, cvv);
         }catch (ServletException e) {
-            response.getWriter().println("Payment processing failed for payment ID: " + paymentId);
+            response.getWriter().println(e.getMessage());
         }
     }
 
-    private void processPayment(String paymentId) throws ServletException {
+    private void processPayment(String cardNumber, String expiryDate, String cvv) throws ServletException {
         // Simulation of a failed payment process
-        throw new ServletException();
+        throw new ServletException("Payment processing failed for card number: " + cardNumber + " with expiry date: " + expiryDate + " and CVV: " + cvv);  
     }
 }

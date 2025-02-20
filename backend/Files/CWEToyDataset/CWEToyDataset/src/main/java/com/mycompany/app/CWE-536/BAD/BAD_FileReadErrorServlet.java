@@ -18,7 +18,7 @@ public class BAD_FileReadErrorServlet extends HttpServlet {
         } catch (IOException e) {
             response.getWriter().write("Error reading file: " + file.getAbsolutePath());
         } catch (ServletException e) {
-            response.getWriter().write("Servlet error: " + file.getAbsolutePath());
+            response.getWriter().write(e.getMessage());
         }
     }
 }

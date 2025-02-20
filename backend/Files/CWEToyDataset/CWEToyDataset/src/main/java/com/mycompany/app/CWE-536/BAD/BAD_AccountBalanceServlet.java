@@ -8,8 +8,7 @@ public class BAD_AccountBalanceServlet extends HttpServlet {
         try {
             retrieveAccountBalance(accountId);
         } catch (ServletException e) {
-            // Directly using account ID from the exception's context
-            response.getWriter().println("Unable to retrieve balance for account ID: " + accountId);
+            response.getWriter().println(e.getMessage());
         }
     }
 

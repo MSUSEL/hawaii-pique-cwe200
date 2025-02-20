@@ -12,8 +12,7 @@ public class BAD_ApiKeyManagementServlet extends HttpServlet {
             }
         }
         catch(ServletException e){
-            System.err.println("Invalid API key " + apiKey + " provided.");
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while processing the request: " + e.getMessage());
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 

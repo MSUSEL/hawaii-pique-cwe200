@@ -12,7 +12,7 @@ public class BAD_IoTDeviceFirmwareUpdateServlet extends HttpServlet {
         try {
             deployFirmwareUpdate(deviceId, firmwareVersion);
         } catch (ServletException e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to deploy firmware update for device ID: " + deviceId + " with firmware version: " + firmwareVersion);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
