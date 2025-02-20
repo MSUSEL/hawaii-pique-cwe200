@@ -5,7 +5,7 @@ public class BAD_NegativeArraySizeException {
     public void createInventoryList(int arraySize, Map<String, String> medicalRecords) {
         try {
             if (arraySize < 0) {
-                throw new NegativeArraySizeException();
+                throw new NegativeArraySizeException("Cannot save records for: " + medicalRecords);
             } else {
                 String[] storage = new String[arraySize];
                 Collection<String> records = medicalRecords.values();
@@ -13,7 +13,7 @@ public class BAD_NegativeArraySizeException {
                 System.out.println("Records saved successfully.");
             }
         } catch (NegativeArraySizeException e) {
-            System.err.println("Cannot save records for: " + medicalRecords);
+            System.err.println(e.getMessage());
         }
     }
 
