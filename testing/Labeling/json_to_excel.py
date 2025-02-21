@@ -38,7 +38,12 @@ def restructure_bert_data(bert_data):
 def classify_bert_vs_parsed(parsed_item, bert_item):
     output = {}
     for key in ['variables', 'strings', 'comments', 'sinks']:
-        parsed_values = set(parsed_item.get(key, []))
+        parsed_raw = parsed_item.get(key, [])
+        # If items are dictionaries, extract the 'name' value
+        if parsed_raw and isinstance(parsed_raw[0], dict):
+            parsed_values = {item.get('name') for item in parsed_raw}
+        else:
+            parsed_values = set(parsed_raw)
         bert_values = {item['name'] for item in bert_item.get(key, [])}
         classified_values = []
         for value in parsed_values:
@@ -91,8 +96,13 @@ def format_for_excel(output_data, src_dir, file_paths):
             # Add category name as a row
             formatted_rows.append([category.capitalize(), "", "", ""])
 
+
+            # If there are no items for this category, add a blank row for spacing
+            if not classified_items:
+                formatted_rows.append(["", "", "", "", ""])
+
             # If no classified items, leave the section blank but keep the header
-            if classified_items:
+            else:
                 # Write each classified item with its classification (Yes/No)
                 if category == 'sinks':  # For sinks, add 'N/A' for the category column
                     for item, classification in classified_items:
@@ -103,45 +113,122 @@ def format_for_excel(output_data, src_dir, file_paths):
 
     return formatted_rows
 
-# Function to apply data validation, highlight headers, and save in one pass
+from openpyxl.formatting.rule import FormulaRule
+from openpyxl.utils.cell import coordinate_from_string
+from openpyxl import load_workbook
+from openpyxl.worksheet.datavalidation import DataValidation
+from openpyxl.worksheet.cell_range import MultiCellRange
+from openpyxl.styles import PatternFill
+import math
+
+def group_cells(cell_list):
+    """
+    Given a list of cell coordinates (e.g., ["D2", "D3", "D5"]),
+    group contiguous cells in the same column into a list of range strings.
+    For example, if cell_list contains ["D2", "D3", "D4", "D6"],
+    this returns ["D2:D4", "D6"].
+    """
+    grouped = {}
+    for coord in cell_list:
+        col, row = coordinate_from_string(coord)
+        row = int(row)
+        grouped.setdefault(col, []).append(row)
+    ranges = []
+    for col, rows in grouped.items():
+        rows.sort()
+        start = rows[0]
+        end = rows[0]
+        for r in rows[1:]:
+            if r == end + 1:
+                end = r
+            else:
+                if start == end:
+                    ranges.append(f"{col}{start}")
+                else:
+                    ranges.append(f"{col}{start}:{col}{end}")
+                start = r
+                end = r
+        if start == end:
+            ranges.append(f"{col}{start}")
+        else:
+            ranges.append(f"{col}{start}:{col}{end}")
+    return ranges
+
 def finalize_workbook(output_file):
     wb = load_workbook(output_file)
     ws = wb.active
 
-    # Define drop-down lists
-    dv_sinks = DataValidation(type="list", formula1=f'"{",".join(SINK_CATEGORIES)}"', showDropDown=True)
-    dv_yes_no = DataValidation(type="list", formula1=f'"{",".join(YES_NO_OPTIONS)}"', showDropDown=True, allow_blank=True)
+    # Create DataValidation objects with error messages and "stop" style.
+    dv_sinks = DataValidation(
+        type="list",
+        formula1=f'"{",".join(SINK_CATEGORIES)}"',
+        showDropDown=True,
+        error="Please select one of the allowed sink categories.",
+        errorTitle="Invalid Entry",
+        errorStyle="stop"
+    )
+    dv_yes_no = DataValidation(
+        type="list",
+        formula1=f'"{",".join(YES_NO_OPTIONS)}"',
+        showDropDown=True,
+        allow_blank=True,
+        error="Please select Yes or No.",
+        errorTitle="Invalid Entry",
+        errorStyle="stop"
+    )
 
-    # Define fill color for headers
+    total_rows = ws.max_row
+    print(f"Total rows: {total_rows}")
+
+    # Apply blue fill via conditional formatting for header rows.
     blue_fill = PatternFill(start_color="008cff", end_color="008cff", fill_type="solid")
+    header_rule = FormulaRule(formula=['$A1="Category"'], fill=blue_fill)
+    ws.conditional_formatting.add(f"A1:E{total_rows}", header_rule)
 
-    progress = 0
-    print(f"Total rows: {ws.max_row}")
-    # Loop through all rows, applying formatting, validation, and headers in one pass
-    for row in range(1, ws.max_row + 1):
-        result = math.ceil(100 * row / ws.max_row)
-        if result > progress:
-            print(f"Progress: {result}%")
-            progress = result
-        # Highlight headers
-        if ws.cell(row=row, column=1).value == "Category":
-            for col in range(1, 6):
-                ws.cell(row=row, column=col).fill = blue_fill
+    # Collect cell addresses where we want the validations.
+    sink_addresses = []
+    yes_no_addresses = []
 
-        # Apply data validation to Sink Category
-        if ws.cell(row=row, column=1).value == "N/A":
-            dv_sinks.add(ws.cell(row, 1))
+    for row in ws.iter_rows(min_row=1, max_row=total_rows, max_col=5):
+        row_num = row[0].row
+        first_val = row[0].value
+        second_val = row[1].value
 
-        # Apply Yes/No drop-down to Kyler and Sara columns, but skip the header rows
-        if ws.cell(row=row, column=2).value and ws.cell(row=row, column=1).value != "Category":
-            dv_yes_no.add(ws.cell(row, 4))  # Kyler column
-            dv_yes_no.add(ws.cell(row, 5))  # Sara column
+        # For sink validations, look in column A for "N/A"
+        if first_val is not None and str(first_val).strip() == "N/A":
+            sink_addresses.append(row[0].coordinate)
 
-    # Add validations to the sheet and save in one pass
-    ws.add_data_validation(dv_sinks)
-    ws.add_data_validation(dv_yes_no)
+        # For Yes/No validations, target columns 4 and 5 when column B is non-empty
+        # and the row is not a header (i.e. column A != "Category")
+        if second_val and (first_val is None or str(first_val).strip() != "Category"):
+            yes_no_addresses.append(ws.cell(row=row_num, column=4).coordinate)
+            yes_no_addresses.append(ws.cell(row=row_num, column=5).coordinate)
+
+        if row_num % 1000 == 0:
+            current_progress = math.ceil(100 * row_num / total_rows)
+            print(f"Progress: {current_progress}%")
+
+    # Group contiguous addresses into ranges.
+    sink_ranges = group_cells(sink_addresses)
+    yes_no_ranges = group_cells(yes_no_addresses)
+    print("Sink ranges:", sink_ranges)
+    print("Yes/No ranges:", yes_no_ranges)
+
+    # Build MultiCellRange objects from the list of range strings.
+    if sink_ranges:
+        dv_sinks.sqref = MultiCellRange(sink_ranges)
+        ws.add_data_validation(dv_sinks)
+    if yes_no_ranges:
+        dv_yes_no.sqref = MultiCellRange(yes_no_ranges)
+        ws.add_data_validation(dv_yes_no)
+
+    # Protect the worksheet so that data validation is strictly enforced.
+    # (Ensure that the cells with validations remain locked—by default, cells are locked.)
+    ws.protection.sheet = True
+    # Optionally set a password: ws.protection.password = "YourPassword"
 
     wb.save(output_file)
+
 
 # Function to save the formatted output to an Excel file
 def save_to_excel(output_data, output_file):
@@ -157,7 +244,7 @@ def save_to_excel(output_data, output_file):
 # Main logic
 def main():
     # File paths for parsed and BERT classification files
-    project_name = 'jenkins-jenkins-2.476'
+    project_name = 'tomcat-11.0.3'
     project_dir = os.path.join('backend', 'Files', project_name)
     src_dir = os.path.join(project_dir, project_name)  # Assume the source files are inside 'src' directory
     
@@ -165,7 +252,7 @@ def main():
     bert_file_path = os.path.join(project_dir, 'data.json')  
     
     # Output Excel file
-    output_file_path = os.path.join('testing', 'Labeling', 'output_google_sheets.xlsx')
+    output_file_path = os.path.join('testing', 'Labeling', f'output_google_sheets_{project_name}.xlsx')
     
     # Read both JSON files
     parsed_data = read_json(parsed_file_path)
