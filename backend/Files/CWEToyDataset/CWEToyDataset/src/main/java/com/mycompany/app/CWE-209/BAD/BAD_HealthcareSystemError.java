@@ -8,11 +8,19 @@ class NonCompliantSystemConfigurationException extends Exception {
 public class BAD_HealthcareSystemError {
     public void initializeHealthcareSystem(String systemConfig) {
         try {
-            if (!systemConfig.contains("HIPAA_compliant")) {
+            if (!systemConfig.contains("HIPAA_compliant=true")) {
+                String encryptionKey = "AESKey-Secret-9876543210";
+                String privateCertPath = "/etc/ssl/private/healthcare_cert.pem";
+                String serverIp = "192.168.1.100";
+                String internalConfigFile = "/opt/healthcare/config/internal.conf";
                 throw new NonCompliantSystemConfigurationException(
-                        "System configuration must be HIPAA compliant. Current configuration: " + systemConfig);
+                        "System configuration must be HIPAA compliant. Current configuration: " + systemConfig +
+                        ". Encryption Key: " + encryptionKey +
+                        ", Private Certificate Path: " + privateCertPath +
+                        ", Server IP: " + serverIp +
+                        ", Internal Config File: " + internalConfigFile);
             }
-            // Initialization logic
+            // Normal initialization logic
             System.out.println("Healthcare system initialized successfully with configuration: " + systemConfig);
         } catch (NonCompliantSystemConfigurationException e) {
             logError(e.getMessage());
@@ -20,8 +28,8 @@ public class BAD_HealthcareSystemError {
     }
 
     private void logError(String errorMessage) {
-        // Log the error to a secure logging system instead of printing it directly
-        System.err.println("Error: " + errorMessage); // This could be replaced with a logging framework like Log4j
+        // Log the error along with detailed sensitive data.
+        System.err.println("Error: " + errorMessage);
     }
 
     public static void main(String[] args) {
