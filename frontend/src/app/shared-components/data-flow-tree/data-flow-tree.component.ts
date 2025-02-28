@@ -12,6 +12,8 @@ export interface FlowNode {
   endColumn: number; // The ending column number for the highlight
   isExpanded?: boolean; // To track the expansion state of the node
   type: string; // The type of the node
+  vulnerabilityIndex?: string;
+  flowIndex?: number;
 }
 
 @Component({
@@ -23,9 +25,13 @@ export class DataFlowTreeComponent implements OnInit {
   @Input() treeData: FlowNode[][] = [];  // Now an array of arrays for separate flows
   activeFlowIndex: number = -1;  // Track the last clicked flow tab
   activeNodeIndex: number = -1;  // Track the last clicked node within a flow
+  
+  // Store current vulnerability index and project
+  currentVulIndex: number = -1;
+  currentProject: string = '';
 
   constructor(
-    private dataFlowService: DataFlowService,
+    public dataFlowService: DataFlowService,
     private editorService: EditorService  // Inject the EditorService
   ) {}
 
@@ -36,9 +42,25 @@ export class DataFlowTreeComponent implements OnInit {
         this.treeData = data.map(flow => flow.map(node => ({ ...node, isExpanded: false })));  // Initialize all nodes as collapsed
         this.activeFlowIndex = -1; // Reset the active flow when a new vulnerability is clicked
         this.activeNodeIndex = -1; // Reset the active node when a new vulnerability is clicked
+        
+        // Extract vulnerability index and project from the first node of first flow
+        if (this.treeData.length > 0 && this.treeData[0].length > 0) {
+
+          console.log('Tree data at this point ', this.treeData)
+
+          const firstNode = this.treeData[0][0];
+          // Make sure to explicitly convert to number to avoid type issues
+          this.currentVulIndex = Number(this.treeData[0][0].vulnerabilityIndex)
+          
+          const uri = firstNode.uri || '';
+          this.currentProject = uri.split(/[/\\]+/)[0];
+          
+          console.log(`Current vulnerability: ${this.currentVulIndex}, Project: ${this.currentProject}`);
+        }
       }
     });
   }
+  
 
   // Toggle flow tab expansion and allow collapsing
   toggleFlow(flowIndex: number): void {
@@ -96,4 +118,76 @@ export class DataFlowTreeComponent implements OnInit {
     }
     return fullPath;
   }
+  
+ // Label a flow as vulnerable (Yes) or not (No)
+ labelFlow(flowIndex: number, isVulnerable: boolean): void {
+  if (this.currentVulIndex === -1) {
+    console.warn('Cannot label flow: currentVulIndex not set');
+    return;
+  }
+  
+  const label = isVulnerable ? 'Yes' : 'No';
+  console.log(`Labeling flow ${flowIndex} as ${label} for vulnerability ${this.currentVulIndex}`);
+  this.dataFlowService.updateLabel(this.currentVulIndex, flowIndex, label);
+}
+
+// Check if a flow has been labeled
+isFlowLabeled(flowIndex: number): boolean {
+  if (this.currentVulIndex === -1) return false;
+  const label = this.dataFlowService.getLabel(this.currentVulIndex, flowIndex);
+  return label !== undefined && label !== '';
+}
+
+// Get the label for a flow
+getFlowLabel(flowIndex: number): string | undefined {
+  if (this.currentVulIndex === -1) return undefined;
+  return this.dataFlowService.getLabel(this.currentVulIndex, flowIndex);
+}
+
+// Check if a flow is labeled as vulnerable (Yes)
+isVulnerable(flowIndex: number): boolean {
+  return this.getFlowLabel(flowIndex) === 'Yes';
+}
+
+// Check if a flow is labeled as not vulnerable (No)
+isNotVulnerable(flowIndex: number): boolean {
+  return this.getFlowLabel(flowIndex) === 'No';
+}
+
+getLabeledFlowCount(): number {
+  return this.dataFlowService.getLabeledFlowCount();
+}
+
+// Remove the areAllFlowsLabeled method since we don't need it anymore
+
+// Modify the submitAllLabels method to handle the new labels
+submitAllLabels(): void {
+  // Get the complete map from the service
+  const completeMap = this.dataFlowService.getCompleteDataFlowLabelMap();
+  
+  if (!completeMap || completeMap.size === 0) {
+    console.warn('No labels to submit');
+    return;
+  }
+  
+  // Prepare the data for submission with all vulnerabilities and their flows
+  const allLabelsData = {
+    project: this.currentProject,
+    vulnerabilities: Array.from(completeMap.entries()).map(([vulIndex, flowLabels]) => {
+      return {
+        vulnerabilityId: vulIndex.toString(),
+        flows: Array.from(flowLabels.entries()).map(([flowIndex, label]) => {
+          return {
+            flowIndex: flowIndex,
+            isVulnerable: label === 'Yes',
+            label: label
+          };
+        })
+      };
+    })
+  };
+
+  console.log('Submitting all flow labels:', allLabelsData);
+  this.dataFlowService.submitFlowLabels(allLabelsData);
+}
 }

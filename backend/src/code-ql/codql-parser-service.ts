@@ -47,63 +47,72 @@ export class CodeQlParserService {
             return [];
         }
     }
-
-    async saveDataFlowTree(filePath: string, project: string) {
+    async saveDataFlowTree(project: string) {
         const sarifPath = path.join(project, 'result.sarif');
         const data = await this.fileService.readJsonFile(sarifPath);
         const results = data.runs[0].results;
         const flowMapsByCWE: { [cwe: string]: any[] } = {}; // Group by CWE
-    
+      
         try {
-            for (let i = 0; i < results.length; i++) {
-                const result = results[i];
-                const cwe = result.ruleId.split('/').pop(); // Extract CWE from ruleId
-                
-                if (!cwe) continue; // Skip if no CWE is found
-    
-                if (result.codeFlows) {
-                    const codeFlowsList = result.codeFlows || [];
-                    for (let j = 0; j < codeFlowsList.length; j++) {
-                        const codeFlows = codeFlowsList[j].threadFlows[0].locations;
-    
-                        // Retrieve the flow map for each code flow
-                        const flowMap = await this.buildDataFlowMap(codeFlows, project);
-    
-                        // Format the flow map to be more human-readable
-                        const humanReadableFlowMap = Object.entries(flowMap).map(([index, node]) => ({
-                            step: Number(index) + 1,  // Step number for readability
-                            variableName: node.message,
-                            uri: node.uri,
-                            // lineRange: `${node.startLine}-${node.endLine}`,
-                            // columnRange: `${node.startColumn}-${node.endColumn}`,
-                            type: node.type,
-                            code: node.code
-                        }));
-    
-                        // Add the flow map to the relevant CWE group
-                        if (!flowMapsByCWE[cwe]) {
-                            flowMapsByCWE[cwe] = [];
-                        }
-    
-                        flowMapsByCWE[cwe].push({
-                            resultIndex: i + 1, 
-                            codeFlowIndex: j + 1,
-                            fileName : humanReadableFlowMap.pop().uri.split('/').pop(),
-                            flow: humanReadableFlowMap,
-                        });
-                    }
+          for (let i = 0; i < results.length; i++) {
+            const result = results[i];
+            const cwe = result.ruleId.split('/').pop(); // Extract CWE from ruleId
+            if (!cwe) continue; // Skip if no CWE is found
+      
+            if (result.codeFlows) {
+              // Ensure there's an array for this CWE
+              if (!flowMapsByCWE[cwe]) {
+                flowMapsByCWE[cwe] = [];
+              }
+              const codeFlowsList = result.codeFlows;
+              for (let j = 0; j < codeFlowsList.length; j++) {
+                const codeFlows = codeFlowsList[j].threadFlows[0].locations;
+      
+                // Retrieve the flow map for each code flow
+                const flowMap = await this.buildDataFlowMap(codeFlows, project);
+      
+                // Format the flow map to be more human-readable
+                const humanReadableFlowMap = Object.entries(flowMap).map(([index, node]) => ({
+                  step: Number(index),  // Step number for readability
+                  variableName: node.message,
+                  uri: node.uri,
+                  type: node.type,
+                  code: node.code
+                }));
+      
+                // Get the fileName from the last element in the flow (without modifying the array)
+                const fileName = humanReadableFlowMap[humanReadableFlowMap.length - 1].uri.split('/').pop();
+      
+                // Check if there is already an entry for this resultIndex
+                let resultEntry = flowMapsByCWE[cwe].find(entry => entry.resultIndex === i + 1);
+                if (!resultEntry) {
+                  resultEntry = {
+                    resultIndex: i,
+                    fileName: fileName,
+                    flows: []
+                  };
+                  flowMapsByCWE[cwe].push(resultEntry);
                 }
+      
+                // Add this flow to the result's flows array
+                resultEntry.flows.push({
+                  codeFlowIndex: j,
+                  flow: humanReadableFlowMap,
+                });
+              }
             }
-    
-            // Save the grouped flow maps in human-readable format
-            const outputFilePath = path.join(project, 'flowMapsByCWE.json');
-            await this.fileService.writeToFile(outputFilePath, JSON.stringify(flowMapsByCWE, null, 2));
-            console.log(`Data flow map grouped by CWE saved to ${outputFilePath}`);
-    
+          }
+      
+          // Save the grouped flow maps in human-readable format
+          const outputFilePath = path.join(project, 'flowMapsByCWE.json');
+          await this.fileService.writeToFile(outputFilePath, JSON.stringify(flowMapsByCWE, null, 2));
+          // console.log(`Data flow map grouped by CWE saved to ${outputFilePath}`);
+      
         } catch (error) {
-            console.error('Error processing code flows:', error);
+          // console.error('Error processing code flows:', error);
         }
-    }
+      }
+      
 
     async buildDataFlowMap(codeFlows: any[], project: string): Promise<{ [key: number]: FlowNode }> {
         const flowMap: { [key: number]: FlowNode } = {};
@@ -289,6 +298,7 @@ export class CodeQlParserService {
         var resultList: Array<{ name: string; fullPath: string, files:any[] }> = [];
         for (let i = 0; i < results.length; i++) {
             let result = results[i];
+            let CWE = result.message.text.split(':')[0];
             var filePath=result.locations[0]?.physicalLocation.artifactLocation.uri;
             var fullPath = this.correctPath(this.fileService.processFilePath(sourcePath,filePath));
 
@@ -298,6 +308,7 @@ export class CodeQlParserService {
             var file: any = null;
             if (fileIndex == -1) {
                 file = {
+                    cwe: CWE,
                     name: this.fileService.getFilenameFromPath(filePath),
                     fullPath: this.correctPath(this.fileService.processFilePath(sourcePath,filePath)),
                     files:[]
@@ -310,6 +321,7 @@ export class CodeQlParserService {
             region.endLine=region.endLine?region.endLine:region.startLine;
             var rule = rules[result.ruleIndex];
             file.files.push({
+                cwe: CWE,
                 name: rule.shortDescription.text,
                 type: rule.defaultConfiguration.level,
                 message: result.message.text,

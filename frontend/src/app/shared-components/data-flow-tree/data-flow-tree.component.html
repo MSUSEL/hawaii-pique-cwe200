@@ -1,30 +1,49 @@
 <div class="flow-tree-box">
-  <!-- Conditionally show the title if there are flows -->
-  <h5 class="dataflow-title" *ngIf="treeData && treeData.length > 0">Data Flow Graph</h5> 
+  <h5 class="dataflow-title" *ngIf="treeData && treeData.length > 0">Data Flow Graph</h5>
 
-  <!-- Scrollable container for flow tabs and content -->
   <div class="flow-tab-container" *ngIf="treeData && treeData.length > 0">
-    <!-- Loop over each flow -->
+    <!-- For each flow -->
     <div *ngFor="let flow of treeData; let flowIndex = index" class="flow-tab">
-      <!-- Flow Tab Header (click to expand/collapse) -->
-      <div class="flow-tab-header" 
-           [ngClass]="{'active-flow': flowIndex === activeFlowIndex}" 
-           (click)="toggleFlow(flowIndex)">
-        <strong>Flow {{ flowIndex + 1 }}</strong>: 
-        <span class="flow-message">{{ flow[0].message.split(':')[0] }}</span> <!-- Truncate message -->
-      </div>
+      <!-- Flow header with labeling controls -->
+      <div class="flow-header">
+        <div class="flow-tab-header" 
+             [ngClass]="{'active-flow': flowIndex === activeFlowIndex}" 
+             (click)="toggleFlow(flowIndex)">
+          <strong>Flow {{ flowIndex + 1 }}</strong>
+          <span class="flow-message" *ngIf="flow[0]?.message">: {{ flow[0].message.split(':')[0] }}</span>
+        </div>
+        
+        <!-- Labeling controls - make sure to use currentVulIndex in the radio button name -->
+<!-- Labeling controls - make sure to use both currentVulIndex and flowIndex in the radio button name -->
+<div class="flow-labeling">
+  <span>Vulnerable?</span>
+  <div class="label-options">
+    <label [class.selected]="isVulnerable(flowIndex)">
+      <input type="radio" [name]="'flow-' + currentVulIndex + '-' + flowIndex" [value]="true"
+             [checked]="isVulnerable(flowIndex)"
+             (change)="labelFlow(flowIndex, true)">
+      Yes
+    </label>
+    <label [class.selected]="isNotVulnerable(flowIndex)">
+      <input type="radio" [name]="'flow-' + currentVulIndex + '-' + flowIndex" [value]="false"
+             [checked]="isNotVulnerable(flowIndex)"
+             (change)="labelFlow(flowIndex, false)">
+      No
+    </label>
+  </div>
+</div>
 
-      <!-- Collapsible Content for Nodes within the Flow -->
+      <!-- Flow content (nodes) - only shown when this flow is active -->
       <div class="node-tab-container" *ngIf="flowIndex === activeFlowIndex">
         <div *ngFor="let node of flow; let nodeIndex = index" class="node-tab">
-          <!-- Node Header (click to expand), highlight only the header -->
+          <!-- Node header -->
           <div class="node-tab-header" 
                [ngClass]="{'active-header': nodeIndex === activeNodeIndex}" 
                (click)="onNodeClick(flowIndex, nodeIndex)">
-            <strong>{{ nodeIndex + 1 }}</strong> {{ node.message.split(':')[0] }}
+            <strong>{{ nodeIndex + 1 }}</strong> {{ node.message }}
           </div>
-
-          <!-- Collapsible Content -->
+          
+          <!-- Node details (appears when clicked) -->
           <div class="node-tab-content" *ngIf="node.isExpanded">
             <p><strong>File Name:</strong> 
               <span class="truncate">{{ node.uri.split('/').pop() }}</span>
@@ -39,5 +58,19 @@
         </div>
       </div>
     </div>
+  </div>
+  
+  <!-- Submit button section - always enabled -->
+  <div class="submit-container" *ngIf="treeData && treeData.length > 0">
+    <button class="submit-button" (click)="submitAllLabels()">
+      Submit Flow Labels
+    </button>
+    <div class="label-count">
+      Labeled flows: {{ getLabeledFlowCount() }}
+    </div>
+  </div>
+  
+  <div *ngIf="!treeData || treeData.length === 0" class="no-data">
+    No data flows available.
   </div>
 </div>

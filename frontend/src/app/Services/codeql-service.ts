@@ -29,6 +29,15 @@ export class CodeQlService {
     
         return this.http.get(this.url + 'vulnerabilityTree', { params });
     }
+
+    submitFlowLabels(labelData: any): Observable<any> {
+        console.log(this.url + "flow-labels")
+        console.log(labelData)
+        return this.http.post(this.url + 'flow-labels', labelData);
+        
+      }
+        
+
 }
 
 export interface Region {

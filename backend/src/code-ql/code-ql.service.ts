@@ -54,7 +54,7 @@ export class CodeQlService {
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
     
         await this.runBert(javaFiles, sourcePath, createCodeQlDto);
-
+        // await this.runLLM(javaFiles, sourcePath);
         if (createCodeQlDto.extension === 'csv'){
             return await this.parserService.getcsvResults(sourcePath);
         }
@@ -112,25 +112,25 @@ export class CodeQlService {
             times[stepName] = (end - start) / 1000; // Time in seconds
         };
 
-        await executeStep('Parsing files for variables, strings, comments, and method calls.', async () => {
-            await this.bertService.bertWrapper(javaFiles, sourcePath);
-        });
+        // await executeStep('Parsing files for variables, strings, comments, and method calls.', async () => {
+        //     await this.bertService.bertWrapper(javaFiles, sourcePath);
+        // });
     
-        await executeStep('Detecting sensitive info using BERT.', async () => {
-            await this.bertService.getBertResponse(sourcePath, "run_bert.py");
-        });
-        let data = null;
-        await executeStep('Reading in BERT results from data.json.', async () => {
-            data = this.useSavedData(sourcePath);
-        });
+        // await executeStep('Detecting sensitive info using BERT.', async () => {
+        //     await this.bertService.getBertResponse(sourcePath, "run_bert.py");
+        // });
+        // let data = null;
+        // await executeStep('Reading in BERT results from data.json.', async () => {
+        //     data = this.useSavedData(sourcePath);
+        // });
     
-        await executeStep('Saving the sensitive info to .yml files.', async () => {
-            await this.saveSensitiveInfo(data);
-        });
+        // await executeStep('Saving the sensitive info to .yml files.', async () => {
+        //     await this.saveSensitiveInfo(data);
+        // });
     
-        await executeStep('Creating CodeQL database.', async () => {
-            await this.createDatabase(sourcePath, createCodeQlDto);
-        });
+        // await executeStep('Creating CodeQL database.', async () => {
+        //     await this.createDatabase(sourcePath, createCodeQlDto);
+        // });
     
         // await executeStep('Running the backward slice queries.', async () => {
         //     await this.performBackwardSlicing(sourcePath, createCodeQlDto);
@@ -149,8 +149,12 @@ export class CodeQlService {
         //     this.saveUpdatedSensitiveVariables(sensitiveVariables);
         // });
     
-        await executeStep('Running CWE queries.', async () => {
-            await this.runCWEQueries(sourcePath, createCodeQlDto);
+        // await executeStep('Running CWE queries.', async () => {
+        //     await this.runCWEQueries(sourcePath, createCodeQlDto);
+        // });
+
+        await executeStep('Saving Dataflow Tree', async () => {
+            await this.parserService.saveDataFlowTree(sourcePath);
         });
     
         // Print all the times at the end
@@ -496,5 +500,62 @@ export class CodeQlService {
         return await this.parserService.getDataFlowTree(vulnerabilityId, sourcePath, index);
     }
 }
+
+    async labelFlows(labelData: any){
+        const sourcePath = path.join(this.projectsPath, labelData.project);
+        var codeFlowsPath = path.join(sourcePath,'flowMapsByCWE.json');
+        var codeFlows = await this.fileUtilService.readJsonFile(codeFlowsPath);
+        // Get the vulnerabilityId from the first result
+        for (let i = 0; i < labelData.vulnerabilities.length; i++){
+            let vulIndex = labelData.vulnerabilities[i].vulnerabilityId
+            
+            // Get the flows from the vulnerabilityId
+            for (let j = 0; j < labelData.vulnerabilities[i].flows.length; j++){
+                let flowIndex = labelData.vulnerabilities[i].flows[j].flowIndex
+                let label = labelData.vulnerabilities[i].flows[j].label
+
+                console.log(typeof codeFlows)
+
+                Object.keys(codeFlows).forEach(cwe => {
+                    // console.log(cwe)
+                    // console.log(codeFlows[cwe][vulIndex].resultIndex)
+                    // console.log(vulIndex, flowIndex, label)
+                    // Check if the resultIndex matches vulIndex and flowIndex matches flowIndex
+                    if (codeFlows[cwe][vulIndex].resultIndex === Number(vulIndex)){
+                        if(codeFlows[cwe][vulIndex].flows[flowIndex].codeFlowIndex === Number(flowIndex)){
+                            codeFlows[cwe][vulIndex].flows[flowIndex].label = label
+                            console.log("Added label to flow")
+                            
+                        }
+                    }
+                  });
+
+                // Save the updated codeFlows back to the file
+                await this.fileUtilService.writeToFile(codeFlowsPath, JSON.stringify(codeFlows, null, 2));
+              
+  
+    }
+}
+        
+    
+        // This edits the sarif file directly
+        var sarifPath = path.join(sourcePath,'result.sarif');
+        var data = await this.fileUtilService.readJsonFile(sarifPath);
+
+        // Get the vulnerabilityId from the first result
+        for (let i = 0; i < labelData.vulnerabilities.length; i++){
+            let vulIndex = labelData.vulnerabilities[i].vulnerabilityId
+            
+            // Get the flows from the vulnerabilityId
+            for (let j = 0; j < labelData.vulnerabilities[i].flows.length; j++){
+                let label = labelData.vulnerabilities[i].flows[j].label
+                data.runs[0].results[vulIndex].codeFlows[j].label = label
+            }
+        }
+
+        // Write the updated data back to the sarif file
+        await this.fileUtilService.writeToFile(sarifPath, JSON.stringify(data, null, 2));
+        console.log("Updated sarif file with labels")
+    }
 }
 
