@@ -87,8 +87,17 @@
  
    predicate isBarrier(DataFlow::Node node) { Barrier::barrier(node) }
  }
+
+ predicate isTestFile(File f) {
+  // Convert path to lowercase for case-insensitive matching
+  exists(string path | path = f.getAbsolutePath().toLowerCase() |
+    // Check for common test-related directory or file name patterns
+    path.regexpMatch(".*(test|tests|testing|test-suite|testcase|unittest|integration-test|spec).*")
+  )
+}
  
  from Flow::PathNode source, Flow::PathNode sink
  where Flow::flowPath(source, sink)
+ and not isTestFile(sink.getNode().getLocation().getFile())
  select sink.getNode(), source, sink, "Sensitive information passed to process execution."
  
