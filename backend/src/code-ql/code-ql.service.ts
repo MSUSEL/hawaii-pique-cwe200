@@ -156,6 +156,10 @@ export class CodeQlService {
         await executeStep('Saving Dataflow Tree', async () => {
             await this.parserService.saveDataFlowTree(sourcePath);
         });
+
+        await executeStep('Verify Sarif', async () => {
+            await this.verifySarif(sourcePath);
+        });
     
         // Print all the times at the end
         console.log("Time taken for each step:");
@@ -501,8 +505,15 @@ export class CodeQlService {
     }
 }
 
+    /**
+     * This function applies the labels from the labeling data to the codeFlows 
+     * in the flowMapsByCWE.json file. These labels are used to train the BERT model.
+     * Used in the verification step of the detections produced by CodeQL.
+     * @param labelData Data from the front-end labeling tool.
+     */
     async labelFlows(labelData: any){
         const sourcePath = path.join(this.projectsPath, labelData.project);
+        // await this.countFlowsBetweenJsonAndSarif(sourcePath)
         var codeFlowsPath = path.join(sourcePath,'flowMapsByCWE.json');
         var codeFlows = await this.fileUtilService.readJsonFile(codeFlowsPath);
         // Get the vulnerabilityId from the first result
@@ -514,48 +525,70 @@ export class CodeQlService {
                 let flowIndex = labelData.vulnerabilities[i].flows[j].flowIndex
                 let label = labelData.vulnerabilities[i].flows[j].label
 
-                console.log(typeof codeFlows)
+                if(label === "No" || label === "Yes"){
 
                 Object.keys(codeFlows).forEach(cwe => {
-                    // console.log(cwe)
-                    // console.log(codeFlows[cwe][vulIndex].resultIndex)
-                    // console.log(vulIndex, flowIndex, label)
-                    // Check if the resultIndex matches vulIndex and flowIndex matches flowIndex
-                    if (codeFlows[cwe][vulIndex].resultIndex === Number(vulIndex)){
-                        if(codeFlows[cwe][vulIndex].flows[flowIndex].codeFlowIndex === Number(flowIndex)){
-                            codeFlows[cwe][vulIndex].flows[flowIndex].label = label
-                            console.log("Added label to flow")
-                            
+                    // Check if the vulIndex from the labeling matches the resultIndex from the codeFlows
+                    // Because not all results in the original SARIF file have codeFlows
+                    // The index of the result in the codeFlows isn't always the same as the vulIndex from the labeling.
+                    // So we have to inefficiently loop through all the codeFlows to find the correct one.
+                    for(let res of codeFlows[cwe]){
+                        if (res.resultIndex === Number(vulIndex)){
+                            // Check if the flowIndex from the labeling matches the codeFlowIndex from the codeFlows
+                            for(let flow of res.flows){
+                                if (flow.codeFlowIndex === Number(flowIndex)){
+                                    flow.label = label
+                                    console.log("Added label to CWE " + cwe + " vulIndex " + vulIndex + " flowIndex " + flowIndex + " label " + label)
+                                }
+                            }
                         }
                     }
                   });
-
-                // Save the updated codeFlows back to the file
-                await this.fileUtilService.writeToFile(codeFlowsPath, JSON.stringify(codeFlows, null, 2));
-              
+                }else{
+                    console.log("-- No label for vulIndex " + vulIndex + " flowIndex " + flowIndex + " label " + label)
+                }
   
-    }
-}
-        
-    
-        // This edits the sarif file directly
-        var sarifPath = path.join(sourcePath,'result.sarif');
-        var data = await this.fileUtilService.readJsonFile(sarifPath);
-
-        // Get the vulnerabilityId from the first result
-        for (let i = 0; i < labelData.vulnerabilities.length; i++){
-            let vulIndex = labelData.vulnerabilities[i].vulnerabilityId
-            
-            // Get the flows from the vulnerabilityId
-            for (let j = 0; j < labelData.vulnerabilities[i].flows.length; j++){
-                let label = labelData.vulnerabilities[i].flows[j].label
-                data.runs[0].results[vulIndex].codeFlows[j].label = label
             }
         }
-
-        // Write the updated data back to the sarif file
-        await this.fileUtilService.writeToFile(sarifPath, JSON.stringify(data, null, 2));
-        console.log("Updated sarif file with labels")
+        console.log("This should be last")
+        // Save the updated codeFlows back to the file
+        await this.fileUtilService.writeToFile(path.join("..", "testing", "labeling", "FlowData", String(labelData.project + ".json")), JSON.stringify(codeFlows, null, 2));
     }
+
+    
+    /**
+     * Adds labels to the flows in the SARIF file.
+     *
+     * This function processes the SARIF file after BERT has determined which flows
+     * are valid based on the flowmap data, it adds corresponding labels to those flows.
+     * So that flows labeled as No (Not sensitive) are not included in the final report.
+     *
+     * @param sourcePath The path to the project directory.
+     */
+    async verifySarif(sourcePath: string){
+        var codeFlowsPath = path.join(sourcePath,'flowMapsByCWE.json');
+        var codeFlows = await this.fileUtilService.readJsonFile(codeFlowsPath);
+
+        var sarifPath = path.join(sourcePath,'result.sarif');
+        var sarifdata = await this.fileUtilService.readJsonFile(sarifPath);
+
+        Object.keys(codeFlows).forEach(cwe => {
+
+            let resultIndex = codeFlows[cwe].resultIndex
+
+            for (let i = 0; i < codeFlows[cwe].flows.length; i++){
+                let flowIndex = codeFlows[cwe].flows[i].codeFlowIndex
+                let label = codeFlows[cwe].flows[i].label
+                
+                // Make sure the resultIndex is the index of the sarif result. 
+                // Not all sarif results have a codeFlow
+                if (sarifdata.runs[0].results[resultIndex].codeFlows[flowIndex]){
+                    sarifdata.runs[0].results[resultIndex].codeFlows[flowIndex].label = label                 }
+                else{
+                }
+            }
+          }); 
+    }
+
 }
 

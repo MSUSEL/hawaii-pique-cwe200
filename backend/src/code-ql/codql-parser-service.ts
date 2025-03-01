@@ -20,14 +20,12 @@ export class CodeQlParserService {
         return {rulesTree,locationsTree};
     }
 
+    // This function is used to get all the data flow trees for a specific result index
     async getDataFlowTree(filePath: string, project: string, index: string) {
         const sarifPath = path.join(project, 'result.sarif');
         const data = await this.fileService.readJsonFile(sarifPath);
         const result = data.runs[0].results[index];
-        
-        // This is just used for testing, it will save the data flow tree to a file, but slows everything down.
-        // this.saveDataFlowTree(filePath, project)
-    
+            
         try {
             // Try to access all codeFlows
             const codeFlowsList = result.codeFlows || [];
@@ -47,6 +45,7 @@ export class CodeQlParserService {
             return [];
         }
     }
+    
     async saveDataFlowTree(project: string) {
         const sarifPath = path.join(project, 'result.sarif');
         const data = await this.fileService.readJsonFile(sarifPath);
@@ -57,13 +56,18 @@ export class CodeQlParserService {
           for (let i = 0; i < results.length; i++) {
             const result = results[i];
             const cwe = result.ruleId.split('/').pop(); // Extract CWE from ruleId
-            if (!cwe) continue; // Skip if no CWE is found
+            if (!cwe){
+                console.log('No CWE found for result:', result);
+                continue; // Skip if no CWE is found
+            } 
       
             if (result.codeFlows) {
+                
               // Ensure there's an array for this CWE
               if (!flowMapsByCWE[cwe]) {
                 flowMapsByCWE[cwe] = [];
               }
+             
               const codeFlowsList = result.codeFlows;
               for (let j = 0; j < codeFlowsList.length; j++) {
                 const codeFlows = codeFlowsList[j].threadFlows[0].locations;
@@ -73,7 +77,7 @@ export class CodeQlParserService {
       
                 // Format the flow map to be more human-readable
                 const humanReadableFlowMap = Object.entries(flowMap).map(([index, node]) => ({
-                  step: Number(index),  // Step number for readability
+                  step: Number(index), // 0-based step number
                   variableName: node.message,
                   uri: node.uri,
                   type: node.type,
@@ -83,8 +87,8 @@ export class CodeQlParserService {
                 // Get the fileName from the last element in the flow (without modifying the array)
                 const fileName = humanReadableFlowMap[humanReadableFlowMap.length - 1].uri.split('/').pop();
       
-                // Check if there is already an entry for this resultIndex
-                let resultEntry = flowMapsByCWE[cwe].find(entry => entry.resultIndex === i + 1);
+                // Look for an existing entry with the same result index (using 0-based index)
+                let resultEntry = flowMapsByCWE[cwe].find(entry => entry.resultIndex === i);
                 if (!resultEntry) {
                   resultEntry = {
                     resultIndex: i,
@@ -94,24 +98,28 @@ export class CodeQlParserService {
                   flowMapsByCWE[cwe].push(resultEntry);
                 }
       
-                // Add this flow to the result's flows array
+                // Append the new flow to the flows array
                 resultEntry.flows.push({
                   codeFlowIndex: j,
-                  flow: humanReadableFlowMap,
+                  flow: humanReadableFlowMap
                 });
               }
             }
+            else{
+                // console.log(`Result ${i} skipped: no codeFlows`);
+
+              }
           }
       
           // Save the grouped flow maps in human-readable format
           const outputFilePath = path.join(project, 'flowMapsByCWE.json');
           await this.fileService.writeToFile(outputFilePath, JSON.stringify(flowMapsByCWE, null, 2));
-          // console.log(`Data flow map grouped by CWE saved to ${outputFilePath}`);
       
         } catch (error) {
-          // console.error('Error processing code flows:', error);
+          console.error('Error processing code flows:', error);
         }
       }
+      
       
 
     async buildDataFlowMap(codeFlows: any[], project: string): Promise<{ [key: number]: FlowNode }> {
@@ -120,7 +128,7 @@ export class CodeQlParserService {
         // Use a loop with `await` to ensure file loading is awaited for each code flow
         for (let flowIndex = 0; flowIndex < codeFlows.length; flowIndex++) {
             const codeFlow = codeFlows[flowIndex];
-            console.log(`Processing Code Flow #${flowIndex + 1}`);
+            // console.log(`Processing Code Flow #${flowIndex + 1}`);
 
             const location = codeFlow.location;
             if (location) {
@@ -137,7 +145,7 @@ export class CodeQlParserService {
 
                 let message = location.message.text;  // Default message from SARIF file
                 const type = message.length > 1 ? message.split(':').slice(1).join(':').trim() : '';
-                console.log(`Message: ${message}`);
+                // console.log(`Message: ${message}`);
 
                 // Await the file read to ensure we get the file data before continuing
                 try {
@@ -177,7 +185,7 @@ export class CodeQlParserService {
                     };
 
                 } catch (error) {
-                    console.error(`Error reading file ${fullPath}:`, error);
+                    // console.error(`Error reading file ${fullPath}:`, error);
                     // Optionally handle the error here
                 }
             }
@@ -220,14 +228,17 @@ export class CodeQlParserService {
                 .filter(file => {
                     // Construct a unique identifier for the file based on its location and line
                     const fileIdentifier = `${file.fullPath}:${file.region.startLine}`;
-    
+                    
+                    // Here I check for duplicates based on the fileIdentifier. 
+                    
+                    // It is commented out right now to allign the same number of flows with the map, but eventually it should be used for the last step.
                     // Check if this file has already been processed under another rule
-                    if (fileMap.has(fileIdentifier)) {
-                        return false;  // Skip this file as it's already associated with a rule
-                    } else {
+                    // if (fileMap.has(fileIdentifier)) {
+                    //     return false;  // Skip this file as it's already associated with a rule
+                    // } else {
                         fileMap.set(fileIdentifier, ruleKey);  // Mark this file as processed under this rule
                         return true;
-                    }
+                    // }
                 });
     
             // Check if the ruleKey already exists in the map
