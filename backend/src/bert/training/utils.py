@@ -10,7 +10,7 @@ from tensorflow.keras.callbacks import (EarlyStopping, ModelCheckpoint,
                                        ReduceLROnPlateau)
 
 from scikeras.wrappers import KerasClassifier
-from sklearn.model_selection import (StratifiedKFold, RandomizedSearchCV)
+from sklearn.model_selection import (StratifiedKFold, RandomizedSearchCV, train_test_split)
 from imblearn.over_sampling import SMOTE
 from tensorflow.keras.utils import to_categorical
 from transformers import T5Tokenizer, TFT5Model
@@ -174,25 +174,24 @@ def train(category, data, param_grid, create_model, embedding_model='sentbert', 
     X = np.array(concatenated_variable_vectors)
     y = variable_array[:, 2].astype(np.int32)
 
-    # Handle class imbalance using SMOTE
+   # Train/test split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+    
+    # Apply SMOTE to training data directly
     if category != 'sinks':
         smote = SMOTE(random_state=42)
-        X, y = smote.fit_resample(X, y)
-
-    # Define scoring metric
+        X_train, y_train = smote.fit_resample(X_train, y_train)
+    
+    # Hyperparameter tuning
     scoring = 'f1_weighted' if category == 'sinks' else 'f1'
-
-    # Wrap model in KerasClassifier
     model = KerasClassifier(
-        model=create_model,  # Pass the model factory
+        model=create_model,
+        epochs=50,           # Default value
+        batch_size=32,       # Default value
         verbose=0,
         embedding_dim=embedding_dim
     )
-
-    # Stratified k-fold cross-validation
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-
-    # Randomized Search for Hyperparameter Tuning
     random_search = RandomizedSearchCV(
         estimator=model,
         param_distributions=param_grid,
@@ -201,57 +200,36 @@ def train(category, data, param_grid, create_model, embedding_model='sentbert', 
         scoring=scoring,
         n_jobs=-1,
         random_state=42
-
     )
-
-    # Perform the search
-    random_search_result = random_search.fit(X, y)
-
-    # Summarize the best parameters
+    random_search_result = random_search.fit(X_train, y_train)
     print(f"Best: {random_search_result.best_score_} using {random_search_result.best_params_}")
-
-    # Build and train the final model using best parameters
+    
+    # Train final model
     best_params = random_search_result.best_params_
     final_model = create_model(
         learning_rate=best_params['model__learning_rate'],
         dropout_rate=best_params['model__dropout_rate'],
-        # weight_decay=best_params['model__weight_decay'],
-        # units=best_params['model__units'],
         activation=best_params['model__activation'],
         embedding_dim=embedding_dim
     )
-
-    # Train/test split for evaluation
-    train_index, test_index = next(kfold.split(X, y))
-    X_train, X_test = X[train_index], X[test_index]
-    y_train, y_test = y[train_index], y[test_index]
-
-    # One-hot encode labels if necessary
-    # if category == 'sinks':
-    #     y_train = to_categorical(y_train, num_classes=8)
-    #     y_test = to_categorical(y_test, num_classes=8)
-
-    # Define callbacks
     checkpoint_filepath = os.path.join(model_dir, f'{embedding_model}_best_model_{category}.keras')
     callbacks = [
         EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True),
         ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=1e-6, verbose=1),
         ModelCheckpoint(filepath=checkpoint_filepath, monitor='val_loss', save_best_only=True)
     ]
-
-    # Train the final model
     history = final_model.fit(
         X_train, y_train,
         validation_split=0.1,
-        epochs=best_params['epochs'],
-        batch_size=best_params['batch_size'],
+        epochs=best_params.get('epochs', 50),
+        batch_size=best_params.get('batch_size', 32),
         callbacks=callbacks,
         verbose=2
     )
-
-    # Evaluate the model
+    
     print('Evaluating the Model...')
     evaluate_model(final_model, checkpoint_filepath, X_test, y_test, category)
+    final_model.save(os.path.join(model_dir, f'{embedding_model}_final_model_{category}.keras'))
     tf.keras.backend.clear_session()
 
 def calculate_t5_vectors(sentences, model_name='t5-small', batch_size=32):

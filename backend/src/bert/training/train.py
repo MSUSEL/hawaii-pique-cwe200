@@ -90,7 +90,7 @@ def get_context(labels, context, category):
                         sink_type_mapping.get(label_item['type'])
                     ]) 
 
-                print(binary_label)
+                # print(binary_label)
 
     return data
 
@@ -229,19 +229,19 @@ params_map = {
 }
 
 categories = [
-    # "variables",
-    "strings",
+    "variables",
+    # "strings",
     # "comments",
     # "sinks"
 ]
 
 # Embedding models, and their respective output dimensions
 embedding_models = {
-    # 't5': 512 * 2,           # T5 model produces 512-dimensional embeddings; concatenating value and context.
+    't5': 512 * 2,           # T5 model produces 512-dimensional embeddings; concatenating value and context.
     # 'roberta': 768 * 2,       # RoBERTa model produces 768-dimensional embeddings; concatenating value and context.
     # 'sentbert': 384 * 2,     # Sentence-BERT produces 384-dimensional embeddings; concatenating value and context.
     # 'codellama': 4096 * 2,    # Code LLaMA produces 4096-dimensional embeddings; concatenating value and context.
-    'codebert': 768 * 2,      # CodeBERT produces 768-dimensional embeddings; concatenating value and context.
+    # 'codebert': 768 * 2,      # CodeBERT produces 768-dimensional embeddings; concatenating value and context.
     # 'albert': 768 * 2,        # ALBERT produces 768-dimensional embeddings; concatenating value and context.
 }
 
