@@ -55,13 +55,13 @@ module CommonSinks {
     }
 
     predicate isErrPrintSink(DataFlow::Node sink) {
-        // exists(MethodCall mc |
-        //     mc.getMethod().getName() = "println" and
-        //     mc.getQualifier().(FieldAccess).getField().getDeclaringType().hasQualifiedName("java.lang", "System") and
-        //     mc.getQualifier().(FieldAccess).getField().getName() = "err" and
-        //     sink.asExpr() = mc.getAnArgument()
-        // )
-        // or
+        exists(MethodCall mc |
+            mc.getMethod().getName() = "println" and
+            mc.getQualifier().(FieldAccess).getField().getDeclaringType().hasQualifiedName("java.lang", "System") and
+            mc.getQualifier().(FieldAccess).getField().getName() = "err" and
+            sink.asExpr() = mc.getAnArgument()
+        )
+        or
         exists(MethodCall mc2, CatchClause cc |
             mc2.getMethod().getName() = "println" and
             mc2.getQualifier().(FieldAccess).getField().getDeclaringType().hasQualifiedName("java.lang", "System") and
