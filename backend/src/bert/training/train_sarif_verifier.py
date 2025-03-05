@@ -53,8 +53,9 @@ def process_data_flows(labeled_flows_dir):
         for cwe in data_flows.keys():
             for result in data_flows[cwe]:
                 result_index = result['resultIndex']
+                flow_file_name = result['fileName']
                 for flow in result['flows']:
-                    data_flow_string = ""
+                    data_flow_string = f"Filename = {flow_file_name} Flows = "
                     codeFlowIndex = flow['codeFlowIndex']
                     label = 1 if flow['label'] == 'Yes' else 0
                     for step in flow['flow']:

@@ -4,17 +4,13 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from keras.models import load_model
 import tensorflow as tf
+import sys
 
 # Suppress TensorFlow logs
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-
-# Configuration
 embedding_model_name = 'paraphrase-MiniLM-L6-v2'
-project_name = "CWEToyDataset"
-project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
-input_json_path = os.path.join(project_path, 'flowMapsByCWE.json')
-model_path = os.path.join(os.getcwd(), "backend", 'src', 'bert', 'models', 'verify_flows.keras')
+
 
 def camel_case_split(str_input):
     words = [[str_input[0]]]
@@ -41,8 +37,9 @@ def process_data_flows_for_inference(data_flows):
     for cwe in data_flows.keys():
         for result in data_flows[cwe]:
             result_index = result['resultIndex']
+            flow_file_name = result['fileName']
             for flow in result['flows']:
-                data_flow_string = ""
+                data_flow_string = f"Filename = {flow_file_name} Flows = "
                 codeFlowIndex = flow['codeFlowIndex']
                 for step in flow['flow']:
                     data_flow_string += str(step)
@@ -88,17 +85,20 @@ def save_updated_json(data_flows, input_file_path):
         json.dump(data_flows, f, indent=4)
     return output_file_path
 
-if __name__ == "__main__":
+def run(project_name):
+    project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
+    input_json_path = os.path.join(project_path, 'flowMapsByCWE.json')
+    model_path = os.path.join(os.getcwd(), "backend", 'src', 'bert', 'models', 'verify_flows.keras')
     # Step 1: Load the trained model
     model = load_keras_model(model_path)
 
     # Step 2: Read and process the input JSON
     print(f"Reading data flows from {input_json_path}...")
     data_flows = read_data_flow_file(input_json_path)
-    processed_texts, flow_references = process_data_flows_for_inference(data_flows)
+    processed_flows, flow_references = process_data_flows_for_inference(data_flows)
 
     # Step 3: Calculate embeddings
-    embeddings = calculate_sentbert_vectors(processed_texts)
+    embeddings = calculate_sentbert_vectors(processed_flows)
 
     # Step 4: Predict labels
     predicted_labels = predict_labels(model, embeddings)
@@ -109,3 +109,11 @@ if __name__ == "__main__":
     # Step 6: Save the updated JSON
     output_path = save_updated_json(updated_data_flows, input_json_path)
     print(f"Inference complete! Updated JSON saved to {output_path}")
+
+if __name__ == "__main__":
+    project_name = "CWEToyDataset" # Default project name
+    run(project_name)
+    
+else:
+    project_name = sys.argv[1] # Project name passed as command-line argument from BERT service
+    run(project_name)
