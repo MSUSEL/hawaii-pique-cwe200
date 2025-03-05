@@ -1,7 +1,12 @@
 /**
  * @name Local information disclosure in a temporary directory with sensitive data
  * @kind path-problem
- * @id java/local-temp-file-sensitive-data-disclosure
+ * @id java/local-temp-file-sensitive-data-disclosure/538
+ * @problem.severity error
+ * @precision high
+ * @tags security
+ *      external/cwe/cwe-538
+ * @cwe CWE-538
  */
 
  import java
