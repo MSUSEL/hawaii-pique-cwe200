@@ -30,6 +30,7 @@ export class DataFlowTreeComponent implements OnInit {
   currentVulIndex: number = -1;
   currentProject: string = '';
 
+
   constructor(
     public dataFlowService: DataFlowService,
     private editorService: EditorService  // Inject the EditorService
@@ -169,6 +170,8 @@ submitAllLabels(): void {
     console.warn('No labels to submit');
     return;
   }
+
+  console.log('here is the tree', this.treeData)
   
   // Prepare the data for submission with all vulnerabilities and their flows
   const allLabelsData = {
@@ -180,7 +183,7 @@ submitAllLabels(): void {
           return {
             flowIndex: flowIndex,
             isVulnerable: label === 'Yes',
-            label: label
+            label: label,
           };
         })
       };

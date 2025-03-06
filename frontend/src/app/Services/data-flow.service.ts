@@ -106,13 +106,17 @@ getCompleteDataFlowLabelMap(): Map<number, Map<number, string>> {
     const pathComponents: string[] = node.fullPath.split(/[/\\]+/);
     const project = pathComponents[1]; // Extract project from path
     const vulnerabilityId = node.fullPath; // Use the full path as the vulnerability ID
+    const cwe = node.message.split(':')[0].trim() || ''
+
+
+    console.log('Project:', project, 'Vulnerability ID:', vulnerabilityId, 'CWE:', cwe);
 
     // Call the CodeQlService to get the data flow tree
     this.codeQlService.getDataFlowTree(vulnerabilityId, project, node.index)
       .subscribe({
         next: (data) => {
           console.log('Vulnerability Tree Response:', data);
-          let tree = this.convertDataToTree(data, node.index);
+          let tree = this.convertDataToTree(data, node.index, cwe);
           this.addLabel(tree)
           console.log(tree)
           this.dataFlowChange.next(tree);  // Update the data flow with the real data
@@ -125,7 +129,7 @@ getCompleteDataFlowLabelMap(): Map<number, Map<number, string>> {
   }
 
   // Helper function to format the real data into the tree structure expected by the component
-  private convertDataToTree(data: any[], vulIndex): any[] {
+  private convertDataToTree(data: any[], vulIndex, cwe: string): any[] {
     // console.log('Converting Data:', data);
 
     // Group flows separately into their own arrays
@@ -148,6 +152,7 @@ getCompleteDataFlowLabelMap(): Map<number, Map<number, string>> {
           endColumn: node.endColumn || 0,
           endLine: node.endLine || node.startLine || 0,
           type: node.type || '',
+          cwe: cwe
         };
       });
 
