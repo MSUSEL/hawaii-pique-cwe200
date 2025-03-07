@@ -1,0 +1,944 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "OgnlValueStack.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "showPassword",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Password.java",
+              "type": "String",
+              "code": "        super.evaluateExtraParams();\n\n        if (showPassword != null) {\n            addParameter(\"showPassword\", findValue(showPassword, Boolean.class));\n        }\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param toType     the type expected to find.\n     * @return the Object found, or <tt>null</tt> if not found.\n     */\n    protected Object findValue(String expression, Class<?> toType) {\n        if (toType == String.class) {\n            if (ComponentUtils.containsExpression(expression)) {\n                return TextParseUtil.translateVariables('%', expression, stack);"
+            },
+            {
+              "step": 2,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param expression the expression (must be not null)\n     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "     * @param expr the expression (must be not null)\r\n     * @return the stripped expression\r\n     */\r\n    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r"
+            },
+            {
+              "step": 6,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r\n\r\n    /**\r"
+            },
+            {
+              "step": 7,
+              "variableName": "ComponentUtils.stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 8,
+              "variableName": "stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "strippedExpression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }\n"
+            },
+            {
+              "step": 10,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @see org.apache.struts2.util.ValueStack#findValue(java.lang.String, java.lang.Class)\n     */\n    @Override\n    public Object findValue(String expr, Class asType, boolean throwExceptionOnFailure) {\n        try {\n            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);"
+            },
+            {
+              "step": 11,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);\n        } catch (OgnlException e) {\n            final Object value = handleOgnlException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } catch (Exception e) {\n            final Object value = handleOtherException(expr, throwExceptionOnFailure, e);"
+            },
+            {
+              "step": 12,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "        return tryFindValue(expr, asType);\n    }\n\n    protected Object handleOgnlException(String expr, boolean throwExceptionOnFailure, OgnlException e) {\n        Object ret = null;\n        if (e != null && e.getReason() instanceof SecurityException) {\n            LOG.error(\"Could not evaluate this expression due to security constraints: [{}]\", expr, e);"
+            },
+            {
+              "step": 13,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "",
+              "code": "    protected Object handleOgnlException(String expr, boolean throwExceptionOnFailure, OgnlException e) {\n        Object ret = null;\n        if (e != null && e.getReason() instanceof SecurityException) {\n            LOG.error(\"Could not evaluate this expression due to security constraints: [{}]\", expr, e);\n        } else {\n            ret = findInContext(expr);\n        }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "showPassword",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Password.java",
+              "type": "String",
+              "code": "        super.evaluateExtraParams();\n\n        if (showPassword != null) {\n            addParameter(\"showPassword\", findValue(showPassword, Boolean.class));\n        }\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param toType     the type expected to find.\n     * @return the Object found, or <tt>null</tt> if not found.\n     */\n    protected Object findValue(String expression, Class<?> toType) {\n        if (toType == String.class) {\n            if (ComponentUtils.containsExpression(expression)) {\n                return TextParseUtil.translateVariables('%', expression, stack);"
+            },
+            {
+              "step": 2,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param expression the expression (must be not null)\n     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "     * @param expr the expression (must be not null)\r\n     * @return the stripped expression\r\n     */\r\n    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r"
+            },
+            {
+              "step": 6,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r"
+            },
+            {
+              "step": 7,
+              "variableName": "expr.substring(2, expr.length() - 1)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r"
+            },
+            {
+              "step": 8,
+              "variableName": "ComponentUtils.stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 9,
+              "variableName": "stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 10,
+              "variableName": "strippedExpression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }\n"
+            },
+            {
+              "step": 11,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @see org.apache.struts2.util.ValueStack#findValue(java.lang.String, java.lang.Class)\n     */\n    @Override\n    public Object findValue(String expr, Class asType, boolean throwExceptionOnFailure) {\n        try {\n            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);"
+            },
+            {
+              "step": 12,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);\n        } catch (OgnlException e) {\n            final Object value = handleOgnlException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } catch (Exception e) {\n            final Object value = handleOtherException(expr, throwExceptionOnFailure, e);"
+            },
+            {
+              "step": 13,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "        return tryFindValue(expr, asType);\n    }\n\n    protected Object handleOgnlException(String expr, boolean throwExceptionOnFailure, OgnlException e) {\n        Object ret = null;\n        if (e != null && e.getReason() instanceof SecurityException) {\n            LOG.error(\"Could not evaluate this expression due to security constraints: [{}]\", expr, e);"
+            },
+            {
+              "step": 14,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "",
+              "code": "    protected Object handleOgnlException(String expr, boolean throwExceptionOnFailure, OgnlException e) {\n        Object ret = null;\n        if (e != null && e.getReason() instanceof SecurityException) {\n            LOG.error(\"Could not evaluate this expression due to security constraints: [{}]\", expr, e);\n        } else {\n            ret = findInContext(expr);\n        }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "OgnlValueStack.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "showPassword",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Password.java",
+              "type": "String",
+              "code": "        super.evaluateExtraParams();\n\n        if (showPassword != null) {\n            addParameter(\"showPassword\", findValue(showPassword, Boolean.class));\n        }\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param toType     the type expected to find.\n     * @return the Object found, or <tt>null</tt> if not found.\n     */\n    protected Object findValue(String expression, Class<?> toType) {\n        if (toType == String.class) {\n            if (ComponentUtils.containsExpression(expression)) {\n                return TextParseUtil.translateVariables('%', expression, stack);"
+            },
+            {
+              "step": 2,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param expression the expression (must be not null)\n     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "     * @param expr the expression (must be not null)\r\n     * @return the stripped expression\r\n     */\r\n    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r"
+            },
+            {
+              "step": 6,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r\n\r\n    /**\r"
+            },
+            {
+              "step": 7,
+              "variableName": "ComponentUtils.stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 8,
+              "variableName": "stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "strippedExpression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }\n"
+            },
+            {
+              "step": 10,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @see org.apache.struts2.util.ValueStack#findValue(java.lang.String, java.lang.Class)\n     */\n    @Override\n    public Object findValue(String expr, Class asType, boolean throwExceptionOnFailure) {\n        try {\n            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);"
+            },
+            {
+              "step": 11,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);\n        } catch (OgnlException e) {\n            final Object value = handleOgnlException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } catch (Exception e) {\n            final Object value = handleOtherException(expr, throwExceptionOnFailure, e);"
+            },
+            {
+              "step": 12,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "        return tryFindValue(expr, asType);\n    }\n\n    protected Object handleOgnlException(String expr, boolean throwExceptionOnFailure, OgnlException e) {\n        Object ret = null;\n        if (e != null && e.getReason() instanceof SecurityException) {\n            LOG.error(\"Could not evaluate this expression due to security constraints: [{}]\", expr, e);"
+            },
+            {
+              "step": 13,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "",
+              "code": "        }\n        if (ret == null) {\n            if (shouldLogMissingPropertyWarning(e)) {\n                LOG.warn(\"Could not find property [{}]!\", expr, e);\n            }\n            if (throwExceptionOnFailure) {\n                throw new StrutsException(e);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "showPassword",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Password.java",
+              "type": "String",
+              "code": "        super.evaluateExtraParams();\n\n        if (showPassword != null) {\n            addParameter(\"showPassword\", findValue(showPassword, Boolean.class));\n        }\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param toType     the type expected to find.\n     * @return the Object found, or <tt>null</tt> if not found.\n     */\n    protected Object findValue(String expression, Class<?> toType) {\n        if (toType == String.class) {\n            if (ComponentUtils.containsExpression(expression)) {\n                return TextParseUtil.translateVariables('%', expression, stack);"
+            },
+            {
+              "step": 2,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param expression the expression (must be not null)\n     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "     * @param expr the expression (must be not null)\r\n     * @return the stripped expression\r\n     */\r\n    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r"
+            },
+            {
+              "step": 6,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r"
+            },
+            {
+              "step": 7,
+              "variableName": "expr.substring(2, expr.length() - 1)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r"
+            },
+            {
+              "step": 8,
+              "variableName": "ComponentUtils.stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 9,
+              "variableName": "stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 10,
+              "variableName": "strippedExpression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }\n"
+            },
+            {
+              "step": 11,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @see org.apache.struts2.util.ValueStack#findValue(java.lang.String, java.lang.Class)\n     */\n    @Override\n    public Object findValue(String expr, Class asType, boolean throwExceptionOnFailure) {\n        try {\n            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);"
+            },
+            {
+              "step": 12,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);\n        } catch (OgnlException e) {\n            final Object value = handleOgnlException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } catch (Exception e) {\n            final Object value = handleOtherException(expr, throwExceptionOnFailure, e);"
+            },
+            {
+              "step": 13,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "        return tryFindValue(expr, asType);\n    }\n\n    protected Object handleOgnlException(String expr, boolean throwExceptionOnFailure, OgnlException e) {\n        Object ret = null;\n        if (e != null && e.getReason() instanceof SecurityException) {\n            LOG.error(\"Could not evaluate this expression due to security constraints: [{}]\", expr, e);"
+            },
+            {
+              "step": 14,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "",
+              "code": "        }\n        if (ret == null) {\n            if (shouldLogMissingPropertyWarning(e)) {\n                LOG.warn(\"Could not find property [{}]!\", expr, e);\n            }\n            if (throwExceptionOnFailure) {\n                throw new StrutsException(e);"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "OgnlValueStack.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "showPassword",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Password.java",
+              "type": "String",
+              "code": "        super.evaluateExtraParams();\n\n        if (showPassword != null) {\n            addParameter(\"showPassword\", findValue(showPassword, Boolean.class));\n        }\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param toType     the type expected to find.\n     * @return the Object found, or <tt>null</tt> if not found.\n     */\n    protected Object findValue(String expression, Class<?> toType) {\n        if (toType == String.class) {\n            if (ComponentUtils.containsExpression(expression)) {\n                return TextParseUtil.translateVariables('%', expression, stack);"
+            },
+            {
+              "step": 2,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param expression the expression (must be not null)\n     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "     * @param expr the expression (must be not null)\r\n     * @return the stripped expression\r\n     */\r\n    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r"
+            },
+            {
+              "step": 6,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r\n\r\n    /**\r"
+            },
+            {
+              "step": 7,
+              "variableName": "ComponentUtils.stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 8,
+              "variableName": "stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "strippedExpression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }\n"
+            },
+            {
+              "step": 10,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @see org.apache.struts2.util.ValueStack#findValue(java.lang.String, java.lang.Class)\n     */\n    @Override\n    public Object findValue(String expr, Class asType, boolean throwExceptionOnFailure) {\n        try {\n            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);"
+            },
+            {
+              "step": 11,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "            final Object value = handleOgnlException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } catch (Exception e) {\n            final Object value = handleOtherException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } finally {\n            ReflectionContextState.clear(context);"
+            },
+            {
+              "step": 12,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "        return tryFindValue(expr);\n    }\n\n    protected Object handleOtherException(String expr, boolean throwExceptionOnFailure, Exception e) {\n        logLookupFailure(expr, e);\n\n        if (throwExceptionOnFailure)"
+            },
+            {
+              "step": 13,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "    }\n\n    protected Object handleOtherException(String expr, boolean throwExceptionOnFailure, Exception e) {\n        logLookupFailure(expr, e);\n\n        if (throwExceptionOnFailure)\n            throw new StrutsException(e);"
+            },
+            {
+              "step": 14,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @param expr The failed expression\n     * @param e    The thrown exception.\n     */\n    private void logLookupFailure(String expr, Exception e) {\n        if (devMode) {\n            LOG.warn(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);\n            LOG.warn(\"NOTE: Previous warning message was issued due to devMode set to true.\");"
+            },
+            {
+              "step": 15,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "",
+              "code": "     */\n    private void logLookupFailure(String expr, Exception e) {\n        if (devMode) {\n            LOG.warn(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);\n            LOG.warn(\"NOTE: Previous warning message was issued due to devMode set to true.\");\n        } else {\n            LOG.debug(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "showPassword",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Password.java",
+              "type": "String",
+              "code": "        super.evaluateExtraParams();\n\n        if (showPassword != null) {\n            addParameter(\"showPassword\", findValue(showPassword, Boolean.class));\n        }\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param toType     the type expected to find.\n     * @return the Object found, or <tt>null</tt> if not found.\n     */\n    protected Object findValue(String expression, Class<?> toType) {\n        if (toType == String.class) {\n            if (ComponentUtils.containsExpression(expression)) {\n                return TextParseUtil.translateVariables('%', expression, stack);"
+            },
+            {
+              "step": 2,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param expression the expression (must be not null)\n     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "     * @param expr the expression (must be not null)\r\n     * @return the stripped expression\r\n     */\r\n    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r"
+            },
+            {
+              "step": 6,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r"
+            },
+            {
+              "step": 7,
+              "variableName": "expr.substring(2, expr.length() - 1)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r"
+            },
+            {
+              "step": 8,
+              "variableName": "ComponentUtils.stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 9,
+              "variableName": "stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 10,
+              "variableName": "strippedExpression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }\n"
+            },
+            {
+              "step": 11,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @see org.apache.struts2.util.ValueStack#findValue(java.lang.String, java.lang.Class)\n     */\n    @Override\n    public Object findValue(String expr, Class asType, boolean throwExceptionOnFailure) {\n        try {\n            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);"
+            },
+            {
+              "step": 12,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "            final Object value = handleOgnlException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } catch (Exception e) {\n            final Object value = handleOtherException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } finally {\n            ReflectionContextState.clear(context);"
+            },
+            {
+              "step": 13,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "        return tryFindValue(expr);\n    }\n\n    protected Object handleOtherException(String expr, boolean throwExceptionOnFailure, Exception e) {\n        logLookupFailure(expr, e);\n\n        if (throwExceptionOnFailure)"
+            },
+            {
+              "step": 14,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "    }\n\n    protected Object handleOtherException(String expr, boolean throwExceptionOnFailure, Exception e) {\n        logLookupFailure(expr, e);\n\n        if (throwExceptionOnFailure)\n            throw new StrutsException(e);"
+            },
+            {
+              "step": 15,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @param expr The failed expression\n     * @param e    The thrown exception.\n     */\n    private void logLookupFailure(String expr, Exception e) {\n        if (devMode) {\n            LOG.warn(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);\n            LOG.warn(\"NOTE: Previous warning message was issued due to devMode set to true.\");"
+            },
+            {
+              "step": 16,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "",
+              "code": "     */\n    private void logLookupFailure(String expr, Exception e) {\n        if (devMode) {\n            LOG.warn(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);\n            LOG.warn(\"NOTE: Previous warning message was issued due to devMode set to true.\");\n        } else {\n            LOG.debug(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 3,
+      "fileName": "OgnlValueStack.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "showPassword",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Password.java",
+              "type": "String",
+              "code": "        super.evaluateExtraParams();\n\n        if (showPassword != null) {\n            addParameter(\"showPassword\", findValue(showPassword, Boolean.class));\n        }\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param toType     the type expected to find.\n     * @return the Object found, or <tt>null</tt> if not found.\n     */\n    protected Object findValue(String expression, Class<?> toType) {\n        if (toType == String.class) {\n            if (ComponentUtils.containsExpression(expression)) {\n                return TextParseUtil.translateVariables('%', expression, stack);"
+            },
+            {
+              "step": 2,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param expression the expression (must be not null)\n     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "     * @param expr the expression (must be not null)\r\n     * @return the stripped expression\r\n     */\r\n    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r"
+            },
+            {
+              "step": 6,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r\n\r\n    /**\r"
+            },
+            {
+              "step": 7,
+              "variableName": "ComponentUtils.stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 8,
+              "variableName": "stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "strippedExpression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }\n"
+            },
+            {
+              "step": 10,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @see org.apache.struts2.util.ValueStack#findValue(java.lang.String, java.lang.Class)\n     */\n    @Override\n    public Object findValue(String expr, Class asType, boolean throwExceptionOnFailure) {\n        try {\n            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);"
+            },
+            {
+              "step": 11,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "            final Object value = handleOgnlException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } catch (Exception e) {\n            final Object value = handleOtherException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } finally {\n            ReflectionContextState.clear(context);"
+            },
+            {
+              "step": 12,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "        return tryFindValue(expr);\n    }\n\n    protected Object handleOtherException(String expr, boolean throwExceptionOnFailure, Exception e) {\n        logLookupFailure(expr, e);\n\n        if (throwExceptionOnFailure)"
+            },
+            {
+              "step": 13,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "    }\n\n    protected Object handleOtherException(String expr, boolean throwExceptionOnFailure, Exception e) {\n        logLookupFailure(expr, e);\n\n        if (throwExceptionOnFailure)\n            throw new StrutsException(e);"
+            },
+            {
+              "step": 14,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @param expr The failed expression\n     * @param e    The thrown exception.\n     */\n    private void logLookupFailure(String expr, Exception e) {\n        if (devMode) {\n            LOG.warn(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);\n            LOG.warn(\"NOTE: Previous warning message was issued due to devMode set to true.\");"
+            },
+            {
+              "step": 15,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "",
+              "code": "            LOG.warn(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);\n            LOG.warn(\"NOTE: Previous warning message was issued due to devMode set to true.\");\n        } else {\n            LOG.debug(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);\n        }\n    }\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "showPassword",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Password.java",
+              "type": "String",
+              "code": "        super.evaluateExtraParams();\n\n        if (showPassword != null) {\n            addParameter(\"showPassword\", findValue(showPassword, Boolean.class));\n        }\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param toType     the type expected to find.\n     * @return the Object found, or <tt>null</tt> if not found.\n     */\n    protected Object findValue(String expression, Class<?> toType) {\n        if (toType == String.class) {\n            if (ComponentUtils.containsExpression(expression)) {\n                return TextParseUtil.translateVariables('%', expression, stack);"
+            },
+            {
+              "step": 2,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "String expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @param expression the expression (must be not null)\n     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "expression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "     * @param expr the expression (must be not null)\r\n     * @return the stripped expression\r\n     */\r\n    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r"
+            },
+            {
+              "step": 6,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r"
+            },
+            {
+              "step": 7,
+              "variableName": "expr.substring(2, expr.length() - 1)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/util/ComponentUtils.java",
+              "type": "String",
+              "code": "    public static String stripExpression(String expr) {\r\n        // does the expression start with %{ and end with }? if so, just cut it off!\r\n        if (isExpression(expr)) {\r\n            return expr.substring(2, expr.length() - 1);\r\n        }\r\n        return expr;\r\n    }\r"
+            },
+            {
+              "step": 8,
+              "variableName": "ComponentUtils.stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "     * @return the stripped expression\n     */\n    protected String stripExpression(String expression) {\n        return ComponentUtils.stripExpression(expression);\n    }\n\n    /**"
+            },
+            {
+              "step": 9,
+              "variableName": "stripExpression(expression)",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "                return expression;\n            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }"
+            },
+            {
+              "step": 10,
+              "variableName": "strippedExpression",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/components/Component.java",
+              "type": "String",
+              "code": "            }\n        } else {\n            String strippedExpression = stripExpression(expression);\n            return getStack().findValue(strippedExpression, toType, throwExceptionOnELFailure);\n        }\n    }\n"
+            },
+            {
+              "step": 11,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @see org.apache.struts2.util.ValueStack#findValue(java.lang.String, java.lang.Class)\n     */\n    @Override\n    public Object findValue(String expr, Class asType, boolean throwExceptionOnFailure) {\n        try {\n            setupExceptionOnFailure(throwExceptionOnFailure);\n            return tryFindValueWhenExpressionIsNotNull(expr, asType);"
+            },
+            {
+              "step": 12,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "            final Object value = handleOgnlException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } catch (Exception e) {\n            final Object value = handleOtherException(expr, throwExceptionOnFailure, e);\n            return converter.convertValue(getContext(), value, asType);\n        } finally {\n            ReflectionContextState.clear(context);"
+            },
+            {
+              "step": 13,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "        return tryFindValue(expr);\n    }\n\n    protected Object handleOtherException(String expr, boolean throwExceptionOnFailure, Exception e) {\n        logLookupFailure(expr, e);\n\n        if (throwExceptionOnFailure)"
+            },
+            {
+              "step": 14,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "    }\n\n    protected Object handleOtherException(String expr, boolean throwExceptionOnFailure, Exception e) {\n        logLookupFailure(expr, e);\n\n        if (throwExceptionOnFailure)\n            throw new StrutsException(e);"
+            },
+            {
+              "step": 15,
+              "variableName": "String expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "String",
+              "code": "     * @param expr The failed expression\n     * @param e    The thrown exception.\n     */\n    private void logLookupFailure(String expr, Exception e) {\n        if (devMode) {\n            LOG.warn(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);\n            LOG.warn(\"NOTE: Previous warning message was issued due to devMode set to true.\");"
+            },
+            {
+              "step": 16,
+              "variableName": "expr",
+              "uri": "struts-STRUTS_7_0_3/core/src/main/java/org/apache/struts2/ognl/OgnlValueStack.java",
+              "type": "",
+              "code": "            LOG.warn(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);\n            LOG.warn(\"NOTE: Previous warning message was issued due to devMode set to true.\");\n        } else {\n            LOG.debug(\"Caught an exception while evaluating expression '{}' against value stack\", expr, e);\n        }\n    }\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
