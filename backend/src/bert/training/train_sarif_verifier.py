@@ -46,21 +46,69 @@ def text_preprocess(feature_text):
     preprocessed_text = ' '.join(words).lower()
     return preprocessed_text
 
+import os
+import numpy as np
+
 def process_data_flows(labeled_flows_dir):
     processed_data_flows = []
+    # Dictionary to track seen variableNames per resultIndex
+    seen_variable_names_by_result = {}
+    
+    # Counters for statistics
+    total_flows = 0
+    duplicate_flows = 0
+    kept_flows = 0
+    
     for file_name in os.listdir(labeled_flows_dir):
         data_flows = read_data_flow_file(os.path.join(labeled_flows_dir, file_name))
         for cwe in data_flows.keys():
             for result in data_flows[cwe]:
                 result_index = result['resultIndex']
                 flow_file_name = result['fileName']
+                
+                # Initialize set for this resultIndex if not already present
+                if result_index not in seen_variable_names_by_result:
+                    seen_variable_names_by_result[result_index] = set()
+                
                 for flow in result['flows']:
+                    total_flows += 1  # Increment total flows
+                    
+                    # Get the variableName of the first step in the flow
+                    if not flow['flow']:  # Handle empty flow case
+                        continue
+                    first_step_variable_name = flow['flow'][0]['variableName']
+                    
+                    # Check for duplicate
+                    if first_step_variable_name in seen_variable_names_by_result[result_index]:
+                        duplicate_flows += 1  # Increment duplicate counter
+                        continue
+                    
+                    # Add the variableName to the seen set
+                    seen_variable_names_by_result[result_index].add(first_step_variable_name)
+                    kept_flows += 1  # Increment kept flows
+                    
+                    # Process the flow as before
                     data_flow_string = f"Filename = {flow_file_name} Flows = "
                     codeFlowIndex = flow['codeFlowIndex']
                     label = 1 if flow['label'] == 'Yes' else 0
                     for step in flow['flow']:
                         data_flow_string += str(step)
-                    processed_data_flows.append([file_name, result_index, codeFlowIndex, text_preprocess(data_flow_string), label])
+                    processed_data_flows.append([
+                        file_name,
+                        result_index,
+                        codeFlowIndex,
+                        text_preprocess(data_flow_string),
+                        label
+                    ])
+    
+    # Print statistics
+    print(f"Total flows processed: {total_flows}")
+    print(f"Duplicate flows excluded: {duplicate_flows}")
+    print(f"Flows kept for training: {kept_flows}")
+
+    with open('processed_data_flows.json', 'w') as json_file:
+        json.dump(processed_data_flows, json_file, indent=4)
+    
     return np.array(processed_data_flows)
 
 def calculate_sentbert_vectors(sentences, batch_size=64):
