@@ -46,8 +46,6 @@ def text_preprocess(feature_text):
     preprocessed_text = ' '.join(words).lower()
     return preprocessed_text
 
-import os
-import numpy as np
 
 def process_data_flows(labeled_flows_dir):
     processed_data_flows = []
@@ -90,7 +88,15 @@ def process_data_flows(labeled_flows_dir):
                     # Process the flow as before
                     data_flow_string = f"Filename = {flow_file_name} Flows = "
                     codeFlowIndex = flow['codeFlowIndex']
-                    label = 1 if flow['label'] == 'Yes' else 0
+                    
+                    if 'label' in flow:
+                        if flow['label'] == 'Yes':
+                            label = 1
+                        elif flow['label'] == 'No':
+                            label = 0
+                    else:
+                        continue  # Skip if this flow is not labeled
+                    
                     for step in flow['flow']:
                         data_flow_string += str(step)
                     processed_data_flows.append([
