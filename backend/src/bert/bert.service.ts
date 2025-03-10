@@ -112,6 +112,34 @@ export class BertService {
             });
         });    
     }
+
+
+    async verifyFlows(sourcePath: string) {
+        const jsonFilePath = path.join(sourcePath, 'flowMapsByCWE.json');
+        const projectName = path.basename(sourcePath);
+        
+        return new Promise<void>((resolve, reject) => {
+            // Spawn the Python process
+            const process = spawn('python', [path.join("src", "bert", "bert_verify_sarif.py"), projectName]);
+            console.log(`Running verification script on ${projectName}`);
+    
+            // Capture stderr data
+            process.stderr.on('data', (data) => {
+                console.error(`stderr: ${data}`);
+            });
+    
+            // Handle the process exit
+            process.on('close', (code) => {
+                if (code === 0) {
+                    console.log('Flows successfully verified.');
+                    resolve();
+                } else {
+                    console.error(`Flow verification process exited with code ${code}`);
+                    reject(new Error(`Flow verification process exited with code ${code}`));
+                }
+            });
+        });    
+    }
 }
 
 

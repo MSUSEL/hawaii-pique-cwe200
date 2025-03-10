@@ -153,13 +153,22 @@ export class CodeQlService {
         //     await this.runCWEQueries(sourcePath, createCodeQlDto);
         // });
 
-        await executeStep('Saving Dataflow Tree', async () => {
-            await this.parserService.saveDataFlowTree(sourcePath);
-        });
+        // await executeStep('Saving Dataflow Tree.', async () => {
+        //     await this.parserService.saveDataFlowTree(sourcePath);
+        // });
 
-        await executeStep('Verify Sarif', async () => {
-            await this.verifySarif(sourcePath);
-        });
+
+        const flows = await this.fileUtilService.readJsonFile (path.join(sourcePath, 'flowMapsByCWE.json'));
+        if (Object.keys(flows).length > 0){
+            
+            // await executeStep('Verifying Data Flows.', async () => {
+            //     await this.bertService.verifyFlows(sourcePath);
+            // });
+
+            await executeStep('Updating Sarif.', async () => {
+                await this.updateSarif(sourcePath);
+            });
+        }
     
         // Print all the times at the end
         console.log("Time taken for each step:");
@@ -565,7 +574,7 @@ export class CodeQlService {
      *
      * @param sourcePath The path to the project directory.
      */
-    async verifySarif(sourcePath: string){
+    async updateSarif(sourcePath: string){
         var codeFlowsPath = path.join(sourcePath,'flowMapsByCWE.json');
         var codeFlows = await this.fileUtilService.readJsonFile(codeFlowsPath);
 
@@ -574,20 +583,30 @@ export class CodeQlService {
 
         Object.keys(codeFlows).forEach(cwe => {
 
-            let resultIndex = codeFlows[cwe].resultIndex
-
-            for (let i = 0; i < codeFlows[cwe].flows.length; i++){
-                let flowIndex = codeFlows[cwe].flows[i].codeFlowIndex
-                let label = codeFlows[cwe].flows[i].label
+            let results = codeFlows[cwe]
+            // Iterate over the results for each CWE
+            for (let j = 0; j < results.length; j++){
+                let resultIndex = results[j].resultIndex
+                let flows = results[j].flows
                 
-                // Make sure the resultIndex is the index of the sarif result. 
-                // Not all sarif results have a codeFlow
-                if (sarifdata.runs[0].results[resultIndex].codeFlows[flowIndex]){
-                    sarifdata.runs[0].results[resultIndex].codeFlows[flowIndex].label = label                 }
-                else{
+                // Iterate over the flows for each result
+                for (let i = 0; i < flows.length; i++){
+                    let flowIndex = flows[i].codeFlowIndex
+                    let label = flows[i].label
+                    
+                    // Make sure the resultIndex is the index of the sarif result. 
+                    // Not all sarif results have a codeFlow
+                    if (sarifdata.runs[0].results[resultIndex].codeFlows[flowIndex]){
+                        sarifdata.runs[0].results[resultIndex].codeFlows[flowIndex].label = label                 
+                    }
+                    else{
+
+                    }
                 }
             }
-          }); 
+        });
+        // Save the updated sarifdata back to the file
+        await this.fileUtilService.writeToFile(sarifPath, JSON.stringify(sarifdata, null, 2)); 
     }
 
 }
