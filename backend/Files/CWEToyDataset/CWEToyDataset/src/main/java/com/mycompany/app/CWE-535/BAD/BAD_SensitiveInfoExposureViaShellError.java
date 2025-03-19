@@ -5,7 +5,8 @@ public class BAD_SensitiveInfoExposureViaShellError {
 
     public static void main(String[] args) {
         try {
-            String[] command = {"/bin/sh", "-c", "somecommand --password=GoldenSunrise2023"};
+            String password = "GoldenSunrise2023";
+            String[] command = {"/bin/sh", "-c", "somecommand --password=", password};
             Process process = Runtime.getRuntime().exec(command);
             process.waitFor();
 
