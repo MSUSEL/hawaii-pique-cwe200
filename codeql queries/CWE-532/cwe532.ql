@@ -74,7 +74,8 @@
    }
    
    predicate isSink(DataFlow::Node sink) { 
-     sinkNode(sink, "log-injection") 
+     sinkNode(sink, "log-injection")  or
+     getSink(sink, "Log Sink")
    }
  
    predicate isBarrier(DataFlow::Node sanitizer) {
