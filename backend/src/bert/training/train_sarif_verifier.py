@@ -6,8 +6,8 @@ import sys
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import tensorflow as tf
-from tensorflow.keras.layers import (Dense, Dropout, BatchNormalization, Activation, Input)
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import (Dense, Dropout, BatchNormalization, Activation, Input, Add)
+from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras import regularizers
 from tensorflow.keras.optimizers import Adam
 from sklearn import metrics
@@ -16,6 +16,8 @@ from scikeras.wrappers import KerasClassifier
 from sklearn.model_selection import (StratifiedKFold, RandomizedSearchCV, train_test_split)
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import Pipeline
+from tqdm import tqdm
+
 
 # Parameter grid
 param_grid = {
@@ -106,6 +108,8 @@ def process_data_flows(labeled_flows_dir):
                         text_preprocess(data_flow_string),
                         label
                     ])
+                    # break  # Only process the first flow for each result
+                    
     
     # Print statistics
     print(f"Total flows processed: {total_flows}")
@@ -122,32 +126,96 @@ def calculate_sentbert_vectors(sentences, batch_size=64):
     embeddings = model_transformer.encode(sentences, batch_size=batch_size, show_progress_bar=True)
     return embeddings
 
+def calculate_codebert_vectors(sentences, model_name='microsoft/codebert-base', batch_size=32):
+    """
+    Calculate fixed-size embeddings using CodeBERT as an encoder with TensorFlow.
+    """
+    from transformers import AutoTokenizer, TFAutoModel
+
+    # Load CodeBERT tokenizer and model
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = TFAutoModel.from_pretrained(model_name)
+    print("CodeBERT model loaded successfully.")
+
+    embeddings = []
+    for i in tqdm(range(0, len(sentences), batch_size), desc="Processing batches"):
+        batch_sentences = sentences[i:i+batch_size]
+
+        # Ensure input is a list of strings
+        if isinstance(batch_sentences, np.ndarray):  # If it's a NumPy array, convert it
+            batch_sentences = batch_sentences.tolist()
+        elif not isinstance(batch_sentences, list):  # Ensure it's a list
+            batch_sentences = [str(batch_sentences)]
+
+        # Tokenize the input batch
+        inputs = tokenizer(batch_sentences, return_tensors="tf", padding=True, truncation=True, max_length=512)
+
+        # Forward pass through CodeBERT
+        outputs = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])
+        hidden_states = outputs.last_hidden_state
+
+        # Apply mean pooling over token embeddings to create sentence embeddings
+        pooled_embeddings = tf.reduce_mean(hidden_states, axis=1)
+        embeddings.append(pooled_embeddings.numpy())
+
+    # Combine all embeddings into a single NumPy array
+    return np.vstack(embeddings)
+
 def create_model(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.0001, units=256, activation='elu', embedding_dim=None):
     if embedding_dim is None:
         raise ValueError("Embedding dimension not found")
     
-    units = embedding_dim // 3
-    model = Sequential()
-    model.add(Input(shape=(embedding_dim,)))
-    model.add(Dense(units, kernel_regularizer=regularizers.l2(weight_decay)))
-    model.add(BatchNormalization())
-    model.add(Activation(activation))
-    model.add(Dropout(dropout_rate))
-    model.add(Dense(units // 2, kernel_regularizer=regularizers.l2(weight_decay)))
-    model.add(BatchNormalization())
-    model.add(Activation(activation))
-    model.add(Dropout(dropout_rate))
-    model.add(Dense(units // 4, kernel_regularizer=regularizers.l2(weight_decay)))
-    model.add(BatchNormalization())
-    model.add(Activation(activation))
-    model.add(Dense(1, activation='sigmoid'))
+ # Gradual reduction of units instead of drastic cuts
+    units1 = embedding_dim
+    units2 = embedding_dim * 3 // 4
+    units3 = embedding_dim // 2
+    units4 = embedding_dim // 4
+
+    inputs = Input(shape=(embedding_dim,))
+    
+    x = Dense(units1, kernel_regularizer=regularizers.l2(weight_decay))(inputs)
+    x = BatchNormalization()(x)
+    x = Activation(activation)(x)
+    x = Dropout(dropout_rate)(x)
+    
+    # Residual Block 1
+    res1 = Dense(units2, kernel_regularizer=regularizers.l2(weight_decay))(x)
+    res1 = BatchNormalization()(res1)
+    res1 = Activation(activation)(res1)
+    res1 = Dropout(dropout_rate)(res1)
+
+    x = Dense(units2)(x)  # This makes x the same size as res1
+    x = Add()([x, res1])  # Skip connection
+
+    # Residual Block 2
+    res2 = Dense(units3, kernel_regularizer=regularizers.l2(weight_decay))(x)
+    res2 = BatchNormalization()(res2)
+    res2 = Activation(activation)(res2)
+    res2 = Dropout(dropout_rate)(res2)
+
+    x = Dense(units3)(x)  # Adjust x to match res2
+    x = Add()([x, res2])  # Skip connection
+
+    x = Dense(units4, kernel_regularizer=regularizers.l2(weight_decay))(x)
+    x = BatchNormalization()(x)
+    x = Activation(activation)(x)
+    x = Dropout(dropout_rate)(x)
+
+    outputs = Dense(1, activation='sigmoid')(x)
+
+    model = Model(inputs, outputs)
+
     opt = Adam(learning_rate=learning_rate)
+
     model.compile(
         loss='binary_crossentropy',
         optimizer=opt,
-        metrics=['accuracy', tf.keras.metrics.Precision(name='precision'),
-                 tf.keras.metrics.Recall(name='recall'), tf.keras.metrics.AUC(name='auc')]
+        metrics=['accuracy', 
+                 tf.keras.metrics.Precision(name='precision'),
+                 tf.keras.metrics.Recall(name='recall'), 
+                 tf.keras.metrics.AUC(name='auc')]
     )
+
     return model
 
 def evaluate_model(final_model, X_test, y_test, category):
