@@ -1,0 +1,1150 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "JBossLogPrintWriter.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "credentialStore",
+              "startLine": 101,
+              "startColumn": 26,
+              "endLine": 101,
+              "endColumn": 41,
+              "uri": "wildfly-35.0.1.Final/testsuite/shared/src/main/java/org/wildfly/test/security/servlets/ReadCredentialServlet.java",
+              "type": "String",
+              "code": "        ServiceController<?> credStoreService = registry.getService(ServiceName.of(SERVICE_NAME_CRED_STORE, credentialStore));\n        if (credStoreService == null) {\n            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);\n            writer.print(credentialStore + \" not found\");\n            return;\n        }\n        CredentialStore cs = (CredentialStore) credStoreService.getValue();"
+            },
+            {
+              "step": 1,
+              "variableName": "credentialStore + \" not found\"",
+              "startLine": 101,
+              "startColumn": 26,
+              "endLine": 101,
+              "endColumn": 56,
+              "uri": "wildfly-35.0.1.Final/testsuite/shared/src/main/java/org/wildfly/test/security/servlets/ReadCredentialServlet.java",
+              "type": "String",
+              "code": "        ServiceController<?> credStoreService = registry.getService(ServiceName.of(SERVICE_NAME_CRED_STORE, credentialStore));\n        if (credStoreService == null) {\n            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);\n            writer.print(credentialStore + \" not found\");\n            return;\n        }\n        CredentialStore cs = (CredentialStore) credStoreService.getValue();"
+            },
+            {
+              "step": 2,
+              "variableName": "String s",
+              "startLine": 176,
+              "startColumn": 23,
+              "endLine": 176,
+              "endColumn": 31,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void print(String s) {\n        if (s != null) {\n            write(s);\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "s",
+              "startLine": 178,
+              "startColumn": 19,
+              "endLine": 178,
+              "endColumn": 20,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    @Override\n    public void print(String s) {\n        if (s != null) {\n            write(s);\n        }\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "String s",
+              "startLine": 103,
+              "startColumn": 23,
+              "endLine": 103,
+              "endColumn": 31,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void write(String s) {\n        write(s, 0, s.length());\n    }\n"
+            },
+            {
+              "step": 5,
+              "variableName": "s",
+              "startLine": 104,
+              "startColumn": 15,
+              "endLine": 104,
+              "endColumn": 16,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "\n    @Override\n    public void write(String s) {\n        write(s, 0, s.length());\n    }\n\n    private void outputLogger() {"
+            },
+            {
+              "step": 6,
+              "variableName": "String str",
+              "startLine": 86,
+              "startColumn": 23,
+              "endLine": 86,
+              "endColumn": 33,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void write(String str, int off, int len) {\n        synchronized (lock) {\n            int mark = 0;\n            int i;"
+            },
+            {
+              "step": 7,
+              "variableName": "str",
+              "startLine": 93,
+              "startColumn": 35,
+              "endLine": 93,
+              "endColumn": 38,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 8,
+              "variableName": "buffer",
+              "startLine": 93,
+              "startColumn": 21,
+              "endLine": 93,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "StringBuilder",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 9,
+              "variableName": "buffer",
+              "startLine": 93,
+              "startColumn": 21,
+              "endLine": 93,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 10,
+              "variableName": "outputLogger()",
+              "startLine": 94,
+              "startColumn": 21,
+              "endLine": 94,
+              "endColumn": 35,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }\n            }"
+            },
+            {
+              "step": 11,
+              "variableName": "outputLogger",
+              "startLine": 107,
+              "startColumn": 18,
+              "endLine": 107,
+              "endColumn": 30,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "        write(s, 0, s.length());\n    }\n\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);"
+            },
+            {
+              "step": 12,
+              "variableName": "buffer",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 61,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 13,
+              "variableName": "buffer",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 61,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "StringBuilder",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 14,
+              "variableName": "buffer.toString()",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 72,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 15,
+              "variableName": "deploymentName + \": \" + buffer.toString()",
+              "startLine": 109,
+              "startColumn": 31,
+              "endLine": 109,
+              "endColumn": 72,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            }
+          ],
+          "label": "No",
+          "probability": 0.4510817229747772
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "credentialStore",
+              "startLine": 101,
+              "startColumn": 26,
+              "endLine": 101,
+              "endColumn": 41,
+              "uri": "wildfly-35.0.1.Final/testsuite/shared/src/main/java/org/wildfly/test/security/servlets/ReadCredentialServlet.java",
+              "type": "String",
+              "code": "        ServiceController<?> credStoreService = registry.getService(ServiceName.of(SERVICE_NAME_CRED_STORE, credentialStore));\n        if (credStoreService == null) {\n            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);\n            writer.print(credentialStore + \" not found\");\n            return;\n        }\n        CredentialStore cs = (CredentialStore) credStoreService.getValue();"
+            },
+            {
+              "step": 1,
+              "variableName": "credentialStore + \" not found\"",
+              "startLine": 101,
+              "startColumn": 26,
+              "endLine": 101,
+              "endColumn": 56,
+              "uri": "wildfly-35.0.1.Final/testsuite/shared/src/main/java/org/wildfly/test/security/servlets/ReadCredentialServlet.java",
+              "type": "String",
+              "code": "        ServiceController<?> credStoreService = registry.getService(ServiceName.of(SERVICE_NAME_CRED_STORE, credentialStore));\n        if (credStoreService == null) {\n            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);\n            writer.print(credentialStore + \" not found\");\n            return;\n        }\n        CredentialStore cs = (CredentialStore) credStoreService.getValue();"
+            },
+            {
+              "step": 2,
+              "variableName": "String s",
+              "startLine": 176,
+              "startColumn": 23,
+              "endLine": 176,
+              "endColumn": 31,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void print(String s) {\n        if (s != null) {\n            write(s);\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "s",
+              "startLine": 178,
+              "startColumn": 19,
+              "endLine": 178,
+              "endColumn": 20,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    @Override\n    public void print(String s) {\n        if (s != null) {\n            write(s);\n        }\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "String s",
+              "startLine": 103,
+              "startColumn": 23,
+              "endLine": 103,
+              "endColumn": 31,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void write(String s) {\n        write(s, 0, s.length());\n    }\n"
+            },
+            {
+              "step": 5,
+              "variableName": "s",
+              "startLine": 104,
+              "startColumn": 15,
+              "endLine": 104,
+              "endColumn": 16,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "\n    @Override\n    public void write(String s) {\n        write(s, 0, s.length());\n    }\n\n    private void outputLogger() {"
+            },
+            {
+              "step": 6,
+              "variableName": "String str",
+              "startLine": 86,
+              "startColumn": 23,
+              "endLine": 86,
+              "endColumn": 33,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void write(String str, int off, int len) {\n        synchronized (lock) {\n            int mark = 0;\n            int i;"
+            },
+            {
+              "step": 7,
+              "variableName": "str",
+              "startLine": 93,
+              "startColumn": 35,
+              "endLine": 93,
+              "endColumn": 38,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 8,
+              "variableName": "buffer",
+              "startLine": 93,
+              "startColumn": 21,
+              "endLine": 93,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "StringBuilder",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 9,
+              "variableName": "buffer",
+              "startLine": 93,
+              "startColumn": 21,
+              "endLine": 93,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 10,
+              "variableName": "outputLogger()",
+              "startLine": 94,
+              "startColumn": 21,
+              "endLine": 94,
+              "endColumn": 35,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }\n            }"
+            },
+            {
+              "step": 11,
+              "variableName": "outputLogger",
+              "startLine": 107,
+              "startColumn": 18,
+              "endLine": 107,
+              "endColumn": 30,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "        write(s, 0, s.length());\n    }\n\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);"
+            },
+            {
+              "step": 12,
+              "variableName": "buffer",
+              "startLine": 108,
+              "startColumn": 13,
+              "endLine": 108,
+              "endColumn": 19,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "    }\n\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }"
+            },
+            {
+              "step": 13,
+              "variableName": "buffer",
+              "startLine": 108,
+              "startColumn": 13,
+              "endLine": 108,
+              "endColumn": 19,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "StringBuilder",
+              "code": "    }\n\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }"
+            },
+            {
+              "step": 14,
+              "variableName": "buffer",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 61,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "StringBuilder",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 15,
+              "variableName": "buffer.toString()",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 72,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 16,
+              "variableName": "deploymentName + \": \" + buffer.toString()",
+              "startLine": 109,
+              "startColumn": 31,
+              "endLine": 109,
+              "endColumn": 72,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            }
+          ],
+          "label": "No",
+          "probability": 0.4510817229747772
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "credentialStore",
+              "startLine": 132,
+              "startColumn": 62,
+              "endLine": 132,
+              "endColumn": 77,
+              "uri": "wildfly-35.0.1.Final/testsuite/shared/src/main/java/org/wildfly/test/security/servlets/ReadCredentialServlet.java",
+              "type": "String",
+              "code": "        }\n        if (clearPassword == null) {\n            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);\n            writer.print(alias + \" password not found in \" + credentialStore);\n        } else {\n            writer.print(clearPassword);\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "alias + \" password not found in \" + credentialStore",
+              "startLine": 132,
+              "startColumn": 26,
+              "endLine": 132,
+              "endColumn": 77,
+              "uri": "wildfly-35.0.1.Final/testsuite/shared/src/main/java/org/wildfly/test/security/servlets/ReadCredentialServlet.java",
+              "type": "String",
+              "code": "        }\n        if (clearPassword == null) {\n            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);\n            writer.print(alias + \" password not found in \" + credentialStore);\n        } else {\n            writer.print(clearPassword);\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "String s",
+              "startLine": 176,
+              "startColumn": 23,
+              "endLine": 176,
+              "endColumn": 31,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void print(String s) {\n        if (s != null) {\n            write(s);\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "s",
+              "startLine": 178,
+              "startColumn": 19,
+              "endLine": 178,
+              "endColumn": 20,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    @Override\n    public void print(String s) {\n        if (s != null) {\n            write(s);\n        }\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "String s",
+              "startLine": 103,
+              "startColumn": 23,
+              "endLine": 103,
+              "endColumn": 31,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void write(String s) {\n        write(s, 0, s.length());\n    }\n"
+            },
+            {
+              "step": 5,
+              "variableName": "s",
+              "startLine": 104,
+              "startColumn": 15,
+              "endLine": 104,
+              "endColumn": 16,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "\n    @Override\n    public void write(String s) {\n        write(s, 0, s.length());\n    }\n\n    private void outputLogger() {"
+            },
+            {
+              "step": 6,
+              "variableName": "String str",
+              "startLine": 86,
+              "startColumn": 23,
+              "endLine": 86,
+              "endColumn": 33,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void write(String str, int off, int len) {\n        synchronized (lock) {\n            int mark = 0;\n            int i;"
+            },
+            {
+              "step": 7,
+              "variableName": "str",
+              "startLine": 93,
+              "startColumn": 35,
+              "endLine": 93,
+              "endColumn": 38,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 8,
+              "variableName": "buffer",
+              "startLine": 93,
+              "startColumn": 21,
+              "endLine": 93,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "StringBuilder",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 9,
+              "variableName": "buffer",
+              "startLine": 93,
+              "startColumn": 21,
+              "endLine": 93,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 10,
+              "variableName": "outputLogger()",
+              "startLine": 94,
+              "startColumn": 21,
+              "endLine": 94,
+              "endColumn": 35,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }\n            }"
+            },
+            {
+              "step": 11,
+              "variableName": "outputLogger",
+              "startLine": 107,
+              "startColumn": 18,
+              "endLine": 107,
+              "endColumn": 30,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "        write(s, 0, s.length());\n    }\n\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);"
+            },
+            {
+              "step": 12,
+              "variableName": "buffer",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 61,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 13,
+              "variableName": "buffer",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 61,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "StringBuilder",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 14,
+              "variableName": "buffer.toString()",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 72,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 15,
+              "variableName": "deploymentName + \": \" + buffer.toString()",
+              "startLine": 109,
+              "startColumn": 31,
+              "endLine": 109,
+              "endColumn": 72,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            }
+          ],
+          "label": "No",
+          "probability": 0.45939570665359497
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "clearPassword",
+              "startLine": 134,
+              "startColumn": 26,
+              "endLine": 134,
+              "endColumn": 39,
+              "uri": "wildfly-35.0.1.Final/testsuite/shared/src/main/java/org/wildfly/test/security/servlets/ReadCredentialServlet.java",
+              "type": "String",
+              "code": "            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);\n            writer.print(alias + \" password not found in \" + credentialStore);\n        } else {\n            writer.print(clearPassword);\n        }\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "String s",
+              "startLine": 176,
+              "startColumn": 23,
+              "endLine": 176,
+              "endColumn": 31,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void print(String s) {\n        if (s != null) {\n            write(s);\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "s",
+              "startLine": 178,
+              "startColumn": 19,
+              "endLine": 178,
+              "endColumn": 20,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    @Override\n    public void print(String s) {\n        if (s != null) {\n            write(s);\n        }\n    }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "String s",
+              "startLine": 103,
+              "startColumn": 23,
+              "endLine": 103,
+              "endColumn": 31,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void write(String s) {\n        write(s, 0, s.length());\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "s",
+              "startLine": 104,
+              "startColumn": 15,
+              "endLine": 104,
+              "endColumn": 16,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "\n    @Override\n    public void write(String s) {\n        write(s, 0, s.length());\n    }\n\n    private void outputLogger() {"
+            },
+            {
+              "step": 5,
+              "variableName": "String str",
+              "startLine": 86,
+              "startColumn": 23,
+              "endLine": 86,
+              "endColumn": 33,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public void write(String str, int off, int len) {\n        synchronized (lock) {\n            int mark = 0;\n            int i;"
+            },
+            {
+              "step": 6,
+              "variableName": "str",
+              "startLine": 93,
+              "startColumn": 35,
+              "endLine": 93,
+              "endColumn": 38,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 7,
+              "variableName": "buffer",
+              "startLine": 93,
+              "startColumn": 21,
+              "endLine": 93,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "StringBuilder",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 8,
+              "variableName": "buffer",
+              "startLine": 93,
+              "startColumn": 21,
+              "endLine": 93,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "            for (i = 0; i < len; i++) {\n                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }"
+            },
+            {
+              "step": 9,
+              "variableName": "outputLogger()",
+              "startLine": 94,
+              "startColumn": 21,
+              "endLine": 94,
+              "endColumn": 35,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "                final char c = str.charAt(off + i);\n                if (c == '\\n') {\n                    buffer.append(str, mark + off, off + i);\n                    outputLogger();\n                    mark = i + 1;\n                }\n            }"
+            },
+            {
+              "step": 10,
+              "variableName": "outputLogger",
+              "startLine": 107,
+              "startColumn": 18,
+              "endLine": 107,
+              "endColumn": 30,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "        write(s, 0, s.length());\n    }\n\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);"
+            },
+            {
+              "step": 11,
+              "variableName": "buffer",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 61,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "JBossLogPrintWriter [buffer] : StringBuilder",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 12,
+              "variableName": "buffer",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 61,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "StringBuilder",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 13,
+              "variableName": "buffer.toString()",
+              "startLine": 109,
+              "startColumn": 55,
+              "endLine": 109,
+              "endColumn": 72,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "String",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            },
+            {
+              "step": 14,
+              "variableName": "deploymentName + \": \" + buffer.toString()",
+              "startLine": 109,
+              "startColumn": 31,
+              "endLine": 109,
+              "endColumn": 72,
+              "uri": "wildfly-35.0.1.Final/connector/src/main/java/org/jboss/as/connector/services/resourceadapters/deployment/JBossLogPrintWriter.java",
+              "type": "",
+              "code": "\n    private void outputLogger() {\n        if (buffer.length() > 0) {\n            logger.log(level, deploymentName + \": \" + buffer.toString());\n            buffer.setLength(0);\n        }\n    }"
+            }
+          ],
+          "label": "Yes",
+          "probability": 0.6399073600769043
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "EJB3SubsystemXMLPersister.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "Constants.PASSWORD",
+              "startLine": 64,
+              "startColumn": 71,
+              "endLine": 64,
+              "endColumn": 89,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "String",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 1,
+              "variableName": "attribute.getName() + \"-\" + Constants.PASSWORD",
+              "startLine": 64,
+              "startColumn": 43,
+              "endLine": 64,
+              "endColumn": 89,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "String",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 2,
+              "variableName": "writer",
+              "startLine": 64,
+              "startColumn": 21,
+              "endLine": 64,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "XMLStreamWriter",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 3,
+              "variableName": "XMLStreamWriter writer",
+              "startLine": 60,
+              "startColumn": 122,
+              "endLine": 60,
+              "endColumn": 144,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "XMLStreamWriter",
+              "code": "    protected static final class KeyStoreAttributeMarshaller extends DefaultAttributeMarshaller {\n\n        @Override\n        public void marshallAsAttribute(AttributeDefinition attribute, ModelNode resourceModel, boolean marshallDefault, XMLStreamWriter writer) throws XMLStreamException {\n            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {"
+            },
+            {
+              "step": 4,
+              "variableName": "writer",
+              "startLine": 353,
+              "startColumn": 139,
+              "endLine": 353,
+              "endColumn": 145,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "            writer.writeAttribute(EJB3SubsystemXMLAttribute.CLIENT_MAPPINGS_CLUSTER_NAME.getLocalName(), model.require(EJB3SubsystemModel.CLIENT_MAPPINGS_CLUSTER_NAME).asString());\n        }\n        // the default marshalling will marshal as an element, and we want to marshal as an attribute, so a change of coding here\n        EJB3RemoteResourceDefinition.CONNECTORS.getMarshaller().marshallAsAttribute(EJB3RemoteResourceDefinition.CONNECTORS, model, true, writer);\n        writer.writeAttribute(EJB3SubsystemXMLAttribute.THREAD_POOL_NAME.getLocalName(), model.require(EJB3SubsystemModel.THREAD_POOL_NAME).asString());\n\n        EJB3RemoteResourceDefinition.EXECUTE_IN_WORKER.marshallAsAttribute(model, writer);"
+            },
+            {
+              "step": 5,
+              "variableName": "final XMLExtendedStreamWriter writer",
+              "startLine": 347,
+              "startColumn": 32,
+              "endLine": 347,
+              "endColumn": 68,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "    }\n\n\n    protected void writeRemote(final XMLExtendedStreamWriter writer, final ModelNode model) throws XMLStreamException {\n        // only write if non-default value?\n        if (model.hasDefined(EJB3SubsystemModel.CLIENT_MAPPINGS_CLUSTER_NAME)) {\n            writer.writeAttribute(EJB3SubsystemXMLAttribute.CLIENT_MAPPINGS_CLUSTER_NAME.getLocalName(), model.require(EJB3SubsystemModel.CLIENT_MAPPINGS_CLUSTER_NAME).asString());"
+            },
+            {
+              "step": 6,
+              "variableName": "writer",
+              "startLine": 194,
+              "startColumn": 25,
+              "endLine": 194,
+              "endColumn": 31,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "        // write the remote element\n        if (model.hasDefined(SERVICE) && model.get(SERVICE).hasDefined(REMOTE)) {\n            writer.writeStartElement(EJB3SubsystemXMLElement.REMOTE.getLocalName());\n            writeRemote(writer, model.get(SERVICE, REMOTE));\n\n            // profiles element\n            if (model.hasDefined(REMOTING_PROFILE)) {"
+            },
+            {
+              "step": 7,
+              "variableName": "writer",
+              "startLine": 220,
+              "startColumn": 23,
+              "endLine": 220,
+              "endColumn": 29,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "",
+              "code": "        // write the remote element\n        if (model.hasDefined(SERVICE) && model.get(SERVICE).hasDefined(IIOP)) {\n            writer.writeStartElement(EJB3SubsystemXMLElement.IIOP.getLocalName());\n            writeIIOP(writer, model.get(SERVICE, IIOP));\n            writer.writeEndElement();\n        }\n"
+            }
+          ],
+          "label": "No",
+          "probability": 0.39359545707702637
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "Constants.PASSWORD",
+              "startLine": 64,
+              "startColumn": 71,
+              "endLine": 64,
+              "endColumn": 89,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "String",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 1,
+              "variableName": "attribute.getName() + \"-\" + Constants.PASSWORD",
+              "startLine": 64,
+              "startColumn": 43,
+              "endLine": 64,
+              "endColumn": 89,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "String",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 2,
+              "variableName": "writer",
+              "startLine": 64,
+              "startColumn": 21,
+              "endLine": 64,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "XMLStreamWriter",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 3,
+              "variableName": "XMLStreamWriter writer",
+              "startLine": 60,
+              "startColumn": 122,
+              "endLine": 60,
+              "endColumn": 144,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "XMLStreamWriter",
+              "code": "    protected static final class KeyStoreAttributeMarshaller extends DefaultAttributeMarshaller {\n\n        @Override\n        public void marshallAsAttribute(AttributeDefinition attribute, ModelNode resourceModel, boolean marshallDefault, XMLStreamWriter writer) throws XMLStreamException {\n            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {"
+            },
+            {
+              "step": 4,
+              "variableName": "writer",
+              "startLine": 558,
+              "startColumn": 137,
+              "endLine": 558,
+              "endColumn": 143,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "                ModelNode distributableCache = property.getValue();\n                writer.writeAttribute(EJB3SubsystemXMLAttribute.NAME.getLocalName(), property.getName());\n                for (Attribute attribute : EnumSet.allOf(DistributableStatefulSessionBeanCacheProviderResourceDefinition.Attribute.class)) {\n                    attribute.getDefinition().getMarshaller().marshallAsAttribute(attribute.getDefinition(), distributableCache, false, writer);\n                }\n                writer.writeEndElement();\n            }"
+            },
+            {
+              "step": 5,
+              "variableName": "XMLExtendedStreamWriter writer",
+              "startLine": 549,
+              "startColumn": 43,
+              "endLine": 549,
+              "endColumn": 73,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "     * @throws javax.xml.stream.XMLStreamException\n     *\n     */\n    private void writeDistributableCaches(XMLExtendedStreamWriter writer, ModelNode model) throws XMLStreamException {\n        // distributable-cache\n        if (model.hasDefined(EJB3SubsystemModel.DISTRIBUTABLE_CACHE)) {\n            List<Property> distributableCaches = model.get(EJB3SubsystemModel.DISTRIBUTABLE_CACHE).asPropertyList();"
+            },
+            {
+              "step": 6,
+              "variableName": "writer",
+              "startLine": 157,
+              "startColumn": 43,
+              "endLine": 157,
+              "endColumn": 49,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "            // write the caches\n            this.writeCaches(writer, model);\n            this.writeSimpleCaches(writer, model);\n            this.writeDistributableCaches(writer, model);\n            // </caches>\n            writer.writeEndElement();\n        }"
+            },
+            {
+              "step": 7,
+              "variableName": "writer",
+              "startLine": 220,
+              "startColumn": 23,
+              "endLine": 220,
+              "endColumn": 29,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "",
+              "code": "        // write the remote element\n        if (model.hasDefined(SERVICE) && model.get(SERVICE).hasDefined(IIOP)) {\n            writer.writeStartElement(EJB3SubsystemXMLElement.IIOP.getLocalName());\n            writeIIOP(writer, model.get(SERVICE, IIOP));\n            writer.writeEndElement();\n        }\n"
+            }
+          ],
+          "label": "No",
+          "probability": 0.39359545707702637
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "Constants.PASSWORD",
+              "startLine": 64,
+              "startColumn": 71,
+              "endLine": 64,
+              "endColumn": 89,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "String",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 1,
+              "variableName": "attribute.getName() + \"-\" + Constants.PASSWORD",
+              "startLine": 64,
+              "startColumn": 43,
+              "endLine": 64,
+              "endColumn": 89,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "String",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 2,
+              "variableName": "writer",
+              "startLine": 64,
+              "startColumn": 21,
+              "endLine": 64,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "XMLStreamWriter",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 3,
+              "variableName": "XMLStreamWriter writer",
+              "startLine": 60,
+              "startColumn": 122,
+              "endLine": 60,
+              "endColumn": 144,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "XMLStreamWriter",
+              "code": "    protected static final class KeyStoreAttributeMarshaller extends DefaultAttributeMarshaller {\n\n        @Override\n        public void marshallAsAttribute(AttributeDefinition attribute, ModelNode resourceModel, boolean marshallDefault, XMLStreamWriter writer) throws XMLStreamException {\n            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {"
+            },
+            {
+              "step": 4,
+              "variableName": "writer",
+              "startLine": 629,
+              "startColumn": 96,
+              "endLine": 629,
+              "endColumn": 102,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "    private void writeTimerService(final XMLExtendedStreamWriter writer, final ModelNode timerServiceModel) throws XMLStreamException {\n\n        for (AttributeDefinition attribute : TimerServiceResourceDefinition.ATTRIBUTES) {\n            attribute.getMarshaller().marshallAsAttribute(attribute, timerServiceModel, false, writer);\n        }\n\n        writer.writeStartElement(EJB3SubsystemXMLElement.DATA_STORES.getLocalName());"
+            },
+            {
+              "step": 5,
+              "variableName": "final XMLExtendedStreamWriter writer",
+              "startLine": 626,
+              "startColumn": 36,
+              "endLine": 626,
+              "endColumn": 72,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "        }\n    }\n\n    private void writeTimerService(final XMLExtendedStreamWriter writer, final ModelNode timerServiceModel) throws XMLStreamException {\n\n        for (AttributeDefinition attribute : TimerServiceResourceDefinition.ATTRIBUTES) {\n            attribute.getMarshaller().marshallAsAttribute(attribute, timerServiceModel, false, writer);"
+            },
+            {
+              "step": 6,
+              "variableName": "writer",
+              "startLine": 186,
+              "startColumn": 36,
+              "endLine": 186,
+              "endColumn": 42,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "            // <timer-service>\n            writer.writeStartElement(EJB3SubsystemXMLElement.TIMER_SERVICE.getLocalName());\n            final ModelNode timerServiceModel = model.get(SERVICE, TIMER_SERVICE);\n            this.writeTimerService(writer, timerServiceModel);\n            // </timer-service>\n            writer.writeEndElement();\n        }"
+            },
+            {
+              "step": 7,
+              "variableName": "writer",
+              "startLine": 220,
+              "startColumn": 23,
+              "endLine": 220,
+              "endColumn": 29,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "",
+              "code": "        // write the remote element\n        if (model.hasDefined(SERVICE) && model.get(SERVICE).hasDefined(IIOP)) {\n            writer.writeStartElement(EJB3SubsystemXMLElement.IIOP.getLocalName());\n            writeIIOP(writer, model.get(SERVICE, IIOP));\n            writer.writeEndElement();\n        }\n"
+            }
+          ],
+          "label": "No",
+          "probability": 0.39359545707702637
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "Constants.PASSWORD",
+              "startLine": 64,
+              "startColumn": 71,
+              "endLine": 64,
+              "endColumn": 89,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "String",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 1,
+              "variableName": "attribute.getName() + \"-\" + Constants.PASSWORD",
+              "startLine": 64,
+              "startColumn": 43,
+              "endLine": 64,
+              "endColumn": 89,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "String",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 2,
+              "variableName": "writer",
+              "startLine": 64,
+              "startColumn": 21,
+              "endLine": 64,
+              "endColumn": 27,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "XMLStreamWriter",
+              "code": "            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.PASSWORD, resourceModel.get(Constants.PASSWORD).asString());\n                }\n                if (resourceModel.hasDefined(Constants.TYPE)) {\n                    writer.writeAttribute(attribute.getName() + \"-\" + Constants.TYPE, resourceModel.get(Constants.TYPE).asString());"
+            },
+            {
+              "step": 3,
+              "variableName": "XMLStreamWriter writer",
+              "startLine": 60,
+              "startColumn": 122,
+              "endLine": 60,
+              "endColumn": 144,
+              "uri": "wildfly-35.0.1.Final/security/subsystem/src/main/java/org/jboss/as/security/ComplexAttributes.java",
+              "type": "XMLStreamWriter",
+              "code": "    protected static final class KeyStoreAttributeMarshaller extends DefaultAttributeMarshaller {\n\n        @Override\n        public void marshallAsAttribute(AttributeDefinition attribute, ModelNode resourceModel, boolean marshallDefault, XMLStreamWriter writer) throws XMLStreamException {\n            if (attribute.isMarshallable(resourceModel, marshallDefault)) {\n                resourceModel = resourceModel.get(attribute.getName());\n                if (resourceModel.hasDefined(Constants.PASSWORD)) {"
+            },
+            {
+              "step": 4,
+              "variableName": "writer",
+              "startLine": 747,
+              "startColumn": 90,
+              "endLine": 747,
+              "endColumn": 96,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "    }\n\n    private static void writeAttribute(XMLExtendedStreamWriter writer, ModelNode model, AttributeDefinition attribute, boolean marshallDefault) throws XMLStreamException {\n        attribute.getMarshaller().marshallAsAttribute(attribute, model, marshallDefault, writer);\n    }\n}\n"
+            },
+            {
+              "step": 5,
+              "variableName": "XMLExtendedStreamWriter writer",
+              "startLine": 746,
+              "startColumn": 40,
+              "endLine": 746,
+              "endColumn": 70,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "        writer.writeEndElement();\n    }\n\n    private static void writeAttribute(XMLExtendedStreamWriter writer, ModelNode model, AttributeDefinition attribute, boolean marshallDefault) throws XMLStreamException {\n        attribute.getMarshaller().marshallAsAttribute(attribute, model, marshallDefault, writer);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "writer",
+              "startLine": 513,
+              "startColumn": 32,
+              "endLine": 513,
+              "endColumn": 38,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "                ModelNode cache = property.getValue();\n                writer.writeAttribute(EJB3SubsystemXMLAttribute.NAME.getLocalName(), property.getName());\n                LegacyCacheFactoryResourceDefinition.PASSIVATION_STORE.marshallAsAttribute(cache, writer);\n                writeAttribute(writer, cache, LegacyCacheFactoryResourceDefinition.ALIASES, true);\n                writer.writeEndElement();\n            }\n        }"
+            },
+            {
+              "step": 7,
+              "variableName": "XMLExtendedStreamWriter writer",
+              "startLine": 504,
+              "startColumn": 30,
+              "endLine": 504,
+              "endColumn": 60,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "        StrictMaxPoolResourceDefinition.INSTANCE_ACQUISITION_TIMEOUT_UNIT.marshallAsAttribute(strictMaxPoolModelNode, writer);\n    }\n\n    private void writeCaches(XMLExtendedStreamWriter writer, ModelNode model) throws XMLStreamException {\n        // cache\n        if (model.hasDefined(EJB3SubsystemModel.CACHE)) {\n            List<Property> caches = model.get(EJB3SubsystemModel.CACHE).asPropertyList();"
+            },
+            {
+              "step": 8,
+              "variableName": "writer",
+              "startLine": 155,
+              "startColumn": 30,
+              "endLine": 155,
+              "endColumn": 36,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "XMLExtendedStreamWriter",
+              "code": "            // <caches>\n            writer.writeStartElement(EJB3SubsystemXMLElement.CACHES.getLocalName());\n            // write the caches\n            this.writeCaches(writer, model);\n            this.writeSimpleCaches(writer, model);\n            this.writeDistributableCaches(writer, model);\n            // </caches>"
+            },
+            {
+              "step": 9,
+              "variableName": "writer",
+              "startLine": 220,
+              "startColumn": 23,
+              "endLine": 220,
+              "endColumn": 29,
+              "uri": "wildfly-35.0.1.Final/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemXMLPersister.java",
+              "type": "",
+              "code": "        // write the remote element\n        if (model.hasDefined(SERVICE) && model.get(SERVICE).hasDefined(IIOP)) {\n            writer.writeStartElement(EJB3SubsystemXMLElement.IIOP.getLocalName());\n            writeIIOP(writer, model.get(SERVICE, IIOP));\n            writer.writeEndElement();\n        }\n"
+            }
+          ],
+          "label": "No",
+          "probability": 0.39359545707702637
+        }
+      ]
+    }
+  ]
+}
