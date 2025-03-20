@@ -1,0 +1,211 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "CheckCompletedVisitor.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "secretStaticProperty",
+              "startLine": 156,
+              "startColumn": 18,
+              "endLine": 156,
+              "endColumn": 38,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "SecretStaticProperty",
+              "code": "\n  @Override\n  public void visit(SecretStaticProperty secretStaticProperty) {\n    validateNull(secretStaticProperty, secretStaticProperty.getValue());\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "StaticProperty sp",
+              "startLine": 197,
+              "startColumn": 29,
+              "endLine": 197,
+              "endColumn": 46,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "SecretStaticProperty",
+              "code": "    return this.validationInfos;\n  }\n\n  private void validateNull(StaticProperty sp, Object value) {\n    if (!ignoreValidation && !sp.isOptional() && Objects.isNull(value)) {\n      addMissingConfiguration(sp);\n    }"
+            },
+            {
+              "step": 2,
+              "variableName": "sp",
+              "startLine": 199,
+              "startColumn": 31,
+              "endLine": 199,
+              "endColumn": 33,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "SecretStaticProperty",
+              "code": "\n  private void validateNull(StaticProperty sp, Object value) {\n    if (!ignoreValidation && !sp.isOptional() && Objects.isNull(value)) {\n      addMissingConfiguration(sp);\n    }\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "StaticProperty sp",
+              "startLine": 211,
+              "startColumn": 40,
+              "endLine": 211,
+              "endColumn": 57,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "SecretStaticProperty",
+              "code": "    return !(mappingProperty.getSelectedProperties() == null || mappingProperty.getSelectedProperties().isEmpty());\n  }\n\n  private void addMissingConfiguration(StaticProperty sp) {\n    validationInfos.add(\n        PipelineElementValidationInfo.error(\n            String.format("
+            },
+            {
+              "step": 4,
+              "variableName": "sp.getInternalName()",
+              "startLine": 216,
+              "startColumn": 17,
+              "endLine": 216,
+              "endColumn": 37,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "String",
+              "code": "        PipelineElementValidationInfo.error(\n            String.format(\n                \"Configuration option \\\"%s\\\" has no value although it is marked as required\",\n                sp.getInternalName()\n            )\n        )\n    );"
+            },
+            {
+              "step": 5,
+              "variableName": "S",
+              "startLine": 214,
+              "startColumn": 13,
+              "endLine": 217,
+              "endColumn": 14,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "Object[] [[]] : String",
+              "code": "  private void addMissingConfiguration(StaticProperty sp) {\n    validationInfos.add(\n        PipelineElementValidationInfo.error(\n            String.format(\n                \"Configuration option \\\"%s\\\" has no value although it is marked as required\",\n                sp.getInternalName()\n            )"
+            },
+            {
+              "step": 6,
+              "variableName": "S",
+              "startLine": 214,
+              "startColumn": 13,
+              "endLine": 217,
+              "endColumn": 14,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "",
+              "code": "  private void addMissingConfiguration(StaticProperty sp) {\n    validationInfos.add(\n        PipelineElementValidationInfo.error(\n            String.format(\n                \"Configuration option \\\"%s\\\" has no value although it is marked as required\",\n                sp.getInternalName()\n            )"
+            }
+          ],
+          "label": "No",
+          "probability": 0.20815731585025787
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "secretStaticProperty",
+              "startLine": 156,
+              "startColumn": 18,
+              "endLine": 156,
+              "endColumn": 38,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "SecretStaticProperty",
+              "code": "\n  @Override\n  public void visit(SecretStaticProperty secretStaticProperty) {\n    validateNull(secretStaticProperty, secretStaticProperty.getValue());\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "StaticProperty sp",
+              "startLine": 197,
+              "startColumn": 29,
+              "endLine": 197,
+              "endColumn": 46,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "SecretStaticProperty",
+              "code": "    return this.validationInfos;\n  }\n\n  private void validateNull(StaticProperty sp, Object value) {\n    if (!ignoreValidation && !sp.isOptional() && Objects.isNull(value)) {\n      addMissingConfiguration(sp);\n    }"
+            },
+            {
+              "step": 2,
+              "variableName": "sp",
+              "startLine": 199,
+              "startColumn": 31,
+              "endLine": 199,
+              "endColumn": 33,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "SecretStaticProperty",
+              "code": "\n  private void validateNull(StaticProperty sp, Object value) {\n    if (!ignoreValidation && !sp.isOptional() && Objects.isNull(value)) {\n      addMissingConfiguration(sp);\n    }\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "StaticProperty sp",
+              "startLine": 211,
+              "startColumn": 40,
+              "endLine": 211,
+              "endColumn": 57,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "SecretStaticProperty",
+              "code": "    return !(mappingProperty.getSelectedProperties() == null || mappingProperty.getSelectedProperties().isEmpty());\n  }\n\n  private void addMissingConfiguration(StaticProperty sp) {\n    validationInfos.add(\n        PipelineElementValidationInfo.error(\n            String.format("
+            },
+            {
+              "step": 4,
+              "variableName": "sp",
+              "startLine": 216,
+              "startColumn": 17,
+              "endLine": 216,
+              "endColumn": 19,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "SecretStaticProperty",
+              "code": "        PipelineElementValidationInfo.error(\n            String.format(\n                \"Configuration option \\\"%s\\\" has no value although it is marked as required\",\n                sp.getInternalName()\n            )\n        )\n    );"
+            },
+            {
+              "step": 5,
+              "variableName": "getInternalName",
+              "startLine": 89,
+              "startColumn": 17,
+              "endLine": 89,
+              "endColumn": 32,
+              "uri": "streampipes-release-0.97.0/streampipes-model/src/main/java/org/apache/streampipes/model/staticproperty/StaticProperty.java",
+              "type": "SecretStaticProperty",
+              "code": "    this.predefined = false;\n  }\n\n  public String getInternalName() {\n    return internalName;\n  }\n"
+            },
+            {
+              "step": 6,
+              "variableName": "internalName",
+              "startLine": 90,
+              "startColumn": 12,
+              "endLine": 90,
+              "endColumn": 24,
+              "uri": "streampipes-release-0.97.0/streampipes-model/src/main/java/org/apache/streampipes/model/staticproperty/StaticProperty.java",
+              "type": "String",
+              "code": "  }\n\n  public String getInternalName() {\n    return internalName;\n  }\n\n  public void setInternalName(String name) {"
+            },
+            {
+              "step": 7,
+              "variableName": "sp.getInternalName()",
+              "startLine": 216,
+              "startColumn": 17,
+              "endLine": 216,
+              "endColumn": 37,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "String",
+              "code": "        PipelineElementValidationInfo.error(\n            String.format(\n                \"Configuration option \\\"%s\\\" has no value although it is marked as required\",\n                sp.getInternalName()\n            )\n        )\n    );"
+            },
+            {
+              "step": 8,
+              "variableName": "S",
+              "startLine": 214,
+              "startColumn": 13,
+              "endLine": 217,
+              "endColumn": 14,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "Object[] [[]] : String",
+              "code": "  private void addMissingConfiguration(StaticProperty sp) {\n    validationInfos.add(\n        PipelineElementValidationInfo.error(\n            String.format(\n                \"Configuration option \\\"%s\\\" has no value although it is marked as required\",\n                sp.getInternalName()\n            )"
+            },
+            {
+              "step": 9,
+              "variableName": "S",
+              "startLine": 214,
+              "startColumn": 13,
+              "endLine": 217,
+              "endColumn": 14,
+              "uri": "streampipes-release-0.97.0/streampipes-pipeline-management/src/main/java/org/apache/streampipes/manager/matching/v2/pipeline/CheckCompletedVisitor.java",
+              "type": "",
+              "code": "  private void addMissingConfiguration(StaticProperty sp) {\n    validationInfos.add(\n        PipelineElementValidationInfo.error(\n            String.format(\n                \"Configuration option \\\"%s\\\" has no value although it is marked as required\",\n                sp.getInternalName()\n            )"
+            }
+          ],
+          "label": "No",
+          "probability": 0.20815731585025787
+        }
+      ]
+    }
+  ]
+}
