@@ -17,6 +17,7 @@ from sklearn.model_selection import (StratifiedKFold, RandomizedSearchCV, train_
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import Pipeline
 from tqdm import tqdm
+import hashlib
 
 
 # Parameter grid
@@ -51,8 +52,8 @@ def text_preprocess(feature_text):
 
 def process_data_flows(labeled_flows_dir):
     processed_data_flows = []
-    # Dictionary to track seen variableNames per resultIndex
-    seen_variable_names_by_result = {}
+    # Dictionary to track seen flow hashes (globally or per resultIndex)
+    seen_flow_hashes = set()  # Using a single set for simplicity; can scope by resultIndex if needed
     
     # Counters for statistics
     total_flows = 0
@@ -66,57 +67,56 @@ def process_data_flows(labeled_flows_dir):
                 result_index = result['resultIndex']
                 flow_file_name = result['fileName']
                 
-                # Initialize set for this resultIndex if not already present
-                if result_index not in seen_variable_names_by_result:
-                    seen_variable_names_by_result[result_index] = set()
-                
                 for flow in result['flows']:
                     total_flows += 1  # Increment total flows
                     
-                    # Get the variableName of the first step in the flow
-                    if not flow['flow']:  # Handle empty flow case
-                        continue
-                    first_step_variable_name = flow['flow'][0]['variableName']
-                    
-                    # Check for duplicate
-                    if first_step_variable_name in seen_variable_names_by_result[result_index]:
-                        duplicate_flows += 1  # Increment duplicate counter
+                    # Skip if flow is empty
+                    if not flow['flow']:
                         continue
                     
-                    # Add the variableName to the seen set
-                    seen_variable_names_by_result[result_index].add(first_step_variable_name)
-                    kept_flows += 1  # Increment kept flows
+                    # Skip if flow lacks a label
+                    if 'label' not in flow:
+                        continue
+                    label = 1 if flow['label'] == 'Yes' else 0 if flow['label'] == 'No' else None
+                    if label is None:
+                        continue
                     
-                    # Process the flow as before
+                    # Build the data flow string
                     data_flow_string = f"Filename = {flow_file_name} Flows = "
                     codeFlowIndex = flow['codeFlowIndex']
-                    
-                    if 'label' in flow:
-                        if flow['label'] == 'Yes':
-                            label = 1
-                        elif flow['label'] == 'No':
-                            label = 0
-                    else:
-                        continue  # Skip if this flow is not labeled
-                    
                     for step in flow['flow']:
                         data_flow_string += str(step)
+                    processed_text = text_preprocess(data_flow_string)
+                    
+                    # Create a unique hash for the flow
+                    # Hashing the processed text ensures uniqueness based on content
+                    flow_hash = hashlib.sha256(processed_text.encode('utf-8')).hexdigest()
+                    
+                    # Check for duplicate
+                    if flow_hash in seen_flow_hashes:
+                        duplicate_flows += 1
+                        continue
+                    
+                    # Add the hash to the seen set
+                    seen_flow_hashes.add(flow_hash)
+                    kept_flows += 1
+                    
+                    # Store the processed flow with metadata
                     processed_data_flows.append([
                         file_name,
                         result_index,
                         codeFlowIndex,
-                        text_preprocess(data_flow_string),
+                        processed_text,
                         label
                     ])
-                    # break  # Only process the first flow for each result
-                    
     
     # Print statistics
     print(f"Total flows processed: {total_flows}")
     print(f"Duplicate flows excluded: {duplicate_flows}")
     print(f"Flows kept for training: {kept_flows}")
 
-    with open('processed_data_flows.json', 'w') as json_file:
+    # Save to JSON
+    with open('processed_data_flows.json', 'w', encoding='utf-8') as json_file:
         json.dump(processed_data_flows, json_file, indent=4)
     
     return np.array(processed_data_flows)
@@ -253,6 +253,11 @@ if __name__ == "__main__":
     processed_data_flows = process_data_flows(labeled_flows_dir)
     print("Calculating Sentence-BERT embeddings...")
     embeddings = calculate_sentbert_vectors(processed_data_flows[:, 3])
+    
+    # embeddings = calculate_codebert_vectors(processed_data_flows[:, 3])
+    # embedding_dim = 768
+
+
     labels = processed_data_flows[:, 4]
 
     # Step 2: Prepare X and y
@@ -276,7 +281,7 @@ if __name__ == "__main__":
         activation='elu',
         weight_decay=0.0001
     )
-    pipeline = Pipeline([('smote', SMOTE(random_state=42)), ('model', model)])
+    pipeline = Pipeline([('model', model)])
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
     random_search = RandomizedSearchCV(
         estimator=pipeline,
@@ -306,11 +311,11 @@ if __name__ == "__main__":
         ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=1e-6, verbose=1)
     ]
     print("Applying SMOTE to training data for final fit...")
-    smote = SMOTE(random_state=42)
-    X_train_smote, y_train_smote = smote.fit_resample(X_train, y_train)
+    # smote = SMOTE(random_state=42)
+    # X_train_smote, y_train_smote = smote.fit_resample(X_train, y_train)
     print(f"Training final model with {best_params['model__epochs']} epochs and batch size {best_params['model__batch_size']}...")
     history = final_model.fit(
-        X_train_smote, y_train_smote,
+        X_train, y_train,
         validation_split=0.1,
         epochs=best_params['model__epochs'],
         batch_size=best_params['model__batch_size'],
