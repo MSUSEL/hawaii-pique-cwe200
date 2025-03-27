@@ -10,4 +10,3 @@ torch==2.2.2
 transformers==4.50.1
 tf_keras==2.17.0
 imblearn==0.0
-huggingface_hub==0.23.0

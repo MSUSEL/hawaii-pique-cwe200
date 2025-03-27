@@ -1,0 +1,26 @@
+{
+    "name": "CWE-200 Dev Container",
+    "build": {
+      "dockerfile": "../Dockerfile",          // ?? relative path to root-level Dockerfile
+      "context": "..",                        // ?? build context should also be root
+      "args": {
+        "JAVA_VERSION": "11"
+      }
+    },
+    "workspaceFolder": "/app",
+    "forwardPorts": [4200, 5400],
+    "postCreateCommand": "npm install",
+    "mounts": [
+      "source=${localWorkspaceFolder},target=/app,type=bind"
+    ],
+    "settings": {
+      "terminal.integrated.defaultProfile.linux": "bash"
+    },
+    "extensions": [
+      "ms-python.python",
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "ms-vscode.vscode-typescript-next"
+    ]
+  }
+  
