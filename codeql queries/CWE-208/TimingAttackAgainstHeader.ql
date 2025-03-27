@@ -63,14 +63,6 @@
      isNonConstantComparisonCallArgument(sink.asExpr())
    }
  }
-
- predicate isTestFile(File f) {
-  // Convert path to lowercase for case-insensitive matching
-  exists(string path | path = f.getAbsolutePath().toLowerCase() |
-    // Check for common test-related directory or file name patterns
-    path.regexpMatch(".*(test|tests|testing|test-suite|testcase|unittest|integration-test|spec).*")
-  )
-}
  
  module NonConstantTimeComparisonFlow = TaintTracking::Global<NonConstantTimeComparisonConfig>;
  
@@ -83,7 +75,6 @@
    sinkNode = sink.getNode() and
    message1 = "Possible timing attack against $@ validation." and
    sourceNode = source.getNode() and
-   message2 = "client-supplied token" and
-   not isTestFile(sink.getNode().getLocation().getFile())
+   message2 = "client-supplied token"
  }
  

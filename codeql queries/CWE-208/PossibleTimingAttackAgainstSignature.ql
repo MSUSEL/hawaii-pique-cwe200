@@ -18,14 +18,6 @@
  import semmle.code.java.dataflow.DataFlow
  deprecated import NonConstantTimeCheckOnSignatureQuery
  deprecated import NonConstantTimeCryptoComparisonFlow::PathGraph
-
- predicate isTestFile(File f) {
-  // Convert path to lowercase for case-insensitive matching
-  exists(string path | path = f.getAbsolutePath().toLowerCase() |
-    // Check for common test-related directory or file name patterns
-    path.regexpMatch(".*(test|tests|testing|test-suite|testcase|unittest|integration-test|spec).*")
-  )
-}
  
  deprecated query predicate problems(
    DataFlow::Node sinkNode, NonConstantTimeCryptoComparisonFlow::PathNode source,
@@ -36,7 +28,6 @@
    sinkNode = sink.getNode() and
    message1 = "Possible timing attack against $@ validation." and
    source = source0 and
-   message2 = source.getNode().(CryptoOperationSource).getCall().getResultType() and
-   not isTestFile(sink.getNode().getLocation().getFile())
+   message2 = source.getNode().(CryptoOperationSource).getCall().getResultType()
  }
  
