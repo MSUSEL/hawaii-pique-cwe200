@@ -72,7 +72,7 @@ RUN wget -O /tmp/maven.tar.gz https://downloads.apache.org/maven/maven-3/$MAVEN_
     && rm /tmp/maven.tar.gz
 
 # Download and install CodeQL CLI
-ENV CODEQL_VERSION=2.17.0
+ENV CODEQL_VERSION=2.20.3
 RUN wget -O /tmp/codeql.zip https://github.com/github/codeql-cli-binaries/releases/download/v$CODEQL_VERSION/codeql-linux64.zip \
     && unzip /tmp/codeql.zip -d /opt \
     && rm /tmp/codeql.zip \
