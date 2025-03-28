@@ -75,3 +75,4 @@ backend/Files/CWEToyDataset/data.json
 testing/codeql_results.json
 testing/codeql_results.json
 pyrightconfig.json
+unsloth_compiled_cache
