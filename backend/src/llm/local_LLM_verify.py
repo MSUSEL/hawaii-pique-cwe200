@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+import torch  # Import PyTorch explicitly
 from transformers import AutoProcessor, AutoModelForImageTextToText
 import logging
 
@@ -8,10 +9,14 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Suppress unnecessary TF logs
+# Suppress unnecessary TF logs (though Gemma uses PyTorch, not TensorFlow)
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
+
+# Check for GPU availability
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+logger.info(f"Using device: {device}")
 
 # Load Gemma 3 4B model and processor
 model_name = "google/gemma-3-4b-it"
@@ -26,6 +31,7 @@ except Exception as e:
 logger.info(f"Loading model for {model_name}...")
 try:
     model = AutoModelForImageTextToText.from_pretrained(model_name)
+    model.to(device)  # Move model to GPU if available
     logger.info("Model loaded successfully.")
 except Exception as e:
     logger.error(f"Failed to load model: {e}")
@@ -53,7 +59,7 @@ def read_data_flow_file(file_path):
 def process_data_flows_for_inference(data_flows):
     processed_data_flows = []
     flow_references = []
-    filenames = []  # Store filenames separately
+    filenames = []
     for cwe in data_flows.keys():
         for result in data_flows[cwe]:
             result_index = result['resultIndex']
@@ -65,22 +71,24 @@ def process_data_flows_for_inference(data_flows):
                     data_flow_string += str(step)
                 processed_data_flows.append(text_preprocess(data_flow_string))
                 flow_references.append((cwe, result_index, codeFlowIndex))
-                filenames.append(flow_file_name)  # Track filename for each flow
+                filenames.append(flow_file_name)
     return processed_data_flows, flow_references, filenames
 
 def query_gemma(data_flow):
     prompt = f"""Does this data flow expose sensitive information in the last step? 
     I don't consider usernames to be sensitive. 
     Answer only with 'Yes' or 'No'. Data flow: {data_flow}"""
-    # Process text input (no image, since we're text-only)
+    # Process text input
     inputs = processor(text=prompt, return_tensors="pt")
+    # Move inputs to the same device as the model
+    inputs = {k: v.to(device) for k, v in inputs.items()}
     # Generate text output
     outputs = model.generate(
         **inputs,
         max_new_tokens=10,
         do_sample=False,
     )
-    # Decode the output
+    # Decode the output (no need to move outputs to CPU explicitly for decoding)
     response = processor.decode(outputs[0], skip_special_tokens=True)
     response = response.lower()
     if "yes" in response:
@@ -97,7 +105,6 @@ def predict_labels_with_gemma(processed_flows, flow_references, filenames):
     
     for i, (flow, (cwe, result_index, code_flow_index), filename) in enumerate(zip(processed_flows, flow_references, filenames)):
         label = query_gemma(flow)
-        # Print each output with filename, result index, and code flow index
         logger.info(f"Flow {i + 1}/{len(processed_flows)}: Filename = {filename}, ResultIndex = {result_index}, CodeFlowIndex = {code_flow_index}, Label = {label}")
         predicted_labels.append(label)
         if label == "No":
@@ -140,7 +147,7 @@ if __name__ == "__main__":
         project_name = sys.argv[1]
         project_path = os.path.join(os.getcwd(), "Files", project_name)
     else:
-        project_name = "snowflake-jdbc-3.23.1"
+        project_name = "PowerJob-5.1.1"
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
     
     logger.info(f"Project name: {project_name}")
