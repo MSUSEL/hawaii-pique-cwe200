@@ -5,6 +5,11 @@ from sentence_transformers import SentenceTransformer
 from keras.models import load_model
 import tensorflow as tf
 import sys
+from tqdm import tqdm
+from transformers import T5Tokenizer, TFT5Model
+from transformers import AutoTokenizer, AutoModel
+import torch
+
 
 # Suppress TensorFlow logs
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
@@ -54,6 +59,61 @@ def calculate_sentbert_vectors(sentences, batch_size=64):
     model_transformer = SentenceTransformer(embedding_model_name)
     embeddings = model_transformer.encode(sentences, batch_size=batch_size, show_progress_bar=True)
     return embeddings
+
+
+def calculate_codebert_vectors(sentences, model_name='microsoft/codebert-base', batch_size=32):
+    """
+    Calculate fixed-size embeddings using CodeBERT as an encoder with TensorFlow.
+    """
+    from transformers import AutoTokenizer, TFAutoModel
+
+    # Load CodeBERT tokenizer and model
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = TFAutoModel.from_pretrained(model_name)
+    print("CodeBERT model loaded successfully.")
+
+    embeddings = []
+    for i in tqdm(range(0, len(sentences), batch_size), desc="Processing batches"):
+        batch_sentences = sentences[i:i+batch_size]
+
+        # Ensure input is a list of strings
+        if isinstance(batch_sentences, np.ndarray):  # If it's a NumPy array, convert it
+            batch_sentences = batch_sentences.tolist()
+        elif not isinstance(batch_sentences, list):  # Ensure it's a list
+            batch_sentences = [str(batch_sentences)]
+
+        # Tokenize the input batch
+        inputs = tokenizer(batch_sentences, return_tensors="tf", padding=True, truncation=True, max_length=512)
+
+        # Forward pass through CodeBERT
+        outputs = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])
+        hidden_states = outputs.last_hidden_state
+
+        # Apply mean pooling over token embeddings to create sentence embeddings
+        pooled_embeddings = tf.reduce_mean(hidden_states, axis=1)
+        embeddings.append(pooled_embeddings.numpy())
+
+    # Combine all embeddings into a single NumPy array
+    return np.vstack(embeddings)
+
+
+def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', batch_size=16, device='cuda' if torch.cuda.is_available() else 'cpu'):
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModel.from_pretrained(model_name)
+    model.to(device)
+    model.eval()
+    embeddings = []
+    for i in tqdm(range(0, len(sentences), batch_size), desc="Embedding with GraphCodeBERT"):
+        batch = sentences[i:i + batch_size]
+        inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
+        input_ids = inputs["input_ids"].to(device)
+        attention_mask = inputs["attention_mask"].to(device)
+        with torch.no_grad():
+            outputs = model(input_ids=input_ids, attention_mask=attention_mask)
+            cls_embeddings = outputs.last_hidden_state[:, 0, :]
+            embeddings.append(cls_embeddings.cpu().numpy())
+    return np.vstack(embeddings)
+
 
 def load_keras_model(model_path):
     print(f"Loading model from {model_path}...")
@@ -108,7 +168,10 @@ def run(project_path, model_path):
     processed_flows, flow_references = process_data_flows_for_inference(data_flows)
 
     # Step 3: Calculate embeddings
-    embeddings = calculate_sentbert_vectors(processed_flows)
+    # embeddings = calculate_sentbert_vectors(processed_flows)
+    # embeddings = calculate_codebert_vectors(processed_flows)
+    # embeddings = calculate_t5_vectors(processed_flows)
+    embeddings = calculate_graphcodebert_vectors(processed_flows)
 
     # Step 4: Predict labels
     predicted_labels, predicted_probs = predict_labels(model, embeddings)
