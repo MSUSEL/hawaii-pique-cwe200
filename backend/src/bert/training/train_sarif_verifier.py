@@ -1,24 +1,24 @@
 import json
 import os
-os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"  # Disable oneDNN messages
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"   # Suppress info and warnings
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 import sys
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import tensorflow as tf
 from tensorflow.keras.layers import (Dense, Dropout, BatchNormalization, Activation, Input, Add)
-from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.models import Model
 from tensorflow.keras import regularizers
 from tensorflow.keras.optimizers import Adam
 from sklearn import metrics
 from tensorflow.keras.callbacks import (EarlyStopping, ReduceLROnPlateau)
 from scikeras.wrappers import KerasClassifier
 from sklearn.model_selection import (StratifiedKFold, RandomizedSearchCV, train_test_split)
-from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import Pipeline
 from tqdm import tqdm
 import hashlib
-
+from transformers import AutoTokenizer, AutoModel
+import torch
 
 # Parameter grid
 param_grid = {
@@ -49,226 +49,138 @@ def text_preprocess(feature_text):
     preprocessed_text = ' '.join(words).lower()
     return preprocessed_text
 
-
 def process_data_flows(labeled_flows_dir):
     processed_data_flows = []
-    # Dictionary to track seen flow hashes (globally or per resultIndex)
-    seen_flow_hashes = set()  # Using a single set for simplicity; can scope by resultIndex if needed
-    
-    # Counters for statistics
+    seen_flow_hashes = set()
     total_flows = 0
     duplicate_flows = 0
     kept_flows = 0
-    
     for file_name in os.listdir(labeled_flows_dir):
         data_flows = read_data_flow_file(os.path.join(labeled_flows_dir, file_name))
         for cwe in data_flows.keys():
             for result in data_flows[cwe]:
                 result_index = result['resultIndex']
                 flow_file_name = result['fileName']
-                
                 for flow in result['flows']:
-                    total_flows += 1  # Increment total flows
-                    
-                    # Skip if flow is empty
-                    if not flow['flow']:
-                        continue
-                    
-                    # Skip if flow lacks a label
-                    if 'label' not in flow:
+                    total_flows += 1
+                    if not flow['flow'] or 'label' not in flow:
                         continue
                     label = 1 if flow['label'] == 'Yes' else 0 if flow['label'] == 'No' else None
                     if label is None:
                         continue
-                    
-                    # Build the data flow string
-                    data_flow_string = f"Filename = {flow_file_name} Flows = "
-                    codeFlowIndex = flow['codeFlowIndex']
+                    data_flow_string = f"Filename = {flow_file_name}, CWE = {cwe}, Flows = "
                     for step in flow['flow']:
                         data_flow_string += str(step)
                     processed_text = text_preprocess(data_flow_string)
-                    
-                    # Create a unique hash for the flow
-                    # Hashing the processed text ensures uniqueness based on content
                     flow_hash = hashlib.sha256(processed_text.encode('utf-8')).hexdigest()
-                    
-                    # Check for duplicate
                     if flow_hash in seen_flow_hashes:
                         duplicate_flows += 1
                         continue
-                    
-                    # Add the hash to the seen set
                     seen_flow_hashes.add(flow_hash)
                     kept_flows += 1
-                    
-                    # Store the processed flow with metadata
                     processed_data_flows.append([
                         file_name,
                         result_index,
-                        codeFlowIndex,
+                        flow['codeFlowIndex'],
                         processed_text,
                         label
                     ])
-    
-    # Print statistics
     print(f"Total flows processed: {total_flows}")
     print(f"Duplicate flows excluded: {duplicate_flows}")
     print(f"Flows kept for training: {kept_flows}")
-
-    # Save to JSON
     with open('processed_data_flows.json', 'w', encoding='utf-8') as json_file:
         json.dump(processed_data_flows, json_file, indent=4)
-    
     return np.array(processed_data_flows)
 
-def calculate_sentbert_vectors(sentences, batch_size=64):
-    model_transformer = SentenceTransformer('paraphrase-MiniLM-L6-v2')
-    embeddings = model_transformer.encode(sentences, batch_size=batch_size, show_progress_bar=True)
-    return embeddings
+def format_data_flows_for_graphcodebert(processed_flows):
+    formatted_flows = []
+    for row in processed_flows:
+        flow_text = row[3]
+        formatted_flows.append(flow_text)
+    return formatted_flows
 
-def calculate_codebert_vectors(sentences, model_name='microsoft/codebert-base', batch_size=32):
-    """
-    Calculate fixed-size embeddings using CodeBERT as an encoder with TensorFlow.
-    """
-    from transformers import AutoTokenizer, TFAutoModel
-
-    # Load CodeBERT tokenizer and model
+def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', batch_size=16, device='cuda' if torch.cuda.is_available() else 'cpu'):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = TFAutoModel.from_pretrained(model_name)
-    print("CodeBERT model loaded successfully.")
-
+    model = AutoModel.from_pretrained(model_name)
+    model.to(device)
+    model.eval()
     embeddings = []
-    for i in tqdm(range(0, len(sentences), batch_size), desc="Processing batches"):
-        batch_sentences = sentences[i:i+batch_size]
-
-        # Ensure input is a list of strings
-        if isinstance(batch_sentences, np.ndarray):  # If it's a NumPy array, convert it
-            batch_sentences = batch_sentences.tolist()
-        elif not isinstance(batch_sentences, list):  # Ensure it's a list
-            batch_sentences = [str(batch_sentences)]
-
-        # Tokenize the input batch
-        inputs = tokenizer(batch_sentences, return_tensors="tf", padding=True, truncation=True, max_length=512)
-
-        # Forward pass through CodeBERT
-        outputs = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])
-        hidden_states = outputs.last_hidden_state
-
-        # Apply mean pooling over token embeddings to create sentence embeddings
-        pooled_embeddings = tf.reduce_mean(hidden_states, axis=1)
-        embeddings.append(pooled_embeddings.numpy())
-
-    # Combine all embeddings into a single NumPy array
+    for i in tqdm(range(0, len(sentences), batch_size), desc="Embedding with GraphCodeBERT"):
+        batch = sentences[i:i + batch_size]
+        inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
+        input_ids = inputs["input_ids"].to(device)
+        attention_mask = inputs["attention_mask"].to(device)
+        with torch.no_grad():
+            outputs = model(input_ids=input_ids, attention_mask=attention_mask)
+            cls_embeddings = outputs.last_hidden_state[:, 0, :]
+            embeddings.append(cls_embeddings.cpu().numpy())
     return np.vstack(embeddings)
 
 def create_model(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.0001, units=256, activation='elu', embedding_dim=None):
     if embedding_dim is None:
         raise ValueError("Embedding dimension not found")
-    
- # Gradual reduction of units instead of drastic cuts
     units1 = embedding_dim
     units2 = embedding_dim * 3 // 4
     units3 = embedding_dim // 2
     units4 = embedding_dim // 4
-
     inputs = Input(shape=(embedding_dim,))
-    
     x = Dense(units1, kernel_regularizer=regularizers.l2(weight_decay))(inputs)
     x = BatchNormalization()(x)
     x = Activation(activation)(x)
     x = Dropout(dropout_rate)(x)
-    
-    # Residual Block 1
     res1 = Dense(units2, kernel_regularizer=regularizers.l2(weight_decay))(x)
     res1 = BatchNormalization()(res1)
     res1 = Activation(activation)(res1)
     res1 = Dropout(dropout_rate)(res1)
-
-    x = Dense(units2)(x)  # This makes x the same size as res1
-    x = Add()([x, res1])  # Skip connection
-
-    # Residual Block 2
+    x = Dense(units2)(x)
+    x = Add()([x, res1])
     res2 = Dense(units3, kernel_regularizer=regularizers.l2(weight_decay))(x)
     res2 = BatchNormalization()(res2)
     res2 = Activation(activation)(res2)
     res2 = Dropout(dropout_rate)(res2)
-
-    x = Dense(units3)(x)  # Adjust x to match res2
-    x = Add()([x, res2])  # Skip connection
-
+    x = Dense(units3)(x)
+    x = Add()([x, res2])
     x = Dense(units4, kernel_regularizer=regularizers.l2(weight_decay))(x)
     x = BatchNormalization()(x)
     x = Activation(activation)(x)
     x = Dropout(dropout_rate)(x)
-
     outputs = Dense(1, activation='sigmoid')(x)
-
     model = Model(inputs, outputs)
-
     opt = Adam(learning_rate=learning_rate)
-
     model.compile(
         loss='binary_crossentropy',
         optimizer=opt,
-        metrics=['accuracy', 
-                 tf.keras.metrics.Precision(name='precision'),
-                 tf.keras.metrics.Recall(name='recall'), 
-                 tf.keras.metrics.AUC(name='auc')]
+        metrics=['accuracy', tf.keras.metrics.Precision(name='precision'), tf.keras.metrics.Recall(name='recall'), tf.keras.metrics.AUC(name='auc')]
     )
-
     return model
 
 def evaluate_model(final_model, X_test, y_test, category):
     print("Evaluating model on test set...")
     predicted_probs = final_model.predict(X_test, verbose=0)
     predicted_classes = (predicted_probs > 0.5).astype(int)
-    precision = metrics.precision_score(y_test, predicted_classes)
-    recall = metrics.recall_score(y_test, predicted_classes)
-    f1_score = metrics.f1_score(y_test, predicted_classes)
-    accuracy = metrics.accuracy_score(y_test, predicted_classes)
-    auc = metrics.roc_auc_score(y_test, predicted_probs)
-    print(f"Precision: {precision:.4f}")
-    print(f"Recall: {recall:.4f}")
-    print(f"F1 Score: {f1_score:.4f}")
-    print(f"Accuracy: {accuracy:.4f}")
-    print(f"AUC: {auc:.4f}")
-    print('------------------------------------------------')
-    print('Classification Report (Binary):')
+    print(f"Precision: {metrics.precision_score(y_test, predicted_classes):.4f}")
+    print(f"Recall: {metrics.recall_score(y_test, predicted_classes):.4f}")
+    print(f"F1 Score: {metrics.f1_score(y_test, predicted_classes):.4f}")
+    print(f"Accuracy: {metrics.accuracy_score(y_test, predicted_classes):.4f}")
+    print(f"AUC: {metrics.roc_auc_score(y_test, predicted_probs):.4f}")
     print(metrics.classification_report(y_test, predicted_classes, target_names=["Non-sensitive", "Sensitive"]))
-    print('Confusion Matrix:')
     print(metrics.confusion_matrix(y_test, predicted_classes))
 
 if __name__ == "__main__":
-    # Configuration
-    embedding_dim = 384
-    embedding_model = 'paraphrase-MiniLM-L6-v2'
-    labeled_flows_dir = os.path.join('Testing', 'Labeling', 'FlowData')
+    labeled_flows_dir = os.path.join('testing', 'Labeling', 'FlowData')
     model_dir = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     os.makedirs(model_dir, exist_ok=True)
     scoring = 'f1'
     category = 'flows'
-
-    # Step 1: Process all data flows
     print("Processing data flows...")
     processed_data_flows = process_data_flows(labeled_flows_dir)
-    print("Calculating Sentence-BERT embeddings...")
-    embeddings = calculate_sentbert_vectors(processed_data_flows[:, 3])
-    
-    # embeddings = calculate_codebert_vectors(processed_data_flows[:, 3])
-    # embedding_dim = 768
-
-
-    labels = processed_data_flows[:, 4]
-
-    # Step 2: Prepare X and y
-    X = np.array(embeddings)
-    y = labels.astype(np.int32)
-
-    # Step 3: Train/test split (before SMOTE)
-    print("Splitting data into train and test sets...")
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
-
-    # Step 4: Hyperparameter tuning with pipeline
+    print("Formatting data flows for GraphCodeBERT...")
+    formatted_flows = format_data_flows_for_graphcodebert(processed_data_flows)
+    print("Calculating GraphCodeBERT embeddings...")
+    embeddings = calculate_graphcodebert_vectors(formatted_flows)
+    embedding_dim = embeddings.shape[1]
+    labels = processed_data_flows[:, 4].astype(np.int32)
+    X_train, X_test, y_train, y_test = train_test_split(embeddings, labels, test_size=0.2, stratify=labels, random_state=42)
     print("Starting hyperparameter tuning with RandomizedSearchCV...")
     model = KerasClassifier(
         model=create_model,
@@ -294,10 +206,7 @@ if __name__ == "__main__":
         verbose=2
     )
     random_search_result = random_search.fit(X_train, y_train)
-    sys.stdout.flush()
     print(f"Best CV F1 Score: {random_search_result.best_score_:.4f} using {random_search_result.best_params_}")
-
-    # Step 5: Train final model with best parameters
     best_params = random_search_result.best_params_
     final_model = create_model(
         learning_rate=best_params['model__learning_rate'],
@@ -310,9 +219,6 @@ if __name__ == "__main__":
         EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True),
         ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=1e-6, verbose=1)
     ]
-    print("Applying SMOTE to training data for final fit...")
-    # smote = SMOTE(random_state=42)
-    # X_train_smote, y_train_smote = smote.fit_resample(X_train, y_train)
     print(f"Training final model with {best_params['model__epochs']} epochs and batch size {best_params['model__batch_size']}...")
     history = final_model.fit(
         X_train, y_train,
@@ -322,12 +228,8 @@ if __name__ == "__main__":
         callbacks=callbacks,
         verbose=1
     )
-
-    # Step 6: Evaluate
     print('Evaluating the Model...')
     evaluate_model(final_model, X_test, y_test, category)
-
-    # Save model for inference
     print("Saving final model...")
     final_model.save(os.path.join(model_dir, 'verify_flows.keras'))
     tf.keras.backend.clear_session()
