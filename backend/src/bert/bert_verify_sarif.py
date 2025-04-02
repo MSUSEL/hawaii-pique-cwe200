@@ -186,13 +186,13 @@ def run(project_path, model_path):
 if __name__ == "__main__":
 
     print(f"Here are the arguments: {sys.argv}")
-    if len(sys.argv) > 0:
+    if len(sys.argv) > 1:
         project_name = sys.argv[1]
         project_path = os.path.join(os.getcwd(), "Files", project_name)
         input_json_path = os.path.join(project_path, 'flowMapsByCWE.json')
         model_path = os.path.join(os.getcwd(), 'src', 'bert', 'models', 'verify_flows.keras')
     else:
-        project_name = "CWEToyDataset" # Default project name
+        project_name = "snowflake-jdbc-3.23.1" # Default project name
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
         input_json_path = os.path.join(project_path, 'flowMapsByCWE.json')
         model_path = os.path.join(os.getcwd(), "backend", 'src', 'bert', 'models', 'verify_flows.keras')

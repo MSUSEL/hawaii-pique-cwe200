@@ -30,7 +30,7 @@ logger.info(f"Loading fine-tuned LLaMA model from: {model_path}")
 try:
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=model_path,
-        max_seq_length=15000,  # Match or adjust based on your training script's max_seq_length
+        max_seq_length=10000,  # Match or adjust based on your training script's max_seq_length
         dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
         load_in_4bit=True,    # Match training setup
         device_map="auto"     # Automatically map to available GPUs

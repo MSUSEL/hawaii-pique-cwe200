@@ -9,6 +9,7 @@ from trl import SFTTrainer
 from transformers import TrainingArguments
 from tqdm import tqdm
 import hashlib
+import re
 from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
@@ -53,7 +54,9 @@ def process_data_flows(labeled_flows_dir):
                     if label is None:
                         continue
 
-                    data_flow_string = f"Filename = {flow_file_name} Flows = " + ''.join(str(step) for step in flow['flow'])
+                    # Add preprocessing here
+                    preprocessed_steps = [text_preprocess(str(step)) for step in flow['flow']]
+                    data_flow_string = f"Filename = {flow_file_name}, CWE = {cwe}, Flows = " + ' -> '.join(preprocessed_steps)
 
                     flow_hash = hashlib.sha256(data_flow_string.encode('utf-8')).hexdigest()
                     if flow_hash in seen_flow_hashes:
@@ -63,7 +66,7 @@ def process_data_flows(labeled_flows_dir):
                     seen_flow_hashes.add(flow_hash)
                     kept_flows += 1
 
-                    instruction = f"Given the following data flow, determine if it exposes sensitive information (Yes) or not (No):\n{data_flow_string}"
+                    instruction = f"Does this data flow expose sensitive information?\n{data_flow_string}"
                     response = "Yes" if label == 1 else "No"
                     processed_data_flows.append({"instruction": instruction, "response": response})
 
@@ -104,9 +107,6 @@ def evaluate_model(model, tokenizer, eval_dataset, max_seq_length):
     true_labels = []
     prediction_logs = []
 
-    yes_token_id = tokenizer(" Yes", add_special_tokens=False).input_ids[0]
-    no_token_id = tokenizer(" No", add_special_tokens=False).input_ids[0]
-
     print("Evaluating model on evaluation dataset...")
 
     for example in tqdm(eval_dataset, desc="Evaluating"):
@@ -119,11 +119,12 @@ def evaluate_model(model, tokenizer, eval_dataset, max_seq_length):
         inputs = tokenizer(prompt, return_tensors="pt", truncation=True, max_length=max_seq_length).to("cuda")
 
         with torch.no_grad():
-            outputs = model(**inputs)
-            logits = outputs.logits
+            generated_ids = model.generate(**inputs, max_new_tokens=10)
+            output = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
 
-        next_token_logits = logits[0, -1]
-        pred_label = 1 if next_token_logits[yes_token_id] > next_token_logits[no_token_id] else 0
+        # pred_label = 1 if re.search(r"\\byes\\b", output.lower()) else 0
+        pred_label = 1 if re.search(r"\byes\b", output.lower().strip(". \n")) else 0
+
         true_label = 1 if true_response.lower() == "yes" else 0
 
         predictions.append(pred_label)
@@ -132,6 +133,7 @@ def evaluate_model(model, tokenizer, eval_dataset, max_seq_length):
         prediction_logs.append({
             "instruction": instruction,
             "true_response": true_response,
+            "predicted_output": output.strip(),
             "predicted_label": "Yes" if pred_label == 1 else "No"
         })
 
