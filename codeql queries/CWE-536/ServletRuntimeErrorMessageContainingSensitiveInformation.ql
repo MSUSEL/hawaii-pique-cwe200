@@ -84,6 +84,14 @@
    Barrier::barrier(node)
   }
  }
+
+ predicate isTestFile(File f) {
+  // Convert path to lowercase for case-insensitive matching
+  exists(string path | path = f.getAbsolutePath().toLowerCase() |
+    // Check for common test-related directory or file name patterns
+    path.regexpMatch(".*(test|tests|testing|test-suite|testcase|unittest|integration-test|spec).*")
+  )
+}
  
  module SensitiveInfoInErrorMsgFlow = TaintTracking::GlobalWithState<ExceptionDataFlowConfig>;
  import SensitiveInfoInErrorMsgFlow::PathGraph
@@ -92,7 +100,8 @@
 
  // Query for sensitive information flow from source to sink with path visualization
  from SensitiveInfoInErrorMsgFlow::PathNode source, SensitiveInfoInErrorMsgFlow::PathNode sink
- where SensitiveInfoInErrorMsgFlow::flowPath(source, sink)
+ where SensitiveInfoInErrorMsgFlow::flowPath(source, sink) and
+ not isTestFile(sink.getNode().getLocation().getFile()) and
  select sink, source, sink,
    "CWE-536: Sensitive information flows into a servlet runtime exception and is exposed via an error message."
  

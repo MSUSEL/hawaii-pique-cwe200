@@ -102,6 +102,14 @@
      Barrier::barrier(node)
    }
  }
+
+ predicate isTestFile(File f) {
+  // Convert path to lowercase for case-insensitive matching
+  exists(string path | path = f.getAbsolutePath().toLowerCase() |
+    // Check for common test-related directory or file name patterns
+    path.regexpMatch(".*(test|tests|testing|test-suite|testcase|unittest|integration-test|spec).*")
+  )
+}
  
  // Instantiate a GlobalWithState for taint tracking
  module SensitiveInfoInErrorMsgFlow = 
@@ -112,7 +120,8 @@
  
  // Use the flowPath from that module
  from SensitiveInfoInErrorMsgFlow::PathNode source, SensitiveInfoInErrorMsgFlow::PathNode sink
- where SensitiveInfoInErrorMsgFlow::flowPath(source, sink)
+ where SensitiveInfoInErrorMsgFlow::flowPath(source, sink) and
+ not isTestFile(sink.getNode().getLocation().getFile()) and
  select sink, source, sink,
    "CWE-209: Sensitive information flows into exception and is exposed via an error message."
  

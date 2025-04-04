@@ -33,11 +33,19 @@
       
     exists(MethodCall mc |
       sink.asExpr() = mc.getAnArgument() and
-      mc.getMethod().hasName("write") and
-      (mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.io", "OutputStream") or
-       mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.io", "FileOutputStream") or
-       mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.net", "Socket") or
-       mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("javax.servlet.http", "HttpServletResponse")
+      (
+        // Existing sinks for write methods
+        (mc.getMethod().hasName("write") and
+          (mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.io", "OutputStream") or
+           mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.io", "FileOutputStream") or
+           mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.net", "Socket") or
+           mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("javax.servlet.http", "HttpServletResponse")
+          )
+        ) or
+        // New sink for XMLStreamWriter.writeAttribute
+        (mc.getMethod().hasName("writeAttribute") and
+         mc.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.xml.stream", "XMLStreamWriter")
+        )
       )
     ) or
   
