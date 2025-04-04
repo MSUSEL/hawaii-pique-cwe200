@@ -4,6 +4,7 @@ import * as path from 'path'
 import * as os from 'os';
 import { parse} from 'csv-parse'
 import { promises as fs } from 'fs';
+import { start } from 'repl';
 
 
 @Injectable()
@@ -79,6 +80,10 @@ export class CodeQlParserService {
                 const humanReadableFlowMap = Object.entries(flowMap).map(([index, node]) => ({
                   step: Number(index), // 0-based step number
                   variableName: node.message,
+                  startLine: node.startLine,
+                  startColumn: node.startColumn,
+                  endLine: node.endLine,
+                  endColumn: node.endColumn,
                   uri: node.uri,
                   type: node.type,
                   code: node.code
@@ -132,12 +137,16 @@ export class CodeQlParserService {
 
             const location = codeFlow.location;
             if (location) {
-                const physicalLocation = location.physicalLocation;
-                const uri = physicalLocation.artifactLocation.uri;
-                const startLine = physicalLocation.region.startLine;
-                const startColumn = physicalLocation.region.startColumn;
-                const endColumn = physicalLocation.region.endColumn;
-                const endLine = physicalLocation.region.endLine || startLine;
+                const physicalLocation = location.physicalLocation ?? {};
+                const artifactLocation = physicalLocation.artifactLocation ?? {};
+                const uri = artifactLocation.uri ?? 'unknown';
+            
+                const region = physicalLocation.region ?? {};
+                const startLine = region?.startLine ?? NaN;
+                const startColumn = region?.startColumn ?? 0;
+                const endColumn = region?.endColumn ?? startColumn;
+                const endLine = region?.endLine ?? startLine;
+
 
                 // Normalize the file path for the current OS
                 const normalizedUri = path.normalize(uri);
@@ -233,12 +242,12 @@ export class CodeQlParserService {
                     
                     // It is commented out right now to allign the same number of flows with the map, but eventually it should be used for the last step.
                     // Check if this file has already been processed under another rule
-                    // if (fileMap.has(fileIdentifier)) {
-                    //     return false;  // Skip this file as it's already associated with a rule
-                    // } else {
+                    if (fileMap.has(fileIdentifier)) {
+                        return false;  // Skip this file as it's already associated with a rule
+                    } else {
                         fileMap.set(fileIdentifier, ruleKey);  // Mark this file as processed under this rule
                         return true;
-                    // }
+                    }
                 });
     
             // Check if the ruleKey already exists in the map
