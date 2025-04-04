@@ -57,10 +57,10 @@ def text_preprocess(feature_text):
 def process_data_flows(labeled_flows_dir):
     processed_data_flows = []
     seen_flow_hashes = set()
-    seen_flow_hashes = set()
     total_flows = 0
     duplicate_flows = 0
     kept_flows = 0
+    
     for file_name in os.listdir(labeled_flows_dir):
         data_flows = read_data_flow_file(os.path.join(labeled_flows_dir, file_name))
         for cwe in data_flows.keys():
@@ -69,32 +69,32 @@ def process_data_flows(labeled_flows_dir):
                 flow_file_name = result['fileName']
                 for flow in result['flows']:
                     total_flows += 1
-                    if not flow['flow'] or 'label' not in flow:
-                    total_flows += 1
+                    
                     if not flow['flow'] or 'label' not in flow:
                         continue
                     label = 1 if flow['label'] == 'Yes' else 0 if flow['label'] == 'No' else None
                     if label is None:
                         continue
-                    data_flow_string = f"Filename = {flow_file_name}, CWE = {cwe}, Flows = "
+                    
                     data_flow_string = f"Filename = {flow_file_name}, CWE = {cwe}, Flows = "
                     for step in flow['flow']:
                         data_flow_string += str(step)
-                    processed_text = text_preprocess(data_flow_string)
-                    flow_hash = hashlib.sha256(processed_text.encode('utf-8')).hexdigest()
+                    
+                    flow_hash = hashlib.sha256(data_flow_string.encode('utf-8')).hexdigest()
                     if flow_hash in seen_flow_hashes:
                         duplicate_flows += 1
                         continue
                     seen_flow_hashes.add(flow_hash)
                     kept_flows += 1
+                    
                     processed_data_flows.append([
                         file_name,
                         result_index,
                         flow['codeFlowIndex'],
-                        flow['codeFlowIndex'],
-                        processed_text,
+                        data_flow_string,
                         label
                     ])
+
     print(f"Total flows processed: {total_flows}")
     print(f"Duplicate flows excluded: {duplicate_flows}")
     print(f"Flows kept for training: {kept_flows}")
@@ -108,32 +108,14 @@ def format_data_flows_for_graphcodebert(processed_flows):
         flow_text = row[3]
         formatted_flows.append(flow_text)
     return formatted_flows
-def format_data_flows_for_graphcodebert(processed_flows):
-    formatted_flows = []
-    for row in processed_flows:
-        flow_text = row[3]
-        formatted_flows.append(flow_text)
-    return formatted_flows
 
-def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', batch_size=16, device='cuda' if torch.cuda.is_available() else 'cpu'):
 def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', batch_size=16, device='cuda' if torch.cuda.is_available() else 'cpu'):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
     model.to(device)
     model.eval()
-    model = AutoModel.from_pretrained(model_name)
-    model.to(device)
-    model.eval()
     embeddings = []
-    for i in tqdm(range(0, len(sentences), batch_size), desc="Embedding with GraphCodeBERT"):
-        batch = sentences[i:i + batch_size]
-        inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
-        input_ids = inputs["input_ids"].to(device)
-        attention_mask = inputs["attention_mask"].to(device)
-        with torch.no_grad():
-            outputs = model(input_ids=input_ids, attention_mask=attention_mask)
-            cls_embeddings = outputs.last_hidden_state[:, 0, :]
-            embeddings.append(cls_embeddings.cpu().numpy())
+    
     for i in tqdm(range(0, len(sentences), batch_size), desc="Embedding with GraphCodeBERT"):
         batch = sentences[i:i + batch_size]
         inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
@@ -184,7 +166,6 @@ def create_model(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.0001, un
         loss='binary_crossentropy',
         optimizer=opt,
         metrics=['accuracy', tf.keras.metrics.Precision(name='precision'), tf.keras.metrics.Recall(name='recall'), tf.keras.metrics.AUC(name='auc')]
-        metrics=['accuracy', tf.keras.metrics.Precision(name='precision'), tf.keras.metrics.Recall(name='recall'), tf.keras.metrics.AUC(name='auc')]
     )
     return model
 
@@ -192,11 +173,6 @@ def evaluate_model(final_model, X_test, y_test, category):
     print("Evaluating model on test set...")
     predicted_probs = final_model.predict(X_test, verbose=0)
     predicted_classes = (predicted_probs > 0.5).astype(int)
-    print(f"Precision: {metrics.precision_score(y_test, predicted_classes):.4f}")
-    print(f"Recall: {metrics.recall_score(y_test, predicted_classes):.4f}")
-    print(f"F1 Score: {metrics.f1_score(y_test, predicted_classes):.4f}")
-    print(f"Accuracy: {metrics.accuracy_score(y_test, predicted_classes):.4f}")
-    print(f"AUC: {metrics.roc_auc_score(y_test, predicted_probs):.4f}")
     print(f"Precision: {metrics.precision_score(y_test, predicted_classes):.4f}")
     print(f"Recall: {metrics.recall_score(y_test, predicted_classes):.4f}")
     print(f"F1 Score: {metrics.f1_score(y_test, predicted_classes):.4f}")
@@ -213,20 +189,16 @@ if __name__ == "__main__":
     category = 'flows'
     print("Processing data flows...")
     processed_data_flows = process_data_flows(labeled_flows_dir)
+   
     print("Formatting data flows for GraphCodeBERT...")
     formatted_flows = format_data_flows_for_graphcodebert(processed_data_flows)
+    
     print("Calculating GraphCodeBERT embeddings...")
     embeddings = calculate_graphcodebert_vectors(formatted_flows)
     embedding_dim = embeddings.shape[1]
     labels = processed_data_flows[:, 4].astype(np.int32)
     X_train, X_test, y_train, y_test = train_test_split(embeddings, labels, test_size=0.2, stratify=labels, random_state=42)
-    print("Formatting data flows for GraphCodeBERT...")
-    formatted_flows = format_data_flows_for_graphcodebert(processed_data_flows)
-    print("Calculating GraphCodeBERT embeddings...")
-    embeddings = calculate_graphcodebert_vectors(formatted_flows)
-    embedding_dim = embeddings.shape[1]
-    labels = processed_data_flows[:, 4].astype(np.int32)
-    X_train, X_test, y_train, y_test = train_test_split(embeddings, labels, test_size=0.2, stratify=labels, random_state=42)
+    
     print("Starting hyperparameter tuning with RandomizedSearchCV...")
     model = KerasClassifier(
         model=create_model,
@@ -239,19 +211,23 @@ if __name__ == "__main__":
         activation='elu',
         weight_decay=0.0001
     )
+    
     pipeline = Pipeline([('model', model)])
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    
     random_search = RandomizedSearchCV(
         estimator=pipeline,
         param_distributions=param_grid,
-        n_iter=50,
+        n_iter=200,
         cv=kfold,
         scoring=scoring,
         n_jobs=-1,
         random_state=42,
         verbose=2
     )
+    
     random_search_result = random_search.fit(X_train, y_train)
+    
     print(f"Best CV F1 Score: {random_search_result.best_score_:.4f} using {random_search_result.best_params_}")
     best_params = random_search_result.best_params_
     final_model = create_model(
@@ -265,6 +241,7 @@ if __name__ == "__main__":
         EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True),
         ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=1e-6, verbose=1)
     ]
+    
     print(f"Training final model with {best_params['model__epochs']} epochs and batch size {best_params['model__batch_size']}...")
     history = final_model.fit(
         X_train, y_train,
@@ -276,8 +253,9 @@ if __name__ == "__main__":
     )
     print('Evaluating the Model...')
     evaluate_model(final_model, X_test, y_test, category)
+    
     print("Saving final model...")
     final_model.save(os.path.join(model_dir, 'verify_flows.keras'))
+    
     tf.keras.backend.clear_session()
     print("Training complete!")
-
