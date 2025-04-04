@@ -1,0 +1,399 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "PwjbAccountLoginService.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password",
+              "startLine": 63,
+              "startColumn": 106,
+              "endLine": 63,
+              "endColumn": 114,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-auth/src/main/java/tech/powerjob/server/auth/login/impl/PwjbAccountLoginService.java",
+              "type": "String",
+              "code": "        final String password = MapUtils.getString(loginInfoMap, AuthConstants.PARAM_KEY_PASSWORD);\n        final String encryption = MapUtils.getString(loginInfoMap, AuthConstants.PARAM_KEY_ENCRYPTION);\n\n        Loggers.WEB.debug(\"[PowerJobLoginService] username: {}, password: {}, encryption: {}\", username, password, encryption);\n\n        if (StringUtils.isAnyEmpty(username, password)) {\n            Loggers.WEB.debug(\"[PowerJobLoginService] username or password is empty, login failed!\");"
+            },
+            {
+              "step": 1,
+              "variableName": "Loggers.WEB.debug(\"[PowerJobLoginService] username: {}, password: {}, encryption: {}\", username, password, encryption)",
+              "startLine": 63,
+              "startColumn": 9,
+              "endLine": 63,
+              "endColumn": 127,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-auth/src/main/java/tech/powerjob/server/auth/login/impl/PwjbAccountLoginService.java",
+              "type": "",
+              "code": "        final String password = MapUtils.getString(loginInfoMap, AuthConstants.PARAM_KEY_PASSWORD);\n        final String encryption = MapUtils.getString(loginInfoMap, AuthConstants.PARAM_KEY_ENCRYPTION);\n\n        Loggers.WEB.debug(\"[PowerJobLoginService] username: {}, password: {}, encryption: {}\", username, password, encryption);\n\n        if (StringUtils.isAnyEmpty(username, password)) {\n            Loggers.WEB.debug(\"[PowerJobLoginService] username or password is empty, login failed!\");"
+            }
+          ],
+          "label": "Yes",
+          "probability": 0.00912801269441843
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "DingTalkAlarmService.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "appSecret",
+              "startLine": 98,
+              "startColumn": 96,
+              "endLine": 98,
+              "endColumn": 105,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-core/src/main/java/tech/powerjob/server/core/alarm/impl/DingTalkAlarmService.java",
+              "type": "String",
+              "code": "        String appKey = environment.getProperty(PowerJobServerConfigKey.DING_APP_KEY);\n        String appSecret = environment.getProperty(PowerJobServerConfigKey.DING_APP_SECRET);\n\n        log.info(\"[DingTalkAlarmService] init with appKey:{},appSecret:{},agentId:{}\", appKey, appSecret, agentId);\n\n        if (StringUtils.isAnyBlank(agentId, appKey, appSecret)) {\n            log.warn(\"[DingTalkAlarmService] cannot get agentId, appKey, appSecret at the same time, this service is unavailable\");"
+            },
+            {
+              "step": 1,
+              "variableName": "log.info(\"[DingTalkAlarmService] init with appKey:{},appSecret:{},agentId:{}\", appKey, appSecret, agentId)",
+              "startLine": 98,
+              "startColumn": 9,
+              "endLine": 98,
+              "endColumn": 115,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-core/src/main/java/tech/powerjob/server/core/alarm/impl/DingTalkAlarmService.java",
+              "type": "",
+              "code": "        String appKey = environment.getProperty(PowerJobServerConfigKey.DING_APP_KEY);\n        String appSecret = environment.getProperty(PowerJobServerConfigKey.DING_APP_SECRET);\n\n        log.info(\"[DingTalkAlarmService] init with appKey:{},appSecret:{},agentId:{}\", appKey, appSecret, agentId);\n\n        if (StringUtils.isAnyBlank(agentId, appKey, appSecret)) {\n            log.warn(\"[DingTalkAlarmService] cannot get agentId, appKey, appSecret at the same time, this service is unavailable\");"
+            }
+          ],
+          "label": "Yes",
+          "probability": 0.01498028077185154
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "MinioOssService.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "secretKey",
+              "startLine": 172,
+              "startColumn": 137,
+              "endLine": 172,
+              "endColumn": 146,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-persistence/src/main/java/tech/powerjob/server/persistence/storage/impl/MinioOssService.java",
+              "type": "String",
+              "code": "     * @param secretKey  秘密密钥\n     */\n    public void initOssClient(String endpoint, String bucketName, String accessKey, String secretKey) {\n        log.info(\"[Minio] init OSS by config: endpoint={}, bucketName={}, accessKey={}, secretKey={}\", endpoint, bucketName, accessKey, secretKey);\n        if (StringUtils.isEmpty(bucketName)) {\n            throw new IllegalArgumentException(\"'oms.storage.dfs.minio.bucketName' can't be empty, please creat a bucket in minio oss console then config it to powerjob\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "log.info(\"[Minio] init OSS by config: endpoint={}, bucketName={}, accessKey={}, secretKey={}\", endpoint, bucketName, accessKey, secretKey)",
+              "startLine": 172,
+              "startColumn": 9,
+              "endLine": 172,
+              "endColumn": 147,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-persistence/src/main/java/tech/powerjob/server/persistence/storage/impl/MinioOssService.java",
+              "type": "",
+              "code": "     * @param secretKey  秘密密钥\n     */\n    public void initOssClient(String endpoint, String bucketName, String accessKey, String secretKey) {\n        log.info(\"[Minio] init OSS by config: endpoint={}, bucketName={}, accessKey={}, secretKey={}\", endpoint, bucketName, accessKey, secretKey);\n        if (StringUtils.isEmpty(bucketName)) {\n            throw new IllegalArgumentException(\"'oms.storage.dfs.minio.bucketName' can't be empty, please creat a bucket in minio oss console then config it to powerjob\");\n        }"
+            }
+          ],
+          "label": "Yes",
+          "probability": 0.045493319630622864
+        }
+      ]
+    },
+    {
+      "resultIndex": 7,
+      "fileName": "PowerJobServerDiscoveryService.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password;",
+              "startLine": 21,
+              "startColumn": 20,
+              "endLine": 21,
+              "endColumn": 29,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/AppInfoVO.java",
+              "type": "String",
+              "code": "@ToString\npublic class AppInfoVO extends AppBaseVO {\n\n    private String password;\n\n    private String tags;\n"
+            },
+            {
+              "step": 1,
+              "variableName": "getPassword(...) : String",
+              "startLine": 18,
+              "endLine": 18,
+              "endColumn": 10,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/AppInfoVO.java",
+              "type": "String",
+              "code": " */\n@Getter\n@Setter\n@ToString\npublic class AppInfoVO extends AppBaseVO {\n\n    private String password;"
+            },
+            {
+              "step": 2,
+              "variableName": "... + ... : String",
+              "startLine": 18,
+              "endLine": 18,
+              "endColumn": 10,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/AppInfoVO.java",
+              "type": "String",
+              "code": " */\n@Getter\n@Setter\n@ToString\npublic class AppInfoVO extends AppBaseVO {\n\n    private String password;"
+            },
+            {
+              "step": 3,
+              "variableName": "resultDTO.getData().toString()",
+              "startLine": 217,
+              "startColumn": 28,
+              "endLine": 217,
+              "endColumn": 58,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "String",
+              "code": "            try {\n                ObjectResultDTO resultDTO = JsonUtils.parseObject(result, ObjectResultDTO.class);\n                if (resultDTO.isSuccess()) {\n                    return resultDTO.getData().toString();\n                }\n            }catch (Exception ignore) {\n            }"
+            },
+            {
+              "step": 4,
+              "variableName": "acquire(firstServerAddress)",
+              "startLine": 166,
+              "startColumn": 26,
+              "endLine": 166,
+              "endColumn": 53,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "String",
+              "code": "            // 直接请求当前Server的HTTP服务，可以少一次网络开销，减轻Server负担\n            String firstServerAddress = ip2Address.get(ip);\n            if (firstServerAddress != null) {\n                result = acquire(firstServerAddress);\n            }\n        }\n"
+            },
+            {
+              "step": 5,
+              "variableName": "result",
+              "startLine": 200,
+              "startColumn": 65,
+              "endLine": 200,
+              "endColumn": 71,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "",
+              "code": "        } else {\n            // 重置失败次数\n            FAILED_COUNT = 0;\n            log.debug(\"[PowerDiscovery] current server is {}.\", result);\n            return result;\n        }\n    }"
+            }
+          ],
+          "label": "Yes",
+          "probability": 0.10268724709749222
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password;",
+              "startLine": 21,
+              "startColumn": 20,
+              "endLine": 21,
+              "endColumn": 29,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/AppInfoVO.java",
+              "type": "String",
+              "code": "@ToString\npublic class AppInfoVO extends AppBaseVO {\n\n    private String password;\n\n    private String tags;\n"
+            },
+            {
+              "step": 1,
+              "variableName": "getPassword(...) : String",
+              "startLine": 18,
+              "endLine": 18,
+              "endColumn": 10,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/AppInfoVO.java",
+              "type": "String",
+              "code": " */\n@Getter\n@Setter\n@ToString\npublic class AppInfoVO extends AppBaseVO {\n\n    private String password;"
+            },
+            {
+              "step": 2,
+              "variableName": "... + ... : String",
+              "startLine": 18,
+              "endLine": 18,
+              "endColumn": 10,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/AppInfoVO.java",
+              "type": "String",
+              "code": " */\n@Getter\n@Setter\n@ToString\npublic class AppInfoVO extends AppBaseVO {\n\n    private String password;"
+            },
+            {
+              "step": 3,
+              "variableName": "resultDTO.getData().toString()",
+              "startLine": 217,
+              "startColumn": 28,
+              "endLine": 217,
+              "endColumn": 58,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "String",
+              "code": "            try {\n                ObjectResultDTO resultDTO = JsonUtils.parseObject(result, ObjectResultDTO.class);\n                if (resultDTO.isSuccess()) {\n                    return resultDTO.getData().toString();\n                }\n            }catch (Exception ignore) {\n            }"
+            },
+            {
+              "step": 4,
+              "variableName": "acquire(httpServerAddress)",
+              "startLine": 172,
+              "startColumn": 26,
+              "endLine": 172,
+              "endColumn": 52,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "String",
+              "code": "\n        for (String httpServerAddress : config.getServerAddress()) {\n            if (StringUtils.isEmpty(result)) {\n                result = acquire(httpServerAddress);\n            }else {\n                break;\n            }"
+            },
+            {
+              "step": 5,
+              "variableName": "result",
+              "startLine": 200,
+              "startColumn": 65,
+              "endLine": 200,
+              "endColumn": 71,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "",
+              "code": "        } else {\n            // 重置失败次数\n            FAILED_COUNT = 0;\n            log.debug(\"[PowerDiscovery] current server is {}.\", result);\n            return result;\n        }\n    }"
+            }
+          ],
+          "label": "Yes",
+          "probability": 0.10268724709749222
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password;",
+              "startLine": 25,
+              "startColumn": 20,
+              "endLine": 25,
+              "endColumn": 29,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/UserDetailVO.java",
+              "type": "String",
+              "code": "    /**\n     * 密码\n     */\n    private String password;\n\n    /**\n     * webHook"
+            },
+            {
+              "step": 1,
+              "variableName": "getPassword(...) : String",
+              "startLine": 18,
+              "endLine": 18,
+              "endColumn": 10,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/UserDetailVO.java",
+              "type": "String",
+              "code": " */\n@Getter\n@Setter\n@ToString\npublic class UserDetailVO extends UserBaseVO {\n\n"
+            },
+            {
+              "step": 2,
+              "variableName": "... + ... : String",
+              "startLine": 18,
+              "endLine": 18,
+              "endColumn": 10,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/UserDetailVO.java",
+              "type": "String",
+              "code": " */\n@Getter\n@Setter\n@ToString\npublic class UserDetailVO extends UserBaseVO {\n\n"
+            },
+            {
+              "step": 3,
+              "variableName": "resultDTO.getData().toString()",
+              "startLine": 217,
+              "startColumn": 28,
+              "endLine": 217,
+              "endColumn": 58,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "String",
+              "code": "            try {\n                ObjectResultDTO resultDTO = JsonUtils.parseObject(result, ObjectResultDTO.class);\n                if (resultDTO.isSuccess()) {\n                    return resultDTO.getData().toString();\n                }\n            }catch (Exception ignore) {\n            }"
+            },
+            {
+              "step": 4,
+              "variableName": "acquire(firstServerAddress)",
+              "startLine": 166,
+              "startColumn": 26,
+              "endLine": 166,
+              "endColumn": 53,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "String",
+              "code": "            // 直接请求当前Server的HTTP服务，可以少一次网络开销，减轻Server负担\n            String firstServerAddress = ip2Address.get(ip);\n            if (firstServerAddress != null) {\n                result = acquire(firstServerAddress);\n            }\n        }\n"
+            },
+            {
+              "step": 5,
+              "variableName": "result",
+              "startLine": 200,
+              "startColumn": 65,
+              "endLine": 200,
+              "endColumn": 71,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "",
+              "code": "        } else {\n            // 重置失败次数\n            FAILED_COUNT = 0;\n            log.debug(\"[PowerDiscovery] current server is {}.\", result);\n            return result;\n        }\n    }"
+            }
+          ],
+          "label": "Yes",
+          "probability": 0.10063598304986954
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password;",
+              "startLine": 25,
+              "startColumn": 20,
+              "endLine": 25,
+              "endColumn": 29,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/UserDetailVO.java",
+              "type": "String",
+              "code": "    /**\n     * 密码\n     */\n    private String password;\n\n    /**\n     * webHook"
+            },
+            {
+              "step": 1,
+              "variableName": "getPassword(...) : String",
+              "startLine": 18,
+              "endLine": 18,
+              "endColumn": 10,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/UserDetailVO.java",
+              "type": "String",
+              "code": " */\n@Getter\n@Setter\n@ToString\npublic class UserDetailVO extends UserBaseVO {\n\n"
+            },
+            {
+              "step": 2,
+              "variableName": "... + ... : String",
+              "startLine": 18,
+              "endLine": 18,
+              "endColumn": 10,
+              "uri": "PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/web/response/UserDetailVO.java",
+              "type": "String",
+              "code": " */\n@Getter\n@Setter\n@ToString\npublic class UserDetailVO extends UserBaseVO {\n\n"
+            },
+            {
+              "step": 3,
+              "variableName": "resultDTO.getData().toString()",
+              "startLine": 217,
+              "startColumn": 28,
+              "endLine": 217,
+              "endColumn": 58,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "String",
+              "code": "            try {\n                ObjectResultDTO resultDTO = JsonUtils.parseObject(result, ObjectResultDTO.class);\n                if (resultDTO.isSuccess()) {\n                    return resultDTO.getData().toString();\n                }\n            }catch (Exception ignore) {\n            }"
+            },
+            {
+              "step": 4,
+              "variableName": "acquire(httpServerAddress)",
+              "startLine": 172,
+              "startColumn": 26,
+              "endLine": 172,
+              "endColumn": 52,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "String",
+              "code": "\n        for (String httpServerAddress : config.getServerAddress()) {\n            if (StringUtils.isEmpty(result)) {\n                result = acquire(httpServerAddress);\n            }else {\n                break;\n            }"
+            },
+            {
+              "step": 5,
+              "variableName": "result",
+              "startLine": 200,
+              "startColumn": 65,
+              "endLine": 200,
+              "endColumn": 71,
+              "uri": "PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java",
+              "type": "",
+              "code": "        } else {\n            // 重置失败次数\n            FAILED_COUNT = 0;\n            log.debug(\"[PowerDiscovery] current server is {}.\", result);\n            return result;\n        }\n    }"
+            }
+          ],
+          "label": "Yes",
+          "probability": 0.10063598304986954
+        }
+      ]
+    }
+  ]
+}
