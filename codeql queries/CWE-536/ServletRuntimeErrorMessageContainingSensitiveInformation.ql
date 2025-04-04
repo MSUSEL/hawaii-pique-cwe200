@@ -101,7 +101,7 @@
  // Query for sensitive information flow from source to sink with path visualization
  from SensitiveInfoInErrorMsgFlow::PathNode source, SensitiveInfoInErrorMsgFlow::PathNode sink
  where SensitiveInfoInErrorMsgFlow::flowPath(source, sink) and
- not isTestFile(sink.getNode().getLocation().getFile()) and
+ not isTestFile(sink.getNode().getLocation().getFile())
  select sink, source, sink,
    "CWE-536: Sensitive information flows into a servlet runtime exception and is exposed via an error message."
  

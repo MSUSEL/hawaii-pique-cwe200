@@ -59,6 +59,6 @@
  
  from Flow::PathNode source, Flow::PathNode sink
  where Flow::flowPath(source, sink) and
- not isTestFile(sink.getNode().getLocation().getFile()) and
+ not isTestFile(sink.getNode().getLocation().getFile())
  select sink.getNode(), source, sink,
    "CWE-537: Java runtime error message containing sensitive information"

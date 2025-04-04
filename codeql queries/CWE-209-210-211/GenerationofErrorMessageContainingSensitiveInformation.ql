@@ -121,7 +121,7 @@
  // Use the flowPath from that module
  from SensitiveInfoInErrorMsgFlow::PathNode source, SensitiveInfoInErrorMsgFlow::PathNode sink
  where SensitiveInfoInErrorMsgFlow::flowPath(source, sink) and
- not isTestFile(sink.getNode().getLocation().getFile()) and
+ not isTestFile(sink.getNode().getLocation().getFile())
  select sink, source, sink,
    "CWE-209: Sensitive information flows into exception and is exposed via an error message."
  
