@@ -239,6 +239,7 @@ class BinaryClassifier(nn.Module):
         x = self.act(x)
         x = self.dropout(x)
         out = self.out(x)
+        torch.sigmoid(out)
         return out
 
 class MultiClassClassifier(nn.Module):
@@ -284,7 +285,7 @@ def evaluate_model(model, dataloader, device, category, print_report=False):
             if category == 'sinks':
                 predictions = torch.argmax(outputs, dim=1).cpu().numpy()
             else:
-                predictions = (torch.sigmoid(outputs) > 0.5).int().cpu().numpy().flatten()
+                predictions = (outputs > 0.5).int().cpu().numpy().flatten()
             preds.extend(predictions)
             trues.extend(labels.numpy())
     trues = np.array(trues)
@@ -393,12 +394,19 @@ def get_context(labels, context, category):
                         None,
                         binary_label
                     ])
+
                 elif category == 'sinks':
+                    sink_type = label_item['type']
+                    if sink_type not in sink_type_mapping_rev:
+                        print(f"Missing sink type: {sink_type} for label: {label_item}")
+                        continue
+                    sink_value = sink_type_mapping_rev.get(sink_type, 0)  # Default to 0 if missing
                     data.append([
                         text_preprocess(label_item['name']),
                         text_preprocess(aggregated_context),
-                        sink_type_mapping_rev.get(label_item['type'])
+                        sink_value
                     ])
+
     return data
 
 # ------------------------------ Training Function ------------------------------------
@@ -542,13 +550,14 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64, 96],
         'epochs': [60, 80, 100],
-        'n_iter': [5]
+        'n_iter': [500]
     }
     
     strings_param_grid = {
         'model__learning_rate': [1e-4, 1e-3, 1e-2, 1e-1],
         'model__dropout_rate': [0.2, 0.3],
         'model__activation': ['elu', 'relu'],
+        'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64],
         'epochs': [50, 60],
         'n_iter': [5]
@@ -558,6 +567,7 @@ if __name__ == '__main__':
         'model__learning_rate': [1e-4, 1e-3, 1e-2, 1e-1],
         'model__dropout_rate': [0.2, 0.3],
         'model__activation': ['elu', 'relu'],
+        'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64],
         'epochs': [50, 60],
         'n_iter': [5]
@@ -567,6 +577,7 @@ if __name__ == '__main__':
         'model__learning_rate': [1e-4, 1e-3, 1e-2, 1e-1],
         'model__dropout_rate': [0.2, 0.3],
         'model__activation': ['elu', 'relu'],
+        'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64],
         'epochs': [50, 60],
         'n_iter': [5]
@@ -580,10 +591,10 @@ if __name__ == '__main__':
     }
     
     categories = [
-        "variables",
+        # "variables",
         # "strings",
         # "comments",
-        # "sinks"
+        "sinks"
     ]
     
     embedding_models = {
