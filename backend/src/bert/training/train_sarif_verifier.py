@@ -370,9 +370,9 @@ if __name__ == "__main__":
     print(metrics.confusion_matrix(y_test, y_pred))
     
     # Save the final model (skorch models can be pickled).
-    final_model_path = os.path.join(model_dir, 'verify_flows_skorch.pkl')
-    with open(final_model_path, 'wb') as f:
-        import pickle
-        pickle.dump(final_net, f)
+    final_model_path = os.path.join(model_dir, 'verify_flows_skorch.pt')
+
+    scripted_model = torch.jit.script(final_net)
+    scripted_model.save(final_model_path)  
     
     print("Training complete!")

@@ -539,7 +539,7 @@ def create_model_sinks(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.00
 # ------------------------------ Main Script ------------------------------------
 
 if __name__ == '__main__':
-    base_path = os.path.join(os.getcwd(), "backend", "src", "bert")
+    base_path = os.path.join(os.getcwd(), "backend", "src", "bert", "training", "data")
     context = read_json(os.path.join(base_path, 'parsedResults.json'))
     labels = read_json(os.path.join(base_path, 'labels.json'))
     
@@ -550,7 +550,7 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64, 96],
         'epochs': [60, 80, 100],
-        'n_iter': [5]
+        'n_iter': [500]
     }
     
     strings_param_grid = {
