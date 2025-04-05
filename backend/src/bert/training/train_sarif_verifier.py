@@ -1,28 +1,20 @@
-import json
 import os
+import json
 import sys
 import numpy as np
-import tensorflow as tf
-from tensorflow.keras.layers import Dense, Dropout, BatchNormalization, Activation, Input, Add
-from tensorflow.keras.models import Model
-from tensorflow.keras import regularizers
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from sklearn import metrics
-from sklearn.model_selection import StratifiedKFold, RandomizedSearchCV, train_test_split
-from imblearn.pipeline import Pipeline
 from tqdm import tqdm
 import hashlib
+
 import torch
 import torch.nn as nn
+import torch.optim as optim
 from transformers import AutoTokenizer, AutoModel
-from scikeras.wrappers import KerasClassifier
 
-print("CUDA Available:", torch.cuda.is_available())
-print("GPU Count:", torch.cuda.device_count())
-if torch.cuda.is_available():
-    print("Current GPU:", torch.cuda.get_device_name(torch.cuda.current_device()))
+from sklearn import metrics
+from sklearn.model_selection import StratifiedKFold, RandomizedSearchCV, train_test_split
 
+# Import skorch for wrapping the PyTorch model as a scikit-learn estimator.
+from skorch import NeuralNetClassifier
 
 ##########################################
 # Data Processing Functions
@@ -86,7 +78,7 @@ def process_data_flows(labeled_flows_dir):
                         data_flow_string,
                         label
                     ])
-
+    
     print(f"Total flows processed: {total_flows}")
     print(f"Duplicate flows excluded: {duplicate_flows}")
     print(f"Flows kept for training: {kept_flows}")
@@ -102,23 +94,23 @@ def format_data_flows_for_graphcodebert(processed_flows):
     return formatted_flows
 
 ##########################################
-# Embedding Functions with RNN Aggregation
+# Embedding Functions with LSTM Aggregation
 ##########################################
-# Define an RNN aggregator using a GRU.
+# LSTM aggregator to combine segment embeddings.
 class RNNAggregator(nn.Module):
     def __init__(self, embedding_dim):
         super(RNNAggregator, self).__init__()
-        self.gru = nn.GRU(input_size=embedding_dim, hidden_size=embedding_dim, num_layers=1, batch_first=True)
+        self.lstm = nn.LSTM(input_size=embedding_dim, hidden_size=embedding_dim, num_layers=1, batch_first=True)
     def forward(self, x):
         # x: (batch, seq_len, embedding_dim)
-        output, h_n = self.gru(x)
-        return h_n  # shape: (num_layers, batch, hidden_size)
+        output, (h_n, c_n) = self.lstm(x)
+        return h_n  # Use the final hidden state (shape: (1, batch, hidden_size))
 
 def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=512):
     """
     Embeds a sentence using GraphCodeBERT. If the tokenized sentence exceeds max_length,
     it is split into segments and each segment is processed. Their embeddings are then
-    aggregated using an RNN.
+    aggregated using an LSTM.
     """
     # Tokenize without truncation to determine full token count.
     encoding = tokenizer(sentence, return_tensors="pt", truncation=False)
@@ -146,25 +138,25 @@ def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=51
             segment_embeddings.append(segment_embedding)
         # Stack segment embeddings and convert to tensor: shape (1, num_segments, embedding_dim)
         seg_tensor = torch.tensor(np.stack(segment_embeddings), dtype=torch.float32).unsqueeze(0).to(device)
-        # Use the aggregator RNN to combine segment embeddings.
+        # Use the LSTM aggregator to combine segment embeddings.
         with torch.no_grad():
             h_n = aggregator(seg_tensor)  # h_n: (num_layers, batch, hidden_size)
         aggregated_embedding = h_n[-1].squeeze(0).cpu().numpy()  # Use last layer's hidden state.
         return aggregated_embedding
 
-def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda' if torch.cuda.is_available() else 'cpu'):
+def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda'):
     """
     Calculates embeddings for a list of sentences using GraphCodeBERT.
-    If a sentence exceeds max_length tokens, it is segmented and aggregated using an RNN.
+    If a sentence exceeds max_length tokens, it is segmented and aggregated using an LSTM.
     """
-    print(f"Using device {device}")
+    print(f"Using device {device} for encoding")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
     model.to(device)
     model.eval()
     
     embedding_dim = model.config.hidden_size
-    # Initialize the RNN aggregator.
+    # Initialize the LSTM aggregator.
     aggregator = RNNAggregator(embedding_dim)
     aggregator.to(device)
     aggregator.eval()
@@ -176,73 +168,107 @@ def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebe
     return np.vstack(embeddings)
 
 ##########################################
-# Model Creation, Evaluation, and Training
+# PyTorch Classifier Model
 ##########################################
-def create_model(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.0001, units=256, activation='elu', embedding_dim=None):
-    if embedding_dim is None:
-        raise ValueError("Embedding dimension not found")
-    units1 = embedding_dim
-    units2 = embedding_dim * 3 // 4
-    units3 = embedding_dim // 2
-    units4 = embedding_dim // 4
-    inputs = Input(shape=(embedding_dim,))
-    x = Dense(units1, kernel_regularizer=regularizers.l2(weight_decay))(inputs)
-    x = BatchNormalization()(x)
-    x = Activation(activation)(x)
-    x = Dropout(dropout_rate)(x)
-    res1 = Dense(units2, kernel_regularizer=regularizers.l2(weight_decay))(x)
-    res1 = BatchNormalization()(res1)
-    res1 = Activation(activation)(res1)
-    res1 = Dropout(dropout_rate)(res1)
-    x = Dense(units2)(x)
-    x = Add()([x, res1])
-    x = Dense(units2)(x)
-    x = Add()([x, res1])
-    res2 = Dense(units3, kernel_regularizer=regularizers.l2(weight_decay))(x)
-    res2 = BatchNormalization()(res2)
-    res2 = Activation(activation)(res2)
-    res2 = Dropout(dropout_rate)(res2)
-    x = Dense(units3)(x)
-    x = Add()([x, res2])
-    x = Dense(units3)(x)
-    x = Add()([x, res2])
-    x = Dense(units4, kernel_regularizer=regularizers.l2(weight_decay))(x)
-    x = BatchNormalization()(x)
-    x = Activation(activation)(x)
-    x = Dropout(dropout_rate)(x)
-    outputs = Dense(1, activation='sigmoid')(x)
-    model = Model(inputs, outputs)
-    opt = Adam(learning_rate=learning_rate)
-    model.compile(
-        loss='binary_crossentropy',
-        optimizer=opt,
-        metrics=['accuracy', tf.keras.metrics.Precision(name='precision'),
-                 tf.keras.metrics.Recall(name='recall'), tf.keras.metrics.AUC(name='auc')]
-    )
-    return model
+def get_activation(act_name):
+    if act_name == 'relu':
+        return nn.ReLU()
+    elif act_name == 'leaky_relu':
+        return nn.LeakyReLU()
+    elif act_name == 'elu':
+        return nn.ELU()
+    elif act_name == 'gelu':
+        return nn.GELU()
+    else:
+        raise ValueError(f"Unsupported activation: {act_name}")
 
-def evaluate_model(final_model, X_test, y_test, category):
-    print("Evaluating model on test set...")
-    predicted_probs = final_model.predict(X_test, verbose=0)
-    predicted_classes = (predicted_probs > 0.5).astype(int)
-    print(f"Precision: {metrics.precision_score(y_test, predicted_classes):.4f}")
-    print(f"Recall: {metrics.recall_score(y_test, predicted_classes):.4f}")
-    print(f"F1 Score: {metrics.f1_score(y_test, predicted_classes):.4f}")
-    print(f"Accuracy: {metrics.accuracy_score(y_test, predicted_classes):.4f}")
-    print(f"AUC: {metrics.roc_auc_score(y_test, predicted_probs):.4f}")
-    print(metrics.classification_report(y_test, predicted_classes, target_names=["Non-sensitive", "Sensitive"]))
-    print(metrics.confusion_matrix(y_test, predicted_classes))
+class ClassifierModel(nn.Module):
+    def __init__(self, embedding_dim, dropout_rate=0.2, activation='elu'):
+        super(ClassifierModel, self).__init__()
+        # Define units similar to the Keras model.
+        units1 = embedding_dim
+        units2 = embedding_dim * 3 // 4
+        units3 = embedding_dim // 2
+        units4 = embedding_dim // 4
+        
+        self.act = get_activation(activation)
+        
+        # First block
+        self.fc1 = nn.Linear(embedding_dim, units1)
+        self.bn1 = nn.BatchNorm1d(units1)
+        self.dropout = nn.Dropout(dropout_rate)
+        
+        # Residual block 1
+        self.fc_res1 = nn.Linear(units1, units2)
+        self.bn_res1 = nn.BatchNorm1d(units2)
+        self.dropout_res1 = nn.Dropout(dropout_rate)
+        
+        self.fc2 = nn.Linear(units1, units2)
+        self.fc3 = nn.Linear(units2, units2)
+        
+        # Residual block 2
+        self.fc_res2 = nn.Linear(units2, units3)
+        self.bn_res2 = nn.BatchNorm1d(units3)
+        self.dropout_res2 = nn.Dropout(dropout_rate)
+        
+        self.fc4 = nn.Linear(units2, units3)
+        self.fc5 = nn.Linear(units3, units3)
+        
+        # Final layers
+        self.fc_final = nn.Linear(units3, units4)
+        self.bn_final = nn.BatchNorm1d(units4)
+        self.dropout_final = nn.Dropout(dropout_rate)
+        self.out = nn.Linear(units4, 1)
+        
+    def forward(self, x):
+        # x shape: (batch, embedding_dim)
+        x = self.fc1(x)
+        x = self.bn1(x)
+        x = self.act(x)
+        x = self.dropout(x)
+        
+        res1 = self.fc_res1(x)
+        res1 = self.bn_res1(res1)
+        res1 = self.act(res1)
+        res1 = self.dropout_res1(res1)
+        
+        x2 = self.fc2(x)
+        x2 = x2 + res1
+        x3 = self.fc3(x2)
+        x3 = x3 + res1
+        
+        res2 = self.fc_res2(x3)
+        res2 = self.bn_res2(res2)
+        res2 = self.act(res2)
+        res2 = self.dropout_res2(res2)
+        
+        x4 = self.fc4(x3)
+        x4 = x4 + res2
+        x5 = self.fc5(x4)
+        x5 = x5 + res2
+        
+        x6 = self.fc_final(x5)
+        x6 = self.bn_final(x6)
+        x6 = self.act(x6)
+        x6 = self.dropout_final(x6)
+        
+        out = self.out(x6)
+        return torch.sigmoid(out).squeeze(1)  # Squeeze to get shape (batch,)
 
 ##########################################
-# Main Script
+# Training, Hyperparameter Tuning, and Evaluation
 ##########################################
 if __name__ == "__main__":
+    # Use GPU if available.
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    print("Using device:", device)
+    
+    # Paths
     labeled_flows_dir = os.path.join('testing', 'Labeling', 'FlowData')
     model_dir = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     os.makedirs(model_dir, exist_ok=True)
-    scoring = 'f1'
-    category = 'flows'
     
+    # Data processing and encoding.
     print("Processing data flows...")
     processed_data_flows = process_data_flows(labeled_flows_dir)
    
@@ -250,77 +276,103 @@ if __name__ == "__main__":
     formatted_flows = format_data_flows_for_graphcodebert(processed_data_flows)
     
     print("Calculating GraphCodeBERT embeddings...")
-    embeddings = calculate_graphcodebert_vectors(formatted_flows, max_length=512)
+    embeddings = calculate_graphcodebert_vectors(formatted_flows, max_length=512, device=device)
     embedding_dim = embeddings.shape[1]
     labels = processed_data_flows[:, 4].astype(np.int32)
-    X_train, X_test, y_train, y_test = train_test_split(embeddings, labels, test_size=0.2, stratify=labels, random_state=42)
     
-    print("Starting hyperparameter tuning with RandomizedSearchCV...")
-    model = KerasClassifier(
-        model=create_model,
-        epochs=50,
-        batch_size=32,
-        verbose=0,
-        embedding_dim=embedding_dim,
-        learning_rate=0.0001,
-        dropout_rate=0.2,
-        activation='elu',
-        weight_decay=0.0001
+    # Split data into training and test sets.
+    X_train, X_test, y_train, y_test = train_test_split(
+        embeddings, labels, test_size=0.2, stratify=labels, random_state=42
     )
     
-    pipeline = Pipeline([('model', model)])
-    kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    # Set up the PyTorch model wrapped in a skorch NeuralNetClassifier.
+    net = NeuralNetClassifier(
+        module=ClassifierModel,
+        module__embedding_dim=embedding_dim,
+        module__dropout_rate=0.2,
+        module__activation='elu',
+        max_epochs=50,
+        lr=0.0001,
+        batch_size=32,
+        optimizer=optim.Adam,
+        optimizer__weight_decay=0.0001,
+        # Set the criterion to binary cross-entropy loss.
+        criterion=nn.BCELoss,
+        device=device,  # Use GPU
+        iterator_train__shuffle=True,
+        verbose=0,
+    )
     
+    # Hyperparameter grid for RandomizedSearchCV.
     param_grid = {
-        'model__learning_rate': [1e-5, 3e-5, 5e-5, 7e-5, 1e-4, 3e-4, 5e-4],
-        'model__dropout_rate': [0.0, 0.1, 0.2, 0.3],
-        'model__activation': ['leaky_relu', 'relu', 'elu', 'gelu'],
-        'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
-        'model__batch_size': [32, 64, 96],
-        'model__epochs': [60, 80, 100]
+        'lr': [1e-5, 3e-5, 5e-5, 7e-5, 1e-4, 3e-4, 5e-4],
+        'module__dropout_rate': [0.0, 0.1, 0.2, 0.3],
+        'module__activation': ['leaky_relu', 'relu', 'elu', 'gelu'],
+        'optimizer__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
+        'batch_size': [32, 64, 96],
+        'max_epochs': [60, 80, 100],
     }
     
+    # Use stratified K-Fold cross-validation.
+    from sklearn.model_selection import StratifiedKFold
+    kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    
+    # Use n_jobs=1 to avoid GPU conflicts.
+    from sklearn.model_selection import RandomizedSearchCV
     random_search = RandomizedSearchCV(
-        estimator=pipeline,
+        estimator=net,
         param_distributions=param_grid,
-        n_iter=200,
+        n_iter=20,  # Adjust iterations as needed.
         cv=kfold,
-        scoring=scoring,
-        n_jobs=-1,
+        scoring='f1',
+        n_jobs=1,  # Use a single job
+        error_score='raise',  # Raise errors for debugging.
         random_state=42,
-        verbose=2
+        verbose=2,
     )
     
-    random_search_result = random_search.fit(X_train, y_train)
+    print("Starting hyperparameter tuning...")
+    random_search_result = random_search.fit(X_train.astype(np.float32), y_train.astype(np.float32))
     
     print(f"Best CV F1 Score: {random_search_result.best_score_:.4f} using {random_search_result.best_params_}")
     best_params = random_search_result.best_params_
-    final_model = create_model(
-        learning_rate=best_params['model__learning_rate'],
-        dropout_rate=best_params['model__dropout_rate'],
-        activation=best_params['model__activation'],
-        weight_decay=best_params['model__weight_decay'],
-        embedding_dim=embedding_dim
+    
+    # Create a final model with the best parameters.
+    final_net = NeuralNetClassifier(
+        module=ClassifierModel,
+        module__embedding_dim=embedding_dim,
+        module__dropout_rate=best_params['module__dropout_rate'],
+        module__activation=best_params['module__activation'],
+        max_epochs=best_params['max_epochs'],
+        lr=best_params['lr'],
+        batch_size=best_params['batch_size'],
+        optimizer=optim.Adam,
+        optimizer__weight_decay=best_params['optimizer__weight_decay'],
+        criterion=nn.BCELoss,
+        device=device,
+        iterator_train__shuffle=True,
+        verbose=1,
     )
-    callbacks = [
-        EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True),
-        ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=1e-6, verbose=1)
-    ]
     
-    print(f"Training final model with {best_params['model__epochs']} epochs and batch size {best_params['model__batch_size']}...")
-    history = final_model.fit(
-        X_train, y_train,
-        validation_split=0.1,
-        epochs=best_params['model__epochs'],
-        batch_size=best_params['model__batch_size'],
-        callbacks=callbacks,
-        verbose=1
-    )
-    print('Evaluating the Model...')
-    evaluate_model(final_model, X_test, y_test, category)
+    print("Training final model...")
+    final_net.fit(X_train.astype(np.float32), y_train.astype(np.float32))
     
-    print("Saving final model...")
-    final_model.save(os.path.join(model_dir, 'verify_flows.keras'))
+    print("Evaluating final model on test set...")
+    y_pred = final_net.predict(X_test.astype(np.float32))
+    predicted_probs = final_net.predict_proba(X_test.astype(np.float32))[:, 1]
     
-    tf.keras.backend.clear_session()
+    print(f"Precision: {metrics.precision_score(y_test, y_pred):.4f}")
+    print(f"Recall: {metrics.recall_score(y_test, y_pred):.4f}")
+    print(f"F1 Score: {metrics.f1_score(y_test, y_pred):.4f}")
+    print(f"Accuracy: {metrics.accuracy_score(y_test, y_pred):.4f}")
+    print(f"AUC: {metrics.roc_auc_score(y_test, predicted_probs):.4f}")
+    print(metrics.classification_report(y_test, y_pred, target_names=["Non-sensitive", "Sensitive"]))
+    print(metrics.confusion_matrix(y_test, y_pred))
+    
+    # Save the final model (skorch models can be pickled).
+    final_model_path = os.path.join(model_dir, 'verify_flows_skorch.pkl')
+    with open(final_model_path, 'wb') as f:
+        import pickle
+        pickle.dump(final_net, f)
+    
     print("Training complete!")
