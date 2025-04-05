@@ -520,8 +520,8 @@ def train(category, data, param_grid, create_model_fn, embedding_model='sentbert
     model_dir = "model"
     os.makedirs(model_dir, exist_ok=True)
     model_path = os.path.join(model_dir, f'{embedding_model}_final_model_{category}.pt')
-    torch.save(final_model.state_dict(), model_path)
-    print(f"Final model saved to {model_path}")
+    scripted_model = torch.jit.script(final_model)
+    scripted_model.save(model_path)    
 
 # ------------------------------ Model Creation Functions ------------------------------------
 
@@ -550,7 +550,7 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64, 96],
         'epochs': [60, 80, 100],
-        'n_iter': [500]
+        'n_iter': [5]
     }
     
     strings_param_grid = {
@@ -591,10 +591,10 @@ if __name__ == '__main__':
     }
     
     categories = [
-        # "variables",
+        "variables",
         # "strings",
         # "comments",
-        "sinks"
+        # "sinks"
     ]
     
     embedding_models = {

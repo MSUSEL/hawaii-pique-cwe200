@@ -28,101 +28,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 DIM = 768
 
 # -----------------------------------------------------------------------------
-# PyTorch Model Definitions (from training)
-# -----------------------------------------------------------------------------
-import torch.nn as nn
-
-def get_activation(act_name):
-    act_name = act_name.lower()
-    if act_name == 'relu':
-        return nn.ReLU()
-    elif act_name == 'elu':
-        return nn.ELU()
-    elif act_name == 'leaky_relu':
-        return nn.LeakyReLU()
-    elif act_name == 'gelu':
-        return nn.GELU()
-    else:
-        raise ValueError(f"Unknown activation: {act_name}")
-
-class BinaryClassifier(nn.Module):
-    def __init__(self, embedding_dim, dropout_rate, weight_decay, activation):
-        super(BinaryClassifier, self).__init__()
-        self.units1 = embedding_dim
-        self.units2 = embedding_dim * 3 // 4
-        self.units3 = embedding_dim // 2
-        self.units4 = embedding_dim // 4
-        act = get_activation(activation)
-        self.act = act
-        self.dropout = nn.Dropout(dropout_rate)
-        self.fc1 = nn.Linear(embedding_dim, self.units1)
-        self.bn1 = nn.BatchNorm1d(self.units1)
-        self.res1_fc = nn.Linear(self.units1, self.units2)
-        self.res1_bn = nn.BatchNorm1d(self.units2)
-        self.skip1 = nn.Linear(self.units1, self.units2)
-        self.res2_fc = nn.Linear(self.units2, self.units3)
-        self.res2_bn = nn.BatchNorm1d(self.units3)
-        self.skip2 = nn.Linear(self.units2, self.units3)
-        self.fc2 = nn.Linear(self.units3, self.units4)
-        self.bn2 = nn.BatchNorm1d(self.units4)
-        self.out = nn.Linear(self.units4, 1)
-        
-    def forward(self, x):
-        x = self.fc1(x)
-        x = self.bn1(x)
-        x = self.act(x)
-        x = self.dropout(x)
-        res1 = self.res1_fc(x)
-        res1 = self.res1_bn(res1)
-        res1 = self.act(res1)
-        res1 = self.dropout(res1)
-        skip1 = self.skip1(x)
-        x = skip1 + res1
-        res2 = self.res2_fc(x)
-        res2 = self.res2_bn(res2)
-        res2 = self.act(res2)
-        res2 = self.dropout(res2)
-        skip2 = self.skip2(x)
-        x = skip2 + res2
-        x = self.fc2(x)
-        x = self.bn2(x)
-        x = self.act(x)
-        x = self.dropout(x)
-        out = self.out(x)
-        out = torch.sigmoid(out)
-        return out
-
-class MultiClassClassifier(nn.Module):
-    def __init__(self, embedding_dim, dropout_rate, weight_decay, activation):
-        super(MultiClassClassifier, self).__init__()
-        units = embedding_dim // 3
-        act = get_activation(activation)
-        self.act = act
-        self.dropout = nn.Dropout(dropout_rate)
-        self.fc1 = nn.Linear(embedding_dim, units)
-        self.bn1 = nn.BatchNorm1d(units)
-        self.fc2 = nn.Linear(units, units // 2)
-        self.bn2 = nn.BatchNorm1d(units // 2)
-        self.fc3 = nn.Linear(units // 2, units // 4)
-        self.bn3 = nn.BatchNorm1d(units // 4)
-        self.out = nn.Linear(units // 4, 8)
-        
-    def forward(self, x):
-        x = self.fc1(x)
-        x = self.bn1(x)
-        x = self.act(x)
-        x = self.dropout(x)
-        x = self.fc2(x)
-        x = self.bn2(x)
-        x = self.act(x)
-        x = self.dropout(x)
-        x = self.fc3(x)
-        x = self.bn3(x)
-        x = self.act(x)
-        out = self.out(x)
-        return out
-
-# -----------------------------------------------------------------------------
 # Other Helper Functions
 # -----------------------------------------------------------------------------
 
@@ -234,11 +139,17 @@ def get_predictions(model_pt, test_x, data_type, batch_size=64):
             batch_data = test_x[i:i+batch_size]
             batch_tensor = torch.tensor(batch_data, dtype=torch.float32, device=device)
             batch_output = model_pt(batch_tensor)
-            if not isinstance(batch_output, torch.Tensor):
-                batch_output = torch.tensor(batch_output)
+            # Apply appropriate activation to get confidence scores between 0 and 1
+            if data_type != "sinks":
+                # For binary classification, use sigmoid
+                batch_output = torch.sigmoid(batch_output)
+            else:
+                # For multi-class classification, use softmax along the class dimension (assumed dim=1)
+                batch_output = torch.softmax(batch_output, dim=1)
             predictions.extend(batch_output.cpu().numpy())
             prediction_tracker.update_progress(1)
     return np.array(predictions)
+
 
 # -----------------------------------------------------------------------------
 # Data Processing Functions
@@ -305,13 +216,7 @@ def process_data_type(data_type, data_list, final_results, model_path):
         else:
             concatenated_vectors = np.asarray(name_vectors)
 
-        # Instantiate appropriate model and load its state dictionary
-        if data_type != 'sinks':
-            model_pt = BinaryClassifier(embedding_dim=DIM, dropout_rate=0.3, weight_decay=0.0001, activation='relu')
-        else:
-            model_pt = MultiClassClassifier(embedding_dim=DIM, dropout_rate=0.2, weight_decay=0.0001, activation='elu')
-        state_dict = torch.load(os.path.join(model_path, f"{data_type}.pt"), map_location=device)
-        model_pt.load_state_dict(state_dict)
+        model_pt = torch.jit.load(os.path.join(model_path, f"{data_type}.pt"), map_location=device)
 
         test_x = np.reshape(concatenated_vectors, (-1, DIM)) if data_type != 'comments' else concatenated_vectors
         y_predict = get_predictions(model_pt, test_x, data_type)
