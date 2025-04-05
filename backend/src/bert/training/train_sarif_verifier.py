@@ -1,40 +1,32 @@
 import json
 import os
-os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 import sys
 import numpy as np
-from sentence_transformers import SentenceTransformer
 import tensorflow as tf
-from tensorflow.keras.layers import (Dense, Dropout, BatchNormalization, Activation, Input, Add)
-from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense, Dropout, BatchNormalization, Activation, Input, Add
 from tensorflow.keras.models import Model
 from tensorflow.keras import regularizers
 from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn import metrics
-from tensorflow.keras.callbacks import (EarlyStopping, ReduceLROnPlateau)
-from scikeras.wrappers import KerasClassifier
-from sklearn.model_selection import (StratifiedKFold, RandomizedSearchCV, train_test_split)
+from sklearn.model_selection import StratifiedKFold, RandomizedSearchCV, train_test_split
 from imblearn.pipeline import Pipeline
 from tqdm import tqdm
 import hashlib
-from transformers import AutoTokenizer, AutoModel
 import torch
+import torch.nn as nn
 from transformers import AutoTokenizer, AutoModel
-import torch
+from scikeras.wrappers import KerasClassifier
 
-# Parameter grid
-param_grid = {
-    'model__learning_rate': [1e-5, 3e-5, 5e-5, 7e-5, 1e-4, 3e-4, 5e-4],
-    'model__dropout_rate': [0.0, 0.1, 0.2, 0.3],
-    'model__activation': ['leaky_relu', 'relu', 'elu', 'gelu'],
-    'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
-    'model__batch_size': [32, 64, 96],
-    'model__epochs': [60, 80, 100]
-}
+print("CUDA Available:", torch.cuda.is_available())
+print("GPU Count:", torch.cuda.device_count())
+if torch.cuda.is_available():
+    print("Current GPU:", torch.cuda.get_device_name(torch.cuda.current_device()))
 
+
+##########################################
+# Data Processing Functions
+##########################################
 def read_data_flow_file(file):
     with open(file, "r") as f:
         data_flows = json.load(f)
@@ -109,24 +101,83 @@ def format_data_flows_for_graphcodebert(processed_flows):
         formatted_flows.append(flow_text)
     return formatted_flows
 
-def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', batch_size=16, device='cuda' if torch.cuda.is_available() else 'cpu'):
+##########################################
+# Embedding Functions with RNN Aggregation
+##########################################
+# Define an RNN aggregator using a GRU.
+class RNNAggregator(nn.Module):
+    def __init__(self, embedding_dim):
+        super(RNNAggregator, self).__init__()
+        self.gru = nn.GRU(input_size=embedding_dim, hidden_size=embedding_dim, num_layers=1, batch_first=True)
+    def forward(self, x):
+        # x: (batch, seq_len, embedding_dim)
+        output, h_n = self.gru(x)
+        return h_n  # shape: (num_layers, batch, hidden_size)
+
+def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=512):
+    """
+    Embeds a sentence using GraphCodeBERT. If the tokenized sentence exceeds max_length,
+    it is split into segments and each segment is processed. Their embeddings are then
+    aggregated using an RNN.
+    """
+    # Tokenize without truncation to determine full token count.
+    encoding = tokenizer(sentence, return_tensors="pt", truncation=False)
+    input_ids = encoding["input_ids"][0]
+    
+    if input_ids.size(0) <= max_length:
+        inputs = tokenizer(sentence, return_tensors="pt", padding="max_length",
+                           truncation=True, max_length=max_length)
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+        with torch.no_grad():
+            outputs = model(**inputs)
+        # Return the [CLS] token embedding.
+        return outputs.last_hidden_state[:, 0, :].cpu().numpy()[0]
+    else:
+        # Long sequence: split into segments.
+        tokens = input_ids.tolist()
+        segment_embeddings = []
+        for i in range(0, len(tokens), max_length):
+            segment_tokens = tokens[i:i+max_length]
+            segment_tensor = torch.tensor(segment_tokens).unsqueeze(0).to(device)
+            attention_mask = torch.ones(segment_tensor.shape, dtype=torch.long).to(device)
+            with torch.no_grad():
+                outputs = model(input_ids=segment_tensor, attention_mask=attention_mask)
+            segment_embedding = outputs.last_hidden_state[:, 0, :].cpu().numpy()[0]
+            segment_embeddings.append(segment_embedding)
+        # Stack segment embeddings and convert to tensor: shape (1, num_segments, embedding_dim)
+        seg_tensor = torch.tensor(np.stack(segment_embeddings), dtype=torch.float32).unsqueeze(0).to(device)
+        # Use the aggregator RNN to combine segment embeddings.
+        with torch.no_grad():
+            h_n = aggregator(seg_tensor)  # h_n: (num_layers, batch, hidden_size)
+        aggregated_embedding = h_n[-1].squeeze(0).cpu().numpy()  # Use last layer's hidden state.
+        return aggregated_embedding
+
+def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda' if torch.cuda.is_available() else 'cpu'):
+    """
+    Calculates embeddings for a list of sentences using GraphCodeBERT.
+    If a sentence exceeds max_length tokens, it is segmented and aggregated using an RNN.
+    """
+    print(f"Using device {device}")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
     model.to(device)
     model.eval()
-    embeddings = []
     
-    for i in tqdm(range(0, len(sentences), batch_size), desc="Embedding with GraphCodeBERT"):
-        batch = sentences[i:i + batch_size]
-        inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
-        input_ids = inputs["input_ids"].to(device)
-        attention_mask = inputs["attention_mask"].to(device)
-        with torch.no_grad():
-            outputs = model(input_ids=input_ids, attention_mask=attention_mask)
-            cls_embeddings = outputs.last_hidden_state[:, 0, :]
-            embeddings.append(cls_embeddings.cpu().numpy())
+    embedding_dim = model.config.hidden_size
+    # Initialize the RNN aggregator.
+    aggregator = RNNAggregator(embedding_dim)
+    aggregator.to(device)
+    aggregator.eval()
+    
+    embeddings = []
+    for sentence in tqdm(sentences, desc="Embedding with GraphCodeBERT"):
+        embedding = embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=max_length)
+        embeddings.append(embedding)
     return np.vstack(embeddings)
 
+##########################################
+# Model Creation, Evaluation, and Training
+##########################################
 def create_model(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.0001, units=256, activation='elu', embedding_dim=None):
     if embedding_dim is None:
         raise ValueError("Embedding dimension not found")
@@ -165,7 +216,8 @@ def create_model(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.0001, un
     model.compile(
         loss='binary_crossentropy',
         optimizer=opt,
-        metrics=['accuracy', tf.keras.metrics.Precision(name='precision'), tf.keras.metrics.Recall(name='recall'), tf.keras.metrics.AUC(name='auc')]
+        metrics=['accuracy', tf.keras.metrics.Precision(name='precision'),
+                 tf.keras.metrics.Recall(name='recall'), tf.keras.metrics.AUC(name='auc')]
     )
     return model
 
@@ -181,12 +233,16 @@ def evaluate_model(final_model, X_test, y_test, category):
     print(metrics.classification_report(y_test, predicted_classes, target_names=["Non-sensitive", "Sensitive"]))
     print(metrics.confusion_matrix(y_test, predicted_classes))
 
+##########################################
+# Main Script
+##########################################
 if __name__ == "__main__":
     labeled_flows_dir = os.path.join('testing', 'Labeling', 'FlowData')
     model_dir = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     os.makedirs(model_dir, exist_ok=True)
     scoring = 'f1'
     category = 'flows'
+    
     print("Processing data flows...")
     processed_data_flows = process_data_flows(labeled_flows_dir)
    
@@ -194,7 +250,7 @@ if __name__ == "__main__":
     formatted_flows = format_data_flows_for_graphcodebert(processed_data_flows)
     
     print("Calculating GraphCodeBERT embeddings...")
-    embeddings = calculate_graphcodebert_vectors(formatted_flows)
+    embeddings = calculate_graphcodebert_vectors(formatted_flows, max_length=512)
     embedding_dim = embeddings.shape[1]
     labels = processed_data_flows[:, 4].astype(np.int32)
     X_train, X_test, y_train, y_test = train_test_split(embeddings, labels, test_size=0.2, stratify=labels, random_state=42)
@@ -214,6 +270,15 @@ if __name__ == "__main__":
     
     pipeline = Pipeline([('model', model)])
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    
+    param_grid = {
+        'model__learning_rate': [1e-5, 3e-5, 5e-5, 7e-5, 1e-4, 3e-4, 5e-4],
+        'model__dropout_rate': [0.0, 0.1, 0.2, 0.3],
+        'model__activation': ['leaky_relu', 'relu', 'elu', 'gelu'],
+        'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
+        'model__batch_size': [32, 64, 96],
+        'model__epochs': [60, 80, 100]
+    }
     
     random_search = RandomizedSearchCV(
         estimator=pipeline,
