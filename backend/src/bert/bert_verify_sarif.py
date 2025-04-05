@@ -1,24 +1,24 @@
 import json
 import os
-import numpy as np
-from sentence_transformers import SentenceTransformer
-from keras.models import load_model
-import tensorflow as tf
 import sys
+import numpy as np
 from tqdm import tqdm
-from transformers import T5Tokenizer, TFT5Model
-from transformers import AutoTokenizer, AutoModel
+import pickle
+import hashlib
 import torch
+from transformers import AutoTokenizer, AutoModel
+from classifier_model import ClassifierModel
 
 
-# Suppress TensorFlow logs
+# Suppress TensorFlow logs if any (not used here, but left for compatibility)
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
-embedding_model_name = 'paraphrase-MiniLM-L6-v2'
 
-
+##########################################
+# Data Processing Functions
+##########################################
 def camel_case_split(str_input):
     words = [[str_input[0]]]
     for c in str_input[1:]:
@@ -30,8 +30,7 @@ def camel_case_split(str_input):
 
 def text_preprocess(feature_text):
     words = camel_case_split(feature_text)
-    preprocessed_text = ' '.join(words).lower()
-    return preprocessed_text
+    return ' '.join(words).lower()
 
 def read_data_flow_file(file_path):
     with open(file_path, "r", encoding='utf-8') as f:
@@ -46,157 +45,157 @@ def process_data_flows_for_inference(data_flows):
             result_index = result['resultIndex']
             flow_file_name = result['fileName']
             for flow in result['flows']:
+                code_flow_index = flow['codeFlowIndex']
+                # Construct a string from filename and flow steps.
                 data_flow_string = f"Filename = {flow_file_name} Flows = "
-                codeFlowIndex = flow['codeFlowIndex']
                 for step in flow['flow']:
                     data_flow_string += str(step)
                 processed_data_flows.append(text_preprocess(data_flow_string))
-                flow_references.append((cwe, result_index, codeFlowIndex))
+                flow_references.append((cwe, result_index, code_flow_index))
     return processed_data_flows, flow_references
 
-def calculate_sentbert_vectors(sentences, batch_size=64):
-    print("Calculating Sentence-BERT embeddings for inference...")
-    model_transformer = SentenceTransformer(embedding_model_name)
-    embeddings = model_transformer.encode(sentences, batch_size=batch_size, show_progress_bar=True)
-    return embeddings
+##########################################
+# Embedding Functions with GraphCodeBERT + LSTM
+##########################################
+# LSTM aggregator class (same as in training)
+import torch.nn as nn
+class RNNAggregator(nn.Module):
+    def __init__(self, embedding_dim):
+        super(RNNAggregator, self).__init__()
+        self.lstm = nn.LSTM(input_size=embedding_dim, hidden_size=embedding_dim, num_layers=1, batch_first=True)
+    def forward(self, x):
+        # x: (batch, seq_len, embedding_dim)
+        output, (h_n, c_n) = self.lstm(x)
+        return h_n  # (num_layers, batch, hidden_size)
 
-
-def calculate_codebert_vectors(sentences, model_name='microsoft/codebert-base', batch_size=32):
+def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=512):
     """
-    Calculate fixed-size embeddings using CodeBERT as an encoder with TensorFlow.
+    If the tokenized sentence exceeds max_length, split into segments, encode each segment,
+    then aggregate via LSTM.
     """
-    from transformers import AutoTokenizer, TFAutoModel
+    encoding = tokenizer(sentence, return_tensors="pt", truncation=False)
+    input_ids = encoding["input_ids"][0]
+    
+    if input_ids.size(0) <= max_length:
+        inputs = tokenizer(sentence, return_tensors="pt", padding="max_length", truncation=True, max_length=max_length)
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+        with torch.no_grad():
+            outputs = model(**inputs)
+        # Use the first token ([CLS]) embedding
+        return outputs.last_hidden_state[:, 0, :].cpu().numpy()[0]
+    else:
+        # Split the tokens into segments
+        tokens = input_ids.tolist()
+        segment_embeddings = []
+        for i in range(0, len(tokens), max_length):
+            segment_tokens = tokens[i:i+max_length]
+            segment_tensor = torch.tensor(segment_tokens).unsqueeze(0).to(device)
+            attention_mask = torch.ones(segment_tensor.shape, dtype=torch.long).to(device)
+            with torch.no_grad():
+                outputs = model(input_ids=segment_tensor, attention_mask=attention_mask)
+            seg_emb = outputs.last_hidden_state[:, 0, :].cpu().numpy()[0]
+            segment_embeddings.append(seg_emb)
+        # Stack segments into (1, num_segments, embedding_dim)
+        seg_tensor = torch.tensor(np.stack(segment_embeddings), dtype=torch.float32).unsqueeze(0).to(device)
+        with torch.no_grad():
+            h_n = aggregator(seg_tensor)  # shape: (num_layers, batch, embedding_dim)
+        aggregated_embedding = h_n[-1].squeeze(0).cpu().numpy()
+        return aggregated_embedding
 
-    # Load CodeBERT tokenizer and model
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = TFAutoModel.from_pretrained(model_name)
-    print("CodeBERT model loaded successfully.")
-
-    embeddings = []
-    for i in tqdm(range(0, len(sentences), batch_size), desc="Processing batches"):
-        batch_sentences = sentences[i:i+batch_size]
-
-        # Ensure input is a list of strings
-        if isinstance(batch_sentences, np.ndarray):  # If it's a NumPy array, convert it
-            batch_sentences = batch_sentences.tolist()
-        elif not isinstance(batch_sentences, list):  # Ensure it's a list
-            batch_sentences = [str(batch_sentences)]
-
-        # Tokenize the input batch
-        inputs = tokenizer(batch_sentences, return_tensors="tf", padding=True, truncation=True, max_length=512)
-
-        # Forward pass through CodeBERT
-        outputs = model(inputs["input_ids"], attention_mask=inputs["attention_mask"])
-        hidden_states = outputs.last_hidden_state
-
-        # Apply mean pooling over token embeddings to create sentence embeddings
-        pooled_embeddings = tf.reduce_mean(hidden_states, axis=1)
-        embeddings.append(pooled_embeddings.numpy())
-
-    # Combine all embeddings into a single NumPy array
-    return np.vstack(embeddings)
-
-
-def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', batch_size=16, device='cuda' if torch.cuda.is_available() else 'cpu'):
+def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda'):
+    print(f"Using device {device} for encoding")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
     model.to(device)
     model.eval()
+    
+    embedding_dim = model.config.hidden_size
+    aggregator = RNNAggregator(embedding_dim)
+    aggregator.to(device)
+    aggregator.eval()
+    
     embeddings = []
-    for i in tqdm(range(0, len(sentences), batch_size), desc="Embedding with GraphCodeBERT"):
-        batch = sentences[i:i + batch_size]
-        inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
-        input_ids = inputs["input_ids"].to(device)
-        attention_mask = inputs["attention_mask"].to(device)
-        with torch.no_grad():
-            outputs = model(input_ids=input_ids, attention_mask=attention_mask)
-            cls_embeddings = outputs.last_hidden_state[:, 0, :]
-            embeddings.append(cls_embeddings.cpu().numpy())
+    for sentence in tqdm(sentences, desc="Embedding with GraphCodeBERT"):
+        emb = embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=max_length)
+        embeddings.append(emb)
     return np.vstack(embeddings)
 
-
-def load_keras_model(model_path):
-    print(f"Loading model from {model_path}...")
-    # model = tf.keras.models.load_model(model_path)
-    model = load_model(model_path)
-
+##########################################
+# Model Loading and Inference Functions
+##########################################
+def load_skorch_model(model_path):
+    print(f"Loading PyTorch model from {model_path}...")
+    with open(model_path, 'rb') as f:
+        model = pickle.load(f)
     return model
 
 def predict_labels(model, embeddings):
     print("Running inference...")
-    false_positive = 0
-    predicted_probs = model.predict(embeddings, verbose=1)
-    predicted_classes = (predicted_probs > 0.5).astype(int)  # 0 = "No", 1 = "Yes"
+    predicted_probs = model.predict_proba(embeddings.astype(np.float32))[:, 1]
+    predicted_classes = (predicted_probs > 0.5).astype(int)
     predicted_labels = ["Yes" if pred == 1 else "No" for pred in predicted_classes]
-    if predicted_labels == "No":
-        false_positive += 1
-    sys.stdout.write(f"Removed {false_positive} flows out of {len(predicted_labels)}")
     return predicted_labels, predicted_probs
 
 def update_json_with_predictions(data_flows, flow_references, predicted_labels, predicted_probs):
     print("Updating JSON with predictions...")
-    if len(predicted_probs.shape) > 1:  
+    if len(predicted_probs.shape) > 1:
         predicted_probs = predicted_probs.flatten()
-    
-    # Zip together flow_references, predicted_labels, and predicted_probs
+    # Zip references with predictions
     for (cwe, result_index, code_flow_index), label, prob in zip(flow_references, predicted_labels, predicted_probs):
         for result in data_flows[cwe]:
             if result['resultIndex'] == result_index:
                 for flow in result['flows']:
                     if flow['codeFlowIndex'] == code_flow_index:
                         flow['label'] = label
-                        flow['probability'] = float(prob)  # Store probability as a float
+                        flow['probability'] = float(prob)
                         break
     return data_flows
 
 def save_updated_json(data_flows, input_file_path):
-    # output_file_path = os.path.splitext(input_file_path)[0] + "_test.json"
     output_file_path = os.path.splitext(input_file_path)[0] + ".json"
     print(f"Saving updated JSON to {output_file_path}...")
     with open(output_file_path, 'w', encoding='utf-8') as f:
         json.dump(data_flows, f, indent=4)
     return output_file_path
 
+##########################################
+# Main Inference Function
+##########################################
 def run(project_path, model_path):
     input_json_path = os.path.join(project_path, 'flowMapsByCWE.json')
-    # Step 1: Load the trained model
-    model = load_keras_model(model_path)
-
-    # Step 2: Read and process the input JSON
+    # Load the pickled Skorch model
+    model = load_skorch_model(model_path)
+    
+    # Read and process input JSON
     print(f"Reading data flows from {input_json_path}...")
     data_flows = read_data_flow_file(input_json_path)
     processed_flows, flow_references = process_data_flows_for_inference(data_flows)
-
-    # Step 3: Calculate embeddings
-    # embeddings = calculate_sentbert_vectors(processed_flows)
-    # embeddings = calculate_codebert_vectors(processed_flows)
-    # embeddings = calculate_t5_vectors(processed_flows)
-    embeddings = calculate_graphcodebert_vectors(processed_flows)
-
-    # Step 4: Predict labels
+    
+    # Calculate embeddings using GraphCodeBERT with LSTM aggregator
+    embeddings = calculate_graphcodebert_vectors(processed_flows, max_length=512, device='cuda' if torch.cuda.is_available() else 'cpu')
+    
+    # Predict labels using the loaded model
     predicted_labels, predicted_probs = predict_labels(model, embeddings)
-
-    # Step 5: Update JSON with predictions
+    
+    # Update the JSON with predictions
     updated_data_flows = update_json_with_predictions(data_flows, flow_references, predicted_labels, predicted_probs)
-
-    # Step 6: Save the updated JSON
+    
+    # Save updated JSON
     output_path = save_updated_json(updated_data_flows, input_json_path)
     print(f"Inference complete! Updated JSON saved to {output_path}")
 
 if __name__ == "__main__":
-
-    print(f"Here are the arguments: {sys.argv}")
+    print(f"Arguments: {sys.argv}")
     if len(sys.argv) > 1:
         project_name = sys.argv[1]
         project_path = os.path.join(os.getcwd(), "Files", project_name)
         input_json_path = os.path.join(project_path, 'flowMapsByCWE.json')
-        model_path = os.path.join(os.getcwd(), 'src', 'bert', 'models', 'verify_flows.keras')
+        model_path = os.path.join(os.getcwd(), 'src', 'bert', 'models', 'verify_flows_skorch.pkl')
     else:
-        project_name = "snowflake-jdbc-3.23.1" # Default project name
+        project_name = "snowflake-jdbc-3.23.2"  # Change default project name as needed
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
         input_json_path = os.path.join(project_path, 'flowMapsByCWE.json')
-        model_path = os.path.join(os.getcwd(), "backend", 'src', 'bert', 'models', 'verify_flows.keras')
+        model_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models", "verify_flows_skorch.pkl")
     
     print(f"Project name: {project_name}")
     run(project_path, model_path)
-
