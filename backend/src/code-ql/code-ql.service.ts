@@ -49,18 +49,24 @@ export class CodeQlService {
      * @param createCodeQlDto Data transfer object with project name
      */
     async runCodeQl(createCodeQlDto: any) {
+        // Check if a java version is specified
+        if (createCodeQlDto.javaVersion) {
+            this.fileUtilService.setJavaVersion(createCodeQlDto.javaVersion);
+        }
+        
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createCodeQlDto.project);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
     
         await this.runBert(javaFiles, sourcePath, createCodeQlDto);
         // await this.runLLM(javaFiles, sourcePath);
+        
         if (createCodeQlDto.extension === 'csv'){
             return await this.parserService.getcsvResults(sourcePath);
         }
+        
         return await this.parserService.getSarifResults(sourcePath);
 
-    
     }
 
     async runChatGPT(sourcePath){
@@ -112,25 +118,25 @@ export class CodeQlService {
             times[stepName] = (end - start) / 1000; // Time in seconds
         };
 
-        // await executeStep('Parsing files for variables, strings, comments, and method calls.', async () => {
-        //     await this.bertService.bertWrapper(javaFiles, sourcePath);
-        // });
+        await executeStep('Parsing files for variables, strings, comments, and method calls.', async () => {
+            await this.bertService.bertWrapper(javaFiles, sourcePath);
+        });
     
-        // await executeStep('Detecting sensitive info using BERT.', async () => {
-        //     await this.bertService.getBertResponse(sourcePath, "run_bert.py");
-        // });
-        // let data = null;
-        // await executeStep('Reading in BERT results from data.json.', async () => {
-        //     data = this.useSavedData(sourcePath);
-        // });
+        await executeStep('Detecting sensitive info using BERT.', async () => {
+            await this.bertService.getBertResponse(sourcePath, "run_bert.py");
+        });
+        let data = null;
+        await executeStep('Reading in BERT results from data.json.', async () => {
+            data = this.useSavedData(sourcePath);
+        });
     
-        // await executeStep('Saving the sensitive info to .yml files.', async () => {
-        //     await this.saveSensitiveInfo(data);
-        // });
+        await executeStep('Saving the sensitive info to .yml files.', async () => {
+            await this.saveSensitiveInfo(data);
+        });
     
-        // await executeStep('Creating CodeQL database.', async () => {
-        //     await this.createDatabase(sourcePath, createCodeQlDto);
-        // });
+        await executeStep('Creating CodeQL database.', async () => {
+            await this.createDatabase(sourcePath, createCodeQlDto);
+        });
     
         // await executeStep('Running the backward slice queries.', async () => {
         //     await this.performBackwardSlicing(sourcePath, createCodeQlDto);
@@ -149,21 +155,21 @@ export class CodeQlService {
         //     this.saveUpdatedSensitiveVariables(sensitiveVariables);
         // });
     
-        // await executeStep('Running CWE queries.', async () => {
-        //     await this.runCWEQueries(sourcePath, createCodeQlDto);
-        // });
+        await executeStep('Running CWE queries.', async () => {
+            await this.runCWEQueries(sourcePath, createCodeQlDto);
+        });
 
-        // await executeStep('Saving Dataflow Tree.', async () => {
-        //     await this.parserService.saveDataFlowTree(sourcePath);
-        // });
+        await executeStep('Saving Dataflow Tree.', async () => {
+            await this.parserService.saveDataFlowTree(sourcePath);
+        });
 
 
         const flows = await this.fileUtilService.readJsonFile (path.join(sourcePath, 'flowMapsByCWE.json'));
         if (Object.keys(flows).length > 0){
             
-            // await executeStep('Verifying Data Flows.', async () => {
-            //     await this.bertService.verifyFlows(sourcePath);
-            // });
+            await executeStep('Verifying Data Flows.', async () => {
+                await this.bertService.verifyFlows(sourcePath);
+            });
 
             await executeStep('Updating Sarif.', async () => {
                 await this.updateSarif(sourcePath);
