@@ -55,15 +55,19 @@ def read_json(file_path):
         return json.load(file)
 
 def calculate_sentbert_vectors(sentences, batch_size=64):
-    model_transformer = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+    from sentence_transformers import SentenceTransformer
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model_transformer = SentenceTransformer('paraphrase-MiniLM-L6-v2', device=device)
     print("Encoding sentences with SentenceTransformer...")
     embeddings = model_transformer.encode(sentences, batch_size=batch_size, show_progress_bar=True)
     return embeddings
 
 def calculate_t5_vectors(sentences, model_name='t5-small', batch_size=32):
     from transformers import T5Tokenizer, T5EncoderModel
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = T5Tokenizer.from_pretrained(model_name)
     model = T5EncoderModel.from_pretrained(model_name)
+    model.to(device)
     model.eval()
     embeddings = []
     with torch.no_grad():
@@ -74,15 +78,18 @@ def calculate_t5_vectors(sentences, model_name='t5-small', batch_size=32):
             elif not isinstance(batch, list):
                 batch = [str(batch)]
             inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
+            inputs = {key: value.to(device) for key, value in inputs.items()}
             outputs = model(**inputs)
             pooled = outputs.last_hidden_state.mean(dim=1)
-            embeddings.append(pooled.cpu().numpy())
+            embeddings.append(pooled.detach().cpu().numpy())
     return np.vstack(embeddings)
 
 def calculate_roberta_vectors(sentences, model_name='roberta-base', batch_size=32):
     from transformers import RobertaTokenizer, RobertaModel
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = RobertaTokenizer.from_pretrained(model_name)
     model = RobertaModel.from_pretrained(model_name)
+    model.to(device)
     model.eval()
     embeddings = []
     with torch.no_grad():
@@ -93,29 +100,35 @@ def calculate_roberta_vectors(sentences, model_name='roberta-base', batch_size=3
             elif not isinstance(batch, list):
                 batch = [str(batch)]
             inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
+            inputs = {key: value.to(device) for key, value in inputs.items()}
             outputs = model(**inputs)
             pooled = outputs.last_hidden_state.mean(dim=1)
-            embeddings.append(pooled.cpu().numpy())
+            embeddings.append(pooled.detach().cpu().numpy())
     return np.vstack(embeddings)
 
 def calculate_codebert_vectors(sentences, model_name='microsoft/codebert-base', batch_size=32):
     from transformers import AutoTokenizer, AutoModel
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    from tqdm import tqdm  # For progress tracking
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
+    model.to(device)
     model.eval()
     embeddings = []
     with torch.no_grad():
-        for i in range(0, len(sentences), batch_size):
+        for i in tqdm(range(0, len(sentences), batch_size), desc="Calculating CodeBERT Vectors"):
             batch = sentences[i:i+batch_size]
             if isinstance(batch, np.ndarray):
                 batch = batch.tolist()
             elif not isinstance(batch, list):
                 batch = [str(batch)]
             inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
+            inputs = {key: value.to(device) for key, value in inputs.items()}
             outputs = model(**inputs)
             pooled = outputs.last_hidden_state.mean(dim=1)
-            embeddings.append(pooled.cpu().numpy())
+            embeddings.append(pooled.detach().cpu().numpy())
     return np.vstack(embeddings)
+
 
 def calculate_codellama_vectors(sentences, model_name='codellama/CodeLlama-7b', batch_size=32):
     from transformers import AutoTokenizer, AutoModel
@@ -174,6 +187,38 @@ def calculate_albert_vectors(sentences, model_name='albert-base-v2', batch_size=
             embeddings.append(pooled.cpu().numpy())
     return np.vstack(embeddings)
 
+
+def calculate_longformer_vectors(sentences, model_name='allenai/longformer-base-4096', batch_size=32):
+    from transformers import LongformerTokenizer, LongformerModel
+    from tqdm import tqdm
+    import torch
+
+    # Determine device (GPU if available)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    
+    tokenizer = LongformerTokenizer.from_pretrained(model_name)
+    model = LongformerModel.from_pretrained(model_name)
+    model.to(device)  # Move model to GPU
+    model.eval()
+    
+    embeddings = []
+    with torch.no_grad():
+        for i in tqdm(range(0, len(sentences), batch_size), desc="Encoding with Longformer"):
+            batch = sentences[i:i+batch_size]
+            if isinstance(batch, np.ndarray):
+                batch = batch.tolist()
+            elif not isinstance(batch, list):
+                batch = [str(batch)]
+            inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=4096)
+            # Move inputs to GPU
+            inputs = {key: value.to(device) for key, value in inputs.items()}
+            outputs = model(**inputs)
+            pooled = outputs.last_hidden_state.mean(dim=1)
+            embeddings.append(pooled.detach().cpu().numpy())
+    return np.vstack(embeddings)
+
+
+
 def concat_name_and_context(name_vecs, context_vecs):
     total_vecs = []
     for idx in range(len(name_vecs)):
@@ -197,7 +242,7 @@ def get_activation(act_name):
 
 class BinaryClassifier(nn.Module):
     def __init__(self, embedding_dim, dropout_rate, weight_decay, activation):
-        super(BinaryClassifier, self).__init__()
+        super().__init__()
         self.units1 = embedding_dim
         self.units2 = embedding_dim * 3 // 4
         self.units3 = embedding_dim // 2
@@ -239,12 +284,12 @@ class BinaryClassifier(nn.Module):
         x = self.act(x)
         x = self.dropout(x)
         out = self.out(x)
-        torch.sigmoid(out)
+        out = torch.sigmoid(out)
         return out
 
 class MultiClassClassifier(nn.Module):
     def __init__(self, embedding_dim, dropout_rate, weight_decay, activation):
-        super(MultiClassClassifier, self).__init__()
+        super().__init__()
         units = embedding_dim // 3
         act = get_activation(activation)
         self.act = act
@@ -427,6 +472,8 @@ def train(category, data, param_grid, create_model_fn, embedding_model='sentbert
         get_embeddings = calculate_distilbert_vectors
     elif embedding_model == 'albert':
         get_embeddings = calculate_albert_vectors
+    elif embedding_model == 'longformer':  # Added support for Longformer
+        get_embeddings = calculate_longformer_vectors
     else:
         raise ValueError(f"Unknown embedding model: {embedding_model}")
 
@@ -521,7 +568,8 @@ def train(category, data, param_grid, create_model_fn, embedding_model='sentbert
     os.makedirs(model_dir, exist_ok=True)
     model_path = os.path.join(model_dir, f'{embedding_model}_final_model_{category}.pt')
     scripted_model = torch.jit.script(final_model)
-    scripted_model.save(model_path)    
+    scripted_model.save(model_path)  
+    print(f"{embedding_model} model saved at {model_path}")  
 
 # ------------------------------ Model Creation Functions ------------------------------------
 
@@ -550,7 +598,7 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64, 96],
         'epochs': [60, 80, 100],
-        'n_iter': [500]
+        'n_iter': [2]
     }
     
     strings_param_grid = {
@@ -604,7 +652,8 @@ if __name__ == '__main__':
         # 'codebert': 768 * 2,
         # 'codellama': 4096 * 2,
         # 'distilbert': 768 * 2,
-        # 'albert': 768 * 2
+        # 'albert': 768 * 2,
+        # 'longformer': 768 * 2,
     }
     
     for embedding_model, embedding_dim in embedding_models.items():

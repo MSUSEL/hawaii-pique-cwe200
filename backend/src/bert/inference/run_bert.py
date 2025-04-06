@@ -30,7 +30,8 @@ DIM = 768
 # -----------------------------------------------------------------------------
 
 lemmatizer = WordNetLemmatizer()
-model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+model = SentenceTransformer('paraphrase-MiniLM-L6-v2', device=device)
+
 
 packages = ['punkt', 'averaged_perceptron_tagger', 'wordnet', 'stopwords']
 def check_and_download_nltk_data(package):
