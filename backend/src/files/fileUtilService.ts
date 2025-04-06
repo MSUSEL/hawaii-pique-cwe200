@@ -1,6 +1,6 @@
 import {Global, Injectable} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
-import { exec } from 'child_process';
+import { exec, execSync } from 'child_process';
 import * as AdmZip from 'adm-zip';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -381,6 +381,39 @@ saveToJsonl (filePath, data) {
 };
     
   
+/**
+ * Sets the desired Java version as default, installing it if necessary.
+ * @param version Java version number, e.g., 11 or 17
+ */
+  setJavaVersion(version: number) {
+        const jdkPackage = `openjdk-${version}-jdk`;
+        const javaPath = `/usr/lib/jvm/java-${version}-openjdk-amd64/bin/java`;
+        const javacPath = `/usr/lib/jvm/java-${version}-openjdk-amd64/bin/javac`;
+
+        try {
+            // Check if Java is already installed
+            console.log(`Checking for ${jdkPackage}...`);
+            execSync(`dpkg -s ${jdkPackage}`, { stdio: "ignore" });
+            console.log(`? ${jdkPackage} is already installed.`);
+        } catch {
+            // Install Java if not found
+            console.log(`Installing ${jdkPackage}...`);
+            execSync(`apt update && apt install -y ${jdkPackage}`, { stdio: "inherit" });
+        }
+
+        // Set as default using update-alternatives
+        try {
+            console.log(`Setting Java ${version} as the default...`);
+            execSync(`update-alternatives --install /usr/bin/java java ${javaPath} 1`);
+            execSync(`update-alternatives --install /usr/bin/javac javac ${javacPath} 1`);
+            execSync(`update-alternatives --set java ${javaPath}`);
+            execSync(`update-alternatives --set javac ${javacPath}`);
+            console.log(`? Java ${version} set as the default.`);
+        } catch (error) {
+            console.error("? Failed to set Java version:", error);
+        }
+}
+
 }
 
 interface JavaParseResult {
