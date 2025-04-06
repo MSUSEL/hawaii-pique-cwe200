@@ -5,10 +5,9 @@ pandas==2.2.2
 scikit-learn==1.5.1
 sentence-transformers==3.0.1
 tensorflow==2.17.0
-keras==3.4.1
-torch==2.2.2
-transformers==4.50.1
-tf_keras==2.17.0
 imblearn==0.0
 accelerate==0.26.0
+skorch==1.1.0
+torch==2.5.1+cu121
+
 
