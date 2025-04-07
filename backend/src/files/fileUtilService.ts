@@ -381,38 +381,77 @@ saveToJsonl (filePath, data) {
 };
     
   
+
 /**
- * Sets the desired Java version as default, installing it if necessary.
+ * Sets the desired Java version as default.
  * @param version Java version number, e.g., 11 or 17
+ * @param useAnyJava If true, checks for any Java installation (not only OpenJDK) and uses it if found.
  */
-  setJavaVersion(version: number) {
-        const jdkPackage = `openjdk-${version}-jdk`;
-        const javaPath = `/usr/lib/jvm/java-${version}-openjdk-amd64/bin/java`;
-        const javacPath = `/usr/lib/jvm/java-${version}-openjdk-amd64/bin/javac`;
+ setJavaVersion(version: number, useAnyJava: boolean = true) {
+  const platform = os.platform();
+  console.log('Detected platform:', platform);
 
-        try {
-            // Check if Java is already installed
-            console.log(`Checking for ${jdkPackage}...`);
-            execSync(`dpkg -s ${jdkPackage}`, { stdio: "ignore" });
-            console.log(`? ${jdkPackage} is already installed.`);
-        } catch {
-            // Install Java if not found
-            console.log(`Installing ${jdkPackage}...`);
-            execSync(`apt update && apt install -y ${jdkPackage}`, { stdio: "inherit" });
-        }
+  if (platform === 'win32') {
+    if (useAnyJava) {
+      try {
+        // Check if any Java is already installed by using the "where" command.
+        const javaPath = execSync('where java', { stdio: 'pipe' }).toString().trim();
+        console.log(`Java is already installed at: ${javaPath}`);
+        // Optionally, get version details:
+        const versionInfo = execSync('java -version', { stdio: 'pipe' }).toString();
+        console.log("Java version info:", versionInfo);
+        // You could also set JAVA_HOME if needed by further processing javaPath.
+        return; // Use the already-installed Java.
+      } catch (error) {
+        console.log("No Java installation found in PATH.");
+      }
+    }
 
-        // Set as default using update-alternatives
-        try {
-            console.log(`Setting Java ${version} as the default...`);
-            execSync(`update-alternatives --install /usr/bin/java java ${javaPath} 1`);
-            execSync(`update-alternatives --install /usr/bin/javac javac ${javacPath} 1`);
-            execSync(`update-alternatives --set java ${javaPath}`);
-            execSync(`update-alternatives --set javac ${javacPath}`);
-            console.log(`? Java ${version} set as the default.`);
-        } catch (error) {
-            console.error("? Failed to set Java version:", error);
-        }
+    // If no Java is found (or if you prefer OpenJDK), use Chocolatey to install OpenJDK.
+    try {
+      console.log(`Checking for OpenJDK ${version} via Chocolatey...`);
+      // This command checks if the OpenJDK package is installed.
+      execSync(`choco list --local-only openjdk${version}`, { stdio: "ignore" });
+      console.log(`OpenJDK ${version} is already installed.`);
+    } catch (err) {
+      console.log(`OpenJDK ${version} not found. Installing via Chocolatey...`);
+      execSync(`choco install openjdk${version} -y`, { stdio: "inherit" });
+    }
+
+    // Set JAVA_HOME and update the PATH.
+    // Note: Adjust the path as needed depending on where Chocolatey installs OpenJDK.
+    const javaHome = `C:\\Program Files\\OpenJDK\\openjdk-${version}`;
+    process.env.JAVA_HOME = javaHome;
+    process.env.PATH = `${javaHome}\\bin;${process.env.PATH}`;
+    console.log(`JAVA_HOME set to ${javaHome} and PATH updated.`);
+  } else {
+    // Linux branch: Use dpkg/apt and update-alternatives.
+    const jdkPackage = `openjdk-${version}-jdk`;
+    const javaPath = `/usr/lib/jvm/java-${version}-openjdk-amd64/bin/java`;
+    const javacPath = `/usr/lib/jvm/java-${version}-openjdk-amd64/bin/javac`;
+
+    try {
+      console.log(`Checking for ${jdkPackage}...`);
+      execSync(`dpkg -s ${jdkPackage}`, { stdio: "ignore" });
+      console.log(`${jdkPackage} is already installed.`);
+    } catch {
+      console.log(`Installing ${jdkPackage}...`);
+      execSync(`apt update && apt install -y ${jdkPackage}`, { stdio: "inherit" });
+    }
+
+    try {
+      console.log(`Setting Java ${version} as the default...`);
+      execSync(`update-alternatives --install /usr/bin/java java ${javaPath} 1`);
+      execSync(`update-alternatives --install /usr/bin/javac javac ${javacPath} 1`);
+      execSync(`update-alternatives --set java ${javaPath}`);
+      execSync(`update-alternatives --set javac ${javacPath}`);
+      console.log(`Java ${version} set as the default.`);
+    } catch (error) {
+      console.error("Failed to set Java version:", error);
+    }
+  }
 }
+
 
 }
 
