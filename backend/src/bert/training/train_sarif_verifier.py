@@ -11,7 +11,12 @@ import torch.optim as optim
 from transformers import AutoTokenizer, AutoModel
 
 from sklearn import metrics
-from sklearn.model_selection import StratifiedKFold, RandomizedSearchCV, train_test_split
+from sklearn.model_selection import StratifiedKFold, train_test_split
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.simplefilter("ignore", FutureWarning)
+
+
 
 # Import skorch for wrapping the PyTorch model as a scikit-learn estimator.
 from skorch import NeuralNetClassifier
@@ -104,7 +109,7 @@ class RNNAggregator(nn.Module):
     def forward(self, x):
         # x: (batch, seq_len, embedding_dim)
         output, (h_n, c_n) = self.lstm(x)
-        return h_n  # Use the final hidden state (shape: (1, batch, hidden_size))
+        return h_n  # Use the final hidden state
 
 def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=512):
     """
@@ -256,6 +261,19 @@ class ClassifierModel(nn.Module):
         return torch.sigmoid(out).squeeze(1)  # Squeeze to get shape (batch,)
 
 ##########################################
+# Customized RandomizedSearchCV with TQDM
+##########################################
+from sklearn.model_selection import RandomizedSearchCV, ParameterSampler
+
+class TqdmRandomizedSearchCV(RandomizedSearchCV):
+    def _run_search(self, evaluate_candidates):
+        # Generate candidate parameter settings using ParameterSampler.
+        param_list = list(ParameterSampler(self.param_distributions, self.n_iter, random_state=self.random_state))
+        # Evaluate each candidate individually with a tqdm progress bar.
+        for params in tqdm(param_list, desc="Total fits"):
+            evaluate_candidates([params])
+
+##########################################
 # Training, Hyperparameter Tuning, and Evaluation
 ##########################################
 if __name__ == "__main__":
@@ -314,21 +332,24 @@ if __name__ == "__main__":
     }
     
     # Use stratified K-Fold cross-validation.
-    from sklearn.model_selection import StratifiedKFold
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
     
-    # Use n_jobs=1 to avoid GPU conflicts.
-    from sklearn.model_selection import RandomizedSearchCV
-    random_search = RandomizedSearchCV(
+    if device == 'cuda':
+        n_jobs = 4
+    else:
+        n_jobs = -1
+
+    # Use the customized RandomizedSearchCV with tqdm.
+    random_search = TqdmRandomizedSearchCV(
         estimator=net,
         param_distributions=param_grid,
-        n_iter=20,  # Adjust iterations as needed.
+        n_iter=1000,  # Adjust iterations as needed.
         cv=kfold,
         scoring='f1',
-        n_jobs=1,  # Use a single job
-        error_score='raise',  # Raise errors for debugging.
+        n_jobs=n_jobs,  # Use a single job to avoid GPU conflicts
+        error_score='raise',
         random_state=42,
-        verbose=2,
+        verbose=0,  # disable internal verbosity
     )
     
     print("Starting hyperparameter tuning...")
@@ -370,9 +391,9 @@ if __name__ == "__main__":
     print(metrics.confusion_matrix(y_test, y_pred))
     
     # Save the final model (skorch models can be pickled).
-    final_model_path = os.path.join(model_dir, 'verify_flows_skorch.pt')
-
-    scripted_model = torch.jit.script(final_net)
-    scripted_model.save(final_model_path)  
+    final_model_path = os.path.join(model_dir, 'verify_flows_skorch_new.pkl')
+    with open(final_model_path, 'wb') as f:
+        import pickle
+        pickle.dump(final_net, f)
     
     print("Training complete!")
