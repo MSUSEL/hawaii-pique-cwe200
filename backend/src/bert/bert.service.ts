@@ -31,7 +31,7 @@ export class BertService {
 
     async getBertResponse(project_root: string, bertScript: string) {
         return new Promise((resolve, reject) => {
-            const bertProcess = spawn('python', [path.join("src", "bert", bertScript), project_root]);
+            const bertProcess = spawn('python', [path.join("src", "bert", "inference", bertScript), project_root]);
     
             let stdoutData = '';
             let stderrData = '';
@@ -62,10 +62,10 @@ export class BertService {
             });
     
             // Handle standard error (stderr)
-            // bertProcess.stderr.on('data', (data) => {
-            //     stderrData += data.toString();
-            //     console.error('Python script error output:', data.toString());  // Print script's error output
-            // });
+            bertProcess.stderr.on('data', (data) => {
+                stderrData += data.toString();
+                console.error('Python script error output:', data.toString());  // Print script's error output
+            });
     
             // Handle when the process closes
             bertProcess.on('close', (code) => {
@@ -120,7 +120,7 @@ export class BertService {
         
         return new Promise<void>((resolve, reject) => {
             // Spawn the Python process
-            const process = spawn('python', [path.join("src", "bert", "bert_verify_sarif.py"), projectName]);
+            const process = spawn('python', [path.join("src", "bert", "inference", "bert_verify_sarif.py"), projectName]);
             console.log(`Running verification script on ${projectName}`);
     
             // Capture stderr data
