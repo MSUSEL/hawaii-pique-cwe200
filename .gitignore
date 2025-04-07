@@ -77,3 +77,4 @@ testing/codeql_results.json
 pyrightconfig.json
 unsloth_compiled_cache
 llama_finetuned_model/*
+.gradle/*
