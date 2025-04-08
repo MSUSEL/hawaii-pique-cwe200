@@ -12,6 +12,7 @@ from transformers import AutoTokenizer, AutoModel
 
 from sklearn import metrics
 from sklearn.model_selection import StratifiedKFold, train_test_split
+from imblearn.over_sampling import SMOTE
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.simplefilter("ignore", FutureWarning)
@@ -302,6 +303,10 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = train_test_split(
         embeddings, labels, test_size=0.2, stratify=labels, random_state=42
     )
+
+    # Apply SMOTE to the training data to balance the classes.
+    sm = SMOTE(random_state=42)
+    X_train, y_train = sm.fit_resample(X_train, y_train)
     
     # Set up the PyTorch model wrapped in a skorch NeuralNetClassifier.
     net = NeuralNetClassifier(
@@ -343,7 +348,7 @@ if __name__ == "__main__":
     random_search = TqdmRandomizedSearchCV(
         estimator=net,
         param_distributions=param_grid,
-        n_iter=1000,  # Adjust iterations as needed.
+        n_iter=50,  # Adjust iterations as needed.
         cv=kfold,
         scoring='f1',
         n_jobs=n_jobs,  # Use a single job to avoid GPU conflicts
