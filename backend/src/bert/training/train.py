@@ -333,12 +333,15 @@ def evaluate_model(model, dataloader, device, category, print_report=False):
                 predictions = (outputs > 0.5).int().cpu().numpy().flatten()
             preds.extend(predictions)
             trues.extend(labels.numpy())
+    
     trues = np.array(trues)
     preds = np.array(preds)
-    precision = metrics.precision_score(trues, preds, average='weighted')
-    recall = metrics.recall_score(trues, preds, average='weighted')
-    f1_score = metrics.f1_score(trues, preds, average='weighted')
+    
+    precision = metrics.precision_score(trues, preds, average='weighted', zero_division=0)
+    recall = metrics.recall_score(trues, preds, average='weighted', zero_division=0)
+    f1_score = metrics.f1_score(trues, preds, average='weighted', zero_division=0)
     accuracy = metrics.accuracy_score(trues, preds)
+    
     if print_report:
         print("\nFinal Evaluation Results:")
         print(f"Precision: {precision}")
@@ -349,13 +352,15 @@ def evaluate_model(model, dataloader, device, category, print_report=False):
         if category == 'sinks':
             target_names = [sink_type_mapping[i] for i in range(8)]
             print("Classification Report (Multi-class):")
-            print(metrics.classification_report(trues, preds, target_names=target_names))
+            print(metrics.classification_report(trues, preds, target_names=target_names, zero_division=0))
         else:
             print("Classification Report (Binary):")
-            print(metrics.classification_report(trues, preds, target_names=["Non-sensitive", "Sensitive"]))
+            print(metrics.classification_report(trues, preds, target_names=["Non-sensitive", "Sensitive"], zero_division=0))
         print("Confusion Matrix:")
         print(metrics.confusion_matrix(trues, preds))
+    
     return f1_score
+
 
 def train_model(model, optimizer, criterion, train_loader, val_loader, device, epochs, early_stop_patience=10, category='binary'):
     best_f1 = -1
@@ -581,7 +586,7 @@ def create_model(learning_rate=0.0001, dropout_rate=0.3, weight_decay=0.0001, ac
 def create_model_sinks(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.0001, activation='elu', embedding_dim=None):
     if embedding_dim is None:
         raise ValueError("Embedding dimension not found")
-    print("Creating multi-class model for sinks")
+    # print("Creating multi-class model for sinks")
     return MultiClassClassifier(embedding_dim=embedding_dim, dropout_rate=dropout_rate, weight_decay=weight_decay, activation=activation)
 
 # ------------------------------ Main Script ------------------------------------
@@ -598,27 +603,27 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64, 96],
         'epochs': [60, 80, 100],
-        'n_iter': [2]
+        'n_iter': [4000]
     }
     
     strings_param_grid = {
-        'model__learning_rate': [1e-4, 1e-3, 1e-2, 1e-1],
-        'model__dropout_rate': [0.2, 0.3],
-        'model__activation': ['elu', 'relu'],
+        'model__learning_rate': [1e-5, 3e-5, 5e-5, 7e-5, 1e-4, 3e-4, 5e-4],
+        'model__dropout_rate': [0.0, 0.1, 0.2, 0.3],
+        'model__activation': ['leaky_relu', 'relu', 'elu', 'gelu'],
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
-        'batch_size': [32, 64],
-        'epochs': [50, 60],
-        'n_iter': [5]
+        'batch_size': [32, 64, 96],
+        'epochs': [60, 80, 100],
+        'n_iter': [4000]
     }
     
     sinks_param_grid = {
-        'model__learning_rate': [1e-4, 1e-3, 1e-2, 1e-1],
-        'model__dropout_rate': [0.2, 0.3],
-        'model__activation': ['elu', 'relu'],
+        'model__learning_rate': [1e-5, 3e-5, 5e-5, 7e-5, 1e-4, 3e-4, 5e-4],
+        'model__dropout_rate': [0.0, 0.1, 0.2, 0.3],
+        'model__activation': ['leaky_relu', 'relu', 'elu', 'gelu'],
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
-        'batch_size': [32, 64],
-        'epochs': [50, 60],
-        'n_iter': [5]
+        'batch_size': [32, 64, 96],
+        'epochs': [60, 80, 100],
+        'n_iter': [1000]
     }
     
     comments_param_grid = {
@@ -639,10 +644,10 @@ if __name__ == '__main__':
     }
     
     categories = [
-        "variables",
+        # "variables",
         # "strings",
         # "comments",
-        # "sinks"
+        "sinks"
     ]
     
     embedding_models = {
