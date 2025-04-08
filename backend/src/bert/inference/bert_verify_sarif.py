@@ -50,7 +50,7 @@ def process_data_flows_for_inference(data_flows):
                 data_flow_string = f"Filename = {flow_file_name} Flows = "
                 for step in flow['flow']:
                     data_flow_string += str(step)
-                processed_data_flows.append(text_preprocess(data_flow_string))
+                processed_data_flows.append(data_flow_string)
                 flow_references.append((cwe, result_index, code_flow_index))
     return processed_data_flows, flow_references
 
