@@ -12,7 +12,7 @@
     "build-backend": "cd backend && npm i && npm run build",
     "start-frontend": "cd frontend && npm run start",
     "start-backend": "cd backend && npm run start",
-    "build": "npm run build-backend && npm run build-frontend",
+    "build": "npm run build-backend && npm run build-frontend && npm i",
     "codeql-setup": "ts-node backend/codeql_setup/run-platform-specific-setup.ts",
     "query-toy": "codeql database analyze backend/Files/CWEToyDataset/CWEToyDatasetdb --format=sarifv2.1.0 --rerun --output=out.sarif codeql/codeql-custom-queries-java",
     "build-toy": "codeql database create backend/Files/CWEToyDataset/CWEToyDatasetdb --language=java --source-root=backend/Files/CWEToyDataset/CWEToyDataset --overwrite",
@@ -23,7 +23,9 @@
     "backend": "file:./backend",
     "concurrently": "^9.0.1",
     "csv-parse": "^5.6.0",
-    "frontend": "file:./frontend"
+    "frontend": "file:./frontend",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.7.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.6.0",
