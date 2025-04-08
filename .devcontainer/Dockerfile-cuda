@@ -106,9 +106,6 @@ COPY package*.json ./
 COPY backend/package*.json ./backend/
 COPY frontend/package*.json ./frontend/
 
-# Install Node dependencies
-RUN npm install
-
 # Copy full source
 COPY . .
 
