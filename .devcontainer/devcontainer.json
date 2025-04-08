@@ -9,7 +9,6 @@
   },
   "workspaceFolder": "/app",
   "forwardPorts": [4200, 5400],
-  "postCreateCommand": "npm install",
   "mounts": [
     "source=${localWorkspaceFolder},target=/app,type=bind"
   ],
@@ -25,8 +24,8 @@
   "extensions": [
     "ms-python.python",
     "ms-python.vscode-pylance",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
+    // "dbaeumer.vscode-eslint",
+    // "esbenp.prettier-vscode",
     "ms-vscode.vscode-typescript-next"
   ]
 }

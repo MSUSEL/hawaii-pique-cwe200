@@ -8,6 +8,5 @@ tensorflow==2.17.0
 imblearn==0.0
 accelerate==0.26.0
 skorch==1.1.0
-torch==2.5.1+cu121
 
 

@@ -83,12 +83,13 @@ RUN wget -O /tmp/maven.tar.gz https://downloads.apache.org/maven/maven-3/$MAVEN_
 # Install Gradle
 ENV GRADLE_VERSION=8.6
 ENV GRADLE_HOME=/usr/local/gradle
-ENV PATH=$GRADLE_HOME/bin:$PATH
 
-RUN wget -O /tmp/gradle.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
-    && mkdir -p $GRADLE_HOME \
-    && unzip /tmp/gradle.zip -d $GRADLE_HOME --strip-components=1 \
-    && rm /tmp/gradle.zip
+RUN mkdir -p $GRADLE_HOME \
+    && wget -O /tmp/gradle.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
+    && unzip /tmp/gradle.zip -d /opt/gradle-tmp \
+    && mv /opt/gradle-tmp/gradle-*/* $GRADLE_HOME \
+    && rm -rf /tmp/gradle.zip /opt/gradle-tmp
+
 
 # Install CodeQL CLI
 ENV CODEQL_VERSION=2.20.3
