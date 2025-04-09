@@ -277,6 +277,7 @@ export class FileUtilService {
     
         if (!fs.existsSync(jarPath)) {
             // Build the JAR file
+            console.log("Building JAR for Java Parser")
             await new Promise<void>((resolve, reject) => {
                 exec('mvn clean package', { cwd: path.resolve(cwd, 'ParseJava') }, (error, stdout, stderr) => {
                     if (error) {
@@ -451,9 +452,6 @@ setJavaVersion(version: number) {
       }
     }
   }
-  
-
-
 }
 
 interface JavaParseResult {
