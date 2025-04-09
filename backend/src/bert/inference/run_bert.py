@@ -128,10 +128,7 @@ def get_predictions(model_pt, test_x, data_type, batch_size=64):
             batch_tensor = torch.tensor(batch_data, dtype=torch.float32, device=device)
             batch_output = model_pt(batch_tensor)
             # Apply appropriate activation to get confidence scores between 0 and 1
-            if data_type != "sinks":
-                # For binary classification, use sigmoid
-                batch_output = torch.sigmoid(batch_output)
-            else:
+            if data_type == "sinks":
                 # For multi-class classification, use softmax along the class dimension (assumed dim=1)
                 batch_output = torch.softmax(batch_output, dim=1)
             predictions.extend(batch_output.cpu().numpy())
@@ -224,7 +221,8 @@ def process_data_type(data_type, data_list, final_results, model_path):
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
                     final_results[file_name]["sinks"].append({"name": original_name, "type": sink_type, "confidence": confidence})
             else: 
-                if prediction >= thresholds.get(data_type):
+                print(prediction[0] >= thresholds.get(data_type))
+                if float(prediction[0]) >= thresholds.get(data_type):
                     if file_name not in final_results:
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
                     final_results[file_name][data_type].append({"name": original_name, "confidence": confidence})
@@ -248,7 +246,7 @@ async def main():
         project_path = os.path.abspath(os.path.join(os.getcwd(), project_path))
         model_path = os.path.join(os.getcwd(), "src", "bert", "models")
     else:
-        project_name = "PowerJob-5.1.1"
+        project_name = "CWEToyDataset"
         project_path = os.path.join(os.getcwd(), "backend", "Files", project_name)
         model_path = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     parsed_data_file_path = os.path.join(project_path, 'parsedResults.json')
