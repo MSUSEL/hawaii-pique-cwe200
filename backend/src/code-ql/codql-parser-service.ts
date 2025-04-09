@@ -11,15 +11,61 @@ import { start } from 'repl';
 export class CodeQlParserService {
     constructor(private fileService: FileUtilService) {}
 
-    async getSarifResults(sourcePath:string) {
-        var sarifPath = path.join(sourcePath,'result.sarif');
-        var data = await this.fileService.readJsonFile(sarifPath);
-        var rules = data.runs[0].tool.driver.rules;
-        var results = data.runs[0].results;
-        var rulesTree = this.parseRules(rules, results,sourcePath);
-        var locationsTree=this.parseResults(rules,results,sourcePath)
-        return {rulesTree,locationsTree};
+    async getSarifResults(sourcePath: string) {
+        const sarifPath = path.join(sourcePath, 'result.sarif');
+        const data = await this.fileService.readJsonFile(sarifPath);
+        const rules = data.runs[0].tool.driver.rules;
+        let results = data.runs[0].results;
+
+        results = this.filterResults(results)
+      
+
+      
+        const rulesTree = this.parseRules(rules, results, sourcePath);
+        const locationsTree = this.parseResults(rules, results, sourcePath);
+        return { rulesTree, locationsTree };
+      }
+    
+    // This function is used to filter flows out that are likely false positives. 
+    // The labeling along with the flows can be found in the flowMapsByCWE.json for each project.
+    filterResults(results){
+        // Initialize counters for flow logging.
+        let totalFlowCount = 0;       // Total flows encountered
+        let totalFlowRemovedCount = 0; // Total flows removed due to label not being "yes"
+        
+        // Process each result.
+        results = results.filter(result => {
+            if (result.codeFlows && result.codeFlows.length > 0) {
+            const originalCount = result.codeFlows.length;
+            totalFlowCount += originalCount;
+        
+            // Filter individual flows: only keep flows with label "yes"
+            const filteredFlows = result.codeFlows.filter(flow => {
+                return flow.label && flow.label.toLowerCase() === 'yes';
+            });
+        
+            // Count removed flows for this result.
+            totalFlowRemovedCount += (originalCount - filteredFlows.length);
+        
+            if (filteredFlows.length > 0) {
+                // Update the result with the filtered flows.
+                result.codeFlows = filteredFlows;
+                return true;
+            } else {
+                // If no flows remain after filtering, remove the entire result.
+                return false;
+            }
+            }
+            // For results with no data flows, leave them untouched.
+            return true;
+        });
+        
+        // Log the total flows removed versus total flows found.
+        console.log(`Filtered out ${totalFlowRemovedCount} flows out of ${totalFlowCount} total flows.`);
+        return results
     }
+      
+      
 
     // This function is used to get all the data flow trees for a specific result index
     async getDataFlowTree(filePath: string, project: string, index: string) {
@@ -283,7 +329,10 @@ export class CodeQlParserService {
             const csvData: any[] = [];
     
             // Process SARIF results
-            const results = fileData.runs[0]?.results || [];
+            let results = fileData.runs[0]?.results || [];
+
+            results = this.filterResults(results)
+
             for (const result of results) {
                 const message = result.message.text.split('\n')[0]; // First line of the message
                 const location = result.locations?.[0]?.physicalLocation;
