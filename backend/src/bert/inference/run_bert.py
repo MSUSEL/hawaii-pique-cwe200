@@ -29,18 +29,8 @@ DIM = 768
 # Other Helper Functions
 # -----------------------------------------------------------------------------
 
-lemmatizer = WordNetLemmatizer()
+# lemmatizer = WordNetLemmatizer()
 model = SentenceTransformer('paraphrase-MiniLM-L6-v2', device=device)
-
-
-packages = ['punkt', 'averaged_perceptron_tagger', 'wordnet', 'stopwords']
-def check_and_download_nltk_data(package):
-    try:
-        find(f'{package}')
-    except LookupError:
-        nltk.download(package)
-for package in packages:
-    check_and_download_nltk_data(package)
 
 projectAllVariables = {
     'variables': [],
@@ -221,7 +211,6 @@ def process_data_type(data_type, data_list, final_results, model_path):
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
                     final_results[file_name]["sinks"].append({"name": original_name, "type": sink_type, "confidence": confidence})
             else: 
-                print(prediction[0] >= thresholds.get(data_type))
                 if float(prediction[0]) >= thresholds.get(data_type):
                     if file_name not in final_results:
                         final_results[file_name] = {"variables": [], "strings": [], "comments": [], "sinks": []}
