@@ -132,7 +132,7 @@ def load_skorch_model(model_path):
 def predict_labels(model, embeddings):
     print("Running inference...")
     predicted_probs = model.predict_proba(embeddings.astype(np.float32))[:, 1]
-    predicted_classes = (predicted_probs > 0.5).astype(int)
+    predicted_classes = (predicted_probs > 0.2).astype(int)
     predicted_labels = ["Yes" if pred == 1 else "No" for pred in predicted_classes]
     return predicted_labels, predicted_probs
 
