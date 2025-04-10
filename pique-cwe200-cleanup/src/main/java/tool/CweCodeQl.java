@@ -33,8 +33,14 @@ import pique.model.Finding;
 import utility.HelperFunctions;
 import pique.utility.PiqueProperties;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -47,6 +53,8 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 
 
@@ -409,30 +417,54 @@ private int getRandomSeverity(int min, int max) {
     }
 
     private String sendPostRequestToServer(String backendAddress, String projectName, String javaVersion) {
-        String toolResults = null;
-        try {
-            // Properly format the JSON data with extra escaping
-            String jsonData = "\"{\\\"project\\\":\\\"" + projectName +
-                          "\\\", \\\"extension\\\":\\\"csv\\\", \\\"format\\\":\\\"csv\\\", \\\"javaVersion\\\":\\\"" + javaVersion + "\\\"}\"";
-            
-            // Define the command array with properly escaped JSON
-            String[] cmd = {
-                "curl", 
-                "-X", "POST",
-                "-H", "Content-Type: application/json",
-                "-d", jsonData,
-                backendAddress + "/codeql/"
-            };
-            
-            // Execute the command
-            toolResults = HelperFunctions.getOutputFromProgramAsString(cmd);
-            
-        } catch (Exception e) {
-            LOGGER.error("Failed to send POST request to server at: " + backendAddress);
-            e.printStackTrace();
+    String toolResults = "";
+    try {
+        // Build the JSON payload using a JSON library
+        JSONObject json = new JSONObject();
+        json.put("project", projectName);
+        json.put("extension", "csv");
+        json.put("format", "csv");
+        json.put("javaVersion", javaVersion);
+        String jsonData = json.toString(); // e.g. {"project":"myProject","extension":"csv","format":"csv","javaVersion":"17"}
+        
+        // Append the endpoint to the backend address
+        URL url = new URL(backendAddress + "/codeql/");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        connection.setDoOutput(true);
+        
+        // Write the JSON payload to the output stream
+        try (OutputStream os = connection.getOutputStream()) {
+            byte[] input = jsonData.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
         }
-        return toolResults;
+        
+        // Get the response code and choose the appropriate input stream
+        int responseCode = connection.getResponseCode();
+        InputStream inputStream;
+        if (responseCode < HttpURLConnection.HTTP_BAD_REQUEST) {
+            inputStream = connection.getInputStream();
+        } else {
+            inputStream = connection.getErrorStream();
+        }
+        
+        // Read the response line by line
+        StringBuilder responseBuilder = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                responseBuilder.append(line.trim());
+            }
+        }
+        toolResults = responseBuilder.toString();
+        
+        connection.disconnect();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return toolResults;
+}
     
     private Path saveToolResultsToFile(JSONObject jsonResponse, String outputFilePath) {
         try {
