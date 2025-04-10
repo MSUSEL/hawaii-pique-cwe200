@@ -35,6 +35,7 @@ import pique.utility.PiqueProperties;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
@@ -45,6 +46,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import org.json.JSONArray;
+
 
 
 /**
@@ -68,6 +71,7 @@ public class CweCodeQl extends Tool implements ITool {
     public CweCodeQl(String backendAddress) {
         super("CweCodeQl", null);
         this.backendAddress = backendAddress;
+        // Read in all of the project's information
     }
 
     // Methods
@@ -193,16 +197,41 @@ private Path runCWE200Tool(String workingDirectoryPrefix, Path projectLocation){
         
                 // Check to see if the server is running
                 if (isServerRunning(backendAddress)){
-                    LOGGER.info("Server is running at: " + backendAddress);
-                    // Upload the project to the server
-                    LOGGER.info("Zipping project at: zipped-repos/" + projectName);
-                    Path zipPath = zipProject(projectLocation);
                     LOGGER.info("CWE-200 Tool is analyzing " + projectName + " this might take a while.");
-                    uploadProjectToServer(backendAddress, zipPath);
+                    
+                    // Upload the project to the server
+                    try{
+                        uploadProjectToServer(backendAddress, projectLocation);
+                    } catch (Exception e){
+                        LOGGER.error("Failed to upload project to server at: " + backendAddress);
+                        e.printStackTrace();
+                        return null;
+                    }
+
+                    String javaVersion = "11";
+                    try{
+                        // Get the Java version for the specific project
+                        LOGGER.info(System.getProperty("user.dir"));
+                        Path projectInfoFilePath = Paths.get("..", "testing", "PIQUE_Projects", "projects.json");
+                        javaVersion = this.getJavaVersion(projectInfoFilePath);
+                    }
+                    catch (Exception e){
+                        LOGGER.error("Failed to get Java version from server at: " + backendAddress);
+                        e.printStackTrace();
+                        return null;
+                    }
                     
                     // Perform the analysis
-                    String toolResults = sendPostRequestToServer(backendAddress, projectName);
-                    JSONObject jsonResponse = responseToJSON(toolResults);
+                    JSONObject jsonResponse = null;
+                    try{
+                        String toolResults = sendPostRequestToServer(backendAddress, projectName, javaVersion);
+                        jsonResponse = responseToJSON(toolResults);
+
+                    } catch (Exception e){
+                        LOGGER.error("Failed to send POST request to server at: " + backendAddress);
+                        e.printStackTrace();
+                        return null;
+                    }
     
                     try {
                         if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
@@ -252,6 +281,42 @@ private int cweToSeverity(String cweId) {
     }
 }
 
+private String getJavaVersion(Path projectInfoFilePath) {
+    try {
+        // Read the entire JSON file as a UTF-8 string.
+        String jsonString = new String(Files.readAllBytes(projectInfoFilePath), StandardCharsets.UTF_8);
+
+        // Parse the JSON content.
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONArray projects = jsonObject.getJSONArray("projects");
+
+        String lookupName = this.projectName.replaceAll("\\.zip$", "");
+
+        // Loop through the projects array.
+        for (int i = 0; i < projects.length(); i++) {
+            JSONObject project = projects.getJSONObject(i);
+            if (project.getString("projectName").equals(lookupName)) {
+                // Get the javaVersion as a string, then parse it into an int.
+                LOGGER.info("Java version for " + lookupName + ": " + project.getString("javaVersion"));
+                return project.getString("javaVersion");
+            }
+        }
+    } catch (IOException e) {
+        // Handle errors reading the file.
+        e.printStackTrace();
+    } catch (JSONException e) {
+        // Handle errors during JSON parsing.
+        e.printStackTrace();
+    } catch (NumberFormatException e) {
+        // Handle any errors converting the javaVersion to int.
+        e.printStackTrace();
+    }
+
+    // Return Java 11 as the default version if not found.
+    LOGGER.info("Java version not found for " + this.projectName + ", defaulting to 11.");
+    return "11";
+}
+
 private int getRandomSeverity(int min, int max) {
     return ThreadLocalRandom.current().nextInt(min, max + 1);
 }
@@ -264,6 +329,7 @@ private int getRandomSeverity(int min, int max) {
             LOGGER.error("Server is not running at: " + backendAddress);
             return false;
         }
+        LOGGER.info("Server is running at: " + backendAddress);
         return true;
     }
 
@@ -342,12 +408,12 @@ private int getRandomSeverity(int min, int max) {
         }
     }
 
-    private String sendPostRequestToServer(String backendAddress, String projectName) {
+    private String sendPostRequestToServer(String backendAddress, String projectName, String javaVersion) {
         String toolResults = null;
         try {
             // Properly format the JSON data with extra escaping
-            String jsonData = "\"{\\\"project\\\":\\\"" + projectName + 
-            "\\\", \\\"extension\\\":\\\"csv\\\", \\\"format\\\":\\\"csv\\\"}\"";
+            String jsonData = "\"{\\\"project\\\":\\\"" + projectName +
+                          "\\\", \\\"extension\\\":\\\"csv\\\", \\\"format\\\":\\\"csv\\\", \\\"javaVersion\\\":\\\"" + javaVersion + "\\\"}\"";
             
             // Define the command array with properly escaped JSON
             String[] cmd = {
