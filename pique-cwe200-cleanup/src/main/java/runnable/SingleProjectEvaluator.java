@@ -64,7 +64,7 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
         }
 
         for (Path projectUnderAnalysisPath : projectRoots){
-            LOGGER.info("Project to analyze: {}", projectUnderAnalysisPath.toString());
+            // LOGGER.info("Project to analyze: {}", projectUnderAnalysisPath.toString());
             Path outputPath = runEvaluator(projectUnderAnalysisPath, resultsDir, qmLocation, tools);
             
             // try {
@@ -75,9 +75,9 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
             //     throw new RuntimeException(e);
             // }
 
-            LOGGER.info("output: {}", outputPath.getFileName());
-            System.out.println("output: " + outputPath.getFileName());
-            System.out.println("exporting compact: " + project.exportToJson(resultsDir, true));
+            // LOGGER.info("output: {}", outputPath.getFileName());
+            // System.out.println("output: " + outputPath.getFileName());
+            // System.out.println("exporting compact: " + project.exportToJson(resultsDir, true));
 
             Pair<String, String> name = Pair.of("projectName", project.getName());
             String fileName = project.getName() + "_compact_evalResults_"+ projectUnderAnalysisPath.getFileName().toString();
@@ -105,13 +105,13 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
     @Override
     public Path runEvaluator(Path projectDir, Path resultsDir, Path qmLocation, Set<ITool> tools){
         
-        for(Path project: projectDir){
-            System.out.println("project: " + project);
-        }
+        // for(Path project: projectDir){
+        //     System.out.println("project: " + project);
+        // }
 
         
-        System.out.println("projectDir="+projectDir);
-        System.out.println("qmLocation="+qmLocation.toString());
+        // System.out.println("projectDir="+projectDir);
+        // System.out.println("qmLocation="+qmLocation.toString());
         // Initialize data structures
         QualityModelImport qmImport = new QualityModelImport(qmLocation);
         QualityModel qualityModel = qmImport.importQualityModel();

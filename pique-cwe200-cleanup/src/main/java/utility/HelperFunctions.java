@@ -82,17 +82,17 @@ public class HelperFunctions {
             Process process = processBuilder.start(); // Start the process
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line); // Print the output line by line
+            // String line;
+            while ((reader.readLine()) != null) {
+                // System.out.println(line); // Print the output line by line
             }
             int exitCode = process.waitFor(); // Wait for the process to complete
-            System.out.println("\nExited with error code : " + exitCode);
+            // System.out.println("\nExited with error code : " + exitCode);
         } 
         
         catch (IOException | InterruptedException e) {
-            System.out.println("Failed to run tool ");
-            e.printStackTrace();
+            // System.out.println("Failed to run tool ");
+            // e.printStackTrace();
         }
     }
 

@@ -74,11 +74,14 @@ public class CweCodeQl extends Tool implements ITool {
     private String backendAddress;
     private String projectName;
     private String outputFilePath;
+    private boolean serverOnline = false;
 
 
     public CweCodeQl(String backendAddress) {
         super("CweCodeQl", null);
         this.backendAddress = backendAddress;
+        this.serverOnline = this.isServerRunning(this.backendAddress);
+
         // Read in all of the project's information
     }
 
@@ -96,8 +99,8 @@ public class CweCodeQl extends Tool implements ITool {
             return null;
 
         }
-        LOGGER.info(this.getName() + "  Analyzing " + this.projectName);
-        System.out.println("Analyzing " + this.projectName + " with " + this.getName());
+        System.out.println("\n");
+        LOGGER.info("Analyzing " + this.projectName);
 
         // set up results dir
 
@@ -113,7 +116,7 @@ public class CweCodeQl extends Tool implements ITool {
             Files.createDirectories(Paths.get(workingDirectoryPrefix));
             // Set up output file path
             this.outputFilePath = workingDirectoryPrefix + this.projectName + "Result.csv";
-            System.out.println("Output file path: " + this.outputFilePath);
+            // System.out.println("Output file path: " + this.outputFilePath);
         
         } catch (IOException e) {
             e.printStackTrace();
@@ -199,14 +202,12 @@ public class CweCodeQl extends Tool implements ITool {
 }
 
 private Path runCWE200Tool(String workingDirectoryPrefix, Path projectLocation){
-
             // Check if the results file already exists
             if (!doesExist(workingDirectoryPrefix, projectName)){
         
                 // Check to see if the server is running
-                if (isServerRunning(backendAddress)){
-                    LOGGER.info("CWE-200 Tool is analyzing " + projectName + " this might take a while.");
-                    
+                if (this.serverOnline){
+
                     // Upload the project to the server
                     try{
                         uploadProjectToServer(backendAddress, projectLocation);
@@ -219,7 +220,6 @@ private Path runCWE200Tool(String workingDirectoryPrefix, Path projectLocation){
                     String javaVersion = "11";
                     try{
                         // Get the Java version for the specific project
-                        LOGGER.info(System.getProperty("user.dir"));
                         Path projectInfoFilePath = Paths.get("..", "testing", "PIQUE_Projects", "projects.json");
                         javaVersion = this.getJavaVersion(projectInfoFilePath);
                     }
@@ -232,6 +232,7 @@ private Path runCWE200Tool(String workingDirectoryPrefix, Path projectLocation){
                     // Perform the analysis
                     JSONObject jsonResponse = null;
                     try{
+                        LOGGER.info("CWE-200 tool is analyzing this might take a while.");
                         String toolResults = sendPostRequestToServer(backendAddress, projectName, javaVersion);
                         jsonResponse = responseToJSON(toolResults);
 
@@ -244,8 +245,11 @@ private Path runCWE200Tool(String workingDirectoryPrefix, Path projectLocation){
                     try {
                         if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
                             System.out.println("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
-                            LOGGER.error("Error running CweQodeQl on " + projectName + " " + jsonResponse.getString("error"));
+                            LOGGER.error("Error running analysis " + jsonResponse.getString("error"));
                             return null;
+                        }
+                        else{
+                            LOGGER.info("Analysis completed successfully");
                         }
                     } catch (JSONException e) {
                         return null;
@@ -305,7 +309,7 @@ private String getJavaVersion(Path projectInfoFilePath) {
             JSONObject project = projects.getJSONObject(i);
             if (project.getString("projectName").equals(lookupName)) {
                 // Get the javaVersion as a string, then parse it into an int.
-                LOGGER.info("Java version for " + lookupName + ": " + project.getString("javaVersion"));
+                LOGGER.info("Java version " + project.getString("javaVersion"));
                 return project.getString("javaVersion");
             }
         }
@@ -477,7 +481,7 @@ private int getRandomSeverity(int min, int max) {
             // Write the extracted data to the specified file path
             Files.write(outputPath, data.getBytes());
             
-            LOGGER.info("Tool results saved to file successfully: " + outputFilePath);
+            LOGGER.info("Tool results saved to file");
             return outputPath;
         } catch (IOException e) {
             LOGGER.error("Failed to save tool results to file: " + outputFilePath);
@@ -495,8 +499,6 @@ private int getRandomSeverity(int min, int max) {
             LOGGER.info("Already ran CweQodeQl on: " + projectName + ", results stored in: " + tempResults.toString());
             return true;
         }
-        LOGGER.info("Have not run CweQodeQl on: " + projectName + ", running now and storing in:"
-                    + tempResults.toString());
             tempResults.getParentFile().mkdirs();
         return false;
     }
