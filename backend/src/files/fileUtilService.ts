@@ -383,7 +383,6 @@ saveToJsonl (filePath, data) {
 };
     
   
-
 /**
  * Sets the desired Java version as default.
  * @param version Java version number, e.g., 11 or 17
@@ -395,12 +394,20 @@ setJavaVersion(version: number) {
     let output = null;
   
     if (platform === 'win32') {
-      // Mapping of Java versions to Winget package IDs.
+      // (1) Mapping of Java versions to Winget package IDs.
       const javaVersionToPackageId: { [key: number]: string } = {
         8: 'Azul.Zulu.8.JDK',
         11: 'Azul.Zulu.11.JDK',
         17: 'Azul.Zulu.17.JDK',
-        21: 'Azul.Zulu.21.JDK'
+        21: 'Azul.Zulu.21.JDK',
+      };
+  
+      // (2) Mapping of Java versions to their actual install folder.
+      const javaVersionToZuluInstallPath: { [key: number]: string } = {
+        8:  'C:\\Program Files\\Zulu\\zulu-8',
+        11: 'C:\\Program Files\\Zulu\\zulu-11',
+        17: 'C:\\Program Files\\Zulu\\zulu-17',
+        21: 'C:\\Program Files\\Zulu\\zulu-21',
       };
   
       const packageId = javaVersionToPackageId[version];
@@ -409,41 +416,44 @@ setJavaVersion(version: number) {
         process.exit(1);
       }
   
+      // Check if it's installed via Winget; if not, install it
       try {
         console.log(`Checking for Java ${version} via Winget (package: ${packageId})...`);
-        // Check if the package is already installed.
-        output = execSync(`winget list --id "${packageId}"`, { stdio: "ignore" });
+        output = execSync(`winget list --id "${packageId}"`, { stdio: 'ignore' });
         console.log(`Java ${version} (package ${packageId}) is already installed.`);
       } catch (err) {
         console.log(`Java ${version} (package ${packageId}) not found. Installing via Winget...`);
-        output = execSync(`winget install --id ${packageId} -e --accept-source-agreements --accept-package-agreements`, { stdio: "inherit" });
+        output = execSync(
+          `winget install --id ${packageId} -e --accept-source-agreements --accept-package-agreements`,
+          { stdio: 'inherit' }
+        );
       }
-      
-      // Set JAVA_HOME and update the PATH.
-      // Note: Adjust the javaHome path as necessary based on the installation location.
-      const javaHome = `C:\\Program Files\\Zulu\\jdk${version}`;
+  
+      // Set JAVA_HOME and update the PATH
+      const javaHome = javaVersionToZuluInstallPath[version];
       process.env.JAVA_HOME = javaHome;
       process.env.PATH = `${javaHome}\\bin;${process.env.PATH}`;
+  
       console.log(`JAVA_HOME set to ${javaHome} and PATH updated.`);
     } else {
-        // Linux branch: Assume that the JDKs are pre-downloaded in the Docker image.
-        // Supported versions based on your Dockerfile: 8, 11, 17, and 21.
-        const supportedVersions = [8, 11, 17, 21];
-        if (!supportedVersions.includes(version)) {
+      // Linux branch: assume JDKs are in /usr/local/java/jdk<version>.
+      const supportedVersions = [8, 11, 17, 21];
+      if (!supportedVersions.includes(version)) {
         console.error(
-            `Unsupported Java version: ${version}. Supported versions are ${supportedVersions.join(', ')}`
+          `Unsupported Java version: ${version}. Supported versions are ${supportedVersions.join(', ')}`
         );
         process.exit(1);
-        }
-        
-        // For Linux, the pre-downloaded JDK directories are under /usr/local/java.
-        const javaHome = `/usr/local/java/jdk${version}`;
-        process.env.JAVA_HOME = javaHome;
-        // Update PATH to include the chosen JDK's bin directory.
-        process.env.PATH = `${javaHome}/bin:${process.env.PATH}`;
-        console.log(`JAVA_HOME set to ${javaHome} and PATH updated.`);
+      }
+  
+      // For Linux, the pre-downloaded JDK directories are under /usr/local/java.
+      const javaHome = `/usr/local/java/jdk${version}`;
+      process.env.JAVA_HOME = javaHome;
+      process.env.PATH = `${javaHome}/bin:${process.env.PATH}`;
+      console.log(`JAVA_HOME set to ${javaHome} and PATH updated.`);
     }
+  
   }
+  
 }
 
 interface JavaParseResult {
