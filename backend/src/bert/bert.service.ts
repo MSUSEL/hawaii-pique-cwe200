@@ -16,7 +16,6 @@ export class BertService {
     contextMap = {};
 
     constructor(
-        private configService: ConfigService,
         private eventsGateway: EventsGateway,
         private fileUtilService: FileUtilService,
         private javaParserService: JavaParserService,
@@ -140,6 +139,109 @@ export class BertService {
             });
         });    
     }
+
+    formatMappings(mapping: { [key: string]: string[] }, type: string): string {
+            let result = "";
+        
+            // Iterate over each key (filename) in the mapping object
+            Object.keys(mapping).forEach(key => {
+                // For each variable associated with the key, generate a new line in the output
+                mapping[key].forEach(variable => {
+                    // Remove Unicode characters, double quotes, single quotes, and newlines from the variable
+                    // Ensure backslashes are escaped
+                    variable = variable.replace(/[^\x00-\x7F]/g, '').replace(/["'\n]/g, '').replace(/\\/g, '\\\\');
+        
+                    // Apply exclusion rules
+                    if (
+                        // Exclude common non-sensitive patterns
+                        /example/i.test(variable) ||
+                        /test/i.test(variable) ||
+                        /demo/i.test(variable) ||
+                        /foo/i.test(variable) ||
+                        /bar/i.test(variable) ||
+                        /baz/i.test(variable) ||
+                        /secret/i.test(variable) ||
+                        // Exclude empty strings
+                        variable === "" ||
+                        // Exclude whitespace-only strings
+                        /^\s*$/.test(variable) ||
+                        // Exclude strings with exactly one dot followed by a digit
+                        /^[^.]*\.[0-9]+$/.test(variable)
+                    ) {
+                        return; // Skip this variable if it matches any exclusion criteria
+                    }
+        
+                    // Check if the variable is in the format {key: value, key: value}
+                    const regex = /{([^}]+)}/;
+                    const match = regex.exec(variable);
+                    if (match) {
+                        // Extract values from the variable
+                        const valuesString = match[1];
+                        const values = valuesString.split(',').map(pair => {
+                            const parts = pair.split(':');
+                            return parts.length > 1 ? parts[1].trim() : '';
+                        });
+                        if (type === "variables") {
+                            values.forEach(value => {
+                                result += `    - ["${key}", ${value}]\n`;
+                            });
+                        } else {
+                            values.forEach(value => {
+                                result += `    - ["${key}", "${value}"]\n`;
+                            });
+                        }
+                    } else {
+                        // If not in the format {key: value, key: value}, handle as normal string
+                        if (type === "variables") {
+                            result += `    - ["${key}", "${variable}"]\n`;
+                        } else {
+                            result += `    - ["${key}", "${variable}"]\n`;
+                        }
+                    }
+                });
+            });
+        
+            return result;
+        }    
+        
+        formatCommentsMapping(mapping: { [key: string]: string[] }, type): string {
+            let result = "";
+        
+            // Iterate over each key (filename) in the mapping object
+            Object.keys(mapping).forEach(key => {
+                // For each variable associated with the key, generate a new line in the output
+                mapping[key].forEach(variable => {
+                    result += `    - ["${key}", "${variable.replace(/(?!^)"(?!$)/g, '\\"')}"]\n`;
+                });
+            });
+        
+            return result;
+        }
+        
+         
+        formatSinkMappings(mapping: Map<string, string[][]>): string {
+            let result = "";
+            // Iterate over each key-value pair in the mapping object
+            for (const [key, sinks] of mapping.entries()) {
+              // For each array associated with the key, generate a new line in the output
+              for (const sink of sinks) {
+                result += `    - ["${key}", "${sink[0]}", "${sink[1]}"]\n`;
+              }
+            }
+            return result;
+          }
+        formatStringArray(inputArray: string[]): string {
+            // Initialize the result string
+            let result = '';
+        
+            // Loop through each string in the array
+            inputArray.forEach(item => {
+                // Append the formatted item to the result string
+                result += `    - [${item}]\n`;
+            });
+        
+            return result;
+        }
 }
 
 

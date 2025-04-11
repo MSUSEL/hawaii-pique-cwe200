@@ -8,6 +8,6 @@ import { EventsModule } from 'src/events/events.module';
     imports:[EventsModule],
     controllers: [FilesController],
     providers: [FilesService, FileUtilService],
-    exports: [FileUtilService],
+    exports: [FileUtilService, FileUtilService],
 })
 export class FilesModule {}
