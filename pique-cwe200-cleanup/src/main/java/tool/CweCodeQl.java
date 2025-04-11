@@ -327,7 +327,7 @@ public class CweCodeQl extends Tool implements ITool {
                                                // {"project":"myProject","extension":"csv","format":"csv","javaVersion":"17"}
 
             // Append the endpoint to the backend address
-            URL url = new URL(backendAddress + "/codeql/");
+            URL url = new URL(backendAddress + "/analyze/");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
