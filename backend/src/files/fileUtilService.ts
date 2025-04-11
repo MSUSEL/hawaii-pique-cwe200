@@ -425,33 +425,23 @@ setJavaVersion(version: number) {
       process.env.JAVA_HOME = javaHome;
       process.env.PATH = `${javaHome}\\bin;${process.env.PATH}`;
       console.log(`JAVA_HOME set to ${javaHome} and PATH updated.`);
-    } 
-    
-    else {
-      // Linux branch: Use dpkg/apt and update-alternatives.
-      const jdkPackage = `openjdk-${version}-jdk`;
-      const javaPath = `/usr/lib/jvm/java-${version}-openjdk-amd64/bin/java`;
-      const javacPath = `/usr/lib/jvm/java-${version}-openjdk-amd64/bin/javac`;
-  
-      try {
-        console.log(`Checking for ${jdkPackage}...`);
-        execSync(`dpkg -s ${jdkPackage}`, { stdio: "ignore" });
-        console.log(`${jdkPackage} is already installed.`);
-      } catch {
-        console.log(`Installing ${jdkPackage}...`);
-        execSync(`apt update && apt install -y ${jdkPackage}`, { stdio: "inherit" });
-      }
-  
-      try {
-        console.log(`Setting Java ${version} as the default...`);
-        execSync(`update-alternatives --install /usr/bin/java java ${javaPath} 1`);
-        execSync(`update-alternatives --install /usr/bin/javac javac ${javacPath} 1`);
-        execSync(`update-alternatives --set java ${javaPath}`);
-        execSync(`update-alternatives --set javac ${javacPath}`);
-        console.log(`Java ${version} set as the default.`);
-      } catch (error) {
-        console.error("Failed to set Java version:", error);
-      }
+    } else {
+        // Linux branch: Assume that the JDKs are pre-downloaded in the Docker image.
+        // Supported versions based on your Dockerfile: 8, 11, 17, and 21.
+        const supportedVersions = [8, 11, 17, 21];
+        if (!supportedVersions.includes(version)) {
+        console.error(
+            `Unsupported Java version: ${version}. Supported versions are ${supportedVersions.join(', ')}`
+        );
+        process.exit(1);
+        }
+        
+        // For Linux, the pre-downloaded JDK directories are under /usr/local/java.
+        const javaHome = `/usr/local/java/jdk${version}`;
+        process.env.JAVA_HOME = javaHome;
+        // Update PATH to include the chosen JDK's bin directory.
+        process.env.PATH = `${javaHome}/bin:${process.env.PATH}`;
+        console.log(`JAVA_HOME set to ${javaHome} and PATH updated.`);
     }
   }
 }

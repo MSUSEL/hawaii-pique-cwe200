@@ -47,7 +47,7 @@ export class AnalyzeService {
     async runAnalysis(createAnalyzeDto: any) {
         // Check if a java version is specified
         // if (createAnalyzeDto.javaVersion) {
-        //     this.fileUtilService.setJavaVersion(createAnalyzeDto.javaVersion);
+        //     this.fileUtilService.setJavaVersion(Number(createCodeQlDto.javaVersion));
         // }
 
         // Get all java files in project
