@@ -3,7 +3,6 @@ import { EventsModule } from 'src/events/events.module';
 import { BertService } from './bert.service';
 import { BertController } from './bert.controller';
 
-
 @Module({
     imports:[EventsModule],
     controllers: [BertController],

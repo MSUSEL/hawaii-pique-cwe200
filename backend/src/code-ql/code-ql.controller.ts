@@ -24,17 +24,7 @@ export class CodeQlController {
    *
    * @param createCodeQlDto Data transfer object with project name
    */
-  @Post()
-  async runCodeQl(@Body() createCodeQlDto: any) {
-    try {
-      return await this.codeQlService.runCodeQl(createCodeQlDto);
-    }
 
-    catch (error) {
-      console.log('Project analysis stopped')
-      return { 'error': error.message }
-    }
-  }
 
   @Get()
   async getSarifResults(@Query('project') project: string) {
@@ -48,7 +38,6 @@ export class CodeQlController {
     @Query('index') index: string
 
   ) {
-
     return await this.codeQlService.getDataFlowTree(vulnerabilityId, project, index);
   }
 

@@ -425,7 +425,9 @@ setJavaVersion(version: number) {
       process.env.JAVA_HOME = javaHome;
       process.env.PATH = `${javaHome}\\bin;${process.env.PATH}`;
       console.log(`JAVA_HOME set to ${javaHome} and PATH updated.`);
-    } else {
+    } 
+    
+    else {
       // Linux branch: Use dpkg/apt and update-alternatives.
       const jdkPackage = `openjdk-${version}-jdk`;
       const javaPath = `/usr/lib/jvm/java-${version}-openjdk-amd64/bin/java`;

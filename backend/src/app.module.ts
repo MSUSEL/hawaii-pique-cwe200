@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AnalyzeModule } from './analyze/analyze.module';
 import { BertModule } from './bert/bert.module';
 import { FilesModule } from './files/files.module';
 import { ChatGptModule } from './chat-gpt/chat-gpt.module';
@@ -23,6 +24,7 @@ import { JavaParserModule } from './java-parser/java-parser.module';
         BertModule,
         LLMModule,
         JavaParserModule,
+        AnalyzeModule,
 
     ],
     controllers: [AppController],
