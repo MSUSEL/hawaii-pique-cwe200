@@ -47,7 +47,7 @@ def process_data_flows_for_inference(data_flows):
             for flow in result['flows']:
                 code_flow_index = flow['codeFlowIndex']
                 # Construct a string from filename and flow steps.
-                data_flow_string = f"Filename = {flow_file_name} Flows = "
+                data_flow_string = f"Filename = {flow_file_name}, CWE = {cwe}, Flows = "
                 for step in flow['flow']:
                     data_flow_string += str(step)
                 processed_data_flows.append(data_flow_string)
