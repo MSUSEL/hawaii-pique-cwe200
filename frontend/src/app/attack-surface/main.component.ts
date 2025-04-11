@@ -7,6 +7,7 @@ import { SettingsDialogComponent } from './dialogs/settings.dialog.component';
 import { ItemFlatNode } from '../shared-components/tree/tree.component';
 import { FilesService } from '../Services/fileService';
 import { HelpDialogComponent } from './dialogs/help-dialog.component';
+import 
 
 
 declare var $: any;

@@ -35,12 +35,29 @@
                         Help <i class="fa fa-question-circle px-2"></i>
                     </button>
                 </li>
+
+                
+
+                <li class="nav-item d-flex align-items-center">
+                    <label for="javaVersion" class="mb-0 mr-2" style="font-size:0.9rem; color:#212529; font-family:'Times New Roman', Times, serif; font-size: 16px; padding: 6px 12px; margin: 0px;">
+                      Java Version:
+                    </label>
+                    <select id="javaVersion"
+                            class="form-control form-control-sm"
+                            style="width: auto; display: inline-block; background-color:#212529; color:#d3d3d3; border:none; height:25px"
+                            [(ngModel)]="utilService.selectedJavaVersion">
+                            >
+                      <option [value]="8">8</option>
+                      <option [value]="11">11</option>
+                      <option [value]="17">17</option>
+                      <option [value]="21">21</option>
+                    </select>
+                  </li>
             </ul>
             <div>
                 <button class="nav-item btn hover-green" (click)="openDialog()" [disabled]="true">
                     Export <i class="fa fa-file-export px-2"></i>
                 </button>
-
             </div>
         </div>
     </nav>

@@ -14,6 +14,8 @@ export class CVEUtilService {
     public isSubmitted:boolean=false;
     directoryFilesTree:any[]=[];
     isUploaded:boolean=false;
+    public selectedJavaVersion: number = 11;
+
     constructor(
 
 
