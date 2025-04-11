@@ -78,3 +78,4 @@ pyrightconfig.json
 unsloth_compiled_cache
 llama_finetuned_model/*
 .gradle/*
+.pnpm-store/**
