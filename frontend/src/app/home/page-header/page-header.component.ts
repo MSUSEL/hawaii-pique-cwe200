@@ -9,6 +9,7 @@ import { ChatGptService } from 'src/app/Services/chatgpt.service';
 import { Subscription } from 'rxjs';
 import { GPTProgressDialogComponent } from '../page-header/dialogs/gpt-progress-dialog.component';
 import { ChangeDetectorRef } from '@angular/core';
+import { AnalyzeService } from 'src/app/Services/analyze.service';
 
 declare var $: any;
 
@@ -29,7 +30,8 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
     private chatGptService: ChatGptService,
     private editorService: EditorService,
     public dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private analyzeService: AnalyzeService
   ) {}
 
   ngOnInit(): void {
@@ -162,7 +164,7 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.codeQlService.runCodeQl({ project: this.utilService.ProjectName }).subscribe(
+    this.analyzeService.analyze({ project: this.utilService.ProjectName }).subscribe(
       (response) => {
         this.editorService.rulesTree = response.rulesTree;
         this.editorService.locationsTree = response.locationsTree;

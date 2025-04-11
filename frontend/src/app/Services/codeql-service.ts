@@ -12,7 +12,7 @@ export class CodeQlService {
     constructor(private http: HttpClient) {}
 
     runCodeQl(data:any):Observable<any>{
-        return this.http.post(this.url,data);
+        return this.http.post(environment.apiUrl + 'analyze', data); 
     }
     
     getSarifResult(project : string):Observable<any>{
