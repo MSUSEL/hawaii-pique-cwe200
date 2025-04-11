@@ -60,19 +60,37 @@ RUN python3.12 -m pip install --no-cache-dir torch torchvision torchaudio --inde
 # Install 'concurrently' globally
 RUN npm install -g concurrently
 
-# Install Java
-RUN mkdir -p $JAVA_HOME \
-    && if [ "$JAVA_VERSION" = "8" ]; then \
-        wget -O /tmp/openjdk.tar.gz https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u372-b07/OpenJDK8U-jdk_x64_linux_hotspot_8u372b07.tar.gz; \
-    elif [ "$JAVA_VERSION" = "11" ]; then \
-        wget -O /tmp/openjdk.tar.gz https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.20+8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.20_8.tar.gz; \
-    elif [ "$JAVA_VERSION" = "17" ]; then \
-        wget -O /tmp/openjdk.tar.gz https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz; \
-    else \
-        echo "Unsupported Java version $JAVA_VERSION"; exit 1; \
-    fi \
-    && tar -xzf /tmp/openjdk.tar.gz -C $JAVA_HOME --strip-components=1 \
-    && rm /tmp/openjdk.tar.gz
+# Create a common directory for Java installations
+RUN mkdir -p /usr/local/java
+
+# Install OpenJDK 8
+RUN mkdir -p /usr/local/java/jdk8 && \
+    wget -O /tmp/openjdk8.tar.gz https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u372-b07/OpenJDK8U-jdk_x64_linux_hotspot_8u372b07.tar.gz && \
+    tar -xzf /tmp/openjdk8.tar.gz -C /usr/local/java/jdk8 --strip-components=1 && \
+    rm /tmp/openjdk8.tar.gz
+
+# Install OpenJDK 11
+RUN mkdir -p /usr/local/java/jdk11 && \
+    wget -O /tmp/openjdk11.tar.gz https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.20+8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.20_8.tar.gz && \
+    tar -xzf /tmp/openjdk11.tar.gz -C /usr/local/java/jdk11 --strip-components=1 && \
+    rm /tmp/openjdk11.tar.gz
+
+# Install OpenJDK 17
+RUN mkdir -p /usr/local/java/jdk17 && \
+    wget -O /tmp/openjdk17.tar.gz https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz && \
+    tar -xzf /tmp/openjdk17.tar.gz -C /usr/local/java/jdk17 --strip-components=1 && \
+    rm /tmp/openjdk17.tar.gz
+
+# Install OpenJDK 21 (Temurin 21.0.6+7)
+RUN mkdir -p /usr/local/java/jdk21 && \
+    wget -O /tmp/openjdk21.tar.gz https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6+7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz && \
+    tar -xzf /tmp/openjdk21.tar.gz -C /usr/local/java/jdk21 --strip-components=1 && \
+    rm /tmp/openjdk21.tar.gz
+
+# Set default Java to JDK 11
+ENV JAVA_HOME=/usr/local/java/jdk11
+ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
 
 # Install Maven
 RUN wget -O /tmp/maven.tar.gz https://downloads.apache.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz \
