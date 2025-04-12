@@ -46,30 +46,30 @@ export class AnalyzeService {
      */
     async runAnalysis(createAnalyzeDto: any) {
         // Check if a java version is specified
-        // if (createAnalyzeDto.javaVersion) {
-        //     this.fileUtilService.setJavaVersion(Number(createCodeQlDto.javaVersion));
-        // }
+        if (createAnalyzeDto.javaVersion) {
+            this.fileUtilService.setJavaVersion(Number(createAnalyzeDto.javaVersion));
+        }
 
         // Get all java files in project
         const sourcePath = path.join(this.projectsPath, createAnalyzeDto.project);
         const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
 
-        // await this.executeStep('Parsing files for variables, strings, comments, and method calls.', async () => {
-        //     await this.bertService.bertWrapper(javaFiles, sourcePath);
-        // });
+        await this.executeStep('Parsing files for variables, strings, comments, and method calls.', async () => {
+            await this.bertService.bertWrapper(javaFiles, sourcePath);
+        });
 
-        // await this.executeStep('Detecting sensitive info using BERT.', async () => {
-        //     await this.bertService.getBertResponse(sourcePath, "run_bert.py");
-        // });
+        await this.executeStep('Detecting sensitive info using BERT.', async () => {
+            await this.bertService.getBertResponse(sourcePath, "run_bert.py");
+        });
         
-        // let data = null;
-        // await this.executeStep('Reading in BERT results from data.json.', async () => {
-        //     data = this.fileUtilService.parseJSONFile(path.join(sourcePath, 'data.json'));
-        // });
+        let data = null;
+        await this.executeStep('Reading in BERT results from data.json.', async () => {
+            data = this.fileUtilService.parseJSONFile(path.join(sourcePath, 'data.json'));
+        });
 
-        // await this.executeStep('Saving the sensitive info to .yml files.', async () => {
-        //     await this.saveSensitiveInfo(data);
-        // });
+        await this.executeStep('Saving the sensitive info to .yml files.', async () => {
+            await this.saveSensitiveInfo(data);
+        });
 
         // await this.executeStep('Creating CodeQL database.', async () => {
         //     await this.codeqlService.createDatabase(sourcePath, createAnalyzeDto);
@@ -92,9 +92,9 @@ export class AnalyzeService {
         //     this.saveUpdatedSensitiveVariables(sensitiveVariables);
         // });
 
-        // await this.executeStep('Running CWE queries.', async () => {
-        //     await this.codeqlService.runCWEQueries(sourcePath, createAnalyzeDto);
-        // });
+        await this.executeStep('Running CWE queries.', async () => {
+            await this.codeqlService.runCWEQueries(sourcePath, createAnalyzeDto);
+        });
 
         await this.executeStep('Saving Dataflow Tree.', async () => {
             await this.parserService.saveDataFlowTree(sourcePath);
