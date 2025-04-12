@@ -26,9 +26,15 @@ export class FileUtilService {
         if (!fs.existsSync(this.configService.get<string>('CODEQL_PROJECTS_DIR')))
             fs.mkdirSync(this.configService.get<string>('CODEQL_PROJECTS_DIR'));
 
+        let projectName = file.originalname;
+        if (projectName.endsWith('.zip')) {
+            projectName = projectName.slice(0, -4); // Remove '.zip'
+        }
+
+
         // Extract code to project directory
         zip.extractAllTo(
-            this.configService.get<string>('CODEQL_PROJECTS_DIR') + "/" + file.originalname,  // extract name
+            this.configService.get<string>('CODEQL_PROJECTS_DIR') + "/" + projectName,  // extract name
             true    // overwrite
         );
     }
