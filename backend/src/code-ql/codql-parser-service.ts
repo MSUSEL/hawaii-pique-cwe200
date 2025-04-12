@@ -43,6 +43,8 @@ export class CodeQlParserService {
             const filteredFlows = result.codeFlows.filter(flow => {
                 return flow.label && flow.label.toLowerCase() === 'yes';
             });
+
+            // const filteredFlows = result.codeFlows; // Keep all flows for now
         
             // Count removed flows for this result.
             totalFlowRemovedCount += (originalCount - filteredFlows.length);
