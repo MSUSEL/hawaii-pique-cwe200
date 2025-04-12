@@ -21,13 +21,16 @@ export class FilesService {
      * @param file Zip binary containing Java Code
      */
     async create(file: Express.Multer.File) {
-        // Save file contents to file
+        // Save file contents to file        
         await this.fileUtilService.writeZipFile(file);
         this.eventsGateway.emitDataToClients('data','file uploaded successfully')
-        // commenting because unsure if specifically done this way
-        // const uploadedProjectDir = path.join(this.projectsPath, file.originalname, 'src');
-        const uploadedProjectDir = path.join(this.projectsPath,file.originalname); // You don't have to worry about removing .zip. It's already done when it gets here.
-        
+        let projectName = file.originalname;
+        if (projectName.endsWith('.zip')) {
+            projectName = projectName.slice(0, -4); // Remove '.zip'
+        }
+
+        const uploadedProjectDir = path.join(this.projectsPath, projectName);
+
         // Return mapped directory tree
         return this.fileUtilService.getDirectoryTree(uploadedProjectDir)
     }
