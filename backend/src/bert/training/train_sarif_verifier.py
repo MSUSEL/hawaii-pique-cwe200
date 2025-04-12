@@ -17,10 +17,8 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.simplefilter("ignore", FutureWarning)
 
-
-
-# Import skorch for wrapping the PyTorch model as a scikit-learn estimator.
 from skorch import NeuralNetClassifier
+
 
 ##########################################
 # Data Processing Functions
@@ -102,23 +100,15 @@ def format_data_flows_for_graphcodebert(processed_flows):
 ##########################################
 # Embedding Functions with LSTM Aggregation
 ##########################################
-# LSTM aggregator to combine segment embeddings.
 class RNNAggregator(nn.Module):
     def __init__(self, embedding_dim):
         super(RNNAggregator, self).__init__()
         self.lstm = nn.LSTM(input_size=embedding_dim, hidden_size=embedding_dim, num_layers=1, batch_first=True)
     def forward(self, x):
-        # x: (batch, seq_len, embedding_dim)
         output, (h_n, c_n) = self.lstm(x)
         return h_n  # Use the final hidden state
 
 def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=512):
-    """
-    Embeds a sentence using GraphCodeBERT. If the tokenized sentence exceeds max_length,
-    it is split into segments and each segment is processed. Their embeddings are then
-    aggregated using an LSTM.
-    """
-    # Tokenize without truncation to determine full token count.
     encoding = tokenizer(sentence, return_tensors="pt", truncation=False)
     input_ids = encoding["input_ids"][0]
     
@@ -128,10 +118,8 @@ def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=51
         inputs = {k: v.to(device) for k, v in inputs.items()}
         with torch.no_grad():
             outputs = model(**inputs)
-        # Return the [CLS] token embedding.
         return outputs.last_hidden_state[:, 0, :].cpu().numpy()[0]
     else:
-        # Long sequence: split into segments.
         tokens = input_ids.tolist()
         segment_embeddings = []
         for i in range(0, len(tokens), max_length):
@@ -142,19 +130,13 @@ def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=51
                 outputs = model(input_ids=segment_tensor, attention_mask=attention_mask)
             segment_embedding = outputs.last_hidden_state[:, 0, :].cpu().numpy()[0]
             segment_embeddings.append(segment_embedding)
-        # Stack segment embeddings and convert to tensor: shape (1, num_segments, embedding_dim)
         seg_tensor = torch.tensor(np.stack(segment_embeddings), dtype=torch.float32).unsqueeze(0).to(device)
-        # Use the LSTM aggregator to combine segment embeddings.
         with torch.no_grad():
-            h_n = aggregator(seg_tensor)  # h_n: (num_layers, batch, hidden_size)
-        aggregated_embedding = h_n[-1].squeeze(0).cpu().numpy()  # Use last layer's hidden state.
+            h_n = aggregator(seg_tensor)
+        aggregated_embedding = h_n[-1].squeeze(0).cpu().numpy()
         return aggregated_embedding
 
 def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda'):
-    """
-    Calculates embeddings for a list of sentences using GraphCodeBERT.
-    If a sentence exceeds max_length tokens, it is segmented and aggregated using an LSTM.
-    """
     print(f"Using device {device} for encoding")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
@@ -162,13 +144,32 @@ def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebe
     model.eval()
     
     embedding_dim = model.config.hidden_size
-    # Initialize the LSTM aggregator.
     aggregator = RNNAggregator(embedding_dim)
     aggregator.to(device)
     aggregator.eval()
     
     embeddings = []
     for sentence in tqdm(sentences, desc="Embedding with GraphCodeBERT"):
+        embedding = embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=max_length)
+        embeddings.append(embedding)
+    torch.save(aggregator.state_dict(), os.path.join(model_dir, 'aggregator.pt'))
+    print(f"Aggregator state dict saved at {os.path.join(model_dir, 'aggregator.pt')}")
+    return np.vstack(embeddings)
+
+def calculate_T5_vectors(sentences, model_name='google/flan-t5-large', max_length=512, device='cuda'):
+    print(f"Using device {device} for encoding")
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModel.from_pretrained(model_name)
+    model.to(device)
+    model.eval()
+    
+    embedding_dim = model.config.hidden_size
+    aggregator = RNNAggregator(embedding_dim)
+    aggregator.to(device)
+    aggregator.eval()
+    
+    embeddings = []
+    for sentence in tqdm(sentences, desc="Embedding with T5"):
         embedding = embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=max_length)
         embeddings.append(embedding)
     return np.vstack(embeddings)
@@ -191,7 +192,6 @@ def get_activation(act_name):
 class ClassifierModel(nn.Module):
     def __init__(self, embedding_dim, dropout_rate=0.2, activation='elu'):
         super(ClassifierModel, self).__init__()
-        # Define units similar to the Keras model.
         units1 = embedding_dim
         units2 = embedding_dim * 3 // 4
         units3 = embedding_dim // 2
@@ -199,12 +199,10 @@ class ClassifierModel(nn.Module):
         
         self.act = get_activation(activation)
         
-        # First block
         self.fc1 = nn.Linear(embedding_dim, units1)
         self.bn1 = nn.BatchNorm1d(units1)
         self.dropout = nn.Dropout(dropout_rate)
         
-        # Residual block 1
         self.fc_res1 = nn.Linear(units1, units2)
         self.bn_res1 = nn.BatchNorm1d(units2)
         self.dropout_res1 = nn.Dropout(dropout_rate)
@@ -212,7 +210,6 @@ class ClassifierModel(nn.Module):
         self.fc2 = nn.Linear(units1, units2)
         self.fc3 = nn.Linear(units2, units2)
         
-        # Residual block 2
         self.fc_res2 = nn.Linear(units2, units3)
         self.bn_res2 = nn.BatchNorm1d(units3)
         self.dropout_res2 = nn.Dropout(dropout_rate)
@@ -220,14 +217,12 @@ class ClassifierModel(nn.Module):
         self.fc4 = nn.Linear(units2, units3)
         self.fc5 = nn.Linear(units3, units3)
         
-        # Final layers
         self.fc_final = nn.Linear(units3, units4)
         self.bn_final = nn.BatchNorm1d(units4)
         self.dropout_final = nn.Dropout(dropout_rate)
         self.out = nn.Linear(units4, 1)
         
     def forward(self, x):
-        # x shape: (batch, embedding_dim)
         x = self.fc1(x)
         x = self.bn1(x)
         x = self.act(x)
@@ -259,7 +254,7 @@ class ClassifierModel(nn.Module):
         x6 = self.dropout_final(x6)
         
         out = self.out(x6)
-        return torch.sigmoid(out).squeeze(1)  # Squeeze to get shape (batch,)
+        return torch.sigmoid(out).squeeze(1)
 
 ##########################################
 # Customized RandomizedSearchCV with TQDM
@@ -268,9 +263,7 @@ from sklearn.model_selection import RandomizedSearchCV, ParameterSampler
 
 class TqdmRandomizedSearchCV(RandomizedSearchCV):
     def _run_search(self, evaluate_candidates):
-        # Generate candidate parameter settings using ParameterSampler.
         param_list = list(ParameterSampler(self.param_distributions, self.n_iter, random_state=self.random_state))
-        # Evaluate each candidate individually with a tqdm progress bar.
         for params in tqdm(param_list, desc="Total fits"):
             evaluate_candidates([params])
 
@@ -278,16 +271,13 @@ class TqdmRandomizedSearchCV(RandomizedSearchCV):
 # Training, Hyperparameter Tuning, and Evaluation
 ##########################################
 if __name__ == "__main__":
-    # Use GPU if available.
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print("Using device:", device)
     
-    # Paths
     labeled_flows_dir = os.path.join('testing', 'Labeling', 'FlowData')
     model_dir = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     os.makedirs(model_dir, exist_ok=True)
     
-    # Data processing and encoding.
     print("Processing data flows...")
     processed_data_flows = process_data_flows(labeled_flows_dir)
    
@@ -299,16 +289,13 @@ if __name__ == "__main__":
     embedding_dim = embeddings.shape[1]
     labels = processed_data_flows[:, 4].astype(np.int32)
     
-    # Split data into training and test sets.
     X_train, X_test, y_train, y_test = train_test_split(
         embeddings, labels, test_size=0.2, stratify=labels, random_state=42
     )
 
-    # Apply SMOTE to the training data to balance the classes.
     sm = SMOTE(random_state=42)
     X_train, y_train = sm.fit_resample(X_train, y_train)
     
-    # Set up the PyTorch model wrapped in a skorch NeuralNetClassifier.
     net = NeuralNetClassifier(
         module=ClassifierModel,
         module__embedding_dim=embedding_dim,
@@ -319,14 +306,12 @@ if __name__ == "__main__":
         batch_size=32,
         optimizer=optim.Adam,
         optimizer__weight_decay=0.0001,
-        # Set the criterion to binary cross-entropy loss.
         criterion=nn.BCELoss,
-        device=device,  # Use GPU
+        device=device,
         iterator_train__shuffle=True,
         verbose=0,
     )
     
-    # Hyperparameter grid for RandomizedSearchCV.
     param_grid = {
         'lr': [1e-5, 3e-5, 5e-5, 7e-5, 1e-4, 3e-4, 5e-4],
         'module__dropout_rate': [0.0, 0.1, 0.2, 0.3],
@@ -336,25 +321,23 @@ if __name__ == "__main__":
         'max_epochs': [60, 80, 100],
     }
     
-    # Use stratified K-Fold cross-validation.
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
     
     if device == 'cuda':
-        n_jobs = 4
+        n_jobs = 3
     else:
         n_jobs = -1
 
-    # Use the customized RandomizedSearchCV with tqdm.
     random_search = TqdmRandomizedSearchCV(
         estimator=net,
         param_distributions=param_grid,
-        n_iter=50,  # Adjust iterations as needed.
+        n_iter=50,
         cv=kfold,
         scoring='f1',
-        n_jobs=n_jobs,  # Use a single job to avoid GPU conflicts
+        n_jobs=n_jobs,
         error_score='raise',
         random_state=42,
-        verbose=0,  # disable internal verbosity
+        verbose=0,
     )
     
     print("Starting hyperparameter tuning...")
@@ -363,7 +346,6 @@ if __name__ == "__main__":
     print(f"Best CV F1 Score: {random_search_result.best_score_:.4f} using {random_search_result.best_params_}")
     best_params = random_search_result.best_params_
     
-    # Create a final model with the best parameters.
     final_net = NeuralNetClassifier(
         module=ClassifierModel,
         module__embedding_dim=embedding_dim,
@@ -395,10 +377,9 @@ if __name__ == "__main__":
     print(metrics.classification_report(y_test, y_pred, target_names=["Non-sensitive", "Sensitive"]))
     print(metrics.confusion_matrix(y_test, y_pred))
     
-    # Save the final model (skorch models can be pickled).
-    final_model_path = os.path.join(model_dir, 'verify_flows_skorch_new.pkl')
-    with open(final_model_path, 'wb') as f:
-        import pickle
-        pickle.dump(final_net, f)
+    scripted_model = torch.jit.script(final_net.module_)
+    model_path = os.path.join(model_dir, 'verify_flows_final_model.pt')
+    scripted_model.save(model_path)
+    print(f"Final model saved at {model_path}")
     
     print("Training complete!")
