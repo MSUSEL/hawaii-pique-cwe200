@@ -80,10 +80,13 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
             // System.out.println("output: " + outputPath.getFileName());
             // System.out.println("exporting compact: " + project.exportToJson(resultsDir, true));
 
-            Pair<String, String> name = Pair.of("projectName", project.getName());
-            String fileName = project.getName() + "_compact_evalResults_"+ projectUnderAnalysisPath.getFileName().toString();
-            QualityModelExport qmExport = new QualityModelCompactExport(project.getQualityModel(), name);
-            qmExport.exportToJson(fileName, resultsDir);
+            if (outputPath != null){
+                Pair<String, String> name = Pair.of("projectName", project.getName());
+                String fileName = project.getName() + "_compact_evalResults_"+ projectUnderAnalysisPath.getFileName().toString();
+                QualityModelExport qmExport = new QualityModelCompactExport(project.getQualityModel(), name);
+                qmExport.exportToJson(fileName, resultsDir);
+            }
+           
         }
     }
 
