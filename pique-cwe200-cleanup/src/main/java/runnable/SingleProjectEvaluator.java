@@ -104,13 +104,6 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
     @Override
     public Path runEvaluator(Path projectDir, Path resultsDir, Path qmLocation, Set<ITool> tools){
         
-        // for(Path project: projectDir){
-        //     System.out.println("project: " + project);
-        // }
-
-        
-        // System.out.println("projectDir="+projectDir);
-        // System.out.println("qmLocation="+qmLocation.toString());
         // Initialize data structures
         QualityModelImport qmImport = new QualityModelImport(qmLocation);
         QualityModel qualityModel = qmImport.importQualityModel();
@@ -131,8 +124,14 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
 
         BigDecimal tqiValue = project.evaluateTqi();
 
-        // Create a file of the results and return its path
-        return project.exportToJson(resultsDir);
+         // Only export if there are diagnostics
+        if (allDiagnostics.isEmpty()) {
+            LOGGER.info("No diagnostics found. Skipping JSON export.");
+            return null;
+        } else {
+            return project.exportToJson(resultsDir);
+    }
+
     }
 
     //region Get / Set

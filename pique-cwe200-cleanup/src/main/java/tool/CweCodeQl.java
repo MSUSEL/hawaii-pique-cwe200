@@ -92,8 +92,8 @@ public class CweCodeQl extends Tool implements ITool {
         this.projectName = projectLocation.getFileName().toString();
         if (this.projectName.endsWith(".zip")) {
             this.projectName = this.projectName.substring(0, this.projectName.length() - 4); // remove ".zip"
-    }
-    
+        }
+
         if (this.projectName == "projects") {
             LOGGER.info(projectName + " is a directory, not a project. Make sure you are running from the wrapper.");
             return null;
@@ -143,7 +143,6 @@ public class CweCodeQl extends Tool implements ITool {
         // Just for testing, remove hardcoded path later
         toolResults = Paths.get(this.outputFilePath.toUri());
 
-        System.out.println(this.getName() + " Parsing Analysis...");
         LOGGER.debug(this.getName() + " Parsing Analysis...");
 
         Map<String, Diagnostic> diagnostics = HelperFunctions.initializeDiagnostics(this.getName());
@@ -395,7 +394,8 @@ public class CweCodeQl extends Tool implements ITool {
     private boolean doesExist(String workingDirectoryPrefix) {
         File tempResults = new File(workingDirectoryPrefix + "CweCodeQl " + this.projectName + ".json");
         if (tempResults.exists()) {
-            LOGGER.info("Already ran CweCodeQl on: " + this.projectName + ", results stored in: " + tempResults.toString());
+            LOGGER.info(
+                    "Already ran CweCodeQl on: " + this.projectName + ", results stored in: " + tempResults.toString());
             return true;
         }
         tempResults.getParentFile().mkdirs();
