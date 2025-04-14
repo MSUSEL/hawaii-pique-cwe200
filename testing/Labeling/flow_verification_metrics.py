@@ -89,8 +89,8 @@ def compute_balanced_accuracy(tp, fp, fn, tn):
 ###############################################################################
 
 def main():
-    labeled_dir = "testing/Labeling/FlowData"
-    backend_dir = "backend/Files"
+    labeled_dir = os.path.join("testing", "Labeling", "FlowData")
+    backend_dir = os.path.join("backend", "Files")
 
     # Global confusion-matrix totals
     g_wv_TP = g_wv_FP = g_wv_FN = g_wv_TN = 0
