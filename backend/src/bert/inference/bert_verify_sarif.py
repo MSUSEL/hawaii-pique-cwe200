@@ -42,7 +42,7 @@ def process_data_flows_for_inference(data_flows):
             flow_file_name = result['fileName']
             for flow in result['flows']:
                 code_flow_index = flow['codeFlowIndex']
-                data_flow_string = f"Filename = {flow_file_name}, CWE = {cwe}, Flows = "
+                data_flow_string = f"CWE = {cwe}, Flows = "
                 for step in flow['flow']:
                     data_flow_string += str(step)
                 processed_data_flows.append(data_flow_string)

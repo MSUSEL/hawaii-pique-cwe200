@@ -64,7 +64,7 @@ def process_data_flows(labeled_flows_dir):
                     if label is None:
                         continue
                     
-                    data_flow_string = f"Filename = {flow_file_name}, CWE = {cwe}, Flows = "
+                    data_flow_string = f"CWE = {cwe}, Flows = "
                     for step in flow['flow']:
                         data_flow_string += str(step)
                     
@@ -331,7 +331,7 @@ if __name__ == "__main__":
     random_search = TqdmRandomizedSearchCV(
         estimator=net,
         param_distributions=param_grid,
-        n_iter=50,
+        n_iter=3000,
         cv=kfold,
         scoring='f1',
         n_jobs=n_jobs,
