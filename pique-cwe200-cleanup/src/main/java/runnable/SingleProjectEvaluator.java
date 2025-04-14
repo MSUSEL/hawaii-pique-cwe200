@@ -3,6 +3,7 @@ package runnable;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.tuple.Pair;
+import org.checkerframework.checker.units.qual.s;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pique.analysis.ITool;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -125,11 +127,13 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
         BigDecimal tqiValue = project.evaluateTqi();
 
          // Only export if there are diagnostics
-        if (allDiagnostics.isEmpty()) {
+        
+        
+         if (hasResults()) {
+            return project.exportToJson(resultsDir);
+        } else {
             LOGGER.info("No diagnostics found. Skipping JSON export.");
             return null;
-        } else {
-            return project.exportToJson(resultsDir);
     }
 
     }
@@ -138,6 +142,32 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
     public Project getEvaluatedProject() {
         return project;
     }
+
+    /**
+     * * A quick check to make sure the CWE-200 tool produced results.
+     * @return
+     */
+    private boolean hasResults() {
+        String projectName = this.project.getPath().getFileName().toString();
+        
+        // If the name ends with ".zip", strip that off.
+        if (projectName.endsWith(".zip")) {
+            projectName = projectName.substring(0, projectName.length() - 4);
+        }
+    
+        // Construct a Path in a platform-agnostic way.
+        Path resultsPath = Paths.get("output", "tool-out", "cwe-200", projectName + ".csv");
+        
+
+        // Path cwdPath = Paths.get("").toAbsolutePath();
+        // System.out.println("Current working directory: " + cwdPath);
+        // System.out.println(Files.exists(resultsPath));
+        // System.out.println(Files.isRegularFile(resultsPath));
+
+        // Return whether the file exists and is a regular file.
+        return Files.exists(resultsPath) && Files.isRegularFile(resultsPath);
+    }
+     
 
 
 }
