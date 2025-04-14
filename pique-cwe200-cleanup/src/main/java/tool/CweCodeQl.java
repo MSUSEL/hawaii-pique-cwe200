@@ -90,7 +90,11 @@ public class CweCodeQl extends Tool implements ITool {
     @Override
     public Path analyze(Path projectLocation) {
         this.projectName = projectLocation.getFileName().toString();
-        if (projectName == "projects") {
+        if (this.projectName.endsWith(".zip")) {
+            this.projectName = this.projectName.substring(0, this.projectName.length() - 4); // remove ".zip"
+    }
+    
+        if (this.projectName == "projects") {
             LOGGER.info(projectName + " is a directory, not a project. Make sure you are running from the wrapper.");
             return null;
 
@@ -111,7 +115,7 @@ public class CweCodeQl extends Tool implements ITool {
             workingDirectoryPrefix = resultsDir + "/tool-out/CWE-200/";
             Files.createDirectories(Paths.get(workingDirectoryPrefix));
             // Set up output file path
-            this.outputFilePath = Paths.get(workingDirectoryPrefix, this.projectName + "Result.csv");
+            this.outputFilePath = Paths.get(workingDirectoryPrefix, this.projectName + ".csv");
 
             // System.out.println("Output file path: " + this.outputFilePath);
 
@@ -176,7 +180,7 @@ public class CweCodeQl extends Tool implements ITool {
 
     private Path runCWE200Tool(String workingDirectoryPrefix, Path projectLocation) {
         // Check if the results file already exists
-        if (!doesExist(workingDirectoryPrefix, projectName)) {
+        if (!doesExist(workingDirectoryPrefix)) {
 
             // Check to see if the server is running
             if (this.serverOnline) {
@@ -205,7 +209,7 @@ public class CweCodeQl extends Tool implements ITool {
                 JSONObject jsonResponse = null;
                 try {
                     LOGGER.info("CWE-200 tool is analyzing this might take a while.");
-                    String toolResults = sendPostRequestToServer(backendAddress, projectName, javaVersion);
+                    String toolResults = sendPostRequestToServer(backendAddress, this.projectName, javaVersion);
                     jsonResponse = HelperFunctions.responseToJSON(toolResults);
 
                 } catch (Exception e) {
@@ -216,8 +220,6 @@ public class CweCodeQl extends Tool implements ITool {
 
                 try {
                     if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
-                        System.out.println(
-                                "Error running CweCodeQl on " + projectName + " " + jsonResponse.getString("error"));
                         LOGGER.error("Error running analysis " + jsonResponse.getString("error"));
                         return null;
                     } else {
@@ -390,10 +392,10 @@ public class CweCodeQl extends Tool implements ITool {
         return null;
     }
 
-    private boolean doesExist(String workingDirectoryPrefix, String projectName) {
-        File tempResults = new File(workingDirectoryPrefix + "CweCodeQl " + projectName + ".json");
+    private boolean doesExist(String workingDirectoryPrefix) {
+        File tempResults = new File(workingDirectoryPrefix + "CweCodeQl " + this.projectName + ".json");
         if (tempResults.exists()) {
-            LOGGER.info("Already ran CweCodeQl on: " + projectName + ", results stored in: " + tempResults.toString());
+            LOGGER.info("Already ran CweCodeQl on: " + this.projectName + ", results stored in: " + tempResults.toString());
             return true;
         }
         tempResults.getParentFile().mkdirs();

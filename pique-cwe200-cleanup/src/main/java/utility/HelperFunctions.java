@@ -93,17 +93,17 @@ public class HelperFunctions {
             Process process = processBuilder.start(); // Start the process
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line); // Print the output line by line
+            // String line;
+            while ((reader.readLine()) != null) {
+                // System.out.println(line); // Print the output line by line
             }
-            int exitCode = process.waitFor(); // Wait for the process to complete
-            System.out.println("\nExited with error code : " + exitCode);
+            process.waitFor(); // Wait for the process to complete
+            // System.out.println("\nExited with error code : " + exitCode);
         }
 
         catch (IOException | InterruptedException e) {
-            System.out.println("Failed to run tool ");
-            e.printStackTrace();
+            // System.out.println("Failed to run tool ");
+            // e.printStackTrace();
         }
     }
 
@@ -247,12 +247,10 @@ public class HelperFunctions {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray projects = jsonObject.getJSONArray("projects");
 
-            String lookupName = projectName.replaceAll("\\.zip$", "");
-
             // Loop through the projects array.
             for (int i = 0; i < projects.length(); i++) {
                 JSONObject project = projects.getJSONObject(i);
-                if (project.getString("projectName").equals(lookupName)) {
+                if (project.getString("projectName").equals(projectName)) {
                     // Get the javaVersion as a string, then parse it into an int.
                     LOGGER.info("Java version " + project.getString("javaVersion"));
                     return project.getString("javaVersion");

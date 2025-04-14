@@ -46,8 +46,7 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
         Path projectFilePath = Paths.get(prop.getProperty("benchmark.repo"));
         Path resultsDir = Paths.get(prop.getProperty("results.directory"));
 
-        LOGGER.info("Projects to analyze from file: " + projectFilePath.toString());
-        System.out.println("Projects to analyze from file: " + projectFilePath.toString());
+        LOGGER.info("Projects to analyze from dir: " + projectFilePath.toString());
 
         Path qmLocation = Paths.get(prop.getProperty("derived.qm"));
 
