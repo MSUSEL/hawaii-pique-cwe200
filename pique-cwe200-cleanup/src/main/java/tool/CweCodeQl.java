@@ -392,7 +392,7 @@ public class CweCodeQl extends Tool implements ITool {
     }
 
     private boolean doesExist(String workingDirectoryPrefix) {
-        File tempResults = new File(workingDirectoryPrefix  + this.projectName + ".json");
+        File tempResults = new File(workingDirectoryPrefix  + this.projectName + ".csv");
         if (tempResults.exists()) {
             LOGGER.info(
                     "Already ran CweCodeQl on: " + this.projectName + ", results stored in: " + tempResults.toString());
