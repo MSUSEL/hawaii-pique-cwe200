@@ -219,12 +219,12 @@ public class CweCodeQl extends Tool implements ITool {
 
                 try {
                     if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
-                        LOGGER.error("Error running analysis " + jsonResponse.getString("error"));
+                        LOGGER.error("Error running analysis");
                         return null;
                     } else {
                         LOGGER.info("Analysis completed successfully");
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     return null;
                 }
 
