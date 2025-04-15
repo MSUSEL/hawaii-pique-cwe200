@@ -47,7 +47,11 @@ def compute_metrics(tp, fp, fn, tn):
       f1        = 2 * precision * recall / (precision + recall),
                   or 0.0 if both precision and recall are 0.
     """
-    precision = tp / (tp + fp) if (tp + fp) else 0.0
+    if tp == 0 and fp == 0:
+        precision = 1.0
+    else:
+        precision = tp / (tp + fp)
+    # precision = tp / (tp + fp) if (tp + fp) else 0.0
     recall    = tp / (tp + fn) if (tp + fn) else 0.0
     f1        = (2 * precision * recall) / (precision + recall) if (precision + recall) else 0.0
     return precision, recall, f1
