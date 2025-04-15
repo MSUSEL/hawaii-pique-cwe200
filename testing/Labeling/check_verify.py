@@ -1,10 +1,12 @@
 import os
+import shutil
 import subprocess
 
-def verify_flows_for_all_json(json_dir, script_path):
+def verify_flows_for_all_json(json_dir, script_path, files_dir):
     """
-    For each JSON file in the directory, extract the project name and run the verification script.
-    Stream stdout and stderr in real time.
+    For each JSON file in the directory:
+    - Copy it into backend/Files/{project_name} as flowMapsByCWE.json
+    - Run the verification script with live stdout/stderr
     """
     for filename in os.listdir(json_dir):
         if not filename.endswith('.json'):
@@ -12,9 +14,23 @@ def verify_flows_for_all_json(json_dir, script_path):
 
         json_path = os.path.join(json_dir, filename)
         project_name = os.path.splitext(filename)[0]
+        project_dir = os.path.join(files_dir, project_name)
+        target_json_path = os.path.join(project_dir, 'flowMapsByCWE.json')
 
+        if not os.path.isdir(project_dir):
+            print(f"[!] Skipping {project_name} – backend/Files/{project_name} does not exist.")
+            continue
+
+        try:
+            shutil.copyfile(json_path, target_json_path)
+            print(f"[✓] Copied {filename} → {target_json_path}")
+        except Exception as e:
+            print(f"[✗] Failed to copy {filename} → {target_json_path}")
+            print(f"    Reason: {e}")
+            continue  # Skip running the script if the copy failed
+
+        # Run the verification script
         print(f"\n=== Verifying: {project_name} ===")
-
         process = subprocess.Popen(
             ['python', script_path, project_name],
             cwd='backend',
@@ -23,11 +39,8 @@ def verify_flows_for_all_json(json_dir, script_path):
             text=True
         )
 
-        # Stream stdout
         for line in process.stdout:
             print(f"[stdout] {line.strip()}")
-
-        # Stream stderr
         for line in process.stderr:
             print(f"[stderr] {line.strip()}")
 
@@ -39,6 +52,7 @@ def verify_flows_for_all_json(json_dir, script_path):
             print(f"[✗] Failed to verify flows for {project_name} (exit code {process.returncode})")
 
 if __name__ == '__main__':
-    json_directory = os.path.join("testing", "Labeling", "FlowData")
-    script_path = os.path.join("src", "bert", "inference", "bert_verify_sarif.py")
-    verify_flows_for_all_json(json_directory, script_path)
+    json_directory = 'testing/Labeling/FlowData'
+    script_path = 'src/bert/inference/bert_verify_sarif.py'
+    files_directory = 'backend/Files'
+    verify_flows_for_all_json(json_directory, script_path, files_directory)
