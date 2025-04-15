@@ -165,7 +165,7 @@ public class HelperFunctions {
                 records.add(nextLine);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         return records;
     }
