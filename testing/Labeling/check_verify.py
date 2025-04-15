@@ -5,7 +5,8 @@ import subprocess
 def verify_flows_for_all_json(json_dir, script_path, files_dir):
     """
     For each JSON file in the directory:
-    - Copy it into backend/Files/{project_name} as flowMapsByCWE.json
+    - Ensure backend/Files/{project_name} exists (create if missing)
+    - Copy JSON into it as flowMapsByCWE.json
     - Run the verification script with live stdout/stderr
     """
     for filename in os.listdir(json_dir):
@@ -17,17 +18,23 @@ def verify_flows_for_all_json(json_dir, script_path, files_dir):
         project_dir = os.path.join(files_dir, project_name)
         target_json_path = os.path.join(project_dir, 'flowMapsByCWE.json')
 
+        # Ensure project directory exists
         if not os.path.isdir(project_dir):
-            print(f"[!] Skipping {project_name} – backend/Files/{project_name} does not exist.")
-            continue
+            try:
+                os.makedirs(project_dir)
+                print(f"[+] Created missing project directory: {project_dir}")
+            except Exception as e:
+                print(f"[?] Failed to create directory for {project_name}: {e}")
+                continue
 
+        # Copy the JSON file
         try:
             shutil.copyfile(json_path, target_json_path)
-            print(f"[✓] Copied {filename} → {target_json_path}")
+            print(f"[?] Copied {filename} ? {target_json_path}")
         except Exception as e:
-            print(f"[✗] Failed to copy {filename} → {target_json_path}")
+            print(f"[?] Failed to copy {filename} ? {target_json_path}")
             print(f"    Reason: {e}")
-            continue  # Skip running the script if the copy failed
+            continue
 
         # Run the verification script
         print(f"\n=== Verifying: {project_name} ===")
@@ -47,9 +54,9 @@ def verify_flows_for_all_json(json_dir, script_path, files_dir):
         process.wait()
 
         if process.returncode == 0:
-            print(f"[✓] Successfully verified flows for {project_name}")
+            print(f"[?] Successfully verified flows for {project_name}")
         else:
-            print(f"[✗] Failed to verify flows for {project_name} (exit code {process.returncode})")
+            print(f"[?] Failed to verify flows for {project_name} (exit code {process.returncode})")
 
 if __name__ == '__main__':
     json_directory = 'testing/Labeling/FlowData'
