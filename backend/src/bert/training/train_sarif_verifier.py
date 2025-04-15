@@ -108,6 +108,28 @@ class RNNAggregator(nn.Module):
         output, (h_n, c_n) = self.lstm(x)
         return h_n  # Use the final hidden state
 
+class TransformerAggregator(nn.Module):
+    def __init__(self, embedding_dim, num_heads=4, num_layers=1):
+        super(TransformerAggregator, self).__init__()
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=embedding_dim,
+            nhead=num_heads,
+            dim_feedforward=embedding_dim * 4,
+            dropout=0.1,
+            batch_first=True,
+            activation='gelu'
+        )
+        self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
+
+    def forward(self, x):
+        """
+        x: shape (batch_size, sequence_length, embedding_dim)
+        returns: shape (batch_size, embedding_dim)
+        """
+        encoded = self.transformer_encoder(x)
+        # Aggregate by mean pooling over the sequence
+        return torch.mean(encoded, dim=1)
+
 def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=512):
     encoding = tokenizer(sentence, return_tensors="pt", truncation=False)
     input_ids = encoding["input_ids"][0]
@@ -136,7 +158,7 @@ def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=51
         aggregated_embedding = h_n[-1].squeeze(0).cpu().numpy()
         return aggregated_embedding
 
-def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda'):
+def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda', aggregator_cls=RNNAggregator):
     print(f"Using device {device} for encoding")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
@@ -144,7 +166,7 @@ def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebe
     model.eval()
     
     embedding_dim = model.config.hidden_size
-    aggregator = RNNAggregator(embedding_dim)
+    aggregator = aggregator_cls(embedding_dim)
     aggregator.to(device)
     aggregator.eval()
     
@@ -285,7 +307,7 @@ if __name__ == "__main__":
     formatted_flows = format_data_flows_for_graphcodebert(processed_data_flows)
     
     print("Calculating GraphCodeBERT embeddings...")
-    embeddings = calculate_graphcodebert_vectors(formatted_flows, max_length=512, device=device)
+    embeddings = calculate_graphcodebert_vectors(formatted_flows, max_length=512, device=device, aggregator_cls=TransformerAggregator)
     embedding_dim = embeddings.shape[1]
     labels = processed_data_flows[:, 4].astype(np.int32)
     
@@ -331,7 +353,7 @@ if __name__ == "__main__":
     random_search = TqdmRandomizedSearchCV(
         estimator=net,
         param_distributions=param_grid,
-        n_iter=3000,
+        n_iter=10,
         cv=kfold,
         scoring='f1',
         n_jobs=n_jobs,

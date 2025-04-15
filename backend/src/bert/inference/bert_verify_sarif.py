@@ -63,6 +63,28 @@ class RNNAggregator(nn.Module):
     def forward(self, x):
         output, (h_n, c_n) = self.lstm(x)
         return h_n
+    
+class TransformerAggregator(nn.Module):
+    def __init__(self, embedding_dim, num_heads=4, num_layers=1):
+        super(TransformerAggregator, self).__init__()
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=embedding_dim,
+            nhead=num_heads,
+            dim_feedforward=embedding_dim * 4,
+            dropout=0.1,
+            batch_first=True,
+            activation='gelu'
+        )
+        self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
+
+    def forward(self, x):
+        """
+        x: shape (batch_size, sequence_length, embedding_dim)
+        returns: shape (batch_size, embedding_dim)
+        """
+        encoded = self.transformer_encoder(x)
+        # Aggregate by mean pooling over the sequence
+        return torch.mean(encoded, dim=1)
 
 def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=512):
     encoding = tokenizer(sentence, return_tensors="pt", truncation=False)
@@ -91,7 +113,7 @@ def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=51
         aggregated_embedding = h_n[-1].squeeze(0).cpu().numpy()
         return aggregated_embedding
 
-def calculate_graphcodebert_vectors(sentences, model_path, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda'):
+def calculate_graphcodebert_vectors(sentences, model_path, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda', aggregator_cls=RNNAggregator):
     print(f"Using device {device} for encoding")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
@@ -99,7 +121,7 @@ def calculate_graphcodebert_vectors(sentences, model_path, model_name='microsoft
     model.eval()
     
     embedding_dim = model.config.hidden_size
-    aggregator = RNNAggregator(embedding_dim)
+    aggregator = aggregator_cls(embedding_dim)
     aggregator.to(device)
     aggregator_path = os.path.join(os.path.dirname(model_path), 'aggregator.pt')
     if not os.path.exists(aggregator_path):
@@ -168,7 +190,7 @@ def run(project_path, model_path):
     processed_flows, flow_references = process_data_flows_for_inference(data_flows)
     processed_flows = format_data_flows_for_graphcodebert(processed_flows)
     
-    embeddings = calculate_graphcodebert_vectors(processed_flows, model_path, max_length=512, device='cuda' if torch.cuda.is_available() else 'cpu')
+    embeddings = calculate_graphcodebert_vectors(processed_flows, model_path, max_length=512, device='cuda' if torch.cuda.is_available() else 'cpu', aggregator_cls=TransformerAggregator)
     
     predicted_labels, predicted_probs = predict_labels(model, embeddings)
     
