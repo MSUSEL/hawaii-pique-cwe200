@@ -159,18 +159,10 @@ public class SingleProjectEvaluator extends ASingleProjectEvaluator {
         }
     
         // Construct a Path in a platform-agnostic way.
-        Path resultsPath = Paths.get("output", "tool-out", "cwe-200", projectName + ".csv");
-        
-
-        // Path cwdPath = Paths.get("").toAbsolutePath();
-        // System.out.println("Current working directory: " + cwdPath);
-        // System.out.println(Files.exists(resultsPath));
-        // System.out.println(Files.isRegularFile(resultsPath));
+        Path resultsPath = Paths.get("output", "tool-out", "CWE-200", projectName + ".csv");
 
         // Return whether the file exists and is a regular file.
         return Files.exists(resultsPath) && Files.isRegularFile(resultsPath);
     }
      
-
-
 }
