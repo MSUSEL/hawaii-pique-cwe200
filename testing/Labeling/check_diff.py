@@ -41,7 +41,7 @@ def hash_flow(flow_entry):
 ###############################################################################
 
 def main():
-    labeled_dir = os.path.join("testing", "Labeling", "FlowDataOld")
+    labeled_dir = os.path.join("testing", "Labeling", "FlowData")
     backend_dir = os.path.join("backend", "Files")
 
     same_projects = []
