@@ -1,27 +1,30 @@
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class BAD_FinancialTransactionAPI {
 
     @PostMapping("/api/transaction")
-    public String processTransaction(@RequestParam("accountNumber") String accountNumber, @RequestParam("amount") double amount) {
+    public String processTransaction(@RequestParam("accountNumber") String accountNumber,
+                                     @RequestParam("amount") double amount) {
         try {
             executeTransaction(accountNumber, amount);
             return "Transaction processed successfully";
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to process transaction for account " + accountNumber + " with amount $" + amount + ": " + e.getMessage(), e);
+        } catch (ResponseStatusException e) {
+            return "Failed to process transaction for account " + accountNumber +
+                   " with amount $" + amount + ": " + e.getMessage();
         }
     }
 
-    private void executeTransaction(String accountNumber, double amount) throws Exception {
-        // Simulate a failure that could arise during transaction processing
+    private void executeTransaction(String accountNumber, double amount) throws ResponseStatusException {
         if (amount > 10000) {
-            throw new Exception("Transaction limit exceeded for single transaction.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Transaction limit exceeded for account " + accountNumber + " with amount $" + amount);
         }
-        throw new Exception("Insufficient funds in account " + accountNumber);
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            "Insufficient funds in account " + accountNumber + " for amount $" + amount);
     }
 }

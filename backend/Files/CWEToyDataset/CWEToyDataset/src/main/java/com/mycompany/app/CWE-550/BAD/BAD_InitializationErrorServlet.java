@@ -7,13 +7,12 @@ public class BAD_InitializationErrorServlet extends HttpServlet {
         String configPath = getServletContext().getRealPath("/WEB-INF/config.properties");
         try {
             loadConfiguration(configPath);
-        } catch (Exception e) {
-            System.out.println("Initialization failed due to configuration error in " + e.getMessage());
+        } catch (ServletException e) {
+            System.out.println("Initialization failed due to configuration error: " + e.getMessage());
         }
     }
 
-    private void loadConfiguration(String configPath) throws Exception {
-        // Configuration loading logic
-        throw new Exception("Configuration file missing at " + configPath);
+    private void loadConfiguration(String configPath) throws ServletException {
+        throw new ServletException("Configuration file missing at " + configPath);
     }
 }

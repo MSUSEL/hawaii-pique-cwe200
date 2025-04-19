@@ -1,7 +1,7 @@
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class BAD_UserDataHandlingAPI {
@@ -11,12 +11,12 @@ public class BAD_UserDataHandlingAPI {
         try {
             processUserData(userData);
             return "User profile updated successfully";
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update user profile: " + e.getMessage(), e);
+        } catch (ResponseStatusException e) {
+            return "Failed to update user profile: " + e.getMessage();
         }
     }
 
-    private void processUserData(String userData) throws Exception {
-        throw new Exception("User data validation failed due to invalid credentials - " + userData + "field in input data");
+    private void processUserData(String userData) throws ResponseStatusException {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User data validation failed due to invalid credentials: " + userData);
     }
 }

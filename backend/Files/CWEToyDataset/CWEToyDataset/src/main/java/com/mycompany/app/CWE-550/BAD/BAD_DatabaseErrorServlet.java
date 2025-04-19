@@ -7,11 +7,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class BAD_DatabaseErrorServlet extends HttpServlet {
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String url = request.getParameter("url");
-
         try {
             establishDatabaseConnection(email, password, url);
         } catch (SQLException e) {
@@ -21,7 +21,8 @@ public class BAD_DatabaseErrorServlet extends HttpServlet {
 
     private void establishDatabaseConnection(String email, String password, String url) throws SQLException {
         Connection conn = DriverManager.getConnection(url, email, password);
-        // Additional database logic
-        throw new SQLException("Could not establish connection to database using credentials: " + email + ", " + password + ", " + url);
+        throw new SQLException("Could not establish connection using credentials: email=" + email +
+                               ", password=" + password +
+                               ", url=" + url);
     }
 }
