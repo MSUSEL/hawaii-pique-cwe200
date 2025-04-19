@@ -51,22 +51,25 @@ def save_results(results, path):
 
 def check_missed(codeql_results, java_files):
     for cwe in codeql_results:
-        cwe_related_files = set()
-        for java_file in java_files:
-            file_name = java_file.split("/")[-1]
-            if cwe in java_file:
-                cwe_related_files.add(java_file)
-        for file in cwe_related_files:
-            file = file.split("\\")[-1]
-            if (file not in codeql_results[cwe]["true_positives"] and 
-                file not in codeql_results[cwe]["true_negatives"] and 
-                file not in codeql_results[cwe]["false_positives"] and 
-                file not in codeql_results[cwe]["false_negatives"]):
-                    if file.startswith("BAD"):
-                        codeql_results[cwe]["false_negatives"].add(file)
-                    elif file.startswith("GOOD"):
-                        codeql_results[cwe]["true_negatives"].add(file)
-    return codeql_results        
+        # find all files under java_files whose path contains the CWE directory
+        cwe_related_files = {
+            f for f in java_files
+            if cwe in f
+        }
+
+        for full_path in cwe_related_files:
+            file_name = os.path.basename(full_path)
+            # if we haven’t already recorded this file…
+            if (file_name not in codeql_results[cwe]["true_positives"] and
+                file_name not in codeql_results[cwe]["true_negatives"] and
+                file_name not in codeql_results[cwe]["false_positives"] and
+                file_name not in codeql_results[cwe]["false_negatives"]):
+
+                if file_name.startswith("BAD"):
+                    codeql_results[cwe]["false_negatives"].add(file_name)
+                elif file_name.startswith("GOOD"):
+                    codeql_results[cwe]["true_negatives"].add(file_name)
+    return codeql_results
 
 def calculate_f1_score(data):
     total_true_positives = 0
@@ -128,45 +131,38 @@ def calculate_f1_score(data):
     print(f"Total recall: {total_recall * 100:.2f}%")
 
 def analyze_codeql_results(codeql_results, java_files):
+    false_positives = set()
 
     cwe_specific_results = defaultdict(lambda: defaultdict(set))
-    cwe_extra_results = defaultdict(lambda: defaultdict(set))
 
-    results = codeql_results['runs'][0]['results']
-    num_results = len(results)
-        
+    results = codeql_results['runs'][0]['results']        
     for res in results:
-        query_cwe = "CWE-" + res['ruleId'].split('/')[-1]
-        directory = res['locations'][0]['physicalLocation']['artifactLocation']['uri']
-        split = directory.split("/")
-        cwe = get_cwe(split)
-        file_name = split[-1]
+        # Get the CWE assoicate with this result
+        query_cwe = f"CWE-{os.path.basename(res['ruleId'])}"
         
-        if file_name.startswith("GOOD"):
-            print(f"CWE: {cwe} GOOD file: {file_name}")
-
-        if query_cwe == cwe:
+        # Get the CWE associated with this file that was flagged
+        uri = res['locations'][0]['physicalLocation']['artifactLocation']['uri']
+        parts = uri.replace("\\", "/").split("/")
+        file_cwe   = next((p for p in parts if p.startswith("CWE-")), None)
+        file_name = os.path.basename(uri)
+        
+        if query_cwe == file_cwe:
             message = res['message']
             if file_name.startswith("BAD") and has_vulnerability(message):
-                cwe_specific_results[cwe]["true_positives"].add(file_name)
+                cwe_specific_results[file_cwe]["true_positives"].add(file_name)
             elif file_name.startswith("GOOD") and has_vulnerability(message):
-                cwe_specific_results[cwe]["false_positives"].add(file_name)
+                cwe_specific_results[file_cwe]["false_positives"].add(file_name)
+                if file_name not in false_positives:
+                    false_positives.add(file_name)
+                    print(f"[analyze_codeql_results] False positive detected: {file_name} by {query_cwe}")
             elif file_name.startswith("BAD") and not has_vulnerability(message):
-                cwe_specific_results[cwe]["false_negatives"].add(file_name)
+                cwe_specific_results[file_cwe]["false_negatives"].add(file_name)
             elif file_name.startswith("GOOD") and not has_vulnerability(message):
-                cwe_specific_results[cwe]["true_negatives"].add(file_name)
-        else:
-            cwe_extra_results[query_cwe + " query results"][cwe].add(file_name)
+                cwe_specific_results[file_cwe]["true_negatives"].add(file_name)
 
     return {
-    'cwe_specific_results': cwe_specific_results,
-    'cwe_extra_results': cwe_extra_results 
-}
+    'cwe_specific_results': cwe_specific_results}
 
-def get_cwe(items):
-    for item in items:
-        if item.startswith("CWE-"):
-            return item
 
 def count_nulls(codeql_results, cwe_specific_results):
     # cwes_queries = list(set([c['properties']['cwe'] for c in codeql_results['runs'][0]['tool']['driver']['rules']]))
@@ -190,6 +186,7 @@ def count_nulls(codeql_results, cwe_specific_results):
                 "true_negatives": set(),
                 "false_negatives": set(),
             }
+            print(f"[count_nulls] Null result for {cwe_query}")
     return cwe_specific_results
 
 if __name__ == "__main__":
