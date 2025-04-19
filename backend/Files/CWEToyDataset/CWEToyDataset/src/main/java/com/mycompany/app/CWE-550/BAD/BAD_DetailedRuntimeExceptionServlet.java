@@ -22,7 +22,7 @@ public class BAD_DetailedRuntimeExceptionServlet extends HttpServlet {
         } catch (RuntimeException e) {
             response.sendError(
                 HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                "An error occurred: " + e.toString()
+                "An error occurred: " + e.getMessage()
             );
         }
     }

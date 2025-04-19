@@ -10,21 +10,20 @@ public class BAD_CloudResourceErrorAPI {
     public String getResourceDetails() {
         String username = "CWE-200";
         String resourceID = "12345";
+        String AWSKey = "aws-key-12345";
         try {
-            return getCloudResource(username, resourceID);
+            return getCloudResource(username, resourceID, AWSKey);
         } catch (ResponseStatusException e) {
-            return "Failed to retrieve cloud resource: " 
-                + e.getReason() 
-                + " | Debug Info: username=" + username 
-                + ", resourceID=" + resourceID;
+            return "Failed to retrieve cloud resource: " + e.getMessage();
+
         }
     }
 
-    private String getCloudResource(String username, String resourceID) throws ResponseStatusException {
+    private String getCloudResource(String username, String resourceID, String AWSKey) throws ResponseStatusException {
         throw new ResponseStatusException(
             HttpStatus.FORBIDDEN,
             "Access denied for resource ID " + resourceID 
-            + ", with username " + username 
+            + ", with username " + username + " and AWSKey " + AWSKey
             + " on AWS due to improper IAM permissions."
         );
     }
