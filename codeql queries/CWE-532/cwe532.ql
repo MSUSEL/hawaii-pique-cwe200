@@ -63,7 +63,13 @@
           v.getName().toLowerCase().regexpMatch(".*credential.*") or
           v.getName().toLowerCase().regexpMatch(".*passw.*") or
           v.getName().toLowerCase().regexpMatch(".*pwd.*") or
-          v.getName().toLowerCase().regexpMatch("pin")
+          v.getName().toLowerCase().regexpMatch("pin") or
+          v.getName().toLowerCase().regexpMatch(".*apikey.*") or
+          v.getName().toLowerCase().regexpMatch("ssn") or
+          v.getName().toLowerCase().regexpMatch("decryptionkey") or
+          v.getName().toLowerCase().regexpMatch("privatekey") or
+          v.getName().toLowerCase().regexpMatch("creditcardnumber") or
+          v.getName().toLowerCase().regexpMatch("cvv*")
          )
          and
          not v.getName().toLowerCase().regexpMatch(".*id.*")

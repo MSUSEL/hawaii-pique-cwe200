@@ -29,12 +29,7 @@
    predicate isSource(DataFlow::Node source, FlowState state) {
      state instanceof State1 and
      (
-       exists(SensitiveVariableExpr sve | source.asExpr() = sve) or
-       // Include request.getParameter results as sensitive
-       exists(MethodCall mc |
-         mc.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletRequest", "getParameter") and
-         source.asExpr() = mc
-       )
+       exists(SensitiveVariableExpr sve | source.asExpr() = sve)
      )
    }
  

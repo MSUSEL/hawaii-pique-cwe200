@@ -31,30 +31,87 @@
     sink instanceof InformationLeakSink or 
     // getSink(sink, "Email Sink") or
       
-    exists(MethodCall mc |
-      sink.asExpr() = mc.getAnArgument() and
-      (
-        // Existing sinks for write methods
-        (mc.getMethod().hasName("write") and
-          (mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.io", "OutputStream") or
-           mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.io", "FileOutputStream") or
-           mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("java.net", "Socket") or
-           mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("javax.servlet.http", "HttpServletResponse")
-          )
-        ) or
-        // New sink for XMLStreamWriter.writeAttribute
-        (mc.getMethod().hasName("writeAttribute") and
-         mc.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("javax.xml.stream", "XMLStreamWriter")
-        )
-      )
-    ) or
-  
-    exists(MethodCall mc |
-      sink.asExpr() = mc.getAnArgument() and
-      (
-       mc.getMethod().hasName("send") and mc.getEnclosingCallable().getDeclaringType().hasQualifiedName("javax.mail", "Transport")
-      )
-    )
+// 1) HttpServletResponse.setHeader(name, value)
+exists(MethodCall mc |
+  mc.getMethod().hasName("setHeader") and
+  mc.getMethod().getDeclaringType().getASupertype*()
+    .hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
+  sink.asExpr() = mc.getAnArgument()
+)
+
+or
+
+// 2) MimeMessage.addHeader(name, value)
+exists(MethodCall mc |
+  mc.getMethod().hasName("addHeader") and
+  mc.getMethod().getDeclaringType().getASupertype*()
+    .hasQualifiedName("javax.mail.internet", "MimeMessage") and
+  sink.asExpr() = mc.getAnArgument()
+)
+
+or
+
+// 3) MimeMessage.setText(text)
+exists(MethodCall mc |
+  mc.getMethod().hasName("setText") and
+  mc.getMethod().getDeclaringType().getASupertype*()
+    .hasQualifiedName("javax.mail.internet", "MimeMessage") and
+  sink.asExpr() = mc.getAnArgument()
+)
+
+or
+
+// 4) Transport.send(message)
+exists(MethodCall mc |
+  mc.getMethod().hasName("send") and
+  mc.getMethod().getDeclaringType().hasQualifiedName("javax.mail", "Transport") and
+  sink.asExpr() = mc.getAnArgument()
+)
+
+or
+
+// 5) Raw sockets only: Socket.getOutputStream().write(...)
+exists(MethodCall mc |
+  mc.getMethod().hasName("write") and
+  sink.asExpr() = mc.getAnArgument() and
+  mc.getMethod().getDeclaringType().getASupertype*()
+    .hasQualifiedName("java.net", "Socket")
+)
+
+or
+
+// 6) FileOutputStream.write(...)
+exists(MethodCall mc |
+  mc.getMethod().hasName("write") and
+  sink.asExpr() = mc.getAnArgument() and
+  mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "FileOutputStream")
+)
+
+or
+
+// 7) Servlet‐response writers only (PrintWriter from HttpServletResponse.getWriter())
+exists(MethodCall mc |
+  (mc.getMethod().hasName("write") or mc.getMethod().hasName("println")) and
+  sink.asExpr() = mc.getAnArgument() and
+  mc.getMethod().getDeclaringType().getASupertype*()
+    .hasQualifiedName("java.io", "Writer") and
+  exists(MethodCall alloc |
+    alloc.getMethod().hasName("getWriter") and
+    alloc.getMethod().getDeclaringType().getASupertype*()
+      .hasQualifiedName("javax.servlet.http", "HttpServletResponse") and
+    alloc.getQualifier() = mc.getQualifier()
+  )
+)
+
+or
+
+// 8) XMLStreamWriter.writeAttribute(name, value)
+exists(MethodCall mc |
+  mc.getMethod().hasName("writeAttribute") and
+  mc.getMethod().getDeclaringType().getASupertype*()
+    .hasQualifiedName("javax.xml.stream", "XMLStreamWriter") and
+  sink.asExpr() = mc.getArgument(1)
+)
  }
 
   predicate isBarrier(DataFlow::Node node) {

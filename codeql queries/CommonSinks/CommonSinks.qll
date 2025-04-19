@@ -39,20 +39,59 @@ module CommonSinks {
     }
 
     predicate isPrintSink(DataFlow::Node sink) {
+        // 1) Any println on a PrintWriter (e.g. response.getWriter().println(...))
         exists(MethodCall mc |
-            // Targets PrintWriter methods that may leak information
-            mc.getMethod().hasName("println") and
-            mc.getQualifier().getType().(RefType).hasQualifiedName("java.io", "PrintWriter") and
-            sink.asExpr() = mc.getAnArgument()
-        ) 
+          mc.getMethod().hasName("println") and
+          mc.getQualifier().getType().(RefType)
+            .getASupertype*().hasQualifiedName("java.io", "PrintWriter") and
+          sink.asExpr() = mc.getAnArgument()
+        )
         or
-        (exists(MethodCall println |
-            println.getMethod().hasName("println") and
-            println.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
-            ((RefType)println.getQualifier().(VarAccess).getVariable().getType()).hasQualifiedName("java.io", "PrintStream") and
-            sink.asExpr() = println.getAnArgument()) 
+        // 2) System.out or System.err println (PrintStream)
+        exists(MethodCall mcStream |
+          mcStream.getMethod().hasName("println") and
+          mcStream.getQualifier().(VarAccess).getVariable().getType() instanceof RefType and
+          ((RefType)mcStream.getQualifier().(VarAccess).getVariable().getType())
+            .hasQualifiedName("java.io", "PrintStream") and
+          sink.asExpr() = mcStream.getAnArgument()
+        )
+        or
+        // 3) Any write/print on a PrintWriter (captures write(...), print(...), println(...))
+        exists(MethodCall mcWriter |
+            mcWriter.getMethod().hasName(["print", "println", "write"]) and
+            mcWriter.getQualifier().getType().(RefType)
+            .getASupertype*().hasQualifiedName("java.io", "PrintWriter") and
+          sink.asExpr() = mcWriter.getAnArgument()
+        )
+        or
+
+         // Servlet PrintWriter methods (print, println, write)
+       exists(MethodCall mcWriter |
+        mcWriter.getMethod().hasName(["print", "println", "write"]) and
+        mcWriter.getQualifier().getType().(RefType).getASupertype*().hasQualifiedName("java.io", "PrintWriter") and
+        (
+          mcWriter.getQualifier().(MethodCall).getMethod().hasName("getWriter") and
+          (
+            mcWriter.getQualifier().(MethodCall).getQualifier().getType().(RefType).hasQualifiedName("javax.servlet.http", "HttpServletResponse") or
+            mcWriter.getQualifier().(MethodCall).getQualifier().getType().(RefType).hasQualifiedName("jakarta.servlet.http", "HttpServletResponse")
           )
-    }
+        ) and
+        sink.asExpr() = mcWriter.getAnArgument()
+      )
+      or
+      // Servlet sendError method
+      exists(MethodCall mc |
+        (
+          mc.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", "sendError") or
+          mc.getMethod().hasQualifiedName("jakarta.servlet.http", "HttpServletResponse", "sendError")
+        ) and
+        sink.asExpr() = mc.getAnArgument()
+      )
+    
+      }
+
+      
+      
 
     predicate isErrPrintSink(DataFlow::Node sink) {
         exists(MethodCall mc |

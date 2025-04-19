@@ -40,16 +40,75 @@
  
    // Track sinks like `println`, `sendError`, etc. in State3
    predicate isSink(DataFlow::Node sink, FlowState state) {
-     state instanceof State3 and
-     exists(MethodCall mcSink |
-       (
-         CommonSinks::isPrintSink(sink) or
-         CommonSinks::isErrPrintSink(sink) or
-         CommonSinks::isServletSink(sink)
-       ) and
-       sink.asExpr() = mcSink.getAnArgument()
-     )
-   }
+    state instanceof State3 and
+    (
+      // Existing sinks: println, sendError, etc.
+      exists(MethodCall mcSink |
+        (
+          CommonSinks::isPrintSink(sink) or
+          CommonSinks::isErrPrintSink(sink) or
+          CommonSinks::isServletSink(sink)
+        ) and
+        sink.asExpr() = mcSink.getAnArgument()
+      ) or
+      // Spring @RestController return statements
+      exists(ReturnStmt ret |
+        sink.asExpr() = ret.getResult() and
+        ret.getEnclosingCallable().getDeclaringType().hasAnnotation("org.springframework.web.bind.annotation", "RestController")
+      ) or
+      // Spring @Controller ResponseEntity or HttpServletResponse writes
+      exists(ReturnStmt ret |
+        sink.asExpr() = ret.getResult() and
+        ret.getEnclosingCallable().getDeclaringType().hasAnnotation("org.springframework.web.bind.annotation", "Controller") and
+        ret.getResult().getType().(RefType).hasQualifiedName("org.springframework.http", "ResponseEntity")
+      ) or
+      exists(MethodCall mc |
+        sink.asExpr() = mc.getAnArgument() and
+        mc.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", ["getWriter", "getOutputStream"]) and
+        mc.getEnclosingCallable().getDeclaringType().hasAnnotation("org.springframework.web.bind.annotation", "Controller")
+      ) or
+      // Spring WebFlux Mono/Flux returns
+      exists(ReturnStmt ret |
+        sink.asExpr() = ret.getResult() and
+        ret.getEnclosingCallable().getDeclaringType().hasAnnotation("org.springframework.web.bind.annotation", ["RestController", "Controller"]) and
+        ret.getResult().getType().(RefType).hasQualifiedName("reactor.core.publisher", ["Mono", "Flux"])
+      ) or
+      // JAX-RS Response or direct returns
+      exists(ReturnStmt ret |
+        sink.asExpr() = ret.getResult() and
+        ret.getEnclosingCallable().getDeclaringType().hasAnnotation("javax.ws.rs", "Path") and
+        (
+          ret.getResult().getType().(RefType).hasQualifiedName("javax.ws.rs.core", "Response")
+        )
+      ) or
+      // Jakarta REST Response or direct returns
+      exists(ReturnStmt ret |
+        sink.asExpr() = ret.getResult() and
+        ret.getEnclosingCallable().getDeclaringType().hasAnnotation("jakarta.ws.rs", "Path") and
+        (
+          ret.getResult().getType().(RefType).hasQualifiedName("jakarta.ws.rs.core", "Response")
+        )
+      ) or
+      // Vaadin Notification.show
+      exists(MethodCall mc |
+        sink.asExpr() = mc.getAnArgument() and
+        mc.getMethod().hasQualifiedName("com.vaadin.flow.component.notification", "Notification", "show") and
+        mc.getEnclosingCallable().getDeclaringType().hasAnnotation("com.vaadin.flow.router", "Route")
+      ) or
+      // Struts 2 HttpServletResponse writes
+      exists(MethodCall mc |
+        sink.asExpr() = mc.getAnArgument() and
+        mc.getMethod().hasQualifiedName("javax.servlet.http", "HttpServletResponse", ["getWriter", "getOutputStream"]) and
+        mc.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("com.opensymphony.xwork2", "Action")
+      ) or
+      // Play Framework Result
+      exists(ReturnStmt ret |
+        sink.asExpr() = ret.getResult() and
+        ret.getEnclosingCallable().getDeclaringType().getASupertype*().hasQualifiedName("play.mvc", "Controller") and
+        ret.getResult().getType().(RefType).hasQualifiedName("play.mvc", "Result")
+      )
+    )
+  }
  
    // Define transitions between flow states
    predicate isAdditionalFlowStep(
@@ -141,8 +200,7 @@
            node1.asExpr() = mc.getAnArgument() and
            mc.getCallee().getAParameter() = param and
            node2 = DataFlow::parameterNode(param) and
-           DataFlow::localFlowStep(node2, paramUse) and
-           paramUse.asExpr() instanceof Expr
+           DataFlow::localFlowStep(node2, paramUse) 
          )
        )
      )
