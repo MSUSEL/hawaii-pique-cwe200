@@ -319,47 +319,43 @@ class MultiClassClassifier(nn.Module):
 
 # ------------------------------ Training Utilities ------------------------------------
 
-def evaluate_model(model, dataloader, device, category, print_report=False):
+def evaluate_model(model, loader, device, category):
     model.eval()
-    preds = []
-    trues = []
+    preds, trues = [], []
     with torch.no_grad():
-        for inputs, labels in dataloader:
-            inputs = inputs.to(device)
-            outputs = model(inputs)
+        for Xb, yb in loader:
+            Xb = Xb.to(device)
+            out = model(Xb)
             if category == 'sinks':
-                predictions = torch.argmax(outputs, dim=1).cpu().numpy()
+                p = torch.argmax(out, dim=1).cpu().numpy()
             else:
-                predictions = (outputs > 0.5).int().cpu().numpy().flatten()
-            preds.extend(predictions)
-            trues.extend(labels.numpy())
-    
-    trues = np.array(trues)
+                p = (out > 0.5).int().cpu().numpy().flatten()
+            preds.extend(p)
+            trues.extend(yb.numpy())
+
     preds = np.array(preds)
-    
-    precision = metrics.precision_score(trues, preds, average='weighted', zero_division=0)
-    recall = metrics.recall_score(trues, preds, average='weighted', zero_division=0)
-    f1_score = metrics.f1_score(trues, preds, average='weighted', zero_division=0)
-    accuracy = metrics.accuracy_score(trues, preds)
-    
-    if print_report:
-        print("\nFinal Evaluation Results:")
-        print(f"Precision: {precision}")
-        print(f"Recall: {recall}")
-        print(f"F1 Score: {f1_score}")
-        print(f"Accuracy: {accuracy}")
-        print('------------------------------------------------')
-        if category == 'sinks':
-            target_names = [sink_type_mapping[i] for i in range(8)]
-            print("Classification Report (Multi-class):")
-            print(metrics.classification_report(trues, preds, target_names=target_names, zero_division=0))
-        else:
-            print("Classification Report (Binary):")
-            print(metrics.classification_report(trues, preds, target_names=["Non-sensitive", "Sensitive"], zero_division=0))
-        print("Confusion Matrix:")
-        print(metrics.confusion_matrix(trues, preds))
-    
-    return f1_score
+    trues = np.array(trues)
+
+    # overall metrics
+    prec = metrics.precision_score(trues, preds, average='weighted', zero_division=0)
+    rec  = metrics.recall_score(   trues, preds, average='weighted', zero_division=0)
+    f1   = metrics.f1_score(      trues, preds, average='weighted', zero_division=0)
+    acc  = metrics.accuracy_score(trues, preds)
+
+    # classification report string + confusion matrix
+    names      = list(sink_type_mapping.values()) if category=='sinks' else ["Non-sensitive","Sensitive"]
+    report_str = metrics.classification_report(trues, preds, target_names=names, zero_division=0)
+    conf_mat   = metrics.confusion_matrix(trues, preds)
+
+    return {
+        'precision':       prec,
+        'recall':          rec,
+        'f1':              f1,
+        'accuracy':        acc,
+        'report_str':      report_str,
+        'confusion_matrix': conf_mat
+    }
+
 
 
 def train_model(model, optimizer, criterion, train_loader, val_loader, device, epochs, early_stop_patience=10, category='binary'):
@@ -382,7 +378,10 @@ def train_model(model, optimizer, criterion, train_loader, val_loader, device, e
             optimizer.step()
             epoch_losses.append(loss.item())
         avg_loss = np.mean(epoch_losses)
-        val_f1 = evaluate_model(model, val_loader, device, category, print_report=False)
+        val_metrics = evaluate_model(model, val_loader, device, category)
+        val_f1 = val_metrics['f1']
+
+        
         if val_f1 > best_f1:
             best_f1 = val_f1
             best_state = model.state_dict()
@@ -566,15 +565,24 @@ def train(category, data, param_grid, create_model_fn, embedding_model='sentbert
     print("Training final model on train+val data...")
     train_model(final_model, optimizer, criterion, train_val_loader, val_loader, device, best_params.get('epochs'), category=cat_type)
     
-    print("Final evaluation on test data:")
-    evaluate_model(final_model, test_loader, device, category if category == 'sinks' else 'binary', print_report=True)
-    
+    # print("Final evaluation on test data:")
+    # evaluate_model(final_model, test_loader, device, category if category == 'sinks' else 'binary', print_report=True)
+
     model_dir = "model"
     os.makedirs(model_dir, exist_ok=True)
     model_path = os.path.join(model_dir, f'{embedding_model}_final_model_{category}.pt')
     scripted_model = torch.jit.script(final_model)
     scripted_model.save(model_path)  
     print(f"{embedding_model} model saved at {model_path}")  
+
+
+    final_metrics = evaluate_model(
+        final_model,
+        test_loader,
+        device,
+        category if category == 'sinks' else 'binary'
+    )
+    return final_metrics
 
 # ------------------------------ Model Creation Functions ------------------------------------
 
@@ -603,7 +611,7 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64, 96],
         'epochs': [60, 80, 100],
-        'n_iter': [4000]
+        'n_iter': [1]
     }
     
     strings_param_grid = {
@@ -623,7 +631,7 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64, 96],
         'epochs': [60, 80, 100],
-        'n_iter': [1000]
+        'n_iter': [1]
     }
     
     comments_param_grid = {
@@ -644,7 +652,7 @@ if __name__ == '__main__':
     }
     
     categories = [
-        # "variables",
+        "variables",
         # "strings",
         # "comments",
         "sinks"
@@ -652,7 +660,7 @@ if __name__ == '__main__':
     
     embedding_models = {
         'sentbert': 384 * 2,
-        # 't5': 512 * 2,
+        't5': 512 * 2,
         # 'roberta': 768 * 2,
         # 'codebert': 768 * 2,
         # 'codellama': 4096 * 2,
@@ -660,13 +668,37 @@ if __name__ == '__main__':
         # 'albert': 768 * 2,
         # 'longformer': 768 * 2,
     }
-    
-    for embedding_model, embedding_dim in embedding_models.items():
-        for category in categories:
-            data = get_context(labels, context, category)
-            print(f"{len(data)} {category} entries found using embedding model {embedding_model}.")
-            if category == 'sinks':
-                model_fn = create_model_sinks
-            else:
-                model_fn = create_model
-            train(category, data, params_map.get(category), model_fn, embedding_model=embedding_model, embedding_dim=embedding_dim)
+
+    summary = {}
+    for emb_name, emb_dim in embedding_models.items():
+        summary[emb_name] = {}
+        for cat in categories:
+            data = get_context(labels, context, cat)
+            print(f"\n--- {emb_name.upper()} / {cat} ({len(data)} samples) ---")
+            factory = create_model_sinks if cat == 'sinks' else create_model
+            metrics_dict = train(cat, data, params_map[cat], factory, embedding_model=emb_name, embedding_dim=emb_dim)
+            summary[emb_name][cat] = metrics_dict
+
+    output_path = os.path.join(os.getcwd(), "backend", "src", "bert", "training", "results.txt")
+
+    with open(output_path, "w") as out:
+        out.write("="*60 + "\n")
+        out.write("      FINAL SUMMARY     \n")
+        out.write("="*60 + "\n\n")
+
+        for emb, cat_map in summary.items():
+            for cat, m in cat_map.items():
+                out.write("\n" + "="*50 + "\n")
+                out.write(f"Model: {emb}  -  Category: {cat}\n")
+                out.write("="*50 + "\n")
+                out.write("Final Evaluation Results:\n")
+                out.write(f"Precision: {m['precision']}\n")
+                out.write(f"Recall:    {m['recall']}\n")
+                out.write(f"F1 Score:  {m['f1']}\n")
+                out.write(f"Accuracy:  {m['accuracy']}\n")
+                out.write("-"*48 + "\n")
+                out.write(m['report_str'] + "\n")
+                out.write("Confusion Matrix:\n")
+                out.write(np.array2string(m['confusion_matrix']) + "\n\n")
+
+    print(f"Summary written to {output_path}")
