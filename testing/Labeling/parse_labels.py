@@ -165,7 +165,7 @@ combined_json_data, stats = parse_all_excels_in_directory(data_dir)
 json_output = json.dumps(combined_json_data, indent=4)
 
 # Save the combined JSON data to a file
-output_file_path = os.path.join('testing', 'Labeling', 'CombinedData.json')
+output_file_path = os.path.join('backend', 'src', 'bert', 'training', 'data', 'labels.json')
 with open(output_file_path, 'w') as json_file:
     json_file.write(json_output)
 
