@@ -439,64 +439,85 @@ def train_model(model, optimizer, criterion, train_loader, val_loader, device, e
 def get_context(labels, context, category):
     data = []
     for label_entry in labels:
-        file_name = label_entry['fileName']
+        file_name = label_entry.get('fileName')
         if file_name not in context:
             print(f"Warning: {file_name} not found in context data.")
             continue
         file_context = context[file_name]
         method_code_map = file_context.get('methodCodeMap', {})
+
+        # Skip if this category isn't in the labels
         if category not in label_entry:
             continue
+
         for label_item in label_entry[category]:
+            # Guard against missing or non?string names
+            name = label_item.get('name')
+            if not isinstance(name, str) or not name.strip():
+                print(
+                    f"??  Skipping invalid name ({name!r}) "
+                    f"in category '{category}' for file '{file_name}': {label_item}"
+                )
+                continue
+            name = name.strip()
+
+            # Find the matching context item by name
             matched_context_item = next(
-                (context_item for context_item in file_context.get(category, [])
-                 if label_item['name'].strip() == str(context_item['name']).strip()), None)
-            if matched_context_item:
-                binary_label = 1 if label_item['IsSensitive'] == 'Yes' else 0
-                aggregated_context = ''
-                if category == 'variables':
-                    methods = matched_context_item.get('methods', [])
-                    aggregated_context = f"Type: {matched_context_item['type']}, Context: "
-                    for method in methods:
-                        if method != 'global' and method in method_code_map:
-                            aggregated_context += method_code_map[method]
-                elif category == 'strings':
-                    methods = matched_context_item.get('methods', [])
-                    aggregated_context = "Context: "
-                    for method in methods:
-                        if method != 'global' and method in method_code_map:
-                            aggregated_context += method_code_map[method]
-                elif category == 'sinks':
-                    methods = matched_context_item.get('methods', [])
-                    for method in methods:
-                        if method != 'global' and method in method_code_map:
-                            aggregated_context += method_code_map[method]
-                if category in ['variables', 'strings']:
-                    data.append([
-                        text_preprocess(label_item['name']),
-                        text_preprocess(aggregated_context),
-                        binary_label
-                    ])
-                elif category == 'comments':
-                    data.append([
-                        text_preprocess(label_item['name']),
-                        None,
-                        binary_label
-                    ])
+                (
+                    context_item
+                    for context_item in file_context.get(category, [])
+                    if name == str(context_item.get('name', '')).strip()
+                ),
+                None
+            )
+            if not matched_context_item:
+                continue
 
-                elif category == 'sinks':
-                    sink_type = label_item['type']
-                    if sink_type not in sink_type_mapping_rev:
-                        print(f"Missing sink type: {sink_type} for label: {label_item}")
-                        continue
-                    sink_value = sink_type_mapping_rev.get(sink_type, 0)  # Default to 0 if missing
-                    data.append([
-                        text_preprocess(label_item['name']),
-                        text_preprocess(aggregated_context),
-                        sink_value
-                    ])
+            # Binary/sink label
+            if category == 'sinks':
+                binary_label = sink_type_mapping_rev.get(label_item.get('type'), 0)
+            else:
+                binary_label = 1 if label_item.get('IsSensitive') == 'Yes' else 0
 
+            # Build aggregated context
+            aggregated_context = ''
+            methods = matched_context_item.get('methods', [])
+            if category == 'variables':
+                aggregated_context = f"Type: {matched_context_item.get('type')}, Context: "
+                for method in methods:
+                    if method != 'global' and method in method_code_map:
+                        aggregated_context += method_code_map[method]
+            elif category == 'strings':
+                aggregated_context = "Context: "
+                for method in methods:
+                    if method != 'global' and method in method_code_map:
+                        aggregated_context += method_code_map[method]
+            elif category == 'sinks':
+                for method in methods:
+                    if method != 'global' and method in method_code_map:
+                        aggregated_context += method_code_map[method]
+
+            # Append to data in the correct format
+            if category in ['variables', 'strings']:
+                data.append([
+                    text_preprocess(name),
+                    text_preprocess(aggregated_context),
+                    binary_label
+                ])
+            elif category == 'comments':
+                data.append([
+                    text_preprocess(name),
+                    None,
+                    binary_label
+                ])
+            elif category == 'sinks':
+                data.append([
+                    text_preprocess(name),
+                    text_preprocess(aggregated_context),
+                    binary_label
+                ])
     return data
+
 
 # ------------------------------ Training Function ------------------------------------
 
@@ -677,12 +698,12 @@ if __name__ == '__main__':
     }
     
     comments_param_grid = {
-        'model__learning_rate': [1e-4, 1e-3, 1e-2, 1e-1],
-        'model__dropout_rate': [0.2, 0.3],
-        'model__activation': ['elu', 'relu'],
+        'model__learning_rate': [1e-5, 3e-5, 5e-5, 7e-5, 1e-4, 3e-4, 5e-4],
+        'model__dropout_rate': [0.0, 0.1, 0.2, 0.3],
+        'model__activation': ['leaky_relu', 'relu', 'elu', 'gelu'],
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
-        'batch_size': [32, 64],
-        'epochs': [50, 60],
+        'batch_size': [32, 64, 96],
+        'epochs': [60, 80, 100],
         'n_iter': [250]
     }
     
