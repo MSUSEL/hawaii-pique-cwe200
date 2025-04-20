@@ -84,6 +84,46 @@ def calculate_t5_vectors(sentences, model_name='t5-small', batch_size=32):
             embeddings.append(pooled.detach().cpu().numpy())
     return np.vstack(embeddings)
 
+def calculate_codet5_vectors(sentences,
+                             model_name='Salesforce/codet5-base',
+                             batch_size=32):
+
+    from transformers import AutoTokenizer, T5EncoderModel
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # Load tokenizer & encoder?only model
+    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False)
+    model     = T5EncoderModel.from_pretrained(model_name)
+    model.to(device)
+    model.eval()
+
+    embeddings = []
+    with torch.no_grad():
+        for i in range(0, len(sentences), batch_size):
+            batch = sentences[i:i+batch_size]
+            if isinstance(batch, np.ndarray):
+                batch = batch.tolist()
+            elif not isinstance(batch, list):
+                batch = [str(batch)]
+
+            inputs = tokenizer(
+                batch,
+                return_tensors="pt",
+                padding=True,
+                truncation=True,
+                max_length=512
+            )
+            inputs = {k: v.to(device) for k, v in inputs.items()}
+            outputs = model(**inputs)                            # encoder output only
+            last_hidden = outputs.last_hidden_state              # [batch, seq_len, dim]
+            pooled      = last_hidden.mean(dim=1)                # mean over seq_len
+            embeddings.append(pooled.cpu().numpy())
+
+    return np.vstack(embeddings)
+
+
+
+
 def calculate_roberta_vectors(sentences, model_name='roberta-base', batch_size=32):
     from transformers import RobertaTokenizer, RobertaModel
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -466,6 +506,8 @@ def train(category, data, param_grid, create_model_fn, embedding_model='sentbert
         get_embeddings = calculate_sentbert_vectors
     elif embedding_model == 't5':
         get_embeddings = calculate_t5_vectors
+    elif embedding_model == 'codet5':
+        get_embeddings = calculate_codet5_vectors
     elif embedding_model == 'roberta':
         get_embeddings = calculate_roberta_vectors
     elif embedding_model == 'codebert':
@@ -611,7 +653,7 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64, 96],
         'epochs': [60, 80, 100],
-        'n_iter': [1]
+        'n_iter': [250]
     }
     
     strings_param_grid = {
@@ -621,7 +663,7 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64, 96],
         'epochs': [60, 80, 100],
-        'n_iter': [4000]
+        'n_iter': [250]
     }
     
     sinks_param_grid = {
@@ -631,7 +673,7 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64, 96],
         'epochs': [60, 80, 100],
-        'n_iter': [1]
+        'n_iter': [250]
     }
     
     comments_param_grid = {
@@ -641,7 +683,7 @@ if __name__ == '__main__':
         'model__weight_decay': [1e-5, 3e-5, 5e-5, 1e-4],
         'batch_size': [32, 64],
         'epochs': [50, 60],
-        'n_iter': [5]
+        'n_iter': [250]
     }
     
     params_map = {
@@ -653,16 +695,17 @@ if __name__ == '__main__':
     
     categories = [
         "variables",
-        # "strings",
-        # "comments",
+        "strings",
+        "comments",
         "sinks"
     ]
     
     embedding_models = {
         'sentbert': 384 * 2,
         't5': 512 * 2,
+        'codet5': 768 * 2,
         # 'roberta': 768 * 2,
-        # 'codebert': 768 * 2,
+        'codebert': 768 * 2,
         # 'codellama': 4096 * 2,
         # 'distilbert': 768 * 2,
         # 'albert': 768 * 2,
