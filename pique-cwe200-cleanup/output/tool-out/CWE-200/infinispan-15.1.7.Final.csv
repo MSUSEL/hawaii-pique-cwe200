@@ -1,0 +1,10 @@
+209,infinispan-15.1.7.Final/cli/src/main/java/org/infinispan/cli/impl/CliRuntimeRunner.java,47,29
+532,infinispan-15.1.7.Final/cli/src/main/java/org/infinispan/cli/commands/kubernetes/Shell.java,163,40
+532,infinispan-15.1.7.Final/hibernate/cache-commons/src/main/java/org/infinispan/hibernate/cache/commons/access/PutFromLoadValidator.java,590,114
+532,infinispan-15.1.7.Final/hibernate/cache-commons/src/main/java/org/infinispan/hibernate/cache/commons/access/PutFromLoadValidator.java,604,96
+532,infinispan-15.1.7.Final/hibernate/cache-commons/src/main/java/org/infinispan/hibernate/cache/commons/access/PutFromLoadValidator.java,647,94
+532,infinispan-15.1.7.Final/persistence/jdbc/src/main/java/org/infinispan/persistence/jdbc/impl/table/AbstractTableManager.java,687,69
+532,infinispan-15.1.7.Final/persistence/remote/src/main/java/org/infinispan/persistence/remote/configuration/KeyStoreConfiguration.java,17,144
+532,infinispan-15.1.7.Final/server/runtime/src/main/java/org/infinispan/server/configuration/DataSourceConfiguration.java,28,204
+532,infinispan-15.1.7.Final/server/runtime/src/main/java/org/infinispan/server/configuration/security/KeyStoreConfiguration.java,53,22
+532,infinispan-15.1.7.Final/server/runtime/src/main/java/org/infinispan/server/configuration/security/KeyStoreConfiguration.java,55,22
