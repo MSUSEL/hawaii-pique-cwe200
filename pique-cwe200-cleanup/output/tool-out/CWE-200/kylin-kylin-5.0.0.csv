@@ -1,0 +1,13 @@
+201,kylin-kylin-5.0.0/src/common-service/src/main/java/org/apache/kylin/rest/service/AsyncTaskService.java,120,40
+214,kylin-kylin-5.0.0/src/datasource-sdk/src/main/java/org/apache/kylin/sdk/datasource/adaptor/AbstractJdbcAdaptor.java,250,31
+214,kylin-kylin-5.0.0/src/datasource-sdk/src/main/java/org/apache/kylin/sdk/datasource/adaptor/AbstractJdbcAdaptor.java,270,35
+214,kylin-kylin-5.0.0/src/ops-service/src/main/java/org/apache/kylin/rest/service/SystemService.java,190,67
+214,kylin-kylin-5.0.0/src/query-service/src/main/java/org/apache/kylin/rest/service/QueryService.java,562,62
+214,kylin-kylin-5.0.0/src/spark-project/sparder/src/main/java/org/apache/kylin/query/pushdown/PushDownRunnerJdbcImpl.java,92,31
+214,kylin-kylin-5.0.0/src/tool/src/main/java/org/apache/kylin/tool/InfluxDBTool.java,84,59
+214,kylin-kylin-5.0.0/src/tool/src/main/java/org/apache/kylin/tool/upgrade/UpdateAuditLogTableColumnLengthCLI.java,91,34
+532,kylin-kylin-5.0.0/src/core-metadata/src/main/java/org/apache/kylin/util/PasswordEncodeFactory.java,33,58
+532,kylin-kylin-5.0.0/src/core-metadata/src/main/java/org/apache/kylin/util/PasswordEncodeFactory.java,38,72
+537,kylin-kylin-5.0.0/src/common-service/src/main/java/org/apache/kylin/rest/util/SparkUIUtil.java,79,47
+537,kylin-kylin-5.0.0/src/core-common/src/main/java/org/apache/kylin/common/KylinVersion.java,141,28
+537,kylin-kylin-5.0.0/src/tool/src/main/java/org/apache/kylin/helper/MetadataToolHelper.java,343,32

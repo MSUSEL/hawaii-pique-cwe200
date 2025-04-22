@@ -1,0 +1,11 @@
+209,cxf-cxf-4.1.1/rt/frontend/jaxrs/src/main/java/org/apache/cxf/jaxrs/impl/tl/ThreadLocalHttpServletResponse.java,70,25
+209,cxf-cxf-4.1.1/rt/transports/http/src/main/java/org/apache/cxf/transport/http/AbstractHTTPDestination.java,680,36
+532,cxf-cxf-4.1.1/core/src/main/java/org/apache/cxf/common/logging/AbstractDelegatingLogger.java,256,19
+532,cxf-cxf-4.1.1/core/src/main/java/org/apache/cxf/common/logging/AbstractDelegatingLogger.java,280,19
+532,cxf-cxf-4.1.1/core/src/main/java/org/apache/cxf/common/logging/AbstractDelegatingLogger.java,378,21
+532,cxf-cxf-4.1.1/core/src/main/java/org/apache/cxf/common/util/Base64Utility.java,213,25
+532,cxf-cxf-4.1.1/core/src/main/java/org/apache/cxf/resource/DefaultResourceManager.java,107,22
+532,cxf-cxf-4.1.1/rt/rs/security/http-signature/src/main/java/org/apache/cxf/rs/security/httpsignature/utils/KeyManagementUtils.java,218,25
+532,cxf-cxf-4.1.1/rt/rs/security/jose-parent/jose/src/main/java/org/apache/cxf/rs/security/jose/common/JoseUtils.java,191,25
+537,cxf-cxf-4.1.1/rt/frontend/jaxrs/src/main/java/org/apache/cxf/jaxrs/impl/tl/ThreadLocalHttpServletResponse.java,70,25
+537,cxf-cxf-4.1.1/rt/transports/http/src/main/java/org/apache/cxf/transport/http/AbstractHTTPDestination.java,680,36

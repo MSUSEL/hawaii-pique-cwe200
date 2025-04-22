@@ -1,0 +1,5 @@
+208,rocketmq-rocketmq-all-5.3.2/common/src/main/java/org/apache/rocketmq/common/BoundaryType.java,41,59
+532,rocketmq-rocketmq-all-5.3.2/remoting/src/main/java/org/apache/rocketmq/remoting/netty/TlsHelper.java,202,32
+532,rocketmq-rocketmq-all-5.3.2/remoting/src/main/java/org/apache/rocketmq/remoting/netty/TlsHelper.java,202,56
+532,rocketmq-rocketmq-all-5.3.2/remoting/src/main/java/org/apache/rocketmq/remoting/netty/TlsHelper.java,208,32
+532,rocketmq-rocketmq-all-5.3.2/remoting/src/main/java/org/apache/rocketmq/remoting/netty/TlsHelper.java,208,56

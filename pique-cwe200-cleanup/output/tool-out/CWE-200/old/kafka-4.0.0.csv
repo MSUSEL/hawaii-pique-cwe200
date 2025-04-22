@@ -1,0 +1,3 @@
+532,kafka-4.0.0/clients/src/main/java/org/apache/kafka/clients/admin/KafkaAdminClient.java,4447,21
+532,kafka-4.0.0/clients/src/main/java/org/apache/kafka/common/config/AbstractConfig.java,371,18
+532,kafka-4.0.0/metadata/src/main/java/org/apache/kafka/image/ScramImage.java,126,44
