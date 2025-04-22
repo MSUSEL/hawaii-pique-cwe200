@@ -204,19 +204,31 @@ export class BertService {
             return result;
         }    
         
-        formatCommentsMapping(mapping: { [key: string]: string[] }, type): string {
+        formatCommentsMapping(mapping: { [key: string]: string[] }, type: string): string {
             let result = "";
         
-            // Iterate over each key (filename) in the mapping object
             Object.keys(mapping).forEach(key => {
-                // For each variable associated with the key, generate a new line in the output
                 mapping[key].forEach(variable => {
-                    result += `    - ["${key}", "${variable.replace(/(?!^)"(?!$)/g, '\\"')}"]\n`;
+                    let cleanValue = variable.trim();
+        
+                    // Remove surrounding quotes if present
+                    if (cleanValue.startsWith('"') && cleanValue.endsWith('"')) {
+                        cleanValue = cleanValue.slice(1, -1);
+                    }
+        
+                    // Flatten multiline content to a single line, escape inner quotes
+                    const safeValue = cleanValue
+                        .replace(/\r?\n\s*/g, ' ')  // Replace newlines + indentation with space
+                        .replace(/"/g, '\\"');      // Escape double quotes inside
+        
+                    result += `    - ["${key}", "${safeValue}"]\n`;
                 });
             });
         
             return result;
         }
+        
+        
         
          
         formatSinkMappings(mapping: Map<string, string[][]>): string {
