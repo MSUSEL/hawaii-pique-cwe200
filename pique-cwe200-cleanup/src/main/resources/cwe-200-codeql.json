@@ -37,12 +37,12 @@
           "CWE-538": {}
         },
         "weights": {
-          "CWE-201": 0.20,
-          "CWE-203": 0.15,
-          "CWE-209": 0.20,
-          "CWE-215": 0.10,
-          "CWE-497": 0.15,
-          "CWE-538": 0.20
+          "CWE-201": 0.2790,
+          "CWE-203": 0.0554,
+          "CWE-209": 0.1862,
+          "CWE-215": 0.0171,
+          "CWE-497": 0.2695,
+          "CWE-538": 0.1927
         }
       }
     }
@@ -72,8 +72,8 @@
         "CWE-208": {}
       },
       "weights": {
-        "CWE-204": 0.60,
-        "CWE-208": 0.40
+        "CWE-204": 0.7273,
+        "CWE-208": 0.2727
       }
     },
     "CWE-204": {
@@ -163,26 +163,26 @@
       "weakness_abstraction": "Base",
       "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
       "children": {
-        "CWE-214": {},
-        "CWE-548": {}
+        "CWE-214": {}
       },
       "weights": {
-        "CWE-214": 0.50,
-        "CWE-548": 0.50
+        "CWE-214": 1.0
       }
     },
-    "CWE-531": {
-      "name": "Inclusion of Sensitive Information in Test Code",
+
+    "CWE-532": {
+      "name": "Insertion of Sensitive Information into Log File",
       "positive": "false",
-      "weakness_abstraction": "Variant",
-      "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
+      "weakness_abstraction": "Base",
+      "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
       "children": {
-        "CWE-531 Diagnostic CweCodeQl": {}
+        "CWE-532 Diagnostic CweCodeQl": {}
       },
       "weights": {
-        "CWE-531 Diagnostic CweCodeQl": 1.0
+        "CWE-532 Diagnostic CweCodeQl": 1.0
       }
     },
+
     "CWE-535": {
       "name": "Exposure of Information Through Shell Error Message",
       "positive": "false",
@@ -225,10 +225,14 @@
       "weakness_abstraction": "Base",
       "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
       "children": {
-        "CWE-540": {}
+        "CWE-540": {},
+        "CWE-532": {}
       },
       "weights": {
-        "CWE-540": 1.0
+        "CWE-538 Diagnostic CweCodeQl": 0.33,
+        "CWE-532": 0.34,
+        "CWE-540": 0.33
+        
       }
     },
     "CWE-540": {
@@ -237,38 +241,10 @@
       "weakness_abstraction": "Base",
       "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
       "children": {
-        "CWE-531": {},
-        "CWE-541": {},
         "CWE-615": {}
       },
       "weights": {
-        "CWE-531": 0.30,
-        "CWE-541": 0.30,
-        "CWE-615": 0.40
-      }
-    },
-    "CWE-541": {
-      "name": "Inclusion of Sensitive Information in an Include File",
-      "positive": "false",
-      "weakness_abstraction": "Variant",
-      "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
-      "children": {
-        "CWE-541 Diagnostic CweCodeQl": {}
-      },
-      "weights": {
-        "CWE-541 Diagnostic CweCodeQl": 1.0
-      }
-    },
-    "CWE-548": {
-      "name": "Exposure of Information Through Directory Listing",
-      "positive": "false",
-      "weakness_abstraction": "Variant",
-      "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
-      "children": {
-        "CWE-548 Diagnostic CweCodeQl": {}
-      },
-      "weights": {
-        "CWE-548 Diagnostic CweCodeQl": 1.0
+        "CWE-615": 1.0
       }
     },
     "CWE-550": {
@@ -327,21 +303,17 @@
       "toolName": "CweCodeQl",
       "description": "Sum of findings of type CWE-209"
     },
-    "CWE-215 Diagnostic CweCodeQl": {
-      "toolName": "CweCodeQl",
-      "description": "Sum of findings of type CWE-215"
-    },
     "CWE-214 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "description": "Sum of findings of type CWE-214"
     },
+    "CWE-215 Diagnostic CweCodeQl": {
+      "toolName": "CweCodeQl",
+      "description": "Sum of findings of type CWE-215"
+    },
     "CWE-532 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "description": "Sum of findings of type CWE-532"
-    },
-    "CWE-531 Diagnostic CweCodeQl": {
-      "toolName": "CweCodeQl",
-      "description": "Sum of findings of type CWE-531"
     },
     "CWE-535 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
@@ -355,13 +327,9 @@
       "toolName": "CweCodeQl",
       "description": "Sum of findings of type CWE-537"
     },
-    "CWE-541 Diagnostic CweCodeQl": {
+    "CWE-538 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
-      "description": "Sum of findings of type CWE-541"
-    },
-    "CWE-548 Diagnostic CweCodeQl": {
-      "toolName": "CweCodeQl",
-      "description": "Sum of findings of type CWE-548"
+      "description": "Sum of findings of type CWE-538"
     },
     "CWE-550 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
