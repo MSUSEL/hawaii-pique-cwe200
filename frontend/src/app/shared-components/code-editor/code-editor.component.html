@@ -18,9 +18,18 @@
     <div class="tab-pane fade show active" style="height: 600px;" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div style="height: 600px;" *ngIf="editorService.openedFiles.length && view == 'code'">
             <div class="code-header d-flex justify-content-between px-3">
-                <div>
-                    <span class="text-secondary">{{filePath}}</span>
-                </div>
+                <div style="
+                flex: 1 1 0;
+                min-width: 0;
+                overflow-x: auto;
+                white-space: nowrap;
+                height: 3em;
+                line-height: 2em;
+                overflow-y: hidden;
+                box-sizing: border-box;
+                ">
+                <span class="text-secondary">{{filePath}}</span>
+            </div>
                 <div class="toolbar">
                     <button class="btn"
                         (click)="this.view = 'gpt'; gerChatGptResponse('gpt');" 
