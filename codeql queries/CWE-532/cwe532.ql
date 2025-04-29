@@ -74,8 +74,11 @@
          and
          not v.getName().toLowerCase().regexpMatch(".*id.*")
        )
-       and  
-       source.asExpr() = v.getAnAccess()
+
+      and  
+      source.asExpr() = v.getAnAccess() and
+      not source.asExpr().getParent() instanceof Annotation // Exclude expressions in annotations
+    
      )
    }
    
