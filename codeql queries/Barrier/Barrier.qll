@@ -13,7 +13,9 @@ module Barrier {
              mc.getMethod().getName().toLowerCase().matches("%obfuscate%") or
              mc.getMethod().getName().toLowerCase().matches("%scramble%") or
              mc.getMethod().getName().toLowerCase().matches("%anonymize%") or
-             mc.getMethod().getName().toLowerCase().matches("%redact%")) and
+             mc.getMethod().getName().toLowerCase().matches("%redact%") or
+             mc.getMethod().getName().toLowerCase().matches("%public%")
+             ) and
 
             // Include arguments and the return value as barriers
             (node.asExpr() = mc.getAnArgument() or node.asExpr() = mc)
@@ -75,6 +77,25 @@ module Barrier {
              customBarriers.getMethod().getName().toLowerCase().matches("%mask%") or
              customBarriers.getMethod().getName().toLowerCase().matches("%scramble%")) and
             (node.asExpr() = customBarriers.getAnArgument() or node.asExpr() = customBarriers)
+        )
+        or 
+        exists(VariableAssign va |
+            node.asExpr() = va and
+            va.getDestVar().getName().matches("%public%")
+        )
+        or
+        // Block data flow for compound or unary assignments to variables with "public" in their name
+        exists(VariableUpdate vu |
+            node.asExpr() = vu and
+            vu.getDestVar().getName().matches("%public%") and
+            not vu instanceof VariableAssign // Exclude simple assignments to avoid duplication
+        )
+        or
+        // Block method call arguments that are variables with "public" in their name
+        exists(MethodCall mc, VarAccess va |
+            node.asExpr() = mc.getAnArgument() and
+            node.asExpr() = va and
+            va.getVariable().getName().matches("%public%")
         )
     }
 }
