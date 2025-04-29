@@ -111,5 +111,4 @@
    )
    // Exclude test files based on the full path of the sink
    and not isTestFile(sink.getNode().getLocation().getFile())
- select sink.getNode(), source, sink, "This $@ is written to a log file.", source.getNode(),
-   "potentially sensitive information"
+ select sink.getNode(), source, sink, "CWE-532: Sensitive information (" + source.getNode() +") written to a log file."
