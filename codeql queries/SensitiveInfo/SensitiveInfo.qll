@@ -55,9 +55,8 @@ class SensitiveVariableExpr extends Expr {
         not v.toString().toLowerCase().matches("%node%") and
         not v.toString().toLowerCase().matches("%subject%") and
         not v.toString().toLowerCase().matches("%object%") and 
-        not v.toString().toLowerCase().matches("%script%") and
-        not v.toString().toLowerCase().matches("%path%") and
-        not v.toString().toLowerCase().matches("%file%")
+        not v.toString().toLowerCase().matches("%script%") 
+        // not v.toString().toLowerCase().matches("%path%") and
       ) and
 
       // Exclude exceptions as sensitive variables
