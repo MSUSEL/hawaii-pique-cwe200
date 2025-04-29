@@ -9,7 +9,10 @@ import { start } from 'repl';
 
 @Injectable()
 export class CodeQlParserService {
-    constructor(private fileService: FileUtilService) {}
+    results: any[] = [];
+    constructor(private fileService: FileUtilService) {
+
+    }
 
     async getSarifResults(sourcePath: string) {
         const sarifPath = path.join(sourcePath, 'result.sarif');
@@ -18,6 +21,7 @@ export class CodeQlParserService {
         let results = data.runs[0].results;
 
         results = this.filterResults(results)
+        this.results = results
       
 
       
@@ -71,9 +75,13 @@ export class CodeQlParserService {
 
     // This function is used to get all the data flow trees for a specific result index
     async getDataFlowTree(filePath: string, project: string, index: string) {
-        const sarifPath = path.join(project, 'result.sarif');
-        const data = await this.fileService.readJsonFile(sarifPath);
-        const result = data.runs[0].results[index];
+        // const sarifPath = path.join(project, 'result.sarif');
+        // const data = await this.fileService.readJsonFile(sarifPath);
+
+        // let results = data.runs[0].results;
+        // results = this.filterResults(results)
+        // const result = results[index];
+        const result = this.results[index];
             
         try {
             // Try to access all codeFlows
