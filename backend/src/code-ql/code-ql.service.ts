@@ -108,53 +108,30 @@ export class CodeQlService {
     }
 
     async runCWEQueries(sourcePath: string, createCodeQlDto: any) {
-        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
+        const db = path.join(sourcePath, createCodeQlDto.project + 'db');
         const extension = 'sarif';
         const format = 'sarifv2.1.0';
         const outputFileName = 'result';
         const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
         const threads = 12;
-        const totalMemoryMB = os.totalmem() / (1024 * 1024);  // Total system memory in MB
-        const ramAllocationMB = Math.floor(totalMemoryMB * 0.8);  // 80% of total memory
-        const queryPath = this.queryPath;
-
-        // This is for running all of the queries
-        const queryDir = path.resolve(queryPath);
-        const excludeDir = path.resolve(path.join(queryPath, 'ProgramSlicing'));
-
-        function collectQlFiles(dir) {
-            let results = [];
-            const list = fs.readdirSync(dir);
-            list.forEach(file => {
-                const filePath = path.join(dir, file);
-                const stat = fs.statSync(filePath);
-                if (stat && stat.isDirectory()) {
-                    // Recursively collect .ql files from subdirectories
-                    results = results.concat(collectQlFiles(filePath));
-                } else if (filePath.endsWith('.ql') && !filePath.startsWith(excludeDir)) {
-                    // Include only .ql files and exclude those in the ProgramSlicing directory
-                    results.push(filePath);
-                }
-            });
-            return results;
-        }
-
-        // Collect all .ql files from the queryDir, excluding ProgramSlicing subdir
-        let queriesToRun = collectQlFiles(queryDir);
-
-        // Join the selected queries into a single string
-        const queryList = queriesToRun.join(' ');
-
-        // Build the command with the filtered list of queries
+        const totalMemoryMB = os.totalmem() / (1024 * 1024);
+        const ramAllocationMB = Math.floor(totalMemoryMB * 0.8);
+        const queryPath = this.queryPath; // e.g., codeql/codeql-custom-queries-java
+    
         const analyzeDbCommand =
-            `database analyze ${db} ` +
+            `database analyze ${db} custom-codeql-queries ` +
             `--format=${format} ` +
             `--rerun ` +
-            `--output=${outputPath} ${queryList} ` +
+            `--output=${outputPath} ` +
             `--threads=${threads} ` +
-            `--ram=${ramAllocationMB}`;
+            `--ram=${ramAllocationMB} ` +
+            `--search-path=${path.resolve(queryPath, '..')}`;
+    
+        console.log(analyzeDbCommand);
         await this.runChildProcess(analyzeDbCommand);
     }
+    
+
 
     async getSarifResults(project: string) {
         const sourcePath = path.join(this.projectsPath, project);
