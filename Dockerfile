@@ -1,4 +1,4 @@
-# install java
+# download java
 FROM alpine/curl:8.12.1 AS java_download
 ARG JAVA_VERSION=8
 ENV JAVA_RELEASE="https://github.com/adoptium/temurin$JAVA_VERSION-binaries/releases/download"
@@ -15,48 +15,8 @@ RUN if [ "$JAVA_VERSION" = "8" ]; then \
     fi \
     && tar xzf /tmp/openjdk.tar.gz --strip-components=1
 
-# install python
-FROM debian:bullseye-slim AS python_build
-ARG PYTHON_VERSION=3.12.2
 
-# install prereqs
-RUN apt update && apt install curl gcc make \
-    build-essential \
-    libssl-dev \
-    zlib1g-dev \
-    libbz2-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    libffi-dev \
-    liblzma-dev \
-    tk-dev -y
-
-WORKDIR /python
-RUN curl -SsLo /tmp/python.tgz "https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz" \
-    && tar xzf /tmp/python.tgz \
-    && cd Python-$PYTHON_VERSION \
-    && ./configure --enable-optimizations \
-    && make altinstall
-
-# install maven
-FROM alpine/curl:8.12.1 AS maven_download
-ARG MAVEN_VERSION=3.9.5
-
-WORKDIR /maven
-RUN curl -SsLo /tmp/maven.tar.gz "https://downloads.apache.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz" \
-    && tar xzf /tmp/maven.tar.gz --strip-components=1
-
-
-# install gradle
-FROM alpine/curl:8.12.1 AS gradle_download
-ARG GRADLE_VERSION=8.6
-
-WORKDIR /gradle
-RUN curl -SsLo /tmp/gradle.zip "https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip" \
-    && unzip /tmp/gradle.zip
-
-
-# install codeql
+# dowload codeql
 FROM alpine/curl:8.12.1 AS codeql_download
 ARG CODEQL_VERSION=2.20.3
 
@@ -78,8 +38,20 @@ ENV GRADLE_HOME=/usr/local/gradle
 ENV CODEQL_HOME=/usr/local/bin/codeql
 ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH:$GRADLE_HOME/bin:$PATH
 
+# install dependencies
+RUN apt update && apt install -y \
+    python3 \
+    python3-pip \
+    maven \
+    gradle \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install 'concurrently' globally to run multiple scripts
 RUN npm install -g concurrently
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 # Set the working directory
 WORKDIR /app
@@ -104,17 +76,8 @@ RUN npm run build
 COPY --from=codeql_download /codeql $CODEQL_HOME
 RUN npm run codeql-setup
 
-# copy build system and languages
-COPY --from=maven_download /maven $MAVEN_HOME
-COPY --from=gradle_download /gradle $GRADLE_HOME
+# copy java download
 COPY --from=java_download /java $JAVA_HOME
-COPY --from=python_build /usr/local/bin/python3.12 $PYTHON_HOME
-# Install pip for Python 3.12
-RUN curl -LSs https://bootstrap.pypa.io/get-pip.py | python get-pip.py
-
-# Install Python dependencies
-COPY requirements.txt .
-RUN python -m pip install --no-cache-dir -r requirements.txt
 
 # Start both frontend and backend servers
 ENTRYPOINT ["npm", "start"]
