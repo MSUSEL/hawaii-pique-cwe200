@@ -94,7 +94,6 @@
 92. apache/ambari - 6 unique advisories
 93. apache/commons-compress - 6 unique advisories
 94. jenkinsci/ec2-deployment-dashboard - 6 unique advisories
-95. youseries/ureport - 6 unique advisories
 96. jenkinsci/electricflow-plugin - 6 unique advisories
 97. jenkinsci/build-failure-analyzer-plugin - 6 unique advisories
 98. OpenTSDB/opentsdb - 6 unique advisories
@@ -144,10 +143,7 @@
 142. jenkinsci/oic-auth-plugin - 4 unique advisories
 143. AsyncHttpClient/async-http-client - 4 unique advisories
 144. hibernate/hibernate-validator - 4 unique advisories
-145. joniles/mpxj - 4 unique advisories
-146. ktorio/ktor - 4 unique advisories
 147. protocolbuffers/protobuf - 4 unique advisories
-148. openhab/openhab-webui - 4 unique advisories
 149. apache/rocketmq - 4 unique advisories
 150. jenkinsci/bitbucket-branch-source-plugin - 4 unique advisories
 
