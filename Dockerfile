@@ -36,7 +36,7 @@ ENV PYTHON_HOME=/usr/local/bin/python
 ENV MAVEN_HOME=/usr/local/maven
 ENV GRADLE_HOME=/usr/local/gradle
 ENV CODEQL_HOME=/usr/local/bin/codeql
-ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH:$GRADLE_HOME/bin:$PATH
+ENV PATH=$PATH:$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH:$GRADLE_HOME/bin:$CODEQL_HOME
 
 # install dependencies
 RUN apt update && apt install -y \
@@ -51,7 +51,7 @@ RUN npm install -g concurrently
 
 # Install Python dependencies
 COPY requirements.txt .
-RUN python3 -m pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Set the working directory
 WORKDIR /app
@@ -73,7 +73,7 @@ COPY . /app
 RUN npm run build
 
 # Setup CodeQL for the application
-COPY --from=codeql_download /codeql $CODEQL_HOME
+COPY --from=codeql_download /codeql/codeql/ $CODEQL_HOME/
 RUN npm run codeql-setup
 
 # copy java download
