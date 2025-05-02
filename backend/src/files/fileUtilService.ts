@@ -458,7 +458,7 @@ setJavaVersion(version: number) {
         }
       
         // Otherwise, download it from Adoptium
-        console.log(`⬇️ Downloading and installing Java ${version} from Adoptium...`);
+        console.log(`Downloading and installing Java ${version} from Adoptium...`);
       
         const versionMap = {
           8: '8u372-b07',
