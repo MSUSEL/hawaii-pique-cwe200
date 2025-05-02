@@ -53,6 +53,9 @@ RUN npm install -g concurrently
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Ensure python points to python3
+RUN ln -s $(which python3) /usr/local/bin/python
+
 # Set the working directory
 WORKDIR /app
 
