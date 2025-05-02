@@ -44,7 +44,10 @@ RUN apt update && apt install -y \
     python3-pip \
     maven \
     gradle \
+    git \
+    && ln -s $(which python3) /usr/local/bin/python \
     && rm -rf /var/lib/apt/lists/*
+
 
 # Install 'concurrently' globally to run multiple scripts
 RUN npm install -g concurrently
@@ -52,9 +55,6 @@ RUN npm install -g concurrently
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Ensure python points to python3
-RUN ln -s $(which python3) /usr/local/bin/python
 
 # Set the working directory
 WORKDIR /app
