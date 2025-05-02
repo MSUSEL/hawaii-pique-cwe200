@@ -106,7 +106,6 @@ export class AnalyzeService {
         }
 
         return await this.parserService.getSarifResults(sourcePath);
-
     }
 
 
