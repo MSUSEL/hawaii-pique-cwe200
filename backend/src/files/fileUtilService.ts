@@ -442,24 +442,53 @@ setJavaVersion(version: number) {
   
       console.log(`JAVA_HOME set to ${javaHome} and PATH updated.`);
     } else {
-      // Linux branch: assume JDKs are in /usr/local/java/jdk<version>.
-      const supportedVersions = [8, 11, 17, 21];
-      if (!supportedVersions.includes(version)) {
-        console.error(
-          `Unsupported Java version: ${version}. Supported versions are ${supportedVersions.join(', ')}`
-        );
-        process.exit(1);
+        const javaBaseDir = '/usr/local/java';
+        const javaHome = `${javaBaseDir}/jdk${version}`;
+        const javacPath = `${javaHome}/bin/javac`;
+      
+        const fs = require('fs');
+        const { execSync } = require('child_process');
+      
+        // Check if JDK is already installed
+        if (fs.existsSync(javacPath)) {
+          process.env.JAVA_HOME = javaHome;
+          process.env.PATH = `${javaHome}/bin:${process.env.PATH}`;
+          console.log(`Java ${version} is already installed. JAVA_HOME set to ${javaHome}`);
+          return;
+        }
+      
+        // Otherwise, download it from Adoptium
+        console.log(`⬇️ Downloading and installing Java ${version} from Adoptium...`);
+      
+        const versionMap = {
+          8: '8u372-b07',
+          11: '11.0.20+8',
+          17: '17.0.8+7',
+          21: '21.0.2+13'
+        };
+      
+        const release = versionMap[version];
+        if (!release) {
+          console.error(`Unsupported Java version ${version}.`);
+          process.exit(1);
+        }
+      
+        const url = `https://github.com/adoptium/temurin${version}-binaries/releases/download/jdk-${release}/OpenJDK${version}U-jdk_x64_linux_hotspot_${release.replace('+', '_')}.tar.gz`;
+      
+        try {
+          execSync(`mkdir -p ${javaHome}`, { stdio: 'inherit' });
+          execSync(`curl -Ls "${url}" | tar -xz -C ${javaHome} --strip-components=1`, { stdio: 'inherit' });
+      
+          // Set environment
+          process.env.JAVA_HOME = javaHome;
+          process.env.PATH = `${javaHome}/bin:${process.env.PATH}`;
+          console.log(`Java ${version} installed to ${javaHome} and added to PATH.`);
+        } catch (err) {
+          console.error(`Failed to download or extract Java ${version}:\n${err}`);
+          process.exit(1);
+        }
       }
-  
-      // For Linux, the pre-downloaded JDK directories are under /usr/local/java.
-      const javaHome = `/usr/local/java/jdk${version}`;
-      process.env.JAVA_HOME = javaHome;
-      process.env.PATH = `${javaHome}/bin:${process.env.PATH}`;
-      console.log(`JAVA_HOME set to ${javaHome} and PATH updated.`);
     }
-  
-  }
-  
 }
 
 interface JavaParseResult {
