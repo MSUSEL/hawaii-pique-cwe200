@@ -13,7 +13,9 @@ RUN if [ "$JAVA_VERSION" = "8" ]; then \
     else \
         echo "Unsupported Java version $JAVA_VERSION"; exit 1; \
     fi \
-    && tar xzf /tmp/openjdk.tar.gz --strip-components=1
+    && mkdir -p /java/jdk \
+    && tar xzf /tmp/openjdk.tar.gz -C /java/jdk --strip-components=1
+
 
 
 # dowload codeql
@@ -36,7 +38,9 @@ ENV PYTHON_HOME=/usr/local/bin/python
 ENV MAVEN_HOME=/usr/local/maven
 ENV GRADLE_HOME=/usr/local/gradle
 ENV CODEQL_HOME=/usr/local/bin/codeql
-ENV PATH=$PATH:$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH:$GRADLE_HOME/bin:$CODEQL_HOME
+ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${GRADLE_HOME}/bin:${CODEQL_HOME}:${PATH}"
+
+
 
 # install dependencies
 RUN apt update && apt install -y \
@@ -80,7 +84,7 @@ COPY --from=codeql_download /codeql/codeql/ $CODEQL_HOME/
 RUN npm run codeql-setup
 
 # copy java download
-COPY --from=java_download /java $JAVA_HOME
+COPY --from=java_download /java/jdk $JAVA_HOME
 
 # Start both frontend and backend servers
 ENTRYPOINT ["npm", "start"]
