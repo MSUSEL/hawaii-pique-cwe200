@@ -44,6 +44,8 @@ ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${GRADLE_HOME}/bin:${CODEQL_HOME}:$
 
 # install dependencies
 RUN apt update && apt install -y \
+    curl \
+    ca-certificates \
     python3 \
     python3-pip \
     maven \
