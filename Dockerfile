@@ -20,7 +20,7 @@ RUN if [ "$JAVA_VERSION" = "8" ]; then \
 
 # dowload codeql
 FROM alpine/curl:8.12.1 AS codeql_download
-ARG CODEQL_VERSION=2.20.3
+ARG CODEQL_VERSION=2.20.4
 
 WORKDIR /codeql
 RUN curl -SsLo /tmp/codeql.zip "https://github.com/github/codeql-cli-binaries/releases/download/v$CODEQL_VERSION/codeql-linux64.zip" \
@@ -54,6 +54,8 @@ RUN apt update && apt install -y \
     maven \
     gradle \
     git \
+    git-lfs \
+    && git lfs install \
     && ln -s $(which python3) /usr/local/bin/python \
     && rm -rf /var/lib/apt/lists/*
 
