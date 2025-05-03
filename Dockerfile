@@ -20,7 +20,7 @@ RUN if [ "$JAVA_VERSION" = "8" ]; then \
 
 # dowload codeql
 FROM alpine/curl:8.12.1 AS codeql_download
-ARG CODEQL_VERSION=2.20.4
+ARG CODEQL_VERSION=2.20.3
 
 WORKDIR /codeql
 RUN curl -SsLo /tmp/codeql.zip "https://github.com/github/codeql-cli-binaries/releases/download/v$CODEQL_VERSION/codeql-linux64.zip" \
