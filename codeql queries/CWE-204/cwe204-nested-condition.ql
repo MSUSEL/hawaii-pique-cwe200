@@ -26,8 +26,8 @@
    // Check if the innerIf is directly within the body of outerIf
    outerIf.getAChild*() = innerIf and
    // Check for specific message literals in the then and else branches of the inner if-statement and the else branch of the outer if-statement
-   innerIf.getElse().getBasicBlock().getANode().asExpr() = innerVal and
-   outerIf.getElse().getBasicBlock().getANode().asExpr() = outerVal and
+   innerIf.getElse().getBasicBlock().getANode() = innerVal and
+   outerIf.getElse().getBasicBlock().getANode() = outerVal and
    // Ensure the innerIf and outerIf are not the same
    innerVal.getValue() != outerVal.getValue()
    
