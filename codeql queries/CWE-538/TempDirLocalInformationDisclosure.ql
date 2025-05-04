@@ -16,69 +16,66 @@
  import semmle.code.java.dataflow.DataFlow
  import Barrier.Barrier
  import SensitiveInfo.SensitiveInfo
-
-
+ 
  module Flow = TaintTracking::Global<SensitiveInfoLeakServletConfig>;
-
+ 
  module TempFileFlow = TaintTracking::Global<TempFileConfig>;
-
+ 
  module TempFileConfig implements DataFlow::ConfigSig {
-    predicate isSource(DataFlow::Node source) {
+   predicate isSource(DataFlow::Node source) {
      exists(MethodCall getPropertyCall, NewClassExpr fileCreation |
-        getPropertyCall.getMethod().hasQualifiedName("java.lang","System", "getProperty") and
-        getPropertyCall.getArgument(0).(StringLiteral).getValue() = "java.io.tmpdir" and
-        DataFlow::localExprFlow(getPropertyCall, fileCreation.getArgument(0)) and
-        fileCreation.getConstructedType().hasQualifiedName("java.io", "File") and
-        source.asExpr() = fileCreation
+       getPropertyCall.getMethod().hasQualifiedName("java.lang", "System", "getProperty") and
+       getPropertyCall.getArgument(0).(StringLiteral).getValue() = "java.io.tmpdir" and
+       // Use DataFlow::localFlow instead of localExprFlow to handle variable flow
+       DataFlow::localFlow(DataFlow::exprNode(getPropertyCall), DataFlow::exprNode(fileCreation.getArgument(0))) and
+       fileCreation.getConstructedType().hasQualifiedName("java.io", "File") and
+       source.asExpr() = fileCreation
      )
-    }
-
-    predicate isSink(DataFlow::Node sink) {
-      exists(MethodCall mc |
-        mc.getMethod().hasName("write") and
-        mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "Writer") and
-        sink.asExpr() = mc.getQualifier())
-    }
+   }
+ 
+   predicate isSink(DataFlow::Node sink) {
+     // Sink is a File used in a FileWriter constructor
+     exists(NewClassExpr writerCreation |
+       writerCreation.getConstructedType().hasQualifiedName("java.io", "FileWriter") and
+       sink.asExpr() = writerCreation.getAnArgument()
+     )
+   }
+ }
+ 
+ module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
+   predicate isSource(DataFlow::Node source) {
+     exists(SensitiveVariableExpr sve | source.asExpr() = sve)
+   }
+ 
+   predicate isSink(DataFlow::Node sink) {
+     exists(MethodCall mc |
+       mc.getMethod().hasName("write") and
+       mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "Writer") and
+       sink.asExpr() = mc.getAnArgument() and
+       // Ensure the Writer is a FileWriter constructed from a temporary File
+       exists(NewClassExpr writerCreation |
+         writerCreation.getConstructedType().hasQualifiedName("java.io", "FileWriter") and
+         DataFlow::localFlow(DataFlow::exprNode(writerCreation), DataFlow::exprNode(mc.getQualifier())) and
+         TempFileFlow::flowToExpr(writerCreation.getAnArgument())
+       )
+     )
+   }
+ 
+   predicate isBarrier(DataFlow::Node node) {
+     Barrier::barrier(node)
+   }
  }
  
  import Flow::PathGraph
  
- module SensitiveInfoLeakServletConfig implements DataFlow::ConfigSig {
-   predicate isSource(DataFlow::Node source) {
-    exists(Variable v | 
-      // Use contains() with % wildcards instead of regex
-      v.getName().matches("%oauthToken%") and  
-      source.asExpr() = v.getAnAccess()
-    )
-    or
-    exists(SensitiveVariableExpr sve | source.asExpr() = sve)
-
-  }
-   predicate isSink(DataFlow::Node sink) {
-    exists(MethodCall mc |
-      mc.getMethod().hasName("write") and
-      mc.getMethod().getDeclaringType().hasQualifiedName("java.io", "Writer") and
-      sink.asExpr() = mc.getAnArgument() and
-      TempFileFlow::flowToExpr(mc.getQualifier())
-    )
-   }
- 
-  predicate isBarrier(DataFlow::Node node) {
-    Barrier::barrier(node)
-   }
- }
-
  predicate isTestFile(File f) {
-  // Convert path to lowercase for case-insensitive matching
-  exists(string path | path = f.getAbsolutePath().toLowerCase() |
-    // Check for common test-related directory or file name patterns
-    path.regexpMatch(".*(test|tests|testing|test-suite|testcase|unittest|integration-test|spec).*")
-  )
-}
-
+   exists(string path | path = f.getAbsolutePath().toLowerCase() |
+     path.regexpMatch(".*(test|tests|testing|test-suite|testcase|unittest|integration-test|spec).*")
+   )
+ }
  
  from Flow::PathNode source, Flow::PathNode sink
  where Flow::flowPath(source, sink) and
- not isTestFile(sink.getNode().getLocation().getFile())
+       not isTestFile(sink.getNode().getLocation().getFile())
  select sink.getNode(), source, sink,
    "CWE-538: Insertion of Sensitive Information into Externally-Accessible File or Directory"
