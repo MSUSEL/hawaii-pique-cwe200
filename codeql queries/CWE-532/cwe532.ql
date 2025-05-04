@@ -69,8 +69,8 @@
           v.getName().toLowerCase().regexpMatch("decryptionkey") or
           v.getName().toLowerCase().regexpMatch("privatekey") or
           v.getName().toLowerCase().regexpMatch("creditcardnumber") or
-          v.getName().toLowerCase().regexpMatch("cvv*")
-         )
+          v.getName().toLowerCase().regexpMatch("cvv*") or
+          v.getName().toLowerCase().regexpMatch(".+token$")         )
          and
          not v.getName().toLowerCase().regexpMatch(".*id.*")
        )

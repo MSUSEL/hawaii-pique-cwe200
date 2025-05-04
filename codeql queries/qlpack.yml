@@ -1,13 +1,16 @@
----
-library: false
-warnOnImplicitThis: false
+
 name: custom-codeql-queries
 version: 0.0.1
+library: false
+warnOnImplicitThis: false
+
 dependencies:
-  # codeql/java-queries: ^0.8.9
   codeql/java-all: 6.1.0
 libraries:
   - name: SensitiveInfo
     path: /SensitiveInfo
+
 dataExtensions:
   - SensitiveInfo/*.yml
+
+  
