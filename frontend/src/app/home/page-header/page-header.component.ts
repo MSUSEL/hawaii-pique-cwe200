@@ -57,6 +57,11 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
   }
 
   uploadProject() {
+    if (!this.utilService.SelectedProject || this.utilService.SelectedProject.size === 0) {
+      console.error('No valid project file selected.');
+      return;
+    }
+
     var data: FormData = new FormData();
     data.append('file', this.utilService.SelectedProject, this.utilService.ProjectName);
     this.isLoading = true;
