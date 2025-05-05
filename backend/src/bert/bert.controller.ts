@@ -1,16 +1,9 @@
 import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Patch,
-    Param,
-    Delete,
-    Query
-} from '@nestjs/common';
-import { BertService } from './bert.service';
+    Controller
+} 
+from '@nestjs/common';
 
-@Controller('chatgpt')
+@Controller('bert')
 export class BertController {
-    constructor(private readonly bertService: BertService) {}
+    
 }

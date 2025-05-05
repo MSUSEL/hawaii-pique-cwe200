@@ -4,6 +4,10 @@ import { FileUtilService } from './fileUtilService';
 import * as path from 'path';
 import { ConfigService } from '@nestjs/config';
 import { EventsGateway } from 'src/events/events.gateway';
+
+/**
+ * * FilesService is a service that provides functionality to handle file operations.
+ */
 @Global()
 @Injectable()
 export class FilesService {
@@ -17,7 +21,6 @@ export class FilesService {
 
     /**
      * Create a directory tree for a given file
-     *
      * @param file Zip binary containing Java Code
      */
     async create(file: Express.Multer.File) {
@@ -35,6 +38,11 @@ export class FilesService {
         return this.fileUtilService.getDirectoryTree(uploadedProjectDir)
     }
 
+    /**
+     * Get the contents of a file
+     * @param fileId The ID of the file to retrieve
+     * @returns The contents of the file
+     */
     async findOne(fileId:string) {
         var fileContents=await this.fileUtilService.readFileAsync(fileId)
         return {code:fileContents}

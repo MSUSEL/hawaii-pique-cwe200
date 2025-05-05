@@ -1,3 +1,5 @@
+// [Unused] An older way to inject the results into CodeQL
+
 export const SensitiveVariablesContents:string=`
 import java
 

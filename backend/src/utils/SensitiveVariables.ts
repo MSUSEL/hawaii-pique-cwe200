@@ -1,3 +1,4 @@
+// Defines the structure of the sensitive variables data that is used in the .yml files.
 export const SensitiveVariables:string=`
 extensions:
   - addsTo:

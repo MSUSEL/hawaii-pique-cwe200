@@ -6,6 +6,10 @@ import {
 import { Server, Socket } from 'socket.io';
 import { Injectable } from '@nestjs/common';
 
+/**
+ * * EventsGateway is a WebSocket gateway that handles real-time events.
+ * * It listens for incoming messages and emits data to connected clients.
+ */
 @Injectable()
 @WebSocketGateway()
 export class EventsGateway {

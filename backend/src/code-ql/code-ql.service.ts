@@ -5,11 +5,14 @@ import { CodeQlParserService } from './codql-parser-service';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
-
 import { ConfigService } from '@nestjs/config';
-
-
 import { EventsGateway } from 'src/events/events.gateway';
+
+
+/**
+ * * CodeQlService is responsible for running CodeQL commands and analyzing Java projects.
+ * * It provides methods to create databases, perform backward slicing, run CWE queries,
+ */
 @Injectable()
 export class CodeQlService {
     projectsPath: string;
@@ -20,16 +23,9 @@ export class CodeQlService {
         private eventsGateway: EventsGateway,
         private fileUtilService: FileUtilService,
     ) {
-        this.projectsPath = this.configService.get<string>(
-            'CODEQL_PROJECTS_DIR',
-        );
-
-        this.queryPath = path.join(
-            // '../',
-            this.configService.get<string>('QUERY_DIR'),
-            'codeql-custom-queries-java',
-        );
-    }
+        this.projectsPath = this.configService.get<string>('CODEQL_PROJECTS_DIR',);
+        this.queryPath = path.join(this.configService.get<string>('QUERY_DIR'),'codeql-custom-queries-java',);
+      }
 
 
     /**
@@ -76,7 +72,11 @@ export class CodeQlService {
         });
     }
 
-
+    /**
+     * Create a CodeQL database for the given project.
+     * @param sourcePath The path to the source code directory.
+     * @param createCodeQlDto The DTO containing project information.
+     */
     async createDatabase(sourcePath: string, createCodeQlDto: any) {
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
         await this.fileUtilService.removeDir(db);
@@ -85,6 +85,11 @@ export class CodeQlService {
         await this.runChildProcess(createDbCommand);
     }
 
+    /**
+     * [Unused] Perform backward slicing on the given project.
+     * @param sourcePath The path to the source code directory.
+     * @param createCodeQlDto The DTO containing project information.
+     */
     async performBackwardSlicing(sourcePath: string, createCodeQlDto: any) {
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
         const extension = 'sarif';
@@ -107,6 +112,11 @@ export class CodeQlService {
 
     }
 
+    /**
+     * Run CWE queries located in "codeql/codeql-custom-queries-java" on the given project.
+     * @param sourcePath The path to the source code directory.
+     * @param createCodeQlDto The DTO containing project information.
+     */
     async runCWEQueries(sourcePath: string, createCodeQlDto: any) {
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');
         const extension = 'sarif';
@@ -132,7 +142,11 @@ export class CodeQlService {
     }
     
 
-
+    /**
+     * Get SARIF results for a specific project that has already been analyzed.
+     * @param project The name of the project to get SARIF results for.
+     * @returns The SARIF results or an error message if the file does not exist.
+     */
     async getSarifResults(project: string) {
         const sourcePath = path.join(this.projectsPath, project);
         console.log(sourcePath);
@@ -143,6 +157,13 @@ export class CodeQlService {
         return await this.parserService.getSarifResults(sourcePath);
     }
 
+    /**
+     * Get the data flow tree for a specific vulnerability in a project.
+     * @param vulnerabilityId The ID of the vulnerability to get the data flow tree for.
+     * @param project The name of the project to get the data flow tree for.
+     * @param index The index of the flow node to get.
+     * @returns The data flow tree for the specified vulnerability.
+     */
     async getDataFlowTree(vulnerabilityId: string, project: string, index: string) {
         {
 

@@ -3,12 +3,9 @@ import {
   Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
-  UseInterceptors,
-  Query
-} from '@nestjs/common';
+
+} 
+from '@nestjs/common';
 import { AnalyzeService } from 'src/analyze/analyze.service';
 
 
@@ -19,8 +16,10 @@ export class AnalyzeController {
 
   /**
    * POST endpoint
-   * Run codeql query against a target project
-   * Body: {"project":"project_name"}
+   * Run analysis on a project
+   * Body: {"project":"project_name", 
+   * ?"javaVersion": "[8, 11, 17, 21]", 
+   * ?"extension": "[csv, json]"}
    *
    * @param createAnalyzeDto Data transfer object with project name
    */
@@ -36,26 +35,5 @@ export class AnalyzeController {
     }
   }
 
-  // @Get()
-  // async getSarifResults(@Query('project') project: string) {
-  //   return await this.analyzeService.getSarifResults(project);
-  // }
-
-  // @Get('vulnerabilityTree')
-  // async getDataFlowTree(
-  //   @Query('vulnerabilityId') vulnerabilityId: string,
-  //   @Query('project') project: string,
-  //   @Query('index') index: string
-
-  // ) {
-
-  //   return await this.analyzeService.getDataFlowTree(vulnerabilityId, project, index);
-  // }
-
-  // @Post('flow-labels')
-  // async submitFlowLabels(@Body() labelData: any) {
-  //   console.log('Test')
-  //   return await this.analyzeService.labelFlows(labelData);
-  // }
 }
 

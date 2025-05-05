@@ -7,6 +7,10 @@ import * as path from 'path';
 import * as readline from 'readline';
 import * as os from 'os';
 
+/**
+ * * FileUtilService is a service that provides utility functions for file operations.
+ * * It includes methods for extracting zip files, reading and writing files, and parsing Java files.
+ */
 @Global()
 @Injectable()
 export class FileUtilService {
@@ -14,7 +18,6 @@ export class FileUtilService {
 
     /**
      * Extract Zip contents to file
-     *
      * @param file Zip binary containing Java Code
      */
     async writeZipFile(file: Express.Multer.File) {
@@ -41,7 +44,6 @@ export class FileUtilService {
 
     /**
      * Recursively find all files with a .java extension in a given directory
-     *
      * @param directoryPath Path to root directory to search for files
      */
     async getJavaFilesInDirectory(directoryPath) {
@@ -72,7 +74,6 @@ export class FileUtilService {
 
     /**
      * Recursively build a list of files in a given directory
-     *
      * @param dirPath Root to build tree from
      */
     async getDirectoryTree(dirPath: string) {
@@ -107,6 +108,10 @@ export class FileUtilService {
         return result;
     }
 
+    /**
+     * Read file contents and return as string
+     * @param filePath Path to file to read
+     */
     async readFileAsync(filePath: string) {
         if (fs.existsSync(filePath)) {
             try {
@@ -119,6 +124,10 @@ export class FileUtilService {
         }
     }
 
+    /**
+     * Read file contents and return as string
+     * @param filePath Path to file to read
+     */
     readJsonFile(filePath: string) {
         if (fs.existsSync(filePath)) {
             try {
@@ -131,6 +140,12 @@ export class FileUtilService {
         }
     }
 
+    /**
+     * Parse JSON file and return variables, strings, comments, and sinks
+     * This is used to read in all the data from "data.json" which stores the results from the Attack Surface Detection Engine.
+     * @param filePath Path to JSON file to parse
+     */
+     async
     parseJSONFile(filePath: string) {
         
         let variables = [];
@@ -196,7 +211,6 @@ export class FileUtilService {
 
     /**
      * Remove directory and contents if it exists
-     *
      * @param dirPath path to directory to delete
      */
     async removeDir(dirPath: string) {
@@ -204,9 +218,18 @@ export class FileUtilService {
             fs.rmSync(dirPath, { recursive: true });
     }
 
+    /**
+     * Process file path to be platform independent
+     * @param sourcePath Path to source directory
+     * @param filePath Path to file to process
+     */
     processFilePath(sourcePath: string, filePath: string) {
         return path.join(sourcePath, filePath.replace('/', '\\'));
     }
+    /**
+     * Get the filename from a file path
+     * @param filePath Path to file to process
+     */
     getFilenameFromPath(filePath: string) {
         var index = filePath.lastIndexOf('/');
         return filePath.substring(index + 1);
@@ -214,7 +237,6 @@ export class FileUtilService {
 
     /**
      * Write to path with utf-8 encoding
-     *
      * @param filePath path to write to
      * @param content content of file
      */
@@ -271,81 +293,17 @@ export class FileUtilService {
     }   
     
 
+    /**
+     * [Unused] Adds file boundaries to prompts for use with LLMs.
+     * @param id 
+     * @param file 
+     * @returns 
+     */
     addFileBoundaryMarkers(id: string, file: string){
         // let fileName = path.basename(filePath);
         return '\n\n-----BEGIN FILE: [' + id + ']----- \n' + file + '\n-----END FILE: [' + id + ']-----'
 
     }
-
-    async buildJarIfNeeded() {
-        const cwd = process.cwd();
-        const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
-    
-        if (!fs.existsSync(jarPath)) {
-            // Build the JAR file
-            console.log("Building JAR for Java Parser")
-            await new Promise<void>((resolve, reject) => {
-                exec('mvn clean package', { cwd: path.resolve(cwd, 'ParseJava') }, (error, stdout, stderr) => {
-                    if (error) {
-                        reject(`Error building JAR: ${stderr}`);
-                        return;
-                    }
-                    resolve();
-                });
-            });
-        }
-    }
-    
-        
-    async parseJavaFile(filePath: string): Promise<JavaParseResult> {
-        const cwd = process.cwd();
-        const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
-        filePath = path.resolve(cwd, filePath);
-    
-        // Run the Java program
-        const result = await this.runJavaProgram(jarPath, filePath);
-        return result;
-    }
-    
-    
-    async runJavaProgram(jarPath: string, filePath: string): Promise<JavaParseResult> {
-        return new Promise((resolve, reject) => {
-            const command = `java -jar ${jarPath} ${filePath}`;
-    
-            exec(command, (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`Error executing command for file ${filePath}: ${stderr}`);
-                    // Return an empty result for this file
-                    resolve({
-                        filename: path.basename(filePath),
-                        variables: [],
-                        comments: [],
-                        strings: [],
-                        sinks: [],
-                        methodCodeMap:[]
-                    });
-                    return;
-                }
-    
-                try {
-                    const result: JavaParseResult = JSON.parse(stdout);
-                    resolve(result);
-                } catch (e) {
-                    // console.error(`Failed to parse JSON: ${e}`);
-                    resolve({
-                        filename: path.basename(filePath),
-                        variables: [],
-                        comments: [],
-                        strings: [],
-                        sinks: [],
-                        methodCodeMap: []
-                    });
-                }
-            });
-        });
-    }
-    
-
 
     convertLabeledDataToMap(labeledData: any): Map<string, Map<string, string[]>> {
         let map = new Map<string, Map<string, string[]>>();
@@ -491,12 +449,5 @@ setJavaVersion(version: number) {
     }
 }
 
-interface JavaParseResult {
-    filename: string;
-    variables: string[];
-    comments: string[];
-    strings: string[];
-    sinks: string[];
-    methodCodeMap: string[];
-}
+
 
