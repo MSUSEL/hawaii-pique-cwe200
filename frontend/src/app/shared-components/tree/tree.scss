@@ -6,7 +6,15 @@ $blue: #0062bd;
     }
 }
 
-.active{
-  color: $blue !important;
-  background-color: transparent !important;
+// .active{
+//   color: $blue !important;
+//   background-color: transparent !important;
+// }
+
+.active {
+  color: white !important;
+  background-color: $blue !important;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 2px 6px;
 }

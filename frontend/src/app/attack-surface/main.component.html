@@ -1,102 +1,91 @@
-<input class="d-none" type="file" (change)="this.utilService.importFromJson($event,fileInput)" #fileInput>
-<!-- <input class="d-none" type="file" (change)="this.utilService.newCVE($event,fileInput)" #fileInput> -->
+<input class="d-none" type="file"
+       (change)="utilService.importFromJson($event, fileInput)"
+       #fileInput>
 
 <header class="bg-header topheader border-bottom">
-    <nav class="navbar navbar-expand-lg border-top py-0 ">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <!-- <li class="nav-item dropdown ">
-                    <a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">File Menu
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <button class="dropdown-item btn" title="Reset project state" (click)="this.utilService.newCVE();"> <i
-                                class="fa fa-file px-2"></i>New </button>
-                        <button class="dropdown-item btn" title="Choose a zip file with your code to start analysis" (click)="fileInput.click();"> <i
-                                class=" fa fa-file-import pl-1 pr-2" ></i>Import Code</button>
-                    </div>
-                </li> -->
-                <li class="nav-item dropdown">
-                    <button class="nav-item btn hover-green" title="Choose a zip file with your code to start analysis" (click)="fileInput.click();"> 
-                        <i class=" fa fa-file-import pl-1 pr-2" ></i>Import</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-item btn hover-green" (click)="openSettingsDialog();">
-                        Settings <i class="fa fa-gear px-2"></i>
-                    </button>
-                </li>
+  <nav class="navbar navbar-expand-sm border-top py-0">
+    <!-- top‐bar menu: left items + export on the right -->
+    <div class="topheader-menu d-flex align-items-center justify-content-between">
+      <ul class="navbar-nav d-flex align-items-center mb-0">
+        <li class="nav-item">
+          <button class="btn hover-green"
+                  title="Choose a zip file with your code to start analysis"
+                  (click)="fileInput.click()">
+            <i class="fa fa-file-import pl-1 pr-2"></i>Import
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="btn hover-green" (click)="openSettingsDialog()">
+            Settings <i class="fa fa-gear px-2"></i>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="btn hover-green" (click)="openHelpDialog()">
+            Help <i class="fa fa-question-circle px-2"></i>
+          </button>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+          <label for="javaVersion"
+                 class="mb-0 mr-2"
+                 style="font-family:'Times New Roman', Times, serif; font-size:16px;">
+            Java Version:
+          </label>
+          <select id="javaVersion"
+                  class="form-control form-control-sm"
+                  style="width:auto; display:inline-block; background:#212529; color:#d3d3d3; border:none; height:25px"
+                  [(ngModel)]="utilService.selectedJavaVersion">
+            <option [value]="8">8</option>
+            <option [value]="11">11</option>
+            <option [value]="17">17</option>
+            <option [value]="21">21</option>
+          </select>
+        </li>
+      </ul>
 
-                <li class="nav-item">
-                    <button class="nav-item btn hover-green" (click)="openHelpDialog();">
-                        Help <i class="fa fa-question-circle px-2"></i>
-                    </button>
-                </li>
-
-                
-
-                <li class="nav-item d-flex align-items-center">
-                    <label for="javaVersion" class="mb-0 mr-2" style="font-size:0.9rem; color:#212529; font-family:'Times New Roman', Times, serif; font-size: 16px; padding: 6px 12px; margin: 0px;">
-                      Java Version:
-                    </label>
-                    <select id="javaVersion"
-                            class="form-control form-control-sm"
-                            style="width: auto; display: inline-block; background-color:#212529; color:#d3d3d3; border:none; height:25px"
-                            [(ngModel)]="utilService.selectedJavaVersion">
-                            >
-                      <option [value]="8">8</option>
-                      <option [value]="11">11</option>
-                      <option [value]="17">17</option>
-                      <option [value]="21">21</option>
-                    </select>
-                  </li>
-            </ul>
-            <div>
-                <button class="nav-item btn hover-green" (click)="openDialog()" [disabled]="true">
-                    Export <i class="fa fa-file-export px-2"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-
+      <button class="btn hover-green" (click)="openDialog()" [disabled]="true">
+        Export <i class="fa fa-file-export px-2"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 
 <div class="wrapper">
-    <div class="left-sidebar">
-        <nav id="bugs-list" class="sticky">
-            <div class="searchbox border-bottom">
-                <i class="fa fa-search fa-lg"></i>
-                <input type="text" class="form-control pl-5 border-0" placeholder="search" [(ngModel)]="SearchTerm">
-            </div>
-            <div class="files-list" style="border-top:1px solid white;">
-                <directory-tree [treeData]="utilService.directoryFilesTree"></directory-tree>
-            </div>
-            <div class="flow-tree-box mt-4">
-                <app-data-flow-tree [treeData]="dataFlowTree"></app-data-flow-tree>
-            </div>
-        </nav>
+  <div class="left-sidebar">
+    <nav id="bugs-list" class="sticky">
+      <div class="searchbox border-bottom">
+        <i class="fa fa-search fa-lg"></i>
+        <input type="text"
+               class="form-control pl-5 border-0"
+               placeholder="search"
+               [(ngModel)]="SearchTerm">
+      </div>
+      <div class="files-list" style="border-top:1px solid white;">
+        <directory-tree [treeData]="utilService.directoryFilesTree"></directory-tree>
+      </div>
+      <div class="flow-tree-box mt-4">
+        <app-data-flow-tree [treeData]="dataFlowTree"></app-data-flow-tree>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Resizer between left‐sidebar and contents -->
+  <div class="resizer resizer-left"></div>
+
+  <div class="contents">
+    <app-page-header></app-page-header>
+    <div class="content-container h-100" id="weaknesses">
+      <app-editor-terminal id="terminal" class="middle-sidebar d-none"></app-editor-terminal>
+      <app-code-editor></app-code-editor>
     </div>
+  </div>
 
-    <!-- Resizer between left-sidebar and contents -->
-    <div class="resizer resizer-left"></div>
+  <!-- Resizer between contents and right‐sidebar -->
+  <div class="resizer resizer-right"></div>
 
-    <div class="contents">
-        <app-page-header></app-page-header>
-        <div class="content-container h-100" id="weaknesses">
-            <app-editor-terminal id="terminal" class="middle-sidebar d-none"></app-editor-terminal>
-            <app-code-editor></app-code-editor>
-        </div>
+  <div class="right-sidebar" id="right-bugs-list">
+    <div class="sticky"></div>
+    <div class="right-sidebar-content">
+      <app-code-ql></app-code-ql>
     </div>
-
-    <!-- Resizer between contents and right-sidebar -->
-    <div class="resizer resizer-right"></div>
-
-    <div class="right-sidebar" id="bugs-list">
-        <div class="sticky">
-            <app-code-ql></app-code-ql>
-        </div>
-    </div>
+  </div>
 </div>

@@ -12,13 +12,16 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <style>
+  html, body {
+    height: 100%;
+  }
+
   /* Prevent scrolling on the body element */
   body.mat-typography {
-    overflow: hidden;
-    /* height: 90vh; */
+    overflow-x: hidden;    
   }
 </style>
-<body class="mat-typography">
+<body class="mat-typography d-flex flex-column min-vh-100">
   <app-root></app-root>
 </body>
 </html>

@@ -1,0 +1,59 @@
+.codeql-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%; // Important to fill .right-sidebar-content
+    overflow: hidden;
+  }
+  
+  .codeql-tab-header {
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: inherit;
+    height: 33px; // Match the left sidebar height exactly
+    display: flex;
+    align-items: center;
+  
+    > ul {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+  
+      .nav-item {
+        height: 100%;
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        position: relative;
+        
+  
+        .nav-link {
+          height: 100%;
+          display: flex;
+          align-items: center;
+        //   font-size: clamp(0.9rem, 1vw, 1.05rem);
+          font-family: "Times New Roman", Times, serif;
+          padding: 0 12px; // control horizontal spacing
+          position: relative;
+
+          font-size: clamp(0.8rem, 1.5vw, 1rem);
+        }
+      }
+    }
+  }
+  
+  .codeql-tab-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding-right: 5px;
+    overflow-x: hidden;
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(0.9rem, 1vw, 1.05rem);
+  }
+
+  
+  

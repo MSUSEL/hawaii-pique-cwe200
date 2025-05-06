@@ -95,3 +95,80 @@ $bg-header: darken($light, 2%);
     }
 }
 
+.navbar {
+    flex-wrap: wrap !important;
+  }
+
+
+  @media (max-width: 768px) {
+    .navbar-nav {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+  
+    .nav-item {
+      width: 100%;
+      margin-bottom: 5px;
+  
+      button {
+        width: 100%;
+        font-size: 14px;
+        padding: 6px 8px;
+      }
+    }
+  }
+
+  header,
+.navbar {
+  overflow: visible !important;
+}
+
+.bg-header {
+    background: $bg-header;
+    height: auto !important;
+    min-height: 40px;
+  }
+  
+  // make the menu a single, non-wrapping flex row with horizontal scroll if needed
+.topheader-menu {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    align-items: center;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    .navbar-nav {
+      flex-wrap: nowrap !important;
+    }
+    .nav-item {
+      flex: 0 1 auto;    // allow each item to shrink
+    }
+    .btn {
+      white-space: nowrap;
+      min-width: auto;   // don’t force a minimum width
+    }
+    > div.ml-auto {
+        margin-left: auto !important;
+      }
+  }
+  
+  // base sizes (desktop)
+  .topheader-menu .btn   { font-size: 1rem; padding: .375rem .75rem; }
+  .topheader-menu label  { font-size: 1rem; margin-right: .5rem; }
+  .topheader-menu select { font-size: 1rem; }
+  
+  // medium screens (<992px)
+  @media (max-width: 991.98px) {
+    .topheader-menu .btn   { font-size: .9rem; padding: .3rem .6rem; }
+    .topheader-menu label  { font-size: .9rem; margin-right: .4rem; }
+    .topheader-menu select { font-size: .9rem; }
+  }
+  
+  // small screens (<768px)
+  @media (max-width: 767.98px) {
+    .topheader-menu .btn   { font-size: .8rem; padding: .25rem .5rem; }
+    .topheader-menu label  { font-size: .8rem; margin-right: .3rem; }
+    .topheader-menu select { font-size: .8rem; }
+  }

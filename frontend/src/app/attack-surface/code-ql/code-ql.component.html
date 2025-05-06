@@ -1,21 +1,25 @@
-<ul class="nav nav-pills nav-justified border-bottom right-tab py-0" id="myTab" role="tablist">
-    <li class="nav-item " role="presentation">
-        <button class="nav-link active hover-green" id="rules-tab" data-toggle="tab" data-target="#rules" type="button" role="tab"
+<!-- app-code-ql.component.html -->
+<div class="codeql-wrapper">
+    <div class="codeql-tab-header">
+      <ul class="nav nav-pills nav-justified border-bottom right-tab py-0" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active hover-green" id="rules-tab" data-toggle="tab" data-target="#rules" type="button" role="tab"
             aria-controls="rules" aria-selected="true"><i class="fa fa-exclamation-triangle pr-3"></i> Rules</button>
-    </li>
-    <li class="nav-item  border-0" role="presentation">
-        <button class="nav-link hover-green" id="locations-tab" data-toggle="tab" data-target="#locations" type="button" role="tab"
-            aria-controls="locations" aria-selected="false"> <i class=" fa fa-file-code pr-3"></i>Locations</button>
-    </li>
-
-</ul>
-<div class="tab-content " id="myTabContent">
-    <div class="tab-pane fade show active bg-creamy" id="rules" role="tabpanel" aria-labelledby="rules-tab">
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link hover-green" id="locations-tab" data-toggle="tab" data-target="#locations" type="button" role="tab"
+            aria-controls="locations" aria-selected="false"><i class="fa fa-file-code pr-3"></i> Locations</button>
+        </li>
+      </ul>
+    </div>
+  
+    <div class="codeql-tab-content tab-content" id="myTabContent">
+      <div class="tab-pane fade show active bg-creamy" id="rules" role="tabpanel" aria-labelledby="rules-tab">
         <app-rule-tree [treeData]="editorService.rulesTree"></app-rule-tree>
-    </div>
-    <div class="tab-pane fade bg-creamy" id="locations" role="tabpanel" aria-labelledby="locations-tab">
+      </div>
+      <div class="tab-pane fade bg-creamy" id="locations" role="tabpanel" aria-labelledby="locations-tab">
         <app-location-tree [treeData]="editorService.locationsTree"></app-location-tree>
-        
+      </div>
     </div>
-   
-</div>
+  </div>
+  

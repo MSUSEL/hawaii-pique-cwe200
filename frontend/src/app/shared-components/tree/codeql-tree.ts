@@ -91,6 +91,7 @@ export class RuleTree {
 export class RuleTreeComponent extends RuleTree implements OnInit, OnChanges {
     @Input() treeData: any[] = [];
     @Output() nodeSelected = new EventEmitter<any>();
+    activeNode: RuleFlatNode | null = null;
 
     constructor(
         protected override editorService: EditorService, // Add 'override' keyword
@@ -111,6 +112,7 @@ export class RuleTreeComponent extends RuleTree implements OnInit, OnChanges {
 
     findFile(node: any) {
         // Find the file in the editor
+        this.activeNode = node;
         this.editorService.findFile(node);
         this.dataFlowService.findFlow(node)
         console.log('Codeql Tree:', node);
@@ -129,6 +131,8 @@ export class RuleTreeComponent extends RuleTree implements OnInit, OnChanges {
 export class LocationsTreeComponent extends RuleTree implements OnInit, OnChanges {
     @Input() treeData: any[] = [];
     @Output() nodeSelected = new EventEmitter<any>();
+    activeNode: RuleFlatNode | null = null;
+
 
     constructor(
         protected override editorService: EditorService, // Add 'override' keyword
@@ -149,6 +153,7 @@ export class LocationsTreeComponent extends RuleTree implements OnInit, OnChange
 
     findFile(node: any) {
         // Find the file in the editor
+        this.activeNode = node;
         this.editorService.findFile(node);
         console.log('Node clicked in locations:', node);
 
