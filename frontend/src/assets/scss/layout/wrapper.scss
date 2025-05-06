@@ -88,6 +88,7 @@ html, body {
     color: $standard-fontcolor;
     height: 100%;
     min-height: 100%;
+    overflow: hidden;
   
     .close-sidebar-button {
       display: none;
@@ -144,9 +145,10 @@ html, body {
     .right-sidebar-content {
       flex: 1 1 auto;
       overflow-y: auto;
-      overflow-x: hidden;
+      overflow-x: auto;
       padding: 10px;
       min-height: 0;
+      padding-bottom: 50px;
     }
 
     // .codeql-tab-content-tab-content{
