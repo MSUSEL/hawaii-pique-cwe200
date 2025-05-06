@@ -4,7 +4,7 @@
     align-items: stretch;
     perspective: 1500px;
     font-family: Cairo;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden;
     overflow-y: hidden;
 }
 
@@ -12,65 +12,69 @@
 .left-sidebar {
     display: flex;
     flex-direction: column;
-    max-height: 100vh; /* Ensure sidebar takes full viewport height */
-    min-width: 320px;
-    max-width: 320px;
-    position: relative; /* Ensure the data flow box is positioned relative to the sidebar */
-    overflow: hidden; /* Prevent content overflow */
+    max-height: 100vh;
+    flex-shrink: 0;
+    width: clamp(200px, 22vw, 320px);
+    position: relative;
+    overflow: hidden;
     background: $card-bg-color;
     border-right: 2px solid $card-border-color;
     color: $standard-fontcolor;
     transition: all 0.5s cubic-bezier(0.945, 0.02, 0.27, 0.665);
     transform-origin: bottom right;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden;
 
     &.active {
-        margin-left: -320px;
+        margin-left: calc(-1 * clamp(200px, 22vw, 320px));
         width: 0px !important;
     }
-    
+
     .close-sidebar-button {
         display: none;
     }
+
+    * {
+        font-size: clamp(0.75rem, 1vw, 1rem);
+        padding: clamp(4px, 0.5vw, 10px);
+        min-width: 0;
+        box-sizing: border-box;
+    }
 }
 
-/* Flex-grow for content above the data-flow-box */
 .left-sidebar > *:not(.flow-tree-box) {
-    flex-grow: 1; /* Ensure content above can take available space */
-    overflow-y: auto; /* Allow scrolling for content */
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
 .files-list {
     flex-grow: 1;
-    overflow-y: auto; /* Enable scrolling for file list */
+    overflow-y: auto;
     padding-left: 10px;
-    font-size: 17px;
+    font-size: clamp(0.9rem, 1vw, 1.05rem);
     font-family: "Times New Roman", Times, serif;
     border-top: 1px solid white;
-    max-height: 50%; /* Ensure it takes up to 50% of the height */
+    max-height: 50%;
 }
 
-/* Data flow tree box */
 .flow-tree-box {
-    max-height: 50%; /* Ensure the data flow takes the bottom half */
+    max-height: 50%;
     width: 100%;
-    overflow-y: auto; /* Scrollable if content overflows */
+    overflow-y: auto;
     padding: 10px;
     background-color: #f5f5f5;
     flex-shrink: 0;
 }
 
-/* Right Sidebar Styling */
 .right-sidebar {
     min-width: 400px;
     max-width: 400px;
-    width: 300px; /* Set a fixed width for the sidebar */
-    height: 100vh; /* Full viewport height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Disable horizontal scrolling */
-    position: fixed; /* Fix the sidebar in place */
-    right: 0; /* Align the sidebar to the right */
-    top: 0; /* Align the sidebar to the top */
+    width: 300px;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: fixed;
+    right: 0;
+    top: 0;
     background: $card-bg-color;
     border-left: 2px solid $card-border-color;
     color: $standard-fontcolor;
@@ -102,7 +106,7 @@
         .nav-item {
             .nav-link {
                 position: absolute;
-                font-size: 17px;
+                font-size: clamp(0.9rem, 1vw, 1.05rem);
                 color: $standard-fontcolor;
                 min-width: 150px;
                 padding-top: 0;
@@ -121,10 +125,9 @@
     }
 }
 
-/* Contents area */
 .contents {
-    flex-grow: 1; /* Ensure it grows to take up remaining space */
-    width: calc(100% - 320px); /* Adjust based on sidebar widths */
+    flex-grow: 1;
+    width: 100%;
     min-height: 87vh;
     transition: all 0.1s;
     padding-bottom: 100px;
@@ -133,13 +136,12 @@
     overflow: hidden !important;
 }
 
-/* Middle Sidebar */
 .middle-sidebar {
     position: fixed;
     z-index: 10;
     top: 46px;
     right: 400px;
-    left: 320px;
+    left: clamp(200px, 22vw, 320px);
     bottom: 0px;
     background: #1e1e1e;
     color: #e6e6e6;
@@ -172,12 +174,10 @@
     color: #f50000;
 }
 
-/* Highlighted line styling */
 .highlight-line {
-    background-color: rgba(255, 255, 0, 0.3) !important; /* Light yellow highlight */
+    background-color: rgba(255, 255, 0, 0.3) !important;
 }
 
-/* Flow Tab Container (scalable with viewport) */
 .flow-tab-container {
     display: block;
     max-height: 450px;
@@ -187,55 +187,44 @@
     background-color: #f5f5f5;
 }
 
-/* Flow (group) tab styles */
 .flow-tab {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     cursor: pointer;
-    width: 100%; /* Ensure full width */
+    width: 100%;
 }
 
-.flow-tab-header {
+.flow-tab-header,
+.node-tab-header {
     background-color: #e7e7e7;
-    padding: 10px;
+    padding: clamp(5px, 1vw, 10px);
     border-bottom: 1px solid #ccc;
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Ensure overflow is hidden */
-    text-overflow: ellipsis; /* Add ellipsis if text overflows */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: clamp(0.75rem, 1vw, 1rem);
+    max-width: 100%;
 }
 
 .flow-tab-header.active-flow {
-    background-color: #d0e7ff;  /* Light blue background when clicked */
+    background-color: #d0e7ff;
 }
 
 .flow-tab-header.active-flow:hover {
-    background-color: #0390fc;  /* Dark blue on hover for active tabs */
+    background-color: #0390fc;
 }
 
-.flow-tab-header:hover {
-    background-color: #d7d7d7;  /* Lighter gray on hover for inactive tabs */
+.flow-tab-header:hover,
+.node-tab-header:hover {
+    background-color: #d7d7d7;
 }
 
-/* Node tab styles within the flow */
 .node-tab {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     cursor: pointer;
     background-color: #f7f7f7;
-    width: 100%; /* Ensure full width */
-}
-
-.node-tab-header {
-    background-color: #e7e7e7;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.node-tab-header:hover {
-    background-color: #d7d7d7;
+    width: 100%;
 }
 
 .node-tab-header.active-header {
@@ -251,7 +240,7 @@
 
 .node-tab-content p {
     margin: 0;
-    padding: 5px 0; /* Consistent spacing */
+    padding: 5px 0;
     display: flex;
     align-items: center;
 }
@@ -261,7 +250,6 @@
     line-height: 1.5;
 }
 
-/* Scrollable vertical container */
 .flow-tab-container::-webkit-scrollbar {
     width: 8px;
 }
@@ -275,22 +263,20 @@
     background-color: #f1f1f1;
 }
 
-/* Truncate long text */
 .truncate {
     display: inline-block;
-    max-width: 150px;
+    max-width: 90%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 768px) {
     .left-sidebar, .right-sidebar {
-        min-width: 200px;
-        max-width: 250px;
+        min-width: 180px;
+        max-width: 220px;
     }
     .contents {
-        width: calc(100% - 200px);
+        width: 100%;
     }
 }
