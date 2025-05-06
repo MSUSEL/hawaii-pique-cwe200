@@ -13,7 +13,11 @@ export class CodeQlParserService {
     constructor(private fileService: FileUtilService) {
 
     }
-
+    /**
+     * This function is used to parse the SARIF file and extract the results.
+     * @param sourcePath - The path to the source directory.
+     * @returns 
+     */
     async getSarifResults(sourcePath: string) {
         const sarifPath = path.join(sourcePath, 'result.sarif');
         const data = await this.fileService.readJsonFile(sarifPath);
@@ -30,8 +34,12 @@ export class CodeQlParserService {
         return { rulesTree, locationsTree };
       }
     
-    // This function is used to filter flows out that are likely false positives. 
-    // The labeling along with the flows can be found in the flowMapsByCWE.json for each project.
+    /**
+     * This function is used to filter flows out that are likely false positives. 
+     * The labeling along with the flows can be found in the flowMapsByCWE.json for each project.
+     * @  param results - The results array from the SARIF file.
+     * @returns - The filtered results array with only relevant flows.
+     */
     filterResults(results){
         // Initialize counters for flow logging.
         let totalFlowCount = 0;       // Total flows encountered
@@ -71,9 +79,13 @@ export class CodeQlParserService {
         return results
     }
       
-      
-
-    // This function is used to get all the data flow trees for a specific result index
+    /**
+     * This function is used to get all the data flow trees for a specific result index
+     * @param filePath - The path to the source directory.
+     * @param project - The name of the project to get flow nodes for
+     * @param index - The index of the flow node to get
+     * @returns - The flow nodes for the specified vulnerability
+     */
     async getDataFlowTree(filePath: string, project: string, index: string) {
         // const sarifPath = path.join(project, 'result.sarif');
         // const data = await this.fileService.readJsonFile(sarifPath);
@@ -103,6 +115,12 @@ export class CodeQlParserService {
         }
     }
     
+    /**
+     * This function is used to save the data flow trees for each CWE in a separate file.
+     * This format is used as input for the Flow Verification Engine.
+     * It is more readable and easier to work with than the SARIF file.
+     * @param project - The name of the project to save the flow maps for
+     */
     async saveDataFlowTree(project: string) {
         const sarifPath = path.join(project, 'result.sarif');
         const data = await this.fileService.readJsonFile(sarifPath);
@@ -181,8 +199,14 @@ export class CodeQlParserService {
         }
       }
       
-      
-
+    
+      /**
+       * This function is used to build a map of flow nodes for a given code flow.
+       * It reads the file at the specified path and extracts the relevant lines of code.
+       * @param codeFlows - The code flows to be processed.
+       * @param project - The path to the source directory.
+       * @returns - A map of flow nodes with their details.
+       */
     async buildDataFlowMap(codeFlows: any[], project: string): Promise<{ [key: number]: FlowNode }> {
         const flowMap: { [key: number]: FlowNode } = {};
 
@@ -259,7 +283,13 @@ export class CodeQlParserService {
         return flowMap; // Return the flow map after all files have been read
     }
 
-
+    /**
+     * This function is used to parse the rules and results from the SARIF file.
+     * @param rules - The rules from the SARIF file.
+     * @param results - The results from the SARIF file.
+     * @param sourcePath - The path to the source directory.
+     * @returns - A map of rules with their details and associated files.
+     */
     parseRules(rules: any[], results: any[], sourcePath: string) {
         const rulesMap = new Map();
         const fileMap = new Map();  // Map to track files and their associated rules
@@ -326,6 +356,14 @@ export class CodeQlParserService {
         // Convert the Map values to an array since the final result expects an array
         return Array.from(rulesMap.values());
     }
+
+
+    /**
+     * This function is used to convert the SARIF results to CSV format.
+     * This is used by the PIQUE tool to read the results.
+     * @param sourcePath - The path to the source directory.
+     * @returns - The CSV data as a string.
+     */
     async getcsvResults(sourcePath: string) {
         // Construct the SARIF file path
         const sarifPath = path.join(sourcePath, 'result.sarif');
@@ -372,7 +410,13 @@ export class CodeQlParserService {
         }
     }
     
-    
+    /**
+     * This function is used to parse the SARIF results and extract the relevant information.
+     * @param rules - The rules from the SARIF file.
+     * @param results - The results from the SARIF file.
+     * @param sourcePath - The path to the source directory.
+     * @returns - A map of rules with their details and associated files.
+     */
     parseResults(rules: any[], results: any[],sourcePath:string) {
         var resultList: Array<{ name: string; fullPath: string, files:any[] }> = [];
         for (let i = 0; i < results.length; i++) {
@@ -410,6 +454,11 @@ export class CodeQlParserService {
         return resultList;
     }
 
+    /**
+     * This function is used to correct the path for the current operating system.
+     * @param filePath - The path to the source directory.
+     * @returns - The corrected path for the current operating system.
+     */
     correctPath(filePath: string) {
         if (os.platform() === 'win32') {
             return filePath.replace(/\//g, '\\');
