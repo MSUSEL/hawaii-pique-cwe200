@@ -15,25 +15,23 @@ sys.stderr.reconfigure(encoding='utf-8')
 ##########################################
 # Data Processing Functions
 ##########################################
-def camel_case_split(str_input):
-    words = [[str_input[0]]]
-    for c in str_input[1:]:
-        if words[-1][-1].islower() and c.isupper():
-            words.append([c])
-        else:
-            words[-1].append(c)
-    return [''.join(word) for word in words]
-
-def text_preprocess(feature_text):
-    words = camel_case_split(feature_text)
-    return ' '.join(words).lower()
-
 def read_data_flow_file(file_path):
+    """Read a JSON file containing labeled data flows.
+    Loads raw labeled flow data for later processing.
+
+    :param file: path to JSON file
+    :returns: loaded JSON object
+    """
     with open(file_path, "r", encoding='utf-8') as f:
         data_flows = json.load(f)
     return data_flows
 
 def process_data_flows_for_inference(data_flows):
+    """Process the loaded data flows for inference.
+    Extracts relevant information and formats it for embedding.
+    :param data_flows: loaded JSON object
+    :returns: processed data flows and their references
+    """
     processed_data_flows = []
     flow_references = []
     for cwe in data_flows.keys():
@@ -50,21 +48,25 @@ def process_data_flows_for_inference(data_flows):
     return processed_data_flows, flow_references
 
 def format_data_flows_for_graphcodebert(processed_flows):
+    """Format the processed data flows for GraphCodeBERT embedding.
+    In the training script, the processed flow had other information, such as the file name and the result index.
+    Since this is inference, the processed flow is just a string already. I kept this function for consistency.
+    :param processed_flows: list of processed data flows
+    :returns: formatted data flows
+    """
     return processed_flows  # Already a list of strings
 
 ##########################################
 # Embedding Functions with GraphCodeBERT + LSTM
 ##########################################
-import torch.nn as nn
-class RNNAggregator(nn.Module):
-    def __init__(self, embedding_dim):
-        super(RNNAggregator, self).__init__()
-        self.lstm = nn.LSTM(input_size=embedding_dim, hidden_size=embedding_dim, num_layers=1, batch_first=True)
-    def forward(self, x):
-        output, (h_n, c_n) = self.lstm(x)
-        return h_n
-    
+import torch.nn as nn    
 class TransformerAggregator(nn.Module):
+    """Transformer-based aggregator for embeddings.
+    This module uses a Transformer encoder to process the embeddings and aggregate them.
+    This is needed because GraphCodeBERT only has a context window of 512 tokens.
+    The transformer encoder will process the embeddings and aggregate them into a single vector 
+    so that extra data don't get trunicated.
+    """
     def __init__(self, embedding_dim, num_heads=4, num_layers=1):
         super(TransformerAggregator, self).__init__()
         encoder_layer = nn.TransformerEncoderLayer(
@@ -87,6 +89,15 @@ class TransformerAggregator(nn.Module):
         return torch.mean(encoded, dim=1)
 
 def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=512):
+    """Embed a single sentence using GraphCodeBERT and the aggregator.
+    :param sentence: input sentence to embed
+    :param tokenizer: tokenizer for GraphCodeBERT
+    :param model: GraphCodeBERT model
+    :param aggregator: aggregator for embeddings
+    :param device: device to run the model on (CPU or GPU)
+    :param max_length: maximum length of the input sequence
+    :returns: aggregated embedding for the sentence
+    """
     encoding = tokenizer(sentence, return_tensors="pt", truncation=False)
     input_ids = encoding["input_ids"][0]
     
@@ -114,6 +125,15 @@ def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=51
         return aggregated_embedding
 
 def calculate_graphcodebert_vectors(sentences, model_path, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda', aggregator_cls=RNNAggregator):
+    """Calculate GraphCodeBERT embeddings for a list of sentences.
+    :param sentences: list of sentences to embed
+    :param model_path: path to the model file
+    :param model_name: name of the GraphCodeBERT model
+    :param max_length: maximum length of the input sequence
+    :param device: device to run the model on (CPU or GPU)
+    :param aggregator_cls: class of the aggregator to use (default is RNNAggregator)
+    :returns: numpy array of embeddings for the sentences
+    """
     print(f"Using device {device} for encoding")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
@@ -139,6 +159,10 @@ def calculate_graphcodebert_vectors(sentences, model_path, model_name='microsoft
 # Model Loading and Inference Functions
 ##########################################
 def load_model(model_path):
+    """Load the trained model from the specified path.
+    :param model_path: path to the model file
+    :returns: loaded model
+    """
     print(f"Loading model from {model_path}...")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = torch.jit.load(model_path, map_location=device)
@@ -146,6 +170,11 @@ def load_model(model_path):
     return model
 
 def predict_labels(model, embeddings):
+    """Run inference on the embeddings using the loaded model.
+    :param model: loaded model
+    :param embeddings: numpy array of embeddings
+    :returns: predicted labels and probabilities
+    """
     print("Running inference...")
     device = next(model.parameters()).device
     batch_tensor = torch.tensor(embeddings, dtype=torch.float32).to(device)
@@ -158,6 +187,13 @@ def predict_labels(model, embeddings):
     return predicted_labels, predicted_probs
 
 def update_json_with_predictions(data_flows, flow_references, predicted_labels, predicted_probs):
+    """Update the original JSON with the predicted labels and probabilities.
+    :param data_flows: original JSON object
+    :param flow_references: list of references to the flows in the original JSON
+    :param predicted_labels: list of predicted labels
+    :param predicted_probs: list of predicted probabilities
+    :returns: updated JSON object
+    """
     print("Updating JSON with predictions...")
     if len(predicted_probs.shape) > 1:
         predicted_probs = predicted_probs.flatten()
@@ -172,6 +208,11 @@ def update_json_with_predictions(data_flows, flow_references, predicted_labels, 
     return data_flows
 
 def save_updated_json(data_flows, input_file_path):
+    """Save the updated JSON object to a new file.
+    :param data_flows: updated JSON object
+    :param input_file_path: path to the original JSON file
+    :returns: path to the saved JSON file
+    """
     output_file_path = os.path.splitext(input_file_path)[0] + ".json"
     print(f"Saving updated JSON to {output_file_path}...")
     with open(output_file_path, 'w', encoding='utf-8') as f:
@@ -182,6 +223,11 @@ def save_updated_json(data_flows, input_file_path):
 # Main Inference Function
 ##########################################
 def run(project_path, model_path):
+    """Main function to run the inference pipeline.
+    :param project_path: path to the project directory
+    :param model_path: path to the trained model file
+    """
+    print(f"Running inference for project: {project_path}")
     input_json_path = os.path.join(project_path, 'flowMapsByCWE.json')
     model = load_model(model_path)
     

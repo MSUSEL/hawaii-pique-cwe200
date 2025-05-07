@@ -19,30 +19,27 @@ warnings.simplefilter("ignore", FutureWarning)
 
 from skorch import NeuralNetClassifier
 
-
 ##########################################
 # Data Processing Functions
 ##########################################
 def read_data_flow_file(file):
+    """Read a JSON file containing labeled data flows.
+    Loads raw labeled flow data for later processing.
+
+    :param file: path to JSON file
+    :returns: loaded JSON object
+    """
     with open(file, "r") as f:
         data_flows = json.load(f)
     return data_flows
 
-def camel_case_split(str_input):
-    words = [[str_input[0]]]
-    for c in str_input[1:]:
-        if words[-1][-1].islower() and c.isupper():
-            words.append([c])
-        else:
-            words[-1].append(c)
-    return [''.join(word) for word in words]
-
-def text_preprocess(feature_text):
-    words = camel_case_split(feature_text)
-    preprocessed_text = ' '.join(words).lower()
-    return preprocessed_text
-
 def process_data_flows(labeled_flows_dir):
+    """Parse, deduplicate, and label all data flows from directory.
+    Prepares clean and unique flows for training and evaluation.
+
+    :param labeled_flows_dir: directory containing labeled flow files
+    :returns: NumPy array of processed flows
+    """
     processed_data_flows = []
     seen_flow_hashes = set()
     total_flows = 0
@@ -91,6 +88,12 @@ def process_data_flows(labeled_flows_dir):
     return np.array(processed_data_flows)
 
 def format_data_flows_for_graphcodebert(processed_flows):
+    """Extract flow text strings from preprocessed flows.
+    Needed to prepare text for GraphCodeBERT input.
+
+    :param processed_flows: list or array of processed data flow rows
+    :returns: list of flow text strings
+    """
     formatted_flows = []
     for row in processed_flows:
         flow_text = row[3]
@@ -101,6 +104,11 @@ def format_data_flows_for_graphcodebert(processed_flows):
 # Embedding Functions with LSTM Aggregation
 ##########################################
 class RNNAggregator(nn.Module):
+    """ [Unused] LSTM-based aggregator for encoding segmented input.
+    Aggregates embeddings across token segments using LSTM.
+
+    :param embedding_dim: dimension of each token embedding
+    """
     def __init__(self, embedding_dim):
         super(RNNAggregator, self).__init__()
         self.lstm = nn.LSTM(input_size=embedding_dim, hidden_size=embedding_dim, num_layers=1, batch_first=True)
@@ -109,6 +117,13 @@ class RNNAggregator(nn.Module):
         return h_n  # Use the final hidden state
 
 class TransformerAggregator(nn.Module):
+    """Transformer encoder for aggregating token sequences.
+    Captures contextual relationships using self-attention.
+
+    :param embedding_dim: input/output embedding size
+    :param num_heads: number of attention heads
+    :param num_layers: number of encoder layers
+    """
     def __init__(self, embedding_dim, num_heads=4, num_layers=1):
         super(TransformerAggregator, self).__init__()
         encoder_layer = nn.TransformerEncoderLayer(
@@ -131,6 +146,17 @@ class TransformerAggregator(nn.Module):
         return torch.mean(encoded, dim=1)
 
 def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=512):
+    """Embed sentence using model and aggregator with optional segmentation.
+    Handles long sequences by segmenting and recombining with RNN/Transformer.
+
+    :param sentence: input string
+    :param tokenizer: tokenizer instance from Hugging Face
+    :param model: transformer model instance
+    :param aggregator: module to aggregate segments (RNN or Transformer)
+    :param device: target device (e.g., 'cuda')
+    :param max_length: token cutoff length per segment
+    :returns: sentence embedding as a 1D NumPy array
+    """
     encoding = tokenizer(sentence, return_tensors="pt", truncation=False)
     input_ids = encoding["input_ids"][0]
     
@@ -159,6 +185,16 @@ def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=51
         return aggregated_embedding
 
 def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda', aggregator_cls=RNNAggregator):
+    """Compute embeddings using GraphCodeBERT + sequence aggregator.
+    Generates contextual vector embeddings for input flows.
+
+    :param sentences: list of flow text strings
+    :param model_name: Hugging Face model name
+    :param max_length: max tokens per segment
+    :param device: target computation device
+    :param aggregator_cls: class for aggregation (e.g., RNN, Transformer)
+    :returns: stacked NumPy array of embeddings
+    """
     print(f"Using device {device} for encoding")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
@@ -178,28 +214,16 @@ def calculate_graphcodebert_vectors(sentences, model_name='microsoft/graphcodebe
     print(f"Aggregator state dict saved at {os.path.join(model_dir, 'aggregator.pt')}")
     return np.vstack(embeddings)
 
-def calculate_T5_vectors(sentences, model_name='google/flan-t5-large', max_length=512, device='cuda'):
-    print(f"Using device {device} for encoding")
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModel.from_pretrained(model_name)
-    model.to(device)
-    model.eval()
-    
-    embedding_dim = model.config.hidden_size
-    aggregator = RNNAggregator(embedding_dim)
-    aggregator.to(device)
-    aggregator.eval()
-    
-    embeddings = []
-    for sentence in tqdm(sentences, desc="Embedding with T5"):
-        embedding = embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=max_length)
-        embeddings.append(embedding)
-    return np.vstack(embeddings)
-
 ##########################################
 # PyTorch Classifier Model
 ##########################################
 def get_activation(act_name):
+    """Return PyTorch activation function by name.
+    Enables dynamic activation configuration.
+
+    :param act_name: string name of activation function
+    :returns: PyTorch activation function instance
+    """
     if act_name == 'relu':
         return nn.ReLU()
     elif act_name == 'leaky_relu':
@@ -212,6 +236,13 @@ def get_activation(act_name):
         raise ValueError(f"Unsupported activation: {act_name}")
 
 class ClassifierModel(nn.Module):
+    """Feed-forward neural network for binary classification.
+    Predicts sensitive vs. non-sensitive flows using dense layers.
+
+    :param embedding_dim: input feature size per sample
+    :param dropout_rate: dropout rate for regularization
+    :param activation: string name for activation function
+    """
     def __init__(self, embedding_dim, dropout_rate=0.2, activation='elu'):
         super(ClassifierModel, self).__init__()
         units1 = embedding_dim
@@ -284,6 +315,11 @@ class ClassifierModel(nn.Module):
 from sklearn.model_selection import RandomizedSearchCV, ParameterSampler
 
 class TqdmRandomizedSearchCV(RandomizedSearchCV):
+    """RandomizedSearchCV with progress tracking via tqdm.
+    Enhances visibility into hyperparameter tuning progress.
+
+    :param RandomizedSearchCV: base class from sklearn
+    """
     def _run_search(self, evaluate_candidates):
         param_list = list(ParameterSampler(self.param_distributions, self.n_iter, random_state=self.random_state))
         for params in tqdm(param_list, desc="Total fits"):
@@ -293,6 +329,11 @@ class TqdmRandomizedSearchCV(RandomizedSearchCV):
 # Training, Hyperparameter Tuning, and Evaluation
 ##########################################
 if __name__ == "__main__":
+    """Run end-to-end training and evaluation pipeline.
+    Coordinates preprocessing, embedding, model tuning, and saving.
+
+    :returns: None
+    """
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print("Using device:", device)
     
