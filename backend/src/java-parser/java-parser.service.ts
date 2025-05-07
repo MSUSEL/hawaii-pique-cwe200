@@ -8,7 +8,7 @@ import { EventsGateway } from 'src/events/events.gateway';
 import { FileUtilService } from 'src/files/fileUtilService';
 
 /**
- * * JavaParserService is a service that provides functionality to parse Java files and extract relevant information.
+ * JavaParserService is a service that provides functionality to parse Java files and extract relevant information.
  */
 @Global()
 @Injectable()
@@ -26,11 +26,11 @@ export class JavaParserService {
             
         }
     /**
-     * * A wrapper that kicks off the parsing.
-     * * @param filePaths - An array of file paths to be parsed.
-     * * @param sourcePath - The path to the source directory.
-     * * @returns A promise that resolves to an object containing the parsed results.
-     * * @throws Error if the parsing fails.
+     * A wrapper that kicks off the parsing.
+     * @param filePaths - An array of file paths to be parsed.
+     * @param sourcePath - The path to the source directory.
+     * @returns A promise that resolves to an object containing the parsed results.
+     * @throws Error if the parsing fails.
      * */
     async wrapper(filePaths: string[], sourcePath: string) {
         this.projectPath = sourcePath;
@@ -40,10 +40,10 @@ export class JavaParserService {
     }
     
     /**
-     * * Parses the given Java files and extracts relevant information.
-     * * @param filePaths - An array of file paths to be parsed.
-     * * @returns A promise that resolves to an object containing the parsed results.
-     * */
+     * Parses the given Java files and extracts relevant information.
+     * @param filePaths - An array of file paths to be parsed.
+     * @returns A promise that resolves to an object containing the parsed results.
+     **/
     async getParsedResults(filePaths: string[]) {
             const total = filePaths.length;
             let completed = 0;
@@ -82,9 +82,9 @@ export class JavaParserService {
         }
 
         /**
-         * * Builds the "ParseJava" JAR file if it doesn't exist.
-         * * @returns A promise that resolves when the JAR file is built.
-         * */
+         * Builds the "ParseJava" JAR file if it doesn't exist.
+         * @returns A promise that resolves when the JAR file is built.
+         **/
         async buildJarIfNeeded() {
                 const cwd = process.cwd();
                 const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
@@ -105,10 +105,10 @@ export class JavaParserService {
             }
             
             /**
-             * * Wrapper for calling the JAR in "backend/ParseJava/target/ParseJava-1.0-jar-with-dependencies.jar".
-             * * @param filePath - The path to the Java file to be parsed.
-             * * @returns A promise that resolves to an object containing the parsed results.
-             * */
+             * Wrapper for calling the JAR in "backend/ParseJava/target/ParseJava-1.0-jar-with-dependencies.jar".
+             * @param filePath - The path to the Java file to be parsed.
+             * @returns A promise that resolves to an object containing the parsed results.
+             **/
             async parseJavaFile(filePath: string): Promise<JavaParseResult> {
                 const cwd = process.cwd();
                 const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
@@ -166,13 +166,13 @@ export class JavaParserService {
     }
     
     /**
-     * * Interface representing the result of parsing a Java file.
-     * * @property {string} filename - The name of the Java file.
-     * * @property {string[]} variables - An array of variable names found in the file.
-     * * @property {string[]} comments - An array of comments found in the file.
-     * * @property {string[]} strings - An array of string literals found in the file.
-     * * @property {string[]} sinks - An array of sink points found in the file.
-     * * @property {string[]} methodCodeMap - An array of method code mappings found in the file defines context for the Attack Surface Detection Engine.
+     * Interface representing the result of parsing a Java file.
+     * @property {string} filename - The name of the Java file.
+     * @property {string[]} variables - An array of variable names found in the file.
+     * @property {string[]} comments - An array of comments found in the file.
+     * @property {string[]} strings - An array of string literals found in the file.
+     * @property {string[]} sinks - An array of sink points found in the file.
+     * @property {string[]} methodCodeMap - An array of method code mappings found in the file defines context for the Attack Surface Detection Engine.
      * 
      */
     interface JavaParseResult {
