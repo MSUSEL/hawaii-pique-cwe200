@@ -24,18 +24,25 @@ export class FilesService {
      * @param file Zip binary containing Java Code
      */
     async create(file: Express.Multer.File) {
-        // Save file contents to file        
-        await this.fileUtilService.writeZipFile(file);
-        this.eventsGateway.emitDataToClients('data','file uploaded successfully')
-        let projectName = file.originalname;
-        if (projectName.endsWith('.zip')) {
-            projectName = projectName.slice(0, -4); // Remove '.zip'
+        try{        // Save file contents to file        
+            await this.fileUtilService.writeZipFile(file);
+            this.eventsGateway.emitDataToClients('data','file uploaded successfully')
+            let projectName = file.originalname;
+            if (projectName.endsWith('.zip')) {
+                projectName = projectName.slice(0, -4); // Remove '.zip'
+            }
+    
+            const uploadedProjectDir = path.join(this.projectsPath, projectName);
+            
+            // Return mapped directory tree
+            return this.fileUtilService.getDirectoryTree(uploadedProjectDir)
+        }
+        catch (error) {
+            console.log('Error in file upload:', error.message)
+            this.eventsGateway.emitDataToClients('data','file upload failed')
+            return { 'error': error.message }
         }
 
-        const uploadedProjectDir = path.join(this.projectsPath, projectName);
-
-        // Return mapped directory tree
-        return this.fileUtilService.getDirectoryTree(uploadedProjectDir)
     }
 
     /**
