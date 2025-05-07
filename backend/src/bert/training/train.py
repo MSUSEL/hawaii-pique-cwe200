@@ -38,6 +38,12 @@ sink_type_mapping_rev = {
 }
 
 def camel_case_split(str_input):
+    """Split a camelCase or PascalCase string into separate words.
+    Helps normalize identifier names for better text processing.
+    
+    :param s: camelCase or PascalCase string
+    :returns: list of split words
+    """
     words = [[str_input[0]]]
     for c in str_input[1:]:
         if words[-1][-1].islower() and c.isupper():
@@ -47,6 +53,12 @@ def camel_case_split(str_input):
     return [''.join(word) for word in words]
 
 def text_preprocess(feature_text):
+    """Preprocess a string by splitting camel case and converting to lowercase.
+    Prepares code tokens for consistent embedding and comparison.
+    
+    :param feature_text: raw text to preprocess
+    :returns: preprocessed string
+    """
     words = camel_case_split(feature_text)
     return ' '.join(words).lower()
 
@@ -55,6 +67,15 @@ def read_json(file_path):
         return json.load(file)
 
 def calculate_sentbert_vectors(sentences, batch_size=64):
+    """Calculate Sentence-BERT embeddings in parallel using threads.
+    Speeds up vector generation for large datasets.
+
+    :param data_list: list of items containing preprocessed text
+    :param data_type: type of data (e.g., variables, strings)
+    :param item_type: text field to encode ('name' or 'context')
+    :param batch_size: number of items per batch
+    :returns: list of embeddings aligned with data_list order
+    """
     from sentence_transformers import SentenceTransformer
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model_transformer = SentenceTransformer('paraphrase-MiniLM-L6-v2', device=device)
@@ -62,32 +83,19 @@ def calculate_sentbert_vectors(sentences, batch_size=64):
     embeddings = model_transformer.encode(sentences, batch_size=batch_size, show_progress_bar=True)
     return embeddings
 
-def calculate_t5_vectors(sentences, model_name='t5-small', batch_size=32):
-    from transformers import T5Tokenizer, T5EncoderModel
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    tokenizer = T5Tokenizer.from_pretrained(model_name)
-    model = T5EncoderModel.from_pretrained(model_name)
-    model.to(device)
-    model.eval()
-    embeddings = []
-    with torch.no_grad():
-        for i in range(0, len(sentences), batch_size):
-            batch = sentences[i:i+batch_size]
-            if isinstance(batch, np.ndarray):
-                batch = batch.tolist()
-            elif not isinstance(batch, list):
-                batch = [str(batch)]
-            inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
-            inputs = {key: value.to(device) for key, value in inputs.items()}
-            outputs = model(**inputs)
-            pooled = outputs.last_hidden_state.mean(dim=1)
-            embeddings.append(pooled.detach().cpu().numpy())
-    return np.vstack(embeddings)
 
 def calculate_codet5_vectors(sentences,
                              model_name='Salesforce/codet5-base',
                              batch_size=32):
+    """Calculate CodeT5 embeddings in parallel using threads.
+    Speeds up vector generation for large datasets.
 
+    :param data_list: list of items containing preprocessed text
+    :param data_type: type of data (e.g., variables, strings)
+    :param item_type: text field to encode ('name' or 'context')
+    :param batch_size: number of items per batch
+    :returns: list of embeddings aligned with data_list order
+    """
     from transformers import AutoTokenizer, T5EncoderModel
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -122,31 +130,17 @@ def calculate_codet5_vectors(sentences,
     return np.vstack(embeddings)
 
 
-
-
-def calculate_roberta_vectors(sentences, model_name='roberta-base', batch_size=32):
-    from transformers import RobertaTokenizer, RobertaModel
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    tokenizer = RobertaTokenizer.from_pretrained(model_name)
-    model = RobertaModel.from_pretrained(model_name)
-    model.to(device)
-    model.eval()
-    embeddings = []
-    with torch.no_grad():
-        for i in range(0, len(sentences), batch_size):
-            batch = sentences[i:i+batch_size]
-            if isinstance(batch, np.ndarray):
-                batch = batch.tolist()
-            elif not isinstance(batch, list):
-                batch = [str(batch)]
-            inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
-            inputs = {key: value.to(device) for key, value in inputs.items()}
-            outputs = model(**inputs)
-            pooled = outputs.last_hidden_state.mean(dim=1)
-            embeddings.append(pooled.detach().cpu().numpy())
-    return np.vstack(embeddings)
-
 def calculate_codebert_vectors(sentences, model_name='microsoft/codebert-base', batch_size=32):
+    """Calculate Code-BERT embeddings in parallel using threads.
+    Speeds up vector generation for large datasets.
+
+    :param data_list: list of items containing preprocessed text
+    :param data_type: type of data (e.g., variables, strings)
+    :param item_type: text field to encode ('name' or 'context')
+    :param batch_size: number of items per batch
+    :returns: list of embeddings aligned with data_list order
+    """
+    
     from transformers import AutoTokenizer, AutoModel
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     from tqdm import tqdm  # For progress tracking
@@ -170,65 +164,16 @@ def calculate_codebert_vectors(sentences, model_name='microsoft/codebert-base', 
     return np.vstack(embeddings)
 
 
-def calculate_codellama_vectors(sentences, model_name='codellama/CodeLlama-7b', batch_size=32):
-    from transformers import AutoTokenizer, AutoModel
-    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
-    model = AutoModel.from_pretrained(model_name)
-    model.eval()
-    embeddings = []
-    with torch.no_grad():
-        for i in range(0, len(sentences), batch_size):
-            batch = sentences[i:i+batch_size]
-            if isinstance(batch, np.ndarray):
-                batch = batch.tolist()
-            elif not isinstance(batch, list):
-                batch = [str(batch)]
-            inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
-            outputs = model(**inputs)
-            pooled = outputs.last_hidden_state.mean(dim=1)
-            embeddings.append(pooled.cpu().numpy())
-    return np.vstack(embeddings)
-
-def calculate_distilbert_vectors(sentences, model_name='distilbert-base-uncased', batch_size=32):
-    from transformers import DistilBertTokenizer, DistilBertModel
-    tokenizer = DistilBertTokenizer.from_pretrained(model_name)
-    model = DistilBertModel.from_pretrained(model_name)
-    model.eval()
-    embeddings = []
-    with torch.no_grad():
-        for i in range(0, len(sentences), batch_size):
-            batch = sentences[i:i+batch_size]
-            if isinstance(batch, np.ndarray):
-                batch = batch.tolist()
-            elif not isinstance(batch, list):
-                batch = [str(batch)]
-            inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
-            outputs = model(**inputs)
-            pooled = outputs.last_hidden_state.mean(dim=1)
-            embeddings.append(pooled.cpu().numpy())
-    return np.vstack(embeddings)
-
-def calculate_albert_vectors(sentences, model_name='albert-base-v2', batch_size=32):
-    from transformers import AlbertTokenizer, AlbertModel
-    tokenizer = AlbertTokenizer.from_pretrained(model_name)
-    model = AlbertModel.from_pretrained(model_name)
-    model.eval()
-    embeddings = []
-    with torch.no_grad():
-        for i in range(0, len(sentences), batch_size):
-            batch = sentences[i:i+batch_size]
-            if isinstance(batch, np.ndarray):
-                batch = batch.tolist()
-            elif not isinstance(batch, list):
-                batch = [str(batch)]
-            inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
-            outputs = model(**inputs)
-            pooled = outputs.last_hidden_state.mean(dim=1)
-            embeddings.append(pooled.cpu().numpy())
-    return np.vstack(embeddings)
-
-
 def calculate_longformer_vectors(sentences, model_name='allenai/longformer-base-4096', batch_size=32):
+    """Calculate longformer embeddings in parallel using threads.
+    Speeds up vector generation for large datasets.
+
+    :param data_list: list of items containing preprocessed text
+    :param data_type: type of data (e.g., variables, strings)
+    :param item_type: text field to encode ('name' or 'context')
+    :param batch_size: number of items per batch
+    :returns: list of embeddings aligned with data_list order
+    """
     from transformers import LongformerTokenizer, LongformerModel
     from tqdm import tqdm
     import torch
@@ -260,6 +205,13 @@ def calculate_longformer_vectors(sentences, model_name='allenai/longformer-base-
 
 
 def concat_name_and_context(name_vecs, context_vecs):
+    """Concatenate name and context vectors for each item.
+    Combines semantic info from both the item and its context.
+    
+    :param name_vec: list of name embeddings
+    :param context_vec: list of context embeddings
+    :returns: list of concatenated embeddings
+    """
     total_vecs = []
     for idx in range(len(name_vecs)):
         total_vecs.append(np.concatenate((name_vecs[idx], context_vecs[idx]), axis=None))
@@ -268,6 +220,11 @@ def concat_name_and_context(name_vecs, context_vecs):
 # ------------------------------ Model Definitions ------------------------------------
 
 def get_activation(act_name):
+    """Get the activation function based on the provided name.
+    param act_name: name of the activation function
+    :returns: activation function object
+    """
+    if act_name is None:
     act_name = act_name.lower()
     if act_name == 'relu':
         return nn.ReLU()
@@ -281,7 +238,16 @@ def get_activation(act_name):
         raise ValueError(f"Unknown activation: {act_name}")
 
 class BinaryClassifier(nn.Module):
+    """Binary classifier model with residual connections and dropout.
+    This model is designed to process embeddings and predict binary labels.
+    """
     def __init__(self, embedding_dim, dropout_rate, weight_decay, activation):
+        """Initialize the model with the given parameters.
+        :param embedding_dim: dimension of the input embeddings
+        :param dropout_rate: dropout rate for regularization
+        :param weight_decay: weight decay for optimizer
+        :param activation: activation function to use in the model
+        """
         super().__init__()
         self.units1 = embedding_dim
         self.units2 = embedding_dim * 3 // 4
@@ -303,6 +269,10 @@ class BinaryClassifier(nn.Module):
         self.out = nn.Linear(self.units4, 1)
         
     def forward(self, x):
+        """Forward pass through the model.
+        :param x: input tensor of shape (batch_size, embedding_dim)
+        :returns: output tensor of shape (batch_size, 1) after sigmoid activation
+        """
         x = self.fc1(x)
         x = self.bn1(x)
         x = self.act(x)
@@ -328,7 +298,16 @@ class BinaryClassifier(nn.Module):
         return out
 
 class MultiClassClassifier(nn.Module):
+    """Multi-class classifier model with dropout.
+    This model is designed to process embeddings and predict multiple classes. Used for sink types.
+    """
     def __init__(self, embedding_dim, dropout_rate, weight_decay, activation):
+        """Initialize the model with the given parameters.
+        :param embedding_dim: dimension of the input embeddings
+        :param dropout_rate: dropout rate for regularization
+        :param weight_decay: weight decay for optimizer
+        :param activation: activation function to use in the model
+        """
         super().__init__()
         units = embedding_dim // 3
         act = get_activation(activation)
@@ -343,6 +322,10 @@ class MultiClassClassifier(nn.Module):
         self.out = nn.Linear(units // 4, 8)
         
     def forward(self, x):
+        """Forward pass through the model.
+        :param x: input tensor of shape (batch_size, embedding_dim)
+        :returns: output tensor of shape (batch_size, 8) after softmax activation
+        """
         x = self.fc1(x)
         x = self.bn1(x)
         x = self.act(x)
@@ -360,6 +343,13 @@ class MultiClassClassifier(nn.Module):
 # ------------------------------ Training Utilities ------------------------------------
 
 def evaluate_model(model, loader, device, category):
+    """Evaluate the model on the given data loader.
+    :param model: trained model to evaluate
+    :param loader: data loader for evaluation
+    :param device: device to run the model on (CPU or GPU)
+    :param category: type of data (variables, sinks, etc.)
+    :returns: dictionary of evaluation metrics
+    """
     model.eval()
     preds, trues = [], []
     with torch.no_grad():
@@ -399,6 +389,18 @@ def evaluate_model(model, loader, device, category):
 
 
 def train_model(model, optimizer, criterion, train_loader, val_loader, device, epochs, early_stop_patience=10, category='binary'):
+    """Train the model for a specified number of epochs.
+    :param model: model to train
+    :param optimizer: optimizer for training
+    :param criterion: loss function
+    :param train_loader: data loader for training
+    :param val_loader: data loader for validation
+    :param device: device to run the model on (CPU or GPU)
+    :param epochs: number of epochs to train
+    :param early_stop_patience: number of epochs to wait for improvement before stopping
+    :param category: type of data (variables, sinks, etc.)
+    :returns: best validation F1 score and the trained model
+    """
     best_f1 = -1
     best_state = None
     patience = 0
@@ -437,6 +439,13 @@ def train_model(model, optimizer, criterion, train_loader, val_loader, device, e
 # ------------------------------ Data Processing ------------------------------------
 
 def get_context(labels, context, category):
+    """Extract context data for a specific category from the labels and context.
+    context comes from the parsedResults.json file.
+    :param labels: list of label entries
+    :param context: dictionary of context data
+    :param category: category to extract (variables, strings, sinks, comments)
+    :returns: list of data entries for the specified category
+    """
     data = []
     for label_entry in labels:
         file_name = label_entry.get('fileName')
@@ -522,24 +531,23 @@ def get_context(labels, context, category):
 # ------------------------------ Training Function ------------------------------------
 
 def train(category, data, param_grid, create_model_fn, embedding_model='sentbert', embedding_dim=384*2):
+    """Train a model on the provided data using the specified parameters.
+    :param category: category of data (variables, strings, sinks, comments)
+    :param data: list of data entries for the specified category
+    :param param_grid: dictionary of hyperparameters for the model
+    :param create_model_fn: function to create the model
+    :param embedding_model: name of the embedding model to use
+    :param embedding_dim: dimension of the embeddings
+    :returns: dictionary of evaluation metrics
+    """
     variable_array = np.array(data, dtype=object)
     if embedding_model == 'sentbert':
         get_embeddings = calculate_sentbert_vectors
-    elif embedding_model == 't5':
-        get_embeddings = calculate_t5_vectors
     elif embedding_model == 'codet5':
         get_embeddings = calculate_codet5_vectors
-    elif embedding_model == 'roberta':
-        get_embeddings = calculate_roberta_vectors
     elif embedding_model == 'codebert':
         get_embeddings = calculate_codebert_vectors
-    elif embedding_model == 'codellama':
-        get_embeddings = calculate_codellama_vectors
-    elif embedding_model == 'distilbert':
-        get_embeddings = calculate_distilbert_vectors
-    elif embedding_model == 'albert':
-        get_embeddings = calculate_albert_vectors
-    elif embedding_model == 'longformer':  # Added support for Longformer
+    elif embedding_model == 'longformer': 
         get_embeddings = calculate_longformer_vectors
     else:
         raise ValueError(f"Unknown embedding model: {embedding_model}")
@@ -627,9 +635,6 @@ def train(category, data, param_grid, create_model_fn, embedding_model='sentbert
     
     print("Training final model on train+val data...")
     train_model(final_model, optimizer, criterion, train_val_loader, val_loader, device, best_params.get('epochs'), category=cat_type)
-    
-    # print("Final evaluation on test data:")
-    # evaluate_model(final_model, test_loader, device, category if category == 'sinks' else 'binary', print_report=True)
 
     model_dir = "model"
     os.makedirs(model_dir, exist_ok=True)
@@ -650,11 +655,27 @@ def train(category, data, param_grid, create_model_fn, embedding_model='sentbert
 # ------------------------------ Model Creation Functions ------------------------------------
 
 def create_model(learning_rate=0.0001, dropout_rate=0.3, weight_decay=0.0001, activation='relu', embedding_dim=None):
+    """Create a binary classifier model with the specified parameters.
+    :param learning_rate: learning rate for the optimizer
+    :param dropout_rate: dropout rate for regularization
+    :param weight_decay: weight decay for optimizer
+    :param activation: activation function to use in the model
+    :param embedding_dim: dimension of the input embeddings
+    :returns: BinaryClassifier instance
+    """
     if embedding_dim is None:
         raise ValueError("Embedding dimension not found")
     return BinaryClassifier(embedding_dim=embedding_dim, dropout_rate=dropout_rate, weight_decay=weight_decay, activation=activation)
 
 def create_model_sinks(learning_rate=0.0001, dropout_rate=0.2, weight_decay=0.0001, activation='elu', embedding_dim=None):
+    """Create a multi-class classifier model for sink types with the specified parameters.
+    :param learning_rate: learning rate for the optimizer
+    :param dropout_rate: dropout rate for regularization
+    :param weight_decay: weight decay for optimizer
+    :param activation: activation function to use in the model
+    :param embedding_dim: dimension of the input embeddings
+    :returns: MultiClassClassifier instance
+    """
     if embedding_dim is None:
         raise ValueError("Embedding dimension not found")
     # print("Creating multi-class model for sinks")
@@ -725,11 +746,7 @@ if __name__ == '__main__':
         'sentbert': 384 * 2,
         't5': 512 * 2,
         'codet5': 768 * 2,
-        # 'roberta': 768 * 2,
         'codebert': 768 * 2,
-        # 'codellama': 4096 * 2,
-        # 'distilbert': 768 * 2,
-        # 'albert': 768 * 2,
         # 'longformer': 768 * 2,
     }
 

@@ -30,6 +30,8 @@ DIM = 768
 # -----------------------------------------------------------------------------
 
 # lemmatizer = WordNetLemmatizer()
+
+# Load SentBert model
 model = SentenceTransformer('paraphrase-MiniLM-L6-v2', device=device)
 
 projectAllVariables = {
@@ -58,6 +60,12 @@ sink_type_mapping = {
 }
 
 def camel_case_split(s):
+    """Split a camelCase or PascalCase string into separate words.
+    Helps normalize identifier names for better text processing.
+    
+    :param s: camelCase or PascalCase string
+    :returns: list of split words
+    """
     words = [[s[0]]]
     for c in s[1:]:
         if words[-1][-1].islower() and c.isupper():
@@ -67,21 +75,48 @@ def camel_case_split(s):
     return [''.join(word) for word in words]
 
 def text_preprocess(feature_text):
+    """Preprocess a string by splitting camel case and converting to lowercase.
+    Prepares code tokens for consistent embedding and comparison.
+    
+    :param feature_text: raw text to preprocess
+    :returns: preprocessed string
+    """
     words = camel_case_split(feature_text)
     preprocessed_text = ' '.join(words).lower()
     return preprocessed_text
 
-def list_to_string(lst):
-    return ' '.join(lst)
 
 def concat_name_and_context(name_vec, context_vec):
+    """Concatenate name and context vectors for each item.
+    Combines semantic info from both the item and its context.
+    
+    :param name_vec: list of name embeddings
+    :param context_vec: list of context embeddings
+    :returns: list of concatenated embeddings
+    """
     return [np.concatenate((name_vec[idx], context_vec[idx]), axis=None) for idx in range(len(name_vec))]
 
 def encode_batch(batch_texts, identifier):
+    """Encode a batch of text using Sentence-BERT model.
+    Encodes inputs into vector form for downstream ML usage with our model.
+    
+    :param batch_texts: list of strings to encode
+    :param identifier: unique batch identifier
+    :returns: tuple of (identifier, list of embeddings)
+    """
     batch_embeddings = model.encode(batch_texts)
     return identifier, batch_embeddings
 
 def calculate_sentbert_vectors_concurrent(data_list, data_type, item_type, batch_size=64):
+    """Calculate Sentence-BERT embeddings in parallel using threads.
+    Speeds up vector generation for large datasets.
+
+    :param data_list: list of items containing preprocessed text
+    :param data_type: type of data (e.g., variables, strings)
+    :param item_type: text field to encode ('name' or 'context')
+    :param batch_size: number of items per batch
+    :returns: list of embeddings aligned with data_list order
+    """
     embeddings = {}
     total_batches = len(data_list) // batch_size + int(len(data_list) % batch_size != 0)
     progress_tracker = ProgressTracker(total_batches, f"{data_type}-{item_type}-encoding")
@@ -107,6 +142,15 @@ def calculate_sentbert_vectors_concurrent(data_list, data_type, item_type, batch
 # -----------------------------------------------------------------------------
 
 def get_predictions(model_pt, test_x, data_type, batch_size=64):
+    """Run predictions using a PyTorch model on input data.
+    Generates classification confidence scores for each input.
+    
+    :param model_pt: PyTorch model
+    :param test_x: input data as NumPy array
+    :param data_type: data type (e.g., variables, sinks)
+    :param batch_size: number of samples per inference batch
+    :returns: array of predictions
+    """
     total_batches = test_x.shape[0] // batch_size + int(test_x.shape[0] % batch_size != 0)
     prediction_tracker = ProgressTracker(total_batches, f"{data_type}-prediction")
     predictions = []
@@ -131,6 +175,13 @@ def get_predictions(model_pt, test_x, data_type, batch_size=64):
 # -----------------------------------------------------------------------------
 
 def process_files(data, data_type):
+    """Extract and preprocess data items from the parsed dataset.
+    Converts raw analysis data into model-compatible format.
+    
+    :param data: full parsed JSON data (From ParseJava)
+    :param data_type: type of items to extract (e.g., variables, sinks)
+    :returns: list of processed items with metadata and context
+    """
     total_progress = sum(len(data[file_name][data_type]) for file_name in data)
     progress_tracker = ProgressTracker(total_progress, f"{data_type}-processing")
     output = []
@@ -179,6 +230,15 @@ def process_files(data, data_type):
     return output
 
 def process_data_type(data_type, data_list, final_results, model_path):
+    """Encode data items, run predictions, and store confident results.
+    Full pipeline step for encoding, inference, and result filtering.
+    
+    :param data_type: type of item (variables, strings, sinks, etc.)
+    :param data_list: preprocessed data list
+    :param final_results: output dictionary to populate with predictions
+    :param model_path: path to PyTorch model directory
+    :returns: None
+    """
     if data_list:
         print(f"Encoding {data_type} name data")
         start = time.time()
@@ -221,6 +281,12 @@ def process_data_type(data_type, data_list, final_results, model_path):
 # -----------------------------------------------------------------------------
 
 async def read_parsed_data(file_path):
+    """Read parsed JSON data asynchronously.
+    Loads data from disk efficiently without blocking.
+    
+    :param file_path: path to the parsed JSON file
+    :returns: dictionary loaded from JSON file, or None on failure
+    """
     try:
         async with aiofiles.open(file_path, 'r', encoding='utf-8') as json_vars:
             return json.loads(await json_vars.read())
@@ -228,7 +294,13 @@ async def read_parsed_data(file_path):
         print(f"Failed to read parsed data from {file_path}: {e}")
         return None
 
-async def main():
+
+async def main() -> None:
+    """Main function to run encoding and prediction pipeline asynchronously.
+    Coordinates all processing steps for a given project’s data.
+    
+    :returns: None
+    """
     if len(sys.argv) > 1:
         print(f"Args = {sys.argv}")
         project_path = sys.argv[1]
@@ -246,6 +318,7 @@ async def main():
     final_results = {}
     print("Processing files")
     
+    # Uncomment the types you want to process
     variables = process_files(parsed_data, 'variables')
     process_data_type('variables', variables, final_results, model_path)
     
