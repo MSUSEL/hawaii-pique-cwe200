@@ -43,7 +43,8 @@
                   "CWE-204 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  5
+                  0,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -77,7 +78,8 @@
                   "CWE-208 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  3
+                  3,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -92,7 +94,8 @@
               "CWE-208": 0.5
             },
             "thresholds": [
-              8
+              3,
+              0
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -126,7 +129,8 @@
               "CWE-215 Diagnostic CweCodeQl": 1.0
             },
             "thresholds": [
-              5
+              0,
+              0
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -141,6 +145,41 @@
             "value": 0.0,
             "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
             "children": {
+              "CWE-532": {
+                "positive": false,
+                "name": "CWE-532",
+                "value": 0.0,
+                "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
+                "children": {
+                  "CWE-532 Diagnostic CweCodeQl": {
+                    "toolName": "CweCodeQl",
+                    "name": "CWE-532 Diagnostic CweCodeQl",
+                    "value": 0.0,
+                    "description": "Sum of findings of type CWE-532",
+                    "children": {},
+                    "weights": {},
+                    "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+                    "normalizer": "pique.evaluation.DefaultNormalizer",
+                    "utility_function": {
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
+                    }
+                  }
+                },
+                "weights": {
+                  "CWE-532 Diagnostic CweCodeQl": 1.0
+                },
+                "thresholds": [
+                  3,
+                  3
+                ],
+                "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+                "normalizer": "pique.evaluation.DefaultNormalizer",
+                "utility_function": {
+                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                  "description": "A Probability Density Function to model the distribution of findings"
+                }
+              },
               "CWE-540": {
                 "positive": false,
                 "name": "CWE-540",
@@ -172,74 +211,7 @@
                       "CWE-615 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      0
-                    ],
-                    "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                    "normalizer": "pique.evaluation.DefaultNormalizer",
-                    "utility_function": {
-                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                      "description": "A Probability Density Function to model the distribution of findings"
-                    }
-                  },
-                  "CWE-541": {
-                    "positive": false,
-                    "name": "CWE-541",
-                    "value": 0.0,
-                    "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
-                    "children": {
-                      "CWE-541 Diagnostic CweCodeQl": {
-                        "toolName": "CweCodeQl",
-                        "name": "CWE-541 Diagnostic CweCodeQl",
-                        "value": 0.0,
-                        "description": "Sum of findings of type CWE-541",
-                        "children": {},
-                        "weights": {},
-                        "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      }
-                    },
-                    "weights": {
-                      "CWE-541 Diagnostic CweCodeQl": 1.0
-                    },
-                    "thresholds": [
-                      0
-                    ],
-                    "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                    "normalizer": "pique.evaluation.DefaultNormalizer",
-                    "utility_function": {
-                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                      "description": "A Probability Density Function to model the distribution of findings"
-                    }
-                  },
-                  "CWE-531": {
-                    "positive": false,
-                    "name": "CWE-531",
-                    "value": 0.0,
-                    "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
-                    "children": {
-                      "CWE-531 Diagnostic CweCodeQl": {
-                        "toolName": "CweCodeQl",
-                        "name": "CWE-531 Diagnostic CweCodeQl",
-                        "value": 0.0,
-                        "description": "Sum of findings of type CWE-531",
-                        "children": {},
-                        "weights": {},
-                        "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      }
-                    },
-                    "weights": {
-                      "CWE-531 Diagnostic CweCodeQl": 1.0
-                    },
-                    "thresholds": [
+                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -251,11 +223,10 @@
                   }
                 },
                 "weights": {
-                  "CWE-615": 0.3333333333333333333333333,
-                  "CWE-541": 0.3333333333333333333333333,
-                  "CWE-531": 0.3333333333333333333333333
+                  "CWE-615": 1.0
                 },
                 "thresholds": [
+                  0,
                   0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -267,10 +238,12 @@
               }
             },
             "weights": {
-              "CWE-540": 1.0
+              "CWE-532": 0.5,
+              "CWE-540": 0.5
             },
             "thresholds": [
-              0
+              3,
+              3
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -330,7 +303,8 @@
                       "CWE-535 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      4
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -364,7 +338,8 @@
                       "CWE-536 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      4
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -398,6 +373,7 @@
                       "CWE-537 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
+                      0,
                       3
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -432,6 +408,7 @@
                       "CWE-550 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
+                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -449,7 +426,8 @@
                   "CWE-550": 0.25
                 },
                 "thresholds": [
-                  11
+                  0,
+                  3
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -464,7 +442,8 @@
               "CWE-211": 0.5
             },
             "thresholds": [
-              15
+              0,
+              6
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -504,40 +483,7 @@
                   "CWE-214 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  5
-                ],
-                "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                "normalizer": "pique.evaluation.DefaultNormalizer",
-                "utility_function": {
-                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                  "description": "A Probability Density Function to model the distribution of findings"
-                }
-              },
-              "CWE-548": {
-                "positive": false,
-                "name": "CWE-548",
-                "value": 0.0,
-                "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
-                "children": {
-                  "CWE-548 Diagnostic CweCodeQl": {
-                    "toolName": "CweCodeQl",
-                    "name": "CWE-548 Diagnostic CweCodeQl",
-                    "value": 0.0,
-                    "description": "Sum of findings of type CWE-548",
-                    "children": {},
-                    "weights": {},
-                    "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                    "normalizer": "pique.evaluation.DefaultNormalizer",
-                    "utility_function": {
-                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                      "description": "A Probability Density Function to model the distribution of findings"
-                    }
-                  }
-                },
-                "weights": {
-                  "CWE-548 Diagnostic CweCodeQl": 1.0
-                },
-                "thresholds": [
+                  0,
                   0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -549,11 +495,11 @@
               }
             },
             "weights": {
-              "CWE-214": 0.5,
-              "CWE-548": 0.5
+              "CWE-214": 1.0
             },
             "thresholds": [
-              5
+              0,
+              0
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -607,7 +553,8 @@
                   "CWE-598 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  5
+                  0,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -622,7 +569,8 @@
               "CWE-598": 0.5
             },
             "thresholds": [
-              9
+              0,
+              0
             ],
             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -690,7 +638,8 @@
                       "CWE-204 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      5
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -724,7 +673,8 @@
                       "CWE-208 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      3
+                      3,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -739,7 +689,8 @@
                   "CWE-208": 0.5
                 },
                 "thresholds": [
-                  8
+                  3,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -773,7 +724,8 @@
                   "CWE-215 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  5
+                  0,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -788,6 +740,41 @@
                 "value": 0.0,
                 "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
                 "children": {
+                  "CWE-532": {
+                    "positive": false,
+                    "name": "CWE-532",
+                    "value": 0.0,
+                    "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
+                    "children": {
+                      "CWE-532 Diagnostic CweCodeQl": {
+                        "toolName": "CweCodeQl",
+                        "name": "CWE-532 Diagnostic CweCodeQl",
+                        "value": 0.0,
+                        "description": "Sum of findings of type CWE-532",
+                        "children": {},
+                        "weights": {},
+                        "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+                        "normalizer": "pique.evaluation.DefaultNormalizer",
+                        "utility_function": {
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
+                        }
+                      }
+                    },
+                    "weights": {
+                      "CWE-532 Diagnostic CweCodeQl": 1.0
+                    },
+                    "thresholds": [
+                      3,
+                      3
+                    ],
+                    "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+                    "normalizer": "pique.evaluation.DefaultNormalizer",
+                    "utility_function": {
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
+                    }
+                  },
                   "CWE-540": {
                     "positive": false,
                     "name": "CWE-540",
@@ -819,74 +806,7 @@
                           "CWE-615 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0
-                        ],
-                        "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      },
-                      "CWE-541": {
-                        "positive": false,
-                        "name": "CWE-541",
-                        "value": 0.0,
-                        "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
-                        "children": {
-                          "CWE-541 Diagnostic CweCodeQl": {
-                            "toolName": "CweCodeQl",
-                            "name": "CWE-541 Diagnostic CweCodeQl",
-                            "value": 0.0,
-                            "description": "Sum of findings of type CWE-541",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          }
-                        },
-                        "weights": {
-                          "CWE-541 Diagnostic CweCodeQl": 1.0
-                        },
-                        "thresholds": [
-                          0
-                        ],
-                        "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      },
-                      "CWE-531": {
-                        "positive": false,
-                        "name": "CWE-531",
-                        "value": 0.0,
-                        "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
-                        "children": {
-                          "CWE-531 Diagnostic CweCodeQl": {
-                            "toolName": "CweCodeQl",
-                            "name": "CWE-531 Diagnostic CweCodeQl",
-                            "value": 0.0,
-                            "description": "Sum of findings of type CWE-531",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          }
-                        },
-                        "weights": {
-                          "CWE-531 Diagnostic CweCodeQl": 1.0
-                        },
-                        "thresholds": [
+                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -898,11 +818,10 @@
                       }
                     },
                     "weights": {
-                      "CWE-615": 0.3333333333333333333333333,
-                      "CWE-541": 0.3333333333333333333333333,
-                      "CWE-531": 0.3333333333333333333333333
+                      "CWE-615": 1.0
                     },
                     "thresholds": [
+                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -914,10 +833,12 @@
                   }
                 },
                 "weights": {
-                  "CWE-540": 1.0
+                  "CWE-532": 0.5,
+                  "CWE-540": 0.5
                 },
                 "thresholds": [
-                  0
+                  3,
+                  3
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -977,7 +898,8 @@
                           "CWE-535 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          4
+                          0,
+                          0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1011,7 +933,8 @@
                           "CWE-536 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          4
+                          0,
+                          0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1045,6 +968,7 @@
                           "CWE-537 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
+                          0,
                           3
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1079,6 +1003,7 @@
                           "CWE-550 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
+                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1096,7 +1021,8 @@
                       "CWE-550": 0.25
                     },
                     "thresholds": [
-                      11
+                      0,
+                      3
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1111,7 +1037,8 @@
                   "CWE-211": 0.5
                 },
                 "thresholds": [
-                  15
+                  0,
+                  6
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1151,40 +1078,7 @@
                       "CWE-214 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      5
-                    ],
-                    "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                    "normalizer": "pique.evaluation.DefaultNormalizer",
-                    "utility_function": {
-                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                      "description": "A Probability Density Function to model the distribution of findings"
-                    }
-                  },
-                  "CWE-548": {
-                    "positive": false,
-                    "name": "CWE-548",
-                    "value": 0.0,
-                    "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
-                    "children": {
-                      "CWE-548 Diagnostic CweCodeQl": {
-                        "toolName": "CweCodeQl",
-                        "name": "CWE-548 Diagnostic CweCodeQl",
-                        "value": 0.0,
-                        "description": "Sum of findings of type CWE-548",
-                        "children": {},
-                        "weights": {},
-                        "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      }
-                    },
-                    "weights": {
-                      "CWE-548 Diagnostic CweCodeQl": 1.0
-                    },
-                    "thresholds": [
+                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1196,11 +1090,11 @@
                   }
                 },
                 "weights": {
-                  "CWE-214": 0.5,
-                  "CWE-548": 0.5
+                  "CWE-214": 1.0
                 },
                 "thresholds": [
-                  5
+                  0,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1254,7 +1148,8 @@
                       "CWE-598 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      5
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1269,7 +1164,8 @@
                   "CWE-598": 0.5
                 },
                 "thresholds": [
-                  9
+                  0,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1346,7 +1242,8 @@
                       "CWE-204 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      5
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1380,7 +1277,8 @@
                       "CWE-208 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      3
+                      3,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1395,7 +1293,8 @@
                   "CWE-208": 0.5
                 },
                 "thresholds": [
-                  8
+                  3,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1429,7 +1328,8 @@
                   "CWE-215 Diagnostic CweCodeQl": 1.0
                 },
                 "thresholds": [
-                  5
+                  0,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1444,6 +1344,41 @@
                 "value": 0.0,
                 "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
                 "children": {
+                  "CWE-532": {
+                    "positive": false,
+                    "name": "CWE-532",
+                    "value": 0.0,
+                    "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
+                    "children": {
+                      "CWE-532 Diagnostic CweCodeQl": {
+                        "toolName": "CweCodeQl",
+                        "name": "CWE-532 Diagnostic CweCodeQl",
+                        "value": 0.0,
+                        "description": "Sum of findings of type CWE-532",
+                        "children": {},
+                        "weights": {},
+                        "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+                        "normalizer": "pique.evaluation.DefaultNormalizer",
+                        "utility_function": {
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
+                        }
+                      }
+                    },
+                    "weights": {
+                      "CWE-532 Diagnostic CweCodeQl": 1.0
+                    },
+                    "thresholds": [
+                      3,
+                      3
+                    ],
+                    "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+                    "normalizer": "pique.evaluation.DefaultNormalizer",
+                    "utility_function": {
+                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                      "description": "A Probability Density Function to model the distribution of findings"
+                    }
+                  },
                   "CWE-540": {
                     "positive": false,
                     "name": "CWE-540",
@@ -1475,74 +1410,7 @@
                           "CWE-615 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          0
-                        ],
-                        "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      },
-                      "CWE-541": {
-                        "positive": false,
-                        "name": "CWE-541",
-                        "value": 0.0,
-                        "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
-                        "children": {
-                          "CWE-541 Diagnostic CweCodeQl": {
-                            "toolName": "CweCodeQl",
-                            "name": "CWE-541 Diagnostic CweCodeQl",
-                            "value": 0.0,
-                            "description": "Sum of findings of type CWE-541",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          }
-                        },
-                        "weights": {
-                          "CWE-541 Diagnostic CweCodeQl": 1.0
-                        },
-                        "thresholds": [
-                          0
-                        ],
-                        "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      },
-                      "CWE-531": {
-                        "positive": false,
-                        "name": "CWE-531",
-                        "value": 0.0,
-                        "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
-                        "children": {
-                          "CWE-531 Diagnostic CweCodeQl": {
-                            "toolName": "CweCodeQl",
-                            "name": "CWE-531 Diagnostic CweCodeQl",
-                            "value": 0.0,
-                            "description": "Sum of findings of type CWE-531",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          }
-                        },
-                        "weights": {
-                          "CWE-531 Diagnostic CweCodeQl": 1.0
-                        },
-                        "thresholds": [
+                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1554,11 +1422,10 @@
                       }
                     },
                     "weights": {
-                      "CWE-615": 0.3333333333333333333333333,
-                      "CWE-541": 0.3333333333333333333333333,
-                      "CWE-531": 0.3333333333333333333333333
+                      "CWE-615": 1.0
                     },
                     "thresholds": [
+                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1570,10 +1437,12 @@
                   }
                 },
                 "weights": {
-                  "CWE-540": 1.0
+                  "CWE-532": 0.5,
+                  "CWE-540": 0.5
                 },
                 "thresholds": [
-                  0
+                  3,
+                  3
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1633,7 +1502,8 @@
                           "CWE-535 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          4
+                          0,
+                          0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1667,7 +1537,8 @@
                           "CWE-536 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          4
+                          0,
+                          0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1701,6 +1572,7 @@
                           "CWE-537 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
+                          0,
                           3
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1735,6 +1607,7 @@
                           "CWE-550 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
+                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1752,7 +1625,8 @@
                       "CWE-550": 0.25
                     },
                     "thresholds": [
-                      11
+                      0,
+                      3
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1767,7 +1641,8 @@
                   "CWE-211": 0.5
                 },
                 "thresholds": [
-                  15
+                  0,
+                  6
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1807,40 +1682,7 @@
                       "CWE-214 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      5
-                    ],
-                    "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                    "normalizer": "pique.evaluation.DefaultNormalizer",
-                    "utility_function": {
-                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                      "description": "A Probability Density Function to model the distribution of findings"
-                    }
-                  },
-                  "CWE-548": {
-                    "positive": false,
-                    "name": "CWE-548",
-                    "value": 0.0,
-                    "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
-                    "children": {
-                      "CWE-548 Diagnostic CweCodeQl": {
-                        "toolName": "CweCodeQl",
-                        "name": "CWE-548 Diagnostic CweCodeQl",
-                        "value": 0.0,
-                        "description": "Sum of findings of type CWE-548",
-                        "children": {},
-                        "weights": {},
-                        "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      }
-                    },
-                    "weights": {
-                      "CWE-548 Diagnostic CweCodeQl": 1.0
-                    },
-                    "thresholds": [
+                      0,
                       0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -1852,11 +1694,11 @@
                   }
                 },
                 "weights": {
-                  "CWE-214": 0.5,
-                  "CWE-548": 0.5
+                  "CWE-214": 1.0
                 },
                 "thresholds": [
-                  5
+                  0,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1910,7 +1752,8 @@
                       "CWE-598 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      5
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1925,7 +1768,8 @@
                   "CWE-598": 0.5
                 },
                 "thresholds": [
-                  9
+                  0,
+                  0
                 ],
                 "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2009,7 +1853,8 @@
                           "CWE-204 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          5
+                          0,
+                          0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2043,7 +1888,8 @@
                           "CWE-208 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          3
+                          3,
+                          0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2058,7 +1904,8 @@
                       "CWE-208": 0.5
                     },
                     "thresholds": [
-                      8
+                      3,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2092,7 +1939,8 @@
                       "CWE-215 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      5
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2107,6 +1955,41 @@
                     "value": 0.0,
                     "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
                     "children": {
+                      "CWE-532": {
+                        "positive": false,
+                        "name": "CWE-532",
+                        "value": 0.0,
+                        "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
+                        "children": {
+                          "CWE-532 Diagnostic CweCodeQl": {
+                            "toolName": "CweCodeQl",
+                            "name": "CWE-532 Diagnostic CweCodeQl",
+                            "value": 0.0,
+                            "description": "Sum of findings of type CWE-532",
+                            "children": {},
+                            "weights": {},
+                            "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+                            "normalizer": "pique.evaluation.DefaultNormalizer",
+                            "utility_function": {
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
+                            }
+                          }
+                        },
+                        "weights": {
+                          "CWE-532 Diagnostic CweCodeQl": 1.0
+                        },
+                        "thresholds": [
+                          3,
+                          3
+                        ],
+                        "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+                        "normalizer": "pique.evaluation.DefaultNormalizer",
+                        "utility_function": {
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
+                        }
+                      },
                       "CWE-540": {
                         "positive": false,
                         "name": "CWE-540",
@@ -2138,74 +2021,7 @@
                               "CWE-615 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0
-                            ],
-                            "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          },
-                          "CWE-541": {
-                            "positive": false,
-                            "name": "CWE-541",
-                            "value": 0.0,
-                            "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
-                            "children": {
-                              "CWE-541 Diagnostic CweCodeQl": {
-                                "toolName": "CweCodeQl",
-                                "name": "CWE-541 Diagnostic CweCodeQl",
-                                "value": 0.0,
-                                "description": "Sum of findings of type CWE-541",
-                                "children": {},
-                                "weights": {},
-                                "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                                "normalizer": "pique.evaluation.DefaultNormalizer",
-                                "utility_function": {
-                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                                  "description": "A Probability Density Function to model the distribution of findings"
-                                }
-                              }
-                            },
-                            "weights": {
-                              "CWE-541 Diagnostic CweCodeQl": 1.0
-                            },
-                            "thresholds": [
-                              0
-                            ],
-                            "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          },
-                          "CWE-531": {
-                            "positive": false,
-                            "name": "CWE-531",
-                            "value": 0.0,
-                            "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
-                            "children": {
-                              "CWE-531 Diagnostic CweCodeQl": {
-                                "toolName": "CweCodeQl",
-                                "name": "CWE-531 Diagnostic CweCodeQl",
-                                "value": 0.0,
-                                "description": "Sum of findings of type CWE-531",
-                                "children": {},
-                                "weights": {},
-                                "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                                "normalizer": "pique.evaluation.DefaultNormalizer",
-                                "utility_function": {
-                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                                  "description": "A Probability Density Function to model the distribution of findings"
-                                }
-                              }
-                            },
-                            "weights": {
-                              "CWE-531 Diagnostic CweCodeQl": 1.0
-                            },
-                            "thresholds": [
+                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2217,11 +2033,10 @@
                           }
                         },
                         "weights": {
-                          "CWE-615": 0.3333333333333333333333333,
-                          "CWE-541": 0.3333333333333333333333333,
-                          "CWE-531": 0.3333333333333333333333333
+                          "CWE-615": 1.0
                         },
                         "thresholds": [
+                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2233,10 +2048,12 @@
                       }
                     },
                     "weights": {
-                      "CWE-540": 1.0
+                      "CWE-532": 0.5,
+                      "CWE-540": 0.5
                     },
                     "thresholds": [
-                      0
+                      3,
+                      3
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2296,7 +2113,8 @@
                               "CWE-535 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              4
+                              0,
+                              0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2330,7 +2148,8 @@
                               "CWE-536 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              4
+                              0,
+                              0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2364,6 +2183,7 @@
                               "CWE-537 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
+                              0,
                               3
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2398,6 +2218,7 @@
                               "CWE-550 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
+                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2415,7 +2236,8 @@
                           "CWE-550": 0.25
                         },
                         "thresholds": [
-                          11
+                          0,
+                          3
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2430,7 +2252,8 @@
                       "CWE-211": 0.5
                     },
                     "thresholds": [
-                      15
+                      0,
+                      6
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2470,40 +2293,7 @@
                           "CWE-214 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          5
-                        ],
-                        "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      },
-                      "CWE-548": {
-                        "positive": false,
-                        "name": "CWE-548",
-                        "value": 0.0,
-                        "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
-                        "children": {
-                          "CWE-548 Diagnostic CweCodeQl": {
-                            "toolName": "CweCodeQl",
-                            "name": "CWE-548 Diagnostic CweCodeQl",
-                            "value": 0.0,
-                            "description": "Sum of findings of type CWE-548",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          }
-                        },
-                        "weights": {
-                          "CWE-548 Diagnostic CweCodeQl": 1.0
-                        },
-                        "thresholds": [
+                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2515,11 +2305,11 @@
                       }
                     },
                     "weights": {
-                      "CWE-214": 0.5,
-                      "CWE-548": 0.5
+                      "CWE-214": 1.0
                     },
                     "thresholds": [
-                      5
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2573,7 +2363,8 @@
                           "CWE-598 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          5
+                          0,
+                          0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2588,7 +2379,8 @@
                       "CWE-598": 0.5
                     },
                     "thresholds": [
-                      9
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2665,7 +2457,8 @@
                           "CWE-204 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          5
+                          0,
+                          0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2699,7 +2492,8 @@
                           "CWE-208 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          3
+                          3,
+                          0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2714,7 +2508,8 @@
                       "CWE-208": 0.5
                     },
                     "thresholds": [
-                      8
+                      3,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2748,7 +2543,8 @@
                       "CWE-215 Diagnostic CweCodeQl": 1.0
                     },
                     "thresholds": [
-                      5
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2763,6 +2559,41 @@
                     "value": 0.0,
                     "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
                     "children": {
+                      "CWE-532": {
+                        "positive": false,
+                        "name": "CWE-532",
+                        "value": 0.0,
+                        "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
+                        "children": {
+                          "CWE-532 Diagnostic CweCodeQl": {
+                            "toolName": "CweCodeQl",
+                            "name": "CWE-532 Diagnostic CweCodeQl",
+                            "value": 0.0,
+                            "description": "Sum of findings of type CWE-532",
+                            "children": {},
+                            "weights": {},
+                            "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+                            "normalizer": "pique.evaluation.DefaultNormalizer",
+                            "utility_function": {
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
+                            }
+                          }
+                        },
+                        "weights": {
+                          "CWE-532 Diagnostic CweCodeQl": 1.0
+                        },
+                        "thresholds": [
+                          3,
+                          3
+                        ],
+                        "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+                        "normalizer": "pique.evaluation.DefaultNormalizer",
+                        "utility_function": {
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
+                        }
+                      },
                       "CWE-540": {
                         "positive": false,
                         "name": "CWE-540",
@@ -2794,74 +2625,7 @@
                               "CWE-615 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              0
-                            ],
-                            "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          },
-                          "CWE-541": {
-                            "positive": false,
-                            "name": "CWE-541",
-                            "value": 0.0,
-                            "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
-                            "children": {
-                              "CWE-541 Diagnostic CweCodeQl": {
-                                "toolName": "CweCodeQl",
-                                "name": "CWE-541 Diagnostic CweCodeQl",
-                                "value": 0.0,
-                                "description": "Sum of findings of type CWE-541",
-                                "children": {},
-                                "weights": {},
-                                "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                                "normalizer": "pique.evaluation.DefaultNormalizer",
-                                "utility_function": {
-                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                                  "description": "A Probability Density Function to model the distribution of findings"
-                                }
-                              }
-                            },
-                            "weights": {
-                              "CWE-541 Diagnostic CweCodeQl": 1.0
-                            },
-                            "thresholds": [
-                              0
-                            ],
-                            "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          },
-                          "CWE-531": {
-                            "positive": false,
-                            "name": "CWE-531",
-                            "value": 0.0,
-                            "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
-                            "children": {
-                              "CWE-531 Diagnostic CweCodeQl": {
-                                "toolName": "CweCodeQl",
-                                "name": "CWE-531 Diagnostic CweCodeQl",
-                                "value": 0.0,
-                                "description": "Sum of findings of type CWE-531",
-                                "children": {},
-                                "weights": {},
-                                "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                                "normalizer": "pique.evaluation.DefaultNormalizer",
-                                "utility_function": {
-                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                                  "description": "A Probability Density Function to model the distribution of findings"
-                                }
-                              }
-                            },
-                            "weights": {
-                              "CWE-531 Diagnostic CweCodeQl": 1.0
-                            },
-                            "thresholds": [
+                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2873,11 +2637,10 @@
                           }
                         },
                         "weights": {
-                          "CWE-615": 0.3333333333333333333333333,
-                          "CWE-541": 0.3333333333333333333333333,
-                          "CWE-531": 0.3333333333333333333333333
+                          "CWE-615": 1.0
                         },
                         "thresholds": [
+                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -2889,10 +2652,12 @@
                       }
                     },
                     "weights": {
-                      "CWE-540": 1.0
+                      "CWE-532": 0.5,
+                      "CWE-540": 0.5
                     },
                     "thresholds": [
-                      0
+                      3,
+                      3
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2952,7 +2717,8 @@
                               "CWE-535 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              4
+                              0,
+                              0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2986,7 +2752,8 @@
                               "CWE-536 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
-                              4
+                              0,
+                              0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3020,6 +2787,7 @@
                               "CWE-537 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
+                              0,
                               3
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3054,6 +2822,7 @@
                               "CWE-550 Diagnostic CweCodeQl": 1.0
                             },
                             "thresholds": [
+                              0,
                               0
                             ],
                             "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3071,7 +2840,8 @@
                           "CWE-550": 0.25
                         },
                         "thresholds": [
-                          11
+                          0,
+                          3
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3086,7 +2856,8 @@
                       "CWE-211": 0.5
                     },
                     "thresholds": [
-                      15
+                      0,
+                      6
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3126,40 +2897,7 @@
                           "CWE-214 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          5
-                        ],
-                        "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      },
-                      "CWE-548": {
-                        "positive": false,
-                        "name": "CWE-548",
-                        "value": 0.0,
-                        "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
-                        "children": {
-                          "CWE-548 Diagnostic CweCodeQl": {
-                            "toolName": "CweCodeQl",
-                            "name": "CWE-548 Diagnostic CweCodeQl",
-                            "value": 0.0,
-                            "description": "Sum of findings of type CWE-548",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          }
-                        },
-                        "weights": {
-                          "CWE-548 Diagnostic CweCodeQl": 1.0
-                        },
-                        "thresholds": [
+                          0,
                           0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3171,11 +2909,11 @@
                       }
                     },
                     "weights": {
-                      "CWE-214": 0.5,
-                      "CWE-548": 0.5
+                      "CWE-214": 1.0
                     },
                     "thresholds": [
-                      5
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3229,7 +2967,8 @@
                           "CWE-598 Diagnostic CweCodeQl": 1.0
                         },
                         "thresholds": [
-                          5
+                          0,
+                          0
                         ],
                         "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3244,7 +2983,8 @@
                       "CWE-598": 0.5
                     },
                     "thresholds": [
-                      9
+                      0,
+                      0
                     ],
                     "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3295,6 +3035,41 @@
     }
   },
   "measures": {
+    "CWE-532": {
+      "positive": false,
+      "name": "CWE-532",
+      "value": 0.0,
+      "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
+      "children": {
+        "CWE-532 Diagnostic CweCodeQl": {
+          "toolName": "CweCodeQl",
+          "name": "CWE-532 Diagnostic CweCodeQl",
+          "value": 0.0,
+          "description": "Sum of findings of type CWE-532",
+          "children": {},
+          "weights": {},
+          "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+          "normalizer": "pique.evaluation.DefaultNormalizer",
+          "utility_function": {
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
+          }
+        }
+      },
+      "weights": {
+        "CWE-532 Diagnostic CweCodeQl": 1.0
+      },
+      "thresholds": [
+        3,
+        3
+      ],
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
+      }
+    },
     "CWE-598": {
       "positive": false,
       "name": "CWE-598",
@@ -3320,7 +3095,8 @@
         "CWE-598 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        5
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3360,7 +3136,8 @@
             "CWE-204 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            5
+            0,
+            0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3394,7 +3171,8 @@
             "CWE-208 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            3
+            3,
+            0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3409,7 +3187,8 @@
         "CWE-208": 0.5
       },
       "thresholds": [
-        8
+        3,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3443,7 +3222,8 @@
         "CWE-214 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        5
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3477,7 +3257,8 @@
         "CWE-215 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        5
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3511,7 +3292,8 @@
         "CWE-204 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        5
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3545,7 +3327,8 @@
         "CWE-535 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        4
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3579,40 +3362,7 @@
         "CWE-536 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        4
-      ],
-      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-      "normalizer": "pique.evaluation.DefaultNormalizer",
-      "utility_function": {
-        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-        "description": "A Probability Density Function to model the distribution of findings"
-      }
-    },
-    "CWE-548": {
-      "positive": false,
-      "name": "CWE-548",
-      "value": 0.0,
-      "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
-      "children": {
-        "CWE-548 Diagnostic CweCodeQl": {
-          "toolName": "CweCodeQl",
-          "name": "CWE-548 Diagnostic CweCodeQl",
-          "value": 0.0,
-          "description": "Sum of findings of type CWE-548",
-          "children": {},
-          "weights": {},
-          "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-          "normalizer": "pique.evaluation.DefaultNormalizer",
-          "utility_function": {
-            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-            "description": "A Probability Density Function to model the distribution of findings"
-          }
-        }
-      },
-      "weights": {
-        "CWE-548 Diagnostic CweCodeQl": 1.0
-      },
-      "thresholds": [
+        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3647,6 +3397,7 @@
         "CWE-537 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
+        0,
         3
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3662,6 +3413,41 @@
       "value": 0.0,
       "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
       "children": {
+        "CWE-532": {
+          "positive": false,
+          "name": "CWE-532",
+          "value": 0.0,
+          "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
+          "children": {
+            "CWE-532 Diagnostic CweCodeQl": {
+              "toolName": "CweCodeQl",
+              "name": "CWE-532 Diagnostic CweCodeQl",
+              "value": 0.0,
+              "description": "Sum of findings of type CWE-532",
+              "children": {},
+              "weights": {},
+              "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
+              "normalizer": "pique.evaluation.DefaultNormalizer",
+              "utility_function": {
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
+              }
+            }
+          },
+          "weights": {
+            "CWE-532 Diagnostic CweCodeQl": 1.0
+          },
+          "thresholds": [
+            3,
+            3
+          ],
+          "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+          "normalizer": "pique.evaluation.DefaultNormalizer",
+          "utility_function": {
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
+          }
+        },
         "CWE-540": {
           "positive": false,
           "name": "CWE-540",
@@ -3693,74 +3479,7 @@
                 "CWE-615 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
-                0
-              ],
-              "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-              "normalizer": "pique.evaluation.DefaultNormalizer",
-              "utility_function": {
-                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                "description": "A Probability Density Function to model the distribution of findings"
-              }
-            },
-            "CWE-541": {
-              "positive": false,
-              "name": "CWE-541",
-              "value": 0.0,
-              "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
-              "children": {
-                "CWE-541 Diagnostic CweCodeQl": {
-                  "toolName": "CweCodeQl",
-                  "name": "CWE-541 Diagnostic CweCodeQl",
-                  "value": 0.0,
-                  "description": "Sum of findings of type CWE-541",
-                  "children": {},
-                  "weights": {},
-                  "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                  "normalizer": "pique.evaluation.DefaultNormalizer",
-                  "utility_function": {
-                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                    "description": "A Probability Density Function to model the distribution of findings"
-                  }
-                }
-              },
-              "weights": {
-                "CWE-541 Diagnostic CweCodeQl": 1.0
-              },
-              "thresholds": [
-                0
-              ],
-              "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-              "normalizer": "pique.evaluation.DefaultNormalizer",
-              "utility_function": {
-                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                "description": "A Probability Density Function to model the distribution of findings"
-              }
-            },
-            "CWE-531": {
-              "positive": false,
-              "name": "CWE-531",
-              "value": 0.0,
-              "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
-              "children": {
-                "CWE-531 Diagnostic CweCodeQl": {
-                  "toolName": "CweCodeQl",
-                  "name": "CWE-531 Diagnostic CweCodeQl",
-                  "value": 0.0,
-                  "description": "Sum of findings of type CWE-531",
-                  "children": {},
-                  "weights": {},
-                  "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-                  "normalizer": "pique.evaluation.DefaultNormalizer",
-                  "utility_function": {
-                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                    "description": "A Probability Density Function to model the distribution of findings"
-                  }
-                }
-              },
-              "weights": {
-                "CWE-531 Diagnostic CweCodeQl": 1.0
-              },
-              "thresholds": [
+                0,
                 0
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3772,11 +3491,10 @@
             }
           },
           "weights": {
-            "CWE-615": 0.3333333333333333333333333,
-            "CWE-541": 0.3333333333333333333333333,
-            "CWE-531": 0.3333333333333333333333333
+            "CWE-615": 1.0
           },
           "thresholds": [
+            0,
             0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3788,10 +3506,12 @@
         }
       },
       "weights": {
-        "CWE-540": 1.0
+        "CWE-532": 0.5,
+        "CWE-540": 0.5
       },
       "thresholds": [
-        0
+        3,
+        3
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3825,7 +3545,8 @@
         "CWE-208 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        3
+        3,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3859,6 +3580,7 @@
         "CWE-615 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
+        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -3919,7 +3641,8 @@
                 "CWE-535 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
-                4
+                0,
+                0
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3953,7 +3676,8 @@
                 "CWE-536 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
-                4
+                0,
+                0
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3987,6 +3711,7 @@
                 "CWE-537 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
+                0,
                 3
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4021,6 +3746,7 @@
                 "CWE-550 Diagnostic CweCodeQl": 1.0
               },
               "thresholds": [
+                0,
                 0
               ],
               "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4038,7 +3764,8 @@
             "CWE-550": 0.25
           },
           "thresholds": [
-            11
+            0,
+            3
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4053,7 +3780,8 @@
         "CWE-211": 0.5
       },
       "thresholds": [
-        15
+        0,
+        6
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4087,6 +3815,7 @@
         "CWE-550 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
+        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4127,74 +3856,7 @@
             "CWE-615 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            0
-          ],
-          "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-          "normalizer": "pique.evaluation.DefaultNormalizer",
-          "utility_function": {
-            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-            "description": "A Probability Density Function to model the distribution of findings"
-          }
-        },
-        "CWE-541": {
-          "positive": false,
-          "name": "CWE-541",
-          "value": 0.0,
-          "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
-          "children": {
-            "CWE-541 Diagnostic CweCodeQl": {
-              "toolName": "CweCodeQl",
-              "name": "CWE-541 Diagnostic CweCodeQl",
-              "value": 0.0,
-              "description": "Sum of findings of type CWE-541",
-              "children": {},
-              "weights": {},
-              "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-              "normalizer": "pique.evaluation.DefaultNormalizer",
-              "utility_function": {
-                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                "description": "A Probability Density Function to model the distribution of findings"
-              }
-            }
-          },
-          "weights": {
-            "CWE-541 Diagnostic CweCodeQl": 1.0
-          },
-          "thresholds": [
-            0
-          ],
-          "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-          "normalizer": "pique.evaluation.DefaultNormalizer",
-          "utility_function": {
-            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-            "description": "A Probability Density Function to model the distribution of findings"
-          }
-        },
-        "CWE-531": {
-          "positive": false,
-          "name": "CWE-531",
-          "value": 0.0,
-          "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
-          "children": {
-            "CWE-531 Diagnostic CweCodeQl": {
-              "toolName": "CweCodeQl",
-              "name": "CWE-531 Diagnostic CweCodeQl",
-              "value": 0.0,
-              "description": "Sum of findings of type CWE-531",
-              "children": {},
-              "weights": {},
-              "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-              "normalizer": "pique.evaluation.DefaultNormalizer",
-              "utility_function": {
-                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                "description": "A Probability Density Function to model the distribution of findings"
-              }
-            }
-          },
-          "weights": {
-            "CWE-531 Diagnostic CweCodeQl": 1.0
-          },
-          "thresholds": [
+            0,
             0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4206,11 +3868,10 @@
         }
       },
       "weights": {
-        "CWE-615": 0.3333333333333333333333333,
-        "CWE-541": 0.3333333333333333333333333,
-        "CWE-531": 0.3333333333333333333333333
+        "CWE-615": 1.0
       },
       "thresholds": [
+        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4251,40 +3912,7 @@
             "CWE-214 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            5
-          ],
-          "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-          "normalizer": "pique.evaluation.DefaultNormalizer",
-          "utility_function": {
-            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-            "description": "A Probability Density Function to model the distribution of findings"
-          }
-        },
-        "CWE-548": {
-          "positive": false,
-          "name": "CWE-548",
-          "value": 0.0,
-          "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
-          "children": {
-            "CWE-548 Diagnostic CweCodeQl": {
-              "toolName": "CweCodeQl",
-              "name": "CWE-548 Diagnostic CweCodeQl",
-              "value": 0.0,
-              "description": "Sum of findings of type CWE-548",
-              "children": {},
-              "weights": {},
-              "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-              "normalizer": "pique.evaluation.DefaultNormalizer",
-              "utility_function": {
-                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                "description": "A Probability Density Function to model the distribution of findings"
-              }
-            }
-          },
-          "weights": {
-            "CWE-548 Diagnostic CweCodeQl": 1.0
-          },
-          "thresholds": [
+            0,
             0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4296,11 +3924,11 @@
         }
       },
       "weights": {
-        "CWE-214": 0.5,
-        "CWE-548": 0.5
+        "CWE-214": 1.0
       },
       "thresholds": [
-        5
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4340,7 +3968,8 @@
             "CWE-535 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            4
+            0,
+            0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4374,7 +4003,8 @@
             "CWE-536 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            4
+            0,
+            0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4408,6 +4038,7 @@
             "CWE-537 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
+            0,
             3
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4442,6 +4073,7 @@
             "CWE-550 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
+            0,
             0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4459,41 +4091,8 @@
         "CWE-550": 0.25
       },
       "thresholds": [
-        11
-      ],
-      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-      "normalizer": "pique.evaluation.DefaultNormalizer",
-      "utility_function": {
-        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-        "description": "A Probability Density Function to model the distribution of findings"
-      }
-    },
-    "CWE-541": {
-      "positive": false,
-      "name": "CWE-541",
-      "value": 0.0,
-      "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
-      "children": {
-        "CWE-541 Diagnostic CweCodeQl": {
-          "toolName": "CweCodeQl",
-          "name": "CWE-541 Diagnostic CweCodeQl",
-          "value": 0.0,
-          "description": "Sum of findings of type CWE-541",
-          "children": {},
-          "weights": {},
-          "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-          "normalizer": "pique.evaluation.DefaultNormalizer",
-          "utility_function": {
-            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-            "description": "A Probability Density Function to model the distribution of findings"
-          }
-        }
-      },
-      "weights": {
-        "CWE-541 Diagnostic CweCodeQl": 1.0
-      },
-      "thresholds": [
-        0
+        0,
+        3
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4547,7 +4146,8 @@
             "CWE-598 Diagnostic CweCodeQl": 1.0
           },
           "thresholds": [
-            5
+            0,
+            0
           ],
           "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4562,40 +4162,7 @@
         "CWE-598": 0.5
       },
       "thresholds": [
-        9
-      ],
-      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-      "normalizer": "pique.evaluation.DefaultNormalizer",
-      "utility_function": {
-        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-        "description": "A Probability Density Function to model the distribution of findings"
-      }
-    },
-    "CWE-531": {
-      "positive": false,
-      "name": "CWE-531",
-      "value": 0.0,
-      "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
-      "children": {
-        "CWE-531 Diagnostic CweCodeQl": {
-          "toolName": "CweCodeQl",
-          "name": "CWE-531 Diagnostic CweCodeQl",
-          "value": 0.0,
-          "description": "Sum of findings of type CWE-531",
-          "children": {},
-          "weights": {},
-          "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-          "normalizer": "pique.evaluation.DefaultNormalizer",
-          "utility_function": {
-            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-            "description": "A Probability Density Function to model the distribution of findings"
-          }
-        }
-      },
-      "weights": {
-        "CWE-531 Diagnostic CweCodeQl": 1.0
-      },
-      "thresholds": [
+        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -4705,34 +4272,6 @@
         "description": "A Probability Density Function to model the distribution of findings"
       }
     },
-    "CWE-541 Diagnostic CweCodeQl": {
-      "toolName": "CweCodeQl",
-      "name": "CWE-541 Diagnostic CweCodeQl",
-      "value": 0.0,
-      "description": "Sum of findings of type CWE-541",
-      "children": {},
-      "weights": {},
-      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-      "normalizer": "pique.evaluation.DefaultNormalizer",
-      "utility_function": {
-        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-        "description": "A Probability Density Function to model the distribution of findings"
-      }
-    },
-    "CWE-548 Diagnostic CweCodeQl": {
-      "toolName": "CweCodeQl",
-      "name": "CWE-548 Diagnostic CweCodeQl",
-      "value": 0.0,
-      "description": "Sum of findings of type CWE-548",
-      "children": {},
-      "weights": {},
-      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-      "normalizer": "pique.evaluation.DefaultNormalizer",
-      "utility_function": {
-        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-        "description": "A Probability Density Function to model the distribution of findings"
-      }
-    },
     "CWE-535 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "name": "CWE-535 Diagnostic CweCodeQl",
@@ -4761,11 +4300,11 @@
         "description": "A Probability Density Function to model the distribution of findings"
       }
     },
-    "CWE-537 Diagnostic CweCodeQl": {
+    "CWE-532 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
-      "name": "CWE-537 Diagnostic CweCodeQl",
+      "name": "CWE-532 Diagnostic CweCodeQl",
       "value": 0.0,
-      "description": "Sum of findings of type CWE-537",
+      "description": "Sum of findings of type CWE-532",
       "children": {},
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
@@ -4775,11 +4314,11 @@
         "description": "A Probability Density Function to model the distribution of findings"
       }
     },
-    "CWE-531 Diagnostic CweCodeQl": {
+    "CWE-537 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
-      "name": "CWE-531 Diagnostic CweCodeQl",
+      "name": "CWE-537 Diagnostic CweCodeQl",
       "value": 0.0,
-      "description": "Sum of findings of type CWE-531",
+      "description": "Sum of findings of type CWE-537",
       "children": {},
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",

@@ -11,7 +11,7 @@
     "product_factors": {
       "Pillar CWE-200": {
         "name": "Pillar CWE-200",
-        "value": 0.8326666666666666666666667,
+        "value": 0.5003333333333333333333333,
         "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
         "weights": {
           "CWE-203": 0.1666666666666666666666667,
@@ -32,7 +32,7 @@
     "quality_aspects": {
       "Security": {
         "name": "Security",
-        "value": 0.8326666666666666666666667,
+        "value": 0.5003333333333333333333333,
         "description": "Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization",
         "weights": {
           "Pillar CWE-200": 1.0
@@ -46,7 +46,7 @@
       },
       "Maintainability": {
         "name": "Maintainability",
-        "value": 0.8326666666666666666666667,
+        "value": 0.5003333333333333333333333,
         "description": "Degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers",
         "weights": {
           "Pillar CWE-200": 1.0
@@ -62,7 +62,7 @@
     "tqi": {
       "PIQUE-CWE200 quality model": {
         "name": "PIQUE-CWE200 quality model",
-        "value": 0.8326666666666666666666668,
+        "value": 0.5003333333333333333333334,
         "description": "Model description, replace with a description of your model",
         "weights": {
           "Maintainability": 0.5,
@@ -78,16 +78,36 @@
     }
   },
   "measures": {
+    "CWE-532": {
+      "positive": false,
+      "name": "CWE-532",
+      "value": 0.001,
+      "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
+      "weights": {
+        "CWE-532 Diagnostic CweCodeQl": 1.0
+      },
+      "thresholds": [
+        3,
+        3
+      ],
+      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
+      "normalizer": "pique.evaluation.DefaultNormalizer",
+      "utility_function": {
+        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+        "description": "A Probability Density Function to model the distribution of findings"
+      }
+    },
     "CWE-598": {
       "positive": false,
       "name": "CWE-598",
-      "value": 0.999,
+      "value": 0.001,
       "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
       "weights": {
         "CWE-598 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        5
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -99,14 +119,15 @@
     "CWE-203": {
       "positive": false,
       "name": "CWE-203",
-      "value": 0.999,
+      "value": 1.0,
       "description": "The product behaves differently or sends different responses under different circumstances in a way that is observable to an unauthorized actor, which exposes security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
       "weights": {
         "CWE-204": 0.5,
         "CWE-208": 0.5
       },
       "thresholds": [
-        8
+        3,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -118,13 +139,14 @@
     "CWE-214": {
       "positive": false,
       "name": "CWE-214",
-      "value": 0.999,
+      "value": 0.001,
       "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
       "weights": {
         "CWE-214 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        5
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -136,13 +158,14 @@
     "CWE-215": {
       "positive": false,
       "name": "CWE-215",
-      "value": 0.999,
+      "value": 0.001,
       "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
       "weights": {
         "CWE-215 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        5
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -154,13 +177,14 @@
     "CWE-204": {
       "positive": false,
       "name": "CWE-204",
-      "value": 0.999,
+      "value": 0.001,
       "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
       "weights": {
         "CWE-204 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        5
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -172,13 +196,14 @@
     "CWE-535": {
       "positive": false,
       "name": "CWE-535",
-      "value": 0.999,
+      "value": 0.001,
       "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
       "weights": {
         "CWE-535 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        4
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -190,30 +215,13 @@
     "CWE-536": {
       "positive": false,
       "name": "CWE-536",
-      "value": 0.999,
+      "value": 0.001,
       "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
       "weights": {
         "CWE-536 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        4
-      ],
-      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-      "normalizer": "pique.evaluation.DefaultNormalizer",
-      "utility_function": {
-        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-        "description": "A Probability Density Function to model the distribution of findings"
-      }
-    },
-    "CWE-548": {
-      "positive": false,
-      "name": "CWE-548",
-      "value": 0.001,
-      "description": "A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.",
-      "weights": {
-        "CWE-548 Diagnostic CweCodeQl": 1.0
-      },
-      "thresholds": [
+        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -226,12 +234,13 @@
     "CWE-537": {
       "positive": false,
       "name": "CWE-537",
-      "value": 0.999,
+      "value": 1.0,
       "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
       "weights": {
         "CWE-537 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
+        0,
         3
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -244,13 +253,15 @@
     "CWE-538": {
       "positive": false,
       "name": "CWE-538",
-      "value": 0.001,
+      "value": 0.999,
       "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
       "weights": {
-        "CWE-540": 1.0
+        "CWE-532": 0.5,
+        "CWE-540": 0.5
       },
       "thresholds": [
-        0
+        3,
+        3
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -262,13 +273,14 @@
     "CWE-208": {
       "positive": false,
       "name": "CWE-208",
-      "value": 0.001,
+      "value": 0.7550608712763571460843462,
       "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
       "weights": {
         "CWE-208 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
-        3
+        3,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -286,6 +298,7 @@
         "CWE-615 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
+        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -298,14 +311,15 @@
     "CWE-209": {
       "positive": false,
       "name": "CWE-209",
-      "value": 0.999,
+      "value": 1.0,
       "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
       "weights": {
         "CWE-209 Diagnostic CweCodeQl": 0.5,
         "CWE-211": 0.5
       },
       "thresholds": [
-        15
+        0,
+        6
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -323,6 +337,7 @@
         "CWE-550 Diagnostic CweCodeQl": 1.0
       },
       "thresholds": [
+        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -338,11 +353,10 @@
       "value": 0.001,
       "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
       "weights": {
-        "CWE-615": 0.3333333333333333333333333,
-        "CWE-541": 0.3333333333333333333333333,
-        "CWE-531": 0.3333333333333333333333333
+        "CWE-615": 1.0
       },
       "thresholds": [
+        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -355,14 +369,14 @@
     "CWE-497": {
       "positive": false,
       "name": "CWE-497",
-      "value": 0.999,
+      "value": 0.001,
       "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
       "weights": {
-        "CWE-214": 0.5,
-        "CWE-548": 0.5
+        "CWE-214": 1.0
       },
       "thresholds": [
-        5
+        0,
+        0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -374,7 +388,7 @@
     "CWE-211": {
       "positive": false,
       "name": "CWE-211",
-      "value": 0.999,
+      "value": 1.0,
       "description": "The product performs an operation that triggers an external diagnostic or error message that is not directly generated or controlled by the product, such as an error generated by the programming language interpreter that a software application uses. The error can contain sensitive system information.",
       "weights": {
         "CWE-535": 0.25,
@@ -383,25 +397,8 @@
         "CWE-550": 0.25
       },
       "thresholds": [
-        11
-      ],
-      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-      "normalizer": "pique.evaluation.DefaultNormalizer",
-      "utility_function": {
-        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-        "description": "A Probability Density Function to model the distribution of findings"
-      }
-    },
-    "CWE-541": {
-      "positive": false,
-      "name": "CWE-541",
-      "value": 0.001,
-      "description": "If an include file source is accessible, the file can contain usernames and passwords, as well as sensitive information pertaining to the application and system.",
-      "weights": {
-        "CWE-541 Diagnostic CweCodeQl": 1.0
-      },
-      "thresholds": [
-        0
+        0,
+        3
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -413,31 +410,14 @@
     "CWE-201": {
       "positive": false,
       "name": "CWE-201",
-      "value": 0.999,
+      "value": 0.001,
       "description": "The code transmits data to another actor, but a portion of the data includes sensitive information that should not be accessible to that actor.",
       "weights": {
         "CWE-201 Diagnostic CweCodeQl": 0.5,
         "CWE-598": 0.5
       },
       "thresholds": [
-        9
-      ],
-      "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
-      "normalizer": "pique.evaluation.DefaultNormalizer",
-      "utility_function": {
-        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-        "description": "A Probability Density Function to model the distribution of findings"
-      }
-    },
-    "CWE-531": {
-      "positive": false,
-      "name": "CWE-531",
-      "value": 0.001,
-      "description": "Accessible test applications can pose a variety of security risks. Since developers or administrators rarely consider that someone besides themselves would even know about the existence of these applications, it is common for them to contain sensitive information or functions.",
-      "weights": {
-        "CWE-531 Diagnostic CweCodeQl": 1.0
-      },
-      "thresholds": [
+        0,
         0
       ],
       "eval_strategy": "pique.evaluation.DefaultMeasureEvaluator",
@@ -540,32 +520,6 @@
         "description": "A Probability Density Function to model the distribution of findings"
       }
     },
-    "CWE-541 Diagnostic CweCodeQl": {
-      "toolName": "CweCodeQl",
-      "name": "CWE-541 Diagnostic CweCodeQl",
-      "value": 0.0,
-      "description": "Sum of findings of type CWE-541",
-      "weights": {},
-      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-      "normalizer": "pique.evaluation.DefaultNormalizer",
-      "utility_function": {
-        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-        "description": "A Probability Density Function to model the distribution of findings"
-      }
-    },
-    "CWE-548 Diagnostic CweCodeQl": {
-      "toolName": "CweCodeQl",
-      "name": "CWE-548 Diagnostic CweCodeQl",
-      "value": 0.0,
-      "description": "Sum of findings of type CWE-548",
-      "weights": {},
-      "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
-      "normalizer": "pique.evaluation.DefaultNormalizer",
-      "utility_function": {
-        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-        "description": "A Probability Density Function to model the distribution of findings"
-      }
-    },
     "CWE-535 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "name": "CWE-535 Diagnostic CweCodeQl",
@@ -592,11 +546,11 @@
         "description": "A Probability Density Function to model the distribution of findings"
       }
     },
-    "CWE-537 Diagnostic CweCodeQl": {
+    "CWE-532 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
-      "name": "CWE-537 Diagnostic CweCodeQl",
-      "value": 0.0,
-      "description": "Sum of findings of type CWE-537",
+      "name": "CWE-532 Diagnostic CweCodeQl",
+      "value": 3.0,
+      "description": "Sum of findings of type CWE-532",
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -605,11 +559,11 @@
         "description": "A Probability Density Function to model the distribution of findings"
       }
     },
-    "CWE-531 Diagnostic CweCodeQl": {
+    "CWE-537 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
-      "name": "CWE-531 Diagnostic CweCodeQl",
+      "name": "CWE-537 Diagnostic CweCodeQl",
       "value": 0.0,
-      "description": "Sum of findings of type CWE-531",
+      "description": "Sum of findings of type CWE-537",
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",

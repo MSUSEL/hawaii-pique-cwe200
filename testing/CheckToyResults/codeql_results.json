@@ -1,23 +1,23 @@
 {
     "CWE-201": {
         "true_positives": [
-            "BAD_ExposeErrorSensitiveDetailsInServletResponse.java",
-            "BAD_EmailHeaderExposure.java",
-            "BAD_CryptoSeedExposure.java",
-            "BAD_SensitiveDataApiExposureSent.java",
-            "BAD_SensitiveDataHttpServletResponse.java",
             "BAD_SendingofEncryptionKey.java",
+            "BAD_ExposeErrorSensitiveDetailsInServletResponse.java",
             "BAD_SendSensitiveDataByEmail.java",
-            "BAD_ExposeSensitiveInfoInEmail.java"
+            "BAD_SensitiveDataApiExposureSent.java",
+            "BAD_CryptoSeedExposure.java",
+            "BAD_ExposeSensitiveInfoInEmail.java",
+            "BAD_SensitiveDataHttpServletResponse.java",
+            "BAD_EmailHeaderExposure.java"
         ],
         "true_negatives": [
-            "GOOD_UseHttpsForSensitiveData.java",
-            "GOOD_ExposeErrorSensitiveDetailsInServletResponse.java",
-            "GOOD_SensitiveDataApiExposureSent.java",
             "GOOD_SendCredentialsInPostRequest.java",
-            "GOOD_DontExposeSessionIDInHeaders.java",
+            "GOOD_SensitiveDataApiExposureSent.java",
+            "GOOD_ExposeErrorSensitiveDetailsInServletResponse.java",
+            "GOOD_UseHttpsForSensitiveData.java",
+            "GOOD_SensitiveInfoInEmail.java",
             "GOOD_EncryptDataBeforeTransmission.java",
-            "GOOD_SensitiveInfoInEmail.java"
+            "GOOD_DontExposeSessionIDInHeaders.java"
         ],
         "false_positives": [],
         "false_negatives": [
@@ -27,286 +27,288 @@
     },
     "CWE-204": {
         "true_positives": [
-            "BAD_AccessControlBasedOnTime.java",
-            "BAD_DifferentErrorCodesrentErrorCodes.java",
             "BAD_ComplexNestedConditions.java",
+            "BAD_NetworkAuthenticationConditional.java",
+            "BAD_AccessControlBasedOnTime.java",
             "BAD_TwoFactorAuthentication.java",
-            "BAD_FileDownloadAuthorization.java",
             "BAD_DetailedErrorHandlingConditional.java",
-            "BAD_EmailVerificationCondition.java",
-            "BAD_SimpleLoginDiscrepancy.java",
             "BAD_FileAccessControlConditional.java",
-            "BAD_NetworkAuthenticationConditional.java"
+            "BAD_FileDownloadAuthorization.java",
+            "BAD_SimpleLoginDiscrepancy.java",
+            "BAD_EmailVerificationCondition.java"
         ],
         "true_negatives": [
             "GOOD_FileAccessControlConditional.java",
-            "GOOD_UniformLoginResponse.java",
-            "GOOD_DetailedErrorHandlingConditional.java",
-            "GOOD_NetworkAuthenticationConditional.java",
             "GOOD_FileDownloadAuthorization.java",
-            "GOOD_EmailVerificationCondition.java",
-            "GOOD_ConsistentAuthenticationTiming.java",
-            "GOOD_DifferentErrorCodes.java",
+            "GOOD_AccessControlBasedOnTime.java",
+            "GOOD_DetailedErrorHandlingConditional.java",
+            "GOOD_UniformLoginResponse.java",
             "GOOD_SimpleLoginDiscrepancy.java",
             "GOOD_ComplexNestedConditions.java",
-            "GOOD_AccessControlBasedOnTime.java"
+            "GOOD_EmailVerificationCondition.java",
+            "GOOD_NetworkAuthenticationConditional.java",
+            "GOOD_DifferentErrorCodes.java",
+            "GOOD_ConsistentAuthenticationTiming.java"
         ],
         "false_positives": [],
         "false_negatives": [
-            "BAD_UserRoleHandlerSwitch.java"
+            "BAD_UserRoleHandlerSwitch.java",
+            "BAD_DifferentErrorCodesrentErrorCodes.java"
         ]
     },
     "CWE-208": {
         "true_positives": [
-            "BAD_unsafeCheckSignatures.java",
-            "BAD_AAS_unsafeCheckCiphertextWithOutputArray.java",
-            "BAD_AAS_unsafeCheckCiphertext.java",
-            "BAD_AAS_unsafeCheckCiphertextWithByteBuffer.java",
+            "BAD_unsafeMacCheckWithLoop.java",
+            "BAD_AAS_unsafeCheckSignaturesWithOutputArray.java",
+            "BAD_AAS_unsafeMacCheckWithDoFinalWithOutputArray.java",
+            "BAD_unsafeMacCheck.java",
             "BAD_AAS_unsafeCheckSignatures.java",
             "BAD_unsafeCheckCustomMac.java",
-            "BAD_AAS_CiphertextWithByteBufferEquals.java",
+            "BAD_unsafeCheckSignatures.java",
+            "BAD_AAS_unsafeCheckCiphertextWithByteBuffer.java",
             "BAD_AttackAgainstHeader_UnsafeComparison.java",
             "BAD_AAS_unsafeMacCheckWithArrayEquals.java",
-            "BAD_unsafeMacCheckWithLoop.java",
-            "BAD_unsafeMacCheck.java",
-            "BAD_AAS_unsafeCheckSignaturesWithOutputArray.java",
-            "BAD_AAS_unsafeMacCheckWithDoFinalWithOutputArray.java"
+            "BAD_AAS_CiphertextWithByteBufferEquals.java",
+            "BAD_AAS_unsafeCheckCiphertext.java",
+            "BAD_AAS_unsafeCheckCiphertextWithOutputArray.java"
         ],
         "false_positives": [
             "GOOD_AAS_noUserInputWhenCheckingCiphertext.java"
         ],
         "true_negatives": [
+            "GOOD_AAS_compareMacWithConstant.java",
             "GOOD_AttackAgainstHeader_safeComparison.java",
             "GOOD_saferCheckSignatures.java",
-            "GOOD_AAS_compareMacWithConstant.java",
             "GOOD_saferCheckCustomMac.java",
+            "GOOD_safeMacCheckWithLoop.java",
             "GOOD_AAS_saferCheckSignatures.java",
-            "GOOD_AAS_saferMacCheck.java",
-            "GOOD_AAS_saferCheckCiphertext.java",
             "GOOD_saferMacCheck.java",
-            "GOOD_safeMacCheckWithLoop.java"
+            "GOOD_AAS_saferMacCheck.java",
+            "GOOD_AAS_saferCheckCiphertext.java"
         ],
         "false_negatives": []
     },
     "CWE-209": {
         "true_positives": [
-            "BAD_AccessControlError.java",
             "BAD_ProcessMonitoring.java",
-            "BAD_MessagingSystem.java",
-            "BAD_VerboseAuthenticationFailure.java",
-            "BAD_SimpleExceptionExposure.java",
-            "BAD_MilitaryOperationPlanError.java",
+            "BAD_RealTimeBiddingError.java",
+            "BAD_EncryptionKeyError.java",
             "BAD_HealthcareSystemError.java",
+            "BAD_MessagingSystem.java",
+            "BAD_DetailedDatabaseErrorExposure.java",
+            "BAD_MilitaryOperationPlanError.java",
+            "BAD_DatabaseSchemaError.java",
+            "BAD_AccessControlError.java",
             "BAD_FinancialAuditError.java",
             "BAD_SoftwareLicensingError.java",
-            "BAD_RealTimeBiddingError.java",
-            "BAD_DatabaseSchemaError.java",
-            "BAD_DetailedDatabaseErrorExposure.java",
-            "BAD_EncryptionKeyError.java"
+            "BAD_VerboseAuthenticationFailure.java",
+            "BAD_SimpleExceptionExposure.java"
         ],
         "true_negatives": [
-            "GOOD_SensitivePathDisclosureInErrors.java",
             "GOOD_MedicalRecordSystemLookup.java",
-            "GOOD_VerboseAuthenticationFailure.java",
-            "GOOD_HealthcareSystemError.java",
-            "GOOD_GenericDatabaseErrorHandling.java",
-            "GOOD_MessagingSystem.java",
-            "GOOD_DatabaseSchemaError.java",
-            "GOOD_AccessControlError.java",
-            "GOOD_EncryptionKeyError.java",
             "GOOD_PatentApplicationError.java",
+            "GOOD_GenericDatabaseErrorHandling.java",
+            "GOOD_DatabaseSchemaError.java",
+            "GOOD_DetailedDatabaseErrorExposure.java",
             "GOOD_GeneralizedAuthenticationFeedback.java",
-            "GOOD_RealTimeBiddingError.java",
+            "GOOD_MilitaryOperationPlanError.java",
+            "GOOD_SensitivePathDisclosureInErrors.java",
             "GOOD_ProcessMonitoring.java",
             "GOOD_SoftwareLicensingError.java",
-            "GOOD_DetailedDatabaseErrorExposure.java",
             "GOOD_FinancialAuditError.java",
-            "GOOD_MilitaryOperationPlanError.java"
+            "GOOD_HealthcareSystemError.java",
+            "GOOD_AccessControlError.java",
+            "GOOD_VerboseAuthenticationFailure.java",
+            "GOOD_EncryptionKeyError.java",
+            "GOOD_MessagingSystem.java",
+            "GOOD_RealTimeBiddingError.java"
         ],
         "false_positives": [],
         "false_negatives": [
             "BAD_MedicalRecordSystemLookup.java",
             "BAD_PatentApplicationError.java",
-            "BAD_PrintStackTrace.java",
-            "BAD_SensitivePathDisclosureInErrors.java"
+            "BAD_SensitivePathDisclosureInErrors.java",
+            "BAD_PrintStackTrace.java"
         ]
     },
     "CWE-214": {
         "true_positives": [
-            "BAD_DockerRunSensitiveInfoExposure.java",
-            "BAD_NetworkConfigCredentialsExposure.java",
+            "BAD_InsecureAPIKeyInvocation.java",
             "BAD_TokenExposureViaEnvironment.java",
+            "BAD_DockerRunSensitiveInfoExposure.java",
+            "BAD_CommandLineToolSensitiveData.java",
+            "BAD_NetworkConfigCredentialsExposure.java",
+            "BAD_ProcessInvocationWithArgs.java",
             "BAD_PasswordExposureInCommands.java",
             "BAD_CloudServiceConfigExposure.java",
-            "BAD_ProcessInvocationWithArgs.java",
-            "BAD_EnvVarExposure.java",
-            "BAD_InsecureAPIKeyInvocation.java"
+            "BAD_EnvVarExposure.java"
         ],
         "true_negatives": [
+            "GOOD_EncryptCommandExecution.java",
+            "GOOD_PasswordSecureCommands.java",
+            "GOOD_SecureProcessInvocationWithEncryption.java",
             "GOOD_EncryptTempFileProcess.java",
-            "GOOD_CloudServiceConfigSecure.java",
-            "GOOD_nonSensitiveInformationInShellCommand.java",
             "GOOD_EnvVarEncryption.java",
             "GOOD_SecureSoftwareUpdate.java",
             "GOOD_DockerRunEncryptedConfig.java",
-            "GOOD_PasswordSecureCommands.java",
-            "GOOD_NetworkConfigSecureHandling.java",
-            "GOOD_SecureProcessInvocationWithEncryption.java",
-            "GOOD_EncryptCommandExecution.java",
-            "GOOD_TokenSecureViaEnvironment.java"
+            "GOOD_nonSensitiveInformationInShellCommand.java",
+            "GOOD_CloudServiceConfigSecure.java",
+            "GOOD_TokenSecureViaEnvironment.java",
+            "GOOD_NetworkConfigSecureHandling.java"
         ],
         "false_positives": [],
         "false_negatives": [
-            "BAD_CommandLineToolSensitiveData.java",
             "BAD_CommandLinePasswordExposure.java"
         ]
     },
     "CWE-215": {
         "true_positives": [
-            "BAD_DebugLoggingEnabled.java",
             "BAD_DebugOutputWithCredentials.java",
             "BAD_DebugFeatureToggle.java",
-            "BAD_DebugLoggingSensitiveInfo.java",
-            "BAD_APIEndpointDebugging.java",
             "BAD_NetworkDebugger.java",
+            "BAD_APIEndpointDebugging.java",
+            "BAD_DebugLoggingEnabled.java",
+            "BAD_DebugLoggingSensitiveInfo.java",
             "BAD_DebugModeActive.java"
         ],
         "true_negatives": [
-            "GOOD_ExceptionDebuggingWithSensitiveData.java",
-            "GOOD_DebugFeatureToggle.java",
-            "GOOD_DebugLoggingSensitiveInfo.java",
-            "GOOD_DebugOutputWithCredentials.java",
-            "GOOD_DebugModeActive.java",
-            "GOOD_DataProcessor.java",
             "GOOD_SecureDebuggingPractices.java",
-            "GOOD_DebugLoggingEnabled.java",
+            "GOOD_DebugFeatureToggle.java",
+            "GOOD_APIEndpointDebugging.java",
             "GOOD_EnhancedDebugWithoutSensitiveData.java",
-            "GOOD_APIEndpointDebugging.java"
+            "GOOD_DataProcessor.java",
+            "GOOD_DebugOutputWithCredentials.java",
+            "GOOD_ExceptionDebuggingWithSensitiveData.java",
+            "GOOD_DebugModeActive.java",
+            "GOOD_DebugLoggingEnabled.java",
+            "GOOD_DebugLoggingSensitiveInfo.java"
         ],
         "false_positives": [],
         "false_negatives": [
+            "BAD_DataProcessor.java",
             "BAD_LoginProcessorDebugging.java",
-            "BAD_ExceptionDebuggingWithSensitiveData.java",
-            "BAD_DataProcessor.java"
+            "BAD_ExceptionDebuggingWithSensitiveData.java"
         ]
     },
     "CWE-532": {
         "true_positives": [
-            "BAD_LogDbConnectionDetails.java",
+            "BAD_ErrorHandler.java",
             "BAD_APIAccessLogger.java",
             "BAD_CustomLogging.java",
-            "BAD_ErrorHandler.java",
-            "BAD_TokenManager.java",
             "BAD_RegistrationService.java",
-            "BAD_UserAuthenticationLogger.java",
-            "BAD_SecurityHandler.java",
-            "BAD_SessionManager.java",
             "BAD_LogUserCredentials.java",
-            "BAD_LogPaymentInformation.java"
+            "BAD_UserAuthenticationLogger.java",
+            "BAD_LogDbConnectionDetails.java",
+            "BAD_LogPaymentInformation.java",
+            "BAD_SecurityHandler.java",
+            "BAD_TokenManager.java"
         ],
         "true_negatives": [
-            "GOOD_LogUserCredentials.java",
-            "GOOD_LogPaymentInformation.java",
             "GOOD_APIAccessLogger.java",
-            "GOOD_LogDbConnectionDetails.java",
-            "GOOD_ErrorReportHandler.java",
-            "GOOD_TokenManager.java",
             "GOOD_FilterSensitiveInfoFromLogs.java",
-            "GOOD_SecureLoggingPractices.java",
             "GOOD_FinancialTransactionLogger.java",
-            "GOOD_ErrorHandler.java"
+            "GOOD_TokenManager.java",
+            "GOOD_LogDbConnectionDetails.java",
+            "GOOD_LogPaymentInformation.java",
+            "GOOD_LogUserCredentials.java",
+            "GOOD_SecureLoggingPractices.java",
+            "GOOD_ErrorHandler.java",
+            "GOOD_ErrorReportHandler.java"
         ],
         "false_positives": [],
         "false_negatives": [
-            "BAD_FinancialTransactionLogger.java",
-            "BAD_LoginServiceCustom.java"
+            "BAD_LoginServiceCustom.java",
+            "BAD_ErrorReportHandlerLog.java",
+            "BAD_UserDataManager.java",
+            "BAD_SessionManager.java",
+            "BAD_FinancialTransactionLogger.java"
         ]
     },
     "CWE-535": {
         "true_positives": [
+            "BAD_FirewallConfigurationServlet.java",
+            "BAD_DatabaseAccessLogger.java",
             "BAD_APIKeyRegenerator.java",
             "BAD_CredentialUpdater.java",
+            "BAD_SecretFileDecryptor.java",
             "BAD_DatabaseCredentialsReset.java",
-            "BAD_APIKeyUpdater.java",
-            "BAD_DatabaseAccessLogger.java",
-            "BAD_FirewallConfigurationServlet.java"
+            "BAD_APIKeyUpdater.java"
         ],
         "true_negatives": [
-            "GOOD_SecretFileDecryptor.java",
             "GOOD_SecureShellCommandHandling.java",
-            "GOOD_DatabaseAccessLogger.java",
-            "GOOD_EncapsulatedSecurityContext.java",
-            "GOOD_DatabaseCredentialsReset.java",
-            "GOOD_FirewallConfigurationServlet.java",
-            "GOOD_APIKeyUpdater.java",
             "GOOD_CredentialUpdater.java",
+            "GOOD_DatabaseCredentialsReset.java",
+            "GOOD_APIKeyUpdater.java",
+            "GOOD_MisconfiguredPermissions.java",
+            "GOOD_EncapsulatedSecurityContext.java",
+            "GOOD_SecretFileDecryptor.java",
             "GOOD_SensitiveInfoExposureViaShellError.java",
-            "GOOD_MisconfiguredPermissions.java"
+            "GOOD_DatabaseAccessLogger.java",
+            "GOOD_FirewallConfigurationServlet.java"
         ],
         "false_positives": [],
         "false_negatives": [
+            "BAD_SensitiveInfoExposureViaShellError.java",
+            "BAD_UserProfileManagerCustomSink.java",
             "BAD_FileProcessorCustomSink.java",
-            "BAD_NetworkConfiguratorCustomSink.java",
+            "BAD_ShellCommandExposure.java",
             "BAD_MisconfiguredPermissions.java",
             "BAD_BackupServiceCustomSink.java",
-            "BAD_DatabaseConnectorCustomSink.java",
-            "BAD_SensitiveInfoExposureViaShellError.java",
-            "BAD_ShellCommandExposure.java",
-            "BAD_UserProfileManagerCustomSink.java",
-            "BAD_SecretFileDecryptor.java"
+            "BAD_NetworkConfiguratorCustomSink.java",
+            "BAD_DatabaseConnectorCustomSink.java"
         ]
     },
     "CWE-536": {
         "true_positives": [
-            "BAD_DbConnectionErrorServlet.java",
+            "BAD_TransactionServlet.java",
             "BAD_PaymentProcessingServlet.java",
             "BAD_ApiKeyManagementServlet.java",
             "BAD_ExternalServiceErrorServlet.java",
+            "BAD_DbConnectionErrorServlet.java",
             "BAD_ProfileUpdateServlet.java",
-            "BAD_TransactionServlet.java",
-            "BAD_UserProfileServlet.java",
-            "BAD_IoTDeviceFirmwareUpdateServlet.java"
+            "BAD_IoTDeviceFirmwareUpdateServlet.java",
+            "BAD_UserProfileServlet.java"
         ],
         "true_negatives": [
-            "GOOD_GenericErrorWithLoggingServlet.java",
-            "GOOD_ProfileUpdateServlet.java",
-            "GOOD_FileReadErrorServlet.java",
-            "GOOD_DbConnectionErrorServlet.java",
-            "GOOD_PaymentProcessingServlet.java",
             "GOOD_ExternalServiceErrorServlet.java",
-            "GOOD_ApiKeyManagementServlet.java",
-            "GOOD_SecureFileAccessServlet.java",
+            "GOOD_ProfileUpdateServlet.java",
+            "GOOD_AccountBalanceServlet.java",
             "GOOD_IoTDeviceFirmwareUpdateServlet.java",
-            "GOOD_AccountBalanceServlet.java"
+            "GOOD_FileReadErrorServlet.java",
+            "GOOD_ApiKeyManagementServlet.java",
+            "GOOD_DbConnectionErrorServlet.java",
+            "GOOD_GenericErrorWithLoggingServlet.java",
+            "GOOD_PaymentProcessingServlet.java",
+            "GOOD_SecureFileAccessServlet.java"
         ],
         "false_positives": [],
         "false_negatives": [
-            "BAD_FileReadErrorServlet.java",
-            "BAD_AccountBalanceServlet.java"
+            "BAD_AccountBalanceServlet.java",
+            "BAD_FileReadErrorServlet.java"
         ]
     },
     "CWE-537": {
         "true_positives": [
-            "BAD_IllegalArgumentException.java",
             "BAD_BufferOverflowException.java",
-            "BAD_SecurityException.java",
-            "BAD_RuntimeExceptionSensitiveDataLeak.java",
-            "BAD_IllegalStateException.java",
             "BAD_IndexOutofBoundsInfoExposure.java",
+            "BAD_IllegalArgumentException.java",
+            "BAD_SensitiveNullPointerExceptionHandling.java",
+            "BAD_SecurityException.java",
             "BAD_SalaryDivisionExceptionHandling.java",
-            "BAD_SensitiveNullPointerExceptionHandling.java"
+            "BAD_RuntimeExceptionSensitiveDataLeak.java",
+            "BAD_IllegalStateException.java"
         ],
         "true_negatives": [
             "GOOD_SensitiveConcurrentModificationHandling.java",
-            "GOOD_FileNotFoundException.java",
-            "GOOD_SecurityException.java",
-            "GOOD_IllegalStateException.java",
-            "GOOD_IllegalArgumentException.java",
-            "GOOD_NoSuchElementException.java",
-            "GOOD_SensitiveNullPointerExceptionHandling.java",
-            "GOOD_IndexOutofBoundsInfoExposure.java",
             "GOOD_SensitiveTypeNotPresentExceptionHandling.java",
-            "GOOD_ArithmeticException.java"
+            "GOOD_SecurityException.java",
+            "GOOD_IndexOutofBoundsInfoExposure.java",
+            "GOOD_ArithmeticException.java",
+            "GOOD_FileNotFoundException.java",
+            "GOOD_IllegalStateException.java",
+            "GOOD_SensitiveNullPointerExceptionHandling.java",
+            "GOOD_IllegalArgumentException.java",
+            "GOOD_NoSuchElementException.java"
         ],
         "false_positives": [],
         "false_negatives": [
@@ -316,102 +318,101 @@
     },
     "CWE-538": {
         "true_positives": [
-            "BAD_ExposeOAuthToken.java",
-            "BAD_ExposeUserCredentialsInTempFile.java"
+            "BAD_ExposeUserCredentialsInTempFile.java",
+            "BAD_ExposeOAuthToken.java"
         ],
         "true_negatives": [
             "GOOD_AppUsageStatsFile.java",
-            "GOOD_TempFile.java",
-            "GOOD_InventoryFile.java"
+            "GOOD_InventoryFile.java",
+            "GOOD_TempFile.java"
         ],
         "false_positives": [],
         "false_negatives": []
     },
     "CWE-550": {
         "true_positives": [
-            "BAD_PaymentErrorExposureServlet.java",
-            "BAD_FinancialTransactionAPI.java",
-            "BAD_DatabaseErrorServlet.java",
-            "BAD_ConfigExposureServlet.java",
             "BAD_CloudResourceErrorAPI.java",
+            "BAD_DatabaseErrorServlet.java",
+            "BAD_PaymentErrorExposureServlet.java",
+            "BAD_UserDataHandlingAPI.java",
+            "BAD_FinancialTransactionAPI.java",
             "BAD_AuthenticationFailureServlet.java",
             "BAD_ExposedExceptionDetailsAPI.java",
-            "BAD_UserDataHandlingAPI.java"
+            "BAD_ConfigExposureServlet.java"
         ],
         "true_negatives": [
-            "GOOD_ExposedExceptionDetailsAPI.java",
-            "GOOD_ConfigExposureServlet.java",
-            "GOOD_SecureErrorLogging2.java",
-            "GOOD_DatabaseErrorServlet.java",
+            "GOOD_FinancialTransactionAPI.java",
+            "GOOD_DetailedRuntimeExceptionServlet.java",
             "GOOD_AuthenticationFailureServlet.java",
-            "GOOD_InitializationErrorServlet.java",
             "GOOD_CloudResourceErrorAPI.java",
             "GOOD_GenericErrorHandling.java",
-            "GOOD_DetailedRuntimeExceptionServlet.java",
-            "GOOD_FinancialTransactionAPI.java"
+            "GOOD_ConfigExposureServlet.java",
+            "GOOD_ExposedExceptionDetailsAPI.java",
+            "GOOD_InitializationErrorServlet.java",
+            "GOOD_DatabaseErrorServlet.java",
+            "GOOD_SecureErrorLogging2.java"
         ],
         "false_positives": [],
         "false_negatives": [
-            "BAD_DetailedRuntimeExceptionServlet.java",
-            "BAD_InitializationErrorServlet.java"
+            "BAD_InitializationErrorServlet.java",
+            "BAD_DetailedRuntimeExceptionServlet.java"
         ]
     },
     "CWE-598": {
         "true_positives": [
             "BAD_SessionTokenGET.java",
-            "BAD_AuthenticationGET.java",
-            "BAD_BankingTransactionQuery.java",
-            "BAD_FinancialDataGET.java",
             "BAD_PasswordChangeGET.java",
-            "BAD_PersonalDetailsGET.java",
-            "BAD_CreditCardSubmissionGET.java"
+            "BAD_AuthenticationGET.java",
+            "BAD_CreditCardSubmissionGET.java",
+            "BAD_FinancialDataGET.java",
+            "BAD_BankingTransactionQuery.java",
+            "BAD_PersonalDetailsGET.java"
         ],
         "true_negatives": [
-            "GOOD_PasswordChangePOST_Encrypted.java",
-            "GOOD_PersonalDetailsPOST_Encrypted.java",
-            "GOOD_CreditCardSubmissionPOST_Encrypted.java",
             "GOOD_BankingTransactionQuery.java",
+            "GOOD_PersonalDetailsPOST_Encrypted.java",
             "GOOD_AuthenticationPOST.java",
-            "GOOD_ApiKeySubmissionPOST.java",
-            "GOOD_FetchWeatherData.java",
             "GOOD_FetchPublicData.java",
+            "GOOD_FetchWeatherData.java",
+            "GOOD_ApiKeySubmissionPOST.java",
+            "GOOD_PasswordChangePOST_Encrypted.java",
             "GOOD_HealthInfoSubmissionPOST.java",
+            "GOOD_CreditCardSubmissionPOST_Encrypted.java",
             "GOOD_HttpsApiCall.java"
         ],
         "false_positives": [],
         "false_negatives": [
             "BAD_ApiKeySubmissionGET.java",
-            "BAD_MedicalRecordRequest.java",
-            "BAD_HealthInfoSubmissionGET.java"
+            "BAD_HealthInfoSubmissionGET.java",
+            "BAD_MedicalRecordRequest.java"
         ]
     },
     "CWE-615": {
-        "true_positives": [
-            "BAD_DatabaseSchemaDetails.java",
-            "BAD_SecurityCheckBypassComments.java",
-            "BAD_NetworkConfigurationComments.java",
-            "BAD_AuthenticationBypassComments.java",
-            "BAD_RecoveryKeyComments.java"
-        ],
+        "true_positives": [],
+        "false_positives": [],
         "true_negatives": [
-            "GOOD_ConfigurationLoadingComments.java",
-            "GOOD_UserAuthenticationComments.java",
-            "GOOD_FileProcessingComments.java",
-            "GOOD_SecureKeyManagement.java",
-            "GOOD_SecureInputHandlingComments.java",
-            "GOOD_TemporaryFixComments.java",
             "GOOD_RecoveryProcessComments.java",
             "GOOD_SecureCommentPractices.java",
+            "GOOD_SecureKeyManagement.java",
+            "GOOD_ProjectDetailsComments.java",
             "GOOD_InfrastructureSetupComments.java",
-            "GOOD_ProjectDetailsComments.java"
+            "GOOD_FileProcessingComments.java",
+            "GOOD_SecureInputHandlingComments.java",
+            "GOOD_ConfigurationLoadingComments.java",
+            "GOOD_UserAuthenticationComments.java",
+            "GOOD_TemporaryFixComments.java"
         ],
-        "false_positives": [],
         "false_negatives": [
-            "BAD_TestingCredentialsComments.java",
+            "BAD_AuthenticationBypassComments.java",
+            "BAD_RecoveryKeyComments.java",
             "BAD_HardcodedCredentialsInComments.java",
+            "BAD_SecurityCheckBypassComments.java",
             "BAD_ApiKeyInComments.java",
-            "BAD_EncryptionDetailsComments.java",
-            "BAD_EncryptionKeyInComments.java"
+            "BAD_NetworkConfigurationComments.java",
+            "BAD_EncryptionKeyInComments.java",
+            "BAD_DatabaseSchemaDetails.java",
+            "BAD_TestingCredentialsComments.java",
+            "BAD_EncryptionDetailsComments.java"
         ]
     }
 }
