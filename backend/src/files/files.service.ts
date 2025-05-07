@@ -6,7 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { EventsGateway } from 'src/events/events.gateway';
 
 /**
- * * FilesService is a service that provides functionality to handle file operations.
+ * FilesService is a service that provides functionality to handle file operations.
  */
 @Global()
 @Injectable()

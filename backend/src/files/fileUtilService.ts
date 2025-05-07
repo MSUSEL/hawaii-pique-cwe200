@@ -8,8 +8,8 @@ import * as readline from 'readline';
 import * as os from 'os';
 
 /**
- * * FileUtilService is a service that provides utility functions for file operations.
- * * It includes methods for extracting zip files, reading and writing files, and parsing Java files.
+ * FileUtilService is a service that provides utility functions for file operations.
+ * It includes methods for extracting zip files, reading and writing files, and parsing Java files.
  */
 @Global()
 @Injectable()
