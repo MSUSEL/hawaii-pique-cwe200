@@ -80,3 +80,7 @@ unsloth_compiled_cache
 llama_finetuned_model/*
 .gradle/*
 .pnpm-store/**
+codeql queries/SensitiveInfo/SensitiveVariables.yml
+codeql queries/SensitiveInfo/Sinks.yml
+codeql queries/SensitiveInfo/Comments.yml
+codeql queries/SensitiveInfo/Strings.yml
