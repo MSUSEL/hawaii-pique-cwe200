@@ -31,7 +31,7 @@ export class JavaParserService {
      * @param sourcePath - The path to the source directory.
      * @returns A promise that resolves to an object containing the parsed results.
      * @throws Error if the parsing fails.
-     * */
+     **/
     async wrapper(filePaths: string[], sourcePath: string) {
         this.projectPath = sourcePath;
         await this.buildJarIfNeeded();

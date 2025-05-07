@@ -287,7 +287,7 @@ export class BertService {
      * 
      * @param inputArray - An array of strings to be formatted.
      * @returns A formatted string representation of the array.
-     * */
+     **/
 
     formatStringArray(inputArray: string[]): string {
         // Initialize the result string
