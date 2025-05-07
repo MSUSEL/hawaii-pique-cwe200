@@ -10,8 +10,8 @@ import { EventsGateway } from 'src/events/events.gateway';
 
 
 /**
- * * CodeQlService is responsible for running CodeQL commands and analyzing Java projects.
- * * It provides methods to create databases, perform backward slicing, run CWE queries,
+ * CodeQlService is responsible for running CodeQL commands and analyzing Java projects.
+ * It provides methods to create databases, perform backward slicing, run CWE queries,
  */
 @Injectable()
 export class CodeQlService {
@@ -23,8 +23,8 @@ export class CodeQlService {
         private eventsGateway: EventsGateway,
         private fileUtilService: FileUtilService,
     ) {
-        this.projectsPath = this.configService.get<string>('CODEQL_PROJECTS_DIR',);
-        this.queryPath = path.join(this.configService.get<string>('QUERY_DIR'),'codeql-custom-queries-java',);
+        this.projectsPath = this.configService.get<string>('CODEQL_PROJECTS_DIR');
+        this.queryPath = this.configService.get<string>('QUERY_DIR');
       }
 
 

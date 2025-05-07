@@ -34,15 +34,8 @@ export class AnalyzeService {
         private codeqlService: CodeQlService,
         private javaParserService: JavaParserService,
     ) {
-        this.projectsPath = this.configService.get<string>(
-            'CODEQL_PROJECTS_DIR',
-        );
-
-        this.queryPath = path.join(
-            // '../',
-            this.configService.get<string>('QUERY_DIR'),
-            'codeql-custom-queries-java',
-        );
+        this.projectsPath = this.configService.get<string>('CODEQL_PROJECTS_DIR');
+        this.queryPath = this.configService.get<string>('QUERY_DIR');
     }
 
     /**
