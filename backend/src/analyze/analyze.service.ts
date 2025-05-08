@@ -8,10 +8,10 @@ import { BertService } from 'src/bert/bert.service';
 import { LLMService } from 'src/llm/llm.service';
 import { JavaParserService } from 'src/java-parser/java-parser.service';
 
-import { SensitiveVariables } from 'src/utils/SensitiveVariables';
-import { SensitiveComments } from 'src/utils/SensitiveComments';
-import { SensitiveStrings } from 'src/utils/SensitiveStrings';
-import { Sinks } from 'src/utils/Sinks';
+import { SensitiveVariables } from 'src/templates/SensitiveVariables';
+import { SensitiveComments } from 'src/templates/SensitiveComments';
+import { SensitiveStrings } from 'src/templates/SensitiveStrings';
+import { Sinks } from 'src/templates/Sinks';
 
 import * as path from 'path';
 
@@ -72,7 +72,7 @@ export class AnalyzeService {
         });
 
         await this.executeStep('Detecting sensitive info using BERT.', async () => {
-            await this.bertService.getBertResponse(sourcePath, "run_bert.py");
+            await this.bertService.getBertResponse(sourcePath, "attack_surface_detection.py");
         });
 
         let data = null;

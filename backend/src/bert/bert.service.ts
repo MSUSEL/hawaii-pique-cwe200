@@ -136,7 +136,7 @@ export class BertService {
 
         return new Promise<void>((resolve, reject) => {
             // Spawn the Python process
-            const process = spawn('python', [path.join("src", "bert", "inference", "bert_verify_sarif.py"), projectName]);
+            const process = spawn('python', [path.join("src", "bert", "inference", "flow_verification.py"), projectName]);
             console.log(`Running verification script on ${projectName}`);
 
             // Capture stderr data

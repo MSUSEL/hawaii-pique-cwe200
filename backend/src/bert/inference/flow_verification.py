@@ -124,7 +124,7 @@ def embed_sentence(sentence, tokenizer, model, aggregator, device, max_length=51
         aggregated_embedding = h_n[-1].squeeze(0).cpu().numpy()
         return aggregated_embedding
 
-def calculate_graphcodebert_vectors(sentences, model_path, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda', aggregator_cls=RNNAggregator):
+def calculate_graphcodebert_vectors(sentences, model_path, model_name='microsoft/graphcodebert-base', max_length=512, device='cuda', aggregator_cls=TransformerAggregator):
     """Calculate GraphCodeBERT embeddings for a list of sentences.
     :param sentences: list of sentences to embed
     :param model_path: path to the model file
