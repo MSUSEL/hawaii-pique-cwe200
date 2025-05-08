@@ -3,6 +3,16 @@ import json
 from collections import defaultdict
 import re
 
+"""
+This script is an experimental approach that is no longer used. 
+It was meant to work with a the CodeQL query in WIP queries/ProgramSlicing/Sinks/CallGraph.ql 
+by parsing the output of that query into a more human readable format that would then be passed 
+to an ML model sort of how the Flow Verificaiton Engine works, but on the Attack Surface Detection 
+Engine outputs. This code is kept in case that approach is ever needed again. 
+It is still not fully complete.
+"""
+
+
 # Load the SARIF file
 def load_sarif(file_path):
     with open(file_path, 'r', encoding='UTF-8') as file:

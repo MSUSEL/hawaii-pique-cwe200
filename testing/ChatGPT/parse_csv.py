@@ -1,6 +1,10 @@
 import csv
 import json
 
+"""
+Used to parse these labels into a JSON that matches ChatGPT’s output format.
+"""
+
 # Function to read the CSV and process the data
 def process_csv_to_json(csv_file, json_file):
     data = {"files": []}

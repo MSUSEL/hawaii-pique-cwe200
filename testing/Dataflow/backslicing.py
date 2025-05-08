@@ -3,6 +3,12 @@ import json
 import re
 from collections import defaultdict
 
+"""
+This was meant to work with the CodeQL query in WIP queries/ProgramSlicing/Variables/BackwardSlice.ql 
+by parsing the output of that query into a more human-readable format that would then be passed 
+to an ML model, sort of how the Flow Verification Engine works.
+"""
+
 # Load the SARIF file
 def load_sarif(file_path):
     with open(file_path, 'r', encoding='UTF-8') as file:

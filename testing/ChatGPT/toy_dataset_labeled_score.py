@@ -1,5 +1,9 @@
 import json
 
+"""
+Used to see how ChatGPT performed at detecting attack surfaces in our ToyDataset
+"""
+
 def calculate_metrics(predictions, labeled_data):
     variable_tp = 0
     variable_fp = 0

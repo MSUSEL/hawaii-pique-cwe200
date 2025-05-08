@@ -4,6 +4,10 @@ import subprocess
 import json
 import backslicing
 import re
+"""
+Builds all of the projects in the CVEdataset and runs the backward slicing query on 
+all the files specified for that project. 
+"""
 
 # Directory paths
 db_dir = os.path.join("testing", "Dataflow", "db_dir")

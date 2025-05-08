@@ -3,6 +3,20 @@ import collections
 import os
 import re
 
+"""
+This script is used to get all the CWE-200 security advisories related to Java on GitHub. 
+It checks for projects with Maven since Java isn’t an option. 
+The output is saved in top_advisories.txt. I would estimate that 85% of the projects are correct. 
+Some are either not Java projects at all or use Java very little. 
+However, this was the best method I used to get Java projects for testing. 
+If you are looking for more Java projects, just increase the number from 150. 
+
+Note: This requires a GitHub token that you can generate with your GitHub account. 
+Just make sure not to commit any changes to the script while your token is still in the code. 
+Feel free to update it to be an arg instead of hardcoding it if needed. It won’t break anything.
+
+"""
+
 # Load GitHub Token from Environment Variable
 GITHUB_TOKEN = ''
 

@@ -15,6 +15,9 @@
                 "name": "privateKeysLastModified"
             },
             {
+                "name": "scope"
+            },
+            {
                 "name": "username"
             },
             {
@@ -59,6 +62,12 @@
                 "name": "hubCredentialsId"
             },
             {
+                "name": "hubTimeout"
+            },
+            {
+                "name": "trustSSLCertificates"
+            },
+            {
                 "name": "detectArtifactUrl"
             },
             {
@@ -66,6 +75,9 @@
             },
             {
                 "name": "proxyInfo"
+            },
+            {
+                "name": "credentialsMatcher"
             },
             {
                 "name": "credentialUserName"
@@ -304,6 +316,9 @@
                 "name": "componentManager"
             },
             {
+                "name": "linkSerializer"
+            },
+            {
                 "name": "generalMailConfiguration"
             },
             {
@@ -343,6 +358,18 @@
             },
             {
                 "name": "MAIN_DEVICE_ID"
+            },
+            {
+                "name": "mCachedDevice"
+            },
+            {
+                "name": "mBluetoothAdapter"
+            },
+            {
+                "name": "device"
+            },
+            {
+                "name": "context"
             },
             {
                 "name": "cachedBluetoothDevice"
@@ -429,6 +456,9 @@
                 "name": "mPackageManager"
             },
             {
+                "name": "mSettingsFactory"
+            },
+            {
                 "name": "mSettings"
             },
             {
@@ -495,12 +525,18 @@
             },
             {
                 "name": "oome"
+            },
+            {
+                "name": "contentUri"
             }
         ]
     },
     {
         "fileName": "BaseUserController.java",
         "variables": [
+            {
+                "name": "baseUserService"
+            },
             {
                 "name": "user"
             },
@@ -509,6 +545,9 @@
             },
             {
                 "name": "any"
+            },
+            {
+                "name": "request"
             },
             {
                 "name": "sourceId"
@@ -520,6 +559,9 @@
                 "name": "authUserIssueRequest"
             },
             {
+                "name": "resourceId"
+            },
+            {
                 "name": "userid"
             }
         ]
@@ -528,10 +570,22 @@
         "fileName": "BondStateMachine.java",
         "variables": [
             {
+                "name": "mAdapterService"
+            },
+            {
+                "name": "mAdapterProperties"
+            },
+            {
                 "name": "mRemoteDevices"
             },
             {
-                "name": "OOBDATA"
+                "name": "mAdapter"
+            },
+            {
+                "name": "mPendingBondedDevices"
+            },
+            {
+                "name": "service"
             },
             {
                 "name": "remoteDevices"
@@ -540,13 +594,13 @@
                 "name": "dev"
             },
             {
-                "name": "oobData"
-            },
-            {
                 "name": "msg"
             },
             {
                 "name": "mDevices"
+            },
+            {
+                "name": "devProp"
             },
             {
                 "name": "passkey"
@@ -561,6 +615,12 @@
                 "name": "address"
             },
             {
+                "name": "device"
+            },
+            {
+                "name": "bdDevice"
+            },
+            {
                 "name": "name"
             }
         ]
@@ -569,7 +629,13 @@
         "fileName": "CLICommand.java",
         "variables": [
             {
+                "name": "channel"
+            },
+            {
                 "name": "transportAuth"
+            },
+            {
+                "name": "sc"
             },
             {
                 "name": "old"
@@ -587,6 +653,9 @@
                 "name": "auth"
             },
             {
+                "name": "cmd"
+            },
+            {
                 "name": "TRANSPORT_AUTHENTICATION"
             }
         ]
@@ -599,6 +668,18 @@
             },
             {
                 "name": "client"
+            },
+            {
+                "name": "processes"
+            },
+            {
+                "name": "podName"
+            },
+            {
+                "name": "namespace"
+            },
+            {
+                "name": "containerName"
             },
             {
                 "name": "globalVars"
@@ -637,6 +718,9 @@
                 "name": "msg"
             },
             {
+                "name": "response"
+            },
+            {
                 "name": "ie"
             },
             {
@@ -646,10 +730,19 @@
                 "name": "pid"
             },
             {
+                "name": "proc"
+            },
+            {
                 "name": "cmdEnvs"
             },
             {
                 "name": "pwd"
+            },
+            {
+                "name": "cookie"
+            },
+            {
+                "name": "modelEnvVars"
             },
             {
                 "name": "entry"
@@ -784,6 +877,9 @@
         "fileName": "FileDownloader.java",
         "variables": [
             {
+                "name": "EXTRA_USER"
+            },
+            {
                 "name": "mDownloadClient"
             },
             {
@@ -906,6 +1002,9 @@
                 "name": "password"
             },
             {
+                "name": "permissions"
+            },
+            {
                 "name": "me"
             },
             {
@@ -930,6 +1029,9 @@
             },
             {
                 "name": "retrofitClient"
+            },
+            {
+                "name": "retrofitLogLevel"
             }
         ]
     },
@@ -937,7 +1039,7 @@
         "fileName": "GitHubServerConfig.java",
         "variables": [
             {
-                "name": "apiUrl"
+                "name": "UNKNOWN_TOKEN"
             },
             {
                 "name": "credentialsId"
@@ -972,9 +1074,6 @@
         "fileName": "GitHubTokenCredentialsCreator.java",
         "variables": [
             {
-                "name": "apiUrl"
-            },
-            {
                 "name": "credentialsId"
             },
             {
@@ -999,9 +1098,6 @@
                 "name": "username"
             },
             {
-                "name": "url"
-            },
-            {
                 "name": "serverAPIUrl"
             },
             {
@@ -1016,13 +1112,22 @@
                 "name": "mConnMgr"
             },
             {
-                "name": "mHandler"
+                "name": "mGnssNetworkListener"
+            },
+            {
+                "name": "mAGpsDataConnectionState"
             },
             {
                 "name": "mAGpsDataConnectionIpAddr"
             },
             {
                 "name": "mActiveSubId"
+            },
+            {
+                "name": "mNiHandler"
+            },
+            {
+                "name": "mContext"
             },
             {
                 "name": "mApn"
@@ -1080,21 +1185,15 @@
             },
             {
                 "name": "e"
-            },
-            {
-                "name": "linkAddresses"
-            },
-            {
-                "name": "inetAddress"
-            },
-            {
-                "name": "linkAddress"
             }
         ]
     },
     {
         "fileName": "HttpMethod.java",
         "variables": [
+            {
+                "name": "httpClient"
+            },
             {
                 "name": "configuration"
             },
@@ -1108,7 +1207,7 @@
                 "name": "e"
             },
             {
-                "name": "param"
+                "name": "header"
             },
             {
                 "name": "bearer"
@@ -1118,6 +1217,9 @@
     {
         "fileName": "LiveTableResultsTest.java",
         "variables": [
+            {
+                "name": "queryService"
+            },
             {
                 "name": "query"
             },
@@ -1129,15 +1231,15 @@
             },
             {
                 "name": "xwikiDocument"
-            },
-            {
-                "name": "location"
             }
         ]
     },
     {
         "fileName": "LiveTableResultsTest_#2.java",
         "variables": [
+            {
+                "name": "queryService"
+            },
             {
                 "name": "query"
             },
@@ -1171,6 +1273,9 @@
                 "name": "env"
             },
             {
+                "name": "argv"
+            },
+            {
                 "name": "dbName"
             },
             {
@@ -1183,6 +1288,12 @@
         "variables": [
             {
                 "name": "sessions"
+            },
+            {
+                "name": "expirationTime"
+            },
+            {
+                "name": "expired"
             },
             {
                 "name": "s"
@@ -1241,6 +1352,9 @@
             },
             {
                 "name": "e"
+            },
+            {
+                "name": "nonce"
             }
         ]
     },
@@ -1251,6 +1365,9 @@
                 "name": "formData"
             },
             {
+                "name": "req"
+            },
+            {
                 "name": "path"
             },
             {
@@ -1258,6 +1375,15 @@
             },
             {
                 "name": "requestPath"
+            },
+            {
+                "name": "staticLink"
+            },
+            {
+                "name": "rsp"
+            },
+            {
+                "name": "xml"
             },
             {
                 "name": "config"
