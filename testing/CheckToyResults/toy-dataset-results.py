@@ -2,6 +2,10 @@ import json
 import os
 from collections import defaultdict
 
+"""
+Used to calculate the metrics for evaluating the Exposure Analysis Engine
+"""
+
 CODEQLPATH = os.path.join("backend", "Files", "CWEToyDataset", "result.sarif")
 SRCCODEPATH = os.path.join("backend", "Files", "CWEToyDataset", "CWEToyDataset")
 CWESPATH = os.path.join("backend", "Files", "CWEToyDataset", "CWEToyDataset","src", "main", "java", "com", "mycompany", "app")
