@@ -236,7 +236,7 @@ export class CodeQlService {
         }
         console.log("This should be last")
         // Save the updated codeFlows back to the file
-        await this.fileUtilService.writeToFile(path.join("..", "testing", "labeling", "FlowData", String(labelData.project + ".json")), JSON.stringify(codeFlows, null, 2));
+        await this.fileUtilService.writeToFile(path.join("..", "testing", "labeling", "Flow Verification", "FlowData", String(labelData.project + ".json")), JSON.stringify(codeFlows, null, 2));
     }
 
 
