@@ -36,8 +36,6 @@
     - [PIQUE_Projects](#pique_projects)
 
 ## backend
-## backend
-
 The backend powers the entire vulnerability detection system and orchestrates all analysis workflows. It is structured around three core engines that work in sequence to identify, analyze, and verify CWE-200 vulnerabilities in Java projects:
 
 ### 🧠 Attack Surface Detection Engine
@@ -533,7 +531,6 @@ These files are used during the `saveSensitiveInfo()` process inside the analyze
 ##### **`SensitiveVariables.ts`**
 Defines the YAML structure for injecting detected sensitive variables into CodeQL via:
 ```json
-export const SensitiveVariables:string=`
 extensions:
   - addsTo:
       pack: custom-codeql-queries
@@ -705,7 +702,19 @@ The data in this directory is as follows.
 
 !!! > **Important:** The new labeled data will be saved in `backend/src/bert/training/data/labels.json`. You will also need to ensure the new parsed results are in `backend/src/bert/training/data/parsedResults.json`. You should create a big project combining all the data into one. For example, create a directory in `backend/Files/TrainingData` and paste the code for all projects with labels in `testing/Labeling/Attack Surface/Data`. Below is an example:
 
-![](/docs/assets/TrainingDir.png)
+└── 📁backend  
+&nbsp;&nbsp;&nbsp;&nbsp;└── 📁Files  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 📁TrainingData  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 📁CVEDataset  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 📁CWEToyDataset  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 📁jenkins-jenkins-2.476  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 📁rocketmq-rocketmq-all-5.3.1  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 📁tomcat-11.0.3  
+
+
+
+
+<!-- ![](/docs/assets/TrainingDir.png) -->
 
 - **`Data/`** 
 This is all of the labeled data. Label it via Google Sheets. Add it to this [directory](https://drive.google.com/drive/u/1/folders/1eSHGs2zKRL_Rb5DHnMRtAcgiWFos1i3y) so the rest of the team can view it. Then download it and paste it into this directory when you are done. 
