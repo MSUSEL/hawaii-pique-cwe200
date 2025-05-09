@@ -673,7 +673,27 @@ The scripts in this directory are used to get a baseline of how our Exposure Ana
     - > **Note:** Use`testing/CheckToyResults/codeql_results.json` to better understand the results.
 
 Combining both of these scripts allows us to create the table below, which was used in the paper.
-![](/docs/assets/CheckToyResults.png)
+
+| CWE  | GOOD | BAD | Total | Precision | Recall | F1 Score |
+|------|------|-----|-------|-----------|--------|----------|
+| 201  | 7    | 10  | 17    | 100.00    | 80.00  | 88.89    |
+| 204  | 11   | 11  | 22    | 100.00    | 90.91  | 95.24    |
+| 208  | 10   | 13  | 23    | 92.86     | 100.00 | 96.30    |
+| 209  | 17   | 17  | 34    | 100.00    | 76.47  | 86.67    |
+| 214  | 11   | 10  | 21    | 100.00    | 80.00  | 88.89    |
+| 215  | 10   | 10  | 20    | 100.00    | 70.00  | 82.35    |
+| 532  | 10   | 13  | 23    | 100.00    | 84.62  | 91.67    |
+| 535  | 10   | 15  | 25    | 100.00    | 40.00  | 57.14    |
+| 536  | 10   | 10  | 20    | 100.00    | 80.00  | 88.89    |
+| 537  | 10   | 10  | 20    | 100.00    | 80.00  | 88.89    |
+| 538  | 3    | 2   | 5     | 100.00    | 100.00 | 100.00   |
+| 550  | 10   | 10  | 20    | 100.00    | 80.00  | 88.89    |
+| 598  | 10   | 10  | 20    | 100.00    | 70.00  | 82.35    |
+| 615  | 10   | 10  | 20    | 100.00    | 50.00  | 66.67    |
+| **Total** | **139** | **161** | **300** | **99.13** | **75.50** | **85.71** |
+
+
+<!-- ![](/docs/assets/CheckToyResults.png) -->
 
 > **Note:** If you do `npm run query-toy`, you can see how changes to queries affect the results.
 
@@ -737,7 +757,15 @@ The data in this directory is as follows.
 
 These scripts were used to generate the metrics for the paper related to the tool's performance. With and without verification.
 
-![](/docs/assets/FlowMetrics.png)
+| Metric      | Without Verification | With Verification |
+|-------------|----------------------|--------------------|
+| Precision   | 0.226                | **0.872**          |
+| Recall      | **1.000**            | 0.938              |
+| F1 Score    | 0.369                | **0.904**          |
+| Accuracy    | 0.226                | **0.955**          |
+
+
+<!-- ![](/docs/assets/FlowMetrics.png) -->
 
 ### NVD
 This script serves a similar purpose to the one in `testing/Advisory`, but it searches the NVD for CVEs related to Java projects with CWE-200 vulnerabilities. However, the GitHub Advisory script is recommended, as it typically identifies more CVEs.
