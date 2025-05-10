@@ -399,7 +399,9 @@ setJavaVersion(version: number) {
       process.env.PATH = `${javaHome}\\bin;${process.env.PATH}`;
   
       console.log(`JAVA_HOME set to ${javaHome} and PATH updated.`);
-    } else {
+    } 
+    // Linux and MacOS
+    else {
         const javaBaseDir = '/usr/local/java';
         const javaHome = `${javaBaseDir}/jdk${version}`;
         const javacPath = `${javaHome}/bin/javac`;
