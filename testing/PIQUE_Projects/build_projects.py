@@ -18,8 +18,11 @@ import subprocess
 import zipfile
 import json
 import sys
+import re
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
+import concurrent.futures
+
 
 input_projects = os.path.join("testing", "Advisory", "clean_advisories.txt")
 java_versions = ["21", "8", "17", "11", ]
@@ -165,12 +168,23 @@ def create_codeql_database(source_root, db_name, env):
 
     # Run command with real-time streaming output
     process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    java_version_pattern = re.compile(r"Java version:.*", re.IGNORECASE)
+
+
+    # for line in process.stdout:
+    #     sys.stdout.write(line)
+    #     sys.stdout.flush()
 
     for line in process.stdout:
-        sys.stdout.write(line)
-        sys.stdout.flush()
+        if java_version_pattern.search(line):
+            print(line.strip())  # Only print the matching Java version line
 
     process.wait()
+
+    if process.returncode != 0:
+        print(f"\nFailed to create CodeQL database for {db_name} with Java {env['JAVA_HOME']}")
+    else:
+        print(f"\nSuccessfully created CodeQL database for {db_name} with Java {env['JAVA_HOME']}")
     return process.returncode == 0
 
 def write_json(data):
@@ -231,49 +245,48 @@ def write_xlsx(data):
     print(f"Saved XLSX to {output_file}")
 
 
-def main():
-    if not os.path.exists(DOWNLOAD_DIR):
-        os.makedirs(DOWNLOAD_DIR)
+def build_project(project):
+    source_root = project["sourceRoot"]
+    curr_project_metadata = {
+        "repoName": project["repoName"],
+        "projectVersion": project["projectVersion"],
+        "javaVersion": "DNB",
+        "projectName": project["projectName"],
+        "url": project["url"]
+    }
 
-    if not os.path.exists(DATABASE_DIR):
-        os.makedirs(DATABASE_DIR)
-    
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
+    for java_version in java_versions:
+        env = change_java_version(java_version)
+        db_output = os.path.join(DATABASE_DIR, f"{project['projectName']}_db")
+
+        if create_codeql_database(source_root, db_output, env):
+            curr_project_metadata["javaVersion"] = java_version
+            print(f"Successfully built {project['projectName']} with Java {java_version}")
+            return curr_project_metadata
+
+    print(f"Failed to build {project['projectName']} with any Java version.")
+    return curr_project_metadata
+
+
+def main():
+    os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+    os.makedirs(DATABASE_DIR, exist_ok=True)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     projects = read_projects(input_projects)
     meta_data = download_projects(projects)
+
     project_results = []
 
-    for project in meta_data:
-        source_root = project["sourceRoot"]
-        curr_project_metadata = {
-            "repoName": project["repoName"],
-            "projectVersion": project["projectVersion"],
-            "javaVersion": "DNB",
-            "projectName": project["projectName"],
-            "url": project["url"]
-        }
-
-        for java_version in java_versions:
-            env = change_java_version(java_version)
-            db_output = os.path.join(DATABASE_DIR, f"{project['projectName']}_db")
-
-            if create_codeql_database(source_root, db_output, env):
-                project["javaVersion"] = java_version  # record successful version
-                curr_project_metadata["javaVersion"] = java_version
-                print(f"Successfully built {project['projectName']} with Java {java_version}")
-                project_results.append(curr_project_metadata)
-                break
+    # Use a process pool to build different projects concurrently
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        futures = [executor.submit(build_project, project) for project in meta_data]
+        for future in concurrent.futures.as_completed(futures):
+            result = future.result()
+            project_results.append(result)
 
     write_json(project_results)
     write_xlsx(project_results)
-
-    # Save metadata to JSON
-    output_json = os.path.join(DOWNLOAD_DIR, "build_metadata.json")
-    with open(output_json, 'w') as f:
-        json.dump(project_results, f, indent=2)
-    print(f"\nSaved build metadata to {output_json}")
 
 
 if __name__ == "__main__":
