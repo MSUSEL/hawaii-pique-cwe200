@@ -1,7 +1,7 @@
 {
   "name": "CWE-200 Dev Container (CUDA)",
   "build": {
-    "dockerfile": "Dockerfile-cuda",     
+    "dockerfile": "../Dockerfile",     
     "context": "..",
     "args": {
       "JAVA_VERSION": "11"
@@ -9,15 +9,13 @@
   },
   "workspaceFolder": "/app",
   "forwardPorts": [4200, 5400],
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/app,type=bind"
-  ],
-  "runArgs": [
-    "--gpus=all"
-  ],
-  "containerEnv": {
-    "NVIDIA_VISIBLE_DEVICES": "all"
-  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
+  // "runArgs": [
+  //   "--gpus=all"
+  // ],
+  // "containerEnv": {
+  //   "NVIDIA_VISIBLE_DEVICES": "all"
+  // },
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   },
@@ -27,5 +25,8 @@
     // "dbaeumer.vscode-eslint",
     // "esbenp.prettier-vscode",
     "ms-vscode.vscode-typescript-next"
-  ]
+  ],
+
+  "postCreateCommand": "npm run codeql-setup && npm run build"
+
 }
