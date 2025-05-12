@@ -180,18 +180,19 @@ def change_java_version(java_version):
             print(f"Java {java_version} not found at {java_home}, attempting to download...")
 
             version_map = {
-                "8": "8u372-b07",
-                "11": "11.0.20+8",
-                "17": "17.0.8+7",
-                "21": "21.0.2+13"
+            "8":  ("jdk8u452-b09", "8u452b09"),
+            "11": ("jdk-11.0.20+8", "11.0.20_8"),
+            "17": ("jdk-17.0.8+7", "17.0.8_7"),
+            "21": ("jdk-21.0.2+13", "21.0.2_13")
             }
 
-            release = version_map.get(str(java_version))
-            if not release:
+            tag, release = version_map.get(str(java_version), (None, None))
+            if not tag or not release:
                 raise Exception(f"Unsupported Java version: {java_version}")
 
-            archive_name = f"OpenJDK{java_version}U-jdk_x64_linux_hotspot_{release.replace('+', '_')}.tar.gz"
-            url = f"https://github.com/adoptium/temurin{java_version}-binaries/releases/download/jdk-{release}/{archive_name}"
+            archive_name = f"OpenJDK{java_version}U-jdk_x64_linux_hotspot_{release}.tar.gz"
+            url = f"https://github.com/adoptium/temurin{java_version}-binaries/releases/download/{tag}/{archive_name}"
+
 
             try:
                 os.makedirs(java_home, exist_ok=True)
