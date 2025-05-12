@@ -22,7 +22,7 @@ import re
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 import concurrent.futures
-
+from datetime import datetime
 
 input_projects = os.path.join("testing", "Advisory", "clean_advisories.txt")
 java_versions = ["21", "8", "17", "11", ]
@@ -39,6 +39,33 @@ def read_projects(file_path):
     return projects
 
 
+def get_latest_tag_by_commit_date(owner, repo):
+    tags_url = f"https://api.github.com/repos/{owner}/{repo}/tags"
+    tags_response = requests.get(tags_url)
+    if tags_response.status_code != 200:
+        return None
+
+    tags = tags_response.json()
+    latest_tag = None
+    latest_date = None
+
+    for tag in tags:
+        commit_url = tag["commit"]["url"]
+        commit_response = requests.get(commit_url)
+        if commit_response.status_code != 200:
+            continue
+        commit_data = commit_response.json()
+        commit_date_str = commit_data.get("commit", {}).get("committer", {}).get("date")
+        if not commit_date_str:
+            continue
+        commit_date = datetime.fromisoformat(commit_date_str.replace("Z", "+00:00"))
+
+        if latest_date is None or commit_date > latest_date:
+            latest_tag = tag["name"]
+            latest_date = commit_date
+    print(f"Latest tag {latest_tag} found. (Date: {latest_date})")
+    return latest_tag
+
 def download_projects(projects):
     """
     Downloads the latest source zip archive for each GitHub project from a list.
@@ -48,31 +75,31 @@ def download_projects(projects):
 
     for project in projects:
         owner, repo = project.split('/')
+        tag_name = None
 
-        # Get the latest release info from GitHub API
+        # First, try to get the latest release
         api_url = f"https://api.github.com/repos/{owner}/{repo}/releases/latest"
         response = requests.get(api_url)
 
-        if response.status_code != 200:
-            print(f"Failed to fetch release info for {project}")
-            meta_data.append({
-                "repoName": project,
-                "projectVersion": "N/A",
-                "projectName": repo,
-                "url": "NA",
-                "sourceRoot": "NA"
-            })
-            continue
-            
+        if response.status_code == 200:
+            release_data = response.json()
+            tag_name = release_data.get('tag_name')
 
-        release_data = response.json()
-        tag_name = release_data.get('tag_name')
-
+        # If no release, try to get latest tag by commit date
         if not tag_name:
-            print(f"No tag name found for {project}")
-            continue
+            print(f"No release found for {project}, falling back to latest tag.")
+            tag_name = get_latest_tag_by_commit_date(owner, repo)
+            if not tag_name:
+                print(f"Failed to get tags for {project}")
+                meta_data.append({
+                    "repoName": project,
+                    "projectVersion": "N/A",
+                    "projectName": repo,
+                    "url": "NA",
+                    "sourceRoot": "NA"
+                })
+                continue
 
-        # Construct the source zip URL for the release tag
         zip_url = f"https://github.com/{owner}/{repo}/archive/refs/tags/{tag_name}.zip"
         zip_name = f"{repo}-{tag_name}.zip"
         zip_path = os.path.join(DOWNLOAD_DIR, zip_name)
@@ -83,20 +110,17 @@ def download_projects(projects):
             zip_response = requests.get(zip_url)
             zip_response.raise_for_status()
 
-            # Save the zip file to disk
             with open(zip_path, 'wb') as f:
                 f.write(zip_response.content)
 
             print(f"Saved {zip_name} to {zip_path}")
 
-            # Extract the zip file
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 zip_ref.extractall(DOWNLOAD_DIR)
 
-            # Remove the zip after extraction
             os.remove(zip_path)
 
-            # Get the actual extracted folder name
+            # Find extracted dir
             extracted_dirs = [
                 name for name in os.listdir(DOWNLOAD_DIR)
                 if os.path.isdir(os.path.join(DOWNLOAD_DIR, name)) and name.startswith(repo)
@@ -109,7 +133,6 @@ def download_projects(projects):
             actual_project_name = extracted_dirs[0]
             extract_dir = os.path.join(DOWNLOAD_DIR, actual_project_name)
 
-            # Store metadata
             meta_data.append({
                 "repoName": project,
                 "projectVersion": tag_name,
@@ -124,26 +147,74 @@ def download_projects(projects):
     return meta_data
 
 
+import os
+import platform
+import subprocess
+import sys
+import shutil
+
 def change_java_version(java_version):
     """
-    Prepares environment to use specified JDK version.
-    Forces Java to be first in PATH.
+    Configures the environment to use a specific Java version.
+    Works on both Windows and Linux/macOS.
+    Returns a modified environment dict for subprocess calls.
     """
-    java_home = os.path.join("C:\\", "Program Files", "Java", f"jdk-{java_version}")
-    java_bin = os.path.join(java_home, "bin")
-    java_exec = os.path.join(java_bin, "java.exe")
-
-    # Override environment for subprocess
     env = os.environ.copy()
+    system = platform.system()
+
+    # Windows setup
+    if system == "Windows":
+        java_home = os.path.join("C:\\", "Program Files", "Java", f"jdk-{java_version}")
+        java_bin = os.path.join(java_home, "bin")
+        java_exec = os.path.join(java_bin, "java.exe")
+
+    # Linux/macOS setup
+    else:
+        java_base_dir = "/usr/local/java"
+        java_home = os.path.join(java_base_dir, f"jdk{java_version}")
+        java_bin = os.path.join(java_home, "bin")
+        java_exec = os.path.join(java_bin, "java")
+
+        # Check if Java is already installed
+        if not os.path.exists(os.path.join(java_bin, "javac")):
+            print(f"Java {java_version} not found at {java_home}, attempting to download...")
+
+            version_map = {
+                "8": "8u372-b07",
+                "11": "11.0.20+8",
+                "17": "17.0.8+7",
+                "21": "21.0.2+13"
+            }
+
+            release = version_map.get(str(java_version))
+            if not release:
+                raise Exception(f"Unsupported Java version: {java_version}")
+
+            archive_name = f"OpenJDK{java_version}U-jdk_x64_linux_hotspot_{release.replace('+', '_')}.tar.gz"
+            url = f"https://github.com/adoptium/temurin{java_version}-binaries/releases/download/jdk-{release}/{archive_name}"
+
+            try:
+                os.makedirs(java_home, exist_ok=True)
+                subprocess.run(
+                    f'curl -Ls "{url}" | tar -xz -C "{java_home}" --strip-components=1',
+                    shell=True,
+                    check=True
+                )
+                print(f"Java {java_version} installed at {java_home}")
+            except subprocess.CalledProcessError as e:
+                raise Exception(f"Failed to download or extract Java {java_version}: {e}")
+
+    # Update environment
     env["JAVA_HOME"] = java_home
     env["PATH"] = java_bin + os.pathsep + env.get("PATH", "")
 
-    # try:
-    #     result = subprocess.run([java_exec, "-version"], env=env, capture_output=True, text=True)
-    #     print(f"Java version set to {java_version}:")
-    #     print(result.stderr.strip())
-    # except Exception as e:
-    #     print(f"Failed to run Java {java_version}: {e}")
+    # Optional: verify java version
+    try:
+        result = subprocess.run([java_exec, "-version"], env=env, capture_output=True, text=True)
+        print(f"Java version set to {java_version}:")
+        print(result.stderr.strip() or result.stdout.strip())
+    except Exception as e:
+        print(f"Failed to verify Java version: {e}")
 
     return env
 
@@ -153,17 +224,17 @@ def create_codeql_database(source_root, db_name, env):
     Attempts to create a CodeQL database for the given source root using the provided environment.
     Also verifies that Java 21 is used by both JAVA_HOME and PATH.
     """
-    print(f"\nVerifying Java version for {db_name}...")
+    # print(f"\nVerifying Java version for {db_name}...")
 
-    # Check direct JAVA_HOME java.exe
-    java_exec = os.path.join(env["JAVA_HOME"], "bin", "java.exe")
-    java_check = subprocess.run([java_exec, "-version"], env=env, capture_output=True, text=True)
-    print("Explicit java version from JAVA_HOME:")
-    print(java_check.stderr.strip())
+    # # Check direct JAVA_HOME java.exe
+    # java_exec = os.path.join(env["JAVA_HOME"], "bin", "java.exe")
+    # java_check = subprocess.run([java_exec, "-version"], env=env, capture_output=True, text=True)
+    # print("Explicit java version from JAVA_HOME:")
+    # print(java_check.stderr.strip())
 
-    # Log first PATH entry
-    print("\nPATH being used by CodeQL:")
-    print(env["PATH"].split(os.pathsep)[0])
+    # # Log first PATH entry
+    # print("\nPATH being used by CodeQL:")
+    # print(env["PATH"].split(os.pathsep)[0])
 
     # Build command
     command = [
@@ -189,10 +260,6 @@ def create_codeql_database(source_root, db_name, env):
 
     process.wait()
 
-    if process.returncode != 0:
-        print(f"\nFailed to create CodeQL database for {db_name} with Java {env['JAVA_HOME']}")
-    else:
-        print(f"\nSuccessfully created CodeQL database for {db_name} with Java {env['JAVA_HOME']}")
     return process.returncode == 0
 
 def write_json(data):
