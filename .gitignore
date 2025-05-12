@@ -84,3 +84,6 @@ codeql queries/SensitiveInfo/SensitiveVariables.yml
 codeql queries/SensitiveInfo/Sinks.yml
 codeql queries/SensitiveInfo/Comments.yml
 codeql queries/SensitiveInfo/Strings.yml
+testing/PIQUE_Projects/project_downloads/*
+testing/PIQUE_Projects/databases/*
+
