@@ -421,19 +421,21 @@ setJavaVersion(version: number) {
         console.log(`Downloading and installing Java ${version} from Adoptium...`);
       
         const versionMap = {
-          8: '8u372-b07',
-          11: '11.0.20+8',
-          17: '17.0.8+7',
-          21: '21.0.2+13'
+            8:  { tag: 'jdk8u452-b09', release: '8u452b09' },
+            11: { tag: 'jdk-11.0.20+8', release: '11.0.20_8' },
+            17: { tag: 'jdk-17.0.8+7', release: '17.0.8_7' },
+            21: { tag: 'jdk-21.0.2+13', release: '21.0.2_13' }
         };
-      
-        const release = versionMap[version];
-        if (!release) {
-          console.error(`Unsupported Java version ${version}.`);
-          process.exit(1);
+
+        const mapping = versionMap[version];
+        if (!mapping) {
+            console.error(`Unsupported Java version ${version}.`);
+            process.exit(1);
         }
-      
-        const url = `https://github.com/adoptium/temurin${version}-binaries/releases/download/jdk-${release}/OpenJDK${version}U-jdk_x64_linux_hotspot_${release.replace('+', '_')}.tar.gz`;
+
+        const { tag, release } = mapping;
+        const url = `https://github.com/adoptium/temurin${version}-binaries/releases/download/${tag}/OpenJDK${version}U-jdk_x64_linux_hotspot_${release}.tar.gz`;
+
       
         try {
           execSync(`mkdir -p ${javaHome}`, { stdio: 'inherit' });
