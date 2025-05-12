@@ -17,7 +17,7 @@ import requests
 import subprocess
 import zipfile
 import json
-import sys
+import time
 import re
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
@@ -46,10 +46,41 @@ def read_projects(file_path):
     projects = [line.strip() for line in projects if line.strip()]
     return projects
 
+def robust_github_get(url, headers=None, max_retries=5, timeout=10):
+    for attempt in range(max_retries):
+        try:
+            response = requests.get(url, headers=headers, timeout=timeout)
+
+            if response.status_code in [403, 429]:
+                remaining = response.headers.get("X-RateLimit-Remaining")
+                reset = response.headers.get("X-RateLimit-Reset")
+                if remaining == "0" and reset:
+                    sleep_time = int(reset) - int(time.time()) + 1
+                    if sleep_time > 0:
+                        print(f"Rate limit hit. Sleeping for {sleep_time} seconds...")
+                        time.sleep(sleep_time)
+                    continue
+
+            if response.status_code == 404:
+                return response  # Let caller handle
+
+            if response.ok:
+                return response
+
+        except requests.exceptions.RequestException as e:
+            print(f"[Attempt {attempt+1}] Request to {url} failed: {e}")
+            time.sleep(2 ** attempt)
+
+    print(f"[ERROR] Failed to fetch {url} after {max_retries} retries.")
+    return None
+
+
+
+
 
 def get_latest_tag_by_commit_date(owner, repo):
     tags_url = f"https://api.github.com/repos/{owner}/{repo}/tags"
-    tags_response = requests.get(tags_url, headers=GITHUB_HEADERS)
+    tags_response = robust_github_get(tags_url, headers=GITHUB_HEADERS)
     if tags_response.status_code != 200:
         return None
 
@@ -59,8 +90,8 @@ def get_latest_tag_by_commit_date(owner, repo):
 
     for tag in tags:
         commit_url = tag["commit"]["url"]
-        commit_response = requests.get(commit_url, headers=GITHUB_HEADERS)
-        if commit_response.status_code != 200:
+        commit_response = robust_github_get(commit_url, headers=GITHUB_HEADERS)
+        if not commit_response or commit_response.status_code != 200:
             continue
         commit_data = commit_response.json()
         commit_date_str = commit_data.get("commit", {}).get("committer", {}).get("date")
@@ -97,7 +128,7 @@ def download_projects(projects):
 
         # First, try to get the latest release
         api_url = f"https://api.github.com/repos/{owner}/{repo}/releases/latest"
-        response = requests.get(api_url, headers=GITHUB_HEADERS)
+        response = robust_github_get(api_url, headers=GITHUB_HEADERS)
 
         if response.status_code == 200:
             release_data = response.json()
@@ -122,7 +153,7 @@ def download_projects(projects):
         print(f"Downloading from {zip_url}")
 
         try:
-            zip_response = requests.get(zip_url, headers=GITHUB_HEADERS)
+            zip_response = robust_github_get(zip_url, headers=GITHUB_HEADERS)
             zip_response.raise_for_status()
 
             # Get actual filename from headers or sanitize fallback
