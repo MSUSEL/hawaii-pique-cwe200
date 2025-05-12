@@ -23,12 +23,20 @@ from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 import concurrent.futures
 from datetime import datetime
+from urllib.parse import unquote
+
 
 input_projects = os.path.join("testing", "Advisory", "clean_advisories.txt")
 java_versions = ["21", "8", "17", "11", ]
 DOWNLOAD_DIR = os.path.join("testing", "PIQUE_Projects", "project_downloads")
 DATABASE_DIR = os.path.join("testing", "PIQUE_Projects", "databases")
 OUTPUT_DIR = os.path.join("testing", "PIQUE_Projects", "output")
+
+GITHUB_TOKEN =  ''
+GITHUB_HEADERS = {
+    "Authorization": f"token {GITHUB_TOKEN}" if GITHUB_TOKEN else None,
+    "Accept": "application/vnd.github+json"
+}
 
 
 def read_projects(file_path):
@@ -41,7 +49,7 @@ def read_projects(file_path):
 
 def get_latest_tag_by_commit_date(owner, repo):
     tags_url = f"https://api.github.com/repos/{owner}/{repo}/tags"
-    tags_response = requests.get(tags_url)
+    tags_response = requests.get(tags_url, headers=GITHUB_HEADERS)
     if tags_response.status_code != 200:
         return None
 
@@ -51,7 +59,7 @@ def get_latest_tag_by_commit_date(owner, repo):
 
     for tag in tags:
         commit_url = tag["commit"]["url"]
-        commit_response = requests.get(commit_url)
+        commit_response = requests.get(commit_url, headers=GITHUB_HEADERS)
         if commit_response.status_code != 200:
             continue
         commit_data = commit_response.json()
@@ -66,6 +74,16 @@ def get_latest_tag_by_commit_date(owner, repo):
     print(f"Latest tag {latest_tag} found. (Date: {latest_date})")
     return latest_tag
 
+
+def get_filename_from_cd(cd_header):
+    """Extracts filename from Content-Disposition header."""
+    if not cd_header:
+        return None
+    fname_match = re.findall('filename="?([^"]+)"?', cd_header)
+    if fname_match:
+        return unquote(fname_match[0])
+    return None
+
 def download_projects(projects):
     """
     Downloads the latest source zip archive for each GitHub project from a list.
@@ -79,7 +97,7 @@ def download_projects(projects):
 
         # First, try to get the latest release
         api_url = f"https://api.github.com/repos/{owner}/{repo}/releases/latest"
-        response = requests.get(api_url)
+        response = requests.get(api_url, headers=GITHUB_HEADERS)
 
         if response.status_code == 200:
             release_data = response.json()
@@ -101,38 +119,47 @@ def download_projects(projects):
                 continue
 
         zip_url = f"https://github.com/{owner}/{repo}/archive/refs/tags/{tag_name}.zip"
-        zip_name = f"{repo}-{tag_name}.zip"
-        zip_path = os.path.join(DOWNLOAD_DIR, zip_name)
-
-        print(f"Downloading {zip_name} from {zip_url}")
+        print(f"Downloading from {zip_url}")
 
         try:
-            zip_response = requests.get(zip_url)
+            zip_response = requests.get(zip_url, headers=GITHUB_HEADERS)
             zip_response.raise_for_status()
 
+            # Get actual filename from headers or sanitize fallback
+            cd = zip_response.headers.get("Content-Disposition")
+            actual_filename = get_filename_from_cd(cd)
+            if not actual_filename:
+                actual_filename = f"{repo}-{tag_name.replace('/', '-')}.zip"
+
+            zip_path = os.path.join(DOWNLOAD_DIR, actual_filename)
+
+            # Save the zip file to disk
             with open(zip_path, 'wb') as f:
                 f.write(zip_response.content)
 
-            print(f"Saved {zip_name} to {zip_path}")
+            print(f"Saved {actual_filename} to {zip_path}")
 
+            # Extract the zip file
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 zip_ref.extractall(DOWNLOAD_DIR)
 
+            # Remove the zip after extraction
             os.remove(zip_path)
 
-            # Find extracted dir
+            # Get the extracted folder name
             extracted_dirs = [
                 name for name in os.listdir(DOWNLOAD_DIR)
                 if os.path.isdir(os.path.join(DOWNLOAD_DIR, name)) and name.startswith(repo)
             ]
 
             if not extracted_dirs:
-                print(f"Could not find extracted directory for {zip_name}")
+                print(f"Could not find extracted directory for {actual_filename}")
                 continue
 
             actual_project_name = extracted_dirs[0]
             extract_dir = os.path.join(DOWNLOAD_DIR, actual_project_name)
 
+            # Store metadata
             meta_data.append({
                 "repoName": project,
                 "projectVersion": tag_name,
@@ -143,15 +170,13 @@ def download_projects(projects):
 
         except Exception as e:
             print(f"Failed to process {zip_url}: {e}")
-
+    
+    with open(os.path.join(OUTPUT_DIR, "projects_meta.json"), "w") as f:
+        json.dump(meta_data, f, indent=2)
+        
     return meta_data
 
 
-import os
-import platform
-import subprocess
-import sys
-import shutil
 
 def change_java_version(java_version):
     """
@@ -373,7 +398,7 @@ def main():
             result = future.result()
             project_results.append(result)
 
-    # 🔒 Ensure original order from input
+    # ? Ensure original order from input
     project_results.sort(key=lambda x: project_index.get(x["repoName"], float("inf")))
 
     write_json(project_results)
