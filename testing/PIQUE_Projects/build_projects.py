@@ -55,7 +55,15 @@ def download_projects(projects):
 
         if response.status_code != 200:
             print(f"Failed to fetch release info for {project}")
+            meta_data.append({
+                "repoName": project,
+                "projectVersion": "N/A",
+                "projectName": repo,
+                "url": "NA",
+                "sourceRoot": "NA"
+            })
             continue
+            
 
         release_data = response.json()
         tag_name = release_data.get('tag_name')
@@ -130,12 +138,12 @@ def change_java_version(java_version):
     env["JAVA_HOME"] = java_home
     env["PATH"] = java_bin + os.pathsep + env.get("PATH", "")
 
-    try:
-        result = subprocess.run([java_exec, "-version"], env=env, capture_output=True, text=True)
-        print(f"Java version set to {java_version}:")
-        print(result.stderr.strip())
-    except Exception as e:
-        print(f"Failed to run Java {java_version}: {e}")
+    # try:
+    #     result = subprocess.run([java_exec, "-version"], env=env, capture_output=True, text=True)
+    #     print(f"Java version set to {java_version}:")
+    #     print(result.stderr.strip())
+    # except Exception as e:
+    #     print(f"Failed to run Java {java_version}: {e}")
 
     return env
 
@@ -209,7 +217,6 @@ def write_xlsx(data):
     ws = wb.active
     ws.title = "Build Results"
 
-    # Define column headers
     headers = [
         "repoName", "projectVersion", "javaVersion", "projectName", "Would Build",
         "Accuracy (TP / Total)", "Accuracy With Validation", "Download Link"
@@ -219,6 +226,7 @@ def write_xlsx(data):
     # Define fill colors
     green_fill = PatternFill(start_color="bfd6ac", end_color="bfd6ac", fill_type="solid")  # light green
     red_fill = PatternFill(start_color="d69c9b", end_color="d69c9b", fill_type="solid")    # light red
+    orange_fill = PatternFill(start_color="f9cb9c", end_color="f9cb9c", fill_type="solid") # light orange
 
     for project in data:
         would_build = "No" if project["javaVersion"] == "DNB" else "Yes"
@@ -235,18 +243,25 @@ def write_xlsx(data):
         ws.append(row)
 
         # Apply color fill
-        fill = red_fill if would_build == "No" else green_fill
+        if project["url"] == "NA":
+            fill = orange_fill
+        elif would_build == "No":
+            fill = red_fill
+        else:
+            fill = green_fill
+
         for cell in ws[ws.max_row]:
             cell.fill = fill
 
-    # Save file
     output_file = os.path.join(OUTPUT_DIR, "projects_auto.xlsx")
     wb.save(output_file)
     print(f"Saved XLSX to {output_file}")
 
 
+
 def build_project(project):
     source_root = project["sourceRoot"]
+
     curr_project_metadata = {
         "repoName": project["repoName"],
         "projectVersion": project["projectVersion"],
@@ -254,6 +269,11 @@ def build_project(project):
         "projectName": project["projectName"],
         "url": project["url"]
     }
+
+    if project["url"] == "NA":
+        print(f"Skipping {project['projectName']} due to missing URL.")
+        return curr_project_metadata
+
 
     for java_version in java_versions:
         env = change_java_version(java_version)
@@ -264,7 +284,7 @@ def build_project(project):
             print(f"Successfully built {project['projectName']} with Java {java_version}")
             return curr_project_metadata
 
-    print(f"Failed to build {project['projectName']} with any Java version.")
+    # print(f"Failed to build {project['projectName']} with any Java version.")
     return curr_project_metadata
 
 
@@ -274,19 +294,23 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     projects = read_projects(input_projects)
-    meta_data = download_projects(projects)
+    project_index = {p: i for i, p in enumerate(projects)}
 
+    meta_data = download_projects(projects)
     project_results = []
 
-    # Use a process pool to build different projects concurrently
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
         futures = [executor.submit(build_project, project) for project in meta_data]
         for future in concurrent.futures.as_completed(futures):
             result = future.result()
             project_results.append(result)
 
+    # 🔒 Ensure original order from input
+    project_results.sort(key=lambda x: project_index.get(x["repoName"], float("inf")))
+
     write_json(project_results)
     write_xlsx(project_results)
+
 
 
 if __name__ == "__main__":
