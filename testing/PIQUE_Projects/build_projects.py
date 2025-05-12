@@ -22,7 +22,7 @@ from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 
 input_projects = os.path.join("testing", "Advisory", "clean_advisories.txt")
-java_versions = ["21", "17", "11", "8"]
+java_versions = ["21", "8", "17", "11", ]
 DOWNLOAD_DIR = os.path.join("testing", "PIQUE_Projects", "project_downloads")
 DATABASE_DIR = os.path.join("testing", "PIQUE_Projects", "databases")
 OUTPUT_DIR = os.path.join("testing", "PIQUE_Projects", "output")
@@ -203,8 +203,8 @@ def write_xlsx(data):
     ws.append(headers)
 
     # Define fill colors
-    green_fill = PatternFill(start_color="C6EFCE", end_color="C6EFCE", fill_type="solid")  # light green
-    red_fill = PatternFill(start_color="F2DCDB", end_color="F2DCDB", fill_type="solid")    # light red
+    green_fill = PatternFill(start_color="bfd6ac", end_color="bfd6ac", fill_type="solid")  # light green
+    red_fill = PatternFill(start_color="d69c9b", end_color="d69c9b", fill_type="solid")    # light red
 
     for project in data:
         would_build = "No" if project["javaVersion"] == "DNB" else "Yes"
