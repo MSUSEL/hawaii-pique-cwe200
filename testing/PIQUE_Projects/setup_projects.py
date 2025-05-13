@@ -3,12 +3,12 @@ import json
 import requests
 
 """
-This script downloads projects from the projects.json file and saves them in PIQUE_Projects/input/projects.
+This script downloads projects from the projects.json file and saves them in pique/input/projects.
 """
 
 def download_projects(json_file):
     # Create the download directory if it doesn't exist.
-    download_dir = os.path.join("pique-cwe200-cleanup", "input", "projects")
+    download_dir = os.path.join("pique", "input", "projects")
     
     # Load the JSON data.
     with open(json_file, 'r') as f:
