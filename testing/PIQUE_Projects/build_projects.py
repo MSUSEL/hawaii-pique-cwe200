@@ -1,5 +1,5 @@
 """
-This script takes in the projects from testing/Advisory/top_advisories.txt
+This script takes in the projects from testing/Advisory/clean_advisories.txt
 and attempts to create a CodeQL database for each project.
 This is done by attempting to create a database for each project with 
 Java 21, 17, 11, and 8.
@@ -19,6 +19,7 @@ import zipfile
 import json
 import time
 import re
+import platform
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 import concurrent.futures
@@ -73,10 +74,6 @@ def robust_github_get(url, headers=None, max_retries=5, timeout=10):
 
     print(f"[ERROR] Failed to fetch {url} after {max_retries} retries.")
     return None
-
-
-
-
 
 def get_latest_tag_by_commit_date(owner, repo):
     tags_url = f"https://api.github.com/repos/{owner}/{repo}/tags"
@@ -206,6 +203,10 @@ def download_projects(projects):
         json.dump(meta_data, f, indent=2)
         
     return meta_data
+
+def load_meta_data_from_file():
+    with open(os.path.join(OUTPUT_DIR, "projects_meta.json"), "r") as f:
+        return json.load(f)
 
 
 
@@ -420,7 +421,8 @@ def main():
     projects = read_projects(input_projects)
     project_index = {p: i for i, p in enumerate(projects)}
 
-    meta_data = download_projects(projects)
+    # meta_data = download_projects(projects)
+    meta_data = load_meta_data_from_file()
     project_results = []
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
@@ -434,8 +436,6 @@ def main():
 
     write_json(project_results)
     write_xlsx(project_results)
-
-
 
 if __name__ == "__main__":
     main()
