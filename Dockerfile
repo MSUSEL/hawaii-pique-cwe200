@@ -9,12 +9,15 @@ RUN if [ "$JAVA_VERSION" = "8" ]; then \
     elif [ "$JAVA_VERSION" = "11" ]; then \
         curl -SsLo /tmp/openjdk.tar.gz https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.20+8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.20_8.tar.gz; \
     elif [ "$JAVA_VERSION" = "17" ]; then \
-       curl -SsLo /tmp/openjdk.tar.gz https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz; \
+        curl -SsLo /tmp/openjdk.tar.gz https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz; \
+    elif [ "$JAVA_VERSION" = "21" ]; then \
+        curl -SsLo /tmp/openjdk.tar.gz https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2+13/OpenJDK21U-jdk_x64_linux_hotspot_21.0.2_13.tar.gz; \
     else \
         echo "Unsupported Java version $JAVA_VERSION"; exit 1; \
     fi \
     && mkdir -p /java/jdk \
     && tar xzf /tmp/openjdk.tar.gz -C /java/jdk --strip-components=1
+
 
 
 
