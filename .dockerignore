@@ -1,9 +1,81 @@
-node_modules/
-backend/node_modules/
-frontend/node_modules/
-.vscode
-.angular
-codeql
-backend/Files
-.pnpm-store/*
+########################
+# OS-specific artifacts
+########################
+.DS_Store
+Thumbs.db
 
+########################
+# Dependency directories
+########################
+node_modules/
+.gradle/
+.pnpm-store/
+
+########################
+# Build output
+########################
+dist/
+target/
+.angular/
+*.class
+*.py[cod]
+*.jar
+*.war
+*.exe
+*.app
+
+########################
+# Logs and caches
+########################
+*.log
+unsloth_compiled_cache/
+codeql-pack.lock.yml
+backend/Files/CWEToyDataset/data.json
+testing/codeql_results.json
+
+########################
+# IDE/Editor files
+########################
+.vscode/
+.idea/
+*.iml
+pyrightconfig.json
+
+########################
+# Test output
+########################
+TEST*.xml
+testing/Dataflow/db_dir/
+testing/Dataflow/query_results/
+testing/PIQUE_Projects/project_downloads/
+testing/PIQUE_Projects/databases/
+
+########################
+# CodeQL & Model files
+########################
+codeql/
+codeql queries/SensitiveInfo/SensitiveVariables.yml
+codeql queries/SensitiveInfo/Sinks.yml
+codeql queries/SensitiveInfo/Comments.yml
+codeql queries/SensitiveInfo/Strings.yml
+
+model/*
+backend/src/bert/models/codebert-base-mean-pooling
+
+########################
+# Commit Tools / Git Hooks
+########################
+commitlint.config.js
+.husky/
+
+########################
+# Backend File Filters
+########################
+backend/Files/*
+!backend/Files/CWEToyDataset/CWEToyDataset/
+!backend/Files/CVEDataset/
+
+########################
+# Miscellaneous
+########################
+!files/*.gitkeep
