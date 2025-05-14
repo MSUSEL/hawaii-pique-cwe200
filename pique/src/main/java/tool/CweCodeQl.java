@@ -125,9 +125,9 @@ public class CweCodeQl extends Tool implements ITool {
             System.out.println("Error creating directory to save CweCodeQl tool results");
         }
 
-        return runCWE200Tool(workingDirectoryPrefix, projectLocation);
+        // return runCWE200Tool(workingDirectoryPrefix, projectLocation);
 
-        // return null;
+        return null;
 
     }
 
@@ -165,11 +165,17 @@ public class CweCodeQl extends Tool implements ITool {
                             severity);
                     finding.setName(cweId);
                     diag.setChild(finding);
+                    
+
+
                     // System.out.println(cweId + " " + cweDescription + " " + filePath + " " +
                     // lineNumber + " " + characterNumber + " " + severity);
                 }
 
             }
+
+            LOGGER.info("Diagnostics parsed: " + diagnostics.size());
+            diagnostics.forEach((k, v) -> LOGGER.info(k + ": " + v.getValue()));
 
         } catch (IOException e) {
             LOGGER.info("No results to read from CweCodeQl.");
