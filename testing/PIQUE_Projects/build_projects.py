@@ -425,11 +425,16 @@ def main():
     meta_data = load_meta_data_from_file()
     project_results = []
 
+    total_projects = len(meta_data)
+    completed_projects = 0
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
         futures = [executor.submit(build_project, project) for project in meta_data]
         for future in concurrent.futures.as_completed(futures):
             result = future.result()
             project_results.append(result)
+            completed_projects += 1
+            print(f"\rCompleted {completed_projects}/{total_projects} projects.", end="")
+            
 
     # ? Ensure original order from input
     project_results.sort(key=lambda x: project_index.get(x["repoName"], float("inf")))
