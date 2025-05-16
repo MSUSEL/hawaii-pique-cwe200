@@ -2884,13 +2884,6 @@
     "sourceRoot": "testing/PIQUE_Projects/project_downloads/sling-org-apache-sling-auth-core-org.apache.sling.auth.core-1.7.0"
   },
   {
-    "repoName": "jenkinsci/monitoring-plugin",
-    "projectVersion": "monitoring-2.5.0",
-    "projectName": "monitoring-plugin-monitoring-2.5.0",
-    "url": "https://github.com/jenkinsci/monitoring-plugin/archive/refs/tags/monitoring-2.5.0.zip",
-    "sourceRoot": "testing/PIQUE_Projects/project_downloads/monitoring-plugin-monitoring-2.5.0"
-  },
-  {
     "repoName": "opendaylight/openflowplugin",
     "projectVersion": "release/scandium-sr2",
     "projectName": "openflowplugin-release-scandium-sr2",
@@ -2903,12 +2896,5 @@
     "projectName": "sling-org-apache-sling-xss-org.apache.sling.xss-2.4.6",
     "url": "https://github.com/apache/sling-org-apache-sling-xss/archive/refs/tags/org.apache.sling.xss-2.4.6.zip",
     "sourceRoot": "testing/PIQUE_Projects/project_downloads/sling-org-apache-sling-xss-org.apache.sling.xss-2.4.6"
-  },
-  {
-    "repoName": "jenkinsci/docker-commons-plugin",
-    "projectVersion": "451.vd12c371eeeb_3",
-    "projectName": "docker-commons-plugin-451.vd12c371eeeb_3",
-    "url": "https://github.com/jenkinsci/docker-commons-plugin/archive/refs/tags/451.vd12c371eeeb_3.zip",
-    "sourceRoot": "testing/PIQUE_Projects/project_downloads/docker-commons-plugin-451.vd12c371eeeb_3"
   }
 ]

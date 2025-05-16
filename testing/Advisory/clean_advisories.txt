@@ -416,7 +416,5 @@ jenkinsci/credentials-plugin
 jenkinsci/windows-slaves-plugin
 apache/axis-axis2-java-core
 apache/sling-org-apache-sling-auth-core
-jenkinsci/monitoring-plugin
 opendaylight/openflowplugin
 apache/sling-org-apache-sling-xss
-jenkinsci/docker-commons-plugin

@@ -267,12 +267,12 @@ def change_java_version(java_version):
     env["PATH"] = java_bin + os.pathsep + env.get("PATH", "")
 
     # Optional: verify java version
-    try:
-        result = subprocess.run([java_exec, "-version"], env=env, capture_output=True, text=True)
-        print(f"Java version set to {java_version}:")
-        print(result.stderr.strip() or result.stdout.strip())
-    except Exception as e:
-        print(f"Failed to verify Java version: {e}")
+    # try:
+    #     result = subprocess.run([java_exec, "-version"], env=env, capture_output=True, text=True)
+    #     print(f"Java version set to {java_version}:")
+    #     print(result.stderr.strip() or result.stdout.strip())
+    # except Exception as e:
+    #     print(f"Failed to verify Java version: {e}")
 
     return env
 
@@ -301,7 +301,7 @@ def create_codeql_database(source_root, db_name, env):
         "--overwrite",
         f"--source-root={source_root}"
     ]
-    print(f"\nRunning CodeQL database create for {db_name}...\n")
+    # print(f"\nRunning CodeQL database create for {db_name}...\n")
 
     # Run command with real-time streaming output
     process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
@@ -406,7 +406,7 @@ def build_project(project):
 
         if create_codeql_database(source_root, db_output, env):
             curr_project_metadata["javaVersion"] = java_version
-            print(f"Successfully built {project['projectName']} with Java {java_version}")
+            # print(f"Successfully built {project['projectName']} with Java {java_version}")
             return curr_project_metadata
 
     # print(f"Failed to build {project['projectName']} with any Java version.")
@@ -427,13 +427,14 @@ def main():
 
     total_projects = len(meta_data)
     completed_projects = 0
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executor:
         futures = [executor.submit(build_project, project) for project in meta_data]
         for future in concurrent.futures.as_completed(futures):
             result = future.result()
             project_results.append(result)
             completed_projects += 1
-            print(f"\rCompleted {completed_projects}/{total_projects} projects.", end="")
+            print(f"--- Completed {completed_projects}/{total_projects} projects.---\n")
+            print(f"--- Project: {result['projectName']}, Java Version: {result['javaVersion']}---\n")
             
 
     # ? Ensure original order from input
