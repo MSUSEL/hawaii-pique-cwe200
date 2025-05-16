@@ -4,7 +4,7 @@
   "global_config": {
     "benchmark_strategy": "calibration.CWE200Benchmarker",
     "normalizer": "pique.evaluation.NoNormalizer",
-    "weights_strategy": "pique.calibration.NaiveWeighter"
+    "weights_strategy": "calibration.FixedWeighter"
   },
   "factors": {
     "tqi": {
@@ -226,7 +226,8 @@
       "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
       "children": {
         "CWE-540": {},
-        "CWE-532": {}
+        "CWE-532": {},
+        "CWE-538 Diagnostic CweCodeQl": {}
       },
       "weights": {
         "CWE-538 Diagnostic CweCodeQl": 0.33,
