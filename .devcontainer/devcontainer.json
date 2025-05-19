@@ -1,7 +1,7 @@
 {
   "name": "CWE-200 Dev Container (CUDA)",
   "build": {
-    "dockerfile": "../Dockerfile",     
+    "dockerfile": "Dockerfile-cuda",     
     "context": "..",
     "args": {
       "JAVA_VERSION": "11"
@@ -10,20 +10,19 @@
   "workspaceFolder": "/app",
   "forwardPorts": [4200, 5400],
   "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
-  // "runArgs": [
-  //   "--gpus=all"
-  // ],
-  // "containerEnv": {
-  //   "NVIDIA_VISIBLE_DEVICES": "all"
-  // },
+  "runArgs": [
+    "--gpus=all"
+  ],
+  "containerEnv": {
+    "NVIDIA_VISIBLE_DEVICES": "all"
+  },
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   },
   "extensions": [
     "ms-python.python",
     "ms-python.vscode-pylance",
-    // "dbaeumer.vscode-eslint",
-    // "esbenp.prettier-vscode",
+    "ms-vscode-remote.remote-containers",
     "ms-vscode.vscode-typescript-next"
   ],
 
