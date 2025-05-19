@@ -50,6 +50,8 @@ RUN apt update && apt install -y \
     gradle \
     git \
     git-lfs \
+    wget \
+    ant \
     && git lfs install \
     && ln -s $(which python3) /usr/local/bin/python \
     && rm -rf /var/lib/apt/lists/*
