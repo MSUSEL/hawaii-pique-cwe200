@@ -19,6 +19,7 @@ import zipfile
 import json
 import time
 import re
+import shutil
 import platform
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
@@ -280,45 +281,48 @@ def change_java_version(java_version):
 def create_codeql_database(source_root, db_name, env):
     """
     Attempts to create a CodeQL database for the given source root using the provided environment.
-    Also verifies that Java 21 is used by both JAVA_HOME and PATH.
+    Always deletes the target db directory before building to avoid stale files.
     """
-    # print(f"\nVerifying Java version for {db_name}...")
+    # Clean old database directory if it exists
+    if os.path.exists(db_name):
+        print(f"[CLEANUP] Removing existing database directory: {db_name}")
+        robust_rmtree(db_name)
 
-    # # Check direct JAVA_HOME java.exe
-    # java_exec = os.path.join(env["JAVA_HOME"], "bin", "java.exe")
-    # java_check = subprocess.run([java_exec, "-version"], env=env, capture_output=True, text=True)
-    # print("Explicit java version from JAVA_HOME:")
-    # print(java_check.stderr.strip())
-
-    # # Log first PATH entry
-    # print("\nPATH being used by CodeQL:")
-    # print(env["PATH"].split(os.pathsep)[0])
-
-    # Build command
     command = [
         "codeql", "database", "create", db_name,
         "--language=java",
         "--overwrite",
         f"--source-root={source_root}"
     ]
-    # print(f"\nRunning CodeQL database create for {db_name}...\n")
+    print(f"\n[BUILD] Running CodeQL database create for {db_name} with {env['JAVA_HOME'].split(os.path.sep)[-1]}")
 
-    # Run command with real-time streaming output
-    process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
     java_version_pattern = re.compile(r"Java version:.*", re.IGNORECASE)
+    try:
+        process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        java_version_logged = False
+        output_lines = []
+
+        # Robust output reading
+        for line in process.stdout:
+            output_lines.append(line)
+            if java_version_pattern.search(line):
+                print(line.strip())
+                java_version_logged = True
+            elif not java_version_logged and 'java version' in line.lower():
+                print(line.strip())
+            # Optionally print all output:
+            # print(line, end='')
+
+        process.wait()
+        process.stdout.close()
+        return process.returncode == 0
+
+    except Exception as e:
+        print(f"[ERROR] Exception during CodeQL build for {db_name}: {e}")
+        return False
 
 
-    # for line in process.stdout:
-    #     sys.stdout.write(line)
-    #     sys.stdout.flush()
 
-    for line in process.stdout:
-        if java_version_pattern.search(line):
-            print(line.strip())  # Only print the matching Java version line
-
-    process.wait()
-
-    return process.returncode == 0
 
 def write_json(data):
     """
@@ -383,9 +387,9 @@ def write_xlsx(data):
     print(f"Saved XLSX to {output_file}")
 
 
-
 def build_project(project):
     source_root = project["sourceRoot"]
+    # print(f"Building {project['projectName']}...")
 
     curr_project_metadata = {
         "repoName": project["repoName"],
@@ -412,6 +416,19 @@ def build_project(project):
     # print(f"Failed to build {project['projectName']} with any Java version.")
     return curr_project_metadata
 
+def robust_rmtree(path, max_retries=5):
+    for i in range(max_retries):
+        try:
+            shutil.rmtree(path, ignore_errors=False)
+            return
+        except Exception as e:
+            if i < max_retries - 1:
+                print(f"[WARN] rmtree failed on {path} (attempt {i+1}/{max_retries}): {e}")
+                time.sleep(0.5)
+            else:
+                print(f"[ERROR] Could not remove directory {path} after {max_retries} attempts: {e}")
+                raise
+
 
 def main():
     os.makedirs(DOWNLOAD_DIR, exist_ok=True)
@@ -427,7 +444,15 @@ def main():
 
     total_projects = len(meta_data)
     completed_projects = 0
-    with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executor:
+
+    # for project in meta_data:
+    #     result = build_project(project)
+    #     project_results.append(result)
+    #     completed_projects += 1
+    #     print(f"--- Completed {completed_projects}/{total_projects} projects.---\n")
+    #     print(f"--- Project: {result['projectName']}, Java Version: {result['javaVersion']}---\n")
+            
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
         futures = [executor.submit(build_project, project) for project in meta_data]
         for future in concurrent.futures.as_completed(futures):
             result = future.result()
