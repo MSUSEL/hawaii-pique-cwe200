@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",     
     "context": "..",
     "args": {
-      "JAVA_VERSION": "11"
+      "JAVA_VERSION": "21"
     }
   },
   "workspaceFolder": "/app",
