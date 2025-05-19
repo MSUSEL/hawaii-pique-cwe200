@@ -24,7 +24,7 @@ export class CodeQlParserService {
         const rules = data.runs[0].tool.driver.rules;
         let results = data.runs[0].results;
 
-        results = this.filterResults(results)
+        // results = this.filterResults(results)
         this.results = results
       
 
