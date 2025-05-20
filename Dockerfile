@@ -33,7 +33,7 @@ FROM node:20.11.1-bullseye-slim AS runtime
 # Expose the ports for frontend and backend
 EXPOSE 4200 5400
 # Set environment variables for Java, Maven, and Gradle
-ARG JAVA_VERSION=8 
+ARG JAVA_VERSION=21 
 ENV JAVA_VERSION=${JAVA_VERSION}
 ENV JAVA_HOME=/usr/local/java/jdk${JAVA_VERSION}
 ENV MAVEN_HOME=/usr/local/maven
