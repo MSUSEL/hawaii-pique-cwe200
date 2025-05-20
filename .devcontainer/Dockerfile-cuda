@@ -1,31 +1,71 @@
-# Use the official Node.js image as the base
-FROM nvidia/cuda:12.0.0-runtime-ubuntu20.04
+ARG JAVA_VERSION=21
+ARG CODEQL_VERSION=2.20.3
+ARG TZ=America/Hawaii
 
-# Install Node.js LTS
-RUN apt-get update && apt-get install -y curl gnupg ca-certificates \
-  && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-  && apt-get install -y nodejs \
-  && apt-get clean && rm -rf /var/lib/apt/lists/*
+# ===== Stage 1: Java Download =====
+FROM nvidia/cuda:12.0.0-runtime-ubuntu20.04 AS java_download
+ARG JAVA_VERSION
+ARG TZ
+RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
 
-ARG JAVA_VERSION=11
-ARG MAVEN_VERSION=3.9.5
-
-ENV JAVA_HOME=/usr/local/java
-ENV MAVEN_HOME=/usr/local/maven
-ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
-
+ENV JAVA_RELEASE="https://github.com/adoptium/temurin$JAVA_VERSION-binaries/releases/download"
 # Set timezone and suppress prompts
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=America/New_York
+ENV TZ=$TZ
+
+WORKDIR /java
+RUN if [ "$JAVA_VERSION" = "8" ]; then \
+        curl -SsLo /tmp/openjdk.tar.gz https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u372-b07/OpenJDK8U-jdk_x64_linux_hotspot_8u372b07.tar.gz; \
+    elif [ "$JAVA_VERSION" = "11" ]; then \
+        curl -SsLo /tmp/openjdk.tar.gz https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.20+8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.20_8.tar.gz; \
+    elif [ "$JAVA_VERSION" = "17" ]; then \
+        curl -SsLo /tmp/openjdk.tar.gz https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz; \
+    elif [ "$JAVA_VERSION" = "21" ]; then \
+        curl -SsLo /tmp/openjdk.tar.gz https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2+13/OpenJDK21U-jdk_x64_linux_hotspot_21.0.2_13.tar.gz; \
+    else \
+        echo "Unsupported Java version $JAVA_VERSION"; exit 1; \
+    fi \
+    && mkdir -p /java/jdk \
+    && tar xzf /tmp/openjdk.tar.gz -C /java/jdk --strip-components=1
+
+
+# ===== Stage 2: CodeQL Download =====
+FROM nvidia/cuda:12.0.0-runtime-ubuntu20.04 AS codeql_download
+ARG CODEQL_VERSION
+ARG TZ
+ENV TZ=$TZ
+ENV DEBIAN_FRONTEND=noninteractive
+
+
+WORKDIR /codeql
+RUN apt-get update && apt-get install -y --no-install-recommends unzip ca-certificates curl \
+    && curl -SsLo /tmp/codeql.zip "https://github.com/github/codeql-cli-binaries/releases/download/v$CODEQL_VERSION/codeql-linux64.zip" \
+    && unzip /tmp/codeql.zip
+
+# ===== Stage 3: Runtime and App =====
+FROM nvidia/cuda:12.0.0-runtime-ubuntu20.04 AS runtime
+ARG JAVA_VERSION
+ARG TZ
+ENV JAVA_VERSION=${JAVA_VERSION}
+ENV JAVA_HOME=/usr/local/java/jdk${JAVA_VERSION}
+ENV MAVEN_HOME=/usr/local/maven
+ENV GRADLE_HOME=/usr/local/gradle
+ENV CODEQL_HOME=/opt/codeql
+ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${GRADLE_HOME}/bin:${CODEQL_HOME}:${PATH}"
+ENV PYTHON_VERSION=3.12.2
+ENV TZ=$TZ
+ENV DEBIAN_FRONTEND=noninteractive
+
 
 # Install core dependencies
-RUN apt-get update && apt-get install -y apt-utils \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     wget \
     curl \
     gnupg2 \
     ca-certificates \
     git \
+    gradle \
     libssl-dev \
     zlib1g-dev \
     libbz2-dev \
@@ -35,113 +75,62 @@ RUN apt-get update && apt-get install -y apt-utils \
     liblzma-dev \
     tk-dev \
     unzip \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# ? Install CUDA 12.0 Runtime via NVIDIA official repo
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/debian11/x86_64/cuda-keyring_1.1-1_all.deb && \
-    dpkg -i cuda-keyring_1.1-1_all.deb && \
-    apt-get update && \
-    apt-get install -y cuda-cudart-12-0 && \
-    ln -s /usr/local/cuda-12.0 /usr/local/cuda && \
-    rm -f cuda-keyring_1.1-1_all.deb && \
-    rm -rf /var/lib/apt/lists/*
+# Install Node.js 20.x
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Python 3.12.2 from source
-ENV PYTHON_VERSION=3.12.2
-RUN wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz \
-    && tar xzf Python-$PYTHON_VERSION.tgz \
-    && cd Python-$PYTHON_VERSION \
-    && ./configure --enable-optimizations \
-    && make altinstall \
-    && cd .. \
-    && rm -rf Python-$PYTHON_VERSION.tgz Python-$PYTHON_VERSION \
-    && ln -s /usr/local/bin/python3.12 /usr/local/bin/python
+# Install Maven 3.9.9
+RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz \
+    | tar -xz -C /usr/local/ \
+    && mv /usr/local/apache-maven-3.9.9 /usr/local/maven
 
-# Install pip for Python 3.12
-RUN wget https://bootstrap.pypa.io/get-pip.py && python3.12 get-pip.py && rm get-pip.py
+# Install Python 3.12.2 (prebuilt binary)
+RUN wget -O /tmp/python.tar.gz "https://github.com/indygreg/python-build-standalone/releases/download/20240224/cpython-3.12.2+20240224-x86_64-unknown-linux-gnu-install_only.tar.gz" \
+    && mkdir -p /opt/python3.12 \
+    && tar -xzf /tmp/python.tar.gz -C /opt/python3.12 --strip-components=1 \
+    && rm /tmp/python.tar.gz
+ENV PATH="/opt/python3.12/bin:${PATH}"
 
-# Copy requirements.txt and install dependencies
+# Symlink for python, python3, pip, pip3
+RUN ln -sf /opt/python3.12/bin/python3.12 /usr/local/bin/python \
+    && ln -sf /opt/python3.12/bin/python3.12 /usr/local/bin/python3 \
+    && ln -sf /opt/python3.12/bin/pip3.12 /usr/local/bin/pip \
+    && ln -sf /opt/python3.12/bin/pip3.12 /usr/local/bin/pip3
+
+# Install Python requirements
 COPY requirements.txt ./
 RUN python3.12 -m pip install --no-cache-dir -r requirements.txt
 
-# ? Override PyTorch to install CUDA-enabled build (compatible with CUDA 12.0)
+# CUDA-enabled PyTorch (compatible with CUDA 12.0/12.1)
 RUN python3.12 -m pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 
-# Install 'concurrently' globally
-RUN npm install -g concurrently
+# Install CodeQL CLI (from codeql_download stage)
+COPY --from=codeql_download /codeql/codeql/ $CODEQL_HOME/
 
-# Create a common directory for Java installations
-RUN mkdir -p /usr/local/java
+# Copy Java from java_download stage
+COPY --from=java_download /java/jdk $JAVA_HOME
 
-# Install OpenJDK 8
-RUN mkdir -p /usr/local/java/jdk8 && \
-    wget -O /tmp/openjdk8.tar.gz https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u372-b07/OpenJDK8U-jdk_x64_linux_hotspot_8u372b07.tar.gz && \
-    tar -xzf /tmp/openjdk8.tar.gz -C /usr/local/java/jdk8 --strip-components=1 && \
-    rm /tmp/openjdk8.tar.gz
-
-# Install OpenJDK 11
-RUN mkdir -p /usr/local/java/jdk11 && \
-    wget -O /tmp/openjdk11.tar.gz https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.20+8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.20_8.tar.gz && \
-    tar -xzf /tmp/openjdk11.tar.gz -C /usr/local/java/jdk11 --strip-components=1 && \
-    rm /tmp/openjdk11.tar.gz
-
-# Install OpenJDK 17
-RUN mkdir -p /usr/local/java/jdk17 && \
-    wget -O /tmp/openjdk17.tar.gz https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8+7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz && \
-    tar -xzf /tmp/openjdk17.tar.gz -C /usr/local/java/jdk17 --strip-components=1 && \
-    rm /tmp/openjdk17.tar.gz
-
-# Install OpenJDK 21 (Temurin 21.0.6+7)
-RUN mkdir -p /usr/local/java/jdk21 && \
-    wget -O /tmp/openjdk21.tar.gz https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6+7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz && \
-    tar -xzf /tmp/openjdk21.tar.gz -C /usr/local/java/jdk21 --strip-components=1 && \
-    rm /tmp/openjdk21.tar.gz
-
-# Set default Java to JDK 11
-ENV JAVA_HOME=/usr/local/java/jdk11
-ENV PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
-
-
-# Install Maven
-RUN wget -O /tmp/maven.tar.gz https://downloads.apache.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz \
-    && mkdir -p $MAVEN_HOME \
-    && tar -xzf /tmp/maven.tar.gz -C $MAVEN_HOME --strip-components=1 \
-    && rm /tmp/maven.tar.gz
-
-# Install Gradle
-ENV GRADLE_VERSION=8.6
-ENV GRADLE_HOME=/usr/local/gradle
-
-RUN mkdir -p $GRADLE_HOME \
-    && wget -O /tmp/gradle.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
-    && unzip /tmp/gradle.zip -d /opt/gradle-tmp \
-    && mv /opt/gradle-tmp/gradle-*/* $GRADLE_HOME \
-    && rm -rf /tmp/gradle.zip /opt/gradle-tmp
-
-
-# Install CodeQL CLI
-ENV CODEQL_VERSION=2.20.3
-RUN wget -O /tmp/codeql.zip https://github.com/github/codeql-cli-binaries/releases/download/v$CODEQL_VERSION/codeql-linux64.zip \
-    && unzip /tmp/codeql.zip -d /opt \
-    && rm /tmp/codeql.zip \
-    && ln -s /opt/codeql/codeql /usr/local/bin/codeql
-
-# Set working directory
+# ===== Node.js/NPM optimized steps =====
 WORKDIR /app
 
-# Copy package files
+# Copy dependency descriptors only for caching
 COPY package*.json ./
 COPY backend/package*.json ./backend/
 COPY frontend/package*.json ./frontend/
 
-# Copy full source
+# Install dependencies with deterministic install
+RUN npm ci
+
+# Copy rest of source code (after dependencies for Docker cache)
 COPY . .
 
-# Build and setup CodeQL
-RUN npm run build
-RUN npm run codeql-setup
+# Build frontend/backend
+RUN npm run build && npm cache clean --force
 
-# Expose frontend and backend ports
+# Expose ports for frontend and backend
 EXPOSE 4200 5400
 
 # Start everything

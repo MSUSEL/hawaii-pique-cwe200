@@ -10,9 +10,9 @@
   "workspaceFolder": "/app",
   "forwardPorts": [4200, 5400],
   "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
-  "runArgs": [
-    "--gpus=all"
-  ],
+  // "runArgs": [
+  //   "--gpus=all"
+  // ],
   "containerEnv": {
     "NVIDIA_VISIBLE_DEVICES": "all"
   },
