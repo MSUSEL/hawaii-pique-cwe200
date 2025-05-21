@@ -427,7 +427,6 @@ def robust_rmtree(path, max_retries=5):
                 time.sleep(0.5)
             else:
                 print(f"[ERROR] Could not remove directory {path} after {max_retries} attempts: {e}")
-                raise
 
 
 def main():
@@ -435,11 +434,11 @@ def main():
     os.makedirs(DATABASE_DIR, exist_ok=True)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    projects = read_projects(input_projects)
+    projects = read_projects(input_projects)[:100]
     project_index = {p: i for i, p in enumerate(projects)}
 
     # meta_data = download_projects(projects)
-    meta_data = load_meta_data_from_file()
+    meta_data = load_meta_data_from_file()[:100]
     project_results = []
 
     total_projects = len(meta_data)
