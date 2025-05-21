@@ -282,8 +282,8 @@ def create_codeql_database(source_root, db_name, env):
     """
     Attempts to create a CodeQL database for the given source root using the provided environment.
     Always deletes the target db directory before building to avoid stale files.
+    Returns (success, detected_java_version) where detected_java_version may be None if not found.
     """
-    # Clean old database directory if it exists
     if os.path.exists(db_name):
         print(f"[CLEANUP] Removing existing database directory: {db_name}")
         robust_rmtree(db_name)
@@ -297,29 +297,35 @@ def create_codeql_database(source_root, db_name, env):
     print(f"\n[BUILD] Running CodeQL database create for {db_name} with {env['JAVA_HOME'].split(os.path.sep)[-1]}")
 
     java_version_pattern = re.compile(r"Java version:.*", re.IGNORECASE)
+    setting_java_pattern = re.compile(r"Setting Java version to ([\d\.]+) \(([^)]+)\)", re.IGNORECASE)
+    detected_java_version = None
+
     try:
         process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         java_version_logged = False
         output_lines = []
 
-        # Robust output reading
         for line in process.stdout:
             output_lines.append(line)
+            # The case where there is a version defined by the project already
+            match = setting_java_pattern.search(line)
+            if match:
+                detected_java_version = match.group(1).split('.')[0]
+                print(f"[INFO] Detected Java version set by tool: {detected_java_version}")
             if java_version_pattern.search(line):
                 print(line.strip())
                 java_version_logged = True
             elif not java_version_logged and 'java version' in line.lower():
                 print(line.strip())
-            # Optionally print all output:
-            # print(line, end='')
 
         process.wait()
         process.stdout.close()
-        return process.returncode == 0
+        return (process.returncode == 0, detected_java_version)
 
     except Exception as e:
         print(f"[ERROR] Exception during CodeQL build for {db_name}: {e}")
-        return False
+        return (False, None)
+
 
 
 
@@ -389,7 +395,6 @@ def write_xlsx(data):
 
 def build_project(project):
     source_root = project["sourceRoot"]
-    # print(f"Building {project['projectName']}...")
 
     curr_project_metadata = {
         "repoName": project["repoName"],
@@ -403,18 +408,23 @@ def build_project(project):
         print(f"Skipping {project['projectName']} due to missing URL.")
         return curr_project_metadata
 
-
     for java_version in java_versions:
         env = change_java_version(java_version)
         db_output = os.path.join(DATABASE_DIR, f"{project['projectName']}_db")
 
-        if create_codeql_database(source_root, db_output, env):
-            curr_project_metadata["javaVersion"] = java_version
-            # print(f"Successfully built {project['projectName']} with Java {java_version}")
+        # Unpack the return value
+        success, detected_java_version = create_codeql_database(source_root, db_output, env)
+
+        if success:
+            # Prefer detected version if available; otherwise, use the attempted java_version
+            curr_project_metadata["javaVersion"] = detected_java_version if detected_java_version else java_version
+            # Optionally, store both for debugging:
+            # curr_project_metadata["javaVersionTried"] = java_version
+            # curr_project_metadata["javaVersionDetected"] = detected_java_version
             return curr_project_metadata
 
-    # print(f"Failed to build {project['projectName']} with any Java version.")
     return curr_project_metadata
+
 
 def robust_rmtree(path, max_retries=5):
     for i in range(max_retries):
@@ -434,11 +444,11 @@ def main():
     os.makedirs(DATABASE_DIR, exist_ok=True)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    projects = read_projects(input_projects)[:100]
+    projects = read_projects(input_projects)[18]
     project_index = {p: i for i, p in enumerate(projects)}
 
     # meta_data = download_projects(projects)
-    meta_data = load_meta_data_from_file()[:100]
+    meta_data = [load_meta_data_from_file()[18]]
     project_results = []
 
     total_projects = len(meta_data)
