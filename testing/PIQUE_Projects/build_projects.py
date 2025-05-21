@@ -444,11 +444,11 @@ def main():
     os.makedirs(DATABASE_DIR, exist_ok=True)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    projects = read_projects(input_projects)[18]
+    projects = read_projects(input_projects)[:350]
     project_index = {p: i for i, p in enumerate(projects)}
 
     # meta_data = download_projects(projects)
-    meta_data = [load_meta_data_from_file()[18]]
+    meta_data = load_meta_data_from_file()[:350]
     project_results = []
 
     total_projects = len(meta_data)
@@ -467,7 +467,7 @@ def main():
             result = future.result()
             project_results.append(result)
             completed_projects += 1
-            print(f"--- Completed {completed_projects}/{total_projects} projects.---\n")
+            print(f"--- Completed {completed_projects}/{total_projects} projects ---")
             print(f"--- Project: {result['projectName']}, Java Version: {result['javaVersion']}---\n")
             
 

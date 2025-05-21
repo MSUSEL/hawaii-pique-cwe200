@@ -49,7 +49,6 @@ apache/atlas
 infinispan/infinispan
 Graylog2/graylog2-server
 dataease/dataease
-DSpace/DSpace
 xwiki/xwiki-commons
 apache/dubbo
 resteasy/Resteasy
@@ -75,7 +74,6 @@ jenkinsci/configuration-as-code-plugin
 rubygems/rubygems
 atomix/atomix
 ratpack/ratpack
-apache/ranger
 apache/streampipes
 jenkinsci/gitlab-plugin
 qos-ch/logback
@@ -303,7 +301,6 @@ clojure/clojure
 apache/james-mime4j
 jeremylong/DependencyCheck
 jenkinsci/qualys-pc-plugin
-apache/axis-axis1-java
 grails/grails-core
 xwiki-contrib/application-changerequest
 noear/solon
@@ -414,7 +411,6 @@ jenkinsci/docker-plugin
 jenkinsci/token-macro-plugin
 jenkinsci/credentials-plugin
 jenkinsci/windows-slaves-plugin
-apache/axis-axis2-java-core
 apache/sling-org-apache-sling-auth-core
 opendaylight/openflowplugin
 apache/sling-org-apache-sling-xss
