@@ -1,6 +1,6 @@
 # download java
 FROM alpine/curl:8.12.1 AS java_download
-ARG JAVA_VERSION=8
+ARG JAVA_VERSION=21
 ENV JAVA_RELEASE="https://github.com/adoptium/temurin$JAVA_VERSION-binaries/releases/download"
 
 WORKDIR /java
@@ -47,13 +47,19 @@ RUN apt update && apt install -y \
     ca-certificates \
     python3 \
     python3-pip \
-    maven \
     gradle \
     git \
     git-lfs \
+    wget \
+    ant \
     && git lfs install \
     && ln -s $(which python3) /usr/local/bin/python \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Maven 3.9.9 (This is done separately because Apt does not have 3.9.9)
+RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz \
+    | tar -xz -C /usr/local/ \
+    && mv /usr/local/apache-maven-3.9.9 /usr/local/maven
 
 # Install 'concurrently' globally to run multiple scripts
 RUN npm install -g concurrently
