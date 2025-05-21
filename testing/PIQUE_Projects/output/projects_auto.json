@@ -1,0 +1,515 @@
+{
+  "projects": [
+    {
+      "repoName": "jenkinsci/jenkins",
+      "projectVersion": "jenkins-2.509",
+      "javaVersion": "21",
+      "projectName": "jenkins-jenkins-2.509",
+      "url": "https://github.com/jenkinsci/jenkins/archive/refs/tags/jenkins-2.509.zip"
+    },
+    {
+      "repoName": "apache/tomcat",
+      "projectVersion": "11.0.7",
+      "javaVersion": "21",
+      "projectName": "tomcat-11.0.7",
+      "url": "https://github.com/apache/tomcat/archive/refs/tags/11.0.7.zip"
+    },
+    {
+      "repoName": "keycloak/keycloak",
+      "projectVersion": "26.2.4",
+      "javaVersion": "21",
+      "projectName": "keycloak-26.2.4",
+      "url": "https://github.com/keycloak/keycloak/archive/refs/tags/26.2.4.zip"
+    },
+    {
+      "repoName": "FasterXML/jackson-databind",
+      "projectVersion": "jackson-databind-3.0.0-rc4",
+      "javaVersion": "21",
+      "projectName": "jackson-databind-jackson-databind-3.0.0-rc4",
+      "url": "https://github.com/FasterXML/jackson-databind/archive/refs/tags/jackson-databind-3.0.0-rc4.zip"
+    },
+    {
+      "repoName": "apache/struts",
+      "projectVersion": "STRUTS_7_0_0",
+      "javaVersion": "21",
+      "projectName": "struts-STRUTS_7_0_0",
+      "url": "https://github.com/apache/struts/archive/refs/tags/STRUTS_7_0_0.zip"
+    },
+    {
+      "repoName": "spring-projects/spring-framework",
+      "projectVersion": "v6.2.6",
+      "javaVersion": "21",
+      "projectName": "spring-framework-6.2.6",
+      "url": "https://github.com/spring-projects/spring-framework/archive/refs/tags/v6.2.6.zip"
+    },
+    {
+      "repoName": "apache/inlong",
+      "projectVersion": "2.1.0-RC0",
+      "javaVersion": "21",
+      "projectName": "inlong-2.1.0-RC0",
+      "url": "https://github.com/apache/inlong/archive/refs/tags/2.1.0-RC0.zip"
+    },
+    {
+      "repoName": "apache/nifi",
+      "projectVersion": "rel/nifi-2.4.0",
+      "javaVersion": "21",
+      "projectName": "nifi-rel-nifi-2.4.0",
+      "url": "https://github.com/apache/nifi/archive/refs/tags/rel/nifi-2.4.0.zip"
+    },
+    {
+      "repoName": "jenkinsci/script-security-plugin",
+      "projectVersion": "1373.vb_b_4a_a_c26fa_00",
+      "javaVersion": "21",
+      "projectName": "script-security-plugin-1373.vb_b_4a_a_c26fa_00",
+      "url": "https://github.com/jenkinsci/script-security-plugin/archive/refs/tags/1373.vb_b_4a_a_c26fa_00.zip"
+    },
+    {
+      "repoName": "jeecgboot/jeecg-boot",
+      "projectVersion": "v3.8.0",
+      "javaVersion": "21",
+      "projectName": "jeecg-boot-starter-3.8.0",
+      "url": "https://github.com/jeecgboot/jeecg-boot/archive/refs/tags/v3.8.0.zip"
+    },
+    {
+      "repoName": "apache/openmeetings",
+      "projectVersion": "8.0.0",
+      "javaVersion": "21",
+      "projectName": "openmeetings-8.0.0",
+      "url": "https://github.com/apache/openmeetings/archive/refs/tags/8.0.0.zip"
+    },
+    {
+      "repoName": "undertow-io/undertow",
+      "projectVersion": "2.3.18.Final",
+      "javaVersion": "21",
+      "projectName": "undertow-2.3.18.Final",
+      "url": "https://github.com/undertow-io/undertow/archive/refs/tags/2.3.18.Final.zip"
+    },
+    {
+      "repoName": "elastic/elasticsearch",
+      "projectVersion": "v9.0.1",
+      "javaVersion": "21",
+      "projectName": "elasticsearch-9.0.1",
+      "url": "https://github.com/elastic/elasticsearch/archive/refs/tags/v9.0.1.zip"
+    },
+    {
+      "repoName": "geoserver/geoserver",
+      "projectVersion": "2.27.0",
+      "javaVersion": "21",
+      "projectName": "geoserver-2.27.0",
+      "url": "https://github.com/geoserver/geoserver/archive/refs/tags/2.27.0.zip"
+    },
+    {
+      "repoName": "bcgit/bc-java",
+      "projectVersion": "r1rv80",
+      "javaVersion": "21",
+      "projectName": "bc-java-r1rv80",
+      "url": "https://github.com/bcgit/bc-java/archive/refs/tags/r1rv80.zip"
+    },
+    {
+      "repoName": "cloudfoundry/uaa",
+      "projectVersion": "v77.32.0",
+      "javaVersion": "21",
+      "projectName": "uaa-77.32.0",
+      "url": "https://github.com/cloudfoundry/uaa/archive/refs/tags/v77.32.0.zip"
+    },
+    {
+      "repoName": "apache/dolphinscheduler",
+      "projectVersion": "3.3.0-alpha",
+      "javaVersion": "21",
+      "projectName": "dolphinscheduler-3.3.0-alpha",
+      "url": "https://github.com/apache/dolphinscheduler/archive/refs/tags/3.3.0-alpha.zip"
+    },
+    {
+      "repoName": "quarkusio/quarkus",
+      "projectVersion": "3.22.2",
+      "javaVersion": "21",
+      "projectName": "quarkus-3.22.2",
+      "url": "https://github.com/quarkusio/quarkus/archive/refs/tags/3.22.2.zip"
+    },
+    {
+      "repoName": "xuxueli/xxl-job",
+      "projectVersion": "3.1.0",
+      "javaVersion": "21",
+      "projectName": "xxl-job-3.1.0",
+      "url": "https://github.com/xuxueli/xxl-job/archive/refs/tags/3.1.0.zip"
+    },
+    {
+      "repoName": "apache/camel",
+      "projectVersion": "camel-4.8.7",
+      "javaVersion": "21",
+      "projectName": "camel-camel-4.8.7",
+      "url": "https://github.com/apache/camel/archive/refs/tags/camel-4.8.7.zip"
+    },
+    {
+      "repoName": "OpenNMS/opennms",
+      "projectVersion": "opennms-33.1.5-1",
+      "javaVersion": "21",
+      "projectName": "opennms-opennms-33.1.5-1",
+      "url": "https://github.com/OpenNMS/opennms/archive/refs/tags/opennms-33.1.5-1.zip"
+    },
+    {
+      "repoName": "spring-projects/spring-security",
+      "projectVersion": "6.4.5",
+      "javaVersion": "21",
+      "projectName": "spring-security-6.4.5",
+      "url": "https://github.com/spring-projects/spring-security/archive/refs/tags/6.4.5.zip"
+    },
+    {
+      "repoName": "apache/cxf",
+      "projectVersion": "cxf-3.5.11",
+      "javaVersion": "21",
+      "projectName": "cxf-fediz-fediz-1.7.1",
+      "url": "https://github.com/apache/cxf/archive/refs/tags/cxf-3.5.11.zip"
+    },
+    {
+      "repoName": "apache/linkis",
+      "projectVersion": "1.6.0",
+      "javaVersion": "21",
+      "projectName": "linkis-1.6.0",
+      "url": "https://github.com/apache/linkis/archive/refs/tags/1.6.0.zip"
+    },
+    {
+      "repoName": "opencast/opencast",
+      "projectVersion": "17.3",
+      "javaVersion": "21",
+      "projectName": "opencast-17.3",
+      "url": "https://github.com/opencast/opencast/archive/refs/tags/17.3.zip"
+    },
+    {
+      "repoName": "apache/pulsar",
+      "projectVersion": "v4.0.4",
+      "javaVersion": "21",
+      "projectName": "pulsar-4.0.4",
+      "url": "https://github.com/apache/pulsar/archive/refs/tags/v4.0.4.zip"
+    },
+    {
+      "repoName": "ming-soft/MCMS",
+      "projectVersion": "5.4.1",
+      "javaVersion": "21",
+      "projectName": "MCMS-5.4.1",
+      "url": "https://github.com/ming-soft/MCMS/archive/refs/tags/5.4.1.zip"
+    },
+    {
+      "repoName": "apache/kylin",
+      "projectVersion": "kylin-5.0.2",
+      "javaVersion": "8",
+      "projectName": "kylin-kylin-5.0.2",
+      "url": "https://github.com/apache/kylin/archive/refs/tags/kylin-5.0.2.zip"
+    },
+    {
+      "repoName": "apache/hadoop",
+      "projectVersion": "release-3.4.1-RC3",
+      "javaVersion": "21",
+      "projectName": "hadoop-release-3.4.1-RC3",
+      "url": "https://github.com/apache/hadoop/archive/refs/tags/release-3.4.1-RC3.zip"
+    },
+    {
+      "repoName": "igniterealtime/Openfire",
+      "projectVersion": "v5.0.0alpha",
+      "javaVersion": "21",
+      "projectName": "Openfire-5.0.0alpha",
+      "url": "https://github.com/igniterealtime/Openfire/archive/refs/tags/v5.0.0alpha.zip"
+    },
+    {
+      "repoName": "dromara/hutool",
+      "projectVersion": "5.8.37",
+      "javaVersion": "21",
+      "projectName": "hutool-5.8.37",
+      "url": "https://github.com/dromara/hutool/archive/refs/tags/5.8.37.zip"
+    },
+    {
+      "repoName": "apache/shiro",
+      "projectVersion": "shiro-root-2.0.4",
+      "javaVersion": "21",
+      "projectName": "shiro-shiro-root-2.0.4",
+      "url": "https://github.com/apache/shiro/archive/refs/tags/shiro-root-2.0.4.zip"
+    },
+    {
+      "repoName": "apache/tika",
+      "projectVersion": "3.2.0-rc1",
+      "javaVersion": "21",
+      "projectName": "tika-3.2.0-rc1",
+      "url": "https://github.com/apache/tika/archive/refs/tags/3.2.0-rc1.zip"
+    },
+    {
+      "repoName": "jfinal/jfinal",
+      "projectVersion": "jfinal-5.2.4",
+      "javaVersion": "21",
+      "projectName": "jfinal_cms-5.1.0",
+      "url": "https://github.com/jfinal/jfinal/archive/refs/tags/jfinal-5.2.4.zip"
+    },
+    {
+      "repoName": "apache/xmlgraphics-batik",
+      "projectVersion": "batik-1_16",
+      "javaVersion": "21",
+      "projectName": "xmlgraphics-batik-batik-1_16",
+      "url": "https://github.com/apache/xmlgraphics-batik/archive/refs/tags/batik-1_16.zip"
+    },
+    {
+      "repoName": "jenkinsci/git-plugin",
+      "projectVersion": "git-5.7.0",
+      "javaVersion": "21",
+      "projectName": "git-plugin-git-5.7.0",
+      "url": "https://github.com/jenkinsci/git-plugin/archive/refs/tags/git-5.7.0.zip"
+    },
+    {
+      "repoName": "apache/atlas",
+      "projectVersion": "release-2.4.0",
+      "javaVersion": "8",
+      "projectName": "atlas-release-2.4.0",
+      "url": "https://github.com/apache/atlas/archive/refs/tags/release-2.4.0.zip"
+    },
+    {
+      "repoName": "infinispan/infinispan",
+      "projectVersion": "15.2.1.Final",
+      "javaVersion": "21",
+      "projectName": "infinispan-15.2.1.Final",
+      "url": "https://github.com/infinispan/infinispan/archive/refs/tags/15.2.1.Final.zip"
+    },
+    {
+      "repoName": "Graylog2/graylog2-server",
+      "projectVersion": "6.3.0-alpha.3",
+      "javaVersion": "21",
+      "projectName": "graylog2-server-6.3.0-alpha.3",
+      "url": "https://github.com/Graylog2/graylog2-server/archive/refs/tags/6.3.0-alpha.3.zip"
+    },
+    {
+      "repoName": "dataease/dataease",
+      "projectVersion": "v2.10.9",
+      "javaVersion": "21",
+      "projectName": "dataease-2.10.9",
+      "url": "https://github.com/dataease/dataease/archive/refs/tags/v2.10.9.zip"
+    },
+    {
+      "repoName": "apache/dubbo",
+      "projectVersion": "dubbo-3.3.4",
+      "javaVersion": "21",
+      "projectName": "dubbo-dubbo-3.3.4",
+      "url": "https://github.com/apache/dubbo/archive/refs/tags/dubbo-3.3.4.zip"
+    },
+    {
+      "repoName": "apache/hive",
+      "projectVersion": "release-2.3.10-rc1",
+      "javaVersion": "8",
+      "projectName": "hive-release-2.3.10-rc1",
+      "url": "https://github.com/apache/hive/archive/refs/tags/release-2.3.10-rc1.zip"
+    },
+    {
+      "repoName": "jenkinsci/workflow-cps-plugin",
+      "projectVersion": "4106.v7a_8a_8176d450",
+      "javaVersion": "21",
+      "projectName": "workflow-cps-plugin-4106.v7a_8a_8176d450",
+      "url": "https://github.com/jenkinsci/workflow-cps-plugin/archive/refs/tags/4106.v7a_8a_8176d450.zip"
+    },
+    {
+      "repoName": "jenkinsci/active-directory-plugin",
+      "projectVersion": "active-directory-2.40",
+      "javaVersion": "21",
+      "projectName": "active-directory-plugin-active-directory-2.40",
+      "url": "https://github.com/jenkinsci/active-directory-plugin/archive/refs/tags/active-directory-2.40.zip"
+    },
+    {
+      "repoName": "jenkinsci/workflow-cps-global-lib-plugin",
+      "projectVersion": "615.vb_b_0664a_b_19f3",
+      "javaVersion": "21",
+      "projectName": "workflow-cps-global-lib-plugin-615.vb_b_0664a_b_19f3",
+      "url": "https://github.com/jenkinsci/workflow-cps-global-lib-plugin/archive/refs/tags/615.vb_b_0664a_b_19f3.zip"
+    },
+    {
+      "repoName": "apache/solr",
+      "projectVersion": "releases/solr/9.8.1",
+      "javaVersion": "21",
+      "projectName": "solr-releases-solr-9.8.1",
+      "url": "https://github.com/apache/solr/archive/refs/tags/releases/solr/9.8.1.zip"
+    },
+    {
+      "repoName": "apache/ozone",
+      "projectVersion": "ozone-2.0.0",
+      "javaVersion": "17",
+      "projectName": "ozone-ozone-2.0.0",
+      "url": "https://github.com/apache/ozone/archive/refs/tags/ozone-2.0.0.zip"
+    },
+    {
+      "repoName": "pgjdbc/pgjdbc",
+      "projectVersion": "REL42.7.5",
+      "javaVersion": "21",
+      "projectName": "pgjdbc-REL42.7.5",
+      "url": "https://github.com/pgjdbc/pgjdbc/archive/refs/tags/REL42.7.5.zip"
+    },
+    {
+      "repoName": "apache/iotdb",
+      "projectVersion": "v2.0.2",
+      "javaVersion": "21",
+      "projectName": "iotdb-2.0.2",
+      "url": "https://github.com/apache/iotdb/archive/refs/tags/v2.0.2.zip"
+    },
+    {
+      "repoName": "rundeck/rundeck",
+      "projectVersion": "v5.12.0",
+      "javaVersion": "21",
+      "projectName": "rundeck-5.11.1",
+      "url": "https://github.com/rundeck/rundeck/archive/refs/tags/v5.12.0.zip"
+    },
+    {
+      "repoName": "opensearch-project/security",
+      "projectVersion": "3.0.0.0",
+      "javaVersion": "21",
+      "projectName": "security-3.0.0.0",
+      "url": "https://github.com/opensearch-project/security/archive/refs/tags/3.0.0.0.zip"
+    },
+    {
+      "repoName": "jenkinsci/config-file-provider-plugin",
+      "projectVersion": "988.v0461fcc2b_9d1",
+      "javaVersion": "21",
+      "projectName": "config-file-provider-plugin-988.v0461fcc2b_9d1",
+      "url": "https://github.com/jenkinsci/config-file-provider-plugin/archive/refs/tags/988.v0461fcc2b_9d1.zip"
+    },
+    {
+      "repoName": "PowerJob/PowerJob",
+      "projectVersion": "v5.1.1",
+      "javaVersion": "21",
+      "projectName": "PowerJob-5.1.1",
+      "url": "https://github.com/PowerJob/PowerJob/archive/refs/tags/v5.1.1.zip"
+    },
+    {
+      "repoName": "jenkinsci/subversion-plugin",
+      "projectVersion": "1287.vd2d507146906",
+      "javaVersion": "21",
+      "projectName": "subversion-plugin-1287.vd2d507146906",
+      "url": "https://github.com/jenkinsci/subversion-plugin/archive/refs/tags/1287.vd2d507146906.zip"
+    },
+    {
+      "repoName": "jenkinsci/ec2-plugin",
+      "projectVersion": "1911.vccb_5a_56f62e6",
+      "javaVersion": "21",
+      "projectName": "ec2-plugin-1911.vccb_5a_56f62e6",
+      "url": "https://github.com/jenkinsci/ec2-plugin/archive/refs/tags/1911.vccb_5a_56f62e6.zip"
+    },
+    {
+      "repoName": "jenkinsci/configuration-as-code-plugin",
+      "projectVersion": "1967.va_968e15fd05b_",
+      "javaVersion": "21",
+      "projectName": "configuration-as-code-plugin-1967.va_968e15fd05b_",
+      "url": "https://github.com/jenkinsci/configuration-as-code-plugin/archive/refs/tags/1967.va_968e15fd05b_.zip"
+    },
+    {
+      "repoName": "apache/streampipes",
+      "projectVersion": "release/0.97.0",
+      "javaVersion": "21",
+      "projectName": "streampipes-release-0.97.0",
+      "url": "https://github.com/apache/streampipes/archive/refs/tags/release/0.97.0.zip"
+    },
+    {
+      "repoName": "jenkinsci/gitlab-plugin",
+      "projectVersion": "gitlab-plugin-1.9.8",
+      "javaVersion": "21",
+      "projectName": "gitlab-plugin-gitlab-plugin-1.9.8",
+      "url": "https://github.com/jenkinsci/gitlab-plugin/archive/refs/tags/gitlab-plugin-1.9.8.zip"
+    },
+    {
+      "repoName": "apache/syncope",
+      "projectVersion": "syncope-3.0.11",
+      "javaVersion": "21",
+      "projectName": "syncope-syncope-3.0.11",
+      "url": "https://github.com/apache/syncope/archive/refs/tags/syncope-3.0.11.zip"
+    },
+    {
+      "repoName": "apache/activemq-artemis",
+      "projectVersion": "2.41.0",
+      "javaVersion": "21",
+      "projectName": "activemq-artemis-2.41.0",
+      "url": "https://github.com/apache/activemq-artemis/archive/refs/tags/2.41.0.zip"
+    },
+    {
+      "repoName": "apache/druid",
+      "projectVersion": "druid-33.0.0",
+      "javaVersion": "21",
+      "projectName": "druid-druid-33.0.0",
+      "url": "https://github.com/apache/druid/archive/refs/tags/druid-33.0.0.zip"
+    },
+    {
+      "repoName": "alkacon/opencms-core",
+      "projectVersion": "build_19_0_0",
+      "javaVersion": "21",
+      "projectName": "opencms-core-build_19_0_0",
+      "url": "https://github.com/alkacon/opencms-core/archive/refs/tags/build_19_0_0.zip"
+    },
+    {
+      "repoName": "apache/commons-compress",
+      "projectVersion": "rel/commons-compress-1.27.1",
+      "javaVersion": "21",
+      "projectName": "commons-compress-rel-commons-compress-1.27.1",
+      "url": "https://github.com/apache/commons-compress/archive/refs/tags/rel/commons-compress-1.27.1.zip"
+    },
+    {
+      "repoName": "jenkinsci/electricflow-plugin",
+      "projectVersion": "electricflow-1.1.40",
+      "javaVersion": "21",
+      "projectName": "electricflow-plugin-electricflow-1.1.40",
+      "url": "https://github.com/jenkinsci/electricflow-plugin/archive/refs/tags/electricflow-1.1.40.zip"
+    },
+    {
+      "repoName": "jenkinsci/build-failure-analyzer-plugin",
+      "projectVersion": "build-failure-analyzer-2.5.5",
+      "javaVersion": "21",
+      "projectName": "build-failure-analyzer-plugin-build-failure-analyzer-2.5.5",
+      "url": "https://github.com/jenkinsci/build-failure-analyzer-plugin/archive/refs/tags/build-failure-analyzer-2.5.5.zip"
+    },
+    {
+      "repoName": "jenkinsci/email-ext-plugin",
+      "projectVersion": "1876.v28d8d38315b_d",
+      "javaVersion": "21",
+      "projectName": "email-ext-plugin-1876.v28d8d38315b_d",
+      "url": "https://github.com/jenkinsci/email-ext-plugin/archive/refs/tags/1876.v28d8d38315b_d.zip"
+    },
+    {
+      "repoName": "jenkinsci/gerrit-trigger-plugin",
+      "projectVersion": "gerrit-trigger-2.42.0",
+      "javaVersion": "21",
+      "projectName": "gerrit-trigger-plugin-gerrit-trigger-2.42.0",
+      "url": "https://github.com/jenkinsci/gerrit-trigger-plugin/archive/refs/tags/gerrit-trigger-2.42.0.zip"
+    },
+    {
+      "repoName": "jenkinsci/cavisson-ns-nd-integration-plugin",
+      "projectVersion": "cavisson-ns-nd-integration-4.11.0.48",
+      "javaVersion": "8",
+      "projectName": "cavisson-ns-nd-integration-plugin-cavisson-ns-nd-integration-4.11.0.48",
+      "url": "https://github.com/jenkinsci/cavisson-ns-nd-integration-plugin/archive/refs/tags/cavisson-ns-nd-integration-4.11.0.48.zip"
+    },
+    {
+      "repoName": "apache/commons-jxpath",
+      "projectVersion": "rel/commons-jxpath-1.4.0",
+      "javaVersion": "21",
+      "projectName": "commons-jxpath-rel-commons-jxpath-1.4.0",
+      "url": "https://github.com/apache/commons-jxpath/archive/refs/tags/rel/commons-jxpath-1.4.0.zip"
+    },
+    {
+      "repoName": "jenkinsci/rundeck-plugin",
+      "projectVersion": "rundeck-3.6.14",
+      "javaVersion": "21",
+      "projectName": "rundeck-plugin-rundeck-3.6.14",
+      "url": "https://github.com/jenkinsci/rundeck-plugin/archive/refs/tags/rundeck-3.6.14.zip"
+    },
+    {
+      "repoName": "jenkinsci/blueocean-plugin",
+      "projectVersion": "blueocean-parent-1.27.19",
+      "javaVersion": "21",
+      "projectName": "blueocean-plugin-blueocean-parent-1.27.19",
+      "url": "https://github.com/jenkinsci/blueocean-plugin/archive/refs/tags/blueocean-parent-1.27.19.zip"
+    },
+    {
+      "repoName": "jenkinsci/fortify-on-demand-uploader-plugin",
+      "projectVersion": "fortify-on-demand-uploader-8.0.1",
+      "javaVersion": "21",
+      "projectName": "fortify-on-demand-uploader-plugin-fortify-on-demand-uploader-8.0.1",
+      "url": "https://github.com/jenkinsci/fortify-on-demand-uploader-plugin/archive/refs/tags/fortify-on-demand-uploader-8.0.1.zip"
+    },
+    {
+      "repoName": "apache/httpcomponents-client",
+      "projectVersion": "rel/v5.4.4",
+      "javaVersion": "21",
+      "projectName": "httpcomponents-client-rel-v5.4.4",
+      "url": "https://github.com/apache/httpcomponents-client/archive/refs/tags/rel/v5.4.4.zip"
+    }
+  ]
+}
