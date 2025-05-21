@@ -143,8 +143,7 @@
          node1.asExpr() = mc.getAnArgument() and
          mc.getCallee().getAParameter() = param and
          node2 = DataFlow::parameterNode(param) and
-         DataFlow::localFlowStep(node2, paramUse) and
-         paramUse.asExpr() instanceof Expr
+         DataFlow::localFlowStep(node2, paramUse)
        )
      ) or
      // (6) State3 → State3: String concatenation (new)
