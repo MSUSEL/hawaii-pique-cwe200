@@ -12,7 +12,7 @@
     "build-backend": "cd backend && npm i && npm run build",
     "start-frontend": "cd frontend && npm run start",
     "start-backend": "cd backend && npm run start",
-    "build": "npm run build-backend && npm run build-frontend && npm i",
+    "build": "npm i && npm run build-backend && npm run build-frontend",
     "codeql-setup": "ts-node backend/codeql_setup/run-platform-specific-setup.ts",
     "query-toy": "codeql database analyze backend/Files/CWEToyDataset/CWEToyDatasetdb --format=sarifv2.1.0 --rerun --output=backend/Files/CWEToyDataset/result.sarif codeql/codeql-custom-queries-java",
     "build-toy": "codeql database create backend/Files/CWEToyDataset/CWEToyDatasetdb --language=java --source-root=backend/Files/CWEToyDataset/CWEToyDataset --overwrite",

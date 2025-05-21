@@ -105,7 +105,7 @@ COPY requirements.txt ./
 RUN python3.12 -m pip install --no-cache-dir -r requirements.txt
 
 # CUDA-enabled PyTorch (compatible with CUDA 12.0/12.1)
-RUN python3.12 -m pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+RUN python3.12 -m pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cu121
 
 # Install CodeQL CLI (from codeql_download stage)
 COPY --from=codeql_download /codeql/codeql/ $CODEQL_HOME/
@@ -116,19 +116,21 @@ COPY --from=java_download /java/jdk $JAVA_HOME
 # ===== Node.js/NPM optimized steps =====
 WORKDIR /app
 
-# Copy dependency descriptors only for caching
-COPY package*.json ./
-COPY backend/package*.json ./backend/
-COPY frontend/package*.json ./frontend/
+# Build steps no need to do this as the mount overwrites it
 
-# Install dependencies with deterministic install
-RUN npm ci
+# # Copy dependency descriptors only for caching
+# COPY package*.json ./
+# COPY backend/package*.json ./backend/
+# COPY frontend/package*.json ./frontend/
+
+# # Install dependencies with deterministic install
+# RUN npm ci
 
 # Copy rest of source code (after dependencies for Docker cache)
 COPY . .
 
 # Build frontend/backend
-RUN npm run build && npm cache clean --force
+# RUN npm run build && npm cache clean --force
 
 # Expose ports for frontend and backend
 EXPOSE 4200 5400
