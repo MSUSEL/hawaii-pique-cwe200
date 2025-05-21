@@ -10,23 +10,20 @@
   "workspaceFolder": "/app",
   "forwardPorts": [4200, 5400],
   "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
-  // "runArgs": [
-  //   "--gpus=all"
-  // ],
-  // "containerEnv": {
-  //   "NVIDIA_VISIBLE_DEVICES": "all"
-  // },
+  "runArgs": [
+    "--gpus=all"
+  ],
+  "containerEnv": {
+    "NVIDIA_VISIBLE_DEVICES": "all"
+  },
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   },
   "extensions": [
     "ms-python.python",
-    "ms-python.vscode-pylance",
-    // "dbaeumer.vscode-eslint",
-    // "esbenp.prettier-vscode",
-    "ms-vscode.vscode-typescript-next"
+    "ms-python.vscode-pylance"
   ],
 
-  "postCreateCommand": "npm run codeql-setup && npm run build"
+  "postCreateCommand": "npm run build && npm run codeql-setup"
 
 }
