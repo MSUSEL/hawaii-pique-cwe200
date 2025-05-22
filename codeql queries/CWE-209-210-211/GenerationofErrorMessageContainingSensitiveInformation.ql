@@ -146,8 +146,7 @@
         mc.getCallee().getAParameter() = param and
         node2 = DataFlow::parameterNode(param) and
         // Ensure the parameter is used in the called method
-        DataFlow::localFlowStep(node2, paramUse) and
-        paramUse.asExpr() instanceof Expr
+        DataFlow::localFlowStep(node2, paramUse)
       )
      )
    }
