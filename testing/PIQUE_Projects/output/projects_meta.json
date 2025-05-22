@@ -357,13 +357,6 @@
     "sourceRoot": "testing/PIQUE_Projects/project_downloads/dataease-2.10.9"
   },
   {
-    "repoName": "DSpace/DSpace",
-    "projectVersion": "dspace-8.1",
-    "projectName": "DSpace-dspace-8.1",
-    "url": "https://github.com/DSpace/DSpace/archive/refs/tags/dspace-8.1.zip",
-    "sourceRoot": "testing/PIQUE_Projects/project_downloads/DSpace-dspace-8.1"
-  },
-  {
     "repoName": "xwiki/xwiki-commons",
     "projectVersion": "xwiki-commons-16.10.7",
     "projectName": "xwiki-commons-xwiki-commons-16.10.7",
@@ -530,13 +523,6 @@
     "projectName": "ratpack-1.9.0",
     "url": "https://github.com/ratpack/ratpack/archive/refs/tags/v1.9.0.zip",
     "sourceRoot": "testing/PIQUE_Projects/project_downloads/ratpack-1.9.0"
-  },
-  {
-    "repoName": "apache/ranger",
-    "projectVersion": "release-ranger-2.6.0",
-    "projectName": "ranger-release-ranger-2.6.0",
-    "url": "https://github.com/apache/ranger/archive/refs/tags/release-ranger-2.6.0.zip",
-    "sourceRoot": "testing/PIQUE_Projects/project_downloads/ranger-release-ranger-2.6.0"
   },
   {
     "repoName": "apache/streampipes",
@@ -2100,13 +2086,6 @@
     "sourceRoot": "testing/PIQUE_Projects/project_downloads/qualys-pc-plugin-qualys-pc-1.0.8"
   },
   {
-    "repoName": "apache/axis-axis1-java",
-    "projectVersion": "1.2",
-    "projectName": "axis-axis1-java-1.2",
-    "url": "https://github.com/apache/axis-axis1-java/archive/refs/tags/1.2.zip",
-    "sourceRoot": "testing/PIQUE_Projects/project_downloads/axis-axis1-java-1.2"
-  },
-  {
     "repoName": "grails/grails-core",
     "projectVersion": "v7.0.0-M3",
     "projectName": "grails-core-7.0.0-M3",
@@ -2868,13 +2847,6 @@
     "projectName": "windows-slaves-plugin-windows-slaves-1.8",
     "url": "https://github.com/jenkinsci/windows-slaves-plugin/archive/refs/tags/windows-slaves-1.8.zip",
     "sourceRoot": "testing/PIQUE_Projects/project_downloads/windows-slaves-plugin-windows-slaves-1.8"
-  },
-  {
-    "repoName": "apache/axis-axis2-java-core",
-    "projectVersion": "v2.0.0",
-    "projectName": "axis-axis2-java-core-2.0.0",
-    "url": "https://github.com/apache/axis-axis2-java-core/archive/refs/tags/v2.0.0.zip",
-    "sourceRoot": "testing/PIQUE_Projects/project_downloads/axis-axis2-java-core-2.0.0"
   },
   {
     "repoName": "apache/sling-org-apache-sling-auth-core",
