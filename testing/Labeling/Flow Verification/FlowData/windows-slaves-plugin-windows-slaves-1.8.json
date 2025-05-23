@@ -1,0 +1,237 @@
+{
+  "209": [
+    {
+      "resultIndex": 0,
+      "fileName": "ManagedWindowsServiceLauncher.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "computer",
+              "startLine": 188,
+              "startColumn": 47,
+              "endLine": 188,
+              "endColumn": 55,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "SlaveComputer",
+              "code": "    public void launch(final SlaveComputer computer, final TaskListener listener) throws IOException, InterruptedException {\n        try {\n            final PrintStream logger = listener.getLogger();\n            final String name = determineHost(computer);\n\n            logger.println(Messages.ManagedWindowsServiceLauncher_ConnectingTo(getTimestamp(), name));\n"
+            },
+            {
+              "step": 1,
+              "variableName": "Computer c",
+              "startLine": 444,
+              "startColumn": 36,
+              "endLine": 444,
+              "endColumn": 46,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "SlaveComputer",
+              "code": "     * @param c the computer\n     * @return the host name or IP address\n     */\n    protected String determineHost(Computer c) {\n        // If host not provided, default to the agent name\n        if (StringUtils.isBlank(host)) {\n            return c.getName();"
+            },
+            {
+              "step": 2,
+              "variableName": "c",
+              "startLine": 447,
+              "startColumn": 20,
+              "endLine": 447,
+              "endColumn": 21,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "SlaveComputer",
+              "code": "    protected String determineHost(Computer c) {\n        // If host not provided, default to the agent name\n        if (StringUtils.isBlank(host)) {\n            return c.getName();\n        } else {\n            return host;\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "c.getName()",
+              "startLine": 447,
+              "startColumn": 20,
+              "endLine": 447,
+              "endColumn": 31,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "    protected String determineHost(Computer c) {\n        // If host not provided, default to the agent name\n        if (StringUtils.isBlank(host)) {\n            return c.getName();\n        } else {\n            return host;\n        }"
+            },
+            {
+              "step": 4,
+              "variableName": "determineHost(computer)",
+              "startLine": 188,
+              "startColumn": 33,
+              "endLine": 188,
+              "endColumn": 56,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "    public void launch(final SlaveComputer computer, final TaskListener listener) throws IOException, InterruptedException {\n        try {\n            final PrintStream logger = listener.getLogger();\n            final String name = determineHost(computer);\n\n            logger.println(Messages.ManagedWindowsServiceLauncher_ConnectingTo(getTimestamp(), name));\n"
+            },
+            {
+              "step": 5,
+              "variableName": "name",
+              "startLine": 203,
+              "startColumn": 40,
+              "endLine": 203,
+              "endColumn": 44,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "//                // continue anyway, just in case it's just ICMP that's getting filtered\n//            }\n\n            checkPort135Access(logger, name, host);\n\n            JIDefaultAuthInfoImpl auth = createAuth();\n            JISession session = JISession.createSession(auth);"
+            },
+            {
+              "step": 6,
+              "variableName": "String name",
+              "startLine": 429,
+              "startColumn": 57,
+              "endLine": 429,
+              "endColumn": 68,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "        return evnp.getEnvVars();\n    }\n\n    private void checkPort135Access(PrintStream logger, String name, InetAddress host) {\n        try (Socket s = new Socket()) {\n            s.connect(new InetSocketAddress(host, 135), 5000);\n        } catch (IOException e) {"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Failed to connect to port 135 of \" + name + \". Is Windows firewall blocking this port? Or did you disable DCOM service?\"",
+              "startLine": 433,
+              "startColumn": 28,
+              "endLine": 433,
+              "endColumn": 149,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "",
+              "code": "        try (Socket s = new Socket()) {\n            s.connect(new InetSocketAddress(host, 135), 5000);\n        } catch (IOException e) {\n            logger.println(\"Failed to connect to port 135 of \" + name + \". Is Windows firewall blocking this port? Or did you disable DCOM service?\");\n            // again, let it continue.\n        }\n    }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "host",
+              "startLine": 446,
+              "startColumn": 33,
+              "endLine": 446,
+              "endColumn": 37,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "     */\n    protected String determineHost(Computer c) {\n        // If host not provided, default to the agent name\n        if (StringUtils.isBlank(host)) {\n            return c.getName();\n        } else {\n            return host;"
+            },
+            {
+              "step": 1,
+              "variableName": "host",
+              "startLine": 449,
+              "startColumn": 20,
+              "endLine": 449,
+              "endColumn": 24,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "        if (StringUtils.isBlank(host)) {\n            return c.getName();\n        } else {\n            return host;\n        }\n    }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "determineHost(computer)",
+              "startLine": 188,
+              "startColumn": 33,
+              "endLine": 188,
+              "endColumn": 56,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "    public void launch(final SlaveComputer computer, final TaskListener listener) throws IOException, InterruptedException {\n        try {\n            final PrintStream logger = listener.getLogger();\n            final String name = determineHost(computer);\n\n            logger.println(Messages.ManagedWindowsServiceLauncher_ConnectingTo(getTimestamp(), name));\n"
+            },
+            {
+              "step": 3,
+              "variableName": "name",
+              "startLine": 203,
+              "startColumn": 40,
+              "endLine": 203,
+              "endColumn": 44,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "//                // continue anyway, just in case it's just ICMP that's getting filtered\n//            }\n\n            checkPort135Access(logger, name, host);\n\n            JIDefaultAuthInfoImpl auth = createAuth();\n            JISession session = JISession.createSession(auth);"
+            },
+            {
+              "step": 4,
+              "variableName": "String name",
+              "startLine": 429,
+              "startColumn": 57,
+              "endLine": 429,
+              "endColumn": 68,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "        return evnp.getEnvVars();\n    }\n\n    private void checkPort135Access(PrintStream logger, String name, InetAddress host) {\n        try (Socket s = new Socket()) {\n            s.connect(new InetSocketAddress(host, 135), 5000);\n        } catch (IOException e) {"
+            },
+            {
+              "step": 5,
+              "variableName": "\"Failed to connect to port 135 of \" + name + \". Is Windows firewall blocking this port? Or did you disable DCOM service?\"",
+              "startLine": 433,
+              "startColumn": 28,
+              "endLine": 433,
+              "endColumn": 149,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "",
+              "code": "        try (Socket s = new Socket()) {\n            s.connect(new InetSocketAddress(host, 135), 5000);\n        } catch (IOException e) {\n            logger.println(\"Failed to connect to port 135 of \" + name + \". Is Windows firewall blocking this port? Or did you disable DCOM service?\");\n            // again, let it continue.\n        }\n    }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "host",
+              "startLine": 449,
+              "startColumn": 20,
+              "endLine": 449,
+              "endColumn": 24,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "        if (StringUtils.isBlank(host)) {\n            return c.getName();\n        } else {\n            return host;\n        }\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "determineHost(computer)",
+              "startLine": 188,
+              "startColumn": 33,
+              "endLine": 188,
+              "endColumn": 56,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "    public void launch(final SlaveComputer computer, final TaskListener listener) throws IOException, InterruptedException {\n        try {\n            final PrintStream logger = listener.getLogger();\n            final String name = determineHost(computer);\n\n            logger.println(Messages.ManagedWindowsServiceLauncher_ConnectingTo(getTimestamp(), name));\n"
+            },
+            {
+              "step": 2,
+              "variableName": "name",
+              "startLine": 203,
+              "startColumn": 40,
+              "endLine": 203,
+              "endColumn": 44,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "//                // continue anyway, just in case it's just ICMP that's getting filtered\n//            }\n\n            checkPort135Access(logger, name, host);\n\n            JIDefaultAuthInfoImpl auth = createAuth();\n            JISession session = JISession.createSession(auth);"
+            },
+            {
+              "step": 3,
+              "variableName": "String name",
+              "startLine": 429,
+              "startColumn": 57,
+              "endLine": 429,
+              "endColumn": 68,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "String",
+              "code": "        return evnp.getEnvVars();\n    }\n\n    private void checkPort135Access(PrintStream logger, String name, InetAddress host) {\n        try (Socket s = new Socket()) {\n            s.connect(new InetSocketAddress(host, 135), 5000);\n        } catch (IOException e) {"
+            },
+            {
+              "step": 4,
+              "variableName": "\"Failed to connect to port 135 of \" + name + \". Is Windows firewall blocking this port? Or did you disable DCOM service?\"",
+              "startLine": 433,
+              "startColumn": 28,
+              "endLine": 433,
+              "endColumn": 149,
+              "uri": "windows-slaves-plugin-windows-slaves-1.8/src/main/java/hudson/os/windows/ManagedWindowsServiceLauncher.java",
+              "type": "",
+              "code": "        try (Socket s = new Socket()) {\n            s.connect(new InetSocketAddress(host, 135), 5000);\n        } catch (IOException e) {\n            logger.println(\"Failed to connect to port 135 of \" + name + \". Is Windows firewall blocking this port? Or did you disable DCOM service?\");\n            // again, let it continue.\n        }\n    }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

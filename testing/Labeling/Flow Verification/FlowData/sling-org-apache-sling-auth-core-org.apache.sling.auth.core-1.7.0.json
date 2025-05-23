@@ -1,0 +1,82 @@
+{
+  "208": [
+    {
+      "resultIndex": 0,
+      "fileName": "HttpBasicAuthenticationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "request.getHeader(HEADER_AUTHORIZATION)",
+              "startLine": 308,
+              "startColumn": 29,
+              "endLine": 308,
+              "endColumn": 68,
+              "uri": "sling-org-apache-sling-auth-core-org.apache.sling.auth.core-1.7.0/src/main/java/org/apache/sling/auth/core/impl/HttpBasicAuthenticationHandler.java",
+              "type": "String",
+              "code": "    protected AuthenticationInfo extractCredentials(HttpServletRequest request) {\n\n        // Return immediately if the header is missing\n        String authHeader = request.getHeader(HEADER_AUTHORIZATION);\n        if (authHeader == null || authHeader.length() == 0) {\n            return null;\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "authHeader",
+              "startLine": 315,
+              "startColumn": 22,
+              "endLine": 315,
+              "endColumn": 32,
+              "uri": "sling-org-apache-sling-auth-core-org.apache.sling.auth.core-1.7.0/src/main/java/org/apache/sling/auth/core/impl/HttpBasicAuthenticationHandler.java",
+              "type": "String",
+              "code": "\n        // Get the authType (Basic, Digest) and authInfo (user/password) from\n        // the header\n        authHeader = authHeader.trim();\n        int blank = authHeader.indexOf(' ');\n        if (blank <= 0) {\n            return null;"
+            },
+            {
+              "step": 2,
+              "variableName": "authHeader.trim()",
+              "startLine": 315,
+              "startColumn": 22,
+              "endLine": 315,
+              "endColumn": 39,
+              "uri": "sling-org-apache-sling-auth-core-org.apache.sling.auth.core-1.7.0/src/main/java/org/apache/sling/auth/core/impl/HttpBasicAuthenticationHandler.java",
+              "type": "String",
+              "code": "\n        // Get the authType (Basic, Digest) and authInfo (user/password) from\n        // the header\n        authHeader = authHeader.trim();\n        int blank = authHeader.indexOf(' ');\n        if (blank <= 0) {\n            return null;"
+            },
+            {
+              "step": 3,
+              "variableName": "authHeader",
+              "startLine": 320,
+              "startColumn": 27,
+              "endLine": 320,
+              "endColumn": 37,
+              "uri": "sling-org-apache-sling-auth-core-org.apache.sling.auth.core-1.7.0/src/main/java/org/apache/sling/auth/core/impl/HttpBasicAuthenticationHandler.java",
+              "type": "String",
+              "code": "        if (blank <= 0) {\n            return null;\n        }\n        String authType = authHeader.substring(0, blank);\n        String authInfo = authHeader.substring(blank).trim();\n\n        // Check whether authorization type matches"
+            },
+            {
+              "step": 4,
+              "variableName": "authHeader.substring(0, blank)",
+              "startLine": 320,
+              "startColumn": 27,
+              "endLine": 320,
+              "endColumn": 57,
+              "uri": "sling-org-apache-sling-auth-core-org.apache.sling.auth.core-1.7.0/src/main/java/org/apache/sling/auth/core/impl/HttpBasicAuthenticationHandler.java",
+              "type": "String",
+              "code": "        if (blank <= 0) {\n            return null;\n        }\n        String authType = authHeader.substring(0, blank);\n        String authInfo = authHeader.substring(blank).trim();\n\n        // Check whether authorization type matches"
+            },
+            {
+              "step": 5,
+              "variableName": "authType",
+              "startLine": 324,
+              "startColumn": 14,
+              "endLine": 324,
+              "endColumn": 22,
+              "uri": "sling-org-apache-sling-auth-core-org.apache.sling.auth.core-1.7.0/src/main/java/org/apache/sling/auth/core/impl/HttpBasicAuthenticationHandler.java",
+              "type": "",
+              "code": "        String authInfo = authHeader.substring(blank).trim();\n\n        // Check whether authorization type matches\n        if (!authType.equalsIgnoreCase(AUTHENTICATION_SCHEME_BASIC)) {\n            return null;\n        }\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
