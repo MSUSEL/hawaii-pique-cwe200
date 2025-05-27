@@ -1,0 +1,160 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "NomadApi.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "secret",
+              "startLine": 189,
+              "startColumn": 45,
+              "endLine": 189,
+              "endColumn": 51,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "String",
+              "code": "\n        String job = normalizeJobTemplate(template.getJobTemplate())\n                .replace(\"%WORKER_NAME%\", name)\n                .replace(\"%WORKER_SECRET%\", secret)\n                .replace(\"%WORKER_DIR%\", template.getRemoteFs());\n\n        LOGGER.log(Level.FINE, String.format(\"job:%n%s\", job));"
+            },
+            {
+              "step": 1,
+              "variableName": "normalizeJobTemplate(template.",
+              "startLine": 187,
+              "startColumn": 22,
+              "endLine": 189,
+              "endColumn": 52,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "String",
+              "code": "            NomadWorkerTemplate template\n    ) {\n\n        String job = normalizeJobTemplate(template.getJobTemplate())\n                .replace(\"%WORKER_NAME%\", name)\n                .replace(\"%WORKER_SECRET%\", secret)\n                .replace(\"%WORKER_DIR%\", template.getRemoteFs());"
+            },
+            {
+              "step": 2,
+              "variableName": "normalizeJobTemplate(template.getJobTemplat",
+              "startLine": 187,
+              "startColumn": 22,
+              "endLine": 190,
+              "endColumn": 65,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "String",
+              "code": "            NomadWorkerTemplate template\n    ) {\n\n        String job = normalizeJobTemplate(template.getJobTemplate())\n                .replace(\"%WORKER_NAME%\", name)\n                .replace(\"%WORKER_SECRET%\", secret)\n                .replace(\"%WORKER_DIR%\", template.getRemoteFs());"
+            },
+            {
+              "step": 3,
+              "variableName": "job",
+              "startLine": 193,
+              "startColumn": 16,
+              "endLine": 193,
+              "endColumn": 19,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "String",
+              "code": "                .replace(\"%WORKER_DIR%\", template.getRemoteFs());\n\n        LOGGER.log(Level.FINE, String.format(\"job:%n%s\", job));\n        return job;\n    }\n\n    /**"
+            },
+            {
+              "step": 4,
+              "variableName": "buildWorkerJob(...) : String",
+              "startLine": 102,
+              "startColumn": 28,
+              "endLine": 106,
+              "endColumn": 10,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "String",
+              "code": "     */\n    public String startWorker(String workerName, String jnlpSecret, NomadWorkerTemplate template) {\n\n        String workerJob = buildWorkerJob(\n                workerName,\n                jnlpSecret,\n                template"
+            },
+            {
+              "step": 5,
+              "variableName": "workerJob",
+              "startLine": 108,
+              "startColumn": 32,
+              "endLine": 108,
+              "endColumn": 41,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "",
+              "code": "                template\n        );\n\n        LOGGER.log(Level.FINE, workerJob);\n\n        Request request = createRequestBuilder(\"/v1/jobs\", null)\n                .put(RequestBody.create(workerJob, JSON))"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "NomadApi.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "secret",
+              "startLine": 189,
+              "startColumn": 45,
+              "endLine": 189,
+              "endColumn": 51,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "String",
+              "code": "\n        String job = normalizeJobTemplate(template.getJobTemplate())\n                .replace(\"%WORKER_NAME%\", name)\n                .replace(\"%WORKER_SECRET%\", secret)\n                .replace(\"%WORKER_DIR%\", template.getRemoteFs());\n\n        LOGGER.log(Level.FINE, String.format(\"job:%n%s\", job));"
+            },
+            {
+              "step": 1,
+              "variableName": "normalizeJobTemplate(template.",
+              "startLine": 187,
+              "startColumn": 22,
+              "endLine": 189,
+              "endColumn": 52,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "String",
+              "code": "            NomadWorkerTemplate template\n    ) {\n\n        String job = normalizeJobTemplate(template.getJobTemplate())\n                .replace(\"%WORKER_NAME%\", name)\n                .replace(\"%WORKER_SECRET%\", secret)\n                .replace(\"%WORKER_DIR%\", template.getRemoteFs());"
+            },
+            {
+              "step": 2,
+              "variableName": "normalizeJobTemplate(template.getJobTemplat",
+              "startLine": 187,
+              "startColumn": 22,
+              "endLine": 190,
+              "endColumn": 65,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "String",
+              "code": "            NomadWorkerTemplate template\n    ) {\n\n        String job = normalizeJobTemplate(template.getJobTemplate())\n                .replace(\"%WORKER_NAME%\", name)\n                .replace(\"%WORKER_SECRET%\", secret)\n                .replace(\"%WORKER_DIR%\", template.getRemoteFs());"
+            },
+            {
+              "step": 3,
+              "variableName": "job",
+              "startLine": 192,
+              "startColumn": 58,
+              "endLine": 192,
+              "endColumn": 61,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "String",
+              "code": "                .replace(\"%WORKER_SECRET%\", secret)\n                .replace(\"%WORKER_DIR%\", template.getRemoteFs());\n\n        LOGGER.log(Level.FINE, String.format(\"job:%n%s\", job));\n        return job;\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "String.format(\"job:%n%s\", job)",
+              "startLine": 192,
+              "startColumn": 32,
+              "endLine": 192,
+              "endColumn": 62,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "Object[] [[]] : String",
+              "code": "                .replace(\"%WORKER_SECRET%\", secret)\n                .replace(\"%WORKER_DIR%\", template.getRemoteFs());\n\n        LOGGER.log(Level.FINE, String.format(\"job:%n%s\", job));\n        return job;\n    }\n"
+            },
+            {
+              "step": 5,
+              "variableName": "String.format(\"job:%n%s\", job)",
+              "startLine": 192,
+              "startColumn": 32,
+              "endLine": 192,
+              "endColumn": 62,
+              "uri": "nomad-plugin-0.10.0/src/main/java/org/jenkinsci/plugins/nomad/NomadApi.java",
+              "type": "",
+              "code": "                .replace(\"%WORKER_SECRET%\", secret)\n                .replace(\"%WORKER_DIR%\", template.getRemoteFs());\n\n        LOGGER.log(Level.FINE, String.format(\"job:%n%s\", job));\n        return job;\n    }\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}
