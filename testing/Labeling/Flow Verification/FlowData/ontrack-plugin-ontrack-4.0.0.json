@@ -1,0 +1,49 @@
+{
+  "214": [
+    {
+      "resultIndex": 0,
+      "fileName": "OntrackDSLRunner.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "dsl",
+              "startLine": 79,
+              "startColumn": 27,
+              "endLine": 79,
+              "endColumn": 30,
+              "uri": "ontrack-plugin-ontrack-4.0.0/src/main/java/net/nemerosa/ontrack/jenkins/AbstractOntrackParameterDefinition.java",
+              "type": "String",
+              "code": "\n    protected Object runDSL() {\n        DSLRunner runner = dslRunner != null ? dslRunner : createDSLRunner();\n        return runner.run(dsl);\n    }\n\n    protected DSLRunner createDSLRunner() {"
+            },
+            {
+              "step": 1,
+              "variableName": "String dsl",
+              "startLine": 53,
+              "startColumn": 23,
+              "endLine": 53,
+              "endColumn": 33,
+              "uri": "ontrack-plugin-ontrack-4.0.0/src/main/java/net/nemerosa/ontrack/jenkins/dsl/OntrackDSLRunner.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public Object run(String dsl) {\n        // Connection to Ontrack\n        OntrackDSLFacade ontrack = OntrackDSLConnector.createOntrackConnector(ontrackLogger);\n"
+            },
+            {
+              "step": 2,
+              "variableName": "dsl",
+              "startLine": 101,
+              "startColumn": 43,
+              "endLine": 101,
+              "endColumn": 46,
+              "uri": "ontrack-plugin-ontrack-4.0.0/src/main/java/net/nemerosa/ontrack/jenkins/dsl/OntrackDSLRunner.java",
+              "type": "",
+              "code": "\n        // Runs the script\n        ontrackLogger.log(String.format(\"Ontrack DSL script running with launcher %s...%n\", launcher.getClass().getName()));\n        Object shellResult = launcher.run(dsl, binding);\n        if (logging) {\n            ontrackLogger.log(String.format(\"Ontrack DSL script returned result: %s%n\", shellResult));\n        } else {"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
