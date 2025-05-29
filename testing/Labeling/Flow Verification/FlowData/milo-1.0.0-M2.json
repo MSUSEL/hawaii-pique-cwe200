@@ -1,0 +1,38 @@
+{
+  "214": [
+    {
+      "resultIndex": 0,
+      "fileName": "ClientExampleRunner.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "client",
+              "startLine": 115,
+              "startColumn": 9,
+              "endLine": 115,
+              "endColumn": 15,
+              "uri": "milo-1.0.0-M2/milo-examples/client-examples/src/main/java/org/eclipse/milo/examples/client/ClientExampleRunner.java",
+              "type": "OpcUaClient",
+              "code": "            exampleServer.getServer().getConfig().getCertificateManager();\n\n        // Make the example server trust the example client certificate by default.\n        client\n            .getConfig()\n            .getCertificate()\n            .ifPresent("
+            },
+            {
+              "step": 1,
+              "variableName": "client",
+              "startLine": 167,
+              "startColumn": 27,
+              "endLine": 167,
+              "endColumn": 33,
+              "uri": "milo-1.0.0-M2/milo-examples/client-examples/src/main/java/org/eclipse/milo/examples/client/ClientExampleRunner.java",
+              "type": "",
+              "code": "          });\n\n      try {\n        clientExample.run(client, future);\n        future.get(15, TimeUnit.SECONDS);\n      } catch (Throwable t) {\n        logger.error(\"Error running client example: {}\", t.getMessage(), t);"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

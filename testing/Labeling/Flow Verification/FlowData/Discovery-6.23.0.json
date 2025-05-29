@@ -1,0 +1,1804 @@
+{
+  "201": [
+    {
+      "resultIndex": 0,
+      "fileName": "AFeignImpl.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 597,
+              "startColumn": 51,
+              "endLine": 597,
+              "endColumn": 55,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "Number",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "\"[H=\" + host + \":\" + port + \"]\"",
+              "startLine": 597,
+              "startColumn": 30,
+              "endLine": 597,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "stringBuilder",
+              "startLine": 597,
+              "startColumn": 9,
+              "endLine": 597,
+              "endColumn": 22,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "doInvoke(value)",
+              "startLine": 31,
+              "startColumn": 17,
+              "endLine": 31,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = bFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 7,
+              "variableName": "value",
+              "startLine": 32,
+              "startColumn": 31,
+              "endLine": 32,
+              "endColumn": 36,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = bFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 8,
+              "variableName": "String value",
+              "startLine": 19,
+              "startColumn": 26,
+              "endLine": 19,
+              "endColumn": 38,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/sentinel/MyBFeignFallbackHandler.java",
+              "type": "String",
+              "code": "@Component\npublic class MyBFeignFallbackHandler implements BFeign {\n    @Override\n    public String invoke(String value) {\n        return value + \" -> B Feign client sentinel fallback\";\n    }\n}"
+            },
+            {
+              "step": 9,
+              "variableName": "value + \" -> B Feign client sentinel fallback\"",
+              "startLine": 20,
+              "startColumn": 16,
+              "endLine": 20,
+              "endColumn": 62,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/sentinel/MyBFeignFallbackHandler.java",
+              "type": "String",
+              "code": "public class MyBFeignFallbackHandler implements BFeign {\n    @Override\n    public String invoke(String value) {\n        return value + \" -> B Feign client sentinel fallback\";\n    }\n}"
+            },
+            {
+              "step": 10,
+              "variableName": "bFeign.invoke(value)",
+              "startLine": 32,
+              "startColumn": 17,
+              "endLine": 32,
+              "endColumn": 37,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = bFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 11,
+              "variableName": "value",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 597,
+              "startColumn": 51,
+              "endLine": 597,
+              "endColumn": 55,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "Number",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "\"[H=\" + host + \":\" + port + \"]\"",
+              "startLine": 597,
+              "startColumn": 30,
+              "endLine": 597,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "stringBuilder",
+              "startLine": 597,
+              "startColumn": 9,
+              "endLine": 597,
+              "endColumn": 22,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "doInvoke(value)",
+              "startLine": 27,
+              "startColumn": 17,
+              "endLine": 27,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 7,
+              "variableName": "value",
+              "startLine": 31,
+              "startColumn": 16,
+              "endLine": 31,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            },
+            {
+              "step": 8,
+              "variableName": "cFeign.invoke(value)",
+              "startLine": 32,
+              "startColumn": 17,
+              "endLine": 32,
+              "endColumn": 37,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 9,
+              "variableName": "value",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            },
+            {
+              "step": 10,
+              "variableName": "bFeign.invoke(value)",
+              "startLine": 32,
+              "startColumn": 17,
+              "endLine": 32,
+              "endColumn": 37,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = bFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 11,
+              "variableName": "value",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 597,
+              "startColumn": 51,
+              "endLine": 597,
+              "endColumn": 55,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "Number",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "\"[H=\" + host + \":\" + port + \"]\"",
+              "startLine": 597,
+              "startColumn": 30,
+              "endLine": 597,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "stringBuilder",
+              "startLine": 597,
+              "startColumn": 9,
+              "endLine": 597,
+              "endColumn": 22,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "doInvoke(value)",
+              "startLine": 31,
+              "startColumn": 17,
+              "endLine": 31,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 7,
+              "variableName": "value",
+              "startLine": 32,
+              "startColumn": 31,
+              "endLine": 32,
+              "endColumn": 36,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 8,
+              "variableName": "String value",
+              "startLine": 19,
+              "startColumn": 26,
+              "endLine": 19,
+              "endColumn": 38,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/sentinel/MyCFeignFallbackHandler.java",
+              "type": "String",
+              "code": "@Component\npublic class MyCFeignFallbackHandler implements CFeign {\n    @Override\n    public String invoke(String value) {\n        return value + \" -> C Feign client sentinel fallback\";\n    }\n}"
+            },
+            {
+              "step": 9,
+              "variableName": "value + \" -> C Feign client sentinel fallback\"",
+              "startLine": 20,
+              "startColumn": 16,
+              "endLine": 20,
+              "endColumn": 62,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/sentinel/MyCFeignFallbackHandler.java",
+              "type": "String",
+              "code": "public class MyCFeignFallbackHandler implements CFeign {\n    @Override\n    public String invoke(String value) {\n        return value + \" -> C Feign client sentinel fallback\";\n    }\n}"
+            },
+            {
+              "step": 10,
+              "variableName": "cFeign.invoke(value)",
+              "startLine": 32,
+              "startColumn": 17,
+              "endLine": 32,
+              "endColumn": 37,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 11,
+              "variableName": "value",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            },
+            {
+              "step": 12,
+              "variableName": "bFeign.invoke(value)",
+              "startLine": 32,
+              "startColumn": 17,
+              "endLine": 32,
+              "endColumn": 37,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = bFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 13,
+              "variableName": "value",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 597,
+              "startColumn": 51,
+              "endLine": 597,
+              "endColumn": 55,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "Number",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "\"[H=\" + host + \":\" + port + \"]\"",
+              "startLine": 597,
+              "startColumn": 30,
+              "endLine": 597,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "stringBuilder",
+              "startLine": 597,
+              "startColumn": 9,
+              "endLine": 597,
+              "endColumn": 22,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "doInvoke(value)",
+              "startLine": 31,
+              "startColumn": 17,
+              "endLine": 31,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = bFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 7,
+              "variableName": "value",
+              "startLine": 32,
+              "startColumn": 31,
+              "endLine": 32,
+              "endColumn": 36,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = bFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 8,
+              "variableName": "@RequestBody String value",
+              "startLine": 30,
+              "startColumn": 26,
+              "endLine": 30,
+              "endColumn": 51,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    private CFeign cFeign;\n\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n"
+            },
+            {
+              "step": 9,
+              "variableName": "value",
+              "startLine": 31,
+              "startColumn": 26,
+              "endLine": 31,
+              "endColumn": 31,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 10,
+              "variableName": "String value",
+              "startLine": 20,
+              "startColumn": 28,
+              "endLine": 20,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    @Autowired\n    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 11,
+              "variableName": "value",
+              "startLine": 21,
+              "startColumn": 44,
+              "endLine": 21,
+              "endColumn": 49,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 12,
+              "variableName": "String previousPluginInfo",
+              "startLine": 568,
+              "startColumn": 33,
+              "endLine": 568,
+              "endColumn": 58,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public String getPluginInfo(String previousPluginInfo) {\n        String plugin = getPlugin();\n        String serviceId = getServiceId();\n        String serviceUUId = getServiceUUId();"
+            },
+            {
+              "step": 13,
+              "variableName": "previousPluginInfo + \" -> \"",
+              "startLine": 585,
+              "startColumn": 34,
+              "endLine": 585,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "\n        StringBuilder stringBuilder = new StringBuilder();\n        if (StringUtils.isNotEmpty(previousPluginInfo)) {\n            stringBuilder.append(previousPluginInfo + \" -> \");\n        }\n\n        stringBuilder.append(\"[ID=\" + serviceId + \"]\");"
+            },
+            {
+              "step": 14,
+              "variableName": "stringBuilder",
+              "startLine": 585,
+              "startColumn": 13,
+              "endLine": 585,
+              "endColumn": 26,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "\n        StringBuilder stringBuilder = new StringBuilder();\n        if (StringUtils.isNotEmpty(previousPluginInfo)) {\n            stringBuilder.append(previousPluginInfo + \" -> \");\n        }\n\n        stringBuilder.append(\"[ID=\" + serviceId + \"]\");"
+            },
+            {
+              "step": 15,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 16,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 17,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 18,
+              "variableName": "doInvoke(value)",
+              "startLine": 31,
+              "startColumn": 17,
+              "endLine": 31,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 19,
+              "variableName": "value",
+              "startLine": 32,
+              "startColumn": 31,
+              "endLine": 32,
+              "endColumn": 36,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 20,
+              "variableName": "@RequestBody String value",
+              "startLine": 26,
+              "startColumn": 26,
+              "endLine": 26,
+              "endColumn": 51,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "    private static final Logger LOG = LoggerFactory.getLogger(CFeignImpl.class);\n\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 21,
+              "variableName": "value",
+              "startLine": 27,
+              "startColumn": 26,
+              "endLine": 27,
+              "endColumn": 31,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 22,
+              "variableName": "String value",
+              "startLine": 20,
+              "startColumn": 28,
+              "endLine": 20,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    @Autowired\n    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 23,
+              "variableName": "value",
+              "startLine": 21,
+              "startColumn": 44,
+              "endLine": 21,
+              "endColumn": 49,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 24,
+              "variableName": "String previousPluginInfo",
+              "startLine": 568,
+              "startColumn": 33,
+              "endLine": 568,
+              "endColumn": 58,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public String getPluginInfo(String previousPluginInfo) {\n        String plugin = getPlugin();\n        String serviceId = getServiceId();\n        String serviceUUId = getServiceUUId();"
+            },
+            {
+              "step": 25,
+              "variableName": "previousPluginInfo + \" -> \"",
+              "startLine": 585,
+              "startColumn": 34,
+              "endLine": 585,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "\n        StringBuilder stringBuilder = new StringBuilder();\n        if (StringUtils.isNotEmpty(previousPluginInfo)) {\n            stringBuilder.append(previousPluginInfo + \" -> \");\n        }\n\n        stringBuilder.append(\"[ID=\" + serviceId + \"]\");"
+            },
+            {
+              "step": 26,
+              "variableName": "stringBuilder",
+              "startLine": 585,
+              "startColumn": 13,
+              "endLine": 585,
+              "endColumn": 26,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "\n        StringBuilder stringBuilder = new StringBuilder();\n        if (StringUtils.isNotEmpty(previousPluginInfo)) {\n            stringBuilder.append(previousPluginInfo + \" -> \");\n        }\n\n        stringBuilder.append(\"[ID=\" + serviceId + \"]\");"
+            },
+            {
+              "step": 27,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 28,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 29,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 30,
+              "variableName": "doInvoke(value)",
+              "startLine": 27,
+              "startColumn": 17,
+              "endLine": 27,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 31,
+              "variableName": "value",
+              "startLine": 31,
+              "startColumn": 16,
+              "endLine": 31,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            },
+            {
+              "step": 32,
+              "variableName": "cFeign.invoke(value)",
+              "startLine": 32,
+              "startColumn": 17,
+              "endLine": 32,
+              "endColumn": 37,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 33,
+              "variableName": "value",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            },
+            {
+              "step": 34,
+              "variableName": "bFeign.invoke(value)",
+              "startLine": 32,
+              "startColumn": 17,
+              "endLine": 32,
+              "endColumn": 37,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = bFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 35,
+              "variableName": "value",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "BFeignImpl.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 597,
+              "startColumn": 51,
+              "endLine": 597,
+              "endColumn": 55,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "Number",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "\"[H=\" + host + \":\" + port + \"]\"",
+              "startLine": 597,
+              "startColumn": 30,
+              "endLine": 597,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "stringBuilder",
+              "startLine": 597,
+              "startColumn": 9,
+              "endLine": 597,
+              "endColumn": 22,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "doInvoke(value)",
+              "startLine": 27,
+              "startColumn": 17,
+              "endLine": 27,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 7,
+              "variableName": "value",
+              "startLine": 31,
+              "startColumn": 16,
+              "endLine": 31,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            },
+            {
+              "step": 8,
+              "variableName": "cFeign.invoke(value)",
+              "startLine": 32,
+              "startColumn": 17,
+              "endLine": 32,
+              "endColumn": 37,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 9,
+              "variableName": "value",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 597,
+              "startColumn": 51,
+              "endLine": 597,
+              "endColumn": 55,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "Number",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "\"[H=\" + host + \":\" + port + \"]\"",
+              "startLine": 597,
+              "startColumn": 30,
+              "endLine": 597,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "stringBuilder",
+              "startLine": 597,
+              "startColumn": 9,
+              "endLine": 597,
+              "endColumn": 22,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "doInvoke(value)",
+              "startLine": 31,
+              "startColumn": 17,
+              "endLine": 31,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = bFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 7,
+              "variableName": "value",
+              "startLine": 32,
+              "startColumn": 31,
+              "endLine": 32,
+              "endColumn": 36,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = bFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 8,
+              "variableName": "@RequestBody String value",
+              "startLine": 30,
+              "startColumn": 26,
+              "endLine": 30,
+              "endColumn": 51,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    private CFeign cFeign;\n\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n"
+            },
+            {
+              "step": 9,
+              "variableName": "value",
+              "startLine": 31,
+              "startColumn": 26,
+              "endLine": 31,
+              "endColumn": 31,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 10,
+              "variableName": "String value",
+              "startLine": 20,
+              "startColumn": 28,
+              "endLine": 20,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    @Autowired\n    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 11,
+              "variableName": "value",
+              "startLine": 21,
+              "startColumn": 44,
+              "endLine": 21,
+              "endColumn": 49,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 12,
+              "variableName": "String previousPluginInfo",
+              "startLine": 568,
+              "startColumn": 33,
+              "endLine": 568,
+              "endColumn": 58,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public String getPluginInfo(String previousPluginInfo) {\n        String plugin = getPlugin();\n        String serviceId = getServiceId();\n        String serviceUUId = getServiceUUId();"
+            },
+            {
+              "step": 13,
+              "variableName": "previousPluginInfo + \" -> \"",
+              "startLine": 585,
+              "startColumn": 34,
+              "endLine": 585,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "\n        StringBuilder stringBuilder = new StringBuilder();\n        if (StringUtils.isNotEmpty(previousPluginInfo)) {\n            stringBuilder.append(previousPluginInfo + \" -> \");\n        }\n\n        stringBuilder.append(\"[ID=\" + serviceId + \"]\");"
+            },
+            {
+              "step": 14,
+              "variableName": "stringBuilder",
+              "startLine": 585,
+              "startColumn": 13,
+              "endLine": 585,
+              "endColumn": 26,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "\n        StringBuilder stringBuilder = new StringBuilder();\n        if (StringUtils.isNotEmpty(previousPluginInfo)) {\n            stringBuilder.append(previousPluginInfo + \" -> \");\n        }\n\n        stringBuilder.append(\"[ID=\" + serviceId + \"]\");"
+            },
+            {
+              "step": 15,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 16,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 17,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 18,
+              "variableName": "doInvoke(value)",
+              "startLine": 31,
+              "startColumn": 17,
+              "endLine": 31,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 19,
+              "variableName": "value",
+              "startLine": 32,
+              "startColumn": 31,
+              "endLine": 32,
+              "endColumn": 36,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 20,
+              "variableName": "String value",
+              "startLine": 19,
+              "startColumn": 26,
+              "endLine": 19,
+              "endColumn": 38,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/sentinel/MyCFeignFallbackHandler.java",
+              "type": "String",
+              "code": "@Component\npublic class MyCFeignFallbackHandler implements CFeign {\n    @Override\n    public String invoke(String value) {\n        return value + \" -> C Feign client sentinel fallback\";\n    }\n}"
+            },
+            {
+              "step": 21,
+              "variableName": "value + \" -> C Feign client sentinel fallback\"",
+              "startLine": 20,
+              "startColumn": 16,
+              "endLine": 20,
+              "endColumn": 62,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/sentinel/MyCFeignFallbackHandler.java",
+              "type": "String",
+              "code": "public class MyCFeignFallbackHandler implements CFeign {\n    @Override\n    public String invoke(String value) {\n        return value + \" -> C Feign client sentinel fallback\";\n    }\n}"
+            },
+            {
+              "step": 22,
+              "variableName": "cFeign.invoke(value)",
+              "startLine": 32,
+              "startColumn": 17,
+              "endLine": 32,
+              "endColumn": 37,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 23,
+              "variableName": "value",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 597,
+              "startColumn": 51,
+              "endLine": 597,
+              "endColumn": 55,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "Number",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "\"[H=\" + host + \":\" + port + \"]\"",
+              "startLine": 597,
+              "startColumn": 30,
+              "endLine": 597,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "stringBuilder",
+              "startLine": 597,
+              "startColumn": 9,
+              "endLine": 597,
+              "endColumn": 22,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "doInvoke(value)",
+              "startLine": 31,
+              "startColumn": 17,
+              "endLine": 31,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 7,
+              "variableName": "value",
+              "startLine": 32,
+              "startColumn": 31,
+              "endLine": 32,
+              "endColumn": 36,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 8,
+              "variableName": "String value",
+              "startLine": 19,
+              "startColumn": 26,
+              "endLine": 19,
+              "endColumn": 38,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/sentinel/MyCFeignFallbackHandler.java",
+              "type": "String",
+              "code": "@Component\npublic class MyCFeignFallbackHandler implements CFeign {\n    @Override\n    public String invoke(String value) {\n        return value + \" -> C Feign client sentinel fallback\";\n    }\n}"
+            },
+            {
+              "step": 9,
+              "variableName": "value + \" -> C Feign client sentinel fallback\"",
+              "startLine": 20,
+              "startColumn": 16,
+              "endLine": 20,
+              "endColumn": 62,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/sentinel/MyCFeignFallbackHandler.java",
+              "type": "String",
+              "code": "public class MyCFeignFallbackHandler implements CFeign {\n    @Override\n    public String invoke(String value) {\n        return value + \" -> C Feign client sentinel fallback\";\n    }\n}"
+            },
+            {
+              "step": 10,
+              "variableName": "cFeign.invoke(value)",
+              "startLine": 32,
+              "startColumn": 17,
+              "endLine": 32,
+              "endColumn": 37,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 11,
+              "variableName": "value",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "CFeignImpl.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 597,
+              "startColumn": 51,
+              "endLine": 597,
+              "endColumn": 55,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "Number",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "\"[H=\" + host + \":\" + port + \"]\"",
+              "startLine": 597,
+              "startColumn": 30,
+              "endLine": 597,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "stringBuilder",
+              "startLine": 597,
+              "startColumn": 9,
+              "endLine": 597,
+              "endColumn": 22,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "doInvoke(value)",
+              "startLine": 27,
+              "startColumn": 17,
+              "endLine": 27,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 7,
+              "variableName": "value",
+              "startLine": 31,
+              "startColumn": 16,
+              "endLine": 31,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 597,
+              "startColumn": 51,
+              "endLine": 597,
+              "endColumn": 55,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "Number",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "\"[H=\" + host + \":\" + port + \"]\"",
+              "startLine": 597,
+              "startColumn": 30,
+              "endLine": 597,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "stringBuilder",
+              "startLine": 597,
+              "startColumn": 9,
+              "endLine": 597,
+              "endColumn": 22,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "doInvoke(value)",
+              "startLine": 31,
+              "startColumn": 17,
+              "endLine": 31,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 7,
+              "variableName": "value",
+              "startLine": 32,
+              "startColumn": 31,
+              "endLine": 32,
+              "endColumn": 36,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/BFeignImpl.java",
+              "type": "String",
+              "code": "    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n        value = cFeign.invoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 8,
+              "variableName": "@RequestBody String value",
+              "startLine": 26,
+              "startColumn": 26,
+              "endLine": 26,
+              "endColumn": 51,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "    private static final Logger LOG = LoggerFactory.getLogger(CFeignImpl.class);\n\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n\n        LOG.info(\"调用路径：{}\", value);"
+            },
+            {
+              "step": 9,
+              "variableName": "value",
+              "startLine": 27,
+              "startColumn": 26,
+              "endLine": 27,
+              "endColumn": 31,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 10,
+              "variableName": "String value",
+              "startLine": 20,
+              "startColumn": 28,
+              "endLine": 20,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    @Autowired\n    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 11,
+              "variableName": "value",
+              "startLine": 21,
+              "startColumn": 44,
+              "endLine": 21,
+              "endColumn": 49,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 12,
+              "variableName": "String previousPluginInfo",
+              "startLine": 568,
+              "startColumn": 33,
+              "endLine": 568,
+              "endColumn": 58,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public String getPluginInfo(String previousPluginInfo) {\n        String plugin = getPlugin();\n        String serviceId = getServiceId();\n        String serviceUUId = getServiceUUId();"
+            },
+            {
+              "step": 13,
+              "variableName": "previousPluginInfo + \" -> \"",
+              "startLine": 585,
+              "startColumn": 34,
+              "endLine": 585,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "\n        StringBuilder stringBuilder = new StringBuilder();\n        if (StringUtils.isNotEmpty(previousPluginInfo)) {\n            stringBuilder.append(previousPluginInfo + \" -> \");\n        }\n\n        stringBuilder.append(\"[ID=\" + serviceId + \"]\");"
+            },
+            {
+              "step": 14,
+              "variableName": "stringBuilder",
+              "startLine": 585,
+              "startColumn": 13,
+              "endLine": 585,
+              "endColumn": 26,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "\n        StringBuilder stringBuilder = new StringBuilder();\n        if (StringUtils.isNotEmpty(previousPluginInfo)) {\n            stringBuilder.append(previousPluginInfo + \" -> \");\n        }\n\n        stringBuilder.append(\"[ID=\" + serviceId + \"]\");"
+            },
+            {
+              "step": 15,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 16,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 17,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/AbstractFeignImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doInvoke(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 18,
+              "variableName": "doInvoke(value)",
+              "startLine": 27,
+              "startColumn": 17,
+              "endLine": 27,
+              "endColumn": 32,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String invoke(@RequestBody String value) {\n        value = doInvoke(value);\n\n        LOG.info(\"调用路径：{}\", value);\n"
+            },
+            {
+              "step": 19,
+              "variableName": "value",
+              "startLine": 31,
+              "startColumn": 16,
+              "endLine": 31,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/feign/CFeignImpl.java",
+              "type": "",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n}"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 3,
+      "fileName": "CRestImpl.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 597,
+              "startColumn": 51,
+              "endLine": 597,
+              "endColumn": 55,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "Number",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "\"[H=\" + host + \":\" + port + \"]\"",
+              "startLine": 597,
+              "startColumn": 30,
+              "endLine": 597,
+              "endColumn": 61,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "stringBuilder",
+              "startLine": 597,
+              "startColumn": 9,
+              "endLine": 597,
+              "endColumn": 22,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "        }\n        stringBuilder.append(\"[T=\" + serviceType + \"]\");\n        stringBuilder.append(\"[P=\" + plugin + \"]\");\n        stringBuilder.append(\"[H=\" + host + \":\" + port + \"]\");\n        if (StringUtils.isNotEmpty(version)) {\n            stringBuilder.append(\"[V=\" + version + \"]\");\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "stringBuilder",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 29,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "stringBuilder.toString()",
+              "startLine": 627,
+              "startColumn": 16,
+              "endLine": 627,
+              "endColumn": 40,
+              "uri": "Discovery-6.23.0/discovery-plugin-framework/discovery-plugin-framework-starter/src/main/java/com/nepxion/discovery/plugin/framework/adapter/AbstractPluginAdapter.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        return stringBuilder.toString();\n    }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "pluginAdapter.getPluginInfo(value)",
+              "startLine": 21,
+              "startColumn": 16,
+              "endLine": 21,
+              "endColumn": 50,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/rest/AbstractRestImpl.java",
+              "type": "String",
+              "code": "    private PluginAdapter pluginAdapter;\n\n    public String doRest(String value) {\n        return pluginAdapter.getPluginInfo(value);\n    }\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "doRest(value)",
+              "startLine": 40,
+              "startColumn": 17,
+              "endLine": 40,
+              "endColumn": 30,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/rest/CRestImpl.java",
+              "type": "String",
+              "code": "    @RequestMapping(path = \"/rest\", method = RequestMethod.POST)\n    @SentinelResource(value = \"sentinel-resource\", blockHandler = \"handleBlock\", fallback = \"handleFallback\")\n    public String rest(@RequestBody String value) {\n        value = doRest(value);\n\n        // Just for testing\n        ServletRequestAttributes attributes = serviceStrategyContextHolder.getRestAttributes();"
+            },
+            {
+              "step": 7,
+              "variableName": "value",
+              "startLine": 57,
+              "startColumn": 16,
+              "endLine": 57,
+              "endColumn": 21,
+              "uri": "Discovery-6.23.0/discovery-springcloud-examples/discovery-springcloud-example-service/src/main/java/com/nepxion/discovery/plugin/example/service/rest/CRestImpl.java",
+              "type": "",
+              "code": "\n        LOG.info(\"调用路径：{}\", value);\n\n        return value;\n    }\n\n    @RequestMapping(path = \"/test\", method = RequestMethod.POST)"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
