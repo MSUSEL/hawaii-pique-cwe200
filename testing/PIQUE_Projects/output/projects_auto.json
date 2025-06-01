@@ -519,13 +519,6 @@
       "url": "https://github.com/apache/kafka/archive/refs/tags/3.9.1-rc2.zip"
     },
     {
-      "repoName": "hapifhir/org.hl7.fhir.core",
-      "projectVersion": "6.5.21",
-      "javaVersion": "11",
-      "projectName": "org.hl7.fhir.core-6.5.21",
-      "url": "https://github.com/hapifhir/org.hl7.fhir.core/archive/refs/tags/6.5.21.zip"
-    },
-    {
       "repoName": "OpenAPITools/openapi-generator",
       "projectVersion": "v7.12.0",
       "javaVersion": "11",
