@@ -25,13 +25,16 @@
  
  module SensitiveInfoInErrorMsgConfig implements DataFlow::StateConfigSig {
  
+   // Tie the module's FlowState to tje newtype
    class FlowState = MyFlowState;
  
+   // Source is valid only in State1
    predicate isSource(DataFlow::Node source, FlowState state) {
      state instanceof State1 and
      exists(SensitiveVariableExpr sve | source.asExpr() = sve)
    }
  
+   // Sink is valid only in State3
    predicate isSink(DataFlow::Node sink, FlowState state) {
      state instanceof State3 and
      exists(MethodCall mcSink |
@@ -40,11 +43,12 @@
          CommonSinks::isErrPrintSink(sink) or
          CommonSinks::isServletSink(sink) or
          sink instanceof InformationLeakSink
-       ) and
+       ) and 
        sink.asExpr() = mcSink.getAnArgument()
      )
    }
  
+   // Transitions between states
    predicate isAdditionalFlowStep(
      DataFlow::Node node1, FlowState state1,
      DataFlow::Node node2, FlowState state2
@@ -67,15 +71,14 @@
      )
      or
      // Transition from State2 to State3: 
-     // A 'throw' to a 'catch', including cross-method propagation
+     // A 'throw' to a 'catch' calling getMessage(), or passing the exception object to a method
      (
        state1 instanceof State2 and
        state2 instanceof State3 and
        (
-         // Case 1: Same method (existing logic)
          exists(
-           ThrowStmt t,
-           CatchClause catchClause,
+           ThrowStmt t, 
+           CatchClause catchClause, 
            MethodCall mcGetMessage |
            t.getExpr() = node1.asExpr() and
            catchClause.getEnclosingCallable() = t.getEnclosingCallable() and
@@ -85,70 +88,13 @@
          )
          or
          exists(
-           ThrowStmt t,
+           ThrowStmt t, 
            CatchClause catchClause |
            t.getExpr() = node1.asExpr() and
            catchClause.getEnclosingCallable() = t.getEnclosingCallable() and
            node2.asExpr() = catchClause.getVariable().getAnAccess()
          )
-         or
-         // Case 2: Cross-method propagation (new logic)
-         exists(
-           ThrowStmt t,
-           CatchClause catchClause,
-           MethodCall mcGetMessage,
-           Call call |
-           t.getExpr() = node1.asExpr() and
-           // The throw is in a method called by the caller
-           call.getCallee() = t.getEnclosingCallable() and
-           // The catch clause is in the caller's method
-           catchClause.getEnclosingCallable() = call.getEnclosingCallable() and
-           // The catch clause catches the thrown exception type
-           catchClause.getACaughtType().getASupertype*() = t.getExpr().getType() and
-           // The catch variable is used in a getMessage() call
-           catchClause.getVariable().getAnAccess() = mcGetMessage.getQualifier() and
-           mcGetMessage.getMethod().getName() = "getMessage" and
-           node2.asExpr() = mcGetMessage
-         )
-         or
-         exists(
-           ThrowStmt t,
-           CatchClause catchClause,
-           Call call |
-           t.getExpr() = node1.asExpr() and
-           // The throw is in a method called by the caller
-           call.getCallee() = t.getEnclosingCallable() and
-           // The catch clause is in the caller's method
-           catchClause.getEnclosingCallable() = call.getEnclosingCallable() and
-           // The catch clause catches the thrown exception type
-           catchClause.getVariable().getType().(RefType).hasSubtype*(t.getExpr().getType()) and
-           // The catch variable itself is used (e.g., passed to another method)
-           node2.asExpr() = catchClause.getVariable().getAnAccess()
-           )
        )
-     )
-     or
-     // New transition: State3 to State3 for method calls
-     // Tracks the flow from catch variable access to a method argument (e.g., logError)
-     (
-       state1 instanceof State3 and
-       state2 instanceof State3 and
-       exists(MethodCall mc |
-         node1.asExpr() = mc.getQualifier() and
-         mc.getMethod().getName() = "getMessage" and
-         node2.asExpr() = mc.getAnArgument()
-       )
-       or
-       exists(MethodCall mc, DataFlow::Node paramUse, Parameter param |
-        state1 instanceof State3 and
-        state2 instanceof State3 and
-        node1.asExpr() = mc.getAnArgument() and
-        mc.getCallee().getAParameter() = param and
-        node2 = DataFlow::parameterNode(param) and
-        // Ensure the parameter is used in the called method
-        DataFlow::localFlowStep(node2, paramUse) and
-        paramUse.asExpr() instanceof Expr
-      )
      )
    }
  
@@ -156,19 +102,26 @@
      Barrier::barrier(node)
    }
  }
- 
+
  predicate isTestFile(File f) {
-   exists(string path | path = f.getAbsolutePath().toLowerCase() |
-     path.regexpMatch(".*(test|tests|testing|test-suite|testcase|unittest|integration-test|spec).*")
-   )
- }
+  // Convert path to lowercase for case-insensitive matching
+  exists(string path | path = f.getAbsolutePath().toLowerCase() |
+    // Check for common test-related directory or file name patterns
+    path.regexpMatch(".*(test|tests|testing|test-suite|testcase|unittest|integration-test|spec).*")
+  )
+}
  
- module SensitiveInfoInErrorMsgFlow = TaintTracking::GlobalWithState<SensitiveInfoInErrorMsgConfig>;
+ // Instantiate a GlobalWithState for taint tracking
+ module SensitiveInfoInErrorMsgFlow = 
+     TaintTracking::GlobalWithState<SensitiveInfoInErrorMsgConfig>;
  
+ // Import its PathGraph (not the old DataFlow::PathGraph)
  import SensitiveInfoInErrorMsgFlow::PathGraph
  
+ // Use the flowPath from that module
  from SensitiveInfoInErrorMsgFlow::PathNode source, SensitiveInfoInErrorMsgFlow::PathNode sink
  where SensitiveInfoInErrorMsgFlow::flowPath(source, sink) and
-       not isTestFile(sink.getNode().getLocation().getFile())
+ not isTestFile(sink.getNode().getLocation().getFile())
  select sink, source, sink,
    "CWE-209: Sensitive information flows into exception and is exposed via an error message."
+ 
