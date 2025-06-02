@@ -1,0 +1,38 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "AbstractPythonConnexionServerCodegen.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "snake_case_token",
+              "startLine": 377,
+              "startColumn": 41,
+              "endLine": 377,
+              "endColumn": 57,
+              "uri": "openapi-generator-7.12.0/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/AbstractPythonConnexionServerCodegen.java",
+              "type": "String",
+              "code": "                        if (token.startsWith(\"{\")) {\n                            String snake_case_token = \"{\" + this.toParamName(token.substring(1, token.length() - 1)) + \"}\";\n                            if (!token.equals(snake_case_token)) {\n                                token = snake_case_token;\n                            }\n                        }\n                        fixedPath += \"/\" + token;"
+            },
+            {
+              "step": 1,
+              "variableName": "fixedPath",
+              "startLine": 385,
+              "startColumn": 43,
+              "endLine": 385,
+              "endColumn": 52,
+              "uri": "openapi-generator-7.12.0/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/AbstractPythonConnexionServerCodegen.java",
+              "type": "",
+              "code": "                    if (!fixedPath.equals(pathname)) {\n                        LOGGER.warn(\n                                \"Path '{}' is not consistent with Python variable names. It will be replaced by '{}'\",\n                                pathname, fixedPath);\n                        paths.remove(pathname);\n                        path.addExtension(\"x-python-connexion-openapi-name\", pathname);\n                        paths.put(fixedPath, path);"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
