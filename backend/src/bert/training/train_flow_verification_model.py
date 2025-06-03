@@ -47,11 +47,13 @@ def process_data_flows(labeled_flows_dir):
     kept_flows = 0
     
     for file_name in os.listdir(labeled_flows_dir):
+        if not file_name.endswith('.json'):
+            continue
         data_flows = read_data_flow_file(os.path.join(labeled_flows_dir, file_name))
         for cwe in data_flows.keys():
             for result in data_flows[cwe]:
                 result_index = result['resultIndex']
-                flow_file_name = result['fileName']
+                file_name = result['fileName']
                 for flow in result['flows']:
                     total_flows += 1
                     
@@ -61,30 +63,47 @@ def process_data_flows(labeled_flows_dir):
                     if label is None:
                         continue
                     
-                    data_flow_string = f"CWE = {cwe}, Flows = "
-                    for step in flow['flow']:
-                        data_flow_string += str(step)
-                    
-                    flow_hash = hashlib.sha256(data_flow_string.encode('utf-8')).hexdigest()
+                    # Build the original “data_flow_string”  
+                    original_data_flow_string = f"CWE = {cwe}, Flows = "
+                    for step in flow["flow"]:
+                        step_string = f"step={step.get('step', '')}, "
+                        step_string += f"variableName={step.get('variableName', '')}, "
+                        step_string += f"type={step.get('type', '')}, "
+                        step_string += f"code={step.get('code', '')}, "
+                        step_string = {step_string}
+                        original_data_flow_string += str(step_string)
+
+                    # ─── Build a normalized “signature” for dedup’ing: only (variableName, type) ───
+                    step_signature = []
+                    for step in flow["flow"]:
+                        varname = step.get("variableName", "").strip()
+                        vartype = step.get("type", "").strip()
+                        step_signature.append(f"{varname}::{vartype}")
+
+                    signature_str = f"CWE={cwe}|" + "→".join(step_signature)
+                    flow_hash = hashlib.sha256(signature_str.encode("utf-8")).hexdigest()
+
                     if flow_hash in seen_flow_hashes:
                         duplicate_flows += 1
                         continue
+
                     seen_flow_hashes.add(flow_hash)
                     kept_flows += 1
-                    
+
+                    # ─── Store the original_data_flow_string (not signature_str) ───
                     processed_data_flows.append([
                         file_name,
                         result_index,
-                        flow['codeFlowIndex'],
-                        data_flow_string,
+                        flow["codeFlowIndex"],
+                        original_data_flow_string,
                         label
                     ])
     
     print(f"Total flows processed: {total_flows}")
     print(f"Duplicate flows excluded: {duplicate_flows}")
     print(f"Flows kept for training: {kept_flows}")
-    with open('processed_data_flows.json', 'w', encoding='utf-8') as json_file:
-        json.dump(processed_data_flows, json_file, indent=4)
+    # with open('processed_data_flows.json', 'w', encoding='utf-8') as json_file:
+    #     json.dump(processed_data_flows, json_file, indent=4)
     return np.array(processed_data_flows)
 
 def format_data_flows_for_graphcodebert(processed_flows):
@@ -336,8 +355,8 @@ if __name__ == "__main__":
     """
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print("Using device:", device)
-    
-    labeled_flows_dir = os.path.join('testing', 'Labeling', 'FlowData')
+
+    labeled_flows_dir = os.path.join('testing', 'Labeling', 'Flow Verification', 'FlowData')
     model_dir = os.path.join(os.getcwd(), "backend", "src", "bert", "models")
     os.makedirs(model_dir, exist_ok=True)
     

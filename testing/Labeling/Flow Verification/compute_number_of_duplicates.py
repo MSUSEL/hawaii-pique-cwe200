@@ -37,7 +37,6 @@ def process_data_flows(labeled_flows_file):
                     step_string += f"type={step.get('type', '')}, "
                     step_string += f"code={step.get('code', '')}, "
                     step_string = {step_string}
-                    # print(step_string)
                     original_data_flow_string += str(step_string)
 
                 # ─── Build a normalized “signature” for dedup’ing: only (variableName, type) ───
