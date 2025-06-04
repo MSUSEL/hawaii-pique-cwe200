@@ -1,0 +1,82 @@
+{
+  "208": [
+    {
+      "resultIndex": 0,
+      "fileName": "AesCipherInputStream.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "mac.doFinal()",
+              "startLine": 66,
+              "startColumn": 12,
+              "endLine": 66,
+              "endColumn": 25,
+              "uri": "zip4j-2.11.5/src/main/java/net/lingala/zip4j/crypto/PBKDF2/MacBasedPRF.java",
+              "type": "byte[]",
+              "code": "    if (macCache.size() > 0) {\r\n      doMacUpdate(numberOfBytesToPushbackForMac);\r\n    }\r\n    return mac.doFinal();\r\n  }\r\n\r\n  public int getHLen() {\r"
+            },
+            {
+              "step": 1,
+              "variableName": "mac.doFinal(numberOfBytesPushedBack)",
+              "startLine": 90,
+              "startColumn": 12,
+              "endLine": 90,
+              "endColumn": 48,
+              "uri": "zip4j-2.11.5/src/main/java/net/lingala/zip4j/crypto/AESDecrypter.java",
+              "type": "byte[]",
+              "code": "  }\n\n  public byte[] getCalculatedAuthenticationBytes(int numberOfBytesPushedBack) {\n    return mac.doFinal(numberOfBytesPushedBack);\n  }\n}\n"
+            },
+            {
+              "step": 2,
+              "variableName": "getDecrypter().getCalculatedAuthenticationBytes(numberOfBytesPushedBack)",
+              "startLine": 125,
+              "startColumn": 28,
+              "endLine": 125,
+              "endColumn": 100,
+              "uri": "zip4j-2.11.5/src/main/java/net/lingala/zip4j/io/inputstream/AesCipherInputStream.java",
+              "type": "byte[]",
+              "code": "  }\n\n  private void verifyContent(byte[] storedMac, int numberOfBytesPushedBack) throws IOException {\n    byte[] calculatedMac = getDecrypter().getCalculatedAuthenticationBytes(numberOfBytesPushedBack);\n    byte[] first10BytesOfCalculatedMac = new byte[AES_AUTH_LENGTH];\n    System.arraycopy(calculatedMac, 0, first10BytesOfCalculatedMac, 0, InternalZipConstants.AES_AUTH_LENGTH);\n"
+            },
+            {
+              "step": 3,
+              "variableName": "calculatedMac",
+              "startLine": 127,
+              "startColumn": 22,
+              "endLine": 127,
+              "endColumn": 35,
+              "uri": "zip4j-2.11.5/src/main/java/net/lingala/zip4j/io/inputstream/AesCipherInputStream.java",
+              "type": "byte[]",
+              "code": "  private void verifyContent(byte[] storedMac, int numberOfBytesPushedBack) throws IOException {\n    byte[] calculatedMac = getDecrypter().getCalculatedAuthenticationBytes(numberOfBytesPushedBack);\n    byte[] first10BytesOfCalculatedMac = new byte[AES_AUTH_LENGTH];\n    System.arraycopy(calculatedMac, 0, first10BytesOfCalculatedMac, 0, InternalZipConstants.AES_AUTH_LENGTH);\n\n    if (!Arrays.equals(storedMac, first10BytesOfCalculatedMac)) {\n      throw new IOException(\"Reached end of data for this entry, but aes verification failed\");"
+            },
+            {
+              "step": 4,
+              "variableName": "first10BytesOfCalculatedMac",
+              "startLine": 127,
+              "startColumn": 40,
+              "endLine": 127,
+              "endColumn": 67,
+              "uri": "zip4j-2.11.5/src/main/java/net/lingala/zip4j/io/inputstream/AesCipherInputStream.java",
+              "type": "byte[]",
+              "code": "  private void verifyContent(byte[] storedMac, int numberOfBytesPushedBack) throws IOException {\n    byte[] calculatedMac = getDecrypter().getCalculatedAuthenticationBytes(numberOfBytesPushedBack);\n    byte[] first10BytesOfCalculatedMac = new byte[AES_AUTH_LENGTH];\n    System.arraycopy(calculatedMac, 0, first10BytesOfCalculatedMac, 0, InternalZipConstants.AES_AUTH_LENGTH);\n\n    if (!Arrays.equals(storedMac, first10BytesOfCalculatedMac)) {\n      throw new IOException(\"Reached end of data for this entry, but aes verification failed\");"
+            },
+            {
+              "step": 5,
+              "variableName": "first10BytesOfCalculatedMac",
+              "startLine": 129,
+              "startColumn": 35,
+              "endLine": 129,
+              "endColumn": 62,
+              "uri": "zip4j-2.11.5/src/main/java/net/lingala/zip4j/io/inputstream/AesCipherInputStream.java",
+              "type": "",
+              "code": "    byte[] first10BytesOfCalculatedMac = new byte[AES_AUTH_LENGTH];\n    System.arraycopy(calculatedMac, 0, first10BytesOfCalculatedMac, 0, InternalZipConstants.AES_AUTH_LENGTH);\n\n    if (!Arrays.equals(storedMac, first10BytesOfCalculatedMac)) {\n      throw new IOException(\"Reached end of data for this entry, but aes verification failed\");\n    }\n  }"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}
