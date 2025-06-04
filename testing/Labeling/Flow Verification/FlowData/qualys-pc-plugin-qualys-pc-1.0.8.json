@@ -1,0 +1,2041 @@
+{
+  "209": [
+    {
+      "resultIndex": 2,
+      "fileName": "PCScanEc2ConnectorLauncher.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "auth",
+              "startLine": 39,
+              "startColumn": 42,
+              "endLine": 39,
+              "endColumn": 46,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "QualysAuth",
+              "code": "        this.buildLogger = listener.getLogger();\n        this.connId = connId;\n        this.ec2ConnName = ec2ConnName;\n    \tthis.apiClient = new QualysPCClient(auth, System.out);        \n        this.pollingIntervalForVulns = setTimeoutInMinutes(\"pollingInterval\", DEFAULT_POLLING_INTERVAL_FOR_VULNS, pollingIntervalStr, listener);\n\t\tthis.vulnsTimeout = setTimeoutInMinutes(\"vulnsTimeout\", DEFAULT_TIMEOUT_FOR_VULNS, vulnsTimeoutStr, listener);\n\t\terrorList = new ArrayList<String>();\t\t"
+            },
+            {
+              "step": 1,
+              "variableName": "QualysAuth auth",
+              "startLine": 65,
+              "startColumn": 24,
+              "endLine": 65,
+              "endColumn": 39,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysAuth",
+              "code": "\t\tthis.populateApiMap();\n\t}\n\n\tpublic QualysPCClient(QualysAuth auth, PrintStream stream) {\n\t\tsuper(auth, stream);\n\t\tthis.populateApiMap();\n\t}"
+            },
+            {
+              "step": 2,
+              "variableName": "auth",
+              "startLine": 66,
+              "startColumn": 9,
+              "endLine": 66,
+              "endColumn": 13,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysAuth",
+              "code": "\t}\n\n\tpublic QualysPCClient(QualysAuth auth, PrintStream stream) {\n\t\tsuper(auth, stream);\n\t\tthis.populateApiMap();\n\t}\n"
+            },
+            {
+              "step": 3,
+              "variableName": "super(auth, stream);",
+              "startLine": 66,
+              "startColumn": 3,
+              "endLine": 66,
+              "endColumn": 23,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\t}\n\n\tpublic QualysPCClient(QualysAuth auth, PrintStream stream) {\n\t\tsuper(auth, stream);\n\t\tthis.populateApiMap();\n\t}\n"
+            },
+            {
+              "step": 4,
+              "variableName": "new QualysPCClient(auth, System.out)",
+              "startLine": 39,
+              "startColumn": 23,
+              "endLine": 39,
+              "endColumn": 59,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "        this.buildLogger = listener.getLogger();\n        this.connId = connId;\n        this.ec2ConnName = ec2ConnName;\n    \tthis.apiClient = new QualysPCClient(auth, System.out);        \n        this.pollingIntervalForVulns = setTimeoutInMinutes(\"pollingInterval\", DEFAULT_POLLING_INTERVAL_FOR_VULNS, pollingIntervalStr, listener);\n\t\tthis.vulnsTimeout = setTimeoutInMinutes(\"vulnsTimeout\", DEFAULT_TIMEOUT_FOR_VULNS, vulnsTimeoutStr, listener);\n\t\terrorList = new ArrayList<String>();\t\t"
+            },
+            {
+              "step": 5,
+              "variableName": "this",
+              "startLine": 39,
+              "startColumn": 6,
+              "endLine": 39,
+              "endColumn": 10,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "PCScanEc2ConnectorLauncher [apiClient, auth] : QualysAuth",
+              "code": "        this.buildLogger = listener.getLogger();\n        this.connId = connId;\n        this.ec2ConnName = ec2ConnName;\n    \tthis.apiClient = new QualysPCClient(auth, System.out);        \n        this.pollingIntervalForVulns = setTimeoutInMinutes(\"pollingInterval\", DEFAULT_POLLING_INTERVAL_FOR_VULNS, pollingIntervalStr, listener);\n\t\tthis.vulnsTimeout = setTimeoutInMinutes(\"vulnsTimeout\", DEFAULT_TIMEOUT_FOR_VULNS, vulnsTimeoutStr, listener);\n\t\terrorList = new ArrayList<String>();\t\t"
+            },
+            {
+              "step": 6,
+              "variableName": "new PCScanEc2ConnectorLaunche",
+              "startLine": 1267,
+              "startColumn": 39,
+              "endLine": 1268,
+              "endColumn": 68,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanNotifier.java",
+              "type": "PCScanEc2ConnectorLauncher [apiClient, auth] : QualysAuth",
+              "code": "\n\t\ttry {\n\t\t\tif (useEc2) {\n\t\t\t\tPCScanEc2ConnectorLauncher ctor = new PCScanEc2ConnectorLauncher(run, listener, pollingInterval,\n\t\t\t\t\t\tvulnsTimeout, auth, useEc2, this.ec2ConnId, this.ec2ConnName);\n\t\t\t\t// Get instance state and endpoint\n\t\t\t\tlistener.getLogger()"
+            },
+            {
+              "step": 7,
+              "variableName": "ctor",
+              "startLine": 1274,
+              "startColumn": 21,
+              "endLine": 1274,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanNotifier.java",
+              "type": "PCScanEc2ConnectorLauncher [apiClient, auth] : QualysAuth",
+              "code": "\t\t\t\t\t\t.println(new Timestamp(System.currentTimeMillis()) + \" Checking the state of instance(\"\n\t\t\t\t\t\t\t\t+ this.ec2IdValue + \") with instance account(\" + this.ec2ConnAccountId + \")\");\n\t\t\t\t// Get state of Instance\n\t\t\t\tinstanceState = ctor.checkInstanceState(this.ec2IdValue, this.ec2ConnAccountId);\n\t\t\t\tinstanceStatus = instanceState.get(\"instanceState\").getAsString();\n\n\t\t\t\tif (instanceState.get(\"count\").getAsInt() == 0) {"
+            },
+            {
+              "step": 8,
+              "variableName": "checkInstanceState",
+              "startLine": 167,
+              "startColumn": 23,
+              "endLine": 167,
+              "endColumn": 41,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "PCScanEc2ConnectorLauncher [apiClient, auth] : QualysAuth",
+              "code": "\t\t}\n\t}// end of getScanFinishedStatus\n   \t\n   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);"
+            },
+            {
+              "step": 9,
+              "variableName": "apiClient",
+              "startLine": 170,
+              "startColumn": 25,
+              "endLine": 170,
+              "endColumn": 34,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "PCScanEc2ConnectorLauncher [apiClient, auth] : QualysAuth",
+              "code": "   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);\n   \t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Making POST Request: \" + instanceDetails.get(\"request\").getAsString());\n   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t"
+            },
+            {
+              "step": 10,
+              "variableName": "apiClient",
+              "startLine": 170,
+              "startColumn": 25,
+              "endLine": 170,
+              "endColumn": 34,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);\n   \t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Making POST Request: \" + instanceDetails.get(\"request\").getAsString());\n   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t"
+            },
+            {
+              "step": 11,
+              "variableName": "getInstanceState",
+              "startLine": 659,
+              "startColumn": 20,
+              "endLine": 659,
+              "endColumn": 36,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\t\treturn connectorState;\n\t}// End of getConnectorStatus\n\n\tpublic JsonObject getInstanceState(String ec2Id, String accountId) throws Exception {\n\t\tlogger.info(\"Getting the instance state for Id:\" + ec2Id);\n\t\tNodeList dataList = null;\n\t\tDocument response = null;"
+            },
+            {
+              "step": 12,
+              "variableName": "this",
+              "startLine": 679,
+              "startColumn": 12,
+              "endLine": 679,
+              "endColumn": 16,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\t\ttry {\n\t\t\twhile (retry < 3) {\n\t\t\t\tlogger.info(\"Retrying to get the instance state API call: \" + retry);\n\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());"
+            },
+            {
+              "step": 13,
+              "variableName": "post",
+              "startLine": 866,
+              "startColumn": 27,
+              "endLine": 866,
+              "endColumn": 31,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\t} // End of QualysPCResponse get() method\n\n\t// Do a [POST] call\n\tprivate QualysPCResponse post(String apiPath, String requestData, String requestXmlString) throws Exception {\n\t\tQualysPCResponse apiResponse = new QualysPCResponse();\n\t\tString apiResponseString = \"\";\n\t\tString uri = null;"
+            },
+            {
+              "step": 14,
+              "variableName": "this",
+              "startLine": 872,
+              "startColumn": 14,
+              "endLine": 872,
+              "endColumn": 18,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\t\tString uri = null;\n\n\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);"
+            },
+            {
+              "step": 15,
+              "variableName": "getAbsoluteUrl",
+              "startLine": 48,
+              "startColumn": 16,
+              "endLine": 48,
+              "endColumn": 30,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "        this.stream = stream;\n    }\n\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;"
+            },
+            {
+              "step": 16,
+              "variableName": "this",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 31,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 17,
+              "variableName": "this.auth",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 36,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "QualysAuth",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 18,
+              "variableName": "getServer",
+              "startLine": 93,
+              "startColumn": 16,
+              "endLine": 93,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/auth/QualysAuth.java",
+              "type": "QualysAuth",
+              "code": "\t\tthis.proxyPort = proxyPort;\n\t}\n\n\tpublic String getServer() {\n    \tif (server == null) {\n    \t\treturn \"https://qualysapi.qualys.com\";\n    \t}else {"
+            },
+            {
+              "step": 19,
+              "variableName": "server",
+              "startLine": 97,
+              "startColumn": 14,
+              "endLine": 97,
+              "endColumn": 20,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/auth/QualysAuth.java",
+              "type": "String",
+              "code": "    \tif (server == null) {\n    \t\treturn \"https://qualysapi.qualys.com\";\n    \t}else {\n    \t\treturn server.replace(\"qualysguard\", \"qualysapi\");\n    \t}\n    }\n\t"
+            },
+            {
+              "step": 20,
+              "variableName": "server.replace(\"qualysguard\", \"qualysapi\")",
+              "startLine": 97,
+              "startColumn": 14,
+              "endLine": 97,
+              "endColumn": 56,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/auth/QualysAuth.java",
+              "type": "String",
+              "code": "    \tif (server == null) {\n    \t\treturn \"https://qualysapi.qualys.com\";\n    \t}else {\n    \t\treturn server.replace(\"qualysguard\", \"qualysapi\");\n    \t}\n    }\n\t"
+            },
+            {
+              "step": 21,
+              "variableName": "this.auth.getServer()",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 48,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "String",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 22,
+              "variableName": "this.auth.getServer() + path",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 55,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "String",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 23,
+              "variableName": "new URL(this.auth.getServer() + path)",
+              "startLine": 50,
+              "startColumn": 19,
+              "endLine": 50,
+              "endColumn": 56,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "URL",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 24,
+              "variableName": "url",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 19,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "URL",
+              "code": "    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    \n    public URL getAbsoluteUrlForTestConnection(String path) throws MalformedURLException {"
+            },
+            {
+              "step": 25,
+              "variableName": "this.getAbsoluteUrl(apiPath)",
+              "startLine": 872,
+              "startColumn": 14,
+              "endLine": 872,
+              "endColumn": 42,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "URL",
+              "code": "\t\tString uri = null;\n\n\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);"
+            },
+            {
+              "step": 26,
+              "variableName": "url",
+              "startLine": 874,
+              "startColumn": 11,
+              "endLine": 874,
+              "endColumn": 14,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "URL",
+              "code": "\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);\n\t\t\t} else {\n\t\t\t\turi = url.toString();"
+            },
+            {
+              "step": 27,
+              "variableName": "url.toString()",
+              "startLine": 874,
+              "startColumn": 11,
+              "endLine": 874,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);\n\t\t\t} else {\n\t\t\t\turi = url.toString();"
+            },
+            {
+              "step": 28,
+              "variableName": "uri",
+              "startLine": 889,
+              "startColumn": 27,
+              "endLine": 889,
+              "endColumn": 30,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 29,
+              "variableName": "uri.toString()",
+              "startLine": 889,
+              "startColumn": 27,
+              "endLine": 889,
+              "endColumn": 41,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 30,
+              "variableName": "String request",
+              "startLine": 51,
+              "startColumn": 25,
+              "endLine": 51,
+              "endColumn": 39,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t/**\n\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n"
+            },
+            {
+              "step": 31,
+              "variableName": "request",
+              "startLine": 52,
+              "startColumn": 18,
+              "endLine": 52,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 32,
+              "variableName": "this",
+              "startLine": 52,
+              "startColumn": 3,
+              "endLine": 52,
+              "endColumn": 7,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 33,
+              "variableName": "apiResponse",
+              "startLine": 889,
+              "startColumn": 4,
+              "endLine": 889,
+              "endColumn": 15,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 34,
+              "variableName": "apiResponse",
+              "startLine": 971,
+              "startColumn": 10,
+              "endLine": 971,
+              "endColumn": 21,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t\tthrow new Exception(e.getMessage());\n\t\t\t}\n\t\t}\n\t\treturn apiResponse;\n\t}// End of QualysPCResponse post() method\n\n\tpublic Set<String> optionProfilesSet(Document resp, int respCode, String apiTypeName) throws Exception {"
+            },
+            {
+              "step": 35,
+              "variableName": "this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData)",
+              "startLine": 679,
+              "startColumn": 12,
+              "endLine": 679,
+              "endColumn": 74,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\ttry {\n\t\t\twhile (retry < 3) {\n\t\t\t\tlogger.info(\"Retrying to get the instance state API call: \" + retry);\n\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());"
+            },
+            {
+              "step": 36,
+              "variableName": "resp",
+              "startLine": 682,
+              "startColumn": 34,
+              "endLine": 682,
+              "endColumn": 38,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 37,
+              "variableName": "getRequest",
+              "startLine": 44,
+              "startColumn": 16,
+              "endLine": 44,
+              "endColumn": 26,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t/**\n\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n"
+            },
+            {
+              "step": 38,
+              "variableName": "request",
+              "startLine": 45,
+              "startColumn": 10,
+              "endLine": 45,
+              "endColumn": 17,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 39,
+              "variableName": "request",
+              "startLine": 45,
+              "startColumn": 10,
+              "endLine": 45,
+              "endColumn": 17,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 40,
+              "variableName": "resp.getRequest()",
+              "startLine": 682,
+              "startColumn": 34,
+              "endLine": 682,
+              "endColumn": 51,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 41,
+              "variableName": "state",
+              "startLine": 682,
+              "startColumn": 5,
+              "endLine": 682,
+              "endColumn": 10,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 42,
+              "variableName": "state",
+              "startLine": 763,
+              "startColumn": 10,
+              "endLine": 763,
+              "endColumn": 15,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "\t\t\tstate.addProperty(\"instanceState\", \"Unknown\");\n\t\tif (state.has(\"endpoint\") && state.get(\"endpoint\").getAsString().isEmpty())\n\t\t\tstate.addProperty(\"endpoint\", \"Unknown\");\n\t\treturn state;\n\t}// End of getInstanceState\n\n\t// End of API calling methods"
+            },
+            {
+              "step": 43,
+              "variableName": "apiClient.getInstanceState(ec2Id, accountId)",
+              "startLine": 170,
+              "startColumn": 25,
+              "endLine": 170,
+              "endColumn": 69,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);\n   \t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Making POST Request: \" + instanceDetails.get(\"request\").getAsString());\n   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t"
+            },
+            {
+              "step": 44,
+              "variableName": "instanceDetails",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 68,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 45,
+              "variableName": "instanceDetails.get(\"apiError\")",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 84,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonElement",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 46,
+              "variableName": "instanceDetails.get(\"apiError\").getAsString()",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 98,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 47,
+              "variableName": "\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\"",
+              "startLine": 175,
+              "startColumn": 36,
+              "endLine": 175,
+              "endColumn": 151,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 48,
+              "variableName": "new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\")",
+              "startLine": 175,
+              "startColumn": 11,
+              "endLine": 175,
+              "endColumn": 152,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "APIResponseException",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 49,
+              "variableName": "e.getMessage()",
+              "startLine": 182,
+              "startColumn": 105,
+              "endLine": 182,
+              "endColumn": 119,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow e;\n\t\t\t} else {\n\t\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage());\n\t\t\t}\n\t\t}\n   \t\tif (instanceDetails.get(\"instanceState\").getAsString().equalsIgnoreCase(\"RUNNING\")) {"
+            },
+            {
+              "step": 50,
+              "variableName": "new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage()",
+              "startLine": 182,
+              "startColumn": 25,
+              "endLine": 182,
+              "endColumn": 119,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "",
+              "code": "\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow e;\n\t\t\t} else {\n\t\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage());\n\t\t\t}\n\t\t}\n   \t\tif (instanceDetails.get(\"instanceState\").getAsString().equalsIgnoreCase(\"RUNNING\")) {"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "apiClient",
+              "startLine": 170,
+              "startColumn": 25,
+              "endLine": 170,
+              "endColumn": 34,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "QualysPCClient",
+              "code": "   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);\n   \t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Making POST Request: \" + instanceDetails.get(\"request\").getAsString());\n   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t"
+            },
+            {
+              "step": 1,
+              "variableName": "getInstanceState",
+              "startLine": 659,
+              "startColumn": 20,
+              "endLine": 659,
+              "endColumn": 36,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient",
+              "code": "\t\treturn connectorState;\n\t}// End of getConnectorStatus\n\n\tpublic JsonObject getInstanceState(String ec2Id, String accountId) throws Exception {\n\t\tlogger.info(\"Getting the instance state for Id:\" + ec2Id);\n\t\tNodeList dataList = null;\n\t\tDocument response = null;"
+            },
+            {
+              "step": 2,
+              "variableName": "this.apiMap",
+              "startLine": 679,
+              "startColumn": 22,
+              "endLine": 679,
+              "endColumn": 33,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "HashMap",
+              "code": "\t\ttry {\n\t\t\twhile (retry < 3) {\n\t\t\t\tlogger.info(\"Retrying to get the instance state API call: \" + retry);\n\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());"
+            },
+            {
+              "step": 3,
+              "variableName": "this.apiMap.get(\"getInstanceState\")",
+              "startLine": 679,
+              "startColumn": 22,
+              "endLine": 679,
+              "endColumn": 57,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\ttry {\n\t\t\twhile (retry < 3) {\n\t\t\t\tlogger.info(\"Retrying to get the instance state API call: \" + retry);\n\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());"
+            },
+            {
+              "step": 4,
+              "variableName": "String apiPath",
+              "startLine": 866,
+              "startColumn": 32,
+              "endLine": 866,
+              "endColumn": 46,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t} // End of QualysPCResponse get() method\n\n\t// Do a [POST] call\n\tprivate QualysPCResponse post(String apiPath, String requestData, String requestXmlString) throws Exception {\n\t\tQualysPCResponse apiResponse = new QualysPCResponse();\n\t\tString apiResponseString = \"\";\n\t\tString uri = null;"
+            },
+            {
+              "step": 5,
+              "variableName": "apiPath",
+              "startLine": 872,
+              "startColumn": 34,
+              "endLine": 872,
+              "endColumn": 41,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\tString uri = null;\n\n\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);"
+            },
+            {
+              "step": 6,
+              "variableName": "String path",
+              "startLine": 48,
+              "startColumn": 31,
+              "endLine": 48,
+              "endColumn": 42,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "String",
+              "code": "        this.stream = stream;\n    }\n\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;"
+            },
+            {
+              "step": 7,
+              "variableName": "this.auth.getServer() + path",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 55,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "String",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 8,
+              "variableName": "new URL(this.auth.getServer() + path)",
+              "startLine": 50,
+              "startColumn": 19,
+              "endLine": 50,
+              "endColumn": 56,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "URL",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 9,
+              "variableName": "url",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 19,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "URL",
+              "code": "    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    \n    public URL getAbsoluteUrlForTestConnection(String path) throws MalformedURLException {"
+            },
+            {
+              "step": 10,
+              "variableName": "this.getAbsoluteUrl(apiPath)",
+              "startLine": 872,
+              "startColumn": 14,
+              "endLine": 872,
+              "endColumn": 42,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "URL",
+              "code": "\t\tString uri = null;\n\n\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);"
+            },
+            {
+              "step": 11,
+              "variableName": "url",
+              "startLine": 874,
+              "startColumn": 11,
+              "endLine": 874,
+              "endColumn": 14,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "URL",
+              "code": "\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);\n\t\t\t} else {\n\t\t\t\turi = url.toString();"
+            },
+            {
+              "step": 12,
+              "variableName": "url.toString()",
+              "startLine": 874,
+              "startColumn": 11,
+              "endLine": 874,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);\n\t\t\t} else {\n\t\t\t\turi = url.toString();"
+            },
+            {
+              "step": 13,
+              "variableName": "uri",
+              "startLine": 889,
+              "startColumn": 27,
+              "endLine": 889,
+              "endColumn": 30,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 14,
+              "variableName": "uri.toString()",
+              "startLine": 889,
+              "startColumn": 27,
+              "endLine": 889,
+              "endColumn": 41,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 15,
+              "variableName": "String request",
+              "startLine": 51,
+              "startColumn": 25,
+              "endLine": 51,
+              "endColumn": 39,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t/**\n\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n"
+            },
+            {
+              "step": 16,
+              "variableName": "request",
+              "startLine": 52,
+              "startColumn": 18,
+              "endLine": 52,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 17,
+              "variableName": "this",
+              "startLine": 52,
+              "startColumn": 3,
+              "endLine": 52,
+              "endColumn": 7,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 18,
+              "variableName": "apiResponse",
+              "startLine": 889,
+              "startColumn": 4,
+              "endLine": 889,
+              "endColumn": 15,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 19,
+              "variableName": "apiResponse",
+              "startLine": 971,
+              "startColumn": 10,
+              "endLine": 971,
+              "endColumn": 21,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t\tthrow new Exception(e.getMessage());\n\t\t\t}\n\t\t}\n\t\treturn apiResponse;\n\t}// End of QualysPCResponse post() method\n\n\tpublic Set<String> optionProfilesSet(Document resp, int respCode, String apiTypeName) throws Exception {"
+            },
+            {
+              "step": 20,
+              "variableName": "this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData)",
+              "startLine": 679,
+              "startColumn": 12,
+              "endLine": 679,
+              "endColumn": 74,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\ttry {\n\t\t\twhile (retry < 3) {\n\t\t\t\tlogger.info(\"Retrying to get the instance state API call: \" + retry);\n\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());"
+            },
+            {
+              "step": 21,
+              "variableName": "resp",
+              "startLine": 682,
+              "startColumn": 34,
+              "endLine": 682,
+              "endColumn": 38,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 22,
+              "variableName": "getRequest",
+              "startLine": 44,
+              "startColumn": 16,
+              "endLine": 44,
+              "endColumn": 26,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t/**\n\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n"
+            },
+            {
+              "step": 23,
+              "variableName": "request",
+              "startLine": 45,
+              "startColumn": 10,
+              "endLine": 45,
+              "endColumn": 17,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 24,
+              "variableName": "request",
+              "startLine": 45,
+              "startColumn": 10,
+              "endLine": 45,
+              "endColumn": 17,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 25,
+              "variableName": "resp.getRequest()",
+              "startLine": 682,
+              "startColumn": 34,
+              "endLine": 682,
+              "endColumn": 51,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 26,
+              "variableName": "state",
+              "startLine": 682,
+              "startColumn": 5,
+              "endLine": 682,
+              "endColumn": 10,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 27,
+              "variableName": "state",
+              "startLine": 763,
+              "startColumn": 10,
+              "endLine": 763,
+              "endColumn": 15,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "\t\t\tstate.addProperty(\"instanceState\", \"Unknown\");\n\t\tif (state.has(\"endpoint\") && state.get(\"endpoint\").getAsString().isEmpty())\n\t\t\tstate.addProperty(\"endpoint\", \"Unknown\");\n\t\treturn state;\n\t}// End of getInstanceState\n\n\t// End of API calling methods"
+            },
+            {
+              "step": 28,
+              "variableName": "apiClient.getInstanceState(ec2Id, accountId)",
+              "startLine": 170,
+              "startColumn": 25,
+              "endLine": 170,
+              "endColumn": 69,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);\n   \t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Making POST Request: \" + instanceDetails.get(\"request\").getAsString());\n   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t"
+            },
+            {
+              "step": 29,
+              "variableName": "instanceDetails",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 68,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 30,
+              "variableName": "instanceDetails.get(\"apiError\")",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 84,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonElement",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 31,
+              "variableName": "instanceDetails.get(\"apiError\").getAsString()",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 98,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 32,
+              "variableName": "\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\"",
+              "startLine": 175,
+              "startColumn": 36,
+              "endLine": 175,
+              "endColumn": 151,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 33,
+              "variableName": "new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\")",
+              "startLine": 175,
+              "startColumn": 11,
+              "endLine": 175,
+              "endColumn": 152,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "APIResponseException",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 34,
+              "variableName": "e.getMessage()",
+              "startLine": 182,
+              "startColumn": 105,
+              "endLine": 182,
+              "endColumn": 119,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow e;\n\t\t\t} else {\n\t\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage());\n\t\t\t}\n\t\t}\n   \t\tif (instanceDetails.get(\"instanceState\").getAsString().equalsIgnoreCase(\"RUNNING\")) {"
+            },
+            {
+              "step": 35,
+              "variableName": "new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage()",
+              "startLine": 182,
+              "startColumn": 25,
+              "endLine": 182,
+              "endColumn": 119,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "",
+              "code": "\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow e;\n\t\t\t} else {\n\t\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage());\n\t\t\t}\n\t\t}\n   \t\tif (instanceDetails.get(\"instanceState\").getAsString().equalsIgnoreCase(\"RUNNING\")) {"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "auth",
+              "startLine": 1268,
+              "startColumn": 21,
+              "endLine": 1268,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanNotifier.java",
+              "type": "QualysAuth",
+              "code": "\t\ttry {\n\t\t\tif (useEc2) {\n\t\t\t\tPCScanEc2ConnectorLauncher ctor = new PCScanEc2ConnectorLauncher(run, listener, pollingInterval,\n\t\t\t\t\t\tvulnsTimeout, auth, useEc2, this.ec2ConnId, this.ec2ConnName);\n\t\t\t\t// Get instance state and endpoint\n\t\t\t\tlistener.getLogger()\n\t\t\t\t\t\t.println(new Timestamp(System.currentTimeMillis()) + \" Checking the state of instance(\""
+            },
+            {
+              "step": 1,
+              "variableName": "QualysAuth auth",
+              "startLine": 34,
+              "startColumn": 58,
+              "endLine": 34,
+              "endColumn": 73,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "QualysAuth",
+              "code": "    private List<String> successList;\n    \n    public PCScanEc2ConnectorLauncher(Run<?, ?> run, TaskListener listener,  \n    \t\tString pollingIntervalStr, String vulnsTimeoutStr, QualysAuth auth, \n    \t\tboolean useEc2, String connId, String ec2ConnName) {    \t\n        this.buildLogger = listener.getLogger();\n        this.connId = connId;"
+            },
+            {
+              "step": 2,
+              "variableName": "auth",
+              "startLine": 39,
+              "startColumn": 42,
+              "endLine": 39,
+              "endColumn": 46,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "QualysAuth",
+              "code": "        this.buildLogger = listener.getLogger();\n        this.connId = connId;\n        this.ec2ConnName = ec2ConnName;\n    \tthis.apiClient = new QualysPCClient(auth, System.out);        \n        this.pollingIntervalForVulns = setTimeoutInMinutes(\"pollingInterval\", DEFAULT_POLLING_INTERVAL_FOR_VULNS, pollingIntervalStr, listener);\n\t\tthis.vulnsTimeout = setTimeoutInMinutes(\"vulnsTimeout\", DEFAULT_TIMEOUT_FOR_VULNS, vulnsTimeoutStr, listener);\n\t\terrorList = new ArrayList<String>();\t\t"
+            },
+            {
+              "step": 3,
+              "variableName": "QualysAuth auth",
+              "startLine": 65,
+              "startColumn": 24,
+              "endLine": 65,
+              "endColumn": 39,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysAuth",
+              "code": "\t\tthis.populateApiMap();\n\t}\n\n\tpublic QualysPCClient(QualysAuth auth, PrintStream stream) {\n\t\tsuper(auth, stream);\n\t\tthis.populateApiMap();\n\t}"
+            },
+            {
+              "step": 4,
+              "variableName": "auth",
+              "startLine": 66,
+              "startColumn": 9,
+              "endLine": 66,
+              "endColumn": 13,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysAuth",
+              "code": "\t}\n\n\tpublic QualysPCClient(QualysAuth auth, PrintStream stream) {\n\t\tsuper(auth, stream);\n\t\tthis.populateApiMap();\n\t}\n"
+            },
+            {
+              "step": 5,
+              "variableName": "super(auth, stream);",
+              "startLine": 66,
+              "startColumn": 3,
+              "endLine": 66,
+              "endColumn": 23,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\t}\n\n\tpublic QualysPCClient(QualysAuth auth, PrintStream stream) {\n\t\tsuper(auth, stream);\n\t\tthis.populateApiMap();\n\t}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "new QualysPCClient(auth, System.out)",
+              "startLine": 39,
+              "startColumn": 23,
+              "endLine": 39,
+              "endColumn": 59,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "        this.buildLogger = listener.getLogger();\n        this.connId = connId;\n        this.ec2ConnName = ec2ConnName;\n    \tthis.apiClient = new QualysPCClient(auth, System.out);        \n        this.pollingIntervalForVulns = setTimeoutInMinutes(\"pollingInterval\", DEFAULT_POLLING_INTERVAL_FOR_VULNS, pollingIntervalStr, listener);\n\t\tthis.vulnsTimeout = setTimeoutInMinutes(\"vulnsTimeout\", DEFAULT_TIMEOUT_FOR_VULNS, vulnsTimeoutStr, listener);\n\t\terrorList = new ArrayList<String>();\t\t"
+            },
+            {
+              "step": 7,
+              "variableName": "this",
+              "startLine": 39,
+              "startColumn": 6,
+              "endLine": 39,
+              "endColumn": 10,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "PCScanEc2ConnectorLauncher [apiClient, auth] : QualysAuth",
+              "code": "        this.buildLogger = listener.getLogger();\n        this.connId = connId;\n        this.ec2ConnName = ec2ConnName;\n    \tthis.apiClient = new QualysPCClient(auth, System.out);        \n        this.pollingIntervalForVulns = setTimeoutInMinutes(\"pollingInterval\", DEFAULT_POLLING_INTERVAL_FOR_VULNS, pollingIntervalStr, listener);\n\t\tthis.vulnsTimeout = setTimeoutInMinutes(\"vulnsTimeout\", DEFAULT_TIMEOUT_FOR_VULNS, vulnsTimeoutStr, listener);\n\t\terrorList = new ArrayList<String>();\t\t"
+            },
+            {
+              "step": 8,
+              "variableName": "new PCScanEc2ConnectorLaunche",
+              "startLine": 1267,
+              "startColumn": 39,
+              "endLine": 1268,
+              "endColumn": 68,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanNotifier.java",
+              "type": "PCScanEc2ConnectorLauncher [apiClient, auth] : QualysAuth",
+              "code": "\n\t\ttry {\n\t\t\tif (useEc2) {\n\t\t\t\tPCScanEc2ConnectorLauncher ctor = new PCScanEc2ConnectorLauncher(run, listener, pollingInterval,\n\t\t\t\t\t\tvulnsTimeout, auth, useEc2, this.ec2ConnId, this.ec2ConnName);\n\t\t\t\t// Get instance state and endpoint\n\t\t\t\tlistener.getLogger()"
+            },
+            {
+              "step": 9,
+              "variableName": "ctor",
+              "startLine": 1274,
+              "startColumn": 21,
+              "endLine": 1274,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanNotifier.java",
+              "type": "PCScanEc2ConnectorLauncher [apiClient, auth] : QualysAuth",
+              "code": "\t\t\t\t\t\t.println(new Timestamp(System.currentTimeMillis()) + \" Checking the state of instance(\"\n\t\t\t\t\t\t\t\t+ this.ec2IdValue + \") with instance account(\" + this.ec2ConnAccountId + \")\");\n\t\t\t\t// Get state of Instance\n\t\t\t\tinstanceState = ctor.checkInstanceState(this.ec2IdValue, this.ec2ConnAccountId);\n\t\t\t\tinstanceStatus = instanceState.get(\"instanceState\").getAsString();\n\n\t\t\t\tif (instanceState.get(\"count\").getAsInt() == 0) {"
+            },
+            {
+              "step": 10,
+              "variableName": "checkInstanceState",
+              "startLine": 167,
+              "startColumn": 23,
+              "endLine": 167,
+              "endColumn": 41,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "PCScanEc2ConnectorLauncher [apiClient, auth] : QualysAuth",
+              "code": "\t\t}\n\t}// end of getScanFinishedStatus\n   \t\n   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);"
+            },
+            {
+              "step": 11,
+              "variableName": "apiClient",
+              "startLine": 170,
+              "startColumn": 25,
+              "endLine": 170,
+              "endColumn": 34,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "PCScanEc2ConnectorLauncher [apiClient, auth] : QualysAuth",
+              "code": "   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);\n   \t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Making POST Request: \" + instanceDetails.get(\"request\").getAsString());\n   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t"
+            },
+            {
+              "step": 12,
+              "variableName": "apiClient",
+              "startLine": 170,
+              "startColumn": 25,
+              "endLine": 170,
+              "endColumn": 34,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);\n   \t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Making POST Request: \" + instanceDetails.get(\"request\").getAsString());\n   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t"
+            },
+            {
+              "step": 13,
+              "variableName": "getInstanceState",
+              "startLine": 659,
+              "startColumn": 20,
+              "endLine": 659,
+              "endColumn": 36,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\t\treturn connectorState;\n\t}// End of getConnectorStatus\n\n\tpublic JsonObject getInstanceState(String ec2Id, String accountId) throws Exception {\n\t\tlogger.info(\"Getting the instance state for Id:\" + ec2Id);\n\t\tNodeList dataList = null;\n\t\tDocument response = null;"
+            },
+            {
+              "step": 14,
+              "variableName": "this",
+              "startLine": 679,
+              "startColumn": 12,
+              "endLine": 679,
+              "endColumn": 16,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\t\ttry {\n\t\t\twhile (retry < 3) {\n\t\t\t\tlogger.info(\"Retrying to get the instance state API call: \" + retry);\n\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());"
+            },
+            {
+              "step": 15,
+              "variableName": "post",
+              "startLine": 866,
+              "startColumn": 27,
+              "endLine": 866,
+              "endColumn": 31,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\t} // End of QualysPCResponse get() method\n\n\t// Do a [POST] call\n\tprivate QualysPCResponse post(String apiPath, String requestData, String requestXmlString) throws Exception {\n\t\tQualysPCResponse apiResponse = new QualysPCResponse();\n\t\tString apiResponseString = \"\";\n\t\tString uri = null;"
+            },
+            {
+              "step": 16,
+              "variableName": "this",
+              "startLine": 872,
+              "startColumn": 14,
+              "endLine": 872,
+              "endColumn": 18,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\t\tString uri = null;\n\n\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);"
+            },
+            {
+              "step": 17,
+              "variableName": "getAbsoluteUrl",
+              "startLine": 48,
+              "startColumn": 16,
+              "endLine": 48,
+              "endColumn": 30,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "        this.stream = stream;\n    }\n\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;"
+            },
+            {
+              "step": 18,
+              "variableName": "this",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 31,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "QualysPCClient [auth] : QualysAuth",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 19,
+              "variableName": "this.auth",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 36,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "QualysAuth",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 20,
+              "variableName": "getServer",
+              "startLine": 93,
+              "startColumn": 16,
+              "endLine": 93,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/auth/QualysAuth.java",
+              "type": "QualysAuth",
+              "code": "\t\tthis.proxyPort = proxyPort;\n\t}\n\n\tpublic String getServer() {\n    \tif (server == null) {\n    \t\treturn \"https://qualysapi.qualys.com\";\n    \t}else {"
+            },
+            {
+              "step": 21,
+              "variableName": "server",
+              "startLine": 97,
+              "startColumn": 14,
+              "endLine": 97,
+              "endColumn": 20,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/auth/QualysAuth.java",
+              "type": "String",
+              "code": "    \tif (server == null) {\n    \t\treturn \"https://qualysapi.qualys.com\";\n    \t}else {\n    \t\treturn server.replace(\"qualysguard\", \"qualysapi\");\n    \t}\n    }\n\t"
+            },
+            {
+              "step": 22,
+              "variableName": "server.replace(\"qualysguard\", \"qualysapi\")",
+              "startLine": 97,
+              "startColumn": 14,
+              "endLine": 97,
+              "endColumn": 56,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/auth/QualysAuth.java",
+              "type": "String",
+              "code": "    \tif (server == null) {\n    \t\treturn \"https://qualysapi.qualys.com\";\n    \t}else {\n    \t\treturn server.replace(\"qualysguard\", \"qualysapi\");\n    \t}\n    }\n\t"
+            },
+            {
+              "step": 23,
+              "variableName": "this.auth.getServer()",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 48,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "String",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 24,
+              "variableName": "this.auth.getServer() + path",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 55,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "String",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 25,
+              "variableName": "new URL(this.auth.getServer() + path)",
+              "startLine": 50,
+              "startColumn": 19,
+              "endLine": 50,
+              "endColumn": 56,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "URL",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 26,
+              "variableName": "url",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 19,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "URL",
+              "code": "    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    \n    public URL getAbsoluteUrlForTestConnection(String path) throws MalformedURLException {"
+            },
+            {
+              "step": 27,
+              "variableName": "this.getAbsoluteUrl(apiPath)",
+              "startLine": 872,
+              "startColumn": 14,
+              "endLine": 872,
+              "endColumn": 42,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "URL",
+              "code": "\t\tString uri = null;\n\n\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);"
+            },
+            {
+              "step": 28,
+              "variableName": "url",
+              "startLine": 874,
+              "startColumn": 11,
+              "endLine": 874,
+              "endColumn": 14,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "URL",
+              "code": "\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);\n\t\t\t} else {\n\t\t\t\turi = url.toString();"
+            },
+            {
+              "step": 29,
+              "variableName": "url.toString()",
+              "startLine": 874,
+              "startColumn": 11,
+              "endLine": 874,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);\n\t\t\t} else {\n\t\t\t\turi = url.toString();"
+            },
+            {
+              "step": 30,
+              "variableName": "uri",
+              "startLine": 889,
+              "startColumn": 27,
+              "endLine": 889,
+              "endColumn": 30,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 31,
+              "variableName": "uri.toString()",
+              "startLine": 889,
+              "startColumn": 27,
+              "endLine": 889,
+              "endColumn": 41,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 32,
+              "variableName": "String request",
+              "startLine": 51,
+              "startColumn": 25,
+              "endLine": 51,
+              "endColumn": 39,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t/**\n\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n"
+            },
+            {
+              "step": 33,
+              "variableName": "request",
+              "startLine": 52,
+              "startColumn": 18,
+              "endLine": 52,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 34,
+              "variableName": "this",
+              "startLine": 52,
+              "startColumn": 3,
+              "endLine": 52,
+              "endColumn": 7,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 35,
+              "variableName": "apiResponse",
+              "startLine": 889,
+              "startColumn": 4,
+              "endLine": 889,
+              "endColumn": 15,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 36,
+              "variableName": "apiResponse",
+              "startLine": 971,
+              "startColumn": 10,
+              "endLine": 971,
+              "endColumn": 21,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t\tthrow new Exception(e.getMessage());\n\t\t\t}\n\t\t}\n\t\treturn apiResponse;\n\t}// End of QualysPCResponse post() method\n\n\tpublic Set<String> optionProfilesSet(Document resp, int respCode, String apiTypeName) throws Exception {"
+            },
+            {
+              "step": 37,
+              "variableName": "this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData)",
+              "startLine": 679,
+              "startColumn": 12,
+              "endLine": 679,
+              "endColumn": 74,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\ttry {\n\t\t\twhile (retry < 3) {\n\t\t\t\tlogger.info(\"Retrying to get the instance state API call: \" + retry);\n\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());"
+            },
+            {
+              "step": 38,
+              "variableName": "resp",
+              "startLine": 682,
+              "startColumn": 34,
+              "endLine": 682,
+              "endColumn": 38,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 39,
+              "variableName": "getRequest",
+              "startLine": 44,
+              "startColumn": 16,
+              "endLine": 44,
+              "endColumn": 26,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t/**\n\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n"
+            },
+            {
+              "step": 40,
+              "variableName": "request",
+              "startLine": 45,
+              "startColumn": 10,
+              "endLine": 45,
+              "endColumn": 17,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 41,
+              "variableName": "request",
+              "startLine": 45,
+              "startColumn": 10,
+              "endLine": 45,
+              "endColumn": 17,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 42,
+              "variableName": "resp.getRequest()",
+              "startLine": 682,
+              "startColumn": 34,
+              "endLine": 682,
+              "endColumn": 51,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 43,
+              "variableName": "state",
+              "startLine": 682,
+              "startColumn": 5,
+              "endLine": 682,
+              "endColumn": 10,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 44,
+              "variableName": "state",
+              "startLine": 763,
+              "startColumn": 10,
+              "endLine": 763,
+              "endColumn": 15,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "\t\t\tstate.addProperty(\"instanceState\", \"Unknown\");\n\t\tif (state.has(\"endpoint\") && state.get(\"endpoint\").getAsString().isEmpty())\n\t\t\tstate.addProperty(\"endpoint\", \"Unknown\");\n\t\treturn state;\n\t}// End of getInstanceState\n\n\t// End of API calling methods"
+            },
+            {
+              "step": 45,
+              "variableName": "apiClient.getInstanceState(ec2Id, accountId)",
+              "startLine": 170,
+              "startColumn": 25,
+              "endLine": 170,
+              "endColumn": 69,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);\n   \t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Making POST Request: \" + instanceDetails.get(\"request\").getAsString());\n   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t"
+            },
+            {
+              "step": 46,
+              "variableName": "instanceDetails",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 68,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 47,
+              "variableName": "instanceDetails.get(\"apiError\")",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 84,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonElement",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 48,
+              "variableName": "instanceDetails.get(\"apiError\").getAsString()",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 98,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 49,
+              "variableName": "\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\"",
+              "startLine": 175,
+              "startColumn": 36,
+              "endLine": 175,
+              "endColumn": 151,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 50,
+              "variableName": "new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\")",
+              "startLine": 175,
+              "startColumn": 11,
+              "endLine": 175,
+              "endColumn": 152,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "APIResponseException",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 51,
+              "variableName": "e.getMessage()",
+              "startLine": 182,
+              "startColumn": 105,
+              "endLine": 182,
+              "endColumn": 119,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow e;\n\t\t\t} else {\n\t\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage());\n\t\t\t}\n\t\t}\n   \t\tif (instanceDetails.get(\"instanceState\").getAsString().equalsIgnoreCase(\"RUNNING\")) {"
+            },
+            {
+              "step": 52,
+              "variableName": "new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage()",
+              "startLine": 182,
+              "startColumn": 25,
+              "endLine": 182,
+              "endColumn": 119,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "",
+              "code": "\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow e;\n\t\t\t} else {\n\t\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage());\n\t\t\t}\n\t\t}\n   \t\tif (instanceDetails.get(\"instanceState\").getAsString().equalsIgnoreCase(\"RUNNING\")) {"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "server",
+              "startLine": 94,
+              "startColumn": 10,
+              "endLine": 94,
+              "endColumn": 16,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/auth/QualysAuth.java",
+              "type": "String",
+              "code": "\t}\n\n\tpublic String getServer() {\n    \tif (server == null) {\n    \t\treturn \"https://qualysapi.qualys.com\";\n    \t}else {\n    \t\treturn server.replace(\"qualysguard\", \"qualysapi\");"
+            },
+            {
+              "step": 1,
+              "variableName": "server",
+              "startLine": 97,
+              "startColumn": 14,
+              "endLine": 97,
+              "endColumn": 20,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/auth/QualysAuth.java",
+              "type": "String",
+              "code": "    \tif (server == null) {\n    \t\treturn \"https://qualysapi.qualys.com\";\n    \t}else {\n    \t\treturn server.replace(\"qualysguard\", \"qualysapi\");\n    \t}\n    }\n\t"
+            },
+            {
+              "step": 2,
+              "variableName": "server.replace(\"qualysguard\", \"qualysapi\")",
+              "startLine": 97,
+              "startColumn": 14,
+              "endLine": 97,
+              "endColumn": 56,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/auth/QualysAuth.java",
+              "type": "String",
+              "code": "    \tif (server == null) {\n    \t\treturn \"https://qualysapi.qualys.com\";\n    \t}else {\n    \t\treturn server.replace(\"qualysguard\", \"qualysapi\");\n    \t}\n    }\n\t"
+            },
+            {
+              "step": 3,
+              "variableName": "this.auth.getServer()",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 48,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "String",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 4,
+              "variableName": "this.auth.getServer() + path",
+              "startLine": 50,
+              "startColumn": 27,
+              "endLine": 50,
+              "endColumn": 55,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "String",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 5,
+              "variableName": "new URL(this.auth.getServer() + path)",
+              "startLine": 50,
+              "startColumn": 19,
+              "endLine": 50,
+              "endColumn": 56,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "URL",
+              "code": "\n    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    "
+            },
+            {
+              "step": 6,
+              "variableName": "url",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 19,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysBaseClient.java",
+              "type": "URL",
+              "code": "    public URL getAbsoluteUrl(String path) throws MalformedURLException {\n        path = (path.startsWith(\"/\")) ? path : (\"/\" + path);\n        URL url = new URL(this.auth.getServer() + path);\n        return url;\n    }\n    \n    public URL getAbsoluteUrlForTestConnection(String path) throws MalformedURLException {"
+            },
+            {
+              "step": 7,
+              "variableName": "this.getAbsoluteUrl(apiPath)",
+              "startLine": 872,
+              "startColumn": 14,
+              "endLine": 872,
+              "endColumn": 42,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "URL",
+              "code": "\t\tString uri = null;\n\n\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);"
+            },
+            {
+              "step": 8,
+              "variableName": "url",
+              "startLine": 874,
+              "startColumn": 11,
+              "endLine": 874,
+              "endColumn": 14,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "URL",
+              "code": "\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);\n\t\t\t} else {\n\t\t\t\turi = url.toString();"
+            },
+            {
+              "step": 9,
+              "variableName": "url.toString()",
+              "startLine": 874,
+              "startColumn": 11,
+              "endLine": 874,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\ttry(CloseableHttpClient\thttpclient = this.getHttpClient()) {\n\t\t\tURL url = this.getAbsoluteUrl(apiPath);\n\t\t\tif (!requestData.isEmpty()) {\n\t\t\t\turi = url.toString() + \"&\" + requestData;\n\t\t\t\tapiResponse.setRequestParam(requestXmlString);\n\t\t\t} else {\n\t\t\t\turi = url.toString();"
+            },
+            {
+              "step": 10,
+              "variableName": "uri",
+              "startLine": 889,
+              "startColumn": 27,
+              "endLine": 889,
+              "endColumn": 30,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 11,
+              "variableName": "uri.toString()",
+              "startLine": 889,
+              "startColumn": 27,
+              "endLine": 889,
+              "endColumn": 41,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 12,
+              "variableName": "String request",
+              "startLine": 51,
+              "startColumn": 25,
+              "endLine": 51,
+              "endColumn": 39,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t/**\n\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n"
+            },
+            {
+              "step": 13,
+              "variableName": "request",
+              "startLine": 52,
+              "startColumn": 18,
+              "endLine": 52,
+              "endColumn": 25,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 14,
+              "variableName": "this",
+              "startLine": 52,
+              "startColumn": 3,
+              "endLine": 52,
+              "endColumn": 7,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t * @param request the request to set\n\t */\n\tpublic void setRequest(String request) {\n\t\tthis.request = request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 15,
+              "variableName": "apiResponse",
+              "startLine": 889,
+              "startColumn": 4,
+              "endLine": 889,
+              "endColumn": 15,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t}\n\n\t\t\tlogger.info(\"Making POST Request: \" + link);\n\t\t\tapiResponse.setRequest(uri.toString());\n\t\t\tHttpPost postRequest = new HttpPost(uri.toString());\n\t\t\tpostRequest.addHeader(\"accept\", \"application/xml\");\n\t\t\tpostRequest.addHeader(\"X-Requested-With\", \"Qualys\");"
+            },
+            {
+              "step": 16,
+              "variableName": "apiResponse",
+              "startLine": 971,
+              "startColumn": 10,
+              "endLine": 971,
+              "endColumn": 21,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t\tthrow new Exception(e.getMessage());\n\t\t\t}\n\t\t}\n\t\treturn apiResponse;\n\t}// End of QualysPCResponse post() method\n\n\tpublic Set<String> optionProfilesSet(Document resp, int respCode, String apiTypeName) throws Exception {"
+            },
+            {
+              "step": 17,
+              "variableName": "this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData)",
+              "startLine": 679,
+              "startColumn": 12,
+              "endLine": 679,
+              "endColumn": 74,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\ttry {\n\t\t\twhile (retry < 3) {\n\t\t\t\tlogger.info(\"Retrying to get the instance state API call: \" + retry);\n\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());"
+            },
+            {
+              "step": 18,
+              "variableName": "resp",
+              "startLine": 682,
+              "startColumn": 34,
+              "endLine": 682,
+              "endColumn": 38,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 19,
+              "variableName": "getRequest",
+              "startLine": 44,
+              "startColumn": 16,
+              "endLine": 44,
+              "endColumn": 26,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t/**\n\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n"
+            },
+            {
+              "step": 20,
+              "variableName": "request",
+              "startLine": 45,
+              "startColumn": 10,
+              "endLine": 45,
+              "endColumn": 17,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "QualysPCResponse [request] : String",
+              "code": "\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 21,
+              "variableName": "request",
+              "startLine": 45,
+              "startColumn": 10,
+              "endLine": 45,
+              "endColumn": 17,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCResponse.java",
+              "type": "String",
+              "code": "\t * @return the request\n\t */\n\tpublic String getRequest() {\n\t\treturn request;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 22,
+              "variableName": "resp.getRequest()",
+              "startLine": 682,
+              "startColumn": 34,
+              "endLine": 682,
+              "endColumn": 51,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 23,
+              "variableName": "state",
+              "startLine": 682,
+              "startColumn": 5,
+              "endLine": 682,
+              "endColumn": 10,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "\t\t\t\tresp = this.post(this.apiMap.get(\"getInstanceState\"), \"\", xmlReqData);\n\t\t\t\tlogger.info(\"Response code received for instance state API call:\" + resp.getResponseCode());\n\t\t\t\tresponse = resp.getResponseXml();\n\t\t\t\tstate.addProperty(\"request\", resp.getRequest());\n\t\t\t\tstate.addProperty(\"requestBody\", resp.getRequestBody());\n\t\t\t\tstate.addProperty(\"requestParam\", resp.getRequestParam());\n"
+            },
+            {
+              "step": 24,
+              "variableName": "state",
+              "startLine": 763,
+              "startColumn": 10,
+              "endLine": 763,
+              "endColumn": 15,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "\t\t\tstate.addProperty(\"instanceState\", \"Unknown\");\n\t\tif (state.has(\"endpoint\") && state.get(\"endpoint\").getAsString().isEmpty())\n\t\t\tstate.addProperty(\"endpoint\", \"Unknown\");\n\t\treturn state;\n\t}// End of getInstanceState\n\n\t// End of API calling methods"
+            },
+            {
+              "step": 25,
+              "variableName": "apiClient.getInstanceState(ec2Id, accountId)",
+              "startLine": 170,
+              "startColumn": 25,
+              "endLine": 170,
+              "endColumn": 69,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "   \tpublic JsonObject checkInstanceState(String ec2Id, String accountId) throws Exception {\n   \t\tJsonObject instanceDetails = new JsonObject();\n   \t\ttry {\n   \t\t\tinstanceDetails = apiClient.getInstanceState(ec2Id, accountId);\n   \t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Making POST Request: \" + instanceDetails.get(\"request\").getAsString());\n   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t"
+            },
+            {
+              "step": 26,
+              "variableName": "instanceDetails",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 68,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonObject [<map.value>] : Object",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 27,
+              "variableName": "instanceDetails.get(\"apiError\")",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 84,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "JsonElement",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 28,
+              "variableName": "instanceDetails.get(\"apiError\").getAsString()",
+              "startLine": 175,
+              "startColumn": 53,
+              "endLine": 175,
+              "endColumn": 98,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 29,
+              "variableName": "\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\"",
+              "startLine": 175,
+              "startColumn": 36,
+              "endLine": 175,
+              "endColumn": 151,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 30,
+              "variableName": "new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\")",
+              "startLine": 175,
+              "startColumn": 11,
+              "endLine": 175,
+              "endColumn": 152,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "APIResponseException",
+              "code": "   \t\t\tif (instanceDetails.get(\"requestBody\").getAsString() != null) buildLogger.println(new Timestamp(System.currentTimeMillis()) + \" API POST request body: \" + instanceDetails.get(\"requestBody\").getAsString());   \t\t\t\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Current instance state is: \" + instanceDetails.get(\"instanceState\").getAsString());\t\t\t\n\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow new APIResponseException(\"API response: \"+instanceDetails.get(\"apiError\").getAsString() + \". Check EC2 details provided to launch the scan.\");\n\t\t\t}\n\t\t\t\t\t\t\n\t\t}catch(Exception e) {\t"
+            },
+            {
+              "step": 31,
+              "variableName": "e.getMessage()",
+              "startLine": 182,
+              "startColumn": 105,
+              "endLine": 182,
+              "endColumn": 119,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "String",
+              "code": "\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow e;\n\t\t\t} else {\n\t\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage());\n\t\t\t}\n\t\t}\n   \t\tif (instanceDetails.get(\"instanceState\").getAsString().equalsIgnoreCase(\"RUNNING\")) {"
+            },
+            {
+              "step": 32,
+              "variableName": "new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage()",
+              "startLine": 182,
+              "startColumn": 25,
+              "endLine": 182,
+              "endColumn": 119,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCScanEc2ConnectorLauncher.java",
+              "type": "",
+              "code": "\t\t\tif (instanceDetails.has(\"apiError\")) {\n\t\t\t\tthrow e;\n\t\t\t} else {\n\t\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" Error getting instance state: \" + e.getMessage());\n\t\t\t}\n\t\t}\n   \t\tif (instanceDetails.get(\"instanceState\").getAsString().equalsIgnoreCase(\"RUNNING\")) {"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 3,
+      "fileName": "PCReportLauncher.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "this.ipAddress",
+              "startLine": 326,
+              "startColumn": 87,
+              "endLine": 326,
+              "endColumn": 101,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCReportLauncher.java",
+              "type": "String",
+              "code": "\n\t\t\tscanResult.add(\"controls\", getControlData(result));\n\t\t} catch (Exception e) {\n\t\t\tString error = \"Data not found for policy \\\"\" + this.policyName + \"\\\" and host \" + this.ipAddress;\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" \" + error);\n\t\t\tlogger.info(error + e.getMessage());\n\t\t\treturn null;"
+            },
+            {
+              "step": 1,
+              "variableName": "new Timestamp(System.currentTimeMillis()) + \" \" + error",
+              "startLine": 327,
+              "startColumn": 24,
+              "endLine": 327,
+              "endColumn": 79,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/PCReportLauncher.java",
+              "type": "",
+              "code": "\t\t\tscanResult.add(\"controls\", getControlData(result));\n\t\t} catch (Exception e) {\n\t\t\tString error = \"Data not found for policy \\\"\" + this.policyName + \"\\\" and host \" + this.ipAddress;\n\t\t\tbuildLogger.println(new Timestamp(System.currentTimeMillis()) + \" \" + error);\n\t\t\tlogger.info(error + e.getMessage());\n\t\t\treturn null;\n\t\t}"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ],
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "QualysPCClient.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "this.tmp_token",
+              "startLine": 390,
+              "startColumn": 46,
+              "endLine": 390,
+              "endColumn": 60,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t\t\tthrow new Exception(errorMessage);\n\t\t\t\t}\n\t\t\t} else if (response.getStatusLine().getStatusCode() == 401) {\n\t\t\t\tlogger.info(\"Connection test failed; \" + this.tmp_token);\n\t\t\t\terrorMessage = \"Connection test failed; response code : 401; Please provide valid Qualys credentials\";\n\t\t\t\tthrow new Exception(errorMessage);\n\t\t\t} else {"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Connection test failed; \" + this.tmp_token",
+              "startLine": 390,
+              "startColumn": 17,
+              "endLine": 390,
+              "endColumn": 60,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "",
+              "code": "\t\t\t\t\tthrow new Exception(errorMessage);\n\t\t\t\t}\n\t\t\t} else if (response.getStatusLine().getStatusCode() == 401) {\n\t\t\t\tlogger.info(\"Connection test failed; \" + this.tmp_token);\n\t\t\t\terrorMessage = \"Connection test failed; response code : 401; Please provide valid Qualys credentials\";\n\t\t\t\tthrow new Exception(errorMessage);\n\t\t\t} else {"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "QualysPCClient.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "this.tmp_token",
+              "startLine": 394,
+              "startColumn": 48,
+              "endLine": 394,
+              "endColumn": 62,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "String",
+              "code": "\t\t\t\terrorMessage = \"Connection test failed; response code : 401; Please provide valid Qualys credentials\";\n\t\t\t\tthrow new Exception(errorMessage);\n\t\t\t} else {\n\t\t\t\tlogger.info(\"Error testing connection; \" + this.tmp_token);\n\t\t\t\terrorMessage = \"Error testing connection; Server returned: \" + response.getStatusLine().getStatusCode()\n\t\t\t\t\t\t+ \"; \"\n\t\t\t\t\t\t+ \" Invalid inputs or something went wrong with server. Please check API server and/or proxy details.\";"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Error testing connection; \" + this.tmp_token",
+              "startLine": 394,
+              "startColumn": 17,
+              "endLine": 394,
+              "endColumn": 62,
+              "uri": "qualys-pc-plugin-qualys-pc-1.0.8/src/main/java/com/qualys/plugins/pc/client/QualysPCClient.java",
+              "type": "",
+              "code": "\t\t\t\terrorMessage = \"Connection test failed; response code : 401; Please provide valid Qualys credentials\";\n\t\t\t\tthrow new Exception(errorMessage);\n\t\t\t} else {\n\t\t\t\tlogger.info(\"Error testing connection; \" + this.tmp_token);\n\t\t\t\terrorMessage = \"Error testing connection; Server returned: \" + response.getStatusLine().getStatusCode()\n\t\t\t\t\t\t+ \"; \"\n\t\t\t\t\t\t+ \" Invalid inputs or something went wrong with server. Please check API server and/or proxy details.\";"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
