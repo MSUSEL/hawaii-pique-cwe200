@@ -1,0 +1,104 @@
+{
+  "208": [
+    {
+      "resultIndex": 0,
+      "fileName": "AuthorizationHeaderParser.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "pRequest.getHeader(\"Authorization\")",
+              "startLine": 20,
+              "startColumn": 23,
+              "endLine": 20,
+              "endColumn": 58,
+              "uri": "jolokia-2.2.9/server/core/src/main/java/org/jolokia/server/core/osgi/security/BaseAuthenticator.java",
+              "type": "String",
+              "code": "     * @return true if authentication passes, false otherwise\n     */\n    public boolean authenticate(HttpServletRequest pRequest) {\n        String auth = pRequest.getHeader(\"Authorization\");\n        if(auth==null){\n            //For cases where middleware may strip credentials\n            auth=pRequest.getHeader(AuthorizationHeaderParser.JOLOKIA_ALTERNATE_AUTHORIZATION_HEADER);"
+            },
+            {
+              "step": 1,
+              "variableName": "auth",
+              "startLine": 28,
+              "startColumn": 85,
+              "endLine": 28,
+              "endColumn": 89,
+              "uri": "jolokia-2.2.9/server/core/src/main/java/org/jolokia/server/core/osgi/security/BaseAuthenticator.java",
+              "type": "String",
+              "code": "        if (auth == null) {\n            return false;\n        }\n        AuthorizationHeaderParser.Result authInfo = AuthorizationHeaderParser.parse(auth);\n        return authInfo.isValid() && doAuthenticate(pRequest, authInfo);\n    }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "String pAuthInfo",
+              "startLine": 35,
+              "startColumn": 32,
+              "endLine": 35,
+              "endColumn": 48,
+              "uri": "jolokia-2.2.9/server/core/src/main/java/org/jolokia/server/core/http/security/AuthorizationHeaderParser.java",
+              "type": "String",
+              "code": "     * @param pAuthInfo header to parse\n     * @return method, user, password and whehter the header was valid\n     */\n    public static Result parse(String pAuthInfo) {\n        StringTokenizer stok = new StringTokenizer(pAuthInfo);\n        String method = stok.nextToken();\n        if (!\"BASIC\".equalsIgnoreCase(method)) {"
+            },
+            {
+              "step": 3,
+              "variableName": "pAuthInfo",
+              "startLine": 36,
+              "startColumn": 52,
+              "endLine": 36,
+              "endColumn": 61,
+              "uri": "jolokia-2.2.9/server/core/src/main/java/org/jolokia/server/core/http/security/AuthorizationHeaderParser.java",
+              "type": "String",
+              "code": "     * @return method, user, password and whehter the header was valid\n     */\n    public static Result parse(String pAuthInfo) {\n        StringTokenizer stok = new StringTokenizer(pAuthInfo);\n        String method = stok.nextToken();\n        if (!\"BASIC\".equalsIgnoreCase(method)) {\n            throw new IllegalArgumentException(\"Only BasicAuthentication is supported\");"
+            },
+            {
+              "step": 4,
+              "variableName": "new StringTokenizer(pAuthInfo)",
+              "startLine": 36,
+              "startColumn": 32,
+              "endLine": 36,
+              "endColumn": 62,
+              "uri": "jolokia-2.2.9/server/core/src/main/java/org/jolokia/server/core/http/security/AuthorizationHeaderParser.java",
+              "type": "StringTokenizer",
+              "code": "     * @return method, user, password and whehter the header was valid\n     */\n    public static Result parse(String pAuthInfo) {\n        StringTokenizer stok = new StringTokenizer(pAuthInfo);\n        String method = stok.nextToken();\n        if (!\"BASIC\".equalsIgnoreCase(method)) {\n            throw new IllegalArgumentException(\"Only BasicAuthentication is supported\");"
+            },
+            {
+              "step": 5,
+              "variableName": "stok",
+              "startLine": 37,
+              "startColumn": 25,
+              "endLine": 37,
+              "endColumn": 29,
+              "uri": "jolokia-2.2.9/server/core/src/main/java/org/jolokia/server/core/http/security/AuthorizationHeaderParser.java",
+              "type": "StringTokenizer",
+              "code": "     */\n    public static Result parse(String pAuthInfo) {\n        StringTokenizer stok = new StringTokenizer(pAuthInfo);\n        String method = stok.nextToken();\n        if (!\"BASIC\".equalsIgnoreCase(method)) {\n            throw new IllegalArgumentException(\"Only BasicAuthentication is supported\");\n        }"
+            },
+            {
+              "step": 6,
+              "variableName": "stok.nextToken()",
+              "startLine": 37,
+              "startColumn": 25,
+              "endLine": 37,
+              "endColumn": 41,
+              "uri": "jolokia-2.2.9/server/core/src/main/java/org/jolokia/server/core/http/security/AuthorizationHeaderParser.java",
+              "type": "String",
+              "code": "     */\n    public static Result parse(String pAuthInfo) {\n        StringTokenizer stok = new StringTokenizer(pAuthInfo);\n        String method = stok.nextToken();\n        if (!\"BASIC\".equalsIgnoreCase(method)) {\n            throw new IllegalArgumentException(\"Only BasicAuthentication is supported\");\n        }"
+            },
+            {
+              "step": 7,
+              "variableName": "method",
+              "startLine": 38,
+              "startColumn": 39,
+              "endLine": 38,
+              "endColumn": 45,
+              "uri": "jolokia-2.2.9/server/core/src/main/java/org/jolokia/server/core/http/security/AuthorizationHeaderParser.java",
+              "type": "",
+              "code": "    public static Result parse(String pAuthInfo) {\n        StringTokenizer stok = new StringTokenizer(pAuthInfo);\n        String method = stok.nextToken();\n        if (!\"BASIC\".equalsIgnoreCase(method)) {\n            throw new IllegalArgumentException(\"Only BasicAuthentication is supported\");\n        }\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

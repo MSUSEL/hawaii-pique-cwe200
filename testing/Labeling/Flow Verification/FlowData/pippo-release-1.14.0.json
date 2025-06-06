@@ -1,0 +1,529 @@
+{
+  "201": [
+    {
+      "resultIndex": 0,
+      "fileName": "Response.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "writer",
+              "startLine": 149,
+              "startColumn": 79,
+              "endLine": 149,
+              "endColumn": 85,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "StringWriter",
+              "code": "        if (records != null && records.length > 0) {\n            String[] header = records[0].getCsvHeader();\n            StringWriter writer = new StringWriter();\n            try (CSVPrinter printer = getCSVFormat().withHeader(header).print(writer)) {\n                for (Csv record : records) {\n                    Object [] data = record.getCsvData();\n                    if (data == null || data.length == 0) {"
+            },
+            {
+              "step": 1,
+              "variableName": "writer.toString()",
+              "startLine": 166,
+              "startColumn": 20,
+              "endLine": 166,
+              "endColumn": 37,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "String",
+              "code": "                log.error(\"Failed to generate CSV\", e);\n            }\n\n            return writer.toString();\n        }\n\n        return null;"
+            },
+            {
+              "step": 2,
+              "variableName": "toCsv((Csv) object)",
+              "startLine": 127,
+              "startColumn": 20,
+              "endLine": 127,
+              "endColumn": 39,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "String",
+              "code": "    @Override\n    public String toString(Object object) {\n        if (object instanceof Csv) {\n            return toCsv((Csv) object);\n        } else if (object.getClass().isArray() && Csv.class.isAssignableFrom(object.getClass().getComponentType())) {\n            return toCsv((Csv[]) object);\n        } else if (Collection.class.isAssignableFrom(object.getClass())) {"
+            },
+            {
+              "step": 3,
+              "variableName": "contentTypeEngine.toString(object)",
+              "startLine": 923,
+              "startColumn": 14,
+              "endLine": 923,
+              "endColumn": 48,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "        }\n\n        header(HttpConstants.Header.CONTENT_TYPE, contentTypeEngine.getContentType());\n        send(contentTypeEngine.toString(object));\n    }\n\n    /**"
+            },
+            {
+              "step": 4,
+              "variableName": "CharSequence content",
+              "startLine": 833,
+              "startColumn": 22,
+              "endLine": 833,
+              "endColumn": 42,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "     *\n     * @param content\n     */\n    public void send(CharSequence content) {\n        checkCommitted();\n\n        commit(content);"
+            },
+            {
+              "step": 5,
+              "variableName": "content",
+              "startLine": 836,
+              "startColumn": 16,
+              "endLine": 836,
+              "endColumn": 23,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "    public void send(CharSequence content) {\n        checkCommitted();\n\n        commit(content);\n    }\n\n    /**"
+            },
+            {
+              "step": 6,
+              "variableName": "CharSequence content",
+              "startLine": 1087,
+              "startColumn": 25,
+              "endLine": 1087,
+              "endColumn": 45,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "        commit(null);\n    }\n\n    private void commit(CharSequence content) {\n        checkCommitted();\n        finalizeResponse();\n"
+            },
+            {
+              "step": 7,
+              "variableName": "content",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 41,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 8,
+              "variableName": "content.toString()",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 52,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 9,
+              "variableName": "content.toString().getBytes(getCharacterEncoding())",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 85,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "byte[]",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 10,
+              "variableName": "encoded",
+              "startLine": 1104,
+              "startColumn": 36,
+              "endLine": 1104,
+              "endColumn": 43,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "",
+              "code": "                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);\n                outputStream.close();\n            }\n            log.trace(\"Response committed\");"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "writer",
+              "startLine": 149,
+              "startColumn": 79,
+              "endLine": 149,
+              "endColumn": 85,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "StringWriter",
+              "code": "        if (records != null && records.length > 0) {\n            String[] header = records[0].getCsvHeader();\n            StringWriter writer = new StringWriter();\n            try (CSVPrinter printer = getCSVFormat().withHeader(header).print(writer)) {\n                for (Csv record : records) {\n                    Object [] data = record.getCsvData();\n                    if (data == null || data.length == 0) {"
+            },
+            {
+              "step": 1,
+              "variableName": "writer",
+              "startLine": 166,
+              "startColumn": 20,
+              "endLine": 166,
+              "endColumn": 26,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "StringWriter",
+              "code": "                log.error(\"Failed to generate CSV\", e);\n            }\n\n            return writer.toString();\n        }\n\n        return null;"
+            },
+            {
+              "step": 2,
+              "variableName": "writer.toString()",
+              "startLine": 166,
+              "startColumn": 20,
+              "endLine": 166,
+              "endColumn": 37,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "String",
+              "code": "                log.error(\"Failed to generate CSV\", e);\n            }\n\n            return writer.toString();\n        }\n\n        return null;"
+            },
+            {
+              "step": 3,
+              "variableName": "toCsv((Csv[]) object)",
+              "startLine": 129,
+              "startColumn": 20,
+              "endLine": 129,
+              "endColumn": 41,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "String",
+              "code": "        if (object instanceof Csv) {\n            return toCsv((Csv) object);\n        } else if (object.getClass().isArray() && Csv.class.isAssignableFrom(object.getClass().getComponentType())) {\n            return toCsv((Csv[]) object);\n        } else if (Collection.class.isAssignableFrom(object.getClass())) {\n            // Collections are supported for serialization to CSV\n            ArrayList<?> list = new ArrayList<>((Collection<?>) object);"
+            },
+            {
+              "step": 4,
+              "variableName": "contentTypeEngine.toString(object)",
+              "startLine": 923,
+              "startColumn": 14,
+              "endLine": 923,
+              "endColumn": 48,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "        }\n\n        header(HttpConstants.Header.CONTENT_TYPE, contentTypeEngine.getContentType());\n        send(contentTypeEngine.toString(object));\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "CharSequence content",
+              "startLine": 833,
+              "startColumn": 22,
+              "endLine": 833,
+              "endColumn": 42,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "     *\n     * @param content\n     */\n    public void send(CharSequence content) {\n        checkCommitted();\n\n        commit(content);"
+            },
+            {
+              "step": 6,
+              "variableName": "content",
+              "startLine": 836,
+              "startColumn": 16,
+              "endLine": 836,
+              "endColumn": 23,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "    public void send(CharSequence content) {\n        checkCommitted();\n\n        commit(content);\n    }\n\n    /**"
+            },
+            {
+              "step": 7,
+              "variableName": "CharSequence content",
+              "startLine": 1087,
+              "startColumn": 25,
+              "endLine": 1087,
+              "endColumn": 45,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "        commit(null);\n    }\n\n    private void commit(CharSequence content) {\n        checkCommitted();\n        finalizeResponse();\n"
+            },
+            {
+              "step": 8,
+              "variableName": "content",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 41,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 9,
+              "variableName": "content.toString()",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 52,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 10,
+              "variableName": "content.toString().getBytes(getCharacterEncoding())",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 85,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "byte[]",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 11,
+              "variableName": "encoded",
+              "startLine": 1104,
+              "startColumn": 36,
+              "endLine": 1104,
+              "endColumn": 43,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "",
+              "code": "                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);\n                outputStream.close();\n            }\n            log.trace(\"Response committed\");"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "writer",
+              "startLine": 166,
+              "startColumn": 20,
+              "endLine": 166,
+              "endColumn": 26,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "StringWriter",
+              "code": "                log.error(\"Failed to generate CSV\", e);\n            }\n\n            return writer.toString();\n        }\n\n        return null;"
+            },
+            {
+              "step": 1,
+              "variableName": "writer.toString()",
+              "startLine": 166,
+              "startColumn": 20,
+              "endLine": 166,
+              "endColumn": 37,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "String",
+              "code": "                log.error(\"Failed to generate CSV\", e);\n            }\n\n            return writer.toString();\n        }\n\n        return null;"
+            },
+            {
+              "step": 2,
+              "variableName": "toCsv((Csv) object)",
+              "startLine": 127,
+              "startColumn": 20,
+              "endLine": 127,
+              "endColumn": 39,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "String",
+              "code": "    @Override\n    public String toString(Object object) {\n        if (object instanceof Csv) {\n            return toCsv((Csv) object);\n        } else if (object.getClass().isArray() && Csv.class.isAssignableFrom(object.getClass().getComponentType())) {\n            return toCsv((Csv[]) object);\n        } else if (Collection.class.isAssignableFrom(object.getClass())) {"
+            },
+            {
+              "step": 3,
+              "variableName": "contentTypeEngine.toString(object)",
+              "startLine": 923,
+              "startColumn": 14,
+              "endLine": 923,
+              "endColumn": 48,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "        }\n\n        header(HttpConstants.Header.CONTENT_TYPE, contentTypeEngine.getContentType());\n        send(contentTypeEngine.toString(object));\n    }\n\n    /**"
+            },
+            {
+              "step": 4,
+              "variableName": "CharSequence content",
+              "startLine": 833,
+              "startColumn": 22,
+              "endLine": 833,
+              "endColumn": 42,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "     *\n     * @param content\n     */\n    public void send(CharSequence content) {\n        checkCommitted();\n\n        commit(content);"
+            },
+            {
+              "step": 5,
+              "variableName": "content",
+              "startLine": 836,
+              "startColumn": 16,
+              "endLine": 836,
+              "endColumn": 23,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "    public void send(CharSequence content) {\n        checkCommitted();\n\n        commit(content);\n    }\n\n    /**"
+            },
+            {
+              "step": 6,
+              "variableName": "CharSequence content",
+              "startLine": 1087,
+              "startColumn": 25,
+              "endLine": 1087,
+              "endColumn": 45,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "        commit(null);\n    }\n\n    private void commit(CharSequence content) {\n        checkCommitted();\n        finalizeResponse();\n"
+            },
+            {
+              "step": 7,
+              "variableName": "content",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 41,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 8,
+              "variableName": "content.toString()",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 52,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 9,
+              "variableName": "content.toString().getBytes(getCharacterEncoding())",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 85,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "byte[]",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 10,
+              "variableName": "encoded",
+              "startLine": 1104,
+              "startColumn": 36,
+              "endLine": 1104,
+              "endColumn": 43,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "",
+              "code": "                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);\n                outputStream.close();\n            }\n            log.trace(\"Response committed\");"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "writer",
+              "startLine": 166,
+              "startColumn": 20,
+              "endLine": 166,
+              "endColumn": 26,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "StringWriter",
+              "code": "                log.error(\"Failed to generate CSV\", e);\n            }\n\n            return writer.toString();\n        }\n\n        return null;"
+            },
+            {
+              "step": 1,
+              "variableName": "writer.toString()",
+              "startLine": 166,
+              "startColumn": 20,
+              "endLine": 166,
+              "endColumn": 37,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "String",
+              "code": "                log.error(\"Failed to generate CSV\", e);\n            }\n\n            return writer.toString();\n        }\n\n        return null;"
+            },
+            {
+              "step": 2,
+              "variableName": "toCsv((Csv[]) object)",
+              "startLine": 129,
+              "startColumn": 20,
+              "endLine": 129,
+              "endColumn": 41,
+              "uri": "pippo-release-1.14.0/pippo-content-type-parent/pippo-csv/src/main/java/ro/pippo/csv/CsvEngine.java",
+              "type": "String",
+              "code": "        if (object instanceof Csv) {\n            return toCsv((Csv) object);\n        } else if (object.getClass().isArray() && Csv.class.isAssignableFrom(object.getClass().getComponentType())) {\n            return toCsv((Csv[]) object);\n        } else if (Collection.class.isAssignableFrom(object.getClass())) {\n            // Collections are supported for serialization to CSV\n            ArrayList<?> list = new ArrayList<>((Collection<?>) object);"
+            },
+            {
+              "step": 3,
+              "variableName": "contentTypeEngine.toString(object)",
+              "startLine": 923,
+              "startColumn": 14,
+              "endLine": 923,
+              "endColumn": 48,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "        }\n\n        header(HttpConstants.Header.CONTENT_TYPE, contentTypeEngine.getContentType());\n        send(contentTypeEngine.toString(object));\n    }\n\n    /**"
+            },
+            {
+              "step": 4,
+              "variableName": "CharSequence content",
+              "startLine": 833,
+              "startColumn": 22,
+              "endLine": 833,
+              "endColumn": 42,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "     *\n     * @param content\n     */\n    public void send(CharSequence content) {\n        checkCommitted();\n\n        commit(content);"
+            },
+            {
+              "step": 5,
+              "variableName": "content",
+              "startLine": 836,
+              "startColumn": 16,
+              "endLine": 836,
+              "endColumn": 23,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "    public void send(CharSequence content) {\n        checkCommitted();\n\n        commit(content);\n    }\n\n    /**"
+            },
+            {
+              "step": 6,
+              "variableName": "CharSequence content",
+              "startLine": 1087,
+              "startColumn": 25,
+              "endLine": 1087,
+              "endColumn": 45,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "        commit(null);\n    }\n\n    private void commit(CharSequence content) {\n        checkCommitted();\n        finalizeResponse();\n"
+            },
+            {
+              "step": 7,
+              "variableName": "content",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 41,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 8,
+              "variableName": "content.toString()",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 52,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "String",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 9,
+              "variableName": "content.toString().getBytes(getCharacterEncoding())",
+              "startLine": 1101,
+              "startColumn": 34,
+              "endLine": 1101,
+              "endColumn": 85,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "byte[]",
+              "code": "                if (getCharacterEncoding() == null) {\n                    characterEncoding(StandardCharsets.UTF_8.name());\n                }\n                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);"
+            },
+            {
+              "step": 10,
+              "variableName": "encoded",
+              "startLine": 1104,
+              "startColumn": 36,
+              "endLine": 1104,
+              "endColumn": 43,
+              "uri": "pippo-release-1.14.0/pippo-core/src/main/java/ro/pippo/core/Response.java",
+              "type": "",
+              "code": "                byte[] encoded = content.toString().getBytes(getCharacterEncoding());\n                contentLength(encoded.length);\n                ServletOutputStream outputStream = httpServletResponse.getOutputStream();\n                outputStream.write(encoded);\n                outputStream.close();\n            }\n            log.trace(\"Response committed\");"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
