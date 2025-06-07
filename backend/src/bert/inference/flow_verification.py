@@ -48,6 +48,7 @@ def process_data_flows_for_inference(data_flows):
                     step_string += f"code={step.get('code', '')}, "
                     step_string = {step_string}
                     data_flow_string += str(step_string)
+                    # data_flow_string += str(step)
                 processed_data_flows.append(data_flow_string)
                 flow_references.append((cwe, result_index, code_flow_index))
     return processed_data_flows, flow_references
