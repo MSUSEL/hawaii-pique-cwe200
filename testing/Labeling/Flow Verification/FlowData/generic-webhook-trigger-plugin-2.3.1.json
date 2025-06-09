@@ -1,0 +1,160 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "GenericWebHookRequestReceiver.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "NO_JOBS_MSG_NO_TOKEN",
+              "startLine": 220,
+              "startColumn": 20,
+              "endLine": 220,
+              "endColumn": 40,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "String",
+              "code": "        String msg = NO_JOBS_MSG;\n        final boolean noTokenGiven = Strings.isNullOrEmpty(givenToken);\n        if (noTokenGiven) {\n            msg += NO_JOBS_MSG_NO_TOKEN;\n            msg += NO_JOBS_HOW_TO_USE_TOKEN;\n            msg += NO_JOBS_HOW_TO_AUTH;\n        } else {"
+            },
+            {
+              "step": 1,
+              "variableName": "msg",
+              "startLine": 226,
+              "startColumn": 16,
+              "endLine": 226,
+              "endColumn": 19,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "String",
+              "code": "        } else {\n            msg += NO_JOBS_MSG_TOKEN;\n        }\n        return msg;\n    }\n\n    String createMessageFromException(final Throwable t) {"
+            },
+            {
+              "step": 2,
+              "variableName": "construct404Message(givenToken)",
+              "startLine": 207,
+              "startColumn": 36,
+              "endLine": 207,
+              "endColumn": 67,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "String",
+              "code": "            return jsonResponse(500, \"There were errors when triggering jobs.\", triggerResultsMap);\n        } else {\n            if (foundJobs.isEmpty()) {\n                final String msg = construct404Message(givenToken);\n                LOGGER.log(Level.FINE, msg);\n                return jsonResponse(404, msg);\n            } else {"
+            },
+            {
+              "step": 3,
+              "variableName": "msg",
+              "startLine": 208,
+              "startColumn": 40,
+              "endLine": 208,
+              "endColumn": 43,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "",
+              "code": "        } else {\n            if (foundJobs.isEmpty()) {\n                final String msg = construct404Message(givenToken);\n                LOGGER.log(Level.FINE, msg);\n                return jsonResponse(404, msg);\n            } else {\n                return jsonResponse(200, \"Triggered jobs.\", triggerResultsMap);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "NO_JOBS_HOW_TO_USE_TOKEN",
+              "startLine": 221,
+              "startColumn": 20,
+              "endLine": 221,
+              "endColumn": 44,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "String",
+              "code": "        final boolean noTokenGiven = Strings.isNullOrEmpty(givenToken);\n        if (noTokenGiven) {\n            msg += NO_JOBS_MSG_NO_TOKEN;\n            msg += NO_JOBS_HOW_TO_USE_TOKEN;\n            msg += NO_JOBS_HOW_TO_AUTH;\n        } else {\n            msg += NO_JOBS_MSG_TOKEN;"
+            },
+            {
+              "step": 1,
+              "variableName": "msg",
+              "startLine": 226,
+              "startColumn": 16,
+              "endLine": 226,
+              "endColumn": 19,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "String",
+              "code": "        } else {\n            msg += NO_JOBS_MSG_TOKEN;\n        }\n        return msg;\n    }\n\n    String createMessageFromException(final Throwable t) {"
+            },
+            {
+              "step": 2,
+              "variableName": "construct404Message(givenToken)",
+              "startLine": 207,
+              "startColumn": 36,
+              "endLine": 207,
+              "endColumn": 67,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "String",
+              "code": "            return jsonResponse(500, \"There were errors when triggering jobs.\", triggerResultsMap);\n        } else {\n            if (foundJobs.isEmpty()) {\n                final String msg = construct404Message(givenToken);\n                LOGGER.log(Level.FINE, msg);\n                return jsonResponse(404, msg);\n            } else {"
+            },
+            {
+              "step": 3,
+              "variableName": "msg",
+              "startLine": 208,
+              "startColumn": 40,
+              "endLine": 208,
+              "endColumn": 43,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "",
+              "code": "        } else {\n            if (foundJobs.isEmpty()) {\n                final String msg = construct404Message(givenToken);\n                LOGGER.log(Level.FINE, msg);\n                return jsonResponse(404, msg);\n            } else {\n                return jsonResponse(200, \"Triggered jobs.\", triggerResultsMap);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "NO_JOBS_MSG_TOKEN",
+              "startLine": 224,
+              "startColumn": 20,
+              "endLine": 224,
+              "endColumn": 37,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "String",
+              "code": "            msg += NO_JOBS_HOW_TO_USE_TOKEN;\n            msg += NO_JOBS_HOW_TO_AUTH;\n        } else {\n            msg += NO_JOBS_MSG_TOKEN;\n        }\n        return msg;\n    }"
+            },
+            {
+              "step": 1,
+              "variableName": "msg",
+              "startLine": 226,
+              "startColumn": 16,
+              "endLine": 226,
+              "endColumn": 19,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "String",
+              "code": "        } else {\n            msg += NO_JOBS_MSG_TOKEN;\n        }\n        return msg;\n    }\n\n    String createMessageFromException(final Throwable t) {"
+            },
+            {
+              "step": 2,
+              "variableName": "construct404Message(givenToken)",
+              "startLine": 207,
+              "startColumn": 36,
+              "endLine": 207,
+              "endColumn": 67,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "String",
+              "code": "            return jsonResponse(500, \"There were errors when triggering jobs.\", triggerResultsMap);\n        } else {\n            if (foundJobs.isEmpty()) {\n                final String msg = construct404Message(givenToken);\n                LOGGER.log(Level.FINE, msg);\n                return jsonResponse(404, msg);\n            } else {"
+            },
+            {
+              "step": 3,
+              "variableName": "msg",
+              "startLine": 208,
+              "startColumn": 40,
+              "endLine": 208,
+              "endColumn": 43,
+              "uri": "generic-webhook-trigger-plugin-2.3.1/src/main/java/org/jenkinsci/plugins/gwt/GenericWebHookRequestReceiver.java",
+              "type": "",
+              "code": "        } else {\n            if (foundJobs.isEmpty()) {\n                final String msg = construct404Message(givenToken);\n                LOGGER.log(Level.FINE, msg);\n                return jsonResponse(404, msg);\n            } else {\n                return jsonResponse(200, \"Triggered jobs.\", triggerResultsMap);"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

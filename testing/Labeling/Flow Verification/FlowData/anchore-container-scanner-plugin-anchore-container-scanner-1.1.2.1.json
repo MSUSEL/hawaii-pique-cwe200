@@ -1,0 +1,375 @@
+{
+  "215": [
+    {
+      "resultIndex": 0,
+      "fileName": "ConsoleLog.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "queryList",
+              "startLine": 223,
+              "startColumn": 11,
+              "endLine": 223,
+              "endColumn": 20,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "ArrayList",
+              "code": "\n\n          String should_auto_subscribe = config.getAutoSubscribeTagUpdates() ? \"true\" : \"false\";\n          queryList.add(Util.GET_VERSION_KEY(config.getEngineApiVersion(), \"autosubscribe\") + \"=\" + should_auto_subscribe);\n\n          String should_force_image_add = config.getForceAnalyze() ? \"true\" : \"false\";\n          queryList.add(\"force=\" + should_force_image_add);"
+            },
+            {
+              "step": 1,
+              "variableName": "queryList",
+              "startLine": 229,
+              "startColumn": 56,
+              "endLine": 229,
+              "endColumn": 65,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "ArrayList",
+              "code": "          queryList.add(\"force=\" + should_force_image_add);\n\n          if (!queryList.isEmpty()){\n            queryStr = Joiner.on('&').skipNulls().join(queryList);\n          }\n\n          if (!Strings.isNullOrEmpty(queryStr)) {"
+            },
+            {
+              "step": 2,
+              "variableName": "Joiner.on('&').skipNulls().join(queryList)",
+              "startLine": 229,
+              "startColumn": 24,
+              "endLine": 229,
+              "endColumn": 66,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "String",
+              "code": "          queryList.add(\"force=\" + should_force_image_add);\n\n          if (!queryList.isEmpty()){\n            queryStr = Joiner.on('&').skipNulls().join(queryList);\n          }\n\n          if (!Strings.isNullOrEmpty(queryStr)) {"
+            },
+            {
+              "step": 3,
+              "variableName": "\"anchore-enterprise add image URL: \" + theurl",
+              "startLine": 282,
+              "startColumn": 28,
+              "endLine": 282,
+              "endColumn": 73,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "String",
+              "code": "          httppost.addHeader(\"Content-Type\", \"application/json\");\n          httppost.setEntity(new StringEntity(body));\n\n          console.logDebug(\"anchore-enterprise add image URL: \" + theurl);\n          console.logDebug(\"anchore-enterprise add image payload: \" + body);\n\n          try (CloseableHttpResponse response = httpclient.execute(httppost, context)) {"
+            },
+            {
+              "step": 4,
+              "variableName": "String msg",
+              "startLine": 39,
+              "startColumn": 24,
+              "endLine": 39,
+              "endColumn": 34,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "String",
+              "code": "    }\n  }\n\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "msg",
+              "startLine": 41,
+              "startColumn": 75,
+              "endLine": 41,
+              "endColumn": 78,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "String",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            },
+            {
+              "step": 6,
+              "variableName": "String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg)",
+              "startLine": 41,
+              "startColumn": 22,
+              "endLine": 41,
+              "endColumn": 79,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "Object[] [[]] : String",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            },
+            {
+              "step": 7,
+              "variableName": "String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg)",
+              "startLine": 41,
+              "startColumn": 22,
+              "endLine": 41,
+              "endColumn": 79,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "queryList",
+              "startLine": 226,
+              "startColumn": 11,
+              "endLine": 226,
+              "endColumn": 20,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "ArrayList",
+              "code": "          queryList.add(Util.GET_VERSION_KEY(config.getEngineApiVersion(), \"autosubscribe\") + \"=\" + should_auto_subscribe);\n\n          String should_force_image_add = config.getForceAnalyze() ? \"true\" : \"false\";\n          queryList.add(\"force=\" + should_force_image_add);\n\n          if (!queryList.isEmpty()){\n            queryStr = Joiner.on('&').skipNulls().join(queryList);"
+            },
+            {
+              "step": 1,
+              "variableName": "queryList",
+              "startLine": 229,
+              "startColumn": 56,
+              "endLine": 229,
+              "endColumn": 65,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "ArrayList",
+              "code": "          queryList.add(\"force=\" + should_force_image_add);\n\n          if (!queryList.isEmpty()){\n            queryStr = Joiner.on('&').skipNulls().join(queryList);\n          }\n\n          if (!Strings.isNullOrEmpty(queryStr)) {"
+            },
+            {
+              "step": 2,
+              "variableName": "Joiner.on('&').skipNulls().join(queryList)",
+              "startLine": 229,
+              "startColumn": 24,
+              "endLine": 229,
+              "endColumn": 66,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "String",
+              "code": "          queryList.add(\"force=\" + should_force_image_add);\n\n          if (!queryList.isEmpty()){\n            queryStr = Joiner.on('&').skipNulls().join(queryList);\n          }\n\n          if (!Strings.isNullOrEmpty(queryStr)) {"
+            },
+            {
+              "step": 3,
+              "variableName": "\"anchore-enterprise add image URL: \" + theurl",
+              "startLine": 282,
+              "startColumn": 28,
+              "endLine": 282,
+              "endColumn": 73,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "String",
+              "code": "          httppost.addHeader(\"Content-Type\", \"application/json\");\n          httppost.setEntity(new StringEntity(body));\n\n          console.logDebug(\"anchore-enterprise add image URL: \" + theurl);\n          console.logDebug(\"anchore-enterprise add image payload: \" + body);\n\n          try (CloseableHttpResponse response = httpclient.execute(httppost, context)) {"
+            },
+            {
+              "step": 4,
+              "variableName": "String msg",
+              "startLine": 39,
+              "startColumn": 24,
+              "endLine": 39,
+              "endColumn": 34,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "String",
+              "code": "    }\n  }\n\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "msg",
+              "startLine": 41,
+              "startColumn": 75,
+              "endLine": 41,
+              "endColumn": 78,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "String",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            },
+            {
+              "step": 6,
+              "variableName": "String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg)",
+              "startLine": 41,
+              "startColumn": 22,
+              "endLine": 41,
+              "endColumn": 79,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "Object[] [[]] : String",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            },
+            {
+              "step": 7,
+              "variableName": "String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg)",
+              "startLine": 41,
+              "startColumn": 22,
+              "endLine": 41,
+              "endColumn": 79,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "queryList",
+              "startLine": 228,
+              "startColumn": 16,
+              "endLine": 228,
+              "endColumn": 25,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "ArrayList",
+              "code": "          String should_force_image_add = config.getForceAnalyze() ? \"true\" : \"false\";\n          queryList.add(\"force=\" + should_force_image_add);\n\n          if (!queryList.isEmpty()){\n            queryStr = Joiner.on('&').skipNulls().join(queryList);\n          }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "queryList",
+              "startLine": 229,
+              "startColumn": 56,
+              "endLine": 229,
+              "endColumn": 65,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "ArrayList",
+              "code": "          queryList.add(\"force=\" + should_force_image_add);\n\n          if (!queryList.isEmpty()){\n            queryStr = Joiner.on('&').skipNulls().join(queryList);\n          }\n\n          if (!Strings.isNullOrEmpty(queryStr)) {"
+            },
+            {
+              "step": 2,
+              "variableName": "Joiner.on('&').skipNulls().join(queryList)",
+              "startLine": 229,
+              "startColumn": 24,
+              "endLine": 229,
+              "endColumn": 66,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "String",
+              "code": "          queryList.add(\"force=\" + should_force_image_add);\n\n          if (!queryList.isEmpty()){\n            queryStr = Joiner.on('&').skipNulls().join(queryList);\n          }\n\n          if (!Strings.isNullOrEmpty(queryStr)) {"
+            },
+            {
+              "step": 3,
+              "variableName": "\"anchore-enterprise add image URL: \" + theurl",
+              "startLine": 282,
+              "startColumn": 28,
+              "endLine": 282,
+              "endColumn": 73,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "String",
+              "code": "          httppost.addHeader(\"Content-Type\", \"application/json\");\n          httppost.setEntity(new StringEntity(body));\n\n          console.logDebug(\"anchore-enterprise add image URL: \" + theurl);\n          console.logDebug(\"anchore-enterprise add image payload: \" + body);\n\n          try (CloseableHttpResponse response = httpclient.execute(httppost, context)) {"
+            },
+            {
+              "step": 4,
+              "variableName": "String msg",
+              "startLine": 39,
+              "startColumn": 24,
+              "endLine": 39,
+              "endColumn": 34,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "String",
+              "code": "    }\n  }\n\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "msg",
+              "startLine": 41,
+              "startColumn": 75,
+              "endLine": 41,
+              "endColumn": 78,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "String",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            },
+            {
+              "step": 6,
+              "variableName": "String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg)",
+              "startLine": 41,
+              "startColumn": 22,
+              "endLine": 41,
+              "endColumn": 79,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "Object[] [[]] : String",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            },
+            {
+              "step": 7,
+              "variableName": "String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg)",
+              "startLine": 41,
+              "startColumn": 22,
+              "endLine": 41,
+              "endColumn": 79,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "queryList",
+              "startLine": 229,
+              "startColumn": 56,
+              "endLine": 229,
+              "endColumn": 65,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "ArrayList",
+              "code": "          queryList.add(\"force=\" + should_force_image_add);\n\n          if (!queryList.isEmpty()){\n            queryStr = Joiner.on('&').skipNulls().join(queryList);\n          }\n\n          if (!Strings.isNullOrEmpty(queryStr)) {"
+            },
+            {
+              "step": 1,
+              "variableName": "Joiner.on('&').skipNulls().join(queryList)",
+              "startLine": 229,
+              "startColumn": 24,
+              "endLine": 229,
+              "endColumn": 66,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "String",
+              "code": "          queryList.add(\"force=\" + should_force_image_add);\n\n          if (!queryList.isEmpty()){\n            queryStr = Joiner.on('&').skipNulls().join(queryList);\n          }\n\n          if (!Strings.isNullOrEmpty(queryStr)) {"
+            },
+            {
+              "step": 2,
+              "variableName": "\"anchore-enterprise add image URL: \" + theurl",
+              "startLine": 282,
+              "startColumn": 28,
+              "endLine": 282,
+              "endColumn": 73,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/BuildWorker.java",
+              "type": "String",
+              "code": "          httppost.addHeader(\"Content-Type\", \"application/json\");\n          httppost.setEntity(new StringEntity(body));\n\n          console.logDebug(\"anchore-enterprise add image URL: \" + theurl);\n          console.logDebug(\"anchore-enterprise add image payload: \" + body);\n\n          try (CloseableHttpResponse response = httpclient.execute(httppost, context)) {"
+            },
+            {
+              "step": 3,
+              "variableName": "String msg",
+              "startLine": 39,
+              "startColumn": 24,
+              "endLine": 39,
+              "endColumn": 34,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "String",
+              "code": "    }\n  }\n\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }"
+            },
+            {
+              "step": 4,
+              "variableName": "msg",
+              "startLine": 41,
+              "startColumn": 75,
+              "endLine": 41,
+              "endColumn": 78,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "String",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            },
+            {
+              "step": 5,
+              "variableName": "String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg)",
+              "startLine": 41,
+              "startColumn": 22,
+              "endLine": 41,
+              "endColumn": 79,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "Object[] [[]] : String",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            },
+            {
+              "step": 6,
+              "variableName": "String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg)",
+              "startLine": 41,
+              "startColumn": 22,
+              "endLine": 41,
+              "endColumn": 79,
+              "uri": "anchore-container-scanner-plugin-anchore-container-scanner-1.1.2.1/src/main/java/com/anchore/jenkins/plugins/anchore/ConsoleLog.java",
+              "type": "",
+              "code": "\n  public void logDebug(String msg) {\n    if (enableDebug) {\n      logger.println(String.format(LOG_FORMAT, new Date(), \"DEBUG\", name, msg));\n    }\n  }\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
