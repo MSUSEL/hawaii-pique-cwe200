@@ -75,6 +75,6 @@ def verify_flows_for_all_json(json_dir, script_path, files_dir):
 
 if __name__ == '__main__':
     json_directory = os.path.join("testing", "Labeling", "Flow Verification", "FlowData")
-    script_path = os.path.join("src", "bert", "inference", "bert_verify_sarif.py")
+    script_path = os.path.join("src", "bert", "inference", "flow_verification.py")
     files_directory = os.path.join("backend", "Files")
     verify_flows_for_all_json(json_directory, script_path, files_directory)
