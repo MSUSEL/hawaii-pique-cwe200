@@ -571,6 +571,31 @@
   ],
   "532": [
     {
+      "resultIndex": 1,
+      "fileName": "DashboardUserController.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "flowIndex": 0,
+              "vulnerabilityIndex": 1,
+              "step": 0,
+              "variableName": "ShenyuResultMessage.DASHBOARD_MODIFY_PASSWORD_ERROR",
+              "startLine": 168,
+              "startColumn": 44,
+              "endLine": 168,
+              "endColumn": 95,
+              "uri": "shenyu-2.7.0.1/shenyu-admin/src/main/java/org/apache/shenyu/admin/controller/DashboardUserController.java",
+              "type": "",
+              "code": "        }\n        dashboardUserModifyPasswordDTO.setId(id);\n        if (!userInfo.getUserId().equals(id) && !userInfo.getUserName().equals(dashboardUserModifyPasswordDTO.getUserName())) {\n            return ShenyuAdminResult.error(ShenyuResultMessage.DASHBOARD_MODIFY_PASSWORD_ERROR);\n        }\n        dashboardUserModifyPasswordDTO.setPassword(DigestUtils.sha512Hex(dashboardUserModifyPasswordDTO.getPassword()));\n        dashboardUserModifyPasswordDTO.setOldPassword(DigestUtils.sha512Hex(dashboardUserModifyPasswordDTO.getOldPassword()));"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
       "resultIndex": 2,
       "fileName": "ShenyuAdminResult.java",
       "flows": [
@@ -792,6 +817,106 @@
             }
           ],
           "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 7,
+      "fileName": "BasicAuthPlugin.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "flowIndex": 0,
+              "vulnerabilityIndex": 7,
+              "step": 0,
+              "variableName": "ShenyuResultEnum.ERROR_TOKEN",
+              "startLine": 63,
+              "startColumn": 85,
+              "endLine": 63,
+              "endColumn": 113,
+              "uri": "shenyu-2.7.0.1/shenyu-plugin/shenyu-plugin-security/shenyu-plugin-basic-auth/src/main/java/org/apache/shenyu/plugin/basic/auth/BasicAuthPlugin.java",
+              "type": "",
+              "code": "        if (Objects.nonNull(authenticationStrategy) && authenticationStrategy.authenticate(basicAuthRuleHandle, authorization)) {\n            return chain.execute(exchange);\n        }\n        return WebFluxResultUtils.result(exchange, ShenyuResultWrap.error(exchange, ShenyuResultEnum.ERROR_TOKEN));\n    }\n\n    @Override"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 8,
+      "fileName": "CasdoorPlugin.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "flowIndex": 0,
+              "vulnerabilityIndex": 8,
+              "step": 0,
+              "variableName": "ShenyuResultEnum.ERROR_TOKEN",
+              "startLine": 65,
+              "startColumn": 57,
+              "endLine": 65,
+              "endColumn": 85,
+              "uri": "shenyu-2.7.0.1/shenyu-plugin/shenyu-plugin-security/shenyu-plugin-casdoor/src/main/java/org/apache/shenyu/plugin/casdoor/CasdoorPlugin.java",
+              "type": "",
+              "code": "                return chain.execute(handleToken(exchange, casdoorUser));\n            }\n        }\n        Object error = ShenyuResultWrap.error(exchange, ShenyuResultEnum.ERROR_TOKEN);\n        return WebFluxResultUtils.result(exchange, error);\n    }\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 9,
+      "fileName": "JwtPlugin.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "flowIndex": 0,
+              "vulnerabilityIndex": 9,
+              "step": 0,
+              "variableName": "ShenyuResultEnum.SECRET_KEY_MUST_BE_CONFIGURED",
+              "startLine": 61,
+              "startColumn": 61,
+              "endLine": 61,
+              "endColumn": 107,
+              "uri": "shenyu-2.7.0.1/shenyu-plugin/shenyu-plugin-security/shenyu-plugin-jwt/src/main/java/org/apache/shenyu/plugin/jwt/JwtPlugin.java",
+              "type": "",
+              "code": "        String token = exchange.getRequest().getHeaders().getFirst(TOKEN);\n        // check secreteKey\n        if (StringUtils.isEmpty(jwtConfig.getSecretKey())) {\n            Object error = ShenyuResultWrap.error(exchange, ShenyuResultEnum.SECRET_KEY_MUST_BE_CONFIGURED);\n            return WebFluxResultUtils.result(exchange, error);\n        }\n        // compatible processing"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 10,
+      "fileName": "JwtPlugin.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "flowIndex": 0,
+              "vulnerabilityIndex": 10,
+              "step": 0,
+              "variableName": "ShenyuResultEnum.ERROR_TOKEN",
+              "startLine": 68,
+              "startColumn": 61,
+              "endLine": 68,
+              "endColumn": 89,
+              "uri": "shenyu-2.7.0.1/shenyu-plugin/shenyu-plugin-security/shenyu-plugin-jwt/src/main/java/org/apache/shenyu/plugin/jwt/JwtPlugin.java",
+              "type": "",
+              "code": "        String finalAuthorization = compatible(token, authorization);\n        Map<String, Object> jwtBody = parseJwtPayload(finalAuthorization, jwtConfig);\n        if (Objects.isNull(jwtBody)) {\n            Object error = ShenyuResultWrap.error(exchange, ShenyuResultEnum.ERROR_TOKEN);\n            return WebFluxResultUtils.result(exchange, error);\n        }\n        return chain.execute(executeRuleHandle(rule, exchange, jwtBody));"
+            }
+          ],
+          "label": "No"
         }
       ]
     }
