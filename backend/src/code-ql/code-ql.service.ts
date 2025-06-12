@@ -250,32 +250,34 @@ export class CodeQlService {
      * @param sourcePath The path to the project directory.
      */
     async updateSarif(sourcePath: string) {
-        var codeFlowsPath = path.join(sourcePath, 'flowMapsByCWE.json');
-        var codeFlows = await this.fileUtilService.readJsonFile(codeFlowsPath);
+        const codeFlowsPath = path.join(sourcePath, 'flowMapsByCWE.json');
+        const codeFlows = await this.fileUtilService.readJsonFile(codeFlowsPath);
 
-        var sarifPath = path.join(sourcePath, 'result.sarif');
-        var sarifdata = await this.fileUtilService.readJsonFile(sarifPath);
+        const sarifPath = path.join(sourcePath, 'result.sarif');
+        const sarifdata = await this.fileUtilService.readJsonFile(sarifPath);
 
         Object.keys(codeFlows).forEach(cwe => {
-
-            let results = codeFlows[cwe]
+            const results = codeFlows[cwe];
             // Iterate over the results for each CWE
             for (let j = 0; j < results.length; j++) {
-                let resultIndex = results[j].resultIndex
-                let flows = results[j].flows
-
+                const resultIndex = results[j].resultIndex;
+                const flows = results[j].flows;
                 // Iterate over the flows for each result
                 for (let i = 0; i < flows.length; i++) {
-                    let flowIndex = flows[i].codeFlowIndex
-                    let label = flows[i].label
+                    const flowIndex = flows[i].codeFlowIndex;
+                    const label = flows[i].label;
+                    const sarifResult = sarifdata.runs[0].results[resultIndex];
 
-                    // Make sure the resultIndex is the index of the sarif result. 
-                    // Not all sarif results have a codeFlow
-                    if (sarifdata.runs[0].results[resultIndex].codeFlows[flowIndex]) {
-                        sarifdata.runs[0].results[resultIndex].codeFlows[flowIndex].label = label
+                    // If there is a codeFlow, update it
+                    if (sarifResult.codeFlows && sarifResult.codeFlows[flowIndex]) {
+                        sarifResult.codeFlows[flowIndex].label = label;
                     }
-                    else {
-
+                    // Otherwise, if the result was generated from locations, update the location directly
+                    else if (sarifResult.locations) {
+                        // Here, you can choose how to store the label. For example, add a new property to each location:
+                        sarifResult.locations.forEach(location => {
+                            location.label = label;
+                        });
                     }
                 }
             }
@@ -283,5 +285,4 @@ export class CodeQlService {
         // Save the updated sarifdata back to the file
         await this.fileUtilService.writeToFile(sarifPath, JSON.stringify(sarifdata, null, 2));
     }
-
 }
