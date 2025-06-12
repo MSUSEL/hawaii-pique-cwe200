@@ -1,0 +1,138 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "SubversionReleaseSCM.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "credentials",
+              "startLine": 976,
+              "startColumn": 16,
+              "endLine": 976,
+              "endColumn": 27,
+              "uri": "svn-partial-release-mgr-plugin-svn-partial-release-mgr-1.0.1/src/main/java/hudson/scm/SubversionReleaseSCM.java",
+              "type": "Hashtable",
+              "code": "        implements RemotableSVNAuthenticationProvider, Serializable {\n      public Credential getCredential(String realm) {\n        LOGGER.fine(String.format(\"getCredential(%s)=>%s\", realm, credentials.get(realm)));\n        return credentials.get(realm);\n      }\n\n      /**"
+            },
+            {
+              "step": 1,
+              "variableName": "credentials.get(realm)",
+              "startLine": 976,
+              "startColumn": 16,
+              "endLine": 976,
+              "endColumn": 38,
+              "uri": "svn-partial-release-mgr-plugin-svn-partial-release-mgr-1.0.1/src/main/java/hudson/scm/SubversionReleaseSCM.java",
+              "type": "Credential",
+              "code": "        implements RemotableSVNAuthenticationProvider, Serializable {\n      public Credential getCredential(String realm) {\n        LOGGER.fine(String.format(\"getCredential(%s)=>%s\", realm, credentials.get(realm)));\n        return credentials.get(realm);\n      }\n\n      /**"
+            },
+            {
+              "step": 2,
+              "variableName": "source.getCredential(realm)",
+              "startLine": 940,
+              "startColumn": 27,
+              "endLine": 940,
+              "endColumn": 54,
+              "uri": "svn-partial-release-mgr-plugin-svn-partial-release-mgr-1.0.1/src/main/java/hudson/scm/SubversionReleaseSCM.java",
+              "type": "Credential",
+              "code": "                                                           SVNErrorMessage errorMessage,\n                                                           SVNAuthentication previousAuth,\n                                                           boolean authMayBeStored) {\n        Credential cred = source.getCredential(realm);\n        LOGGER.fine(\n            String.format(\"requestClientAuthentication(%s,%s,%s)=>%s\", kind, url, realm, cred));\n"
+            },
+            {
+              "step": 3,
+              "variableName": "cred",
+              "startLine": 942,
+              "startColumn": 90,
+              "endLine": 942,
+              "endColumn": 94,
+              "uri": "svn-partial-release-mgr-plugin-svn-partial-release-mgr-1.0.1/src/main/java/hudson/scm/SubversionReleaseSCM.java",
+              "type": "Credential",
+              "code": "                                                           boolean authMayBeStored) {\n        Credential cred = source.getCredential(realm);\n        LOGGER.fine(\n            String.format(\"requestClientAuthentication(%s,%s,%s)=>%s\", kind, url, realm, cred));\n\n        try {\n          SVNAuthentication auth = null;"
+            },
+            {
+              "step": 4,
+              "variableName": "String.format(\"requestClientAuthentication(%s,%s,%s)=>%s\", kind, url, realm, cred)",
+              "startLine": 942,
+              "startColumn": 13,
+              "endLine": 942,
+              "endColumn": 95,
+              "uri": "svn-partial-release-mgr-plugin-svn-partial-release-mgr-1.0.1/src/main/java/hudson/scm/SubversionReleaseSCM.java",
+              "type": "Object[] [[]] : Credential",
+              "code": "                                                           boolean authMayBeStored) {\n        Credential cred = source.getCredential(realm);\n        LOGGER.fine(\n            String.format(\"requestClientAuthentication(%s,%s,%s)=>%s\", kind, url, realm, cred));\n\n        try {\n          SVNAuthentication auth = null;"
+            },
+            {
+              "step": 5,
+              "variableName": "String.format(\"requestClientAuthentication(%s,%s,%s)=>%s\", kind, url, realm, cred)",
+              "startLine": 942,
+              "startColumn": 13,
+              "endLine": 942,
+              "endColumn": 95,
+              "uri": "svn-partial-release-mgr-plugin-svn-partial-release-mgr-1.0.1/src/main/java/hudson/scm/SubversionReleaseSCM.java",
+              "type": "",
+              "code": "                                                           boolean authMayBeStored) {\n        Credential cred = source.getCredential(realm);\n        LOGGER.fine(\n            String.format(\"requestClientAuthentication(%s,%s,%s)=>%s\", kind, url, realm, cred));\n\n        try {\n          SVNAuthentication auth = null;"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "SubversionReleaseSCM.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "credentials",
+              "startLine": 975,
+              "startColumn": 67,
+              "endLine": 975,
+              "endColumn": 78,
+              "uri": "svn-partial-release-mgr-plugin-svn-partial-release-mgr-1.0.1/src/main/java/hudson/scm/SubversionReleaseSCM.java",
+              "type": "Hashtable",
+              "code": "    private final class RemotableSVNAuthenticationProviderImpl\n        implements RemotableSVNAuthenticationProvider, Serializable {\n      public Credential getCredential(String realm) {\n        LOGGER.fine(String.format(\"getCredential(%s)=>%s\", realm, credentials.get(realm)));\n        return credentials.get(realm);\n      }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "credentials.get(realm)",
+              "startLine": 975,
+              "startColumn": 67,
+              "endLine": 975,
+              "endColumn": 89,
+              "uri": "svn-partial-release-mgr-plugin-svn-partial-release-mgr-1.0.1/src/main/java/hudson/scm/SubversionReleaseSCM.java",
+              "type": "Credential",
+              "code": "    private final class RemotableSVNAuthenticationProviderImpl\n        implements RemotableSVNAuthenticationProvider, Serializable {\n      public Credential getCredential(String realm) {\n        LOGGER.fine(String.format(\"getCredential(%s)=>%s\", realm, credentials.get(realm)));\n        return credentials.get(realm);\n      }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "String.format(\"getCredential(%s)=>%s\", realm, credentials.get(realm))",
+              "startLine": 975,
+              "startColumn": 21,
+              "endLine": 975,
+              "endColumn": 90,
+              "uri": "svn-partial-release-mgr-plugin-svn-partial-release-mgr-1.0.1/src/main/java/hudson/scm/SubversionReleaseSCM.java",
+              "type": "Object[] [[]] : Credential",
+              "code": "    private final class RemotableSVNAuthenticationProviderImpl\n        implements RemotableSVNAuthenticationProvider, Serializable {\n      public Credential getCredential(String realm) {\n        LOGGER.fine(String.format(\"getCredential(%s)=>%s\", realm, credentials.get(realm)));\n        return credentials.get(realm);\n      }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "String.format(\"getCredential(%s)=>%s\", realm, credentials.get(realm))",
+              "startLine": 975,
+              "startColumn": 21,
+              "endLine": 975,
+              "endColumn": 90,
+              "uri": "svn-partial-release-mgr-plugin-svn-partial-release-mgr-1.0.1/src/main/java/hudson/scm/SubversionReleaseSCM.java",
+              "type": "",
+              "code": "    private final class RemotableSVNAuthenticationProviderImpl\n        implements RemotableSVNAuthenticationProvider, Serializable {\n      public Credential getCredential(String realm) {\n        LOGGER.fine(String.format(\"getCredential(%s)=>%s\", realm, credentials.get(realm)));\n        return credentials.get(realm);\n      }\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}
