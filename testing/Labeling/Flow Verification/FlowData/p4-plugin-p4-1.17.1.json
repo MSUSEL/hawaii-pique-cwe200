@@ -1,0 +1,242 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "CheckoutTask.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "pin",
+              "startLine": 47,
+              "startColumn": 10,
+              "endLine": 47,
+              "endColumn": 13,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/populate/Populate.java",
+              "type": "String",
+              "code": "\t}\n\n\tpublic String getPin() {\n\t\treturn pin;\n\t}\n\n\tpublic ParallelSync getParallel() {"
+            },
+            {
+              "step": 1,
+              "variableName": "populate.getPin()",
+              "startLine": 230,
+              "startColumn": 26,
+              "endLine": 230,
+              "endColumn": 43,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/tasks/CheckoutTask.java",
+              "type": "String",
+              "code": "\t\tExpand expand = workspace.getExpand();\n\n\t\t// if a pinned change/label is specified the update\n\t\tString populateLabel = populate.getPin();\n\t\tif (populateLabel != null && !populateLabel.isEmpty()) {\n\t\t\t// Expand label with environment vars if one was defined\n\t\t\tString expandedPopulateLabel = expand.format(populateLabel, false);"
+            },
+            {
+              "step": 2,
+              "variableName": "populateLabel",
+              "startLine": 233,
+              "startColumn": 49,
+              "endLine": 233,
+              "endColumn": 62,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/tasks/CheckoutTask.java",
+              "type": "String",
+              "code": "\t\tString populateLabel = populate.getPin();\n\t\tif (populateLabel != null && !populateLabel.isEmpty()) {\n\t\t\t// Expand label with environment vars if one was defined\n\t\t\tString expandedPopulateLabel = expand.format(populateLabel, false);\n\t\t\tif (!expandedPopulateLabel.isEmpty()) {\n\t\t\t\ttry {\n\t\t\t\t\t// if build is a change-number passed as a label"
+            },
+            {
+              "step": 3,
+              "variableName": "String format",
+              "startLine": 52,
+              "startColumn": 23,
+              "endLine": 52,
+              "endColumn": 36,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/workspace/Expand.java",
+              "type": "String",
+              "code": "\t\treturn super.clone();\n\t}\n\n\tpublic String format(String format, boolean useKey) {\n\t\tif (formatTags != null) {\n\t\t\tformat = Util.replaceMacro(format, formatTags); // fails to replace undefined tags, just like before\n\t\t}"
+            },
+            {
+              "step": 4,
+              "variableName": "format",
+              "startLine": 63,
+              "startColumn": 13,
+              "endLine": 63,
+              "endColumn": 19,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/workspace/Expand.java",
+              "type": "String",
+              "code": "\t\t\tformat = format.replace(\"${\", \"\");\n\t\t\tformat = format.replace(\"}\", \"\");\n\t\t} else {\n\t\t\tformat = format.replaceAll(\"\\\\$\\\\{.+?\\\\}\", \"\"); // strips undefined tags\n\t\t}\n\t\treturn format;\n\t}"
+            },
+            {
+              "step": 5,
+              "variableName": "format.replaceAll(\"\\\\$\\\\{.+?\\\\}\", \"\")",
+              "startLine": 63,
+              "startColumn": 13,
+              "endLine": 63,
+              "endColumn": 50,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/workspace/Expand.java",
+              "type": "String",
+              "code": "\t\t\tformat = format.replace(\"${\", \"\");\n\t\t\tformat = format.replace(\"}\", \"\");\n\t\t} else {\n\t\t\tformat = format.replaceAll(\"\\\\$\\\\{.+?\\\\}\", \"\"); // strips undefined tags\n\t\t}\n\t\treturn format;\n\t}"
+            },
+            {
+              "step": 6,
+              "variableName": "format",
+              "startLine": 65,
+              "startColumn": 10,
+              "endLine": 65,
+              "endColumn": 16,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/workspace/Expand.java",
+              "type": "String",
+              "code": "\t\t} else {\n\t\t\tformat = format.replaceAll(\"\\\\$\\\\{.+?\\\\}\", \"\"); // strips undefined tags\n\t\t}\n\t\treturn format;\n\t}\n\n\tpublic String formatID(String format) {"
+            },
+            {
+              "step": 7,
+              "variableName": "expand.format(populateLabel, false)",
+              "startLine": 233,
+              "startColumn": 35,
+              "endLine": 233,
+              "endColumn": 70,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/tasks/CheckoutTask.java",
+              "type": "String",
+              "code": "\t\tString populateLabel = populate.getPin();\n\t\tif (populateLabel != null && !populateLabel.isEmpty()) {\n\t\t\t// Expand label with environment vars if one was defined\n\t\t\tString expandedPopulateLabel = expand.format(populateLabel, false);\n\t\t\tif (!expandedPopulateLabel.isEmpty()) {\n\t\t\t\ttry {\n\t\t\t\t\t// if build is a change-number passed as a label"
+            },
+            {
+              "step": 8,
+              "variableName": "\"getBuildChange:pinned:label:\" + expandedPopulateLabel",
+              "startLine": 242,
+              "startColumn": 18,
+              "endLine": 242,
+              "endColumn": 72,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/tasks/CheckoutTask.java",
+              "type": "",
+              "code": "\t\t\t\t\tlogger.info(\"getBuildChange:pinned:change:\" + change);\n\t\t\t\t} catch (NumberFormatException e) {\n\t\t\t\t\tbuild = new P4LabelRef(expandedPopulateLabel);\n\t\t\t\t\tlogger.info(\"getBuildChange:pinned:label:\" + expandedPopulateLabel);\n\t\t\t\t}\n\t\t\t}\n\t\t}"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "pin",
+              "startLine": 47,
+              "startColumn": 10,
+              "endLine": 47,
+              "endColumn": 13,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/populate/Populate.java",
+              "type": "String",
+              "code": "\t}\n\n\tpublic String getPin() {\n\t\treturn pin;\n\t}\n\n\tpublic ParallelSync getParallel() {"
+            },
+            {
+              "step": 1,
+              "variableName": "populate.getPin()",
+              "startLine": 230,
+              "startColumn": 26,
+              "endLine": 230,
+              "endColumn": 43,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/tasks/CheckoutTask.java",
+              "type": "String",
+              "code": "\t\tExpand expand = workspace.getExpand();\n\n\t\t// if a pinned change/label is specified the update\n\t\tString populateLabel = populate.getPin();\n\t\tif (populateLabel != null && !populateLabel.isEmpty()) {\n\t\t\t// Expand label with environment vars if one was defined\n\t\t\tString expandedPopulateLabel = expand.format(populateLabel, false);"
+            },
+            {
+              "step": 2,
+              "variableName": "populateLabel",
+              "startLine": 233,
+              "startColumn": 49,
+              "endLine": 233,
+              "endColumn": 62,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/tasks/CheckoutTask.java",
+              "type": "String",
+              "code": "\t\tString populateLabel = populate.getPin();\n\t\tif (populateLabel != null && !populateLabel.isEmpty()) {\n\t\t\t// Expand label with environment vars if one was defined\n\t\t\tString expandedPopulateLabel = expand.format(populateLabel, false);\n\t\t\tif (!expandedPopulateLabel.isEmpty()) {\n\t\t\t\ttry {\n\t\t\t\t\t// if build is a change-number passed as a label"
+            },
+            {
+              "step": 3,
+              "variableName": "String format",
+              "startLine": 52,
+              "startColumn": 23,
+              "endLine": 52,
+              "endColumn": 36,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/workspace/Expand.java",
+              "type": "String",
+              "code": "\t\treturn super.clone();\n\t}\n\n\tpublic String format(String format, boolean useKey) {\n\t\tif (formatTags != null) {\n\t\t\tformat = Util.replaceMacro(format, formatTags); // fails to replace undefined tags, just like before\n\t\t}"
+            },
+            {
+              "step": 4,
+              "variableName": "format",
+              "startLine": 54,
+              "startColumn": 31,
+              "endLine": 54,
+              "endColumn": 37,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/workspace/Expand.java",
+              "type": "String",
+              "code": "\n\tpublic String format(String format, boolean useKey) {\n\t\tif (formatTags != null) {\n\t\t\tformat = Util.replaceMacro(format, formatTags); // fails to replace undefined tags, just like before\n\t\t}\n\n\t\t// cleanup undefined tags"
+            },
+            {
+              "step": 5,
+              "variableName": "Util.replaceMacro(format, formatTags)",
+              "startLine": 54,
+              "startColumn": 13,
+              "endLine": 54,
+              "endColumn": 50,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/workspace/Expand.java",
+              "type": "String",
+              "code": "\n\tpublic String format(String format, boolean useKey) {\n\t\tif (formatTags != null) {\n\t\t\tformat = Util.replaceMacro(format, formatTags); // fails to replace undefined tags, just like before\n\t\t}\n\n\t\t// cleanup undefined tags"
+            },
+            {
+              "step": 6,
+              "variableName": "format",
+              "startLine": 63,
+              "startColumn": 13,
+              "endLine": 63,
+              "endColumn": 19,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/workspace/Expand.java",
+              "type": "String",
+              "code": "\t\t\tformat = format.replace(\"${\", \"\");\n\t\t\tformat = format.replace(\"}\", \"\");\n\t\t} else {\n\t\t\tformat = format.replaceAll(\"\\\\$\\\\{.+?\\\\}\", \"\"); // strips undefined tags\n\t\t}\n\t\treturn format;\n\t}"
+            },
+            {
+              "step": 7,
+              "variableName": "format.replaceAll(\"\\\\$\\\\{.+?\\\\}\", \"\")",
+              "startLine": 63,
+              "startColumn": 13,
+              "endLine": 63,
+              "endColumn": 50,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/workspace/Expand.java",
+              "type": "String",
+              "code": "\t\t\tformat = format.replace(\"${\", \"\");\n\t\t\tformat = format.replace(\"}\", \"\");\n\t\t} else {\n\t\t\tformat = format.replaceAll(\"\\\\$\\\\{.+?\\\\}\", \"\"); // strips undefined tags\n\t\t}\n\t\treturn format;\n\t}"
+            },
+            {
+              "step": 8,
+              "variableName": "format",
+              "startLine": 65,
+              "startColumn": 10,
+              "endLine": 65,
+              "endColumn": 16,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/workspace/Expand.java",
+              "type": "String",
+              "code": "\t\t} else {\n\t\t\tformat = format.replaceAll(\"\\\\$\\\\{.+?\\\\}\", \"\"); // strips undefined tags\n\t\t}\n\t\treturn format;\n\t}\n\n\tpublic String formatID(String format) {"
+            },
+            {
+              "step": 9,
+              "variableName": "expand.format(populateLabel, false)",
+              "startLine": 233,
+              "startColumn": 35,
+              "endLine": 233,
+              "endColumn": 70,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/tasks/CheckoutTask.java",
+              "type": "String",
+              "code": "\t\tString populateLabel = populate.getPin();\n\t\tif (populateLabel != null && !populateLabel.isEmpty()) {\n\t\t\t// Expand label with environment vars if one was defined\n\t\t\tString expandedPopulateLabel = expand.format(populateLabel, false);\n\t\t\tif (!expandedPopulateLabel.isEmpty()) {\n\t\t\t\ttry {\n\t\t\t\t\t// if build is a change-number passed as a label"
+            },
+            {
+              "step": 10,
+              "variableName": "\"getBuildChange:pinned:label:\" + expandedPopulateLabel",
+              "startLine": 242,
+              "startColumn": 18,
+              "endLine": 242,
+              "endColumn": 72,
+              "uri": "p4-plugin-p4-1.17.1/src/main/java/org/jenkinsci/plugins/p4/tasks/CheckoutTask.java",
+              "type": "",
+              "code": "\t\t\t\t\tlogger.info(\"getBuildChange:pinned:change:\" + change);\n\t\t\t\t} catch (NumberFormatException e) {\n\t\t\t\t\tbuild = new P4LabelRef(expandedPopulateLabel);\n\t\t\t\t\tlogger.info(\"getBuildChange:pinned:label:\" + expandedPopulateLabel);\n\t\t\t\t}\n\t\t\t}\n\t\t}"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

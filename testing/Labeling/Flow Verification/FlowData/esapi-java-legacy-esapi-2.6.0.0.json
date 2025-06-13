@@ -1,0 +1,2229 @@
+{
+  "201": [
+    {
+      "resultIndex": 1,
+      "fileName": "SecurityWrapperResponse.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "strippedValue",
+              "startLine": 938,
+              "startColumn": 77,
+              "endLine": 938,
+              "endColumn": 90,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedName = StringUtilities.replaceLinearWhiteSpace(name);\n            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);"
+            },
+            {
+              "step": 1,
+              "variableName": "String input",
+              "startLine": 258,
+              "startColumn": 49,
+              "endLine": 258,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "input",
+              "startLine": 259,
+              "startColumn": 39,
+              "endLine": 259,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 3,
+              "variableName": "String input",
+              "startLine": 273,
+              "startColumn": 49,
+              "endLine": 273,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull, boolean canonicalize) throws ValidationException {\n        StringValidationRule rvr = new StringValidationRule( type, encoder );\n        Pattern p = ESAPI.securityConfiguration().getValidationPattern( type );\n        if ( p != null ) {"
+            },
+            {
+              "step": 4,
+              "variableName": "input",
+              "startLine": 285,
+              "startColumn": 38,
+              "endLine": 285,
+              "endColumn": 43,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String input",
+              "startLine": 262,
+              "startColumn": 45,
+              "endLine": 262,
+              "endColumn": 57,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String getValid( String context, String input ) throws ValidationException\n    {\n        String data = null;\n"
+            },
+            {
+              "step": 6,
+              "variableName": "data",
+              "startLine": 289,
+              "startColumn": 16,
+              "endLine": 289,
+              "endColumn": 20,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "        checkBlacklist(context, data, input);\n\n        // validation passed\n        return data;\n    }\n\n    /**"
+            },
+            {
+              "step": 7,
+              "variableName": "rvr.getValid(context, input)",
+              "startLine": 285,
+              "startColumn": 16,
+              "endLine": 285,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 8,
+              "variableName": "getValidInput(context, input, type, maxLength, allowNull, true)",
+              "startLine": 259,
+              "startColumn": 16,
+              "endLine": 259,
+              "endColumn": 79,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 9,
+              "variableName": "ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false)",
+              "startLine": 938,
+              "startColumn": 32,
+              "endLine": 938,
+              "endColumn": 168,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedName = StringUtilities.replaceLinearWhiteSpace(name);\n            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);"
+            },
+            {
+              "step": 10,
+              "variableName": "safeValue",
+              "startLine": 939,
+              "startColumn": 42,
+              "endLine": 939,
+              "endColumn": 51,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);\n        }"
+            },
+            {
+              "step": 11,
+              "variableName": "String value",
+              "startLine": 497,
+              "startColumn": 40,
+              "endLine": 497,
+              "endColumn": 52,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "     * @param name\n     * @param value\n     */\n    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);"
+            },
+            {
+              "step": 12,
+              "variableName": "value",
+              "startLine": 500,
+              "startColumn": 62,
+              "endLine": 500,
+              "endColumn": 67,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);\n        String safeName = null;\n        String safeValue = null;\n        try {"
+            },
+            {
+              "step": 13,
+              "variableName": "String input",
+              "startLine": 41,
+              "startColumn": 41,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "     * @param input\n     * @return the stripped value\n     */\n    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );"
+            },
+            {
+              "step": 14,
+              "variableName": "input",
+              "startLine": 44,
+              "startColumn": 22,
+              "endLine": 44,
+              "endColumn": 27,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {"
+            },
+            {
+              "step": 15,
+              "variableName": "input.charAt( i )",
+              "startLine": 44,
+              "startColumn": 22,
+              "endLine": 44,
+              "endColumn": 39,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "Number",
+              "code": "    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {"
+            },
+            {
+              "step": 16,
+              "variableName": "c",
+              "startLine": 46,
+              "startColumn": 28,
+              "endLine": 46,
+              "endColumn": 29,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "Number",
+              "code": "        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {\n                sb.append( ' ' );\n            }"
+            },
+            {
+              "step": 17,
+              "variableName": "sb",
+              "startLine": 46,
+              "startColumn": 17,
+              "endLine": 46,
+              "endColumn": 19,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "StringBuilder",
+              "code": "        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {\n                sb.append( ' ' );\n            }"
+            },
+            {
+              "step": 18,
+              "variableName": "sb",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 18,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "StringBuilder",
+              "code": "                sb.append( ' ' );\n            }\n        }\n        return sb.toString();\n    }\n\n"
+            },
+            {
+              "step": 19,
+              "variableName": "sb.toString()",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 29,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "                sb.append( ' ' );\n            }\n        }\n        return sb.toString();\n    }\n\n"
+            },
+            {
+              "step": 20,
+              "variableName": "StringUtilities.stripControls(value)",
+              "startLine": 500,
+              "startColumn": 32,
+              "endLine": 500,
+              "endColumn": 68,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);\n        String safeName = null;\n        String safeValue = null;\n        try {"
+            },
+            {
+              "step": 21,
+              "variableName": "strippedValue",
+              "startLine": 510,
+              "startColumn": 70,
+              "endLine": 510,
+              "endColumn": 83,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "        }\n\n        try {\n            safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header VALUE denied: HTTPHeaderName:\"+ name, e);\n        }"
+            },
+            {
+              "step": 22,
+              "variableName": "String input",
+              "startLine": 258,
+              "startColumn": 49,
+              "endLine": 258,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n"
+            },
+            {
+              "step": 23,
+              "variableName": "input",
+              "startLine": 259,
+              "startColumn": 39,
+              "endLine": 259,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 24,
+              "variableName": "String input",
+              "startLine": 273,
+              "startColumn": 49,
+              "endLine": 273,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull, boolean canonicalize) throws ValidationException {\n        StringValidationRule rvr = new StringValidationRule( type, encoder );\n        Pattern p = ESAPI.securityConfiguration().getValidationPattern( type );\n        if ( p != null ) {"
+            },
+            {
+              "step": 25,
+              "variableName": "input",
+              "startLine": 285,
+              "startColumn": 38,
+              "endLine": 285,
+              "endColumn": 43,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 26,
+              "variableName": "String input",
+              "startLine": 262,
+              "startColumn": 45,
+              "endLine": 262,
+              "endColumn": 57,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String getValid( String context, String input ) throws ValidationException\n    {\n        String data = null;\n"
+            },
+            {
+              "step": 27,
+              "variableName": "data",
+              "startLine": 289,
+              "startColumn": 16,
+              "endLine": 289,
+              "endColumn": 20,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "        checkBlacklist(context, data, input);\n\n        // validation passed\n        return data;\n    }\n\n    /**"
+            },
+            {
+              "step": 28,
+              "variableName": "rvr.getValid(context, input)",
+              "startLine": 285,
+              "startColumn": 16,
+              "endLine": 285,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 29,
+              "variableName": "getValidInput(context, input, type, maxLength, allowNull, true)",
+              "startLine": 259,
+              "startColumn": 16,
+              "endLine": 259,
+              "endColumn": 79,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 30,
+              "variableName": "ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false)",
+              "startLine": 510,
+              "startColumn": 25,
+              "endLine": 510,
+              "endColumn": 161,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "        }\n\n        try {\n            safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header VALUE denied: HTTPHeaderName:\"+ name, e);\n        }"
+            },
+            {
+              "step": 31,
+              "variableName": "safeValue",
+              "startLine": 519,
+              "startColumn": 58,
+              "endLine": 519,
+              "endColumn": 67,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "",
+              "code": "        boolean validValue = StringUtilities.notNullOrEmpty(safeValue, true);\n\n        if (validName && validValue) {\n            getHttpServletResponse().setHeader(safeName, safeValue);\n        }\n    }\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "strippedValue",
+              "startLine": 938,
+              "startColumn": 77,
+              "endLine": 938,
+              "endColumn": 90,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedName = StringUtilities.replaceLinearWhiteSpace(name);\n            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);"
+            },
+            {
+              "step": 1,
+              "variableName": "String input",
+              "startLine": 258,
+              "startColumn": 49,
+              "endLine": 258,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "input",
+              "startLine": 259,
+              "startColumn": 39,
+              "endLine": 259,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 3,
+              "variableName": "String input",
+              "startLine": 273,
+              "startColumn": 49,
+              "endLine": 273,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull, boolean canonicalize) throws ValidationException {\n        StringValidationRule rvr = new StringValidationRule( type, encoder );\n        Pattern p = ESAPI.securityConfiguration().getValidationPattern( type );\n        if ( p != null ) {"
+            },
+            {
+              "step": 4,
+              "variableName": "input",
+              "startLine": 285,
+              "startColumn": 38,
+              "endLine": 285,
+              "endColumn": 43,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String input",
+              "startLine": 262,
+              "startColumn": 45,
+              "endLine": 262,
+              "endColumn": 57,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String getValid( String context, String input ) throws ValidationException\n    {\n        String data = null;\n"
+            },
+            {
+              "step": 6,
+              "variableName": "input",
+              "startLine": 275,
+              "startColumn": 41,
+              "endLine": 275,
+              "endColumn": 46,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "\n        // canonicalize\n        if (canonicalizeInput) {\n            data = encoder.canonicalize(input);\n        } else {\n            String message = String.format(\"Input validation excludes canonicalization.  Context: %s   Input: %s\", context, input);\n            LOGGER.warning(Logger.SECURITY_AUDIT, message);"
+            },
+            {
+              "step": 7,
+              "variableName": "String input",
+              "startLine": 131,
+              "startColumn": 33,
+              "endLine": 131,
+              "endColumn": 45,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String canonicalize( String input ) {\n        if ( input == null ) {\n            return null;\n        }"
+            },
+            {
+              "step": 8,
+              "variableName": "input",
+              "startLine": 137,
+              "startColumn": 29,
+              "endLine": 137,
+              "endColumn": 34,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "        }\n\n        // Issue 231 - These are reverse boolean logic in the Encoder interface, so we need to invert these values - CS\n        return canonicalize(input,\n                            !ESAPI.securityConfiguration().getAllowMultipleEncoding(),\n                            !ESAPI.securityConfiguration().getAllowMixedEncoding() );\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "String input",
+              "startLine": 154,
+              "startColumn": 33,
+              "endLine": 154,
+              "endColumn": 45,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String canonicalize( String input, boolean restrictMultiple, boolean restrictMixed ) {\n        if ( input == null ) {\n            return null;\n        }"
+            },
+            {
+              "step": 10,
+              "variableName": "working",
+              "startLine": 208,
+              "startColumn": 16,
+              "endLine": 208,
+              "endColumn": 23,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "                logger.warning( Logger.SECURITY_FAILURE, \"Mixed encoding (\"+ mixedCount +\"x) detected in \" + input );\n            }\n        }\n        return working;\n    }\n\n    /**"
+            },
+            {
+              "step": 11,
+              "variableName": "canonicalize(input,",
+              "startLine": 137,
+              "startColumn": 16,
+              "endLine": 139,
+              "endColumn": 85,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "        }\n\n        // Issue 231 - These are reverse boolean logic in the Encoder interface, so we need to invert these values - CS\n        return canonicalize(input,\n                            !ESAPI.securityConfiguration().getAllowMultipleEncoding(),\n                            !ESAPI.securityConfiguration().getAllowMixedEncoding() );\n    }"
+            },
+            {
+              "step": 12,
+              "variableName": "encoder.canonicalize(input)",
+              "startLine": 275,
+              "startColumn": 20,
+              "endLine": 275,
+              "endColumn": 47,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "\n        // canonicalize\n        if (canonicalizeInput) {\n            data = encoder.canonicalize(input);\n        } else {\n            String message = String.format(\"Input validation excludes canonicalization.  Context: %s   Input: %s\", context, input);\n            LOGGER.warning(Logger.SECURITY_AUDIT, message);"
+            },
+            {
+              "step": 13,
+              "variableName": "data",
+              "startLine": 289,
+              "startColumn": 16,
+              "endLine": 289,
+              "endColumn": 20,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "        checkBlacklist(context, data, input);\n\n        // validation passed\n        return data;\n    }\n\n    /**"
+            },
+            {
+              "step": 14,
+              "variableName": "rvr.getValid(context, input)",
+              "startLine": 285,
+              "startColumn": 16,
+              "endLine": 285,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 15,
+              "variableName": "getValidInput(context, input, type, maxLength, allowNull, true)",
+              "startLine": 259,
+              "startColumn": 16,
+              "endLine": 259,
+              "endColumn": 79,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 16,
+              "variableName": "ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false)",
+              "startLine": 938,
+              "startColumn": 32,
+              "endLine": 938,
+              "endColumn": 168,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedName = StringUtilities.replaceLinearWhiteSpace(name);\n            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);"
+            },
+            {
+              "step": 17,
+              "variableName": "safeValue",
+              "startLine": 939,
+              "startColumn": 42,
+              "endLine": 939,
+              "endColumn": 51,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);\n        }"
+            },
+            {
+              "step": 18,
+              "variableName": "String value",
+              "startLine": 497,
+              "startColumn": 40,
+              "endLine": 497,
+              "endColumn": 52,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "     * @param name\n     * @param value\n     */\n    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);"
+            },
+            {
+              "step": 19,
+              "variableName": "value",
+              "startLine": 500,
+              "startColumn": 62,
+              "endLine": 500,
+              "endColumn": 67,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);\n        String safeName = null;\n        String safeValue = null;\n        try {"
+            },
+            {
+              "step": 20,
+              "variableName": "String input",
+              "startLine": 41,
+              "startColumn": 41,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "     * @param input\n     * @return the stripped value\n     */\n    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );"
+            },
+            {
+              "step": 21,
+              "variableName": "input",
+              "startLine": 44,
+              "startColumn": 22,
+              "endLine": 44,
+              "endColumn": 27,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {"
+            },
+            {
+              "step": 22,
+              "variableName": "input.charAt( i )",
+              "startLine": 44,
+              "startColumn": 22,
+              "endLine": 44,
+              "endColumn": 39,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "Number",
+              "code": "    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {"
+            },
+            {
+              "step": 23,
+              "variableName": "c",
+              "startLine": 46,
+              "startColumn": 28,
+              "endLine": 46,
+              "endColumn": 29,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "Number",
+              "code": "        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {\n                sb.append( ' ' );\n            }"
+            },
+            {
+              "step": 24,
+              "variableName": "sb",
+              "startLine": 46,
+              "startColumn": 17,
+              "endLine": 46,
+              "endColumn": 19,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "StringBuilder",
+              "code": "        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {\n                sb.append( ' ' );\n            }"
+            },
+            {
+              "step": 25,
+              "variableName": "sb",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 18,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "StringBuilder",
+              "code": "                sb.append( ' ' );\n            }\n        }\n        return sb.toString();\n    }\n\n"
+            },
+            {
+              "step": 26,
+              "variableName": "sb.toString()",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 29,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "                sb.append( ' ' );\n            }\n        }\n        return sb.toString();\n    }\n\n"
+            },
+            {
+              "step": 27,
+              "variableName": "StringUtilities.stripControls(value)",
+              "startLine": 500,
+              "startColumn": 32,
+              "endLine": 500,
+              "endColumn": 68,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);\n        String safeName = null;\n        String safeValue = null;\n        try {"
+            },
+            {
+              "step": 28,
+              "variableName": "strippedValue",
+              "startLine": 510,
+              "startColumn": 70,
+              "endLine": 510,
+              "endColumn": 83,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "        }\n\n        try {\n            safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header VALUE denied: HTTPHeaderName:\"+ name, e);\n        }"
+            },
+            {
+              "step": 29,
+              "variableName": "String input",
+              "startLine": 258,
+              "startColumn": 49,
+              "endLine": 258,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n"
+            },
+            {
+              "step": 30,
+              "variableName": "input",
+              "startLine": 259,
+              "startColumn": 39,
+              "endLine": 259,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 31,
+              "variableName": "String input",
+              "startLine": 273,
+              "startColumn": 49,
+              "endLine": 273,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull, boolean canonicalize) throws ValidationException {\n        StringValidationRule rvr = new StringValidationRule( type, encoder );\n        Pattern p = ESAPI.securityConfiguration().getValidationPattern( type );\n        if ( p != null ) {"
+            },
+            {
+              "step": 32,
+              "variableName": "input",
+              "startLine": 285,
+              "startColumn": 38,
+              "endLine": 285,
+              "endColumn": 43,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 33,
+              "variableName": "String input",
+              "startLine": 262,
+              "startColumn": 45,
+              "endLine": 262,
+              "endColumn": 57,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String getValid( String context, String input ) throws ValidationException\n    {\n        String data = null;\n"
+            },
+            {
+              "step": 34,
+              "variableName": "input",
+              "startLine": 275,
+              "startColumn": 41,
+              "endLine": 275,
+              "endColumn": 46,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "\n        // canonicalize\n        if (canonicalizeInput) {\n            data = encoder.canonicalize(input);\n        } else {\n            String message = String.format(\"Input validation excludes canonicalization.  Context: %s   Input: %s\", context, input);\n            LOGGER.warning(Logger.SECURITY_AUDIT, message);"
+            },
+            {
+              "step": 35,
+              "variableName": "String input",
+              "startLine": 131,
+              "startColumn": 33,
+              "endLine": 131,
+              "endColumn": 45,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String canonicalize( String input ) {\n        if ( input == null ) {\n            return null;\n        }"
+            },
+            {
+              "step": 36,
+              "variableName": "input",
+              "startLine": 137,
+              "startColumn": 29,
+              "endLine": 137,
+              "endColumn": 34,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "        }\n\n        // Issue 231 - These are reverse boolean logic in the Encoder interface, so we need to invert these values - CS\n        return canonicalize(input,\n                            !ESAPI.securityConfiguration().getAllowMultipleEncoding(),\n                            !ESAPI.securityConfiguration().getAllowMixedEncoding() );\n    }"
+            },
+            {
+              "step": 37,
+              "variableName": "String input",
+              "startLine": 154,
+              "startColumn": 33,
+              "endLine": 154,
+              "endColumn": 45,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String canonicalize( String input, boolean restrictMultiple, boolean restrictMixed ) {\n        if ( input == null ) {\n            return null;\n        }"
+            },
+            {
+              "step": 38,
+              "variableName": "working",
+              "startLine": 208,
+              "startColumn": 16,
+              "endLine": 208,
+              "endColumn": 23,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "                logger.warning( Logger.SECURITY_FAILURE, \"Mixed encoding (\"+ mixedCount +\"x) detected in \" + input );\n            }\n        }\n        return working;\n    }\n\n    /**"
+            },
+            {
+              "step": 39,
+              "variableName": "canonicalize(input,",
+              "startLine": 137,
+              "startColumn": 16,
+              "endLine": 139,
+              "endColumn": 85,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "        }\n\n        // Issue 231 - These are reverse boolean logic in the Encoder interface, so we need to invert these values - CS\n        return canonicalize(input,\n                            !ESAPI.securityConfiguration().getAllowMultipleEncoding(),\n                            !ESAPI.securityConfiguration().getAllowMixedEncoding() );\n    }"
+            },
+            {
+              "step": 40,
+              "variableName": "encoder.canonicalize(input)",
+              "startLine": 275,
+              "startColumn": 20,
+              "endLine": 275,
+              "endColumn": 47,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "\n        // canonicalize\n        if (canonicalizeInput) {\n            data = encoder.canonicalize(input);\n        } else {\n            String message = String.format(\"Input validation excludes canonicalization.  Context: %s   Input: %s\", context, input);\n            LOGGER.warning(Logger.SECURITY_AUDIT, message);"
+            },
+            {
+              "step": 41,
+              "variableName": "data",
+              "startLine": 289,
+              "startColumn": 16,
+              "endLine": 289,
+              "endColumn": 20,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "        checkBlacklist(context, data, input);\n\n        // validation passed\n        return data;\n    }\n\n    /**"
+            },
+            {
+              "step": 42,
+              "variableName": "rvr.getValid(context, input)",
+              "startLine": 285,
+              "startColumn": 16,
+              "endLine": 285,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 43,
+              "variableName": "getValidInput(context, input, type, maxLength, allowNull, true)",
+              "startLine": 259,
+              "startColumn": 16,
+              "endLine": 259,
+              "endColumn": 79,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 44,
+              "variableName": "ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false)",
+              "startLine": 510,
+              "startColumn": 25,
+              "endLine": 510,
+              "endColumn": 161,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "        }\n\n        try {\n            safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header VALUE denied: HTTPHeaderName:\"+ name, e);\n        }"
+            },
+            {
+              "step": 45,
+              "variableName": "safeValue",
+              "startLine": 519,
+              "startColumn": 58,
+              "endLine": 519,
+              "endColumn": 67,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "",
+              "code": "        boolean validValue = StringUtilities.notNullOrEmpty(safeValue, true);\n\n        if (validName && validValue) {\n            getHttpServletResponse().setHeader(safeName, safeValue);\n        }\n    }\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "safeValue",
+              "startLine": 939,
+              "startColumn": 42,
+              "endLine": 939,
+              "endColumn": 51,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "String value",
+              "startLine": 497,
+              "startColumn": 40,
+              "endLine": 497,
+              "endColumn": 52,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "     * @param name\n     * @param value\n     */\n    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);"
+            },
+            {
+              "step": 2,
+              "variableName": "value",
+              "startLine": 500,
+              "startColumn": 62,
+              "endLine": 500,
+              "endColumn": 67,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);\n        String safeName = null;\n        String safeValue = null;\n        try {"
+            },
+            {
+              "step": 3,
+              "variableName": "String input",
+              "startLine": 41,
+              "startColumn": 41,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "     * @param input\n     * @return the stripped value\n     */\n    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );"
+            },
+            {
+              "step": 4,
+              "variableName": "input",
+              "startLine": 44,
+              "startColumn": 22,
+              "endLine": 44,
+              "endColumn": 27,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {"
+            },
+            {
+              "step": 5,
+              "variableName": "input.charAt( i )",
+              "startLine": 44,
+              "startColumn": 22,
+              "endLine": 44,
+              "endColumn": 39,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "Number",
+              "code": "    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {"
+            },
+            {
+              "step": 6,
+              "variableName": "c",
+              "startLine": 46,
+              "startColumn": 28,
+              "endLine": 46,
+              "endColumn": 29,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "Number",
+              "code": "        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {\n                sb.append( ' ' );\n            }"
+            },
+            {
+              "step": 7,
+              "variableName": "sb",
+              "startLine": 46,
+              "startColumn": 17,
+              "endLine": 46,
+              "endColumn": 19,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "StringBuilder",
+              "code": "        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {\n                sb.append( ' ' );\n            }"
+            },
+            {
+              "step": 8,
+              "variableName": "sb",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 18,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "StringBuilder",
+              "code": "                sb.append( ' ' );\n            }\n        }\n        return sb.toString();\n    }\n\n"
+            },
+            {
+              "step": 9,
+              "variableName": "sb.toString()",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 29,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "                sb.append( ' ' );\n            }\n        }\n        return sb.toString();\n    }\n\n"
+            },
+            {
+              "step": 10,
+              "variableName": "StringUtilities.stripControls(value)",
+              "startLine": 500,
+              "startColumn": 32,
+              "endLine": 500,
+              "endColumn": 68,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);\n        String safeName = null;\n        String safeValue = null;\n        try {"
+            },
+            {
+              "step": 11,
+              "variableName": "strippedValue",
+              "startLine": 510,
+              "startColumn": 70,
+              "endLine": 510,
+              "endColumn": 83,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "        }\n\n        try {\n            safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header VALUE denied: HTTPHeaderName:\"+ name, e);\n        }"
+            },
+            {
+              "step": 12,
+              "variableName": "String input",
+              "startLine": 258,
+              "startColumn": 49,
+              "endLine": 258,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n"
+            },
+            {
+              "step": 13,
+              "variableName": "input",
+              "startLine": 259,
+              "startColumn": 39,
+              "endLine": 259,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 14,
+              "variableName": "String input",
+              "startLine": 273,
+              "startColumn": 49,
+              "endLine": 273,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull, boolean canonicalize) throws ValidationException {\n        StringValidationRule rvr = new StringValidationRule( type, encoder );\n        Pattern p = ESAPI.securityConfiguration().getValidationPattern( type );\n        if ( p != null ) {"
+            },
+            {
+              "step": 15,
+              "variableName": "input",
+              "startLine": 285,
+              "startColumn": 38,
+              "endLine": 285,
+              "endColumn": 43,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 16,
+              "variableName": "String input",
+              "startLine": 262,
+              "startColumn": 45,
+              "endLine": 262,
+              "endColumn": 57,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String getValid( String context, String input ) throws ValidationException\n    {\n        String data = null;\n"
+            },
+            {
+              "step": 17,
+              "variableName": "data",
+              "startLine": 289,
+              "startColumn": 16,
+              "endLine": 289,
+              "endColumn": 20,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "        checkBlacklist(context, data, input);\n\n        // validation passed\n        return data;\n    }\n\n    /**"
+            },
+            {
+              "step": 18,
+              "variableName": "rvr.getValid(context, input)",
+              "startLine": 285,
+              "startColumn": 16,
+              "endLine": 285,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 19,
+              "variableName": "getValidInput(context, input, type, maxLength, allowNull, true)",
+              "startLine": 259,
+              "startColumn": 16,
+              "endLine": 259,
+              "endColumn": 79,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 20,
+              "variableName": "ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false)",
+              "startLine": 510,
+              "startColumn": 25,
+              "endLine": 510,
+              "endColumn": 161,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "        }\n\n        try {\n            safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header VALUE denied: HTTPHeaderName:\"+ name, e);\n        }"
+            },
+            {
+              "step": 21,
+              "variableName": "safeValue",
+              "startLine": 519,
+              "startColumn": 58,
+              "endLine": 519,
+              "endColumn": 67,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "",
+              "code": "        boolean validValue = StringUtilities.notNullOrEmpty(safeValue, true);\n\n        if (validName && validValue) {\n            getHttpServletResponse().setHeader(safeName, safeValue);\n        }\n    }\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "safeValue",
+              "startLine": 939,
+              "startColumn": 42,
+              "endLine": 939,
+              "endColumn": 51,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "String value",
+              "startLine": 497,
+              "startColumn": 40,
+              "endLine": 497,
+              "endColumn": 52,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "     * @param name\n     * @param value\n     */\n    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);"
+            },
+            {
+              "step": 2,
+              "variableName": "value",
+              "startLine": 500,
+              "startColumn": 62,
+              "endLine": 500,
+              "endColumn": 67,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);\n        String safeName = null;\n        String safeValue = null;\n        try {"
+            },
+            {
+              "step": 3,
+              "variableName": "String input",
+              "startLine": 41,
+              "startColumn": 41,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "     * @param input\n     * @return the stripped value\n     */\n    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );"
+            },
+            {
+              "step": 4,
+              "variableName": "input",
+              "startLine": 44,
+              "startColumn": 22,
+              "endLine": 44,
+              "endColumn": 27,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {"
+            },
+            {
+              "step": 5,
+              "variableName": "input.charAt( i )",
+              "startLine": 44,
+              "startColumn": 22,
+              "endLine": 44,
+              "endColumn": 39,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "Number",
+              "code": "    public static String stripControls( String input ) {\n        StringBuilder sb = new StringBuilder();\n        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {"
+            },
+            {
+              "step": 6,
+              "variableName": "c",
+              "startLine": 46,
+              "startColumn": 28,
+              "endLine": 46,
+              "endColumn": 29,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "Number",
+              "code": "        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {\n                sb.append( ' ' );\n            }"
+            },
+            {
+              "step": 7,
+              "variableName": "sb",
+              "startLine": 46,
+              "startColumn": 17,
+              "endLine": 46,
+              "endColumn": 19,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "StringBuilder",
+              "code": "        for ( int i=0; i<input.length(); i++ ) {\n            char c = input.charAt( i );\n            if ( c > 0x20 && c < 0x7f ) {\n                sb.append( c );\n            } else {\n                sb.append( ' ' );\n            }"
+            },
+            {
+              "step": 8,
+              "variableName": "sb",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 18,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "StringBuilder",
+              "code": "                sb.append( ' ' );\n            }\n        }\n        return sb.toString();\n    }\n\n"
+            },
+            {
+              "step": 9,
+              "variableName": "sb.toString()",
+              "startLine": 51,
+              "startColumn": 16,
+              "endLine": 51,
+              "endColumn": 29,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/StringUtilities.java",
+              "type": "String",
+              "code": "                sb.append( ' ' );\n            }\n        }\n        return sb.toString();\n    }\n\n"
+            },
+            {
+              "step": 10,
+              "variableName": "StringUtilities.stripControls(value)",
+              "startLine": 500,
+              "startColumn": 32,
+              "endLine": 500,
+              "endColumn": 68,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "    public void setHeader(String name, String value) {\n        SecurityConfiguration sc = ESAPI.securityConfiguration();\n        String strippedName = StringUtilities.stripControls(name);\n        String strippedValue = StringUtilities.stripControls(value);\n        String safeName = null;\n        String safeValue = null;\n        try {"
+            },
+            {
+              "step": 11,
+              "variableName": "strippedValue",
+              "startLine": 510,
+              "startColumn": 70,
+              "endLine": 510,
+              "endColumn": 83,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "        }\n\n        try {\n            safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header VALUE denied: HTTPHeaderName:\"+ name, e);\n        }"
+            },
+            {
+              "step": 12,
+              "variableName": "String input",
+              "startLine": 258,
+              "startColumn": 49,
+              "endLine": 258,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n"
+            },
+            {
+              "step": 13,
+              "variableName": "input",
+              "startLine": 259,
+              "startColumn": 39,
+              "endLine": 259,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 14,
+              "variableName": "String input",
+              "startLine": 273,
+              "startColumn": 49,
+              "endLine": 273,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull, boolean canonicalize) throws ValidationException {\n        StringValidationRule rvr = new StringValidationRule( type, encoder );\n        Pattern p = ESAPI.securityConfiguration().getValidationPattern( type );\n        if ( p != null ) {"
+            },
+            {
+              "step": 15,
+              "variableName": "input",
+              "startLine": 285,
+              "startColumn": 38,
+              "endLine": 285,
+              "endColumn": 43,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 16,
+              "variableName": "String input",
+              "startLine": 262,
+              "startColumn": 45,
+              "endLine": 262,
+              "endColumn": 57,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String getValid( String context, String input ) throws ValidationException\n    {\n        String data = null;\n"
+            },
+            {
+              "step": 17,
+              "variableName": "input",
+              "startLine": 275,
+              "startColumn": 41,
+              "endLine": 275,
+              "endColumn": 46,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "\n        // canonicalize\n        if (canonicalizeInput) {\n            data = encoder.canonicalize(input);\n        } else {\n            String message = String.format(\"Input validation excludes canonicalization.  Context: %s   Input: %s\", context, input);\n            LOGGER.warning(Logger.SECURITY_AUDIT, message);"
+            },
+            {
+              "step": 18,
+              "variableName": "String input",
+              "startLine": 131,
+              "startColumn": 33,
+              "endLine": 131,
+              "endColumn": 45,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String canonicalize( String input ) {\n        if ( input == null ) {\n            return null;\n        }"
+            },
+            {
+              "step": 19,
+              "variableName": "input",
+              "startLine": 137,
+              "startColumn": 29,
+              "endLine": 137,
+              "endColumn": 34,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "        }\n\n        // Issue 231 - These are reverse boolean logic in the Encoder interface, so we need to invert these values - CS\n        return canonicalize(input,\n                            !ESAPI.securityConfiguration().getAllowMultipleEncoding(),\n                            !ESAPI.securityConfiguration().getAllowMixedEncoding() );\n    }"
+            },
+            {
+              "step": 20,
+              "variableName": "String input",
+              "startLine": 154,
+              "startColumn": 33,
+              "endLine": 154,
+              "endColumn": 45,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String canonicalize( String input, boolean restrictMultiple, boolean restrictMixed ) {\n        if ( input == null ) {\n            return null;\n        }"
+            },
+            {
+              "step": 21,
+              "variableName": "working",
+              "startLine": 208,
+              "startColumn": 16,
+              "endLine": 208,
+              "endColumn": 23,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "                logger.warning( Logger.SECURITY_FAILURE, \"Mixed encoding (\"+ mixedCount +\"x) detected in \" + input );\n            }\n        }\n        return working;\n    }\n\n    /**"
+            },
+            {
+              "step": 22,
+              "variableName": "canonicalize(input,",
+              "startLine": 137,
+              "startColumn": 16,
+              "endLine": 139,
+              "endColumn": 85,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "        }\n\n        // Issue 231 - These are reverse boolean logic in the Encoder interface, so we need to invert these values - CS\n        return canonicalize(input,\n                            !ESAPI.securityConfiguration().getAllowMultipleEncoding(),\n                            !ESAPI.securityConfiguration().getAllowMixedEncoding() );\n    }"
+            },
+            {
+              "step": 23,
+              "variableName": "encoder.canonicalize(input)",
+              "startLine": 275,
+              "startColumn": 20,
+              "endLine": 275,
+              "endColumn": 47,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "\n        // canonicalize\n        if (canonicalizeInput) {\n            data = encoder.canonicalize(input);\n        } else {\n            String message = String.format(\"Input validation excludes canonicalization.  Context: %s   Input: %s\", context, input);\n            LOGGER.warning(Logger.SECURITY_AUDIT, message);"
+            },
+            {
+              "step": 24,
+              "variableName": "data",
+              "startLine": 289,
+              "startColumn": 16,
+              "endLine": 289,
+              "endColumn": 20,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "        checkBlacklist(context, data, input);\n\n        // validation passed\n        return data;\n    }\n\n    /**"
+            },
+            {
+              "step": 25,
+              "variableName": "rvr.getValid(context, input)",
+              "startLine": 285,
+              "startColumn": 16,
+              "endLine": 285,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 26,
+              "variableName": "getValidInput(context, input, type, maxLength, allowNull, true)",
+              "startLine": 259,
+              "startColumn": 16,
+              "endLine": 259,
+              "endColumn": 79,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 27,
+              "variableName": "ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false)",
+              "startLine": 510,
+              "startColumn": 25,
+              "endLine": 510,
+              "endColumn": 161,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "String",
+              "code": "        }\n\n        try {\n            safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header VALUE denied: HTTPHeaderName:\"+ name, e);\n        }"
+            },
+            {
+              "step": 28,
+              "variableName": "safeValue",
+              "startLine": 519,
+              "startColumn": 58,
+              "endLine": 519,
+              "endColumn": 67,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/filters/SecurityWrapperResponse.java",
+              "type": "",
+              "code": "        boolean validValue = StringUtilities.notNullOrEmpty(safeValue, true);\n\n        if (validName && validValue) {\n            getHttpServletResponse().setHeader(safeName, safeValue);\n        }\n    }\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "DefaultHTTPUtilities.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "strippedValue",
+              "startLine": 938,
+              "startColumn": 77,
+              "endLine": 938,
+              "endColumn": 90,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedName = StringUtilities.replaceLinearWhiteSpace(name);\n            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);"
+            },
+            {
+              "step": 1,
+              "variableName": "String input",
+              "startLine": 258,
+              "startColumn": 49,
+              "endLine": 258,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "input",
+              "startLine": 259,
+              "startColumn": 39,
+              "endLine": 259,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 3,
+              "variableName": "String input",
+              "startLine": 273,
+              "startColumn": 49,
+              "endLine": 273,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull, boolean canonicalize) throws ValidationException {\n        StringValidationRule rvr = new StringValidationRule( type, encoder );\n        Pattern p = ESAPI.securityConfiguration().getValidationPattern( type );\n        if ( p != null ) {"
+            },
+            {
+              "step": 4,
+              "variableName": "input",
+              "startLine": 285,
+              "startColumn": 38,
+              "endLine": 285,
+              "endColumn": 43,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String input",
+              "startLine": 262,
+              "startColumn": 45,
+              "endLine": 262,
+              "endColumn": 57,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String getValid( String context, String input ) throws ValidationException\n    {\n        String data = null;\n"
+            },
+            {
+              "step": 6,
+              "variableName": "data",
+              "startLine": 289,
+              "startColumn": 16,
+              "endLine": 289,
+              "endColumn": 20,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "        checkBlacklist(context, data, input);\n\n        // validation passed\n        return data;\n    }\n\n    /**"
+            },
+            {
+              "step": 7,
+              "variableName": "rvr.getValid(context, input)",
+              "startLine": 285,
+              "startColumn": 16,
+              "endLine": 285,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 8,
+              "variableName": "getValidInput(context, input, type, maxLength, allowNull, true)",
+              "startLine": 259,
+              "startColumn": 16,
+              "endLine": 259,
+              "endColumn": 79,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 9,
+              "variableName": "ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false)",
+              "startLine": 938,
+              "startColumn": 32,
+              "endLine": 938,
+              "endColumn": 168,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedName = StringUtilities.replaceLinearWhiteSpace(name);\n            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);"
+            },
+            {
+              "step": 10,
+              "variableName": "safeValue",
+              "startLine": 939,
+              "startColumn": 42,
+              "endLine": 939,
+              "endColumn": 51,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "",
+              "code": "            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);\n        }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "strippedValue",
+              "startLine": 938,
+              "startColumn": 77,
+              "endLine": 938,
+              "endColumn": 90,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedName = StringUtilities.replaceLinearWhiteSpace(name);\n            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);"
+            },
+            {
+              "step": 1,
+              "variableName": "String input",
+              "startLine": 258,
+              "startColumn": 49,
+              "endLine": 258,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "input",
+              "startLine": 259,
+              "startColumn": 39,
+              "endLine": 259,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 3,
+              "variableName": "String input",
+              "startLine": 273,
+              "startColumn": 49,
+              "endLine": 273,
+              "endColumn": 61,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     * for additional details.\n     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull, boolean canonicalize) throws ValidationException {\n        StringValidationRule rvr = new StringValidationRule( type, encoder );\n        Pattern p = ESAPI.securityConfiguration().getValidationPattern( type );\n        if ( p != null ) {"
+            },
+            {
+              "step": 4,
+              "variableName": "input",
+              "startLine": 285,
+              "startColumn": 38,
+              "endLine": 285,
+              "endColumn": 43,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "String input",
+              "startLine": 262,
+              "startColumn": 45,
+              "endLine": 262,
+              "endColumn": 57,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String getValid( String context, String input ) throws ValidationException\n    {\n        String data = null;\n"
+            },
+            {
+              "step": 6,
+              "variableName": "input",
+              "startLine": 275,
+              "startColumn": 41,
+              "endLine": 275,
+              "endColumn": 46,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "\n        // canonicalize\n        if (canonicalizeInput) {\n            data = encoder.canonicalize(input);\n        } else {\n            String message = String.format(\"Input validation excludes canonicalization.  Context: %s   Input: %s\", context, input);\n            LOGGER.warning(Logger.SECURITY_AUDIT, message);"
+            },
+            {
+              "step": 7,
+              "variableName": "String input",
+              "startLine": 131,
+              "startColumn": 33,
+              "endLine": 131,
+              "endColumn": 45,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String canonicalize( String input ) {\n        if ( input == null ) {\n            return null;\n        }"
+            },
+            {
+              "step": 8,
+              "variableName": "input",
+              "startLine": 137,
+              "startColumn": 29,
+              "endLine": 137,
+              "endColumn": 34,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "        }\n\n        // Issue 231 - These are reverse boolean logic in the Encoder interface, so we need to invert these values - CS\n        return canonicalize(input,\n                            !ESAPI.securityConfiguration().getAllowMultipleEncoding(),\n                            !ESAPI.securityConfiguration().getAllowMixedEncoding() );\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "String input",
+              "startLine": 154,
+              "startColumn": 33,
+              "endLine": 154,
+              "endColumn": 45,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "    /**\n     * {@inheritDoc}\n     */\n    public String canonicalize( String input, boolean restrictMultiple, boolean restrictMixed ) {\n        if ( input == null ) {\n            return null;\n        }"
+            },
+            {
+              "step": 10,
+              "variableName": "working",
+              "startLine": 208,
+              "startColumn": 16,
+              "endLine": 208,
+              "endColumn": 23,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "                logger.warning( Logger.SECURITY_FAILURE, \"Mixed encoding (\"+ mixedCount +\"x) detected in \" + input );\n            }\n        }\n        return working;\n    }\n\n    /**"
+            },
+            {
+              "step": 11,
+              "variableName": "canonicalize(input,",
+              "startLine": 137,
+              "startColumn": 16,
+              "endLine": 139,
+              "endColumn": 85,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java",
+              "type": "String",
+              "code": "        }\n\n        // Issue 231 - These are reverse boolean logic in the Encoder interface, so we need to invert these values - CS\n        return canonicalize(input,\n                            !ESAPI.securityConfiguration().getAllowMultipleEncoding(),\n                            !ESAPI.securityConfiguration().getAllowMixedEncoding() );\n    }"
+            },
+            {
+              "step": 12,
+              "variableName": "encoder.canonicalize(input)",
+              "startLine": 275,
+              "startColumn": 20,
+              "endLine": 275,
+              "endColumn": 47,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "\n        // canonicalize\n        if (canonicalizeInput) {\n            data = encoder.canonicalize(input);\n        } else {\n            String message = String.format(\"Input validation excludes canonicalization.  Context: %s   Input: %s\", context, input);\n            LOGGER.warning(Logger.SECURITY_AUDIT, message);"
+            },
+            {
+              "step": 13,
+              "variableName": "data",
+              "startLine": 289,
+              "startColumn": 16,
+              "endLine": 289,
+              "endColumn": 20,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/validation/StringValidationRule.java",
+              "type": "String",
+              "code": "        checkBlacklist(context, data, input);\n\n        // validation passed\n        return data;\n    }\n\n    /**"
+            },
+            {
+              "step": 14,
+              "variableName": "rvr.getValid(context, input)",
+              "startLine": 285,
+              "startColumn": 16,
+              "endLine": 285,
+              "endColumn": 44,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "        rvr.setMaximumLength(maxLength);\n        rvr.setAllowNull(allowNull);\n        rvr.setCanonicalize(canonicalize);\n        return rvr.getValid(context, input);\n    }\n\n    /**"
+            },
+            {
+              "step": 15,
+              "variableName": "getValidInput(context, input, type, maxLength, allowNull, true)",
+              "startLine": 259,
+              "startColumn": 16,
+              "endLine": 259,
+              "endColumn": 79,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultValidator.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getValidInput(String context, String input, String type, int maxLength, boolean allowNull) throws ValidationException {\n        return getValidInput(context, input, type, maxLength, allowNull, true);\n    }\n\n    /**"
+            },
+            {
+              "step": 16,
+              "variableName": "ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false)",
+              "startLine": 938,
+              "startColumn": 32,
+              "endLine": 938,
+              "endColumn": 168,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "            String strippedName = StringUtilities.replaceLinearWhiteSpace(name);\n            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);"
+            },
+            {
+              "step": 17,
+              "variableName": "safeValue",
+              "startLine": 939,
+              "startColumn": 42,
+              "endLine": 939,
+              "endColumn": 51,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "",
+              "code": "            String strippedValue = StringUtilities.replaceLinearWhiteSpace(value);\n            String safeName = ESAPI.validator().getValidInput(\"setHeader\", strippedName, \"HTTPHeaderName\", sc.getIntProp(\"HttpUtilities.MaxHeaderNameSize\"), false);\n            String safeValue = ESAPI.validator().getValidInput(\"setHeader\", strippedValue, \"HTTPHeaderValue\", sc.getIntProp(\"HttpUtilities.MaxHeaderValueSize\"), false);\n            response.setHeader(safeName, safeValue);\n        } catch (ValidationException e) {\n            logger.warning(Logger.SECURITY_FAILURE, \"Attempt to set invalid header denied\", e);\n        }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 3,
+      "fileName": "InterceptingPrintWriter.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "roles",
+              "startLine": 261,
+              "startColumn": 44,
+              "endLine": 261,
+              "endColumn": 49,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultUser.java",
+              "type": "HashSet",
+              "code": "     * {@inheritDoc}\n     */\n    public Set<String> getRoles() {\n        return Collections.unmodifiableSet(roles);\n    }\n\n    /**"
+            },
+            {
+              "step": 1,
+              "variableName": "Collections.unmodifiableSet(roles)",
+              "startLine": 261,
+              "startColumn": 16,
+              "endLine": 261,
+              "endColumn": 50,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultUser.java",
+              "type": "Set [<element>] : Object",
+              "code": "     * {@inheritDoc}\n     */\n    public Set<String> getRoles() {\n        return Collections.unmodifiableSet(roles);\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "user.getRoles()",
+              "startLine": 632,
+              "startColumn": 24,
+              "endLine": 632,
+              "endColumn": 39,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "Set [<element>] : Object",
+              "code": "        sb.append(\" | \");\n        sb.append(getHashedPassword(user));\n        sb.append(\" | \");\n        sb.append(dump(user.getRoles()));\n        sb.append(\" | \");\n        sb.append(user.isLocked() ? \"locked\" : \"unlocked\");\n        sb.append(\" | \");"
+            },
+            {
+              "step": 3,
+              "variableName": "Collection<String> c",
+              "startLine": 660,
+              "startColumn": 25,
+              "endLine": 660,
+              "endColumn": 45,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "Set [<element>] : Object",
+              "code": "     * @param c the collection to convert to a comma separated list\n     * @return a comma separated list containing the values in c\n     */\n    private String dump(Collection<String> c) {\n        StringBuilder sb = new StringBuilder();\n        for (String s : c) {\n            sb.append(s).append(\",\");"
+            },
+            {
+              "step": 4,
+              "variableName": "c",
+              "startLine": 662,
+              "startColumn": 25,
+              "endLine": 662,
+              "endColumn": 26,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "Set [<element>] : Object",
+              "code": "     */\n    private String dump(Collection<String> c) {\n        StringBuilder sb = new StringBuilder();\n        for (String s : c) {\n            sb.append(s).append(\",\");\n        }\n        if ( c.size() > 0) {"
+            },
+            {
+              "step": 5,
+              "variableName": "s",
+              "startLine": 663,
+              "startColumn": 23,
+              "endLine": 663,
+              "endColumn": 24,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "String",
+              "code": "    private String dump(Collection<String> c) {\n        StringBuilder sb = new StringBuilder();\n        for (String s : c) {\n            sb.append(s).append(\",\");\n        }\n        if ( c.size() > 0) {\n            return sb.toString().substring(0, sb.length() - 1);"
+            },
+            {
+              "step": 6,
+              "variableName": "sb",
+              "startLine": 663,
+              "startColumn": 13,
+              "endLine": 663,
+              "endColumn": 15,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "StringBuilder",
+              "code": "    private String dump(Collection<String> c) {\n        StringBuilder sb = new StringBuilder();\n        for (String s : c) {\n            sb.append(s).append(\",\");\n        }\n        if ( c.size() > 0) {\n            return sb.toString().substring(0, sb.length() - 1);"
+            },
+            {
+              "step": 7,
+              "variableName": "sb",
+              "startLine": 666,
+              "startColumn": 20,
+              "endLine": 666,
+              "endColumn": 22,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "StringBuilder",
+              "code": "            sb.append(s).append(\",\");\n        }\n        if ( c.size() > 0) {\n            return sb.toString().substring(0, sb.length() - 1);\n        }\n        return \"\";\n"
+            },
+            {
+              "step": 8,
+              "variableName": "sb.toString()",
+              "startLine": 666,
+              "startColumn": 20,
+              "endLine": 666,
+              "endColumn": 33,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "String",
+              "code": "            sb.append(s).append(\",\");\n        }\n        if ( c.size() > 0) {\n            return sb.toString().substring(0, sb.length() - 1);\n        }\n        return \"\";\n"
+            },
+            {
+              "step": 9,
+              "variableName": "sb.toString().substring(0, sb.length() - 1)",
+              "startLine": 666,
+              "startColumn": 20,
+              "endLine": 666,
+              "endColumn": 63,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "String",
+              "code": "            sb.append(s).append(\",\");\n        }\n        if ( c.size() > 0) {\n            return sb.toString().substring(0, sb.length() - 1);\n        }\n        return \"\";\n"
+            },
+            {
+              "step": 10,
+              "variableName": "dump(user.getRoles())",
+              "startLine": 632,
+              "startColumn": 19,
+              "endLine": 632,
+              "endColumn": 40,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "String",
+              "code": "        sb.append(\" | \");\n        sb.append(getHashedPassword(user));\n        sb.append(\" | \");\n        sb.append(dump(user.getRoles()));\n        sb.append(\" | \");\n        sb.append(user.isLocked() ? \"locked\" : \"unlocked\");\n        sb.append(\" | \");"
+            },
+            {
+              "step": 11,
+              "variableName": "sb",
+              "startLine": 632,
+              "startColumn": 9,
+              "endLine": 632,
+              "endColumn": 11,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "StringBuilder",
+              "code": "        sb.append(\" | \");\n        sb.append(getHashedPassword(user));\n        sb.append(\" | \");\n        sb.append(dump(user.getRoles()));\n        sb.append(\" | \");\n        sb.append(user.isLocked() ? \"locked\" : \"unlocked\");\n        sb.append(\" | \");"
+            },
+            {
+              "step": 12,
+              "variableName": "sb",
+              "startLine": 651,
+              "startColumn": 16,
+              "endLine": 651,
+              "endColumn": 18,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "StringBuilder",
+              "code": "        sb.append(user.getExpirationTime().getTime());\n        sb.append(\" | \");\n        sb.append(user.getFailedLoginCount());\n        return sb.toString();\n    }\n\n    /**"
+            },
+            {
+              "step": 13,
+              "variableName": "sb.toString()",
+              "startLine": 651,
+              "startColumn": 16,
+              "endLine": 651,
+              "endColumn": 29,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "String",
+              "code": "        sb.append(user.getExpirationTime().getTime());\n        sb.append(\" | \");\n        sb.append(user.getFailedLoginCount());\n        return sb.toString();\n    }\n\n    /**"
+            },
+            {
+              "step": 14,
+              "variableName": "save(u)",
+              "startLine": 611,
+              "startColumn": 32,
+              "endLine": 611,
+              "endColumn": 39,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/FileBasedAuthenticator.java",
+              "type": "String",
+              "code": "            String accountName = (String) o;\n            DefaultUser u = (DefaultUser) getUser(accountName);\n            if (u != null && !u.isAnonymous()) {\n                writer.println(save(u));\n            } else {\n                throw new AuthenticationCredentialsException(\"Problem saving user\", \"Skipping save of user \" + accountName);\n            }"
+            },
+            {
+              "step": 15,
+              "variableName": "String x",
+              "startLine": 154,
+              "startColumn": 25,
+              "endLine": 154,
+              "endColumn": 33,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/waf/internal/InterceptingPrintWriter.java",
+              "type": "String",
+              "code": "        super.println(x);\n    }\n\n    public void println(String x) {\n        super.println(x);\n    }\n"
+            },
+            {
+              "step": 16,
+              "variableName": "x",
+              "startLine": 155,
+              "startColumn": 23,
+              "endLine": 155,
+              "endColumn": 24,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/waf/internal/InterceptingPrintWriter.java",
+              "type": "",
+              "code": "    }\n\n    public void println(String x) {\n        super.println(x);\n    }\n\n    protected void setError() {"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ],
+  "537": [
+    {
+      "resultIndex": 0,
+      "fileName": "DefaultSecurityConfiguration.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "PropNames.FILEUPLOAD_ALLOW_ANONYMOUS_USERS",
+              "startLine": 166,
+              "startColumn": 91,
+              "endLine": 166,
+              "endColumn": 133,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "                    \"; exception was: \" + ex);\n        }\n        try {\n            fileUploadAllowAnonymousUsers = ESAPI.securityConfiguration().getBooleanProp( PropNames.FILEUPLOAD_ALLOW_ANONYMOUS_USERS );\n        } catch ( ConfigurationException ex ) {\n            // This likely will be the normal case (because ESAPI clients seldom update\n            // their ESAPI.properties file from release to release. Therefore, I am"
+            },
+            {
+              "step": 1,
+              "variableName": "String propertyName",
+              "startLine": 1440,
+              "startColumn": 35,
+              "endLine": 1440,
+              "endColumn": 54,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultSecurityConfiguration.java",
+              "type": "String",
+              "code": "     * 3.) In ESAPI.properties\n     */\n    @Override\n    public Boolean getBooleanProp(String propertyName) throws ConfigurationException {\n        try {\n            return esapiPropertyManager.getBooleanProp(propertyName);\n        } catch (ConfigurationException ex) {"
+            },
+            {
+              "step": 2,
+              "variableName": "propertyName",
+              "startLine": 1442,
+              "startColumn": 56,
+              "endLine": 1442,
+              "endColumn": 68,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultSecurityConfiguration.java",
+              "type": "String",
+              "code": "    @Override\n    public Boolean getBooleanProp(String propertyName) throws ConfigurationException {\n        try {\n            return esapiPropertyManager.getBooleanProp(propertyName);\n        } catch (ConfigurationException ex) {\n            String property = properties.getProperty(propertyName);\n            if ( property == null ) {"
+            },
+            {
+              "step": 3,
+              "variableName": "String propertyName",
+              "startLine": 68,
+              "startColumn": 35,
+              "endLine": 68,
+              "endColumn": 54,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/configuration/EsapiPropertyManager.java",
+              "type": "String",
+              "code": "     * {@inheritDoc}\n     */\n    @Override\n    public Boolean getBooleanProp(String propertyName) throws ConfigurationException {\n        for (AbstractPrioritizedPropertyLoader loader : loaders) {\n            try {\n                return loader.getBooleanProp(propertyName);"
+            },
+            {
+              "step": 4,
+              "variableName": "\"Could not find property \" + propertyName + \" in configuration\"",
+              "startLine": 76,
+              "startColumn": 42,
+              "endLine": 76,
+              "endColumn": 105,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/configuration/EsapiPropertyManager.java",
+              "type": "String",
+              "code": "                logToStdout(\"Boolean property '\" + propertyName + \"' not found in \" + loader.name(), e);\n            }\n        }\n        throw new ConfigurationException(\"Could not find property \" + propertyName + \" in configuration\");\n    }\n\n    /**"
+            },
+            {
+              "step": 5,
+              "variableName": "new ConfigurationException(\"Could not find property \" + propertyName + \" in configuration\")",
+              "startLine": 76,
+              "startColumn": 15,
+              "endLine": 76,
+              "endColumn": 106,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/configuration/EsapiPropertyManager.java",
+              "type": "ConfigurationException",
+              "code": "                logToStdout(\"Boolean property '\" + propertyName + \"' not found in \" + loader.name(), e);\n            }\n        }\n        throw new ConfigurationException(\"Could not find property \" + propertyName + \" in configuration\");\n    }\n\n    /**"
+            },
+            {
+              "step": 6,
+              "variableName": "e",
+              "startLine": 73,
+              "startColumn": 102,
+              "endLine": 73,
+              "endColumn": 103,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/configuration/EsapiPropertyManager.java",
+              "type": "ConfigurationException",
+              "code": "            try {\n                return loader.getBooleanProp(propertyName);\n            } catch (ConfigurationException e) {\n                logToStdout(\"Boolean property '\" + propertyName + \"' not found in \" + loader.name(), e);\n            }\n        }\n        throw new ConfigurationException(\"Could not find property \" + propertyName + \" in configuration\");"
+            },
+            {
+              "step": 7,
+              "variableName": "Throwable t",
+              "startLine": 884,
+              "startColumn": 67,
+              "endLine": 884,
+              "endColumn": 78,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultSecurityConfiguration.java",
+              "type": "ConfigurationException",
+              "code": "     * @param t     Associated exception that was caught. The class name and\n     *              exception message is also logged.\n     */\n    public final synchronized static void logToStdout(String msg, Throwable t) {\n     // Note that this class was made final because it is called from this class'\n     // CTOR and we want to prohibit someone from <i>easily</i> doing sneaky\n     // things like subclassing this class and inserting a malicious code as a"
+            },
+            {
+              "step": 8,
+              "variableName": "\"ESAPI: \" + msg +",
+              "startLine": 899,
+              "startColumn": 32,
+              "endLine": 901,
+              "endColumn": 63,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultSecurityConfiguration.java",
+              "type": "",
+              "code": "        if ( t == null ) {\n            System.out.println(\"ESAPI: \" + msg);\n        } else {\n            System.out.println(\"ESAPI: \" + msg +\n                               \". Caught \" + t.getClass().getName() +\n                               \"; exception message was: \" + t);\n        }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "PropNames.FILEUPLOAD_ALLOW_ANONYMOUS_USERS",
+              "startLine": 166,
+              "startColumn": 91,
+              "endLine": 166,
+              "endColumn": 133,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultHTTPUtilities.java",
+              "type": "String",
+              "code": "                    \"; exception was: \" + ex);\n        }\n        try {\n            fileUploadAllowAnonymousUsers = ESAPI.securityConfiguration().getBooleanProp( PropNames.FILEUPLOAD_ALLOW_ANONYMOUS_USERS );\n        } catch ( ConfigurationException ex ) {\n            // This likely will be the normal case (because ESAPI clients seldom update\n            // their ESAPI.properties file from release to release. Therefore, I am"
+            },
+            {
+              "step": 1,
+              "variableName": "String propertyName",
+              "startLine": 557,
+              "startColumn": 35,
+              "endLine": 557,
+              "endColumn": 54,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/test/java/org/owasp/esapi/SecurityConfigurationWrapper.java",
+              "type": "String",
+              "code": "    }\n\n    @Override\n    public Boolean getBooleanProp(String propertyName) throws ConfigurationException {\n        return wrapped.getBooleanProp(propertyName);\n    }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "propertyName",
+              "startLine": 558,
+              "startColumn": 39,
+              "endLine": 558,
+              "endColumn": 51,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/test/java/org/owasp/esapi/SecurityConfigurationWrapper.java",
+              "type": "String",
+              "code": "\n    @Override\n    public Boolean getBooleanProp(String propertyName) throws ConfigurationException {\n        return wrapped.getBooleanProp(propertyName);\n    }\n\n    @Override"
+            },
+            {
+              "step": 3,
+              "variableName": "String propertyName",
+              "startLine": 1440,
+              "startColumn": 35,
+              "endLine": 1440,
+              "endColumn": 54,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultSecurityConfiguration.java",
+              "type": "String",
+              "code": "     * 3.) In ESAPI.properties\n     */\n    @Override\n    public Boolean getBooleanProp(String propertyName) throws ConfigurationException {\n        try {\n            return esapiPropertyManager.getBooleanProp(propertyName);\n        } catch (ConfigurationException ex) {"
+            },
+            {
+              "step": 4,
+              "variableName": "propertyName",
+              "startLine": 1442,
+              "startColumn": 56,
+              "endLine": 1442,
+              "endColumn": 68,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultSecurityConfiguration.java",
+              "type": "String",
+              "code": "    @Override\n    public Boolean getBooleanProp(String propertyName) throws ConfigurationException {\n        try {\n            return esapiPropertyManager.getBooleanProp(propertyName);\n        } catch (ConfigurationException ex) {\n            String property = properties.getProperty(propertyName);\n            if ( property == null ) {"
+            },
+            {
+              "step": 5,
+              "variableName": "String propertyName",
+              "startLine": 68,
+              "startColumn": 35,
+              "endLine": 68,
+              "endColumn": 54,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/configuration/EsapiPropertyManager.java",
+              "type": "String",
+              "code": "     * {@inheritDoc}\n     */\n    @Override\n    public Boolean getBooleanProp(String propertyName) throws ConfigurationException {\n        for (AbstractPrioritizedPropertyLoader loader : loaders) {\n            try {\n                return loader.getBooleanProp(propertyName);"
+            },
+            {
+              "step": 6,
+              "variableName": "\"Could not find property \" + propertyName + \" in configuration\"",
+              "startLine": 76,
+              "startColumn": 42,
+              "endLine": 76,
+              "endColumn": 105,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/configuration/EsapiPropertyManager.java",
+              "type": "String",
+              "code": "                logToStdout(\"Boolean property '\" + propertyName + \"' not found in \" + loader.name(), e);\n            }\n        }\n        throw new ConfigurationException(\"Could not find property \" + propertyName + \" in configuration\");\n    }\n\n    /**"
+            },
+            {
+              "step": 7,
+              "variableName": "new ConfigurationException(\"Could not find property \" + propertyName + \" in configuration\")",
+              "startLine": 76,
+              "startColumn": 15,
+              "endLine": 76,
+              "endColumn": 106,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/configuration/EsapiPropertyManager.java",
+              "type": "ConfigurationException",
+              "code": "                logToStdout(\"Boolean property '\" + propertyName + \"' not found in \" + loader.name(), e);\n            }\n        }\n        throw new ConfigurationException(\"Could not find property \" + propertyName + \" in configuration\");\n    }\n\n    /**"
+            },
+            {
+              "step": 8,
+              "variableName": "e",
+              "startLine": 73,
+              "startColumn": 102,
+              "endLine": 73,
+              "endColumn": 103,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/configuration/EsapiPropertyManager.java",
+              "type": "ConfigurationException",
+              "code": "            try {\n                return loader.getBooleanProp(propertyName);\n            } catch (ConfigurationException e) {\n                logToStdout(\"Boolean property '\" + propertyName + \"' not found in \" + loader.name(), e);\n            }\n        }\n        throw new ConfigurationException(\"Could not find property \" + propertyName + \" in configuration\");"
+            },
+            {
+              "step": 9,
+              "variableName": "Throwable t",
+              "startLine": 884,
+              "startColumn": 67,
+              "endLine": 884,
+              "endColumn": 78,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultSecurityConfiguration.java",
+              "type": "ConfigurationException",
+              "code": "     * @param t     Associated exception that was caught. The class name and\n     *              exception message is also logged.\n     */\n    public final synchronized static void logToStdout(String msg, Throwable t) {\n     // Note that this class was made final because it is called from this class'\n     // CTOR and we want to prohibit someone from <i>easily</i> doing sneaky\n     // things like subclassing this class and inserting a malicious code as a"
+            },
+            {
+              "step": 10,
+              "variableName": "\"ESAPI: \" + msg +",
+              "startLine": 899,
+              "startColumn": 32,
+              "endLine": 901,
+              "endColumn": 63,
+              "uri": "esapi-java-legacy-esapi-2.6.0.0/src/main/java/org/owasp/esapi/reference/DefaultSecurityConfiguration.java",
+              "type": "",
+              "code": "        if ( t == null ) {\n            System.out.println(\"ESAPI: \" + msg);\n        } else {\n            System.out.println(\"ESAPI: \" + msg +\n                               \". Caught \" + t.getClass().getName() +\n                               \"; exception message was: \" + t);\n        }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
