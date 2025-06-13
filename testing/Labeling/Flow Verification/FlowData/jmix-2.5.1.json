@@ -1,0 +1,2322 @@
+{
+  "201": [
+    {
+      "resultIndex": 3,
+      "fileName": "ReportRestController.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "info",
+              "startLine": 95,
+              "startColumn": 9,
+              "endLine": 95,
+              "endColumn": 13,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "GroupInfo",
+              "code": "\n        GroupInfo info = new GroupInfo();\n        //noinspection ConstantConditions\n        info.id = group.getId().toString();\n        info.code = group.getCode();\n        info.title = group.getTitle();\n"
+            },
+            {
+              "step": 1,
+              "variableName": "info",
+              "startLine": 96,
+              "startColumn": 9,
+              "endLine": 96,
+              "endColumn": 13,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "GroupInfo",
+              "code": "        GroupInfo info = new GroupInfo();\n        //noinspection ConstantConditions\n        info.id = group.getId().toString();\n        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);"
+            },
+            {
+              "step": 2,
+              "variableName": "info",
+              "startLine": 97,
+              "startColumn": 9,
+              "endLine": 97,
+              "endColumn": 13,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "GroupInfo",
+              "code": "        //noinspection ConstantConditions\n        info.id = group.getId().toString();\n        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "info",
+              "startLine": 99,
+              "startColumn": 36,
+              "endLine": 99,
+              "endColumn": 40,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "GroupInfo",
+              "code": "        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }\n\n    public String loadReportsList() {"
+            },
+            {
+              "step": 4,
+              "variableName": "createGson().toJson(info)",
+              "startLine": 99,
+              "startColumn": 16,
+              "endLine": 99,
+              "endColumn": 41,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "String",
+              "code": "        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }\n\n    public String loadReportsList() {"
+            },
+            {
+              "step": 5,
+              "variableName": "controllerManager.loadGroup(entityId)",
+              "startLine": 60,
+              "startColumn": 16,
+              "endLine": 60,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestController.java",
+              "type": "",
+              "code": "\n    @GetMapping(value = \"/group/{entityId}\")\n    public String loadGroup(@PathVariable String entityId) {\n        return controllerManager.loadGroup(entityId);\n    }\n\n    @PostMapping(value = \"/run/{entityId}\")"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "info",
+              "startLine": 96,
+              "startColumn": 9,
+              "endLine": 96,
+              "endColumn": 13,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "GroupInfo",
+              "code": "        GroupInfo info = new GroupInfo();\n        //noinspection ConstantConditions\n        info.id = group.getId().toString();\n        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);"
+            },
+            {
+              "step": 1,
+              "variableName": "info",
+              "startLine": 97,
+              "startColumn": 9,
+              "endLine": 97,
+              "endColumn": 13,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "GroupInfo",
+              "code": "        //noinspection ConstantConditions\n        info.id = group.getId().toString();\n        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }"
+            },
+            {
+              "step": 2,
+              "variableName": "info",
+              "startLine": 99,
+              "startColumn": 36,
+              "endLine": 99,
+              "endColumn": 40,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "GroupInfo",
+              "code": "        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }\n\n    public String loadReportsList() {"
+            },
+            {
+              "step": 3,
+              "variableName": "createGson().toJson(info)",
+              "startLine": 99,
+              "startColumn": 16,
+              "endLine": 99,
+              "endColumn": 41,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "String",
+              "code": "        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }\n\n    public String loadReportsList() {"
+            },
+            {
+              "step": 4,
+              "variableName": "controllerManager.loadGroup(entityId)",
+              "startLine": 60,
+              "startColumn": 16,
+              "endLine": 60,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestController.java",
+              "type": "",
+              "code": "\n    @GetMapping(value = \"/group/{entityId}\")\n    public String loadGroup(@PathVariable String entityId) {\n        return controllerManager.loadGroup(entityId);\n    }\n\n    @PostMapping(value = \"/run/{entityId}\")"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "info",
+              "startLine": 97,
+              "startColumn": 9,
+              "endLine": 97,
+              "endColumn": 13,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "GroupInfo",
+              "code": "        //noinspection ConstantConditions\n        info.id = group.getId().toString();\n        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }"
+            },
+            {
+              "step": 1,
+              "variableName": "info",
+              "startLine": 99,
+              "startColumn": 36,
+              "endLine": 99,
+              "endColumn": 40,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "GroupInfo",
+              "code": "        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }\n\n    public String loadReportsList() {"
+            },
+            {
+              "step": 2,
+              "variableName": "createGson().toJson(info)",
+              "startLine": 99,
+              "startColumn": 16,
+              "endLine": 99,
+              "endColumn": 41,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "String",
+              "code": "        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }\n\n    public String loadReportsList() {"
+            },
+            {
+              "step": 3,
+              "variableName": "controllerManager.loadGroup(entityId)",
+              "startLine": 60,
+              "startColumn": 16,
+              "endLine": 60,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestController.java",
+              "type": "",
+              "code": "\n    @GetMapping(value = \"/group/{entityId}\")\n    public String loadGroup(@PathVariable String entityId) {\n        return controllerManager.loadGroup(entityId);\n    }\n\n    @PostMapping(value = \"/run/{entityId}\")"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "info",
+              "startLine": 99,
+              "startColumn": 36,
+              "endLine": 99,
+              "endColumn": 40,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "GroupInfo",
+              "code": "        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }\n\n    public String loadReportsList() {"
+            },
+            {
+              "step": 1,
+              "variableName": "createGson().toJson(info)",
+              "startLine": 99,
+              "startColumn": 16,
+              "endLine": 99,
+              "endColumn": 41,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestControllerManager.java",
+              "type": "String",
+              "code": "        info.code = group.getCode();\n        info.title = group.getTitle();\n\n        return createGson().toJson(info);\n    }\n\n    public String loadReportsList() {"
+            },
+            {
+              "step": 2,
+              "variableName": "controllerManager.loadGroup(entityId)",
+              "startLine": 60,
+              "startColumn": 16,
+              "endLine": 60,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-reports/reports-rest/src/main/java/io/jmix/reportsrest/controller/ReportRestController.java",
+              "type": "",
+              "code": "\n    @GetMapping(value = \"/group/{entityId}\")\n    public String loadGroup(@PathVariable String entityId) {\n        return controllerManager.loadGroup(entityId);\n    }\n\n    @PostMapping(value = \"/run/{entityId}\")"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 4,
+      "fileName": "ServicesController.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "fromT",
+              "startLine": 42,
+              "startColumn": 57,
+              "endLine": 42,
+              "endColumn": 62,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/tree/FromNode.java",
+              "type": "Token",
+              "code": "\n    @Override\n    public String toString() {\n        return (token != null ? token.getText() : \"\") + fromT;\n    }\n\n    @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "(token != null ? token.getText() : \"\") + fromT",
+              "startLine": 42,
+              "startColumn": 16,
+              "endLine": 42,
+              "endColumn": 62,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/tree/FromNode.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return (token != null ? token.getText() : \"\") + fromT;\n    }\n\n    @Override"
+            },
+            {
+              "step": 2,
+              "variableName": "node.toString()",
+              "startLine": 32,
+              "startColumn": 33,
+              "endLine": 32,
+              "endColumn": 48,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/ErrorRec.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return message + \" [\" + node.toString() + \"]\";\n    }\n}\n"
+            },
+            {
+              "step": 3,
+              "variableName": "message + \" [\" + node.toString() + \"]\"",
+              "startLine": 32,
+              "startColumn": 16,
+              "endLine": 32,
+              "endColumn": 54,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/ErrorRec.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return message + \" [\" + node.toString() + \"]\";\n    }\n}\n"
+            },
+            {
+              "step": 4,
+              "variableName": "value.toString()",
+              "startLine": 41,
+              "startColumn": 37,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 5,
+              "variableName": "value == null ? \"\" : value.toString()",
+              "startLine": 41,
+              "startColumn": 16,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "... : String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 6,
+              "variableName": "datatype.format(methodResult)",
+              "startLine": 196,
+              "startColumn": 46,
+              "endLine": 196,
+              "endColumn": 75,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 7,
+              "variableName": "String stringValue",
+              "startLine": 230,
+              "startColumn": 34,
+              "endLine": 230,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected String stringValue;\n        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }"
+            },
+            {
+              "step": 8,
+              "variableName": "stringValue",
+              "startLine": 231,
+              "startColumn": 32,
+              "endLine": 231,
+              "endColumn": 43,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 9,
+              "variableName": "this",
+              "startLine": 231,
+              "startColumn": 13,
+              "endLine": 231,
+              "endColumn": 17,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 10,
+              "variableName": "new ServiceCallResult(datatype.format(methodResult), false)",
+              "startLine": 196,
+              "startColumn": 24,
+              "endLine": 196,
+              "endColumn": 83,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 11,
+              "variableName": "_invokeServiceMethod(serviceName, methodName, HttpMethod.POST, paramNames, paramValuesStr, modelVersion)",
+              "startLine": 101,
+              "startColumn": 16,
+              "endLine": 101,
+              "endColumn": 120,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        Map<String, String> paramsMap = restParseUtils.parseParamsJson(paramsJson);\n        List<String> paramNames = new ArrayList<>(paramsMap.keySet());\n        List<String> paramValuesStr = new ArrayList<>(paramsMap.values());\n        return _invokeServiceMethod(serviceName, methodName, HttpMethod.POST, paramNames, paramValuesStr, modelVersion);\n    }\n\n    public Collection<RestServicesConfiguration.RestServiceInfo> getServiceInfos() {"
+            },
+            {
+              "step": 12,
+              "variableName": "invokeServiceMethodPost(...) : ServiceCallResult [stringValue] : String",
+              "startLine": 44,
+              "startColumn": 62,
+              "endLine": 45,
+              "endColumn": 54,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "                                                          @PathVariable String methodName,\n                                                          @RequestParam(required = false) String modelVersion,\n                                                          @RequestBody(required = false) String paramsJson) throws Throwable {\n        ServicesControllerManager.ServiceCallResult result = servicesControllerManager.invokeServiceMethodPost(serviceName,\n                methodName, paramsJson, modelVersion);\n        HttpStatus status;\n        if (result == null) {"
+            },
+            {
+              "step": 13,
+              "variableName": "result",
+              "startLine": 54,
+              "startColumn": 87,
+              "endLine": 54,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            },
+            {
+              "step": 14,
+              "variableName": "getStringValue",
+              "startLine": 239,
+              "startColumn": 23,
+              "endLine": 239,
+              "endColumn": 37,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            return validJson;\n        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }"
+            },
+            {
+              "step": 15,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 16,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 17,
+              "variableName": "result.getStringValue()",
+              "startLine": 54,
+              "startColumn": 87,
+              "endLine": 54,
+              "endColumn": 110,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            },
+            {
+              "step": 18,
+              "variableName": "ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue())",
+              "startLine": 54,
+              "startColumn": 16,
+              "endLine": 54,
+              "endColumn": 111,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "fromT",
+              "startLine": 42,
+              "startColumn": 57,
+              "endLine": 42,
+              "endColumn": 62,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/tree/FromNode.java",
+              "type": "Token",
+              "code": "\n    @Override\n    public String toString() {\n        return (token != null ? token.getText() : \"\") + fromT;\n    }\n\n    @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "(token != null ? token.getText() : \"\") + fromT",
+              "startLine": 42,
+              "startColumn": 16,
+              "endLine": 42,
+              "endColumn": 62,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/tree/FromNode.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return (token != null ? token.getText() : \"\") + fromT;\n    }\n\n    @Override"
+            },
+            {
+              "step": 2,
+              "variableName": "node.toString()",
+              "startLine": 32,
+              "startColumn": 33,
+              "endLine": 32,
+              "endColumn": 48,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/ErrorRec.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return message + \" [\" + node.toString() + \"]\";\n    }\n}\n"
+            },
+            {
+              "step": 3,
+              "variableName": "message + \" [\" + node.toString() + \"]\"",
+              "startLine": 32,
+              "startColumn": 16,
+              "endLine": 32,
+              "endColumn": 54,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/ErrorRec.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return message + \" [\" + node.toString() + \"]\";\n    }\n}\n"
+            },
+            {
+              "step": 4,
+              "variableName": "value.toString()",
+              "startLine": 36,
+              "startColumn": 37,
+              "endLine": 36,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/FileRefDatatype.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 5,
+              "variableName": "value == null ? \"\" : value.toString()",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/FileRefDatatype.java",
+              "type": "... : String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 6,
+              "variableName": "datatype.format(methodResult)",
+              "startLine": 196,
+              "startColumn": 46,
+              "endLine": 196,
+              "endColumn": 75,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 7,
+              "variableName": "String stringValue",
+              "startLine": 230,
+              "startColumn": 34,
+              "endLine": 230,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected String stringValue;\n        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }"
+            },
+            {
+              "step": 8,
+              "variableName": "stringValue",
+              "startLine": 231,
+              "startColumn": 32,
+              "endLine": 231,
+              "endColumn": 43,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 9,
+              "variableName": "this",
+              "startLine": 231,
+              "startColumn": 13,
+              "endLine": 231,
+              "endColumn": 17,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 10,
+              "variableName": "new ServiceCallResult(datatype.format(methodResult), false)",
+              "startLine": 196,
+              "startColumn": 24,
+              "endLine": 196,
+              "endColumn": 83,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 11,
+              "variableName": "_invokeServiceMethod(serviceName, methodName, HttpMethod.POST, paramNames, paramValuesStr, modelVersion)",
+              "startLine": 101,
+              "startColumn": 16,
+              "endLine": 101,
+              "endColumn": 120,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        Map<String, String> paramsMap = restParseUtils.parseParamsJson(paramsJson);\n        List<String> paramNames = new ArrayList<>(paramsMap.keySet());\n        List<String> paramValuesStr = new ArrayList<>(paramsMap.values());\n        return _invokeServiceMethod(serviceName, methodName, HttpMethod.POST, paramNames, paramValuesStr, modelVersion);\n    }\n\n    public Collection<RestServicesConfiguration.RestServiceInfo> getServiceInfos() {"
+            },
+            {
+              "step": 12,
+              "variableName": "invokeServiceMethodPost(...) : ServiceCallResult [stringValue] : String",
+              "startLine": 44,
+              "startColumn": 62,
+              "endLine": 45,
+              "endColumn": 54,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "                                                          @PathVariable String methodName,\n                                                          @RequestParam(required = false) String modelVersion,\n                                                          @RequestBody(required = false) String paramsJson) throws Throwable {\n        ServicesControllerManager.ServiceCallResult result = servicesControllerManager.invokeServiceMethodPost(serviceName,\n                methodName, paramsJson, modelVersion);\n        HttpStatus status;\n        if (result == null) {"
+            },
+            {
+              "step": 13,
+              "variableName": "result",
+              "startLine": 54,
+              "startColumn": 87,
+              "endLine": 54,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            },
+            {
+              "step": 14,
+              "variableName": "getStringValue",
+              "startLine": 239,
+              "startColumn": 23,
+              "endLine": 239,
+              "endColumn": 37,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            return validJson;\n        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }"
+            },
+            {
+              "step": 15,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 16,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 17,
+              "variableName": "result.getStringValue()",
+              "startLine": 54,
+              "startColumn": 87,
+              "endLine": 54,
+              "endColumn": 110,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            },
+            {
+              "step": 18,
+              "variableName": "ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue())",
+              "startLine": 54,
+              "startColumn": 16,
+              "endLine": 54,
+              "endColumn": 111,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "rawValueEntry",
+              "startLine": 100,
+              "startColumn": 63,
+              "endLine": 100,
+              "endColumn": 76,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "Entry",
+              "code": "    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "rawValueEntry.getKey()",
+              "startLine": 100,
+              "startColumn": 63,
+              "endLine": 100,
+              "endColumn": 85,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "String",
+              "code": "    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry))",
+              "startLine": 100,
+              "startColumn": 39,
+              "endLine": 100,
+              "endColumn": 117,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "Object[] [[]] : String",
+              "code": "    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry))",
+              "startLine": 100,
+              "startColumn": 39,
+              "endLine": 100,
+              "endColumn": 117,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "String",
+              "code": "    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "rawValues.entrySet().stream()",
+              "startLine": 99,
+              "startColumn": 70,
+              "endLine": 100,
+              "endColumn": 118,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "Stream [<element>] : String",
+              "code": "\n    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "collect(...) : String",
+              "startLine": 99,
+              "startColumn": 70,
+              "endLine": 101,
+              "endColumn": 51,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }"
+            },
+            {
+              "step": 6,
+              "variableName": "String.format(\"Field: %s, Data: {%s}",
+              "startLine": 99,
+              "startColumn": 16,
+              "endLine": 101,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "Object[] [[]] : String",
+              "code": "\n    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }"
+            },
+            {
+              "step": 7,
+              "variableName": "String.format(\"Field: %s, Data: {%s}",
+              "startLine": 99,
+              "startColumn": 16,
+              "endLine": 101,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }"
+            },
+            {
+              "step": 8,
+              "variableName": "value.toString()",
+              "startLine": 41,
+              "startColumn": 37,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 9,
+              "variableName": "value == null ? \"\" : value.toString()",
+              "startLine": 41,
+              "startColumn": 16,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "... : String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 10,
+              "variableName": "datatype.format(methodResult)",
+              "startLine": 196,
+              "startColumn": 46,
+              "endLine": 196,
+              "endColumn": 75,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 11,
+              "variableName": "String stringValue",
+              "startLine": 230,
+              "startColumn": 34,
+              "endLine": 230,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected String stringValue;\n        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }"
+            },
+            {
+              "step": 12,
+              "variableName": "stringValue",
+              "startLine": 231,
+              "startColumn": 32,
+              "endLine": 231,
+              "endColumn": 43,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 13,
+              "variableName": "this",
+              "startLine": 231,
+              "startColumn": 13,
+              "endLine": 231,
+              "endColumn": 17,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 14,
+              "variableName": "new ServiceCallResult(datatype.format(methodResult), false)",
+              "startLine": 196,
+              "startColumn": 24,
+              "endLine": 196,
+              "endColumn": 83,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 15,
+              "variableName": "_invokeServiceMethod(serviceName, methodName, HttpMethod.POST, paramNames, paramValuesStr, modelVersion)",
+              "startLine": 101,
+              "startColumn": 16,
+              "endLine": 101,
+              "endColumn": 120,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        Map<String, String> paramsMap = restParseUtils.parseParamsJson(paramsJson);\n        List<String> paramNames = new ArrayList<>(paramsMap.keySet());\n        List<String> paramValuesStr = new ArrayList<>(paramsMap.values());\n        return _invokeServiceMethod(serviceName, methodName, HttpMethod.POST, paramNames, paramValuesStr, modelVersion);\n    }\n\n    public Collection<RestServicesConfiguration.RestServiceInfo> getServiceInfos() {"
+            },
+            {
+              "step": 16,
+              "variableName": "invokeServiceMethodPost(...) : ServiceCallResult [stringValue] : String",
+              "startLine": 44,
+              "startColumn": 62,
+              "endLine": 45,
+              "endColumn": 54,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "                                                          @PathVariable String methodName,\n                                                          @RequestParam(required = false) String modelVersion,\n                                                          @RequestBody(required = false) String paramsJson) throws Throwable {\n        ServicesControllerManager.ServiceCallResult result = servicesControllerManager.invokeServiceMethodPost(serviceName,\n                methodName, paramsJson, modelVersion);\n        HttpStatus status;\n        if (result == null) {"
+            },
+            {
+              "step": 17,
+              "variableName": "result",
+              "startLine": 54,
+              "startColumn": 87,
+              "endLine": 54,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            },
+            {
+              "step": 18,
+              "variableName": "getStringValue",
+              "startLine": 239,
+              "startColumn": 23,
+              "endLine": 239,
+              "endColumn": 37,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            return validJson;\n        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }"
+            },
+            {
+              "step": 19,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 20,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 21,
+              "variableName": "result.getStringValue()",
+              "startLine": 54,
+              "startColumn": 87,
+              "endLine": 54,
+              "endColumn": 110,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            },
+            {
+              "step": 22,
+              "variableName": "ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue())",
+              "startLine": 54,
+              "startColumn": 16,
+              "endLine": 54,
+              "endColumn": 111,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "query",
+              "startLine": 306,
+              "startColumn": 35,
+              "endLine": 306,
+              "endColumn": 40,
+              "uri": "jmix-2.5.1/jmix-tabbedmode/tabbedmode-flowui/src/main/java/io/jmix/tabbedmode/JmixUI.java",
+              "type": "String",
+              "code": "        public String toString() {\n            return \"JmixBrowserNavigateEvent{\" +\n                    \"route='\" + route + '\\'' +\n                    \", query='\" + query + '\\'' +\n                    \", appShellTitle='\" + appShellTitle + '\\'' +\n                    \", historyState=\" + historyState +\n                    \", trigger='\" + trigger + '\\'' +"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Jmi",
+              "startLine": 304,
+              "startColumn": 20,
+              "endLine": 310,
+              "endColumn": 24,
+              "uri": "jmix-2.5.1/jmix-tabbedmode/tabbedmode-flowui/src/main/java/io/jmix/tabbedmode/JmixUI.java",
+              "type": "String",
+              "code": "\n        @Override\n        public String toString() {\n            return \"JmixBrowserNavigateEvent{\" +\n                    \"route='\" + route + '\\'' +\n                    \", query='\" + query + '\\'' +\n                    \", appShellTitle='\" + appShellTitle + '\\'' +"
+            },
+            {
+              "step": 2,
+              "variableName": "value.toString()",
+              "startLine": 41,
+              "startColumn": 37,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 3,
+              "variableName": "value == null ? \"\" : value.toString()",
+              "startLine": 41,
+              "startColumn": 16,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "... : String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 4,
+              "variableName": "datatype.format(methodResult)",
+              "startLine": 196,
+              "startColumn": 46,
+              "endLine": 196,
+              "endColumn": 75,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 5,
+              "variableName": "String stringValue",
+              "startLine": 230,
+              "startColumn": 34,
+              "endLine": 230,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected String stringValue;\n        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }"
+            },
+            {
+              "step": 6,
+              "variableName": "stringValue",
+              "startLine": 231,
+              "startColumn": 32,
+              "endLine": 231,
+              "endColumn": 43,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 7,
+              "variableName": "this",
+              "startLine": 231,
+              "startColumn": 13,
+              "endLine": 231,
+              "endColumn": 17,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 8,
+              "variableName": "new ServiceCallResult(datatype.format(methodResult), false)",
+              "startLine": 196,
+              "startColumn": 24,
+              "endLine": 196,
+              "endColumn": 83,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 9,
+              "variableName": "_invokeServiceMethod(serviceName, methodName, HttpMethod.POST, paramNames, paramValuesStr, modelVersion)",
+              "startLine": 101,
+              "startColumn": 16,
+              "endLine": 101,
+              "endColumn": 120,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        Map<String, String> paramsMap = restParseUtils.parseParamsJson(paramsJson);\n        List<String> paramNames = new ArrayList<>(paramsMap.keySet());\n        List<String> paramValuesStr = new ArrayList<>(paramsMap.values());\n        return _invokeServiceMethod(serviceName, methodName, HttpMethod.POST, paramNames, paramValuesStr, modelVersion);\n    }\n\n    public Collection<RestServicesConfiguration.RestServiceInfo> getServiceInfos() {"
+            },
+            {
+              "step": 10,
+              "variableName": "invokeServiceMethodPost(...) : ServiceCallResult [stringValue] : String",
+              "startLine": 44,
+              "startColumn": 62,
+              "endLine": 45,
+              "endColumn": 54,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "                                                          @PathVariable String methodName,\n                                                          @RequestParam(required = false) String modelVersion,\n                                                          @RequestBody(required = false) String paramsJson) throws Throwable {\n        ServicesControllerManager.ServiceCallResult result = servicesControllerManager.invokeServiceMethodPost(serviceName,\n                methodName, paramsJson, modelVersion);\n        HttpStatus status;\n        if (result == null) {"
+            },
+            {
+              "step": 11,
+              "variableName": "result",
+              "startLine": 54,
+              "startColumn": 87,
+              "endLine": 54,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            },
+            {
+              "step": 12,
+              "variableName": "getStringValue",
+              "startLine": 239,
+              "startColumn": 23,
+              "endLine": 239,
+              "endColumn": 37,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            return validJson;\n        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }"
+            },
+            {
+              "step": 13,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 14,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 15,
+              "variableName": "result.getStringValue()",
+              "startLine": 54,
+              "startColumn": 87,
+              "endLine": 54,
+              "endColumn": 110,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            },
+            {
+              "step": 16,
+              "variableName": "ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue())",
+              "startLine": 54,
+              "startColumn": 16,
+              "endLine": 54,
+              "endColumn": 111,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping(\"/{serviceName}/{methodName}\")"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 5,
+      "fileName": "ServicesController.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "fromT",
+              "startLine": 42,
+              "startColumn": 57,
+              "endLine": 42,
+              "endColumn": 62,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/tree/FromNode.java",
+              "type": "Token",
+              "code": "\n    @Override\n    public String toString() {\n        return (token != null ? token.getText() : \"\") + fromT;\n    }\n\n    @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "(token != null ? token.getText() : \"\") + fromT",
+              "startLine": 42,
+              "startColumn": 16,
+              "endLine": 42,
+              "endColumn": 62,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/tree/FromNode.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return (token != null ? token.getText() : \"\") + fromT;\n    }\n\n    @Override"
+            },
+            {
+              "step": 2,
+              "variableName": "node.toString()",
+              "startLine": 32,
+              "startColumn": 33,
+              "endLine": 32,
+              "endColumn": 48,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/ErrorRec.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return message + \" [\" + node.toString() + \"]\";\n    }\n}\n"
+            },
+            {
+              "step": 3,
+              "variableName": "message + \" [\" + node.toString() + \"]\"",
+              "startLine": 32,
+              "startColumn": 16,
+              "endLine": 32,
+              "endColumn": 54,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/ErrorRec.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return message + \" [\" + node.toString() + \"]\";\n    }\n}\n"
+            },
+            {
+              "step": 4,
+              "variableName": "value.toString()",
+              "startLine": 41,
+              "startColumn": 37,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 5,
+              "variableName": "value == null ? \"\" : value.toString()",
+              "startLine": 41,
+              "startColumn": 16,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "... : String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 6,
+              "variableName": "datatype.format(methodResult)",
+              "startLine": 196,
+              "startColumn": 46,
+              "endLine": 196,
+              "endColumn": 75,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 7,
+              "variableName": "String stringValue",
+              "startLine": 230,
+              "startColumn": 34,
+              "endLine": 230,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected String stringValue;\n        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }"
+            },
+            {
+              "step": 8,
+              "variableName": "stringValue",
+              "startLine": 231,
+              "startColumn": 32,
+              "endLine": 231,
+              "endColumn": 43,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 9,
+              "variableName": "this",
+              "startLine": 231,
+              "startColumn": 13,
+              "endLine": 231,
+              "endColumn": 17,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 10,
+              "variableName": "new ServiceCallResult(datatype.format(methodResult), false)",
+              "startLine": 196,
+              "startColumn": 24,
+              "endLine": 196,
+              "endColumn": 83,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 11,
+              "variableName": "_invokeServiceMethod(serviceName, methodName, HttpMethod.GET, paramNames, paramValuesStr, modelVersion)",
+              "startLine": 90,
+              "startColumn": 16,
+              "endLine": 90,
+              "endColumn": 119,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        paramsMap.remove(\"modelVersion\");\n        List<String> paramNames = new ArrayList<>(paramsMap.keySet());\n        List<String> paramValuesStr = new ArrayList<>(paramsMap.values());\n        return _invokeServiceMethod(serviceName, methodName, HttpMethod.GET, paramNames, paramValuesStr, modelVersion);\n    }\n\n    @Nullable"
+            },
+            {
+              "step": 12,
+              "variableName": "invokeServiceMethodGet(...) : ServiceCallResult [stringValue] : String",
+              "startLine": 62,
+              "startColumn": 62,
+              "endLine": 63,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "                                                         @PathVariable String methodName,\n                                                         @RequestParam(required = false) String modelVersion,\n                                                         @RequestParam Map<String, String> paramsMap) throws Throwable {\n        ServicesControllerManager.ServiceCallResult result = servicesControllerManager.invokeServiceMethodGet(serviceName,\n                methodName, paramsMap, modelVersion);\n        HttpStatus status;\n        if (result == null) {"
+            },
+            {
+              "step": 13,
+              "variableName": "result",
+              "startLine": 72,
+              "startColumn": 87,
+              "endLine": 72,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            },
+            {
+              "step": 14,
+              "variableName": "getStringValue",
+              "startLine": 239,
+              "startColumn": 23,
+              "endLine": 239,
+              "endColumn": 37,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            return validJson;\n        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }"
+            },
+            {
+              "step": 15,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 16,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 17,
+              "variableName": "result.getStringValue()",
+              "startLine": 72,
+              "startColumn": 87,
+              "endLine": 72,
+              "endColumn": 110,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            },
+            {
+              "step": 18,
+              "variableName": "ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue())",
+              "startLine": 72,
+              "startColumn": 16,
+              "endLine": 72,
+              "endColumn": 111,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "fromT",
+              "startLine": 42,
+              "startColumn": 57,
+              "endLine": 42,
+              "endColumn": 62,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/tree/FromNode.java",
+              "type": "Token",
+              "code": "\n    @Override\n    public String toString() {\n        return (token != null ? token.getText() : \"\") + fromT;\n    }\n\n    @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "(token != null ? token.getText() : \"\") + fromT",
+              "startLine": 42,
+              "startColumn": 16,
+              "endLine": 42,
+              "endColumn": 62,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/tree/FromNode.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return (token != null ? token.getText() : \"\") + fromT;\n    }\n\n    @Override"
+            },
+            {
+              "step": 2,
+              "variableName": "node.toString()",
+              "startLine": 32,
+              "startColumn": 33,
+              "endLine": 32,
+              "endColumn": 48,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/ErrorRec.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return message + \" [\" + node.toString() + \"]\";\n    }\n}\n"
+            },
+            {
+              "step": 3,
+              "variableName": "message + \" [\" + node.toString() + \"]\"",
+              "startLine": 32,
+              "startColumn": 16,
+              "endLine": 32,
+              "endColumn": 54,
+              "uri": "jmix-2.5.1/jmix-data/data/src/main/java/io/jmix/data/impl/jpql/ErrorRec.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return message + \" [\" + node.toString() + \"]\";\n    }\n}\n"
+            },
+            {
+              "step": 4,
+              "variableName": "value.toString()",
+              "startLine": 36,
+              "startColumn": 37,
+              "endLine": 36,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/FileRefDatatype.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 5,
+              "variableName": "value == null ? \"\" : value.toString()",
+              "startLine": 36,
+              "startColumn": 16,
+              "endLine": 36,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/FileRefDatatype.java",
+              "type": "... : String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 6,
+              "variableName": "datatype.format(methodResult)",
+              "startLine": 196,
+              "startColumn": 46,
+              "endLine": 196,
+              "endColumn": 75,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 7,
+              "variableName": "String stringValue",
+              "startLine": 230,
+              "startColumn": 34,
+              "endLine": 230,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected String stringValue;\n        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }"
+            },
+            {
+              "step": 8,
+              "variableName": "stringValue",
+              "startLine": 231,
+              "startColumn": 32,
+              "endLine": 231,
+              "endColumn": 43,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 9,
+              "variableName": "this",
+              "startLine": 231,
+              "startColumn": 13,
+              "endLine": 231,
+              "endColumn": 17,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 10,
+              "variableName": "new ServiceCallResult(datatype.format(methodResult), false)",
+              "startLine": 196,
+              "startColumn": 24,
+              "endLine": 196,
+              "endColumn": 83,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 11,
+              "variableName": "_invokeServiceMethod(serviceName, methodName, HttpMethod.GET, paramNames, paramValuesStr, modelVersion)",
+              "startLine": 90,
+              "startColumn": 16,
+              "endLine": 90,
+              "endColumn": 119,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        paramsMap.remove(\"modelVersion\");\n        List<String> paramNames = new ArrayList<>(paramsMap.keySet());\n        List<String> paramValuesStr = new ArrayList<>(paramsMap.values());\n        return _invokeServiceMethod(serviceName, methodName, HttpMethod.GET, paramNames, paramValuesStr, modelVersion);\n    }\n\n    @Nullable"
+            },
+            {
+              "step": 12,
+              "variableName": "invokeServiceMethodGet(...) : ServiceCallResult [stringValue] : String",
+              "startLine": 62,
+              "startColumn": 62,
+              "endLine": 63,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "                                                         @PathVariable String methodName,\n                                                         @RequestParam(required = false) String modelVersion,\n                                                         @RequestParam Map<String, String> paramsMap) throws Throwable {\n        ServicesControllerManager.ServiceCallResult result = servicesControllerManager.invokeServiceMethodGet(serviceName,\n                methodName, paramsMap, modelVersion);\n        HttpStatus status;\n        if (result == null) {"
+            },
+            {
+              "step": 13,
+              "variableName": "result",
+              "startLine": 72,
+              "startColumn": 87,
+              "endLine": 72,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            },
+            {
+              "step": 14,
+              "variableName": "getStringValue",
+              "startLine": 239,
+              "startColumn": 23,
+              "endLine": 239,
+              "endColumn": 37,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            return validJson;\n        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }"
+            },
+            {
+              "step": 15,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 16,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 17,
+              "variableName": "result.getStringValue()",
+              "startLine": 72,
+              "startColumn": 87,
+              "endLine": 72,
+              "endColumn": 110,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            },
+            {
+              "step": 18,
+              "variableName": "ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue())",
+              "startLine": 72,
+              "startColumn": 16,
+              "endLine": 72,
+              "endColumn": 111,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "rawValueEntry",
+              "startLine": 100,
+              "startColumn": 63,
+              "endLine": 100,
+              "endColumn": 76,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "Entry",
+              "code": "    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "rawValueEntry.getKey()",
+              "startLine": 100,
+              "startColumn": 63,
+              "endLine": 100,
+              "endColumn": 85,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "String",
+              "code": "    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry))",
+              "startLine": 100,
+              "startColumn": 39,
+              "endLine": 100,
+              "endColumn": 117,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "Object[] [[]] : String",
+              "code": "    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry))",
+              "startLine": 100,
+              "startColumn": 39,
+              "endLine": 100,
+              "endColumn": 117,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "String",
+              "code": "    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "rawValues.entrySet().stream()",
+              "startLine": 99,
+              "startColumn": 70,
+              "endLine": 100,
+              "endColumn": 118,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "Stream [<element>] : String",
+              "code": "\n    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "collect(...) : String",
+              "startLine": 99,
+              "startColumn": 70,
+              "endLine": 101,
+              "endColumn": 51,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }"
+            },
+            {
+              "step": 6,
+              "variableName": "String.format(\"Field: %s, Data: {%s}",
+              "startLine": 99,
+              "startColumn": 16,
+              "endLine": 101,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "Object[] [[]] : String",
+              "code": "\n    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }"
+            },
+            {
+              "step": 7,
+              "variableName": "String.format(\"Field: %s, Data: {%s}",
+              "startLine": 99,
+              "startColumn": 16,
+              "endLine": 101,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-dataimport/dataimport/src/main/java/io/jmix/dataimport/extractor/data/ImportedObject.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String toString() {\n        return String.format(\"Field: %s, Data: {%s}\", dataFieldName, rawValues.entrySet().stream()\n                .map(rawValueEntry -> String.format(\"%s: %s\", rawValueEntry.getKey(), getValueString(rawValueEntry)))\n                .collect(Collectors.joining(\", \")));\n    }"
+            },
+            {
+              "step": 8,
+              "variableName": "value.toString()",
+              "startLine": 41,
+              "startColumn": 37,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 9,
+              "variableName": "value == null ? \"\" : value.toString()",
+              "startLine": 41,
+              "startColumn": 16,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "... : String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 10,
+              "variableName": "datatype.format(methodResult)",
+              "startLine": 196,
+              "startColumn": 46,
+              "endLine": 196,
+              "endColumn": 75,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 11,
+              "variableName": "String stringValue",
+              "startLine": 230,
+              "startColumn": 34,
+              "endLine": 230,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected String stringValue;\n        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }"
+            },
+            {
+              "step": 12,
+              "variableName": "stringValue",
+              "startLine": 231,
+              "startColumn": 32,
+              "endLine": 231,
+              "endColumn": 43,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 13,
+              "variableName": "this",
+              "startLine": 231,
+              "startColumn": 13,
+              "endLine": 231,
+              "endColumn": 17,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 14,
+              "variableName": "new ServiceCallResult(datatype.format(methodResult), false)",
+              "startLine": 196,
+              "startColumn": 24,
+              "endLine": 196,
+              "endColumn": 83,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 15,
+              "variableName": "_invokeServiceMethod(serviceName, methodName, HttpMethod.GET, paramNames, paramValuesStr, modelVersion)",
+              "startLine": 90,
+              "startColumn": 16,
+              "endLine": 90,
+              "endColumn": 119,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        paramsMap.remove(\"modelVersion\");\n        List<String> paramNames = new ArrayList<>(paramsMap.keySet());\n        List<String> paramValuesStr = new ArrayList<>(paramsMap.values());\n        return _invokeServiceMethod(serviceName, methodName, HttpMethod.GET, paramNames, paramValuesStr, modelVersion);\n    }\n\n    @Nullable"
+            },
+            {
+              "step": 16,
+              "variableName": "invokeServiceMethodGet(...) : ServiceCallResult [stringValue] : String",
+              "startLine": 62,
+              "startColumn": 62,
+              "endLine": 63,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "                                                         @PathVariable String methodName,\n                                                         @RequestParam(required = false) String modelVersion,\n                                                         @RequestParam Map<String, String> paramsMap) throws Throwable {\n        ServicesControllerManager.ServiceCallResult result = servicesControllerManager.invokeServiceMethodGet(serviceName,\n                methodName, paramsMap, modelVersion);\n        HttpStatus status;\n        if (result == null) {"
+            },
+            {
+              "step": 17,
+              "variableName": "result",
+              "startLine": 72,
+              "startColumn": 87,
+              "endLine": 72,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            },
+            {
+              "step": 18,
+              "variableName": "getStringValue",
+              "startLine": 239,
+              "startColumn": 23,
+              "endLine": 239,
+              "endColumn": 37,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            return validJson;\n        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }"
+            },
+            {
+              "step": 19,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 20,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 21,
+              "variableName": "result.getStringValue()",
+              "startLine": 72,
+              "startColumn": 87,
+              "endLine": 72,
+              "endColumn": 110,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            },
+            {
+              "step": 22,
+              "variableName": "ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue())",
+              "startLine": 72,
+              "startColumn": 16,
+              "endLine": 72,
+              "endColumn": 111,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "query",
+              "startLine": 306,
+              "startColumn": 35,
+              "endLine": 306,
+              "endColumn": 40,
+              "uri": "jmix-2.5.1/jmix-tabbedmode/tabbedmode-flowui/src/main/java/io/jmix/tabbedmode/JmixUI.java",
+              "type": "String",
+              "code": "        public String toString() {\n            return \"JmixBrowserNavigateEvent{\" +\n                    \"route='\" + route + '\\'' +\n                    \", query='\" + query + '\\'' +\n                    \", appShellTitle='\" + appShellTitle + '\\'' +\n                    \", historyState=\" + historyState +\n                    \", trigger='\" + trigger + '\\'' +"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Jmi",
+              "startLine": 304,
+              "startColumn": 20,
+              "endLine": 310,
+              "endColumn": 24,
+              "uri": "jmix-2.5.1/jmix-tabbedmode/tabbedmode-flowui/src/main/java/io/jmix/tabbedmode/JmixUI.java",
+              "type": "String",
+              "code": "\n        @Override\n        public String toString() {\n            return \"JmixBrowserNavigateEvent{\" +\n                    \"route='\" + route + '\\'' +\n                    \", query='\" + query + '\\'' +\n                    \", appShellTitle='\" + appShellTitle + '\\'' +"
+            },
+            {
+              "step": 2,
+              "variableName": "value.toString()",
+              "startLine": 41,
+              "startColumn": 37,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 3,
+              "variableName": "value == null ? \"\" : value.toString()",
+              "startLine": 41,
+              "startColumn": 16,
+              "endLine": 41,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-core/core/src/main/java/io/jmix/core/metamodel/datatype/impl/CharacterDatatype.java",
+              "type": "... : String",
+              "code": "\n    @Override\n    public String format(@Nullable Object value) {\n        return value == null ? \"\" : value.toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 4,
+              "variableName": "datatype.format(methodResult)",
+              "startLine": 196,
+              "startColumn": 46,
+              "endLine": 196,
+              "endColumn": 75,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 5,
+              "variableName": "String stringValue",
+              "startLine": 230,
+              "startColumn": 34,
+              "endLine": 230,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected String stringValue;\n        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }"
+            },
+            {
+              "step": 6,
+              "variableName": "stringValue",
+              "startLine": 231,
+              "startColumn": 32,
+              "endLine": 231,
+              "endColumn": 43,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 7,
+              "variableName": "this",
+              "startLine": 231,
+              "startColumn": 13,
+              "endLine": 231,
+              "endColumn": 17,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        protected boolean validJson;\n\n        public ServiceCallResult(String stringValue, boolean validJson) {\n            this.stringValue = stringValue;\n            this.validJson = validJson;\n        }\n"
+            },
+            {
+              "step": 8,
+              "variableName": "new ServiceCallResult(datatype.format(methodResult), false)",
+              "startLine": 196,
+              "startColumn": 24,
+              "endLine": 196,
+              "endColumn": 83,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        } else {\n            Datatype<?> datatype = datatypeRegistry.find(methodReturnType);\n            if (datatype != null) {\n                return new ServiceCallResult(datatype.format(methodResult), false);\n            } else {\n                return new ServiceCallResult(restParseUtils.serialize(methodResult), true);\n            }"
+            },
+            {
+              "step": 9,
+              "variableName": "_invokeServiceMethod(serviceName, methodName, HttpMethod.GET, paramNames, paramValuesStr, modelVersion)",
+              "startLine": 90,
+              "startColumn": 16,
+              "endLine": 90,
+              "endColumn": 119,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        paramsMap.remove(\"modelVersion\");\n        List<String> paramNames = new ArrayList<>(paramsMap.keySet());\n        List<String> paramValuesStr = new ArrayList<>(paramsMap.values());\n        return _invokeServiceMethod(serviceName, methodName, HttpMethod.GET, paramNames, paramValuesStr, modelVersion);\n    }\n\n    @Nullable"
+            },
+            {
+              "step": 10,
+              "variableName": "invokeServiceMethodGet(...) : ServiceCallResult [stringValue] : String",
+              "startLine": 62,
+              "startColumn": 62,
+              "endLine": 63,
+              "endColumn": 53,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "                                                         @PathVariable String methodName,\n                                                         @RequestParam(required = false) String modelVersion,\n                                                         @RequestParam Map<String, String> paramsMap) throws Throwable {\n        ServicesControllerManager.ServiceCallResult result = servicesControllerManager.invokeServiceMethodGet(serviceName,\n                methodName, paramsMap, modelVersion);\n        HttpStatus status;\n        if (result == null) {"
+            },
+            {
+              "step": 11,
+              "variableName": "result",
+              "startLine": 72,
+              "startColumn": 87,
+              "endLine": 72,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            },
+            {
+              "step": 12,
+              "variableName": "getStringValue",
+              "startLine": 239,
+              "startColumn": 23,
+              "endLine": 239,
+              "endColumn": 37,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "            return validJson;\n        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }"
+            },
+            {
+              "step": 13,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "ServiceCallResult [stringValue] : String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 14,
+              "variableName": "stringValue",
+              "startLine": 240,
+              "startColumn": 20,
+              "endLine": 240,
+              "endColumn": 31,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/service/ServicesControllerManager.java",
+              "type": "String",
+              "code": "        }\n\n        public String getStringValue() {\n            return stringValue;\n        }\n    }\n}"
+            },
+            {
+              "step": 15,
+              "variableName": "result.getStringValue()",
+              "startLine": 72,
+              "startColumn": 87,
+              "endLine": 72,
+              "endColumn": 110,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "String",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            },
+            {
+              "step": 16,
+              "variableName": "ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue())",
+              "startLine": 72,
+              "startColumn": 16,
+              "endLine": 72,
+              "endColumn": 111,
+              "uri": "jmix-2.5.1/jmix-rest/rest/src/main/java/io/jmix/rest/impl/controller/ServicesController.java",
+              "type": "",
+              "code": "            status = HttpStatus.OK;\n        }\n        String contentType = result.isValidJson() ? \"application/json;charset=UTF-8\" : \"text/plain;charset=UTF-8\";\n        return ResponseEntity.status(status).header(\"Content-Type\", contentType).body(result.getStringValue());\n    }\n\n    @GetMapping"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ],
+  "214": [
+    {
+      "resultIndex": 0,
+      "fileName": "CustomFormatter.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "curlToolParams",
+              "startLine": 223,
+              "startColumn": 63,
+              "endLine": 223,
+              "endColumn": 77,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/libintegration/CustomFormatter.java",
+              "type": "String",
+              "code": "            Runtime runtime = Runtime.getRuntime();\n            String curlToolPath = reportsProperties.getCurlPath();\n            String curlToolParams = reportsProperties.getCurlParams();\n            String command = format(\"%s %s %s\", curlToolPath, curlToolParams, url);\n            log.info(\"Reporting::CustomFormatter::Trying to load report from URL: [{}]\", url);\n            proc = runtime.exec(command);\n"
+            },
+            {
+              "step": 1,
+              "variableName": "format(\"%s %s %s\", curlToolPath, curlToolParams, url)",
+              "startLine": 223,
+              "startColumn": 30,
+              "endLine": 223,
+              "endColumn": 83,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/libintegration/CustomFormatter.java",
+              "type": "Object[] [[]] : String",
+              "code": "            Runtime runtime = Runtime.getRuntime();\n            String curlToolPath = reportsProperties.getCurlPath();\n            String curlToolParams = reportsProperties.getCurlParams();\n            String command = format(\"%s %s %s\", curlToolPath, curlToolParams, url);\n            log.info(\"Reporting::CustomFormatter::Trying to load report from URL: [{}]\", url);\n            proc = runtime.exec(command);\n"
+            },
+            {
+              "step": 2,
+              "variableName": "format(\"%s %s %s\", curlToolPath, curlToolParams, url)",
+              "startLine": 223,
+              "startColumn": 30,
+              "endLine": 223,
+              "endColumn": 83,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/libintegration/CustomFormatter.java",
+              "type": "String",
+              "code": "            Runtime runtime = Runtime.getRuntime();\n            String curlToolPath = reportsProperties.getCurlPath();\n            String curlToolParams = reportsProperties.getCurlParams();\n            String command = format(\"%s %s %s\", curlToolPath, curlToolParams, url);\n            log.info(\"Reporting::CustomFormatter::Trying to load report from URL: [{}]\", url);\n            proc = runtime.exec(command);\n"
+            },
+            {
+              "step": 3,
+              "variableName": "command",
+              "startLine": 225,
+              "startColumn": 33,
+              "endLine": 225,
+              "endColumn": 40,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/libintegration/CustomFormatter.java",
+              "type": "",
+              "code": "            String curlToolParams = reportsProperties.getCurlParams();\n            String command = format(\"%s %s %s\", curlToolPath, curlToolParams, url);\n            log.info(\"Reporting::CustomFormatter::Trying to load report from URL: [{}]\", url);\n            proc = runtime.exec(command);\n\n            inputStream = proc.getInputStream();\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "OOServer.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 128,
+              "startColumn": 77,
+              "endLine": 128,
+              "endColumn": 81,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/OOServer.java",
+              "type": "Number",
+              "code": "        // find office executable relative to this class's class loader\n        String sOffice = System.getProperty(\"os.name\").startsWith(\"Windows\") ? \"soffice.exe\" : \"soffice\";\n        //accept option !Note! we are using old version notation (- instead of --) to support old version of office\n        String oooAcceptOption = \"-accept=socket,host=\" + host + \",port=\" + port + \",tcpNoDelay=1;urp;\";\n\n        URL[] oooExecFolderURL = new URL[]{new File(oooExecFolder).toURI().toURL()};\n        URLClassLoader loader = new URLClassLoader(oooExecFolderURL);"
+            },
+            {
+              "step": 1,
+              "variableName": "oooAcceptOption",
+              "startLine": 147,
+              "startColumn": 27,
+              "endLine": 147,
+              "endColumn": 42,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/OOServer.java",
+              "type": "String",
+              "code": "            prepareInstanceProfileDir();\n            argumentsList.add(\"-env:UserInstallation=\" + toUrl(new File(instanceProfilePath)));\n        }\n        argumentsList.add(oooAcceptOption);\n\n        // start office process\n        oooProcess = Runtime.getRuntime().exec(argumentsList.toArray(new String[0]));"
+            },
+            {
+              "step": 2,
+              "variableName": "argumentsList",
+              "startLine": 147,
+              "startColumn": 9,
+              "endLine": 147,
+              "endColumn": 22,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/OOServer.java",
+              "type": "LinkedList [<element>] : String",
+              "code": "            prepareInstanceProfileDir();\n            argumentsList.add(\"-env:UserInstallation=\" + toUrl(new File(instanceProfilePath)));\n        }\n        argumentsList.add(oooAcceptOption);\n\n        // start office process\n        oooProcess = Runtime.getRuntime().exec(argumentsList.toArray(new String[0]));"
+            },
+            {
+              "step": 3,
+              "variableName": "argumentsList",
+              "startLine": 150,
+              "startColumn": 48,
+              "endLine": 150,
+              "endColumn": 61,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/OOServer.java",
+              "type": "LinkedList [<element>] : String",
+              "code": "        argumentsList.add(oooAcceptOption);\n\n        // start office process\n        oooProcess = Runtime.getRuntime().exec(argumentsList.toArray(new String[0]));\n\n        pipe(oooProcess.getInputStream(), \"OUT\");\n        pipe(oooProcess.getErrorStream(), \"ERR\");"
+            },
+            {
+              "step": 4,
+              "variableName": "argumentsList.toArray(new String[0])",
+              "startLine": 150,
+              "startColumn": 48,
+              "endLine": 150,
+              "endColumn": 84,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/OOServer.java",
+              "type": "String[] [[]] : String",
+              "code": "        argumentsList.add(oooAcceptOption);\n\n        // start office process\n        oooProcess = Runtime.getRuntime().exec(argumentsList.toArray(new String[0]));\n\n        pipe(oooProcess.getInputStream(), \"OUT\");\n        pipe(oooProcess.getErrorStream(), \"ERR\");"
+            },
+            {
+              "step": 5,
+              "variableName": "argumentsList.toArray(new String[0])",
+              "startLine": 150,
+              "startColumn": 48,
+              "endLine": 150,
+              "endColumn": 84,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/OOServer.java",
+              "type": "",
+              "code": "        argumentsList.add(oooAcceptOption);\n\n        // start office process\n        oooProcess = Runtime.getRuntime().exec(argumentsList.toArray(new String[0]));\n\n        pipe(oooProcess.getInputStream(), \"OUT\");\n        pipe(oooProcess.getErrorStream(), \"ERR\");"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "WinProcessManager.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 171,
+              "startColumn": 60,
+              "endLine": 171,
+              "endColumn": 64,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/OOServer.java",
+              "type": "Number",
+              "code": "    public synchronized void kill() {\n        if (oooProcess != null) {\n            log.info(\"OOServer is killing office instance with port {}\", port);\n            List<Long> pids = processManager.findPid(host, port);\n            processManager.kill(oooProcess, pids);\n            oooProcess = null;\n            deleteProfileDir();"
+            },
+            {
+              "step": 1,
+              "variableName": "int port",
+              "startLine": 44,
+              "startColumn": 44,
+              "endLine": 44,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "Number",
+              "code": "    protected static final String LOCAL_HOST = \"127.0.0.1\";\n\n    @Override\n    public List<Long> findPid(String host, int port) {\n        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;"
+            },
+            {
+              "step": 2,
+              "variableName": "port",
+              "startLine": 48,
+              "startColumn": 89,
+              "endLine": 48,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "Number",
+              "code": "        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;\n            Process process = Runtime.getRuntime().exec(String.format(FIND_PID_COMMAND, port));\n            List<String> r = IOUtils.readLines(process.getInputStream(), StandardCharsets.UTF_8);\n            for (String output : r) {\n                NetStatInfo info = new NetStatInfo(output);"
+            },
+            {
+              "step": 3,
+              "variableName": "String.format(FIND_PID_COMMAND, port)",
+              "startLine": 48,
+              "startColumn": 57,
+              "endLine": 48,
+              "endColumn": 94,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "Object[] [[]] : Number",
+              "code": "        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;\n            Process process = Runtime.getRuntime().exec(String.format(FIND_PID_COMMAND, port));\n            List<String> r = IOUtils.readLines(process.getInputStream(), StandardCharsets.UTF_8);\n            for (String output : r) {\n                NetStatInfo info = new NetStatInfo(output);"
+            },
+            {
+              "step": 4,
+              "variableName": "String.format(FIND_PID_COMMAND, port)",
+              "startLine": 48,
+              "startColumn": 57,
+              "endLine": 48,
+              "endColumn": 94,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "",
+              "code": "        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;\n            Process process = Runtime.getRuntime().exec(String.format(FIND_PID_COMMAND, port));\n            List<String> r = IOUtils.readLines(process.getInputStream(), StandardCharsets.UTF_8);\n            for (String output : r) {\n                NetStatInfo info = new NetStatInfo(output);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 170,
+              "startColumn": 74,
+              "endLine": 170,
+              "endColumn": 78,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/OOServer.java",
+              "type": "Number",
+              "code": "     */\n    public synchronized void kill() {\n        if (oooProcess != null) {\n            log.info(\"OOServer is killing office instance with port {}\", port);\n            List<Long> pids = processManager.findPid(host, port);\n            processManager.kill(oooProcess, pids);\n            oooProcess = null;"
+            },
+            {
+              "step": 1,
+              "variableName": "port",
+              "startLine": 171,
+              "startColumn": 60,
+              "endLine": 171,
+              "endColumn": 64,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/OOServer.java",
+              "type": "Number",
+              "code": "    public synchronized void kill() {\n        if (oooProcess != null) {\n            log.info(\"OOServer is killing office instance with port {}\", port);\n            List<Long> pids = processManager.findPid(host, port);\n            processManager.kill(oooProcess, pids);\n            oooProcess = null;\n            deleteProfileDir();"
+            },
+            {
+              "step": 2,
+              "variableName": "int port",
+              "startLine": 44,
+              "startColumn": 44,
+              "endLine": 44,
+              "endColumn": 52,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "Number",
+              "code": "    protected static final String LOCAL_HOST = \"127.0.0.1\";\n\n    @Override\n    public List<Long> findPid(String host, int port) {\n        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;"
+            },
+            {
+              "step": 3,
+              "variableName": "port",
+              "startLine": 48,
+              "startColumn": 89,
+              "endLine": 48,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "Number",
+              "code": "        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;\n            Process process = Runtime.getRuntime().exec(String.format(FIND_PID_COMMAND, port));\n            List<String> r = IOUtils.readLines(process.getInputStream(), StandardCharsets.UTF_8);\n            for (String output : r) {\n                NetStatInfo info = new NetStatInfo(output);"
+            },
+            {
+              "step": 4,
+              "variableName": "String.format(FIND_PID_COMMAND, port)",
+              "startLine": 48,
+              "startColumn": 57,
+              "endLine": 48,
+              "endColumn": 94,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "Object[] [[]] : Number",
+              "code": "        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;\n            Process process = Runtime.getRuntime().exec(String.format(FIND_PID_COMMAND, port));\n            List<String> r = IOUtils.readLines(process.getInputStream(), StandardCharsets.UTF_8);\n            for (String output : r) {\n                NetStatInfo info = new NetStatInfo(output);"
+            },
+            {
+              "step": 5,
+              "variableName": "String.format(FIND_PID_COMMAND, port)",
+              "startLine": 48,
+              "startColumn": 57,
+              "endLine": 48,
+              "endColumn": 94,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "",
+              "code": "        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;\n            Process process = Runtime.getRuntime().exec(String.format(FIND_PID_COMMAND, port));\n            List<String> r = IOUtils.readLines(process.getInputStream(), StandardCharsets.UTF_8);\n            for (String output : r) {\n                NetStatInfo info = new NetStatInfo(output);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 48,
+              "startColumn": 89,
+              "endLine": 48,
+              "endColumn": 93,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "Number",
+              "code": "        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;\n            Process process = Runtime.getRuntime().exec(String.format(FIND_PID_COMMAND, port));\n            List<String> r = IOUtils.readLines(process.getInputStream(), StandardCharsets.UTF_8);\n            for (String output : r) {\n                NetStatInfo info = new NetStatInfo(output);"
+            },
+            {
+              "step": 1,
+              "variableName": "String.format(FIND_PID_COMMAND, port)",
+              "startLine": 48,
+              "startColumn": 57,
+              "endLine": 48,
+              "endColumn": 94,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "Object[] [[]] : Number",
+              "code": "        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;\n            Process process = Runtime.getRuntime().exec(String.format(FIND_PID_COMMAND, port));\n            List<String> r = IOUtils.readLines(process.getInputStream(), StandardCharsets.UTF_8);\n            for (String output : r) {\n                NetStatInfo info = new NetStatInfo(output);"
+            },
+            {
+              "step": 2,
+              "variableName": "String.format(FIND_PID_COMMAND, port)",
+              "startLine": 48,
+              "startColumn": 57,
+              "endLine": 48,
+              "endColumn": 94,
+              "uri": "jmix-2.5.1/jmix-reports/reports/src/main/java/io/jmix/reports/yarg/formatters/impl/doc/connector/WinProcessManager.java",
+              "type": "",
+              "code": "        try {\n            if (\"localhost\".equalsIgnoreCase(host))\n                host = LOCAL_HOST;\n            Process process = Runtime.getRuntime().exec(String.format(FIND_PID_COMMAND, port));\n            List<String> r = IOUtils.readLines(process.getInputStream(), StandardCharsets.UTF_8);\n            for (String output : r) {\n                NetStatInfo info = new NetStatInfo(output);"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1835 @@
+{
+  "201": [
+    {
+      "resultIndex": 2,
+      "fileName": "FederationService.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "token",
+              "startLine": 106,
+              "startColumn": 58,
+              "endLine": 106,
+              "endColumn": 63,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "String",
+              "code": "                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, \"yes\");\n                transformer.transform(new DOMSource(el), new StreamResult(buffer));\n                String token = buffer.toString();\n                String escapedXml = HtmlUtils.htmlEscape(token);\n                out.append(\"<p>\").append(escapedXml);\n            } catch (Exception ex) {\n                out.append(\"<p>Failed to transform cached element to string: \").append(ex.toString());"
+            },
+            {
+              "step": 1,
+              "variableName": "HtmlUtils.htmlEscape(token)",
+              "startLine": 106,
+              "startColumn": 37,
+              "endLine": 106,
+              "endColumn": 64,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "String",
+              "code": "                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, \"yes\");\n                transformer.transform(new DOMSource(el), new StreamResult(buffer));\n                String token = buffer.toString();\n                String escapedXml = HtmlUtils.htmlEscape(token);\n                out.append(\"<p>\").append(escapedXml);\n            } catch (Exception ex) {\n                out.append(\"<p>Failed to transform cached element to string: \").append(ex.toString());"
+            },
+            {
+              "step": 2,
+              "variableName": "escapedXml",
+              "startLine": 107,
+              "startColumn": 42,
+              "endLine": 107,
+              "endColumn": 52,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "String",
+              "code": "                transformer.transform(new DOMSource(el), new StreamResult(buffer));\n                String token = buffer.toString();\n                String escapedXml = HtmlUtils.htmlEscape(token);\n                out.append(\"<p>\").append(escapedXml);\n            } catch (Exception ex) {\n                out.append(\"<p>Failed to transform cached element to string: \").append(ex.toString());\n            }"
+            },
+            {
+              "step": 3,
+              "variableName": "out.append(\"<p>\")",
+              "startLine": 107,
+              "startColumn": 17,
+              "endLine": 107,
+              "endColumn": 34,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "StringBuilder",
+              "code": "                transformer.transform(new DOMSource(el), new StreamResult(buffer));\n                String token = buffer.toString();\n                String escapedXml = HtmlUtils.htmlEscape(token);\n                out.append(\"<p>\").append(escapedXml);\n            } catch (Exception ex) {\n                out.append(\"<p>Failed to transform cached element to string: \").append(ex.toString());\n            }"
+            },
+            {
+              "step": 4,
+              "variableName": "out",
+              "startLine": 117,
+              "startColumn": 63,
+              "endLine": 117,
+              "endColumn": 66,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "StringBuilder",
+              "code": "\n        out.append(\"</body>\");\n\n        return Response.ok().type(MediaType.TEXT_HTML).entity(out.toString()).build();\n    }\n\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "out.toString()",
+              "startLine": 117,
+              "startColumn": 63,
+              "endLine": 117,
+              "endColumn": 77,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "String",
+              "code": "\n        out.append(\"</body>\");\n\n        return Response.ok().type(MediaType.TEXT_HTML).entity(out.toString()).build();\n    }\n\n}"
+            },
+            {
+              "step": 6,
+              "variableName": "Response.ok().type(MediaType.TEXT_HTML).entity(out.toString())",
+              "startLine": 117,
+              "startColumn": 16,
+              "endLine": 117,
+              "endColumn": 78,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "ResponseBuilder",
+              "code": "\n        out.append(\"</body>\");\n\n        return Response.ok().type(MediaType.TEXT_HTML).entity(out.toString()).build();\n    }\n\n}"
+            },
+            {
+              "step": 7,
+              "variableName": "Response.ok().type(MediaType.TEXT_HTML).entity(out.toString()).build()",
+              "startLine": 117,
+              "startColumn": 16,
+              "endLine": 117,
+              "endColumn": 86,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "",
+              "code": "\n        out.append(\"</body>\");\n\n        return Response.ok().type(MediaType.TEXT_HTML).entity(out.toString()).build();\n    }\n\n}"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 3,
+      "fileName": "FederationService.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "token",
+              "startLine": 106,
+              "startColumn": 58,
+              "endLine": 106,
+              "endColumn": 63,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "String",
+              "code": "                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, \"yes\");\n                transformer.transform(new DOMSource(el), new StreamResult(buffer));\n                String token = buffer.toString();\n                String escapedXml = HtmlUtils.htmlEscape(token);\n                out.append(\"<p>\").append(escapedXml);\n            } catch (Exception ex) {\n                out.append(\"<p>Failed to transform cached element to string: \").append(ex.toString());"
+            },
+            {
+              "step": 1,
+              "variableName": "HtmlUtils.htmlEscape(token)",
+              "startLine": 106,
+              "startColumn": 37,
+              "endLine": 106,
+              "endColumn": 64,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "String",
+              "code": "                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, \"yes\");\n                transformer.transform(new DOMSource(el), new StreamResult(buffer));\n                String token = buffer.toString();\n                String escapedXml = HtmlUtils.htmlEscape(token);\n                out.append(\"<p>\").append(escapedXml);\n            } catch (Exception ex) {\n                out.append(\"<p>Failed to transform cached element to string: \").append(ex.toString());"
+            },
+            {
+              "step": 2,
+              "variableName": "escapedXml",
+              "startLine": 107,
+              "startColumn": 42,
+              "endLine": 107,
+              "endColumn": 52,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "String",
+              "code": "                transformer.transform(new DOMSource(el), new StreamResult(buffer));\n                String token = buffer.toString();\n                String escapedXml = HtmlUtils.htmlEscape(token);\n                out.append(\"<p>\").append(escapedXml);\n            } catch (Exception ex) {\n                out.append(\"<p>Failed to transform cached element to string: \").append(ex.toString());\n            }"
+            },
+            {
+              "step": 3,
+              "variableName": "out.append(\"<p>\")",
+              "startLine": 107,
+              "startColumn": 17,
+              "endLine": 107,
+              "endColumn": 34,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "StringBuilder",
+              "code": "                transformer.transform(new DOMSource(el), new StreamResult(buffer));\n                String token = buffer.toString();\n                String escapedXml = HtmlUtils.htmlEscape(token);\n                out.append(\"<p>\").append(escapedXml);\n            } catch (Exception ex) {\n                out.append(\"<p>Failed to transform cached element to string: \").append(ex.toString());\n            }"
+            },
+            {
+              "step": 4,
+              "variableName": "out",
+              "startLine": 117,
+              "startColumn": 63,
+              "endLine": 117,
+              "endColumn": 66,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "StringBuilder",
+              "code": "\n        out.append(\"</body>\");\n\n        return Response.ok().type(MediaType.TEXT_HTML).entity(out.toString()).build();\n    }\n\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "out.toString()",
+              "startLine": 117,
+              "startColumn": 63,
+              "endLine": 117,
+              "endColumn": 77,
+              "uri": "cxf-fediz-fediz-1.7.1/examples/jaxrsSpringSecurityWebapp/src/main/java/org/apache/cxf/fediz/example/FederationService.java",
+              "type": "",
+              "code": "\n        out.append(\"</body>\");\n\n        return Response.ok().type(MediaType.TEXT_HTML).entity(out.toString()).build();\n    }\n\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resultIndex": 4,
+      "fileName": "MetadataWriter.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "serviceURL",
+              "startLine": 81,
+              "startColumn": 17,
+              "endLine": 81,
+              "endColumn": 27,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            writer.writeAttribute(\"ID\", referenceID);\n\n            String serviceURL = protocol.getApplicationServiceURL();\n            if (serviceURL == null) {\n                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "serviceURL",
+              "startLine": 85,
+              "startColumn": 47,
+              "endLine": 85,
+              "endColumn": 57,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n\n            writer.writeAttribute(\"entityID\", serviceURL);\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "requestUrl",
+              "startLine": 51,
+              "startColumn": 38,
+              "endLine": 51,
+              "endColumn": 48,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        String result;\n        String contextPath = request.getContextPath();\n        String requestUrl = request.getRequestURL().toString();\n        String requestPath = new URL(requestUrl).getPath();\n        // Cut request path of request url and add context path if not ROOT\n        if (requestPath != null && !requestPath.isEmpty()) {\n            int lastIndex = requestUrl.lastIndexOf(requestPath);"
+            },
+            {
+              "step": 1,
+              "variableName": "result",
+              "startLine": 65,
+              "startColumn": 16,
+              "endLine": 65,
+              "endColumn": 22,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        } else {\n            result = result + '/';\n        }\n        return result;\n    }\n}\n"
+            },
+            {
+              "step": 2,
+              "variableName": "StringUtils.extractFullContextPath(request)",
+              "startLine": 82,
+              "startColumn": 30,
+              "endLine": 82,
+              "endColumn": 73,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "\n            String serviceURL = protocol.getApplicationServiceURL();\n            if (serviceURL == null) {\n                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n\n            writer.writeAttribute(\"entityID\", serviceURL);"
+            },
+            {
+              "step": 3,
+              "variableName": "serviceURL",
+              "startLine": 85,
+              "startColumn": 47,
+              "endLine": 85,
+              "endColumn": 57,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n\n            writer.writeAttribute(\"entityID\", serviceURL);\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "requestUrl",
+              "startLine": 54,
+              "startColumn": 29,
+              "endLine": 54,
+              "endColumn": 39,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        String requestPath = new URL(requestUrl).getPath();\n        // Cut request path of request url and add context path if not ROOT\n        if (requestPath != null && !requestPath.isEmpty()) {\n            int lastIndex = requestUrl.lastIndexOf(requestPath);\n            result = requestUrl.substring(0, lastIndex);\n        } else {\n            result = requestUrl;"
+            },
+            {
+              "step": 1,
+              "variableName": "requestUrl",
+              "startLine": 55,
+              "startColumn": 22,
+              "endLine": 55,
+              "endColumn": 32,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        // Cut request path of request url and add context path if not ROOT\n        if (requestPath != null && !requestPath.isEmpty()) {\n            int lastIndex = requestUrl.lastIndexOf(requestPath);\n            result = requestUrl.substring(0, lastIndex);\n        } else {\n            result = requestUrl;\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "requestUrl.substring(0, lastIndex)",
+              "startLine": 55,
+              "startColumn": 22,
+              "endLine": 55,
+              "endColumn": 56,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        // Cut request path of request url and add context path if not ROOT\n        if (requestPath != null && !requestPath.isEmpty()) {\n            int lastIndex = requestUrl.lastIndexOf(requestPath);\n            result = requestUrl.substring(0, lastIndex);\n        } else {\n            result = requestUrl;\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "result",
+              "startLine": 65,
+              "startColumn": 16,
+              "endLine": 65,
+              "endColumn": 22,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        } else {\n            result = result + '/';\n        }\n        return result;\n    }\n}\n"
+            },
+            {
+              "step": 4,
+              "variableName": "StringUtils.extractFullContextPath(request)",
+              "startLine": 82,
+              "startColumn": 30,
+              "endLine": 82,
+              "endColumn": 73,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "\n            String serviceURL = protocol.getApplicationServiceURL();\n            if (serviceURL == null) {\n                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n\n            writer.writeAttribute(\"entityID\", serviceURL);"
+            },
+            {
+              "step": 5,
+              "variableName": "serviceURL",
+              "startLine": 85,
+              "startColumn": 47,
+              "endLine": 85,
+              "endColumn": 57,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n\n            writer.writeAttribute(\"entityID\", serviceURL);\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "requestUrl",
+              "startLine": 55,
+              "startColumn": 22,
+              "endLine": 55,
+              "endColumn": 32,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        // Cut request path of request url and add context path if not ROOT\n        if (requestPath != null && !requestPath.isEmpty()) {\n            int lastIndex = requestUrl.lastIndexOf(requestPath);\n            result = requestUrl.substring(0, lastIndex);\n        } else {\n            result = requestUrl;\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "requestUrl.substring(0, lastIndex)",
+              "startLine": 55,
+              "startColumn": 22,
+              "endLine": 55,
+              "endColumn": 56,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        // Cut request path of request url and add context path if not ROOT\n        if (requestPath != null && !requestPath.isEmpty()) {\n            int lastIndex = requestUrl.lastIndexOf(requestPath);\n            result = requestUrl.substring(0, lastIndex);\n        } else {\n            result = requestUrl;\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "result",
+              "startLine": 65,
+              "startColumn": 16,
+              "endLine": 65,
+              "endColumn": 22,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        } else {\n            result = result + '/';\n        }\n        return result;\n    }\n}\n"
+            },
+            {
+              "step": 3,
+              "variableName": "StringUtils.extractFullContextPath(request)",
+              "startLine": 82,
+              "startColumn": 30,
+              "endLine": 82,
+              "endColumn": 73,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "\n            String serviceURL = protocol.getApplicationServiceURL();\n            if (serviceURL == null) {\n                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n\n            writer.writeAttribute(\"entityID\", serviceURL);"
+            },
+            {
+              "step": 4,
+              "variableName": "serviceURL",
+              "startLine": 85,
+              "startColumn": 47,
+              "endLine": 85,
+              "endColumn": 57,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n\n            writer.writeAttribute(\"entityID\", serviceURL);\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 5,
+      "fileName": "MetadataWriter.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "logoutURL",
+              "startLine": 235,
+              "startColumn": 17,
+              "endLine": 235,
+              "endColumn": 26,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            writer.writeStartElement(\"md\", \"SingleLogoutService\", SAML2_METADATA_NS);\n\n            String logoutURL = config.getLogoutURL();\n            if (logoutURL.startsWith(\"/\")) {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1));\n            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);"
+            },
+            {
+              "step": 1,
+              "variableName": "logoutURL",
+              "startLine": 238,
+              "startColumn": 80,
+              "endLine": 238,
+              "endColumn": 89,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            if (logoutURL.startsWith(\"/\")) {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1));\n            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }\n            writer.writeAttribute(\"Location\", logoutURL);\n"
+            },
+            {
+              "step": 2,
+              "variableName": "StringUtils.extractFullContextPath(request).concat(logoutURL)",
+              "startLine": 238,
+              "startColumn": 29,
+              "endLine": 238,
+              "endColumn": 90,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            if (logoutURL.startsWith(\"/\")) {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1));\n            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }\n            writer.writeAttribute(\"Location\", logoutURL);\n"
+            },
+            {
+              "step": 3,
+              "variableName": "logoutURL",
+              "startLine": 240,
+              "startColumn": 47,
+              "endLine": 240,
+              "endColumn": 56,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }\n            writer.writeAttribute(\"Location\", logoutURL);\n\n            writer.writeAttribute(\"Binding\", \"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\");\n            writer.writeEndElement(); // SingleLogoutService"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "logoutURL",
+              "startLine": 236,
+              "startColumn": 80,
+              "endLine": 236,
+              "endColumn": 89,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "\n            String logoutURL = config.getLogoutURL();\n            if (logoutURL.startsWith(\"/\")) {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1));\n            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }"
+            },
+            {
+              "step": 1,
+              "variableName": "logoutURL.substring(1)",
+              "startLine": 236,
+              "startColumn": 80,
+              "endLine": 236,
+              "endColumn": 102,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "\n            String logoutURL = config.getLogoutURL();\n            if (logoutURL.startsWith(\"/\")) {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1));\n            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }"
+            },
+            {
+              "step": 2,
+              "variableName": "StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1))",
+              "startLine": 236,
+              "startColumn": 29,
+              "endLine": 236,
+              "endColumn": 103,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "\n            String logoutURL = config.getLogoutURL();\n            if (logoutURL.startsWith(\"/\")) {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1));\n            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }"
+            },
+            {
+              "step": 3,
+              "variableName": "logoutURL",
+              "startLine": 240,
+              "startColumn": 47,
+              "endLine": 240,
+              "endColumn": 56,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }\n            writer.writeAttribute(\"Location\", logoutURL);\n\n            writer.writeAttribute(\"Binding\", \"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\");\n            writer.writeEndElement(); // SingleLogoutService"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "logoutURL",
+              "startLine": 238,
+              "startColumn": 80,
+              "endLine": 238,
+              "endColumn": 89,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            if (logoutURL.startsWith(\"/\")) {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1));\n            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }\n            writer.writeAttribute(\"Location\", logoutURL);\n"
+            },
+            {
+              "step": 1,
+              "variableName": "StringUtils.extractFullContextPath(request).concat(logoutURL)",
+              "startLine": 238,
+              "startColumn": 29,
+              "endLine": 238,
+              "endColumn": 90,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            if (logoutURL.startsWith(\"/\")) {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1));\n            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }\n            writer.writeAttribute(\"Location\", logoutURL);\n"
+            },
+            {
+              "step": 2,
+              "variableName": "logoutURL",
+              "startLine": 240,
+              "startColumn": 47,
+              "endLine": 240,
+              "endColumn": 56,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }\n            writer.writeAttribute(\"Location\", logoutURL);\n\n            writer.writeAttribute(\"Binding\", \"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\");\n            writer.writeEndElement(); // SingleLogoutService"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "requestUrl",
+              "startLine": 51,
+              "startColumn": 38,
+              "endLine": 51,
+              "endColumn": 48,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        String result;\n        String contextPath = request.getContextPath();\n        String requestUrl = request.getRequestURL().toString();\n        String requestPath = new URL(requestUrl).getPath();\n        // Cut request path of request url and add context path if not ROOT\n        if (requestPath != null && !requestPath.isEmpty()) {\n            int lastIndex = requestUrl.lastIndexOf(requestPath);"
+            },
+            {
+              "step": 1,
+              "variableName": "result",
+              "startLine": 65,
+              "startColumn": 16,
+              "endLine": 65,
+              "endColumn": 22,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        } else {\n            result = result + '/';\n        }\n        return result;\n    }\n}\n"
+            },
+            {
+              "step": 2,
+              "variableName": "StringUtils.extractFullContextPath(request)",
+              "startLine": 236,
+              "startColumn": 29,
+              "endLine": 236,
+              "endColumn": 72,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "\n            String logoutURL = config.getLogoutURL();\n            if (logoutURL.startsWith(\"/\")) {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1));\n            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }"
+            },
+            {
+              "step": 3,
+              "variableName": "StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1))",
+              "startLine": 236,
+              "startColumn": 29,
+              "endLine": 236,
+              "endColumn": 103,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "\n            String logoutURL = config.getLogoutURL();\n            if (logoutURL.startsWith(\"/\")) {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL.substring(1));\n            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }"
+            },
+            {
+              "step": 4,
+              "variableName": "logoutURL",
+              "startLine": 240,
+              "startColumn": 47,
+              "endLine": 240,
+              "endColumn": 56,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "            } else {\n                logoutURL = StringUtils.extractFullContextPath(request).concat(logoutURL);\n            }\n            writer.writeAttribute(\"Location\", logoutURL);\n\n            writer.writeAttribute(\"Binding\", \"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\");\n            writer.writeEndElement(); // SingleLogoutService"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 6,
+      "fileName": "MetadataWriter.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "serviceURL",
+              "startLine": 81,
+              "startColumn": 17,
+              "endLine": 81,
+              "endColumn": 27,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            writer.writeAttribute(\"ID\", referenceID);\n\n            String serviceURL = protocol.getApplicationServiceURL();\n            if (serviceURL == null) {\n                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "serviceURL",
+              "startLine": 96,
+              "startColumn": 60,
+              "endLine": 96,
+              "endColumn": 70,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            if (protocol instanceof FederationProtocol) {\n                writeFederationMetadata(writer, config, serviceURL);\n            } else if (protocol instanceof SAMLProtocol) {\n                writeSAMLMetadata(writer, request, config, serviceURL);\n            }\n\n            writer.writeEndElement(); // EntityDescriptor"
+            },
+            {
+              "step": 2,
+              "variableName": "String serviceURL",
+              "startLine": 221,
+              "startColumn": 9,
+              "endLine": 221,
+              "endColumn": 26,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "        XMLStreamWriter writer,\n        HttpServletRequest request,\n        FedizContext config,\n        String serviceURL\n    ) throws Exception {\n\n        SAMLProtocol protocol = (SAMLProtocol)config.getProtocol();"
+            },
+            {
+              "step": 3,
+              "variableName": "serviceURL",
+              "startLine": 247,
+              "startColumn": 43,
+              "endLine": 247,
+              "endColumn": 53,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "        }\n\n        writer.writeStartElement(\"md\", \"AssertionConsumerService\", SAML2_METADATA_NS);\n        writer.writeAttribute(\"Location\", serviceURL);\n        writer.writeAttribute(\"index\", \"0\");\n        writer.writeAttribute(\"isDefault\", \"true\");\n        writer.writeAttribute(\"Binding\", \"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\");"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "serviceURL",
+              "startLine": 85,
+              "startColumn": 47,
+              "endLine": 85,
+              "endColumn": 57,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n\n            writer.writeAttribute(\"entityID\", serviceURL);\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            },
+            {
+              "step": 1,
+              "variableName": "serviceURL",
+              "startLine": 96,
+              "startColumn": 60,
+              "endLine": 96,
+              "endColumn": 70,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            if (protocol instanceof FederationProtocol) {\n                writeFederationMetadata(writer, config, serviceURL);\n            } else if (protocol instanceof SAMLProtocol) {\n                writeSAMLMetadata(writer, request, config, serviceURL);\n            }\n\n            writer.writeEndElement(); // EntityDescriptor"
+            },
+            {
+              "step": 2,
+              "variableName": "String serviceURL",
+              "startLine": 221,
+              "startColumn": 9,
+              "endLine": 221,
+              "endColumn": 26,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "        XMLStreamWriter writer,\n        HttpServletRequest request,\n        FedizContext config,\n        String serviceURL\n    ) throws Exception {\n\n        SAMLProtocol protocol = (SAMLProtocol)config.getProtocol();"
+            },
+            {
+              "step": 3,
+              "variableName": "serviceURL",
+              "startLine": 247,
+              "startColumn": 43,
+              "endLine": 247,
+              "endColumn": 53,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "        }\n\n        writer.writeStartElement(\"md\", \"AssertionConsumerService\", SAML2_METADATA_NS);\n        writer.writeAttribute(\"Location\", serviceURL);\n        writer.writeAttribute(\"index\", \"0\");\n        writer.writeAttribute(\"isDefault\", \"true\");\n        writer.writeAttribute(\"Binding\", \"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\");"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "serviceURL",
+              "startLine": 96,
+              "startColumn": 60,
+              "endLine": 96,
+              "endColumn": 70,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            if (protocol instanceof FederationProtocol) {\n                writeFederationMetadata(writer, config, serviceURL);\n            } else if (protocol instanceof SAMLProtocol) {\n                writeSAMLMetadata(writer, request, config, serviceURL);\n            }\n\n            writer.writeEndElement(); // EntityDescriptor"
+            },
+            {
+              "step": 1,
+              "variableName": "String serviceURL",
+              "startLine": 221,
+              "startColumn": 9,
+              "endLine": 221,
+              "endColumn": 26,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "        XMLStreamWriter writer,\n        HttpServletRequest request,\n        FedizContext config,\n        String serviceURL\n    ) throws Exception {\n\n        SAMLProtocol protocol = (SAMLProtocol)config.getProtocol();"
+            },
+            {
+              "step": 2,
+              "variableName": "serviceURL",
+              "startLine": 247,
+              "startColumn": 43,
+              "endLine": 247,
+              "endColumn": 53,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "        }\n\n        writer.writeStartElement(\"md\", \"AssertionConsumerService\", SAML2_METADATA_NS);\n        writer.writeAttribute(\"Location\", serviceURL);\n        writer.writeAttribute(\"index\", \"0\");\n        writer.writeAttribute(\"isDefault\", \"true\");\n        writer.writeAttribute(\"Binding\", \"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\");"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "requestUrl",
+              "startLine": 51,
+              "startColumn": 38,
+              "endLine": 51,
+              "endColumn": 48,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        String result;\n        String contextPath = request.getContextPath();\n        String requestUrl = request.getRequestURL().toString();\n        String requestPath = new URL(requestUrl).getPath();\n        // Cut request path of request url and add context path if not ROOT\n        if (requestPath != null && !requestPath.isEmpty()) {\n            int lastIndex = requestUrl.lastIndexOf(requestPath);"
+            },
+            {
+              "step": 1,
+              "variableName": "result",
+              "startLine": 65,
+              "startColumn": 16,
+              "endLine": 65,
+              "endColumn": 22,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/util/StringUtils.java",
+              "type": "String",
+              "code": "        } else {\n            result = result + '/';\n        }\n        return result;\n    }\n}\n"
+            },
+            {
+              "step": 2,
+              "variableName": "StringUtils.extractFullContextPath(request)",
+              "startLine": 82,
+              "startColumn": 30,
+              "endLine": 82,
+              "endColumn": 73,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "\n            String serviceURL = protocol.getApplicationServiceURL();\n            if (serviceURL == null) {\n                serviceURL = StringUtils.extractFullContextPath(request);\n            }\n\n            writer.writeAttribute(\"entityID\", serviceURL);"
+            },
+            {
+              "step": 3,
+              "variableName": "serviceURL",
+              "startLine": 96,
+              "startColumn": 60,
+              "endLine": 96,
+              "endColumn": 70,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "            if (protocol instanceof FederationProtocol) {\n                writeFederationMetadata(writer, config, serviceURL);\n            } else if (protocol instanceof SAMLProtocol) {\n                writeSAMLMetadata(writer, request, config, serviceURL);\n            }\n\n            writer.writeEndElement(); // EntityDescriptor"
+            },
+            {
+              "step": 4,
+              "variableName": "String serviceURL",
+              "startLine": 221,
+              "startColumn": 9,
+              "endLine": 221,
+              "endColumn": 26,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "String",
+              "code": "        XMLStreamWriter writer,\n        HttpServletRequest request,\n        FedizContext config,\n        String serviceURL\n    ) throws Exception {\n\n        SAMLProtocol protocol = (SAMLProtocol)config.getProtocol();"
+            },
+            {
+              "step": 5,
+              "variableName": "serviceURL",
+              "startLine": 247,
+              "startColumn": 43,
+              "endLine": 247,
+              "endColumn": 53,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/metadata/MetadataWriter.java",
+              "type": "",
+              "code": "        }\n\n        writer.writeStartElement(\"md\", \"AssertionConsumerService\", SAML2_METADATA_NS);\n        writer.writeAttribute(\"Location\", serviceURL);\n        writer.writeAttribute(\"index\", \"0\");\n        writer.writeAttribute(\"isDefault\", \"true\");\n        writer.writeAttribute(\"Binding\", \"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\");"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 7,
+      "fileName": "ServiceMetadataWriter.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "realm",
+              "startLine": 138,
+              "startColumn": 16,
+              "endLine": 138,
+              "endColumn": 21,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "String",
+              "code": "    }\n\n    public String getRealm() {\n        return realm;\n    }\n\n    public void setRealm(String realm) {"
+            },
+            {
+              "step": 1,
+              "variableName": "config.getRealm()",
+              "startLine": 67,
+              "startColumn": 47,
+              "endLine": 67,
+              "endColumn": 64,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/metadata/ServiceMetadataWriter.java",
+              "type": "",
+              "code": "            writer.writeAttribute(\"ID\", referenceID);\n\n            String serviceURL = config.getIdpUrl().toString();\n            writer.writeAttribute(\"entityID\", config.getRealm());\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "realm",
+              "startLine": 142,
+              "startColumn": 22,
+              "endLine": 142,
+              "endColumn": 27,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "String",
+              "code": "    }\n\n    public void setRealm(String realm) {\n        this.realm = realm;\n    }\n\n    public String getUri() {"
+            },
+            {
+              "step": 1,
+              "variableName": "this",
+              "startLine": 142,
+              "startColumn": 9,
+              "endLine": 142,
+              "endColumn": 13,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "Idp [realm] : String",
+              "code": "    }\n\n    public void setRealm(String realm) {\n        this.realm = realm;\n    }\n\n    public String getUri() {"
+            },
+            {
+              "step": 2,
+              "variableName": "idp",
+              "startLine": 312,
+              "startColumn": 9,
+              "endLine": 312,
+              "endColumn": 12,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "        idp.setId(entity.getId());\n        idp.setCertificate(entity.getCertificate());\n        idp.setCertificatePassword(entity.getCertificatePassword());\n        idp.setRealm(entity.getRealm());\n        idp.setServiceDescription(entity.getServiceDescription());\n        idp.setServiceDisplayName(entity.getServiceDisplayName());\n        idp.setHrds(entity.getHrds());"
+            },
+            {
+              "step": 3,
+              "variableName": "idp",
+              "startLine": 362,
+              "startColumn": 16,
+              "endLine": 362,
+              "endColumn": 19,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "            }\n        }\n\n        return idp;\n    }\n\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "entity2domain((IdpEntity)idpObj, expandList)",
+              "startLine": 82,
+              "startColumn": 16,
+              "endLine": 82,
+              "endColumn": 60,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "        query.setParameter(\"realm\", realm);\n\n        Object idpObj = query.getSingleResult();\n        return entity2domain((IdpEntity)idpObj, expandList);\n    }\n\n    @Override"
+            },
+            {
+              "step": 5,
+              "variableName": "idpDAO.getIdp(realm, expand)",
+              "startLine": 76,
+              "startColumn": 19,
+              "endLine": 76,
+              "endColumn": 47,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/IdpServiceImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "\n    @Override\n    public Idp getIdp(String realm, List<String> expand) {\n        Idp idp = idpDAO.getIdp(realm, expand);\n        if (idp == null) {\n            LOG.warn(\"IdP not found for realm {}\", realm);\n            throw new NotFoundException();"
+            },
+            {
+              "step": 6,
+              "variableName": "idp",
+              "startLine": 81,
+              "startColumn": 20,
+              "endLine": 81,
+              "endColumn": 23,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/IdpServiceImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "            LOG.warn(\"IdP not found for realm {}\", realm);\n            throw new NotFoundException();\n        } else {\n            return idp;\n        }\n    }\n"
+            },
+            {
+              "step": 7,
+              "variableName": "idpService.getIdp(realm, Arrays.asList(\"all\"))",
+              "startLine": 65,
+              "startColumn": 24,
+              "endLine": 65,
+              "endColumn": 70,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/ConfigServiceJPA.java",
+              "type": "Idp [realm] : String",
+              "code": "\n                SecurityContextHolder.getContext().setAuthentication(technicalUser);\n\n                return idpService.getIdp(realm, Arrays.asList(\"all\"));\n            }\n        } finally {\n            SecurityContextHolder.getContext().setAuthentication(currentAuthentication);"
+            },
+            {
+              "step": 8,
+              "variableName": "cs.getIDP(realm)",
+              "startLine": 63,
+              "startColumn": 25,
+              "endLine": 63,
+              "endColumn": 41,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/MetadataServlet.java",
+              "type": "Idp [realm] : String",
+              "code": "        PrintWriter out = response.getWriter();\n\n        ConfigService cs = (ConfigService)getApplicationContext().getBean(\"config\");\n        Idp idpConfig = cs.getIDP(realm);\n        try {\n            boolean isSamlRequest = request.getQueryString() != null\n                && request.getQueryString().contains(\"protocol=saml\");"
+            },
+            {
+              "step": 9,
+              "variableName": "idpConfig",
+              "startLine": 91,
+              "startColumn": 52,
+              "endLine": 91,
+              "endColumn": 61,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/MetadataServlet.java",
+              "type": "Idp [realm] : String",
+              "code": "                    return;\n                }\n                ServiceMetadataWriter mw = new ServiceMetadataWriter();\n                Document metadata = mw.getMetaData(idpConfig, trustedIdp);\n                out.write(DOM2Writer.nodeToString(metadata));\n            } else {\n                // Otherwise return the Metadata for the Idp"
+            },
+            {
+              "step": 10,
+              "variableName": "Idp config",
+              "startLine": 53,
+              "startColumn": 33,
+              "endLine": 53,
+              "endColumn": 43,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/metadata/ServiceMetadataWriter.java",
+              "type": "Idp [realm] : String",
+              "code": "\n    private static final Logger LOG = LoggerFactory.getLogger(ServiceMetadataWriter.class);\n\n    public Document getMetaData(Idp config, TrustedIdp serviceConfig) throws ProcessingException {\n\n        try {\n            Crypto crypto = CertsUtils.getCryptoFromFile(config.getCertificate());"
+            },
+            {
+              "step": 11,
+              "variableName": "config",
+              "startLine": 67,
+              "startColumn": 47,
+              "endLine": 67,
+              "endColumn": 53,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/metadata/ServiceMetadataWriter.java",
+              "type": "Idp [realm] : String",
+              "code": "            writer.writeAttribute(\"ID\", referenceID);\n\n            String serviceURL = config.getIdpUrl().toString();\n            writer.writeAttribute(\"entityID\", config.getRealm());\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            },
+            {
+              "step": 12,
+              "variableName": "getRealm",
+              "startLine": 137,
+              "startColumn": 19,
+              "endLine": 137,
+              "endColumn": 27,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "Idp [realm] : String",
+              "code": "        this.id = id;\n    }\n\n    public String getRealm() {\n        return realm;\n    }\n"
+            },
+            {
+              "step": 13,
+              "variableName": "realm",
+              "startLine": 138,
+              "startColumn": 16,
+              "endLine": 138,
+              "endColumn": 21,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "Idp [realm] : String",
+              "code": "    }\n\n    public String getRealm() {\n        return realm;\n    }\n\n    public void setRealm(String realm) {"
+            },
+            {
+              "step": 14,
+              "variableName": "realm",
+              "startLine": 138,
+              "startColumn": 16,
+              "endLine": 138,
+              "endColumn": 21,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "String",
+              "code": "    }\n\n    public String getRealm() {\n        return realm;\n    }\n\n    public void setRealm(String realm) {"
+            },
+            {
+              "step": 15,
+              "variableName": "config.getRealm()",
+              "startLine": 67,
+              "startColumn": 47,
+              "endLine": 67,
+              "endColumn": 64,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/metadata/ServiceMetadataWriter.java",
+              "type": "",
+              "code": "            writer.writeAttribute(\"ID\", referenceID);\n\n            String serviceURL = config.getIdpUrl().toString();\n            writer.writeAttribute(\"entityID\", config.getRealm());\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "realm",
+              "startLine": 142,
+              "startColumn": 22,
+              "endLine": 142,
+              "endColumn": 27,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "String",
+              "code": "    }\n\n    public void setRealm(String realm) {\n        this.realm = realm;\n    }\n\n    public String getUri() {"
+            },
+            {
+              "step": 1,
+              "variableName": "this",
+              "startLine": 142,
+              "startColumn": 9,
+              "endLine": 142,
+              "endColumn": 13,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "Idp [realm] : String",
+              "code": "    }\n\n    public void setRealm(String realm) {\n        this.realm = realm;\n    }\n\n    public String getUri() {"
+            },
+            {
+              "step": 2,
+              "variableName": "idp",
+              "startLine": 312,
+              "startColumn": 9,
+              "endLine": 312,
+              "endColumn": 12,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "        idp.setId(entity.getId());\n        idp.setCertificate(entity.getCertificate());\n        idp.setCertificatePassword(entity.getCertificatePassword());\n        idp.setRealm(entity.getRealm());\n        idp.setServiceDescription(entity.getServiceDescription());\n        idp.setServiceDisplayName(entity.getServiceDisplayName());\n        idp.setHrds(entity.getHrds());"
+            },
+            {
+              "step": 3,
+              "variableName": "idp",
+              "startLine": 362,
+              "startColumn": 16,
+              "endLine": 362,
+              "endColumn": 19,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "            }\n        }\n\n        return idp;\n    }\n\n}"
+            },
+            {
+              "step": 4,
+              "variableName": "entity2domain(entity, expandList)",
+              "startLine": 71,
+              "startColumn": 22,
+              "endLine": 71,
+              "endColumn": 55,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "\n        for (Object obj : idpEntities) {\n            IdpEntity entity = (IdpEntity) obj;\n            list.add(entity2domain(entity, expandList));\n        }\n        return list;\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "list",
+              "startLine": 71,
+              "startColumn": 13,
+              "endLine": 71,
+              "endColumn": 17,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "ArrayList [<element>, realm] : String",
+              "code": "\n        for (Object obj : idpEntities) {\n            IdpEntity entity = (IdpEntity) obj;\n            list.add(entity2domain(entity, expandList));\n        }\n        return list;\n    }"
+            },
+            {
+              "step": 6,
+              "variableName": "list",
+              "startLine": 73,
+              "startColumn": 16,
+              "endLine": 73,
+              "endColumn": 20,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "ArrayList [<element>, realm] : String",
+              "code": "            IdpEntity entity = (IdpEntity) obj;\n            list.add(entity2domain(entity, expandList));\n        }\n        return list;\n    }\n\n    @Override"
+            },
+            {
+              "step": 7,
+              "variableName": "idpDAO.getIdps(start, size, expand)",
+              "startLine": 67,
+              "startColumn": 26,
+              "endLine": 67,
+              "endColumn": 61,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/IdpServiceImpl.java",
+              "type": "ArrayList [<element>, realm] : String",
+              "code": "\n    @Override\n    public Idps getIdps(int start, int size, List<String> expand, UriInfo uriInfo) {\n        List<Idp> idps = idpDAO.getIdps(start, size, expand);\n\n        Idps list = new Idps();\n        list.setIdps(idps);"
+            },
+            {
+              "step": 8,
+              "variableName": "idps",
+              "startLine": 70,
+              "startColumn": 22,
+              "endLine": 70,
+              "endColumn": 26,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/IdpServiceImpl.java",
+              "type": "ArrayList [<element>, realm] : String",
+              "code": "        List<Idp> idps = idpDAO.getIdps(start, size, expand);\n\n        Idps list = new Idps();\n        list.setIdps(idps);\n        return list;\n    }\n"
+            },
+            {
+              "step": 9,
+              "variableName": "Collection<Idp> idps",
+              "startLine": 46,
+              "startColumn": 25,
+              "endLine": 46,
+              "endColumn": 45,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/Idps.java",
+              "type": "ArrayList [<element>, realm] : String",
+              "code": "        return idps;\n    }\n\n    public void setIdps(Collection<Idp> idps) {\n        this.idps = idps;\n    }\n}"
+            },
+            {
+              "step": 10,
+              "variableName": "idps",
+              "startLine": 47,
+              "startColumn": 21,
+              "endLine": 47,
+              "endColumn": 25,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/Idps.java",
+              "type": "ArrayList [<element>, realm] : String",
+              "code": "    }\n\n    public void setIdps(Collection<Idp> idps) {\n        this.idps = idps;\n    }\n}"
+            },
+            {
+              "step": 11,
+              "variableName": "this",
+              "startLine": 47,
+              "startColumn": 9,
+              "endLine": 47,
+              "endColumn": 13,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/Idps.java",
+              "type": "Idps [idps, <element>, realm] : String",
+              "code": "    }\n\n    public void setIdps(Collection<Idp> idps) {\n        this.idps = idps;\n    }\n}"
+            },
+            {
+              "step": 12,
+              "variableName": "list",
+              "startLine": 70,
+              "startColumn": 9,
+              "endLine": 70,
+              "endColumn": 13,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/IdpServiceImpl.java",
+              "type": "Idps [idps, <element>, realm] : String",
+              "code": "        List<Idp> idps = idpDAO.getIdps(start, size, expand);\n\n        Idps list = new Idps();\n        list.setIdps(idps);\n        return list;\n    }\n"
+            },
+            {
+              "step": 13,
+              "variableName": "list",
+              "startLine": 71,
+              "startColumn": 16,
+              "endLine": 71,
+              "endColumn": 20,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/IdpServiceImpl.java",
+              "type": "Idps [idps, <element>, realm] : String",
+              "code": "\n        Idps list = new Idps();\n        list.setIdps(idps);\n        return list;\n    }\n\n    @Override"
+            },
+            {
+              "step": 14,
+              "variableName": "idpService.getIdps(0, 1, Arrays.asList(\"all\"), null)",
+              "startLine": 57,
+              "startColumn": 24,
+              "endLine": 57,
+              "endColumn": 76,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/ConfigServiceJPA.java",
+              "type": "Idps [idps, <element>, realm] : String",
+              "code": "\n                SecurityContextHolder.getContext().setAuthentication(technicalUser);\n\n                return idpService.getIdps(0, 1, Arrays.asList(\"all\"), null).getIdps().iterator().next();\n            } else {\n                authorities.add(new SimpleGrantedAuthority(\"IDP_READ\"));\n                UsernamePasswordAuthenticationToken technicalUser ="
+            },
+            {
+              "step": 15,
+              "variableName": "getIdps",
+              "startLine": 42,
+              "startColumn": 28,
+              "endLine": 42,
+              "endColumn": 35,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/Idps.java",
+              "type": "Idps [idps, <element>, realm] : String",
+              "code": "    }\n\n    @XmlElementRef\n    public Collection<Idp> getIdps() {\n        return idps;\n    }\n"
+            },
+            {
+              "step": 16,
+              "variableName": "idps",
+              "startLine": 43,
+              "startColumn": 16,
+              "endLine": 43,
+              "endColumn": 20,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/Idps.java",
+              "type": "Idps [idps, <element>, realm] : String",
+              "code": "\n    @XmlElementRef\n    public Collection<Idp> getIdps() {\n        return idps;\n    }\n\n    public void setIdps(Collection<Idp> idps) {"
+            },
+            {
+              "step": 17,
+              "variableName": "idps",
+              "startLine": 43,
+              "startColumn": 16,
+              "endLine": 43,
+              "endColumn": 20,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/Idps.java",
+              "type": "ArrayList [<element>, realm] : String",
+              "code": "\n    @XmlElementRef\n    public Collection<Idp> getIdps() {\n        return idps;\n    }\n\n    public void setIdps(Collection<Idp> idps) {"
+            },
+            {
+              "step": 18,
+              "variableName": "idpService.getIdps(0, 1, Arrays.asList(\"all\"), null).getIdps()",
+              "startLine": 57,
+              "startColumn": 24,
+              "endLine": 57,
+              "endColumn": 86,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/ConfigServiceJPA.java",
+              "type": "ArrayList [<element>, realm] : String",
+              "code": "\n                SecurityContextHolder.getContext().setAuthentication(technicalUser);\n\n                return idpService.getIdps(0, 1, Arrays.asList(\"all\"), null).getIdps().iterator().next();\n            } else {\n                authorities.add(new SimpleGrantedAuthority(\"IDP_READ\"));\n                UsernamePasswordAuthenticationToken technicalUser ="
+            },
+            {
+              "step": 19,
+              "variableName": "idpService.getIdps(0, 1, Arrays.asList(\"all\"), null).getIdps().iterator()",
+              "startLine": 57,
+              "startColumn": 24,
+              "endLine": 57,
+              "endColumn": 97,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/ConfigServiceJPA.java",
+              "type": "Iterator [<element>, realm] : String",
+              "code": "\n                SecurityContextHolder.getContext().setAuthentication(technicalUser);\n\n                return idpService.getIdps(0, 1, Arrays.asList(\"all\"), null).getIdps().iterator().next();\n            } else {\n                authorities.add(new SimpleGrantedAuthority(\"IDP_READ\"));\n                UsernamePasswordAuthenticationToken technicalUser ="
+            },
+            {
+              "step": 20,
+              "variableName": "idpService.getIdps(0, 1, Arrays.asList(\"all\"), null).getIdps().iterator().next()",
+              "startLine": 57,
+              "startColumn": 24,
+              "endLine": 57,
+              "endColumn": 104,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/ConfigServiceJPA.java",
+              "type": "Idp [realm] : String",
+              "code": "\n                SecurityContextHolder.getContext().setAuthentication(technicalUser);\n\n                return idpService.getIdps(0, 1, Arrays.asList(\"all\"), null).getIdps().iterator().next();\n            } else {\n                authorities.add(new SimpleGrantedAuthority(\"IDP_READ\"));\n                UsernamePasswordAuthenticationToken technicalUser ="
+            },
+            {
+              "step": 21,
+              "variableName": "cs.getIDP(realm)",
+              "startLine": 63,
+              "startColumn": 25,
+              "endLine": 63,
+              "endColumn": 41,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/MetadataServlet.java",
+              "type": "Idp [realm] : String",
+              "code": "        PrintWriter out = response.getWriter();\n\n        ConfigService cs = (ConfigService)getApplicationContext().getBean(\"config\");\n        Idp idpConfig = cs.getIDP(realm);\n        try {\n            boolean isSamlRequest = request.getQueryString() != null\n                && request.getQueryString().contains(\"protocol=saml\");"
+            },
+            {
+              "step": 22,
+              "variableName": "idpConfig",
+              "startLine": 91,
+              "startColumn": 52,
+              "endLine": 91,
+              "endColumn": 61,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/MetadataServlet.java",
+              "type": "Idp [realm] : String",
+              "code": "                    return;\n                }\n                ServiceMetadataWriter mw = new ServiceMetadataWriter();\n                Document metadata = mw.getMetaData(idpConfig, trustedIdp);\n                out.write(DOM2Writer.nodeToString(metadata));\n            } else {\n                // Otherwise return the Metadata for the Idp"
+            },
+            {
+              "step": 23,
+              "variableName": "Idp config",
+              "startLine": 53,
+              "startColumn": 33,
+              "endLine": 53,
+              "endColumn": 43,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/metadata/ServiceMetadataWriter.java",
+              "type": "Idp [realm] : String",
+              "code": "\n    private static final Logger LOG = LoggerFactory.getLogger(ServiceMetadataWriter.class);\n\n    public Document getMetaData(Idp config, TrustedIdp serviceConfig) throws ProcessingException {\n\n        try {\n            Crypto crypto = CertsUtils.getCryptoFromFile(config.getCertificate());"
+            },
+            {
+              "step": 24,
+              "variableName": "config",
+              "startLine": 67,
+              "startColumn": 47,
+              "endLine": 67,
+              "endColumn": 53,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/metadata/ServiceMetadataWriter.java",
+              "type": "Idp [realm] : String",
+              "code": "            writer.writeAttribute(\"ID\", referenceID);\n\n            String serviceURL = config.getIdpUrl().toString();\n            writer.writeAttribute(\"entityID\", config.getRealm());\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            },
+            {
+              "step": 25,
+              "variableName": "getRealm",
+              "startLine": 137,
+              "startColumn": 19,
+              "endLine": 137,
+              "endColumn": 27,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "Idp [realm] : String",
+              "code": "        this.id = id;\n    }\n\n    public String getRealm() {\n        return realm;\n    }\n"
+            },
+            {
+              "step": 26,
+              "variableName": "realm",
+              "startLine": 138,
+              "startColumn": 16,
+              "endLine": 138,
+              "endColumn": 21,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "Idp [realm] : String",
+              "code": "    }\n\n    public String getRealm() {\n        return realm;\n    }\n\n    public void setRealm(String realm) {"
+            },
+            {
+              "step": 27,
+              "variableName": "realm",
+              "startLine": 138,
+              "startColumn": 16,
+              "endLine": 138,
+              "endColumn": 21,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "String",
+              "code": "    }\n\n    public String getRealm() {\n        return realm;\n    }\n\n    public void setRealm(String realm) {"
+            },
+            {
+              "step": 28,
+              "variableName": "config.getRealm()",
+              "startLine": 67,
+              "startColumn": 47,
+              "endLine": 67,
+              "endColumn": 64,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/metadata/ServiceMetadataWriter.java",
+              "type": "",
+              "code": "            writer.writeAttribute(\"ID\", referenceID);\n\n            String serviceURL = config.getIdpUrl().toString();\n            writer.writeAttribute(\"entityID\", config.getRealm());\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "realm",
+              "startLine": 156,
+              "startColumn": 16,
+              "endLine": 156,
+              "endColumn": 21,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpEntity.java",
+              "type": "String",
+              "code": "    }\n\n    public String getRealm() {\n        return realm;\n    }\n\n    public void setRealm(String realm) {"
+            },
+            {
+              "step": 1,
+              "variableName": "entity.getRealm()",
+              "startLine": 312,
+              "startColumn": 22,
+              "endLine": 312,
+              "endColumn": 39,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "String",
+              "code": "        idp.setId(entity.getId());\n        idp.setCertificate(entity.getCertificate());\n        idp.setCertificatePassword(entity.getCertificatePassword());\n        idp.setRealm(entity.getRealm());\n        idp.setServiceDescription(entity.getServiceDescription());\n        idp.setServiceDisplayName(entity.getServiceDisplayName());\n        idp.setHrds(entity.getHrds());"
+            },
+            {
+              "step": 2,
+              "variableName": "String realm",
+              "startLine": 141,
+              "startColumn": 26,
+              "endLine": 141,
+              "endColumn": 38,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "String",
+              "code": "        return realm;\n    }\n\n    public void setRealm(String realm) {\n        this.realm = realm;\n    }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "realm",
+              "startLine": 142,
+              "startColumn": 22,
+              "endLine": 142,
+              "endColumn": 27,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "String",
+              "code": "    }\n\n    public void setRealm(String realm) {\n        this.realm = realm;\n    }\n\n    public String getUri() {"
+            },
+            {
+              "step": 4,
+              "variableName": "this",
+              "startLine": 142,
+              "startColumn": 9,
+              "endLine": 142,
+              "endColumn": 13,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "Idp [realm] : String",
+              "code": "    }\n\n    public void setRealm(String realm) {\n        this.realm = realm;\n    }\n\n    public String getUri() {"
+            },
+            {
+              "step": 5,
+              "variableName": "idp",
+              "startLine": 312,
+              "startColumn": 9,
+              "endLine": 312,
+              "endColumn": 12,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "        idp.setId(entity.getId());\n        idp.setCertificate(entity.getCertificate());\n        idp.setCertificatePassword(entity.getCertificatePassword());\n        idp.setRealm(entity.getRealm());\n        idp.setServiceDescription(entity.getServiceDescription());\n        idp.setServiceDisplayName(entity.getServiceDisplayName());\n        idp.setHrds(entity.getHrds());"
+            },
+            {
+              "step": 6,
+              "variableName": "idp",
+              "startLine": 362,
+              "startColumn": 16,
+              "endLine": 362,
+              "endColumn": 19,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "            }\n        }\n\n        return idp;\n    }\n\n}"
+            },
+            {
+              "step": 7,
+              "variableName": "entity2domain((IdpEntity)idpObj, expandList)",
+              "startLine": 82,
+              "startColumn": 16,
+              "endLine": 82,
+              "endColumn": 60,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/IdpDAOJPAImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "        query.setParameter(\"realm\", realm);\n\n        Object idpObj = query.getSingleResult();\n        return entity2domain((IdpEntity)idpObj, expandList);\n    }\n\n    @Override"
+            },
+            {
+              "step": 8,
+              "variableName": "idpDAO.getIdp(realm, expand)",
+              "startLine": 76,
+              "startColumn": 19,
+              "endLine": 76,
+              "endColumn": 47,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/IdpServiceImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "\n    @Override\n    public Idp getIdp(String realm, List<String> expand) {\n        Idp idp = idpDAO.getIdp(realm, expand);\n        if (idp == null) {\n            LOG.warn(\"IdP not found for realm {}\", realm);\n            throw new NotFoundException();"
+            },
+            {
+              "step": 9,
+              "variableName": "idp",
+              "startLine": 81,
+              "startColumn": 20,
+              "endLine": 81,
+              "endColumn": 23,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/rest/IdpServiceImpl.java",
+              "type": "Idp [realm] : String",
+              "code": "            LOG.warn(\"IdP not found for realm {}\", realm);\n            throw new NotFoundException();\n        } else {\n            return idp;\n        }\n    }\n"
+            },
+            {
+              "step": 10,
+              "variableName": "idpService.getIdp(realm, Arrays.asList(\"all\"))",
+              "startLine": 65,
+              "startColumn": 24,
+              "endLine": 65,
+              "endColumn": 70,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/service/jpa/ConfigServiceJPA.java",
+              "type": "Idp [realm] : String",
+              "code": "\n                SecurityContextHolder.getContext().setAuthentication(technicalUser);\n\n                return idpService.getIdp(realm, Arrays.asList(\"all\"));\n            }\n        } finally {\n            SecurityContextHolder.getContext().setAuthentication(currentAuthentication);"
+            },
+            {
+              "step": 11,
+              "variableName": "cs.getIDP(realm)",
+              "startLine": 63,
+              "startColumn": 25,
+              "endLine": 63,
+              "endColumn": 41,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/MetadataServlet.java",
+              "type": "Idp [realm] : String",
+              "code": "        PrintWriter out = response.getWriter();\n\n        ConfigService cs = (ConfigService)getApplicationContext().getBean(\"config\");\n        Idp idpConfig = cs.getIDP(realm);\n        try {\n            boolean isSamlRequest = request.getQueryString() != null\n                && request.getQueryString().contains(\"protocol=saml\");"
+            },
+            {
+              "step": 12,
+              "variableName": "idpConfig",
+              "startLine": 91,
+              "startColumn": 52,
+              "endLine": 91,
+              "endColumn": 61,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/MetadataServlet.java",
+              "type": "Idp [realm] : String",
+              "code": "                    return;\n                }\n                ServiceMetadataWriter mw = new ServiceMetadataWriter();\n                Document metadata = mw.getMetaData(idpConfig, trustedIdp);\n                out.write(DOM2Writer.nodeToString(metadata));\n            } else {\n                // Otherwise return the Metadata for the Idp"
+            },
+            {
+              "step": 13,
+              "variableName": "Idp config",
+              "startLine": 53,
+              "startColumn": 33,
+              "endLine": 53,
+              "endColumn": 43,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/metadata/ServiceMetadataWriter.java",
+              "type": "Idp [realm] : String",
+              "code": "\n    private static final Logger LOG = LoggerFactory.getLogger(ServiceMetadataWriter.class);\n\n    public Document getMetaData(Idp config, TrustedIdp serviceConfig) throws ProcessingException {\n\n        try {\n            Crypto crypto = CertsUtils.getCryptoFromFile(config.getCertificate());"
+            },
+            {
+              "step": 14,
+              "variableName": "config",
+              "startLine": 67,
+              "startColumn": 47,
+              "endLine": 67,
+              "endColumn": 53,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/metadata/ServiceMetadataWriter.java",
+              "type": "Idp [realm] : String",
+              "code": "            writer.writeAttribute(\"ID\", referenceID);\n\n            String serviceURL = config.getIdpUrl().toString();\n            writer.writeAttribute(\"entityID\", config.getRealm());\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            },
+            {
+              "step": 15,
+              "variableName": "getRealm",
+              "startLine": 137,
+              "startColumn": 19,
+              "endLine": 137,
+              "endColumn": 27,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "Idp [realm] : String",
+              "code": "        this.id = id;\n    }\n\n    public String getRealm() {\n        return realm;\n    }\n"
+            },
+            {
+              "step": 16,
+              "variableName": "realm",
+              "startLine": 138,
+              "startColumn": 16,
+              "endLine": 138,
+              "endColumn": 21,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "Idp [realm] : String",
+              "code": "    }\n\n    public String getRealm() {\n        return realm;\n    }\n\n    public void setRealm(String realm) {"
+            },
+            {
+              "step": 17,
+              "variableName": "realm",
+              "startLine": 138,
+              "startColumn": 16,
+              "endLine": 138,
+              "endColumn": 21,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/domain/Idp.java",
+              "type": "String",
+              "code": "    }\n\n    public String getRealm() {\n        return realm;\n    }\n\n    public void setRealm(String realm) {"
+            },
+            {
+              "step": 18,
+              "variableName": "config.getRealm()",
+              "startLine": 67,
+              "startColumn": 47,
+              "endLine": 67,
+              "endColumn": 64,
+              "uri": "cxf-fediz-fediz-1.7.1/services/idp-core/src/main/java/org/apache/cxf/fediz/service/idp/metadata/ServiceMetadataWriter.java",
+              "type": "",
+              "code": "            writer.writeAttribute(\"ID\", referenceID);\n\n            String serviceURL = config.getIdpUrl().toString();\n            writer.writeAttribute(\"entityID\", config.getRealm());\n\n            writer.writeNamespace(\"md\", SAML2_METADATA_NS);\n            writer.writeNamespace(\"fed\", WS_FEDERATION_NS);"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 8,
+      "fileName": "ClientRegistrationService.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "client",
+              "startLine": 357,
+              "startColumn": 33,
+              "endLine": 357,
+              "endColumn": 39,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "Client",
+              "code": "                throw new InvalidRegistrationException(\"The client name must not be empty\");\n            }\n\n            updateClientDetails(client, audience, redirectURI, logoutURI, homeRealm);\n\n            if (!client.getApplicationName().equals(appName)) {\n                Collection<Client> clientRegistrations = getClientRegistrations("
+            },
+            {
+              "step": 1,
+              "variableName": "client",
+              "startLine": 376,
+              "startColumn": 32,
+              "endLine": 376,
+              "endColumn": 38,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "Client",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            },
+            {
+              "step": 2,
+              "variableName": "Response.ok(client)",
+              "startLine": 376,
+              "startColumn": 20,
+              "endLine": 376,
+              "endColumn": 39,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "ResponseBuilder",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            },
+            {
+              "step": 3,
+              "variableName": "Response.ok(client).build()",
+              "startLine": 376,
+              "startColumn": 20,
+              "endLine": 376,
+              "endColumn": 47,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "client",
+              "startLine": 359,
+              "startColumn": 18,
+              "endLine": 359,
+              "endColumn": 24,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "Client",
+              "code": "\n            updateClientDetails(client, audience, redirectURI, logoutURI, homeRealm);\n\n            if (!client.getApplicationName().equals(appName)) {\n                Collection<Client> clientRegistrations = getClientRegistrations(\n                    client.getResourceOwnerSubject().getLogin());\n                for (Iterator<Client> it = clientRegistrations.iterator(); it.hasNext();) {"
+            },
+            {
+              "step": 1,
+              "variableName": "client",
+              "startLine": 376,
+              "startColumn": 32,
+              "endLine": 376,
+              "endColumn": 38,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "Client",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            },
+            {
+              "step": 2,
+              "variableName": "Response.ok(client)",
+              "startLine": 376,
+              "startColumn": 20,
+              "endLine": 376,
+              "endColumn": 39,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "ResponseBuilder",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            },
+            {
+              "step": 3,
+              "variableName": "Response.ok(client).build()",
+              "startLine": 376,
+              "startColumn": 20,
+              "endLine": 376,
+              "endColumn": 47,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "client",
+              "startLine": 361,
+              "startColumn": 21,
+              "endLine": 361,
+              "endColumn": 27,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "Client",
+              "code": "\n            if (!client.getApplicationName().equals(appName)) {\n                Collection<Client> clientRegistrations = getClientRegistrations(\n                    client.getResourceOwnerSubject().getLogin());\n                for (Iterator<Client> it = clientRegistrations.iterator(); it.hasNext();) {\n                    Client c = it.next();\n                    if (c.getClientId().equals(clientId)) {"
+            },
+            {
+              "step": 1,
+              "variableName": "client",
+              "startLine": 376,
+              "startColumn": 32,
+              "endLine": 376,
+              "endColumn": 38,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "Client",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            },
+            {
+              "step": 2,
+              "variableName": "Response.ok(client)",
+              "startLine": 376,
+              "startColumn": 20,
+              "endLine": 376,
+              "endColumn": 39,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "ResponseBuilder",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            },
+            {
+              "step": 3,
+              "variableName": "Response.ok(client).build()",
+              "startLine": 376,
+              "startColumn": 20,
+              "endLine": 376,
+              "endColumn": 47,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "client",
+              "startLine": 369,
+              "startColumn": 17,
+              "endLine": 369,
+              "endColumn": 23,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "Client",
+              "code": "                        break;\n                    }\n                }\n                client.setApplicationName(appName);\n                updateClientApplicationName(client, clientRegistrations);\n                clientRegistrations.add(client);\n            }"
+            },
+            {
+              "step": 1,
+              "variableName": "client",
+              "startLine": 376,
+              "startColumn": 32,
+              "endLine": 376,
+              "endColumn": 38,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "Client",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            },
+            {
+              "step": 2,
+              "variableName": "Response.ok(client)",
+              "startLine": 376,
+              "startColumn": 20,
+              "endLine": 376,
+              "endColumn": 39,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "ResponseBuilder",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            },
+            {
+              "step": 3,
+              "variableName": "Response.ok(client).build()",
+              "startLine": 376,
+              "startColumn": 20,
+              "endLine": 376,
+              "endColumn": 47,
+              "uri": "cxf-fediz-fediz-1.7.1/services/oidc/src/main/java/org/apache/cxf/fediz/service/oidc/clients/ClientRegistrationService.java",
+              "type": "",
+              "code": "\n            clientProvider.setClient(client);\n\n            return Response.ok(client).build();\n        } catch (InvalidRegistrationException ex) {\n            // For the view handlers to handle it\n            return Response.ok(new InvalidRegistration(ex.getMessage())).build();"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ],
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "SigninHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "flowIndex": 0,
+              "vulnerabilityIndex": 0,
+              "step": 0,
+              "variableName": "responseToken",
+              "startLine": 101,
+              "startColumn": 33,
+              "endLine": 101,
+              "endColumn": 46,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/core/src/main/java/org/apache/cxf/fediz/core/handler/SigninHandler.java",
+              "type": "",
+              "code": "    public FedizResponse processSigninRequest(String responseToken, HttpServletRequest req, HttpServletResponse resp)\n        throws ProcessingException {\n        LOG.debug(\"Process SignIn request\");\n        LOG.debug(\"token=\\n{}\", responseToken);\n\n        FedizRequest federationRequest = new FedizRequest();\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "FedizRedirectBindingFilter.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "flowIndex": 0,
+              "vulnerabilityIndex": 1,
+              "step": 0,
+              "variableName": "responseToken",
+              "startLine": 134,
+              "startColumn": 37,
+              "endLine": 134,
+              "endColumn": 50,
+              "uri": "cxf-fediz-fediz-1.7.1/plugins/cxf/src/main/java/org/apache/cxf/fediz/cxf/plugin/FedizRedirectBindingFilter.java",
+              "type": "",
+              "code": "        } else {\n            // processSignInRequest\n            LOG.debug(\"Process SignIn request\");\n            LOG.debug(\"token=\\n{}\", responseToken);\n\n            FedizResponse wfRes =\n                validateSignInRequest(fedConfig, params, responseToken, state);"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}

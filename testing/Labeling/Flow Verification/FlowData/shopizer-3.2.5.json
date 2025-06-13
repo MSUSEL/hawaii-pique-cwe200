@@ -1,0 +1,322 @@
+{
+  "201": [
+    {
+      "resultIndex": 1,
+      "fileName": "CorsFilter.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "flowIndex": 0,
+              "vulnerabilityIndex": 1,
+              "step": 0,
+              "variableName": "origin",
+              "startLine": 40,
+              "startColumn": 64,
+              "endLine": 40,
+              "endColumn": 70,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/filter/CorsFilter.java",
+              "type": "",
+              "code": "\t\n\t        httpResponse.setHeader(\"Access-Control-Allow-Methods\", \"POST, GET, PUT, OPTIONS, DELETE, PATCH\");\n        \thttpResponse.setHeader(\"Access-Control-Allow-Headers\", \"X-Auth-Token, Content-Type, Authorization, Cache-Control, X-Requested-With\");\n        \thttpResponse.setHeader(\"Access-Control-Allow-Origin\", origin);\n\t        \n        \treturn true;\n\t\t\t"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "OrderApi.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "principal",
+              "startLine": 300,
+              "startColumn": 21,
+              "endLine": 300,
+              "endColumn": 30,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "Principal",
+              "code": "\tpublic ReadableOrder getOrder(@PathVariable final Long id, @ApiIgnore MerchantStore merchantStore,\n\t\t\t@ApiIgnore Language language, HttpServletRequest request, HttpServletResponse response) throws Exception {\n\t\tPrincipal principal = request.getUserPrincipal();\n\t\tString userName = principal.getName();\n\n\t\tCustomer customer = customerService.getByNick(userName);\n"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Order is null for customer \" + principal",
+              "startLine": 319,
+              "startColumn": 28,
+              "endLine": 319,
+              "endColumn": 69,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "",
+              "code": "\n\t\tif (order.getCustomer() == null) {\n\t\t\tLOGGER.error(\"Order is null for customer \" + principal);\n\t\t\tresponse.sendError(404, \"Order is null for customer \" + principal);\n\t\t\treturn null;\n\t\t}\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "principal",
+              "startLine": 318,
+              "startColumn": 49,
+              "endLine": 318,
+              "endColumn": 58,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "Principal",
+              "code": "\t\t}\n\n\t\tif (order.getCustomer() == null) {\n\t\t\tLOGGER.error(\"Order is null for customer \" + principal);\n\t\t\tresponse.sendError(404, \"Order is null for customer \" + principal);\n\t\t\treturn null;\n\t\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Order is null for customer \" + principal",
+              "startLine": 319,
+              "startColumn": 28,
+              "endLine": 319,
+              "endColumn": 69,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "",
+              "code": "\n\t\tif (order.getCustomer() == null) {\n\t\t\tLOGGER.error(\"Order is null for customer \" + principal);\n\t\t\tresponse.sendError(404, \"Order is null for customer \" + principal);\n\t\t\treturn null;\n\t\t}\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "principal",
+              "startLine": 319,
+              "startColumn": 60,
+              "endLine": 319,
+              "endColumn": 69,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "Principal",
+              "code": "\n\t\tif (order.getCustomer() == null) {\n\t\t\tLOGGER.error(\"Order is null for customer \" + principal);\n\t\t\tresponse.sendError(404, \"Order is null for customer \" + principal);\n\t\t\treturn null;\n\t\t}\n"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Order is null for customer \" + principal",
+              "startLine": 319,
+              "startColumn": 28,
+              "endLine": 319,
+              "endColumn": 69,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "",
+              "code": "\n\t\tif (order.getCustomer() == null) {\n\t\t\tLOGGER.error(\"Order is null for customer \" + principal);\n\t\t\tresponse.sendError(404, \"Order is null for customer \" + principal);\n\t\t\treturn null;\n\t\t}\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 3,
+      "fileName": "OrderApi.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "principal",
+              "startLine": 300,
+              "startColumn": 21,
+              "endLine": 300,
+              "endColumn": 30,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "Principal",
+              "code": "\tpublic ReadableOrder getOrder(@PathVariable final Long id, @ApiIgnore MerchantStore merchantStore,\n\t\t\t@ApiIgnore Language language, HttpServletRequest request, HttpServletResponse response) throws Exception {\n\t\tPrincipal principal = request.getUserPrincipal();\n\t\tString userName = principal.getName();\n\n\t\tCustomer customer = customerService.getByNick(userName);\n"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Order is null for customer \" + principal",
+              "startLine": 326,
+              "startColumn": 28,
+              "endLine": 326,
+              "endColumn": 69,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "",
+              "code": "\t\tif (order.getCustomer().getId() != null\n\t\t\t\t&& order.getCustomer().getId().longValue() != customer.getId().longValue()) {\n\t\t\tLOGGER.error(\"Order is null for customer \" + principal);\n\t\t\tresponse.sendError(404, \"Order is null for customer \" + principal);\n\t\t\treturn null;\n\t\t}\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "principal",
+              "startLine": 325,
+              "startColumn": 49,
+              "endLine": 325,
+              "endColumn": 58,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "Principal",
+              "code": "\n\t\tif (order.getCustomer().getId() != null\n\t\t\t\t&& order.getCustomer().getId().longValue() != customer.getId().longValue()) {\n\t\t\tLOGGER.error(\"Order is null for customer \" + principal);\n\t\t\tresponse.sendError(404, \"Order is null for customer \" + principal);\n\t\t\treturn null;\n\t\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Order is null for customer \" + principal",
+              "startLine": 326,
+              "startColumn": 28,
+              "endLine": 326,
+              "endColumn": 69,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "",
+              "code": "\t\tif (order.getCustomer().getId() != null\n\t\t\t\t&& order.getCustomer().getId().longValue() != customer.getId().longValue()) {\n\t\t\tLOGGER.error(\"Order is null for customer \" + principal);\n\t\t\tresponse.sendError(404, \"Order is null for customer \" + principal);\n\t\t\treturn null;\n\t\t}\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "principal",
+              "startLine": 326,
+              "startColumn": 60,
+              "endLine": 326,
+              "endColumn": 69,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "Principal",
+              "code": "\t\tif (order.getCustomer().getId() != null\n\t\t\t\t&& order.getCustomer().getId().longValue() != customer.getId().longValue()) {\n\t\t\tLOGGER.error(\"Order is null for customer \" + principal);\n\t\t\tresponse.sendError(404, \"Order is null for customer \" + principal);\n\t\t\treturn null;\n\t\t}\n"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Order is null for customer \" + principal",
+              "startLine": 326,
+              "startColumn": 28,
+              "endLine": 326,
+              "endColumn": 69,
+              "uri": "shopizer-3.2.5/sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+              "type": "",
+              "code": "\t\tif (order.getCustomer().getId() != null\n\t\t\t\t&& order.getCustomer().getId().longValue() != customer.getId().longValue()) {\n\t\t\tLOGGER.error(\"Order is null for customer \" + principal);\n\t\t\tresponse.sendError(404, \"Order is null for customer \" + principal);\n\t\t\treturn null;\n\t\t}\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ],
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "UPSShippingQuote.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password",
+              "startLine": 210,
+              "startColumn": 24,
+              "endLine": 210,
+              "endColumn": 32,
+              "uri": "shopizer-3.2.5/sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/UPSShippingQuote.java",
+              "type": "String",
+              "code": "\t\t\txmlreqbuffer.append(userId);\n\t\t\txmlreqbuffer.append(\"</UserId>\");\n\t\t\txmlreqbuffer.append(\"<Password>\");\n\t\t\txmlreqbuffer.append(password);\n\t\t\txmlreqbuffer.append(\"</Password>\");\n\t\t\txmlreqbuffer.append(\"</AccessRequest>\");\n\t\t\t"
+            },
+            {
+              "step": 1,
+              "variableName": "xmlreqbuffer",
+              "startLine": 210,
+              "startColumn": 4,
+              "endLine": 210,
+              "endColumn": 16,
+              "uri": "shopizer-3.2.5/sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/UPSShippingQuote.java",
+              "type": "StringBuilder",
+              "code": "\t\t\txmlreqbuffer.append(userId);\n\t\t\txmlreqbuffer.append(\"</UserId>\");\n\t\t\txmlreqbuffer.append(\"<Password>\");\n\t\t\txmlreqbuffer.append(password);\n\t\t\txmlreqbuffer.append(\"</Password>\");\n\t\t\txmlreqbuffer.append(\"</AccessRequest>\");\n\t\t\t"
+            },
+            {
+              "step": 2,
+              "variableName": "xmlreqbuffer",
+              "startLine": 214,
+              "startColumn": 21,
+              "endLine": 214,
+              "endColumn": 33,
+              "uri": "shopizer-3.2.5/sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/UPSShippingQuote.java",
+              "type": "StringBuilder",
+              "code": "\t\t\txmlreqbuffer.append(\"</Password>\");\n\t\t\txmlreqbuffer.append(\"</AccessRequest>\");\n\t\t\t\n\t\t\tString xmlhead = xmlreqbuffer.toString();\n\t\t\t\n\n\t\t\tString weightCode = store.getWeightunitcode();"
+            },
+            {
+              "step": 3,
+              "variableName": "xmlreqbuffer.toString()",
+              "startLine": 214,
+              "startColumn": 21,
+              "endLine": 214,
+              "endColumn": 44,
+              "uri": "shopizer-3.2.5/sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/UPSShippingQuote.java",
+              "type": "String",
+              "code": "\t\t\txmlreqbuffer.append(\"</Password>\");\n\t\t\txmlreqbuffer.append(\"</AccessRequest>\");\n\t\t\t\n\t\t\tString xmlhead = xmlreqbuffer.toString();\n\t\t\t\n\n\t\t\tString weightCode = store.getWeightunitcode();"
+            },
+            {
+              "step": 4,
+              "variableName": "xmlhead",
+              "startLine": 373,
+              "startColumn": 21,
+              "endLine": 373,
+              "endColumn": 28,
+              "uri": "shopizer-3.2.5/sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/UPSShippingQuote.java",
+              "type": "String",
+              "code": "\t\t\txmldatabuffer.append(\"</Shipment>\");\n\t\t\txmldatabuffer.append(\"</RatingServiceSelectionRequest>\");\n\n\t\t\txmlbuffer.append(xmlhead).append(xml).append(\n\t\t\t\t\txmldatabuffer.toString());\n\t\t\t\n"
+            },
+            {
+              "step": 5,
+              "variableName": "xmlbuffer",
+              "startLine": 373,
+              "startColumn": 4,
+              "endLine": 373,
+              "endColumn": 13,
+              "uri": "shopizer-3.2.5/sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/UPSShippingQuote.java",
+              "type": "StringBuilder",
+              "code": "\t\t\txmldatabuffer.append(\"</Shipment>\");\n\t\t\txmldatabuffer.append(\"</RatingServiceSelectionRequest>\");\n\n\t\t\txmlbuffer.append(xmlhead).append(xml).append(\n\t\t\t\t\txmldatabuffer.toString());\n\t\t\t\n"
+            },
+            {
+              "step": 6,
+              "variableName": "xmlbuffer",
+              "startLine": 378,
+              "startColumn": 40,
+              "endLine": 378,
+              "endColumn": 49,
+              "uri": "shopizer-3.2.5/sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/UPSShippingQuote.java",
+              "type": "StringBuilder",
+              "code": "\t\t\t\n\n\n\t\t\tLOGGER.debug(\"UPS QUOTE REQUEST \" + xmlbuffer.toString());\n\n\n\t\t\ttry(CloseableHttpClient httpclient = HttpClients.createDefault()) {"
+            },
+            {
+              "step": 7,
+              "variableName": "xmlbuffer.toString()",
+              "startLine": 378,
+              "startColumn": 40,
+              "endLine": 378,
+              "endColumn": 60,
+              "uri": "shopizer-3.2.5/sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/UPSShippingQuote.java",
+              "type": "String",
+              "code": "\t\t\t\n\n\n\t\t\tLOGGER.debug(\"UPS QUOTE REQUEST \" + xmlbuffer.toString());\n\n\n\t\t\ttry(CloseableHttpClient httpclient = HttpClients.createDefault()) {"
+            },
+            {
+              "step": 8,
+              "variableName": "\"UPS QUOTE REQUEST \" + xmlbuffer.toString()",
+              "startLine": 378,
+              "startColumn": 17,
+              "endLine": 378,
+              "endColumn": 60,
+              "uri": "shopizer-3.2.5/sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/UPSShippingQuote.java",
+              "type": "",
+              "code": "\t\t\t\n\n\n\t\t\tLOGGER.debug(\"UPS QUOTE REQUEST \" + xmlbuffer.toString());\n\n\n\t\t\ttry(CloseableHttpClient httpclient = HttpClients.createDefault()) {"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}
