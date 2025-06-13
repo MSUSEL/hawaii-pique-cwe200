@@ -1,0 +1,60 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "PgClient.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "CLEARTEXT_PASSWORD",
+              "startLine": 435,
+              "startColumn": 27,
+              "endLine": 435,
+              "endColumn": 45,
+              "uri": "crate-5.10.5/server/src/main/java/io/crate/protocols/postgres/PgClient.java",
+              "type": "AuthType",
+              "code": "        public static AuthType of(int type) {\n            return switch (type) {\n                case 0 -> OK;\n                case 3 -> CLEARTEXT_PASSWORD;\n                default -> throw new IllegalArgumentException(\"Unknown auth type: \" + type);\n            };\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "switch (type)",
+              "startLine": 433,
+              "startColumn": 20,
+              "endLine": 433,
+              "endColumn": 33,
+              "uri": "crate-5.10.5/server/src/main/java/io/crate/protocols/postgres/PgClient.java",
+              "type": "AuthType",
+              "code": "        CLEARTEXT_PASSWORD;\n\n        public static AuthType of(int type) {\n            return switch (type) {\n                case 0 -> OK;\n                case 3 -> CLEARTEXT_PASSWORD;\n                default -> throw new IllegalArgumentException(\"Unknown auth type: \" + type);"
+            },
+            {
+              "step": 2,
+              "variableName": "AuthType.of(msg.readInt())",
+              "startLine": 408,
+              "startColumn": 33,
+              "endLine": 408,
+              "endColumn": 59,
+              "uri": "crate-5.10.5/server/src/main/java/io/crate/protocols/postgres/PgClient.java",
+              "type": "AuthType",
+              "code": "        }\n\n        private void handleAuth(Channel channel, ByteBuf msg) {\n            AuthType authType = AuthType.of(msg.readInt());\n            if (LOGGER.isTraceEnabled()) {\n                LOGGER.trace(\"Server sent authentication request type={}\", authType);\n            }"
+            },
+            {
+              "step": 3,
+              "variableName": "authType",
+              "startLine": 410,
+              "startColumn": 76,
+              "endLine": 410,
+              "endColumn": 84,
+              "uri": "crate-5.10.5/server/src/main/java/io/crate/protocols/postgres/PgClient.java",
+              "type": "",
+              "code": "        private void handleAuth(Channel channel, ByteBuf msg) {\n            AuthType authType = AuthType.of(msg.readInt());\n            if (LOGGER.isTraceEnabled()) {\n                LOGGER.trace(\"Server sent authentication request type={}\", authType);\n            }\n            switch (authType) {\n                case OK:"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

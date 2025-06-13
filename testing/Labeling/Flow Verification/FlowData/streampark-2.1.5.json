@@ -1,0 +1,66 @@
+{
+  "209": [
+    {
+      "resultIndex": 0,
+      "fileName": "BashJavaUtils.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 66,
+              "startColumn": 28,
+              "endLine": 66,
+              "endColumn": 32,
+              "uri": "streampark-2.1.5/streampark-console/streampark-console-service/src/main/java/org/apache/streampark/console/base/util/BashJavaUtils.java",
+              "type": "Number",
+              "code": "        break;\n      case \"--free_port\":\n        int start = Integer.parseInt(actionArgs[0]);\n        for (port = start; port < 65535; port++) {\n          try (Socket ignored = new Socket(localhost, port)) {\n          } catch (Exception e) {\n            System.out.println(port);"
+            },
+            {
+              "step": 1,
+              "variableName": "port",
+              "startLine": 69,
+              "startColumn": 32,
+              "endLine": 69,
+              "endColumn": 36,
+              "uri": "streampark-2.1.5/streampark-console/streampark-console-service/src/main/java/org/apache/streampark/console/base/util/BashJavaUtils.java",
+              "type": "",
+              "code": "        for (port = start; port < 65535; port++) {\n          try (Socket ignored = new Socket(localhost, port)) {\n          } catch (Exception e) {\n            System.out.println(port);\n            break;\n          }\n        }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "port",
+              "startLine": 67,
+              "startColumn": 55,
+              "endLine": 67,
+              "endColumn": 59,
+              "uri": "streampark-2.1.5/streampark-console/streampark-console-service/src/main/java/org/apache/streampark/console/base/util/BashJavaUtils.java",
+              "type": "Number",
+              "code": "      case \"--free_port\":\n        int start = Integer.parseInt(actionArgs[0]);\n        for (port = start; port < 65535; port++) {\n          try (Socket ignored = new Socket(localhost, port)) {\n          } catch (Exception e) {\n            System.out.println(port);\n            break;"
+            },
+            {
+              "step": 1,
+              "variableName": "port",
+              "startLine": 69,
+              "startColumn": 32,
+              "endLine": 69,
+              "endColumn": 36,
+              "uri": "streampark-2.1.5/streampark-console/streampark-console-service/src/main/java/org/apache/streampark/console/base/util/BashJavaUtils.java",
+              "type": "",
+              "code": "        for (port = start; port < 65535; port++) {\n          try (Socket ignored = new Socket(localhost, port)) {\n          } catch (Exception e) {\n            System.out.println(port);\n            break;\n          }\n        }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
