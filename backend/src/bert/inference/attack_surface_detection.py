@@ -59,33 +59,6 @@ sink_type_mapping = {
     7: "IPC Sink"
 }
 
-def camel_case_split(s):
-    """Split a camelCase or PascalCase string into separate words.
-    Helps normalize identifier names for better text processing.
-    
-    :param s: camelCase or PascalCase string
-    :returns: list of split words
-    """
-    words = [[s[0]]]
-    for c in s[1:]:
-        if words[-1][-1].islower() and c.isupper():
-            words.append(list(c))
-        else:
-            words[-1].append(c)
-    return [''.join(word) for word in words]
-
-def text_preprocess(feature_text):
-    """Preprocess a string by splitting camel case and converting to lowercase.
-    Prepares code tokens for consistent embedding and comparison.
-    
-    :param feature_text: raw text to preprocess
-    :returns: preprocessed string
-    """
-    words = camel_case_split(feature_text)
-    preprocessed_text = ' '.join(words).lower()
-    return preprocessed_text
-
-
 def concat_name_and_context(name_vec, context_vec):
     """Concatenate name and context vectors for each item.
     Combines semantic info from both the item and its context.
@@ -193,20 +166,19 @@ def process_files(data, data_type):
             item_methods = item['methods']
             context = None
             try:
-                preprocessed_item = text_preprocess(item_name)
+                preprocessed_item = item_name
                 if data_type == 'variables':
                     item_type = item['type']
                     context = f"Type: {item_type}, Context: "
                     for method in item_methods:
                         if method in data[file_name]['methodCodeMap']:
                             context += data[file_name]['methodCodeMap'][method]
-                    context = text_preprocess(context)
+                    context = context
                 elif data_type == 'strings':
                     context = "Context: "
                     for method in item_methods:
                         if method in data[file_name]['methodCodeMap']:
                             context += data[file_name]['methodCodeMap'][method]
-                    context = text_preprocess(context)
                 # elif data_type == 'comments':
                 #     output.append((file_name, preprocessed_item))
                 elif data_type == 'sinks': 
