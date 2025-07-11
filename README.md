@@ -9,20 +9,18 @@ Users can upload their Java projects for a thorough analysis, ensuring all insta
 
 ### Current Coverage ###
 
-- CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
 - CWE-201: Insertion of Sensitive Information Into Sent Data
 - CWE-204: Observable Response Discrepancy
 - CWE-208: Observable Timing Discrepancy
 - CWE-209: Generation of Error Message Containing Sensitive Information
 - CWE-214: Invocation of Process Using Visible Sensitive Information
 - CWE-215: Insertion of Sensitive Information Into Debugging Code
-- CWE-531: Inclusion of Sensitive Information in Test Code
 - CWE-532: Insertion of Sensitive Information into Log File
 - CWE-535: Exposure of Information Through Shell Error Message
 - CWE-536: Servlet Runtime Error Message Containing Sensitive Information
 - CWE-537: Java Runtime Error Message Containing Sensitive Information
+- CWE-538: Insertion of Sensitive Information into Externally-Accessible File or Directory
 - CWE-540: Inclusion of Sensitive Information in Source Code
-- CWE-548: Exposure of Information Through Directory Listing
 - CWE-550: Server-generated Error Message Containing Sensitive Information
 - CWE-598: Use of GET Request Method With Sensitive Query Strings
 - CWE-615: Inclusion of Sensitive Information in Source Code Comments
