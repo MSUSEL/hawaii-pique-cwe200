@@ -24,7 +24,7 @@ export class CodeQlParserService {
         const rules = data.runs[0].tool.driver.rules;
         let results = data.runs[0].results;
 
-        // results = this.filterResults(results)
+        results = this.filterResults(results)
         this.results = results
       
 
@@ -40,44 +40,48 @@ export class CodeQlParserService {
      * @  param results - The results array from the SARIF file.
      * @returns - The filtered results array with only relevant flows.
      */
-    filterResults(results){
-        // Initialize counters for flow logging.
-        let totalFlowCount = 0;       // Total flows encountered
-        let totalFlowRemovedCount = 0; // Total flows removed due to label not being "yes"
-        
-        // Process each result.
-        results = results.filter(result => {
-            if (result.codeFlows && result.codeFlows.length > 0) {
-            const originalCount = result.codeFlows.length;
-            totalFlowCount += originalCount;
-        
-            // Filter individual flows: only keep flows with label "yes"
-            const filteredFlows = result.codeFlows.filter(flow => {
-                return flow.label && flow.label.toLowerCase() === 'yes';
+    filterResults(results) {
+    let totalFlowCount = 0;
+    let totalFlowRemovedCount = 0;
+
+    results = results.filter(result => {
+        let originalCount = 0;
+        let filteredFlows = [];
+
+        if (result.codeFlows && result.codeFlows.length > 0) {
+            // Handle multi-flow results
+            originalCount = result.codeFlows.length;
+
+            filteredFlows = result.codeFlows.filter(flow => {
+                return flow.label && flow.label.toLowerCase().trim() === 'yes';
             });
 
-            // const filteredFlows = result.codeFlows; // Keep all flows for now
-        
-            // Count removed flows for this result.
-            totalFlowRemovedCount += (originalCount - filteredFlows.length);
-        
-            if (filteredFlows.length > 0) {
-                // Update the result with the filtered flows.
-                result.codeFlows = filteredFlows;
-                return true;
-            } else {
-                // If no flows remain after filtering, remove the entire result.
-                return false;
-            }
-            }
-            // For results with no data flows, leave them untouched.
-            return true;
-        });
-        
-        // Log the total flows removed versus total flows found.
-        console.log(`Filtered out ${totalFlowRemovedCount} flows out of ${totalFlowCount} total flows.`);
-        return results
-    }
+            result.codeFlows = filteredFlows;
+        } else if (result.locations && result.locations.length > 0) {
+            // Handle single-flow result via locations
+            originalCount = result.locations.length;
+
+            filteredFlows = result.locations.filter(location => {
+                return location.label && location.label.toLowerCase().trim() === 'yes';
+            });
+
+            result.locations = filteredFlows;
+        } else {
+            // No codeFlows or locations = no usable flow
+            return false;
+        }
+
+        totalFlowCount += originalCount;
+        totalFlowRemovedCount += (originalCount - filteredFlows.length);
+
+        // Keep the result only if at least one flow remains
+        return filteredFlows.length > 0;
+    });
+
+    console.log(`Filtered out ${totalFlowRemovedCount} flows out of ${totalFlowCount} total flows.`);
+    return results;
+}
+
       
     /**
      * This function is used to get all the data flow trees for a specific result index
