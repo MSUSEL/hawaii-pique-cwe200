@@ -6,10 +6,11 @@ import { EventsModule } from 'src/events/events.module';
 import { BertModule } from 'src/bert/bert.module';
 import { LLMModule } from 'src/llm/llm.module';
 import { CodeQlModule } from 'src/code-ql/code-ql.module';
+import { LanguageAnalysisModule } from 'src/language-analysis/language-analysis.module';
 
 
 @Module({
-  imports: [FilesModule, EventsModule, BertModule, LLMModule, CodeQlModule],
+  imports: [FilesModule, EventsModule, BertModule, LLMModule, CodeQlModule, LanguageAnalysisModule],
   controllers: [AnalyzeController],
   providers: [AnalyzeService], 
   exports: [AnalyzeService], 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { FileUtilService } from 'src/files/fileUtilService';
 import { CodeQlParserService } from '../code-ql/codql-parser-service';
 
@@ -7,6 +7,8 @@ import { CodeQlService } from 'src/code-ql/code-ql.service';
 import { BertService } from 'src/bert/bert.service';
 import { LLMService } from 'src/llm/llm.service';
 import { JavaParserService } from 'src/java-parser/java-parser.service';
+import { AnalyzeRequestDto } from 'src/types/analysis-config.type';
+import { LanguageAnalyzerFactory } from 'src/language-analysis/factories/language-analyzer.factory';
 
 import { SensitiveVariables } from 'src/templates/SensitiveVariables';
 import { SensitiveComments } from 'src/templates/SensitiveComments';
@@ -16,8 +18,9 @@ import { Sinks } from 'src/templates/Sinks';
 import * as path from 'path';
 
 /**
- * Service responsible for analyzing Java projects, detecting sensitive information,
- * and verifying data flows using various engines and tools.
+ * Service responsible for analyzing projects in multiple programming languages,
+ * detecting sensitive information, and verifying data flows using various engines and tools.
+ * Now supports extensible language analysis through the LanguageAnalyzerFactory.
  */
 @Injectable()
 export class AnalyzeService {
@@ -30,45 +33,54 @@ export class AnalyzeService {
         private parserService: CodeQlParserService,
         private fileUtilService: FileUtilService,
         private bertService: BertService,
-        private llmService: LLMService,
         private codeqlService: CodeQlService,
-        private javaParserService: JavaParserService,
+        private languageAnalyzerFactory: LanguageAnalyzerFactory,
     ) {
         this.projectsPath = this.configService.get<string>('CODEQL_PROJECTS_DIR');
         this.queryPath = this.configService.get<string>('QUERY_DIR');
     }
 
     /**
-     * Run analysis on a project
+     * Run analysis on a project using language-specific analyzers
      * This is the main function that kicks off the analysis process.
      * It performs the following steps:
-     * 1. Set the Java version if specified
-     * 2. Get all Java files in the project directory
-     * 3. [Attack Surface Detection Engine] Parse the files for variables, strings, comments, and method calls
-     * 4. [Attack Surface Detection Engine] Detect sensitive information using BERT
-     * 5. [Attack Surface Detection Engine] Read in BERT results from data.json
-     * 6. [Attack Surface Detection Engine] Save the sensitive information to .yml files
-     * 7. [Exposure Analysis Engine] Create a CodeQL database
-     * 8. [Exposure Analysis Engine] Run CWE queries
-     * 9. [Exposure Analysis Engine] Save the Dataflow Tree
-     * 10. [Flow Verification Engine]Verify Data Flows if any flows are detected
-     * 11. [Flow Verification Engine] Update the SARIF file
-     * 12. Print the time taken for each step
-     * 13. Return the results in the specified format (CSV or SARIF)
-     * @param createAnalyzeDto Data transfer object with project name, ?java version, and ?extension
+     * 1. Get the appropriate language analyzer from the factory
+     * 2. Validate the project for the specified language
+     * 3. Discover source files for the language
+     * 4. [Attack Surface Detection Engine] Parse the files for variables, strings, comments, and method calls
+     * 5. [Attack Surface Detection Engine] Detect sensitive information using BERT
+     * 6. [Attack Surface Detection Engine] Read in BERT results from data.json
+     * 7. [Attack Surface Detection Engine] Save the sensitive information to .yml files
+     * 8. [Exposure Analysis Engine] Create a CodeQL database
+     * 9. [Exposure Analysis Engine] Run CWE queries
+     * 10. [Exposure Analysis Engine] Save the Dataflow Tree
+     * 11. [Flow Verification Engine] Verify Data Flows if any flows are detected
+     * 12. [Flow Verification Engine] Update the SARIF file
+     * 13. Print the time taken for each step
+     * 14. Return the results in the specified format (CSV or SARIF)
+     * @param analyzeDto Data transfer object with project name, language, and optional parameters
      */
-    async runAnalysis(createAnalyzeDto: any) {
-        // Check if a java version is specified
-        if (createAnalyzeDto.javaVersion) {
-            this.fileUtilService.setJavaVersion(Number(createAnalyzeDto.javaVersion));
+    async runAnalysis(analyzeDto: AnalyzeRequestDto) {
+        const sourcePath = path.join(this.projectsPath, analyzeDto.project);
+        
+        // Get the appropriate language analyzer from the factory
+        let languageAnalyzer;
+        try {
+            languageAnalyzer = this.languageAnalyzerFactory.getAnalyzer(analyzeDto.language);
+        } catch (error) {
+            throw new BadRequestException(error.message);
         }
 
-        // Get all java files in project
-        const sourcePath = path.join(this.projectsPath, createAnalyzeDto.project);
-        const javaFiles = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+        // Discover source files using the language-specific analyzer
+        let sourceFiles;
+        await this.executeStep(`Discovering ${analyzeDto.language} source files`, async () => {
+            sourceFiles = await languageAnalyzer.discoverSourceFiles(sourcePath);
+            console.log(`Found ${sourceFiles.length} ${analyzeDto.language} files`);
+        });
 
+        // Parse files using the language-specific parser
         await this.executeStep('Parsing files for variables, strings, comments, and method calls.', async () => {
-            await this.javaParserService.wrapper(javaFiles, sourcePath);
+            await languageAnalyzer.parseSourceFiles(sourceFiles, sourcePath);
         });
 
         await this.executeStep('Detecting sensitive info using BERT.', async () => {
@@ -84,12 +96,24 @@ export class AnalyzeService {
             await this.saveSensitiveInfo(data);
         });
 
+        // Create language-specific CodeQL database
         await this.executeStep('Creating CodeQL database.', async () => {
-            await this.codeqlService.createDatabase(sourcePath, createAnalyzeDto);
+            await languageAnalyzer.createCodeQLDatabase(sourcePath, {
+                project: analyzeDto.project,
+                language: analyzeDto.language,
+                extension: analyzeDto.extension,
+                languageVersion: analyzeDto.javaVersion || analyzeDto.pythonVersion || analyzeDto.nodeVersion,
+            });
         });
 
+        // Run language-specific CWE queries
         await this.executeStep('Running CWE queries.', async () => {
-            await this.codeqlService.runCWEQueries(sourcePath, createAnalyzeDto);
+            await languageAnalyzer.runCWEQueries(sourcePath, {
+                project: analyzeDto.project,
+                language: analyzeDto.language,
+                extension: analyzeDto.extension,
+                languageVersion: analyzeDto.javaVersion || analyzeDto.pythonVersion || analyzeDto.nodeVersion,
+            });
         });
 
         await this.executeStep('Saving Dataflow Tree.', async () => {
@@ -114,7 +138,7 @@ export class AnalyzeService {
             console.log(`${step}: ${this.formatTime(this.times[step])}`);
         });
 
-        if (createAnalyzeDto.extension === 'csv') {
+        if (analyzeDto.extension === 'csv') {
             return await this.parserService.getcsvResults(sourcePath);
         }
 
@@ -234,6 +258,61 @@ export class AnalyzeService {
         await this.fileUtilService.writeToFile(variablesFile, "../codeql queries/SensitiveInfo/SensitiveVariables.yml")
         await this.fileUtilService.writeToFile(variablesFile, "../codeql/codeql-custom-queries-java/SensitiveInfo/SensitiveVariables.yml")
 
+    }
+
+    /**
+     * Future method for running analysis with language-specific strategies.
+     * This demonstrates how the system will work when multiple languages are supported.
+     * TODO: Replace runAnalysis with this method once language analyzers are fully implemented.
+     */
+    async runAnalysisWithLanguageSupport(analyzeDto: AnalyzeRequestDto) {
+        // This is how the system will work in the future:
+        // 
+        // 1. Get language-specific analyzer from factory
+        // const analyzer = this.languageAnalyzerFactory.getAnalyzer(analyzeDto.language);
+        // 
+        // 2. Validate project has files for the specified language
+        // const sourcePath = path.join(this.projectsPath, analyzeDto.project);
+        // const isValidProject = await analyzer.validateProject(sourcePath);
+        // if (!isValidProject) {
+        //     throw new BadRequestException(`No ${analyzeDto.language} files found in project ${analyzeDto.project}`);
+        // }
+        // 
+        // 3. Discover language-specific source files
+        // const sourceFiles = await analyzer.discoverSourceFiles(sourcePath);
+        // 
+        // 4. Parse files using language-specific parser
+        // await this.executeStep('Parsing files for variables, strings, comments, and method calls.', async () => {
+        //     await analyzer.parseSourceFiles(sourceFiles, sourcePath);
+        // });
+        // 
+        // 5. Create language-specific CodeQL database
+        // await this.executeStep('Creating CodeQL database.', async () => {
+        //     await analyzer.createCodeQLDatabase(sourcePath, {
+        //         project: analyzeDto.project,
+        //         language: analyzeDto.language,
+        //         languageVersion: analyzeDto.javaVersion, // This would be more generic
+        //         extension: analyzeDto.extension
+        //     });
+        // });
+        // 
+        // 6. Run language-specific CWE queries
+        // await this.executeStep('Running CWE queries.', async () => {
+        //     await analyzer.runCWEQueries(sourcePath, config);
+        // });
+        //
+        // The rest of the pipeline (BERT analysis, flow verification) would remain the same
+        // but could also be made language-aware in the future.
+        
+        throw new Error('Multi-language support not yet implemented. Use runAnalysis for Java projects.');
+    }
+
+    /**
+     * Get list of supported programming languages
+     * @returns Array of supported language names
+     */
+    async getSupportedLanguages(): Promise<string[]> {
+        return this.languageAnalyzerFactory.getSupportedLanguages();
     }
 }
 

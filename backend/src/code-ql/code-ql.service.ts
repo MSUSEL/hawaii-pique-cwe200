@@ -285,4 +285,47 @@ export class CodeQlService {
         // Save the updated sarifdata back to the file
         await this.fileUtilService.writeToFile(sarifPath, JSON.stringify(sarifdata, null, 2));
     }
+
+    /**
+     * Create a language-agnostic CodeQL database
+     * This method demonstrates how to make database creation language-aware
+     * @param sourcePath - Path to source directory
+     * @param language - Programming language
+     * @param projectName - Name of the project
+     * @param config - Additional configuration
+     */
+    async createLanguageDatabase(sourcePath: string, language: string, projectName: string, config: any = {}) {
+        const db = path.join(sourcePath, projectName + 'db');
+        await this.fileUtilService.removeDir(db);
+        
+        // Map programming languages to CodeQL language identifiers
+        const codeqlLanguageMap: Record<string, string> = {
+            'java': 'java',
+            'python': 'python',
+            'javascript': 'javascript',
+            'typescript': 'javascript', // TypeScript is analyzed as JavaScript in CodeQL
+            'csharp': 'csharp',
+            'cpp': 'cpp',
+            'c': 'cpp', // C is analyzed as C++ in CodeQL
+            'go': 'go',
+            'ruby': 'ruby',
+            'swift': 'swift',
+        };
+
+        const codeqlLanguage = codeqlLanguageMap[language.toLowerCase()];
+        if (!codeqlLanguage) {
+            throw new Error(`CodeQL does not support language: ${language}`);
+        }
+
+        const createDbCommand = `database create ${db} --language=${codeqlLanguage} --source-root=${sourcePath}`;
+        console.log(`Creating CodeQL database for ${language}:`, createDbCommand);
+        await this.runChildProcess(createDbCommand);
+    }
+
+    /**
+     * Get supported languages for CodeQL analysis
+     */
+    getSupportedCodeQLLanguages(): string[] {
+        return ['java', 'python', 'javascript', 'typescript', 'csharp', 'cpp', 'c', 'go', 'ruby', 'swift'];
+    }
 }
