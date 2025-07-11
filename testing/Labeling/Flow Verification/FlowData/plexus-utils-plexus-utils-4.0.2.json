@@ -1,0 +1,1780 @@
+{
+  "214": [
+    {
+      "resultIndex": 0,
+      "fileName": "Commandline.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "preamble",
+              "startLine": 144,
+              "startColumn": 17,
+              "endLine": 144,
+              "endColumn": 25,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "\n        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "preamble",
+              "startLine": 145,
+              "startColumn": 27,
+              "endLine": 145,
+              "endColumn": 35,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 2,
+              "variableName": "sb",
+              "startLine": 145,
+              "startColumn": 17,
+              "endLine": 145,
+              "endColumn": 19,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 3,
+              "variableName": "sb",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 4,
+              "variableName": "sb.toString()",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 38,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "commandLine",
+              "startLine": 166,
+              "startColumn": 9,
+              "endLine": 166,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 6,
+              "variableName": "commandLine",
+              "startLine": 168,
+              "startColumn": 16,
+              "endLine": 168,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }\n\n    protected char[] getQuotingTriggerChars() {"
+            },
+            {
+              "step": 7,
+              "variableName": "getRawCommandLine(executable, arguments)",
+              "startLine": 124,
+              "startColumn": 16,
+              "endLine": 124,
+              "endColumn": 56,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "     * @return List with one String object with executable and arguments quoted as needed\n     */\n    public List<String> getCommandLine(String executable, String[] arguments) {\n        return getRawCommandLine(executable, arguments);\n    }\n\n    protected String quoteOneItem(String inputString, boolean isExecutable) {"
+            },
+            {
+              "step": 8,
+              "variableName": "getCommandLine(getOriginalExecutable(), arguments)",
+              "startLine": 255,
+              "startColumn": 28,
+              "endLine": 255,
+              "endColumn": 78,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "commandLine",
+              "startLine": 255,
+              "startColumn": 9,
+              "endLine": 255,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 10,
+              "variableName": "commandLine",
+              "startLine": 257,
+              "startColumn": 16,
+              "endLine": 257,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }\n\n    public List<String> getShellArgsList() {"
+            },
+            {
+              "step": 11,
+              "variableName": "getShell().getShellCommandLine(getArguments())",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 62,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 12,
+              "variableName": "getShell().getShellCommandLine(getArguments()).toArray(new String[0])",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 85,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 13,
+              "variableName": "getShellCommandline()",
+              "startLine": 436,
+              "startColumn": 20,
+              "endLine": 436,
+              "endColumn": 41,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "     */\n    public String[] getCommandline() {\n        if (Os.isFamily(Os.FAMILY_WINDOWS)) {\n            return getShellCommandline();\n        }\n\n        return getRawCommandline();"
+            },
+            {
+              "step": 14,
+              "variableName": "getCommandline()",
+              "startLine": 585,
+              "startColumn": 53,
+              "endLine": 585,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "\n        try {\n            if (workingDir == null) {\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            } else {\n                if (!workingDir.exists()) {\n                    throw new CommandLineException("
+            },
+            {
+              "step": 15,
+              "variableName": "getCommandline()",
+              "startLine": 585,
+              "startColumn": 53,
+              "endLine": 585,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "",
+              "code": "\n        try {\n            if (workingDir == null) {\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            } else {\n                if (!workingDir.exists()) {\n                    throw new CommandLineException("
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "preamble",
+              "startLine": 144,
+              "startColumn": 17,
+              "endLine": 144,
+              "endColumn": 25,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "\n        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "preamble",
+              "startLine": 145,
+              "startColumn": 27,
+              "endLine": 145,
+              "endColumn": 35,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 2,
+              "variableName": "sb",
+              "startLine": 145,
+              "startColumn": 17,
+              "endLine": 145,
+              "endColumn": 19,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 3,
+              "variableName": "sb",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 4,
+              "variableName": "sb.toString()",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 38,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "commandLine",
+              "startLine": 166,
+              "startColumn": 9,
+              "endLine": 166,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 6,
+              "variableName": "commandLine",
+              "startLine": 168,
+              "startColumn": 16,
+              "endLine": 168,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }\n\n    protected char[] getQuotingTriggerChars() {"
+            },
+            {
+              "step": 7,
+              "variableName": "getRawCommandLine(executable, arguments)",
+              "startLine": 124,
+              "startColumn": 16,
+              "endLine": 124,
+              "endColumn": 56,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "     * @return List with one String object with executable and arguments quoted as needed\n     */\n    public List<String> getCommandLine(String executable, String[] arguments) {\n        return getRawCommandLine(executable, arguments);\n    }\n\n    protected String quoteOneItem(String inputString, boolean isExecutable) {"
+            },
+            {
+              "step": 8,
+              "variableName": "super.getCommandLine(executable, arguments).",
+              "startLine": 80,
+              "startColumn": 19,
+              "endLine": 80,
+              "endColumn": 63,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 9,
+              "variableName": "super.getCommandLine(executable, arguments).get(0)",
+              "startLine": 80,
+              "startColumn": 19,
+              "endLine": 80,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 10,
+              "variableName": "sb",
+              "startLine": 80,
+              "startColumn": 9,
+              "endLine": 80,
+              "endColumn": 11,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "StringBuilder",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 11,
+              "variableName": "sb",
+              "startLine": 83,
+              "startColumn": 44,
+              "endLine": 83,
+              "endColumn": 46,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "StringBuilder",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 12,
+              "variableName": "sb.toString()",
+              "startLine": 83,
+              "startColumn": 44,
+              "endLine": 83,
+              "endColumn": 57,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 13,
+              "variableName": "new String[] {sb.toString()}",
+              "startLine": 83,
+              "startColumn": 30,
+              "endLine": 83,
+              "endColumn": 58,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String[] [[]] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 14,
+              "variableName": "new String[] {sb.toString()}",
+              "startLine": 83,
+              "startColumn": 30,
+              "endLine": 83,
+              "endColumn": 58,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String[] [[]] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 15,
+              "variableName": "Arrays.asList(new String[] {sb.toString()})",
+              "startLine": 83,
+              "startColumn": 16,
+              "endLine": 83,
+              "endColumn": 59,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "List [<element>] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 16,
+              "variableName": "getCommandLine(getOriginalExecutable(), arguments)",
+              "startLine": 255,
+              "startColumn": 28,
+              "endLine": 255,
+              "endColumn": 78,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "List [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 17,
+              "variableName": "commandLine",
+              "startLine": 255,
+              "startColumn": 9,
+              "endLine": 255,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 18,
+              "variableName": "commandLine",
+              "startLine": 257,
+              "startColumn": 16,
+              "endLine": 257,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }\n\n    public List<String> getShellArgsList() {"
+            },
+            {
+              "step": 19,
+              "variableName": "getShell().getShellCommandLine(getArguments())",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 62,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 20,
+              "variableName": "getShell().getShellCommandLine(getArguments()).toArray(new String[0])",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 85,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 21,
+              "variableName": "getShellCommandline()",
+              "startLine": 436,
+              "startColumn": 20,
+              "endLine": 436,
+              "endColumn": 41,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "     */\n    public String[] getCommandline() {\n        if (Os.isFamily(Os.FAMILY_WINDOWS)) {\n            return getShellCommandline();\n        }\n\n        return getRawCommandline();"
+            },
+            {
+              "step": 22,
+              "variableName": "getCommandline()",
+              "startLine": 585,
+              "startColumn": 53,
+              "endLine": 585,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "\n        try {\n            if (workingDir == null) {\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            } else {\n                if (!workingDir.exists()) {\n                    throw new CommandLineException("
+            },
+            {
+              "step": 23,
+              "variableName": "getCommandline()",
+              "startLine": 585,
+              "startColumn": 53,
+              "endLine": 585,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "",
+              "code": "\n        try {\n            if (workingDir == null) {\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            } else {\n                if (!workingDir.exists()) {\n                    throw new CommandLineException("
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "preamble",
+              "startLine": 145,
+              "startColumn": 27,
+              "endLine": 145,
+              "endColumn": 35,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 1,
+              "variableName": "sb",
+              "startLine": 145,
+              "startColumn": 17,
+              "endLine": 145,
+              "endColumn": 19,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 2,
+              "variableName": "sb",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "sb.toString()",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 38,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 4,
+              "variableName": "commandLine",
+              "startLine": 166,
+              "startColumn": 9,
+              "endLine": 166,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "commandLine",
+              "startLine": 168,
+              "startColumn": 16,
+              "endLine": 168,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }\n\n    protected char[] getQuotingTriggerChars() {"
+            },
+            {
+              "step": 6,
+              "variableName": "getRawCommandLine(executable, arguments)",
+              "startLine": 124,
+              "startColumn": 16,
+              "endLine": 124,
+              "endColumn": 56,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "     * @return List with one String object with executable and arguments quoted as needed\n     */\n    public List<String> getCommandLine(String executable, String[] arguments) {\n        return getRawCommandLine(executable, arguments);\n    }\n\n    protected String quoteOneItem(String inputString, boolean isExecutable) {"
+            },
+            {
+              "step": 7,
+              "variableName": "getCommandLine(getOriginalExecutable(), arguments)",
+              "startLine": 255,
+              "startColumn": 28,
+              "endLine": 255,
+              "endColumn": 78,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 8,
+              "variableName": "commandLine",
+              "startLine": 255,
+              "startColumn": 9,
+              "endLine": 255,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "commandLine",
+              "startLine": 257,
+              "startColumn": 16,
+              "endLine": 257,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }\n\n    public List<String> getShellArgsList() {"
+            },
+            {
+              "step": 10,
+              "variableName": "getShell().getShellCommandLine(getArguments())",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 62,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 11,
+              "variableName": "getShell().getShellCommandLine(getArguments()).toArray(new String[0])",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 85,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 12,
+              "variableName": "getShellCommandline()",
+              "startLine": 436,
+              "startColumn": 20,
+              "endLine": 436,
+              "endColumn": 41,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "     */\n    public String[] getCommandline() {\n        if (Os.isFamily(Os.FAMILY_WINDOWS)) {\n            return getShellCommandline();\n        }\n\n        return getRawCommandline();"
+            },
+            {
+              "step": 13,
+              "variableName": "getCommandline()",
+              "startLine": 585,
+              "startColumn": 53,
+              "endLine": 585,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "\n        try {\n            if (workingDir == null) {\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            } else {\n                if (!workingDir.exists()) {\n                    throw new CommandLineException("
+            },
+            {
+              "step": 14,
+              "variableName": "getCommandline()",
+              "startLine": 585,
+              "startColumn": 53,
+              "endLine": 585,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "",
+              "code": "\n        try {\n            if (workingDir == null) {\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            } else {\n                if (!workingDir.exists()) {\n                    throw new CommandLineException("
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "preamble",
+              "startLine": 145,
+              "startColumn": 27,
+              "endLine": 145,
+              "endColumn": 35,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 1,
+              "variableName": "sb",
+              "startLine": 145,
+              "startColumn": 17,
+              "endLine": 145,
+              "endColumn": 19,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 2,
+              "variableName": "sb",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "sb.toString()",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 38,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 4,
+              "variableName": "commandLine",
+              "startLine": 166,
+              "startColumn": 9,
+              "endLine": 166,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "commandLine",
+              "startLine": 168,
+              "startColumn": 16,
+              "endLine": 168,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }\n\n    protected char[] getQuotingTriggerChars() {"
+            },
+            {
+              "step": 6,
+              "variableName": "getRawCommandLine(executable, arguments)",
+              "startLine": 124,
+              "startColumn": 16,
+              "endLine": 124,
+              "endColumn": 56,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "     * @return List with one String object with executable and arguments quoted as needed\n     */\n    public List<String> getCommandLine(String executable, String[] arguments) {\n        return getRawCommandLine(executable, arguments);\n    }\n\n    protected String quoteOneItem(String inputString, boolean isExecutable) {"
+            },
+            {
+              "step": 7,
+              "variableName": "super.getCommandLine(executable, arguments).",
+              "startLine": 80,
+              "startColumn": 19,
+              "endLine": 80,
+              "endColumn": 63,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 8,
+              "variableName": "super.getCommandLine(executable, arguments).get(0)",
+              "startLine": 80,
+              "startColumn": 19,
+              "endLine": 80,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 9,
+              "variableName": "sb",
+              "startLine": 80,
+              "startColumn": 9,
+              "endLine": 80,
+              "endColumn": 11,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "StringBuilder",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 10,
+              "variableName": "sb",
+              "startLine": 83,
+              "startColumn": 44,
+              "endLine": 83,
+              "endColumn": 46,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "StringBuilder",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 11,
+              "variableName": "sb.toString()",
+              "startLine": 83,
+              "startColumn": 44,
+              "endLine": 83,
+              "endColumn": 57,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 12,
+              "variableName": "new String[] {sb.toString()}",
+              "startLine": 83,
+              "startColumn": 30,
+              "endLine": 83,
+              "endColumn": 58,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String[] [[]] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 13,
+              "variableName": "new String[] {sb.toString()}",
+              "startLine": 83,
+              "startColumn": 30,
+              "endLine": 83,
+              "endColumn": 58,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String[] [[]] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 14,
+              "variableName": "Arrays.asList(new String[] {sb.toString()})",
+              "startLine": 83,
+              "startColumn": 16,
+              "endLine": 83,
+              "endColumn": 59,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "List [<element>] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 15,
+              "variableName": "getCommandLine(getOriginalExecutable(), arguments)",
+              "startLine": 255,
+              "startColumn": 28,
+              "endLine": 255,
+              "endColumn": 78,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "List [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 16,
+              "variableName": "commandLine",
+              "startLine": 255,
+              "startColumn": 9,
+              "endLine": 255,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 17,
+              "variableName": "commandLine",
+              "startLine": 257,
+              "startColumn": 16,
+              "endLine": 257,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }\n\n    public List<String> getShellArgsList() {"
+            },
+            {
+              "step": 18,
+              "variableName": "getShell().getShellCommandLine(getArguments())",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 62,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 19,
+              "variableName": "getShell().getShellCommandLine(getArguments()).toArray(new String[0])",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 85,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 20,
+              "variableName": "getShellCommandline()",
+              "startLine": 436,
+              "startColumn": 20,
+              "endLine": 436,
+              "endColumn": 41,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "     */\n    public String[] getCommandline() {\n        if (Os.isFamily(Os.FAMILY_WINDOWS)) {\n            return getShellCommandline();\n        }\n\n        return getRawCommandline();"
+            },
+            {
+              "step": 21,
+              "variableName": "getCommandline()",
+              "startLine": 585,
+              "startColumn": 53,
+              "endLine": 585,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "\n        try {\n            if (workingDir == null) {\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            } else {\n                if (!workingDir.exists()) {\n                    throw new CommandLineException("
+            },
+            {
+              "step": 22,
+              "variableName": "getCommandline()",
+              "startLine": 585,
+              "startColumn": 53,
+              "endLine": 585,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "",
+              "code": "\n        try {\n            if (workingDir == null) {\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            } else {\n                if (!workingDir.exists()) {\n                    throw new CommandLineException("
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "Commandline.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "preamble",
+              "startLine": 144,
+              "startColumn": 17,
+              "endLine": 144,
+              "endColumn": 25,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "\n        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "preamble",
+              "startLine": 145,
+              "startColumn": 27,
+              "endLine": 145,
+              "endColumn": 35,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 2,
+              "variableName": "sb",
+              "startLine": 145,
+              "startColumn": 17,
+              "endLine": 145,
+              "endColumn": 19,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 3,
+              "variableName": "sb",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 4,
+              "variableName": "sb.toString()",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 38,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "commandLine",
+              "startLine": 166,
+              "startColumn": 9,
+              "endLine": 166,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 6,
+              "variableName": "commandLine",
+              "startLine": 168,
+              "startColumn": 16,
+              "endLine": 168,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }\n\n    protected char[] getQuotingTriggerChars() {"
+            },
+            {
+              "step": 7,
+              "variableName": "getRawCommandLine(executable, arguments)",
+              "startLine": 124,
+              "startColumn": 16,
+              "endLine": 124,
+              "endColumn": 56,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "     * @return List with one String object with executable and arguments quoted as needed\n     */\n    public List<String> getCommandLine(String executable, String[] arguments) {\n        return getRawCommandLine(executable, arguments);\n    }\n\n    protected String quoteOneItem(String inputString, boolean isExecutable) {"
+            },
+            {
+              "step": 8,
+              "variableName": "getCommandLine(getOriginalExecutable(), arguments)",
+              "startLine": 255,
+              "startColumn": 28,
+              "endLine": 255,
+              "endColumn": 78,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "commandLine",
+              "startLine": 255,
+              "startColumn": 9,
+              "endLine": 255,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 10,
+              "variableName": "commandLine",
+              "startLine": 257,
+              "startColumn": 16,
+              "endLine": 257,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }\n\n    public List<String> getShellArgsList() {"
+            },
+            {
+              "step": 11,
+              "variableName": "getShell().getShellCommandLine(getArguments())",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 62,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 12,
+              "variableName": "getShell().getShellCommandLine(getArguments()).toArray(new String[0])",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 85,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 13,
+              "variableName": "getShellCommandline()",
+              "startLine": 436,
+              "startColumn": 20,
+              "endLine": 436,
+              "endColumn": 41,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "     */\n    public String[] getCommandline() {\n        if (Os.isFamily(Os.FAMILY_WINDOWS)) {\n            return getShellCommandline();\n        }\n\n        return getRawCommandline();"
+            },
+            {
+              "step": 14,
+              "variableName": "getCommandline()",
+              "startLine": 595,
+              "startColumn": 53,
+              "endLine": 595,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "                            \"Path \\\"\" + workingDir.getPath() + \"\\\" does not specify a directory.\");\n                }\n\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            }\n        } catch (IOException ex) {\n            throw new CommandLineException(\"Error while executing process.\", ex);"
+            },
+            {
+              "step": 15,
+              "variableName": "getCommandline()",
+              "startLine": 595,
+              "startColumn": 53,
+              "endLine": 595,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "",
+              "code": "                            \"Path \\\"\" + workingDir.getPath() + \"\\\" does not specify a directory.\");\n                }\n\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            }\n        } catch (IOException ex) {\n            throw new CommandLineException(\"Error while executing process.\", ex);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "preamble",
+              "startLine": 144,
+              "startColumn": 17,
+              "endLine": 144,
+              "endColumn": 25,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "\n        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n"
+            },
+            {
+              "step": 1,
+              "variableName": "preamble",
+              "startLine": 145,
+              "startColumn": 27,
+              "endLine": 145,
+              "endColumn": 35,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 2,
+              "variableName": "sb",
+              "startLine": 145,
+              "startColumn": 17,
+              "endLine": 145,
+              "endColumn": 19,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 3,
+              "variableName": "sb",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 4,
+              "variableName": "sb.toString()",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 38,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "commandLine",
+              "startLine": 166,
+              "startColumn": 9,
+              "endLine": 166,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 6,
+              "variableName": "commandLine",
+              "startLine": 168,
+              "startColumn": 16,
+              "endLine": 168,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }\n\n    protected char[] getQuotingTriggerChars() {"
+            },
+            {
+              "step": 7,
+              "variableName": "getRawCommandLine(executable, arguments)",
+              "startLine": 124,
+              "startColumn": 16,
+              "endLine": 124,
+              "endColumn": 56,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "     * @return List with one String object with executable and arguments quoted as needed\n     */\n    public List<String> getCommandLine(String executable, String[] arguments) {\n        return getRawCommandLine(executable, arguments);\n    }\n\n    protected String quoteOneItem(String inputString, boolean isExecutable) {"
+            },
+            {
+              "step": 8,
+              "variableName": "super.getCommandLine(executable, arguments).",
+              "startLine": 80,
+              "startColumn": 19,
+              "endLine": 80,
+              "endColumn": 63,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 9,
+              "variableName": "super.getCommandLine(executable, arguments).get(0)",
+              "startLine": 80,
+              "startColumn": 19,
+              "endLine": 80,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 10,
+              "variableName": "sb",
+              "startLine": 80,
+              "startColumn": 9,
+              "endLine": 80,
+              "endColumn": 11,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "StringBuilder",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 11,
+              "variableName": "sb",
+              "startLine": 83,
+              "startColumn": 44,
+              "endLine": 83,
+              "endColumn": 46,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "StringBuilder",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 12,
+              "variableName": "sb.toString()",
+              "startLine": 83,
+              "startColumn": 44,
+              "endLine": 83,
+              "endColumn": 57,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 13,
+              "variableName": "new String[] {sb.toString()}",
+              "startLine": 83,
+              "startColumn": 30,
+              "endLine": 83,
+              "endColumn": 58,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String[] [[]] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 14,
+              "variableName": "new String[] {sb.toString()}",
+              "startLine": 83,
+              "startColumn": 30,
+              "endLine": 83,
+              "endColumn": 58,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String[] [[]] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 15,
+              "variableName": "Arrays.asList(new String[] {sb.toString()})",
+              "startLine": 83,
+              "startColumn": 16,
+              "endLine": 83,
+              "endColumn": 59,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "List [<element>] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 16,
+              "variableName": "getCommandLine(getOriginalExecutable(), arguments)",
+              "startLine": 255,
+              "startColumn": 28,
+              "endLine": 255,
+              "endColumn": 78,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "List [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 17,
+              "variableName": "commandLine",
+              "startLine": 255,
+              "startColumn": 9,
+              "endLine": 255,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 18,
+              "variableName": "commandLine",
+              "startLine": 257,
+              "startColumn": 16,
+              "endLine": 257,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }\n\n    public List<String> getShellArgsList() {"
+            },
+            {
+              "step": 19,
+              "variableName": "getShell().getShellCommandLine(getArguments())",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 62,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 20,
+              "variableName": "getShell().getShellCommandLine(getArguments()).toArray(new String[0])",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 85,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 21,
+              "variableName": "getShellCommandline()",
+              "startLine": 436,
+              "startColumn": 20,
+              "endLine": 436,
+              "endColumn": 41,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "     */\n    public String[] getCommandline() {\n        if (Os.isFamily(Os.FAMILY_WINDOWS)) {\n            return getShellCommandline();\n        }\n\n        return getRawCommandline();"
+            },
+            {
+              "step": 22,
+              "variableName": "getCommandline()",
+              "startLine": 595,
+              "startColumn": 53,
+              "endLine": 595,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "                            \"Path \\\"\" + workingDir.getPath() + \"\\\" does not specify a directory.\");\n                }\n\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            }\n        } catch (IOException ex) {\n            throw new CommandLineException(\"Error while executing process.\", ex);"
+            },
+            {
+              "step": 23,
+              "variableName": "getCommandline()",
+              "startLine": 595,
+              "startColumn": 53,
+              "endLine": 595,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "",
+              "code": "                            \"Path \\\"\" + workingDir.getPath() + \"\\\" does not specify a directory.\");\n                }\n\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            }\n        } catch (IOException ex) {\n            throw new CommandLineException(\"Error while executing process.\", ex);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "preamble",
+              "startLine": 145,
+              "startColumn": 27,
+              "endLine": 145,
+              "endColumn": 35,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 1,
+              "variableName": "sb",
+              "startLine": 145,
+              "startColumn": 17,
+              "endLine": 145,
+              "endColumn": 19,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 2,
+              "variableName": "sb",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "sb.toString()",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 38,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 4,
+              "variableName": "commandLine",
+              "startLine": 166,
+              "startColumn": 9,
+              "endLine": 166,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "commandLine",
+              "startLine": 168,
+              "startColumn": 16,
+              "endLine": 168,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }\n\n    protected char[] getQuotingTriggerChars() {"
+            },
+            {
+              "step": 6,
+              "variableName": "getRawCommandLine(executable, arguments)",
+              "startLine": 124,
+              "startColumn": 16,
+              "endLine": 124,
+              "endColumn": 56,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "     * @return List with one String object with executable and arguments quoted as needed\n     */\n    public List<String> getCommandLine(String executable, String[] arguments) {\n        return getRawCommandLine(executable, arguments);\n    }\n\n    protected String quoteOneItem(String inputString, boolean isExecutable) {"
+            },
+            {
+              "step": 7,
+              "variableName": "getCommandLine(getOriginalExecutable(), arguments)",
+              "startLine": 255,
+              "startColumn": 28,
+              "endLine": 255,
+              "endColumn": 78,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 8,
+              "variableName": "commandLine",
+              "startLine": 255,
+              "startColumn": 9,
+              "endLine": 255,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "commandLine",
+              "startLine": 257,
+              "startColumn": 16,
+              "endLine": 257,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }\n\n    public List<String> getShellArgsList() {"
+            },
+            {
+              "step": 10,
+              "variableName": "getShell().getShellCommandLine(getArguments())",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 62,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 11,
+              "variableName": "getShell().getShellCommandLine(getArguments()).toArray(new String[0])",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 85,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 12,
+              "variableName": "getShellCommandline()",
+              "startLine": 436,
+              "startColumn": 20,
+              "endLine": 436,
+              "endColumn": 41,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "     */\n    public String[] getCommandline() {\n        if (Os.isFamily(Os.FAMILY_WINDOWS)) {\n            return getShellCommandline();\n        }\n\n        return getRawCommandline();"
+            },
+            {
+              "step": 13,
+              "variableName": "getCommandline()",
+              "startLine": 595,
+              "startColumn": 53,
+              "endLine": 595,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "                            \"Path \\\"\" + workingDir.getPath() + \"\\\" does not specify a directory.\");\n                }\n\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            }\n        } catch (IOException ex) {\n            throw new CommandLineException(\"Error while executing process.\", ex);"
+            },
+            {
+              "step": 14,
+              "variableName": "getCommandline()",
+              "startLine": 595,
+              "startColumn": 53,
+              "endLine": 595,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "",
+              "code": "                            \"Path \\\"\" + workingDir.getPath() + \"\\\" does not specify a directory.\");\n                }\n\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            }\n        } catch (IOException ex) {\n            throw new CommandLineException(\"Error while executing process.\", ex);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "preamble",
+              "startLine": 145,
+              "startColumn": 27,
+              "endLine": 145,
+              "endColumn": 35,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 1,
+              "variableName": "sb",
+              "startLine": 145,
+              "startColumn": 17,
+              "endLine": 145,
+              "endColumn": 19,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "        if (executable != null) {\n            String preamble = getExecutionPreamble();\n            if (preamble != null) {\n                sb.append(preamble);\n            }\n\n            if (isQuotedExecutableEnabled()) {"
+            },
+            {
+              "step": 2,
+              "variableName": "sb",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "StringBuilder",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "sb.toString()",
+              "startLine": 166,
+              "startColumn": 25,
+              "endLine": 166,
+              "endColumn": 38,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 4,
+              "variableName": "commandLine",
+              "startLine": 166,
+              "startColumn": 9,
+              "endLine": 166,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            }\n        }\n\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 5,
+              "variableName": "commandLine",
+              "startLine": 168,
+              "startColumn": 16,
+              "endLine": 168,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.add(sb.toString());\n\n        return commandLine;\n    }\n\n    protected char[] getQuotingTriggerChars() {"
+            },
+            {
+              "step": 6,
+              "variableName": "getRawCommandLine(executable, arguments)",
+              "startLine": 124,
+              "startColumn": 16,
+              "endLine": 124,
+              "endColumn": 56,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "     * @return List with one String object with executable and arguments quoted as needed\n     */\n    public List<String> getCommandLine(String executable, String[] arguments) {\n        return getRawCommandLine(executable, arguments);\n    }\n\n    protected String quoteOneItem(String inputString, boolean isExecutable) {"
+            },
+            {
+              "step": 7,
+              "variableName": "super.getCommandLine(executable, arguments).",
+              "startLine": 80,
+              "startColumn": 19,
+              "endLine": 80,
+              "endColumn": 63,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 8,
+              "variableName": "super.getCommandLine(executable, arguments).get(0)",
+              "startLine": 80,
+              "startColumn": 19,
+              "endLine": 80,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 9,
+              "variableName": "sb",
+              "startLine": 80,
+              "startColumn": 9,
+              "endLine": 80,
+              "endColumn": 11,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "StringBuilder",
+              "code": "    public List<String> getCommandLine(String executable, String[] arguments) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(\"\\\"\");\n        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});"
+            },
+            {
+              "step": 10,
+              "variableName": "sb",
+              "startLine": 83,
+              "startColumn": 44,
+              "endLine": 83,
+              "endColumn": 46,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "StringBuilder",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 11,
+              "variableName": "sb.toString()",
+              "startLine": 83,
+              "startColumn": 44,
+              "endLine": 83,
+              "endColumn": 57,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 12,
+              "variableName": "new String[] {sb.toString()}",
+              "startLine": 83,
+              "startColumn": 30,
+              "endLine": 83,
+              "endColumn": 58,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String[] [[]] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 13,
+              "variableName": "new String[] {sb.toString()}",
+              "startLine": 83,
+              "startColumn": 30,
+              "endLine": 83,
+              "endColumn": 58,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "String[] [[]] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 14,
+              "variableName": "Arrays.asList(new String[] {sb.toString()})",
+              "startLine": 83,
+              "startColumn": 16,
+              "endLine": 83,
+              "endColumn": 59,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/CmdShell.java",
+              "type": "List [<element>] : String",
+              "code": "        sb.append(super.getCommandLine(executable, arguments).get(0));\n        sb.append(\"\\\"\");\n\n        return Arrays.asList(new String[] {sb.toString()});\n    }\n}\n"
+            },
+            {
+              "step": 15,
+              "variableName": "getCommandLine(getOriginalExecutable(), arguments)",
+              "startLine": 255,
+              "startColumn": 28,
+              "endLine": 255,
+              "endColumn": 78,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "List [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 16,
+              "variableName": "commandLine",
+              "startLine": 255,
+              "startColumn": 9,
+              "endLine": 255,
+              "endColumn": 20,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "            commandLine.addAll(getShellArgsList());\n        }\n\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }"
+            },
+            {
+              "step": 17,
+              "variableName": "commandLine",
+              "startLine": 257,
+              "startColumn": 16,
+              "endLine": 257,
+              "endColumn": 27,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/shell/Shell.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "\n        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));\n\n        return commandLine;\n    }\n\n    public List<String> getShellArgsList() {"
+            },
+            {
+              "step": 18,
+              "variableName": "getShell().getShellCommandLine(getArguments())",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 62,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "ArrayList [<element>] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 19,
+              "variableName": "getShell().getShellCommandLine(getArguments()).toArray(new String[0])",
+              "startLine": 468,
+              "startColumn": 16,
+              "endLine": 468,
+              "endColumn": 85,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "        // TODO: Provided only for backward compat. with <= 1.4\n        verifyShellState();\n\n        return getShell().getShellCommandLine(getArguments()).toArray(new String[0]);\n    }\n\n    /**"
+            },
+            {
+              "step": 20,
+              "variableName": "getShellCommandline()",
+              "startLine": 436,
+              "startColumn": 20,
+              "endLine": 436,
+              "endColumn": 41,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "     */\n    public String[] getCommandline() {\n        if (Os.isFamily(Os.FAMILY_WINDOWS)) {\n            return getShellCommandline();\n        }\n\n        return getRawCommandline();"
+            },
+            {
+              "step": 21,
+              "variableName": "getCommandline()",
+              "startLine": 595,
+              "startColumn": 53,
+              "endLine": 595,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "String[] [[]] : String",
+              "code": "                            \"Path \\\"\" + workingDir.getPath() + \"\\\" does not specify a directory.\");\n                }\n\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            }\n        } catch (IOException ex) {\n            throw new CommandLineException(\"Error while executing process.\", ex);"
+            },
+            {
+              "step": 22,
+              "variableName": "getCommandline()",
+              "startLine": 595,
+              "startColumn": 53,
+              "endLine": 595,
+              "endColumn": 69,
+              "uri": "plexus-utils-plexus-utils-4.0.2/src/main/java/org/codehaus/plexus/util/cli/Commandline.java",
+              "type": "",
+              "code": "                            \"Path \\\"\" + workingDir.getPath() + \"\\\" does not specify a directory.\");\n                }\n\n                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);\n            }\n        } catch (IOException ex) {\n            throw new CommandLineException(\"Error while executing process.\", ex);"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

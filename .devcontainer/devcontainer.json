@@ -21,7 +21,9 @@
   },
   "extensions": [
     "ms-python.python",
-    "ms-python.vscode-pylance"
+    "ms-python.vscode-pylance",
+    "ms-sarifvscode.sarif-viewer",
+    "streetsidesoftware.code-spell-checker"
   ],
 
   "postCreateCommand": "npm run build && npm run codeql-setup"

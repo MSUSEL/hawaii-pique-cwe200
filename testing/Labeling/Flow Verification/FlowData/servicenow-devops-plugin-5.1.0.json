@@ -1,0 +1,1390 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "DevOpsModel.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "callbackToken",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 25,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "HashMap",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "callbackToken.remove(jobId)",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 665,
+              "startColumn": 10,
+              "endLine": 665,
+              "endColumn": 15,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}\n\n\tpublic static String getToken(String jobId) {"
+            },
+            {
+              "step": 3,
+              "variableName": "DevOpsRootAction.removeCallbackToken(jobId)",
+              "startLine": 589,
+              "startColumn": 10,
+              "endLine": 589,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t// called from build step\n\tpublic String removeCallbackToken(String jobId) {\n\t\tprintDebug(\"removeCallbackToken\", new String[]{\"jobId\"}, new String[]{jobId}, Level.FINE);\n\t\treturn DevOpsRootAction.removeCallbackToken(jobId);\n\t}\n\n\t// get from 'jobs' map"
+            },
+            {
+              "step": 4,
+              "variableName": "model.removeCallbackToken(jobId)",
+              "startLine": 355,
+              "startColumn": 21,
+              "endLine": 355,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\n\t\t\t\tif (model.checkIsTrackingCache(build.getParent(), build.getId())) {\n\t\t\t\t\tString jobId = model.getJobId(build, build.getParent());\n\t\t\t\t\tString token = model.removeCallbackToken(jobId);\n\t\t\t\t\tString jobUrl = build.getParent().getAbsoluteUrl();\n\t\t\t\t\tString jobName = build.getParent().getName();\n\t\t\t\t\tString jenkinsUrl = model.getJenkinsUrl();"
+            },
+            {
+              "step": 5,
+              "variableName": "token",
+              "startLine": 369,
+              "startColumn": 33,
+              "endLine": 369,
+              "endColumn": 38,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\t\t\t\t\t\tDevOpsConfigurationEntry devOpsConfig = GenericUtils.getDevOpsConfigurationEntryOrDefault(configurationName);\n\t\t\t\t\t\tif (token != null) {\n\t\t\t\t\t\t\tif (shouldStop(build, listener, build.getParent(), model)) {\n\t\t\t\t\t\t\t\tmodel.sendBuildAndToken(token, jenkinsUrl, buildUrl, jobUrl,\n\t\t\t\t\t\t\t\t\t\tjobName, null, null, false, null, false, devOpsConfig);\n\t\t\t\t\t\t\t\tbuild.setResult(Result.FAILURE);\n\t\t\t\t\t\t\t\tthrow new RunnerAbortedException();"
+            },
+            {
+              "step": 6,
+              "variableName": "String token",
+              "startLine": 685,
+              "startColumn": 34,
+              "endLine": 685,
+              "endColumn": 46,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\t\t\tstring.substring(index + substring.length());\n\t}\n\n\tpublic String sendBuildAndToken(String token, String jenkinsUrl, String buildUrl,\n\t                                String jobUrl, String jobName, String stageName,\n\t                                DevOpsPipelineNode stageNode, Boolean isMultiBranch, String branchName, Boolean isChangeClose, DevOpsConfigurationEntry devopsConfig) {\n\t\tprintDebug(\"sendBuildAndToken\", null, null, Level.FINE);"
+            },
+            {
+              "step": 7,
+              "variableName": "token",
+              "startLine": 698,
+              "startColumn": 40,
+              "endLine": 698,
+              "endColumn": 45,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\tparams.put(DevOpsConstants.TOOL_TYPE_ATTR.toString(),\n\t\t\t\tDevOpsConstants.TOOL_TYPE.toString());\n\t\ttry {\n\t\t\tString callbackUrl = getCallbackUrl(token, jenkinsUrl);\n\t\t\tdata.put(DevOpsConstants.CALLBACK_URL_ATTR.toString(), callbackUrl);\n\t\t\tdata.put(DevOpsConstants.JOB_URL_ATTR.toString(), jobUrl);\n\t\t\tdata.put(DevOpsConstants.BUILD_URL_ATTR.toString(), buildUrl);"
+            },
+            {
+              "step": 8,
+              "variableName": "String token",
+              "startLine": 666,
+              "startColumn": 32,
+              "endLine": 666,
+              "endColumn": 44,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\treturn m.matches();\n\t}\n\n\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);"
+            },
+            {
+              "step": 9,
+              "variableName": "token",
+              "startLine": 669,
+              "startColumn": 18,
+              "endLine": 669,
+              "endColumn": 23,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 10,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[] [[]] : String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 11,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[] [[]] : String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 12,
+              "variableName": "String[] values",
+              "startLine": 62,
+              "startColumn": 65,
+              "endLine": 62,
+              "endColumn": 80,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[] [[]] : String",
+              "code": "\t\t\t\t\"^(https?):\\\\/\\\\/[-a-zA-Z0-9+&@#\\\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\\\/%=~_|]\");\n\t}\n\n\tprivate void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils\n\t\t\t\t.printDebug(DevOpsModel.class.getName(), methodName, variables, values,\n\t\t\t\t\t\tlogLevel);"
+            },
+            {
+              "step": 13,
+              "variableName": "values",
+              "startLine": 64,
+              "startColumn": 69,
+              "endLine": 64,
+              "endColumn": 75,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "",
+              "code": "\n\tprivate void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils\n\t\t\t\t.printDebug(DevOpsModel.class.getName(), methodName, variables, values,\n\t\t\t\t\t\tlogLevel);\n\t}\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "callbackToken",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 25,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "HashMap",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "callbackToken.remove(jobId)",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 665,
+              "startColumn": 10,
+              "endLine": 665,
+              "endColumn": 15,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}\n\n\tpublic static String getToken(String jobId) {"
+            },
+            {
+              "step": 3,
+              "variableName": "DevOpsRootAction.removeCallbackToken(jobId)",
+              "startLine": 589,
+              "startColumn": 10,
+              "endLine": 589,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t// called from build step\n\tpublic String removeCallbackToken(String jobId) {\n\t\tprintDebug(\"removeCallbackToken\", new String[]{\"jobId\"}, new String[]{jobId}, Level.FINE);\n\t\treturn DevOpsRootAction.removeCallbackToken(jobId);\n\t}\n\n\t// get from 'jobs' map"
+            },
+            {
+              "step": 4,
+              "variableName": "model.removeCallbackToken(jobId)",
+              "startLine": 355,
+              "startColumn": 21,
+              "endLine": 355,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\n\t\t\t\tif (model.checkIsTrackingCache(build.getParent(), build.getId())) {\n\t\t\t\t\tString jobId = model.getJobId(build, build.getParent());\n\t\t\t\t\tString token = model.removeCallbackToken(jobId);\n\t\t\t\t\tString jobUrl = build.getParent().getAbsoluteUrl();\n\t\t\t\t\tString jobName = build.getParent().getName();\n\t\t\t\t\tString jenkinsUrl = model.getJenkinsUrl();"
+            },
+            {
+              "step": 5,
+              "variableName": "token",
+              "startLine": 374,
+              "startColumn": 33,
+              "endLine": 374,
+              "endColumn": 38,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\t\t\t\t\t\t\t\tbuild.setResult(Result.FAILURE);\n\t\t\t\t\t\t\t\tthrow new RunnerAbortedException();\n\t\t\t\t\t\t\t} else\n\t\t\t\t\t\t\t\tmodel.sendBuildAndToken(token, jenkinsUrl, buildUrl, jobUrl,\n\t\t\t\t\t\t\t\t\t\tjobName, null, null, false, null, false, devOpsConfig);\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\tif (shouldStopDueToLocalError(build, listener, build.getParent(), model)) {"
+            },
+            {
+              "step": 6,
+              "variableName": "String token",
+              "startLine": 685,
+              "startColumn": 34,
+              "endLine": 685,
+              "endColumn": 46,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\t\t\tstring.substring(index + substring.length());\n\t}\n\n\tpublic String sendBuildAndToken(String token, String jenkinsUrl, String buildUrl,\n\t                                String jobUrl, String jobName, String stageName,\n\t                                DevOpsPipelineNode stageNode, Boolean isMultiBranch, String branchName, Boolean isChangeClose, DevOpsConfigurationEntry devopsConfig) {\n\t\tprintDebug(\"sendBuildAndToken\", null, null, Level.FINE);"
+            },
+            {
+              "step": 7,
+              "variableName": "token",
+              "startLine": 698,
+              "startColumn": 40,
+              "endLine": 698,
+              "endColumn": 45,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\tparams.put(DevOpsConstants.TOOL_TYPE_ATTR.toString(),\n\t\t\t\tDevOpsConstants.TOOL_TYPE.toString());\n\t\ttry {\n\t\t\tString callbackUrl = getCallbackUrl(token, jenkinsUrl);\n\t\t\tdata.put(DevOpsConstants.CALLBACK_URL_ATTR.toString(), callbackUrl);\n\t\t\tdata.put(DevOpsConstants.JOB_URL_ATTR.toString(), jobUrl);\n\t\t\tdata.put(DevOpsConstants.BUILD_URL_ATTR.toString(), buildUrl);"
+            },
+            {
+              "step": 8,
+              "variableName": "String token",
+              "startLine": 666,
+              "startColumn": 32,
+              "endLine": 666,
+              "endColumn": 44,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\treturn m.matches();\n\t}\n\n\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);"
+            },
+            {
+              "step": 9,
+              "variableName": "token",
+              "startLine": 669,
+              "startColumn": 18,
+              "endLine": 669,
+              "endColumn": 23,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 10,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[] [[]] : String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 11,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[]",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 12,
+              "variableName": "String[] values",
+              "startLine": 62,
+              "startColumn": 65,
+              "endLine": 62,
+              "endColumn": 80,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[]",
+              "code": "\t\t\t\t\"^(https?):\\\\/\\\\/[-a-zA-Z0-9+&@#\\\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\\\/%=~_|]\");\n\t}\n\n\tprivate void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils\n\t\t\t\t.printDebug(DevOpsModel.class.getName(), methodName, variables, values,\n\t\t\t\t\t\tlogLevel);"
+            },
+            {
+              "step": 13,
+              "variableName": "values",
+              "startLine": 64,
+              "startColumn": 69,
+              "endLine": 64,
+              "endColumn": 75,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "",
+              "code": "\n\tprivate void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils\n\t\t\t\t.printDebug(DevOpsModel.class.getName(), methodName, variables, values,\n\t\t\t\t\t\tlogLevel);\n\t}\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "DevOpsModel.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "callbackToken",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 25,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "HashMap",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "callbackToken.remove(jobId)",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 665,
+              "startColumn": 10,
+              "endLine": 665,
+              "endColumn": 15,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}\n\n\tpublic static String getToken(String jobId) {"
+            },
+            {
+              "step": 3,
+              "variableName": "DevOpsRootAction.removeCallbackToken(jobId)",
+              "startLine": 589,
+              "startColumn": 10,
+              "endLine": 589,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t// called from build step\n\tpublic String removeCallbackToken(String jobId) {\n\t\tprintDebug(\"removeCallbackToken\", new String[]{\"jobId\"}, new String[]{jobId}, Level.FINE);\n\t\treturn DevOpsRootAction.removeCallbackToken(jobId);\n\t}\n\n\t// get from 'jobs' map"
+            },
+            {
+              "step": 4,
+              "variableName": "model.removeCallbackToken(jobId)",
+              "startLine": 355,
+              "startColumn": 21,
+              "endLine": 355,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\n\t\t\t\tif (model.checkIsTrackingCache(build.getParent(), build.getId())) {\n\t\t\t\t\tString jobId = model.getJobId(build, build.getParent());\n\t\t\t\t\tString token = model.removeCallbackToken(jobId);\n\t\t\t\t\tString jobUrl = build.getParent().getAbsoluteUrl();\n\t\t\t\t\tString jobName = build.getParent().getName();\n\t\t\t\t\tString jenkinsUrl = model.getJenkinsUrl();"
+            },
+            {
+              "step": 5,
+              "variableName": "token",
+              "startLine": 369,
+              "startColumn": 33,
+              "endLine": 369,
+              "endColumn": 38,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\t\t\t\t\t\tDevOpsConfigurationEntry devOpsConfig = GenericUtils.getDevOpsConfigurationEntryOrDefault(configurationName);\n\t\t\t\t\t\tif (token != null) {\n\t\t\t\t\t\t\tif (shouldStop(build, listener, build.getParent(), model)) {\n\t\t\t\t\t\t\t\tmodel.sendBuildAndToken(token, jenkinsUrl, buildUrl, jobUrl,\n\t\t\t\t\t\t\t\t\t\tjobName, null, null, false, null, false, devOpsConfig);\n\t\t\t\t\t\t\t\tbuild.setResult(Result.FAILURE);\n\t\t\t\t\t\t\t\tthrow new RunnerAbortedException();"
+            },
+            {
+              "step": 6,
+              "variableName": "String token",
+              "startLine": 685,
+              "startColumn": 34,
+              "endLine": 685,
+              "endColumn": 46,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\t\t\tstring.substring(index + substring.length());\n\t}\n\n\tpublic String sendBuildAndToken(String token, String jenkinsUrl, String buildUrl,\n\t                                String jobUrl, String jobName, String stageName,\n\t                                DevOpsPipelineNode stageNode, Boolean isMultiBranch, String branchName, Boolean isChangeClose, DevOpsConfigurationEntry devopsConfig) {\n\t\tprintDebug(\"sendBuildAndToken\", null, null, Level.FINE);"
+            },
+            {
+              "step": 7,
+              "variableName": "token",
+              "startLine": 698,
+              "startColumn": 40,
+              "endLine": 698,
+              "endColumn": 45,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\tparams.put(DevOpsConstants.TOOL_TYPE_ATTR.toString(),\n\t\t\t\tDevOpsConstants.TOOL_TYPE.toString());\n\t\ttry {\n\t\t\tString callbackUrl = getCallbackUrl(token, jenkinsUrl);\n\t\t\tdata.put(DevOpsConstants.CALLBACK_URL_ATTR.toString(), callbackUrl);\n\t\t\tdata.put(DevOpsConstants.JOB_URL_ATTR.toString(), jobUrl);\n\t\t\tdata.put(DevOpsConstants.BUILD_URL_ATTR.toString(), buildUrl);"
+            },
+            {
+              "step": 8,
+              "variableName": "String token",
+              "startLine": 666,
+              "startColumn": 32,
+              "endLine": 666,
+              "endColumn": 44,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\treturn m.matches();\n\t}\n\n\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);"
+            },
+            {
+              "step": 9,
+              "variableName": "token",
+              "startLine": 669,
+              "startColumn": 18,
+              "endLine": 669,
+              "endColumn": 23,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 10,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[] [[]] : String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 11,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "callbackToken",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 25,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "HashMap",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "callbackToken.remove(jobId)",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 665,
+              "startColumn": 10,
+              "endLine": 665,
+              "endColumn": 15,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}\n\n\tpublic static String getToken(String jobId) {"
+            },
+            {
+              "step": 3,
+              "variableName": "DevOpsRootAction.removeCallbackToken(jobId)",
+              "startLine": 589,
+              "startColumn": 10,
+              "endLine": 589,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t// called from build step\n\tpublic String removeCallbackToken(String jobId) {\n\t\tprintDebug(\"removeCallbackToken\", new String[]{\"jobId\"}, new String[]{jobId}, Level.FINE);\n\t\treturn DevOpsRootAction.removeCallbackToken(jobId);\n\t}\n\n\t// get from 'jobs' map"
+            },
+            {
+              "step": 4,
+              "variableName": "model.removeCallbackToken(jobId)",
+              "startLine": 355,
+              "startColumn": 21,
+              "endLine": 355,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\n\t\t\t\tif (model.checkIsTrackingCache(build.getParent(), build.getId())) {\n\t\t\t\t\tString jobId = model.getJobId(build, build.getParent());\n\t\t\t\t\tString token = model.removeCallbackToken(jobId);\n\t\t\t\t\tString jobUrl = build.getParent().getAbsoluteUrl();\n\t\t\t\t\tString jobName = build.getParent().getName();\n\t\t\t\t\tString jenkinsUrl = model.getJenkinsUrl();"
+            },
+            {
+              "step": 5,
+              "variableName": "token",
+              "startLine": 374,
+              "startColumn": 33,
+              "endLine": 374,
+              "endColumn": 38,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\t\t\t\t\t\t\t\tbuild.setResult(Result.FAILURE);\n\t\t\t\t\t\t\t\tthrow new RunnerAbortedException();\n\t\t\t\t\t\t\t} else\n\t\t\t\t\t\t\t\tmodel.sendBuildAndToken(token, jenkinsUrl, buildUrl, jobUrl,\n\t\t\t\t\t\t\t\t\t\tjobName, null, null, false, null, false, devOpsConfig);\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\tif (shouldStopDueToLocalError(build, listener, build.getParent(), model)) {"
+            },
+            {
+              "step": 6,
+              "variableName": "String token",
+              "startLine": 685,
+              "startColumn": 34,
+              "endLine": 685,
+              "endColumn": 46,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\t\t\tstring.substring(index + substring.length());\n\t}\n\n\tpublic String sendBuildAndToken(String token, String jenkinsUrl, String buildUrl,\n\t                                String jobUrl, String jobName, String stageName,\n\t                                DevOpsPipelineNode stageNode, Boolean isMultiBranch, String branchName, Boolean isChangeClose, DevOpsConfigurationEntry devopsConfig) {\n\t\tprintDebug(\"sendBuildAndToken\", null, null, Level.FINE);"
+            },
+            {
+              "step": 7,
+              "variableName": "token",
+              "startLine": 698,
+              "startColumn": 40,
+              "endLine": 698,
+              "endColumn": 45,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\tparams.put(DevOpsConstants.TOOL_TYPE_ATTR.toString(),\n\t\t\t\tDevOpsConstants.TOOL_TYPE.toString());\n\t\ttry {\n\t\t\tString callbackUrl = getCallbackUrl(token, jenkinsUrl);\n\t\t\tdata.put(DevOpsConstants.CALLBACK_URL_ATTR.toString(), callbackUrl);\n\t\t\tdata.put(DevOpsConstants.JOB_URL_ATTR.toString(), jobUrl);\n\t\t\tdata.put(DevOpsConstants.BUILD_URL_ATTR.toString(), buildUrl);"
+            },
+            {
+              "step": 8,
+              "variableName": "String token",
+              "startLine": 666,
+              "startColumn": 32,
+              "endLine": 666,
+              "endColumn": 44,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\treturn m.matches();\n\t}\n\n\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);"
+            },
+            {
+              "step": 9,
+              "variableName": "token",
+              "startLine": 669,
+              "startColumn": 18,
+              "endLine": 669,
+              "endColumn": 23,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 10,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[] [[]] : String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 11,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "GenericUtils.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "callbackToken",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 25,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "HashMap",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "callbackToken.remove(jobId)",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 665,
+              "startColumn": 10,
+              "endLine": 665,
+              "endColumn": 15,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}\n\n\tpublic static String getToken(String jobId) {"
+            },
+            {
+              "step": 3,
+              "variableName": "DevOpsRootAction.removeCallbackToken(jobId)",
+              "startLine": 589,
+              "startColumn": 10,
+              "endLine": 589,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t// called from build step\n\tpublic String removeCallbackToken(String jobId) {\n\t\tprintDebug(\"removeCallbackToken\", new String[]{\"jobId\"}, new String[]{jobId}, Level.FINE);\n\t\treturn DevOpsRootAction.removeCallbackToken(jobId);\n\t}\n\n\t// get from 'jobs' map"
+            },
+            {
+              "step": 4,
+              "variableName": "model.removeCallbackToken(jobId)",
+              "startLine": 355,
+              "startColumn": 21,
+              "endLine": 355,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\n\t\t\t\tif (model.checkIsTrackingCache(build.getParent(), build.getId())) {\n\t\t\t\t\tString jobId = model.getJobId(build, build.getParent());\n\t\t\t\t\tString token = model.removeCallbackToken(jobId);\n\t\t\t\t\tString jobUrl = build.getParent().getAbsoluteUrl();\n\t\t\t\t\tString jobName = build.getParent().getName();\n\t\t\t\t\tString jenkinsUrl = model.getJenkinsUrl();"
+            },
+            {
+              "step": 5,
+              "variableName": "token",
+              "startLine": 369,
+              "startColumn": 33,
+              "endLine": 369,
+              "endColumn": 38,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\t\t\t\t\t\tDevOpsConfigurationEntry devOpsConfig = GenericUtils.getDevOpsConfigurationEntryOrDefault(configurationName);\n\t\t\t\t\t\tif (token != null) {\n\t\t\t\t\t\t\tif (shouldStop(build, listener, build.getParent(), model)) {\n\t\t\t\t\t\t\t\tmodel.sendBuildAndToken(token, jenkinsUrl, buildUrl, jobUrl,\n\t\t\t\t\t\t\t\t\t\tjobName, null, null, false, null, false, devOpsConfig);\n\t\t\t\t\t\t\t\tbuild.setResult(Result.FAILURE);\n\t\t\t\t\t\t\t\tthrow new RunnerAbortedException();"
+            },
+            {
+              "step": 6,
+              "variableName": "String token",
+              "startLine": 685,
+              "startColumn": 34,
+              "endLine": 685,
+              "endColumn": 46,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\t\t\tstring.substring(index + substring.length());\n\t}\n\n\tpublic String sendBuildAndToken(String token, String jenkinsUrl, String buildUrl,\n\t                                String jobUrl, String jobName, String stageName,\n\t                                DevOpsPipelineNode stageNode, Boolean isMultiBranch, String branchName, Boolean isChangeClose, DevOpsConfigurationEntry devopsConfig) {\n\t\tprintDebug(\"sendBuildAndToken\", null, null, Level.FINE);"
+            },
+            {
+              "step": 7,
+              "variableName": "token",
+              "startLine": 698,
+              "startColumn": 40,
+              "endLine": 698,
+              "endColumn": 45,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\tparams.put(DevOpsConstants.TOOL_TYPE_ATTR.toString(),\n\t\t\t\tDevOpsConstants.TOOL_TYPE.toString());\n\t\ttry {\n\t\t\tString callbackUrl = getCallbackUrl(token, jenkinsUrl);\n\t\t\tdata.put(DevOpsConstants.CALLBACK_URL_ATTR.toString(), callbackUrl);\n\t\t\tdata.put(DevOpsConstants.JOB_URL_ATTR.toString(), jobUrl);\n\t\t\tdata.put(DevOpsConstants.BUILD_URL_ATTR.toString(), buildUrl);"
+            },
+            {
+              "step": 8,
+              "variableName": "String token",
+              "startLine": 666,
+              "startColumn": 32,
+              "endLine": 666,
+              "endColumn": 44,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\treturn m.matches();\n\t}\n\n\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);"
+            },
+            {
+              "step": 9,
+              "variableName": "token",
+              "startLine": 669,
+              "startColumn": 18,
+              "endLine": 669,
+              "endColumn": 23,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 10,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[] [[]] : String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 11,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[] [[]] : String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 12,
+              "variableName": "String[] values",
+              "startLine": 62,
+              "startColumn": 65,
+              "endLine": 62,
+              "endColumn": 80,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[] [[]] : String",
+              "code": "\t\t\t\t\"^(https?):\\\\/\\\\/[-a-zA-Z0-9+&@#\\\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\\\/%=~_|]\");\n\t}\n\n\tprivate void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils\n\t\t\t\t.printDebug(DevOpsModel.class.getName(), methodName, variables, values,\n\t\t\t\t\t\tlogLevel);"
+            },
+            {
+              "step": 13,
+              "variableName": "values",
+              "startLine": 64,
+              "startColumn": 69,
+              "endLine": 64,
+              "endColumn": 75,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[]",
+              "code": "\n\tprivate void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils\n\t\t\t\t.printDebug(DevOpsModel.class.getName(), methodName, variables, values,\n\t\t\t\t\t\tlogLevel);\n\t}\n"
+            },
+            {
+              "step": 14,
+              "variableName": "String[] values",
+              "startLine": 263,
+              "startColumn": 32,
+              "endLine": 263,
+              "endColumn": 47,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "String[]",
+              "code": "\t}\n\n\tpublic static void printDebug(String className, String methodName, String[] variables,\n\t                              String[] values, Level logLevel) {\n\t\tif (variables != null && values != null) {\n\t\t\tif (variables.length == values.length) {\n\t\t\t\tfor (int i = 0; i < variables.length; i++) {"
+            },
+            {
+              "step": 15,
+              "variableName": "message",
+              "startLine": 270,
+              "startColumn": 32,
+              "endLine": 270,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "",
+              "code": "\t\t\t\t\tString message =\n\t\t\t\t\t\t\tclassName + \".\" + methodName + \"(), \" + variables[i] +\n\t\t\t\t\t\t\t\t\t\": \" + values[i];\n\t\t\t\t\tgetLogger().log(logLevel, message);\n\t\t\t\t}\n\t\t\t}\n\t\t} else {"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "callbackToken",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 25,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "HashMap",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "callbackToken.remove(jobId)",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 665,
+              "startColumn": 10,
+              "endLine": 665,
+              "endColumn": 15,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}\n\n\tpublic static String getToken(String jobId) {"
+            },
+            {
+              "step": 3,
+              "variableName": "DevOpsRootAction.removeCallbackToken(jobId)",
+              "startLine": 589,
+              "startColumn": 10,
+              "endLine": 589,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t// called from build step\n\tpublic String removeCallbackToken(String jobId) {\n\t\tprintDebug(\"removeCallbackToken\", new String[]{\"jobId\"}, new String[]{jobId}, Level.FINE);\n\t\treturn DevOpsRootAction.removeCallbackToken(jobId);\n\t}\n\n\t// get from 'jobs' map"
+            },
+            {
+              "step": 4,
+              "variableName": "model.removeCallbackToken(jobId)",
+              "startLine": 355,
+              "startColumn": 21,
+              "endLine": 355,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\n\t\t\t\tif (model.checkIsTrackingCache(build.getParent(), build.getId())) {\n\t\t\t\t\tString jobId = model.getJobId(build, build.getParent());\n\t\t\t\t\tString token = model.removeCallbackToken(jobId);\n\t\t\t\t\tString jobUrl = build.getParent().getAbsoluteUrl();\n\t\t\t\t\tString jobName = build.getParent().getName();\n\t\t\t\t\tString jenkinsUrl = model.getJenkinsUrl();"
+            },
+            {
+              "step": 5,
+              "variableName": "token",
+              "startLine": 374,
+              "startColumn": 33,
+              "endLine": 374,
+              "endColumn": 38,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\t\t\t\t\t\t\t\tbuild.setResult(Result.FAILURE);\n\t\t\t\t\t\t\t\tthrow new RunnerAbortedException();\n\t\t\t\t\t\t\t} else\n\t\t\t\t\t\t\t\tmodel.sendBuildAndToken(token, jenkinsUrl, buildUrl, jobUrl,\n\t\t\t\t\t\t\t\t\t\tjobName, null, null, false, null, false, devOpsConfig);\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\tif (shouldStopDueToLocalError(build, listener, build.getParent(), model)) {"
+            },
+            {
+              "step": 6,
+              "variableName": "String token",
+              "startLine": 685,
+              "startColumn": 34,
+              "endLine": 685,
+              "endColumn": 46,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\t\t\tstring.substring(index + substring.length());\n\t}\n\n\tpublic String sendBuildAndToken(String token, String jenkinsUrl, String buildUrl,\n\t                                String jobUrl, String jobName, String stageName,\n\t                                DevOpsPipelineNode stageNode, Boolean isMultiBranch, String branchName, Boolean isChangeClose, DevOpsConfigurationEntry devopsConfig) {\n\t\tprintDebug(\"sendBuildAndToken\", null, null, Level.FINE);"
+            },
+            {
+              "step": 7,
+              "variableName": "devopsConfig.getChangeControlUrl() + \"/\" + token",
+              "startLine": 729,
+              "startColumn": 9,
+              "endLine": 729,
+              "endColumn": 57,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\t\t\t\t\tDevOpsConfigurationEntry.getTokenText(devopsConfig.getSecretCredentialId()));\n\t\t\t\tresult = GenericUtils.parseResponseResult(\n\t\t\t\t\t\tCommUtils.callV2Support(DevOpsConstants.REST_PUT_METHOD.toString(),\n\t\t\t\t\t\t\t\tdevopsConfig.getChangeControlUrl() + \"/\" + token, params, data.toString(),\n\t\t\t\t\t\t\t\tDevOpsConfigurationEntry.getUser(devopsConfig.getCredentialsId()), DevOpsConfigurationEntry.getPwd(devopsConfig.getCredentialsId()), null, null, tokenDetails),\n\t\t\t\t\t\tDevOpsConstants.COMMON_RESPONSE_CHANGE_CTRL.toString());\n"
+            },
+            {
+              "step": 8,
+              "variableName": "String urlString",
+              "startLine": 135,
+              "startColumn": 56,
+              "endLine": 135,
+              "endColumn": 72,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String",
+              "code": "        }\n    }\n    \n\tpublic static JSONObject callV2Support(String method, String urlString, JSONObject params, String data,\n\t\t\tString username, String password, String contentType, String transactionSource, Map<String,String> tokenDetails) {\n\t\tif (contentType == null)\n\t\t\tcontentType = CommUtils.defaultContentType;"
+            },
+            {
+              "step": 9,
+              "variableName": "urlString",
+              "startLine": 141,
+              "startColumn": 29,
+              "endLine": 141,
+              "endColumn": 38,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String",
+              "code": "\t\t\tcontentType = CommUtils.defaultContentType;\n\t\tif (params == null)\n\t\t\tprintDebug(\"callV2Support\", new String[] { \"method\", \"urlString\", \"params\", \"data\" },\n\t\t\t\t\tnew String[] { method, urlString, \"\", data }, Level.FINE);\n\t\telse\n\t\t\tprintDebug(\"callV2Support\", new String[] { \"method\", \"urlString\", \"params\", \"data\" },\n\t\t\t\t\tnew String[] { method, urlString, params.toString(), data }, Level.FINE);"
+            },
+            {
+              "step": 10,
+              "variableName": "new String[] { method, urlString, \"\", data }",
+              "startLine": 141,
+              "startColumn": 6,
+              "endLine": 141,
+              "endColumn": 50,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "\t\t\tcontentType = CommUtils.defaultContentType;\n\t\tif (params == null)\n\t\t\tprintDebug(\"callV2Support\", new String[] { \"method\", \"urlString\", \"params\", \"data\" },\n\t\t\t\t\tnew String[] { method, urlString, \"\", data }, Level.FINE);\n\t\telse\n\t\t\tprintDebug(\"callV2Support\", new String[] { \"method\", \"urlString\", \"params\", \"data\" },\n\t\t\t\t\tnew String[] { method, urlString, params.toString(), data }, Level.FINE);"
+            },
+            {
+              "step": 11,
+              "variableName": "new String[] { method, urlString, \"\", data }",
+              "startLine": 141,
+              "startColumn": 6,
+              "endLine": 141,
+              "endColumn": 50,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "\t\t\tcontentType = CommUtils.defaultContentType;\n\t\tif (params == null)\n\t\t\tprintDebug(\"callV2Support\", new String[] { \"method\", \"urlString\", \"params\", \"data\" },\n\t\t\t\t\tnew String[] { method, urlString, \"\", data }, Level.FINE);\n\t\telse\n\t\t\tprintDebug(\"callV2Support\", new String[] { \"method\", \"urlString\", \"params\", \"data\" },\n\t\t\t\t\tnew String[] { method, urlString, params.toString(), data }, Level.FINE);"
+            },
+            {
+              "step": 12,
+              "variableName": "String[] values",
+              "startLine": 329,
+              "startColumn": 75,
+              "endLine": 329,
+              "endColumn": 90,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "        return jsonResult;\n    }\n    \n    private static void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils.printDebug(CommUtils.class.getName(), methodName, variables, values, logLevel);\n    }\t  \n}"
+            },
+            {
+              "step": 13,
+              "variableName": "values",
+              "startLine": 330,
+              "startColumn": 77,
+              "endLine": 330,
+              "endColumn": 83,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "    }\n    \n    private static void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils.printDebug(CommUtils.class.getName(), methodName, variables, values, logLevel);\n    }\t  \n}"
+            },
+            {
+              "step": 14,
+              "variableName": "String[] values",
+              "startLine": 263,
+              "startColumn": 32,
+              "endLine": 263,
+              "endColumn": 47,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "\t}\n\n\tpublic static void printDebug(String className, String methodName, String[] variables,\n\t                              String[] values, Level logLevel) {\n\t\tif (variables != null && values != null) {\n\t\t\tif (variables.length == values.length) {\n\t\t\t\tfor (int i = 0; i < variables.length; i++) {"
+            },
+            {
+              "step": 15,
+              "variableName": "values",
+              "startLine": 269,
+              "startColumn": 17,
+              "endLine": 269,
+              "endColumn": 23,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "\t\t\t\tfor (int i = 0; i < variables.length; i++) {\n\t\t\t\t\tString message =\n\t\t\t\t\t\t\tclassName + \".\" + methodName + \"(), \" + variables[i] +\n\t\t\t\t\t\t\t\t\t\": \" + values[i];\n\t\t\t\t\tgetLogger().log(logLevel, message);\n\t\t\t\t}\n\t\t\t}"
+            },
+            {
+              "step": 16,
+              "variableName": "values[i]",
+              "startLine": 269,
+              "startColumn": 17,
+              "endLine": 269,
+              "endColumn": 26,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "String",
+              "code": "\t\t\t\tfor (int i = 0; i < variables.length; i++) {\n\t\t\t\t\tString message =\n\t\t\t\t\t\t\tclassName + \".\" + methodName + \"(), \" + variables[i] +\n\t\t\t\t\t\t\t\t\t\": \" + values[i];\n\t\t\t\t\tgetLogger().log(logLevel, message);\n\t\t\t\t}\n\t\t\t}"
+            },
+            {
+              "step": 17,
+              "variableName": "message",
+              "startLine": 270,
+              "startColumn": 32,
+              "endLine": 270,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "",
+              "code": "\t\t\t\t\tString message =\n\t\t\t\t\t\t\tclassName + \".\" + methodName + \"(), \" + variables[i] +\n\t\t\t\t\t\t\t\t\t\": \" + values[i];\n\t\t\t\t\tgetLogger().log(logLevel, message);\n\t\t\t\t}\n\t\t\t}\n\t\t} else {"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "callbackToken",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 25,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "HashMap",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "callbackToken.remove(jobId)",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 665,
+              "startColumn": 10,
+              "endLine": 665,
+              "endColumn": 15,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}\n\n\tpublic static String getToken(String jobId) {"
+            },
+            {
+              "step": 3,
+              "variableName": "DevOpsRootAction.removeCallbackToken(jobId)",
+              "startLine": 589,
+              "startColumn": 10,
+              "endLine": 589,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t// called from build step\n\tpublic String removeCallbackToken(String jobId) {\n\t\tprintDebug(\"removeCallbackToken\", new String[]{\"jobId\"}, new String[]{jobId}, Level.FINE);\n\t\treturn DevOpsRootAction.removeCallbackToken(jobId);\n\t}\n\n\t// get from 'jobs' map"
+            },
+            {
+              "step": 4,
+              "variableName": "model.removeCallbackToken(jobId)",
+              "startLine": 355,
+              "startColumn": 21,
+              "endLine": 355,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\n\t\t\t\tif (model.checkIsTrackingCache(build.getParent(), build.getId())) {\n\t\t\t\t\tString jobId = model.getJobId(build, build.getParent());\n\t\t\t\t\tString token = model.removeCallbackToken(jobId);\n\t\t\t\t\tString jobUrl = build.getParent().getAbsoluteUrl();\n\t\t\t\t\tString jobName = build.getParent().getName();\n\t\t\t\t\tString jenkinsUrl = model.getJenkinsUrl();"
+            },
+            {
+              "step": 5,
+              "variableName": "token",
+              "startLine": 374,
+              "startColumn": 33,
+              "endLine": 374,
+              "endColumn": 38,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\t\t\t\t\t\t\t\tbuild.setResult(Result.FAILURE);\n\t\t\t\t\t\t\t\tthrow new RunnerAbortedException();\n\t\t\t\t\t\t\t} else\n\t\t\t\t\t\t\t\tmodel.sendBuildAndToken(token, jenkinsUrl, buildUrl, jobUrl,\n\t\t\t\t\t\t\t\t\t\tjobName, null, null, false, null, false, devOpsConfig);\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\tif (shouldStopDueToLocalError(build, listener, build.getParent(), model)) {"
+            },
+            {
+              "step": 6,
+              "variableName": "String token",
+              "startLine": 685,
+              "startColumn": 34,
+              "endLine": 685,
+              "endColumn": 46,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\t\t\tstring.substring(index + substring.length());\n\t}\n\n\tpublic String sendBuildAndToken(String token, String jenkinsUrl, String buildUrl,\n\t                                String jobUrl, String jobName, String stageName,\n\t                                DevOpsPipelineNode stageNode, Boolean isMultiBranch, String branchName, Boolean isChangeClose, DevOpsConfigurationEntry devopsConfig) {\n\t\tprintDebug(\"sendBuildAndToken\", null, null, Level.FINE);"
+            },
+            {
+              "step": 7,
+              "variableName": "token",
+              "startLine": 698,
+              "startColumn": 40,
+              "endLine": 698,
+              "endColumn": 45,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\tparams.put(DevOpsConstants.TOOL_TYPE_ATTR.toString(),\n\t\t\t\tDevOpsConstants.TOOL_TYPE.toString());\n\t\ttry {\n\t\t\tString callbackUrl = getCallbackUrl(token, jenkinsUrl);\n\t\t\tdata.put(DevOpsConstants.CALLBACK_URL_ATTR.toString(), callbackUrl);\n\t\t\tdata.put(DevOpsConstants.JOB_URL_ATTR.toString(), jobUrl);\n\t\t\tdata.put(DevOpsConstants.BUILD_URL_ATTR.toString(), buildUrl);"
+            },
+            {
+              "step": 8,
+              "variableName": "String token",
+              "startLine": 666,
+              "startColumn": 32,
+              "endLine": 666,
+              "endColumn": 44,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\treturn m.matches();\n\t}\n\n\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);"
+            },
+            {
+              "step": 9,
+              "variableName": "token",
+              "startLine": 669,
+              "startColumn": 18,
+              "endLine": 669,
+              "endColumn": 23,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 10,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[] [[]] : String",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 11,
+              "variableName": "new String[]{token, jenkinsUrl}",
+              "startLine": 669,
+              "startColumn": 5,
+              "endLine": 669,
+              "endColumn": 36,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[]",
+              "code": "\tprivate String getCallbackUrl(String token, String jenkinsUrl)\n\t\t\tthrows URISyntaxException {\n\t\tprintDebug(\"getCallbackUrl\", new String[]{\"token\", \"jenkinsUrl\"},\n\t\t\t\tnew String[]{token, jenkinsUrl}, Level.FINE);\n\t\tjava.net.URI baseUri = new java.net.URI(jenkinsUrl);\n\t\tjava.net.URI relative = new java.net.URI(\n\t\t\t\tDevOpsConstants.CALLBACK_URL_IDENTIFIER.toString() + \"/\" + token);"
+            },
+            {
+              "step": 12,
+              "variableName": "String[] values",
+              "startLine": 62,
+              "startColumn": 65,
+              "endLine": 62,
+              "endColumn": 80,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[]",
+              "code": "\t\t\t\t\"^(https?):\\\\/\\\\/[-a-zA-Z0-9+&@#\\\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\\\/%=~_|]\");\n\t}\n\n\tprivate void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils\n\t\t\t\t.printDebug(DevOpsModel.class.getName(), methodName, variables, values,\n\t\t\t\t\t\tlogLevel);"
+            },
+            {
+              "step": 13,
+              "variableName": "values",
+              "startLine": 64,
+              "startColumn": 69,
+              "endLine": 64,
+              "endColumn": 75,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String[]",
+              "code": "\n\tprivate void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils\n\t\t\t\t.printDebug(DevOpsModel.class.getName(), methodName, variables, values,\n\t\t\t\t\t\tlogLevel);\n\t}\n"
+            },
+            {
+              "step": 14,
+              "variableName": "String[] values",
+              "startLine": 263,
+              "startColumn": 32,
+              "endLine": 263,
+              "endColumn": 47,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "String[]",
+              "code": "\t}\n\n\tpublic static void printDebug(String className, String methodName, String[] variables,\n\t                              String[] values, Level logLevel) {\n\t\tif (variables != null && values != null) {\n\t\t\tif (variables.length == values.length) {\n\t\t\t\tfor (int i = 0; i < variables.length; i++) {"
+            },
+            {
+              "step": 15,
+              "variableName": "message",
+              "startLine": 270,
+              "startColumn": 32,
+              "endLine": 270,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "",
+              "code": "\t\t\t\t\tString message =\n\t\t\t\t\t\t\tclassName + \".\" + methodName + \"(), \" + variables[i] +\n\t\t\t\t\t\t\t\t\t\": \" + values[i];\n\t\t\t\t\tgetLogger().log(logLevel, message);\n\t\t\t\t}\n\t\t\t}\n\t\t} else {"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "callbackToken",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 25,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "HashMap",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "callbackToken.remove(jobId)",
+              "startLine": 663,
+              "startColumn": 12,
+              "endLine": 663,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\tpublic static String removeCallbackToken(String jobId) {\n\t\tString token;\n\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 665,
+              "startColumn": 10,
+              "endLine": 665,
+              "endColumn": 15,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRootAction.java",
+              "type": "String",
+              "code": "\t\tsynchronized (callbackToken) {\n\t\t\ttoken = callbackToken.remove(jobId);\n\t\t}\n\t\treturn token;\n\t}\n\n\tpublic static String getToken(String jobId) {"
+            },
+            {
+              "step": 3,
+              "variableName": "DevOpsRootAction.removeCallbackToken(jobId)",
+              "startLine": 589,
+              "startColumn": 10,
+              "endLine": 589,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t// called from build step\n\tpublic String removeCallbackToken(String jobId) {\n\t\tprintDebug(\"removeCallbackToken\", new String[]{\"jobId\"}, new String[]{jobId}, Level.FINE);\n\t\treturn DevOpsRootAction.removeCallbackToken(jobId);\n\t}\n\n\t// get from 'jobs' map"
+            },
+            {
+              "step": 4,
+              "variableName": "model.removeCallbackToken(jobId)",
+              "startLine": 355,
+              "startColumn": 21,
+              "endLine": 355,
+              "endColumn": 53,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\n\t\t\t\tif (model.checkIsTrackingCache(build.getParent(), build.getId())) {\n\t\t\t\t\tString jobId = model.getJobId(build, build.getParent());\n\t\t\t\t\tString token = model.removeCallbackToken(jobId);\n\t\t\t\t\tString jobUrl = build.getParent().getAbsoluteUrl();\n\t\t\t\t\tString jobName = build.getParent().getName();\n\t\t\t\t\tString jenkinsUrl = model.getJenkinsUrl();"
+            },
+            {
+              "step": 5,
+              "variableName": "token",
+              "startLine": 369,
+              "startColumn": 33,
+              "endLine": 369,
+              "endColumn": 38,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/DevOpsRunListener.java",
+              "type": "String",
+              "code": "\t\t\t\t\t\tDevOpsConfigurationEntry devOpsConfig = GenericUtils.getDevOpsConfigurationEntryOrDefault(configurationName);\n\t\t\t\t\t\tif (token != null) {\n\t\t\t\t\t\t\tif (shouldStop(build, listener, build.getParent(), model)) {\n\t\t\t\t\t\t\t\tmodel.sendBuildAndToken(token, jenkinsUrl, buildUrl, jobUrl,\n\t\t\t\t\t\t\t\t\t\tjobName, null, null, false, null, false, devOpsConfig);\n\t\t\t\t\t\t\t\tbuild.setResult(Result.FAILURE);\n\t\t\t\t\t\t\t\tthrow new RunnerAbortedException();"
+            },
+            {
+              "step": 6,
+              "variableName": "String token",
+              "startLine": 685,
+              "startColumn": 34,
+              "endLine": 685,
+              "endColumn": 46,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\t\t\tstring.substring(index + substring.length());\n\t}\n\n\tpublic String sendBuildAndToken(String token, String jenkinsUrl, String buildUrl,\n\t                                String jobUrl, String jobName, String stageName,\n\t                                DevOpsPipelineNode stageNode, Boolean isMultiBranch, String branchName, Boolean isChangeClose, DevOpsConfigurationEntry devopsConfig) {\n\t\tprintDebug(\"sendBuildAndToken\", null, null, Level.FINE);"
+            },
+            {
+              "step": 7,
+              "variableName": "devopsConfig.getChangeControlUrl() + \"/\" + token",
+              "startLine": 729,
+              "startColumn": 9,
+              "endLine": 729,
+              "endColumn": 57,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/model/DevOpsModel.java",
+              "type": "String",
+              "code": "\t\t\t\t\t\tDevOpsConfigurationEntry.getTokenText(devopsConfig.getSecretCredentialId()));\n\t\t\t\tresult = GenericUtils.parseResponseResult(\n\t\t\t\t\t\tCommUtils.callV2Support(DevOpsConstants.REST_PUT_METHOD.toString(),\n\t\t\t\t\t\t\t\tdevopsConfig.getChangeControlUrl() + \"/\" + token, params, data.toString(),\n\t\t\t\t\t\t\t\tDevOpsConfigurationEntry.getUser(devopsConfig.getCredentialsId()), DevOpsConfigurationEntry.getPwd(devopsConfig.getCredentialsId()), null, null, tokenDetails),\n\t\t\t\t\t\tDevOpsConstants.COMMON_RESPONSE_CHANGE_CTRL.toString());\n"
+            },
+            {
+              "step": 8,
+              "variableName": "String urlString",
+              "startLine": 135,
+              "startColumn": 56,
+              "endLine": 135,
+              "endColumn": 72,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String",
+              "code": "        }\n    }\n    \n\tpublic static JSONObject callV2Support(String method, String urlString, JSONObject params, String data,\n\t\t\tString username, String password, String contentType, String transactionSource, Map<String,String> tokenDetails) {\n\t\tif (contentType == null)\n\t\t\tcontentType = CommUtils.defaultContentType;"
+            },
+            {
+              "step": 9,
+              "variableName": "urlString",
+              "startLine": 144,
+              "startColumn": 29,
+              "endLine": 144,
+              "endColumn": 38,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String",
+              "code": "\t\t\t\t\tnew String[] { method, urlString, \"\", data }, Level.FINE);\n\t\telse\n\t\t\tprintDebug(\"callV2Support\", new String[] { \"method\", \"urlString\", \"params\", \"data\" },\n\t\t\t\t\tnew String[] { method, urlString, params.toString(), data }, Level.FINE);\n\n\t\tJSONObject jsonResult = null;\n\t\ttry {"
+            },
+            {
+              "step": 10,
+              "variableName": "new String[] { method, urlString, params.toString(), data }",
+              "startLine": 144,
+              "startColumn": 6,
+              "endLine": 144,
+              "endColumn": 65,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "\t\t\t\t\tnew String[] { method, urlString, \"\", data }, Level.FINE);\n\t\telse\n\t\t\tprintDebug(\"callV2Support\", new String[] { \"method\", \"urlString\", \"params\", \"data\" },\n\t\t\t\t\tnew String[] { method, urlString, params.toString(), data }, Level.FINE);\n\n\t\tJSONObject jsonResult = null;\n\t\ttry {"
+            },
+            {
+              "step": 11,
+              "variableName": "new String[] { method, urlString, params.toString(), data }",
+              "startLine": 144,
+              "startColumn": 6,
+              "endLine": 144,
+              "endColumn": 65,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "\t\t\t\t\tnew String[] { method, urlString, \"\", data }, Level.FINE);\n\t\telse\n\t\t\tprintDebug(\"callV2Support\", new String[] { \"method\", \"urlString\", \"params\", \"data\" },\n\t\t\t\t\tnew String[] { method, urlString, params.toString(), data }, Level.FINE);\n\n\t\tJSONObject jsonResult = null;\n\t\ttry {"
+            },
+            {
+              "step": 12,
+              "variableName": "String[] values",
+              "startLine": 329,
+              "startColumn": 75,
+              "endLine": 329,
+              "endColumn": 90,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "        return jsonResult;\n    }\n    \n    private static void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils.printDebug(CommUtils.class.getName(), methodName, variables, values, logLevel);\n    }\t  \n}"
+            },
+            {
+              "step": 13,
+              "variableName": "values",
+              "startLine": 330,
+              "startColumn": 77,
+              "endLine": 330,
+              "endColumn": 83,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/CommUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "    }\n    \n    private static void printDebug(String methodName, String[] variables, String[] values, Level logLevel) {\n\t\tGenericUtils.printDebug(CommUtils.class.getName(), methodName, variables, values, logLevel);\n    }\t  \n}"
+            },
+            {
+              "step": 14,
+              "variableName": "String[] values",
+              "startLine": 263,
+              "startColumn": 32,
+              "endLine": 263,
+              "endColumn": 47,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "\t}\n\n\tpublic static void printDebug(String className, String methodName, String[] variables,\n\t                              String[] values, Level logLevel) {\n\t\tif (variables != null && values != null) {\n\t\t\tif (variables.length == values.length) {\n\t\t\t\tfor (int i = 0; i < variables.length; i++) {"
+            },
+            {
+              "step": 15,
+              "variableName": "values",
+              "startLine": 269,
+              "startColumn": 17,
+              "endLine": 269,
+              "endColumn": 23,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "String[] [[]] : String",
+              "code": "\t\t\t\tfor (int i = 0; i < variables.length; i++) {\n\t\t\t\t\tString message =\n\t\t\t\t\t\t\tclassName + \".\" + methodName + \"(), \" + variables[i] +\n\t\t\t\t\t\t\t\t\t\": \" + values[i];\n\t\t\t\t\tgetLogger().log(logLevel, message);\n\t\t\t\t}\n\t\t\t}"
+            },
+            {
+              "step": 16,
+              "variableName": "values[i]",
+              "startLine": 269,
+              "startColumn": 17,
+              "endLine": 269,
+              "endColumn": 26,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "String",
+              "code": "\t\t\t\tfor (int i = 0; i < variables.length; i++) {\n\t\t\t\t\tString message =\n\t\t\t\t\t\t\tclassName + \".\" + methodName + \"(), \" + variables[i] +\n\t\t\t\t\t\t\t\t\t\": \" + values[i];\n\t\t\t\t\tgetLogger().log(logLevel, message);\n\t\t\t\t}\n\t\t\t}"
+            },
+            {
+              "step": 17,
+              "variableName": "message",
+              "startLine": 270,
+              "startColumn": 32,
+              "endLine": 270,
+              "endColumn": 39,
+              "uri": "servicenow-devops-plugin-5.1.0/src/main/java/io/jenkins/plugins/utils/GenericUtils.java",
+              "type": "",
+              "code": "\t\t\t\t\tString message =\n\t\t\t\t\t\t\tclassName + \".\" + methodName + \"(), \" + variables[i] +\n\t\t\t\t\t\t\t\t\t\": \" + values[i];\n\t\t\t\t\tgetLogger().log(logLevel, message);\n\t\t\t\t}\n\t\t\t}\n\t\t} else {"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

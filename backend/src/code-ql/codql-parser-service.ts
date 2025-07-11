@@ -24,7 +24,7 @@ export class CodeQlParserService {
         const rules = data.runs[0].tool.driver.rules;
         let results = data.runs[0].results;
 
-        results = this.filterResults(results)
+        // results = this.filterResults(results)
         this.results = results
       
 
@@ -86,34 +86,29 @@ export class CodeQlParserService {
      * @param index - The index of the flow node to get
      * @returns - The flow nodes for the specified vulnerability
      */
-    async getDataFlowTree(filePath: string, project: string, index: string) {
-        // const sarifPath = path.join(project, 'result.sarif');
-        // const data = await this.fileService.readJsonFile(sarifPath);
-
-        // let results = data.runs[0].results;
-        // results = this.filterResults(results)
-        // const result = results[index];
-        const result = this.results[index];
-            
-        try {
-            // Try to access all codeFlows
-            const codeFlowsList = result.codeFlows || [];
-            const flowMaps = [];
-    
-            // Loop through each codeFlow and build the flow map for each
-            for (let i = 0; i < codeFlowsList.length; i++) {
-                const codeFlows = codeFlowsList[i].threadFlows[0].locations;
+async getDataFlowTree(filePath: string, project: string, index: string) {
+    const result = this.results[index];
+    try {
+        const flowMaps = [];
+        if (result.codeFlows && result.codeFlows.length > 0) {
+            // Process each codeFlow
+            for (let i = 0; i < result.codeFlows.length; i++) {
+                const codeFlows = result.codeFlows[i].threadFlows[0].locations;
                 const flowMap = await this.buildDataFlowMap(codeFlows, project);
                 flowMaps.push(flowMap);
             }
-
-            console.log(flowMaps)            
-            return flowMaps; // Return all flow maps (one for each codeFlow)
-        } catch (error) {
-            console.error('Error processing code flows:', error);
-            return [];
+        } else if (result.locations) {
+            // Use result.locations in absence of codeFlows
+            const flowMap = await this.buildDataFlowMap(result.locations, project);
+            flowMaps.push(flowMap);
         }
+        // console.log(flowMaps);
+        return flowMaps; // Return all flow maps
+    } catch (error) {
+        console.error('Error processing data flows:', error);
+        return [];
     }
+}
     
     /**
      * This function is used to save the data flow trees for each CWE in a separate file.
@@ -184,12 +179,41 @@ export class CodeQlParserService {
                 });
               }
             }
-            else{
-                // console.log(`Result ${i} skipped: no codeFlows`);
+            // If there are no codeFlows, we can still build a flow map from locations
+            else {
+            const flowMap = await this.buildDataFlowMap(result.locations, project);
+  
+            // Map each node to include additional properties for labeling
+            const humanReadable = Object.entries(flowMap).map(([index, node]) => ({
+              // Assign unique indexes; you may choose a different strategy if needed
+              flowIndex: Number(index),
+              vulnerabilityIndex: i,
+              step: Number(index), // 0-based step number
+              variableName: node.message,
+              startLine: node.startLine,
+              startColumn: node.startColumn,
+              endLine: node.endLine,
+              endColumn: node.endColumn,
+              uri: node.uri,
+              type: node.type,
+              code: node.code
+            }));
+  
+            const fileName = humanReadable[humanReadable.length - 1].uri.split('/').pop() ?? 'unknown';
+  
+            if (!flowMapsByCWE[cwe]) flowMapsByCWE[cwe] = [];
+  
+            let entry = flowMapsByCWE[cwe].find(e => e.resultIndex === i);
+            if (!entry) {
+              entry = { resultIndex: i, fileName, flows: [] };
+              flowMapsByCWE[cwe].push(entry);
+            }
+  
+            entry.flows.push({ codeFlowIndex: 0, flow: humanReadable });
 
               }
           }
-      
+
           // Save the grouped flow maps in human-readable format
           const outputFilePath = path.join(project, 'flowMapsByCWE.json');
           await this.fileService.writeToFile(outputFilePath, JSON.stringify(flowMapsByCWE, null, 2));
@@ -212,12 +236,12 @@ export class CodeQlParserService {
 
         // Use a loop with `await` to ensure file loading is awaited for each code flow
         for (let flowIndex = 0; flowIndex < codeFlows.length; flowIndex++) {
-            const codeFlow = codeFlows[flowIndex];
+            const locationObj = codeFlows[flowIndex].location ?? codeFlows[flowIndex];
             // console.log(`Processing Code Flow #${flowIndex + 1}`);
 
-            const location = codeFlow.location;
-            if (location) {
-                const physicalLocation = location.physicalLocation ?? {};
+
+            if (locationObj) {
+                const physicalLocation = locationObj.physicalLocation ?? {};
                 const artifactLocation = physicalLocation.artifactLocation ?? {};
                 const uri = artifactLocation.uri ?? 'unknown';
             
@@ -232,7 +256,7 @@ export class CodeQlParserService {
                 const normalizedUri = path.normalize(uri);
                 const fullPath = path.join(project, normalizedUri);
 
-                let message = location.message.text;  // Default message from SARIF file
+                let message = locationObj.message?.text ?? '';  // Default message from SARIF file
                 const type = message.length > 1 ? message.split(':').slice(1).join(':').trim() : '';
                 // console.log(`Message: ${message}`);
 

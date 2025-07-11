@@ -1,0 +1,777 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "PoolingHttpClientConnectionManager.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "userToken",
+              "startLine": 127,
+              "startColumn": 60,
+              "endLine": 127,
+              "endColumn": 69,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/ConnectExec.java",
+              "type": "Object",
+              "code": "            if (LOG.isDebugEnabled()) {\n                LOG.debug(\"{} acquiring connection with route {}\", exchangeId, route);\n            }\n            execRuntime.acquireEndpoint(exchangeId, route, userToken, context);\n        }\n        try {\n            if (!execRuntime.isEndpointConnected()) {"
+            },
+            {
+              "step": 1,
+              "variableName": "final Object object",
+              "startLine": 97,
+              "startColumn": 53,
+              "endLine": 97,
+              "endColumn": 72,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/InternalExecRuntime.java",
+              "type": "Object",
+              "code": "\n    @Override\n    public void acquireEndpoint(\n            final String id, final HttpRoute route, final Object object, final HttpClientContext context) throws IOException {\n        Args.notNull(route, \"Route\");\n        if (endpointRef.get() == null) {\n            final RequestConfig requestConfig = context.getRequestConfigOrDefault();"
+            },
+            {
+              "step": 2,
+              "variableName": "object",
+              "startLine": 105,
+              "startColumn": 97,
+              "endLine": 105,
+              "endColumn": 103,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/InternalExecRuntime.java",
+              "type": "Object",
+              "code": "            if (log.isDebugEnabled()) {\n                log.debug(\"{} acquiring endpoint ({})\", id, connectionRequestTimeout);\n            }\n            final LeaseRequest connRequest = manager.lease(id, route, connectionRequestTimeout, object);\n            state = object;\n            if (cancellableDependency != null) {\n                cancellableDependency.setDependency(connRequest);"
+            },
+            {
+              "step": 3,
+              "variableName": "final Object state",
+              "startLine": 321,
+              "startColumn": 13,
+              "endLine": 321,
+              "endColumn": 31,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "Object",
+              "code": "            final String id,\n            final HttpRoute route,\n            final Timeout requestTimeout,\n            final Object state) {\n        Args.notNull(route, \"HTTP route\");\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));"
+            },
+            {
+              "step": 4,
+              "variableName": "state",
+              "startLine": 324,
+              "startColumn": 115,
+              "endLine": 324,
+              "endColumn": 120,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "Object",
+              "code": "            final Object state) {\n        Args.notNull(route, \"HTTP route\");\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        final Future<PoolEntry<HttpRoute, ManagedHttpClientConnection>> leaseFuture = this.pool.lease(route, state, requestTimeout, null);\n        return new LeaseRequest() {"
+            },
+            {
+              "step": 5,
+              "variableName": "final Object state",
+              "startLine": 55,
+              "startColumn": 13,
+              "endLine": 55,
+              "endColumn": 31,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "Object",
+              "code": "\n    public static String formatStats(\n            final HttpRoute route,\n            final Object state,\n            final ConnPoolControl<HttpRoute> connPool) {\n        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");"
+            },
+            {
+              "step": 6,
+              "variableName": "state",
+              "startLine": 60,
+              "startColumn": 43,
+              "endLine": 60,
+              "endColumn": 48,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "Object",
+              "code": "        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");\n        if (state != null) {\n            buf.append(\"[state: \").append(state).append(\"]\");\n        }\n        final PoolStats totals = connPool.getTotalStats();\n        final PoolStats stats = connPool.getStats(route);"
+            },
+            {
+              "step": 7,
+              "variableName": "buf.append(\"[state: \")",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 35,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "StringBuilder",
+              "code": "        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");\n        if (state != null) {\n            buf.append(\"[state: \").append(state).append(\"]\");\n        }\n        final PoolStats totals = connPool.getTotalStats();\n        final PoolStats stats = connPool.getStats(route);"
+            },
+            {
+              "step": 8,
+              "variableName": "buf",
+              "startLine": 69,
+              "startColumn": 16,
+              "endLine": 69,
+              "endColumn": 19,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "StringBuilder",
+              "code": "        buf.append(\" of \").append(stats.getMax()).append(\"; \");\n        buf.append(\"total allocated: \").append(totals.getLeased() + totals.getAvailable());\n        buf.append(\" of \").append(totals.getMax()).append(\"]\");\n        return buf.toString();\n    }\n\n}"
+            },
+            {
+              "step": 9,
+              "variableName": "buf.toString()",
+              "startLine": 69,
+              "startColumn": 16,
+              "endLine": 69,
+              "endColumn": 30,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "String",
+              "code": "        buf.append(\" of \").append(stats.getMax()).append(\"; \");\n        buf.append(\"total allocated: \").append(totals.getLeased() + totals.getAvailable());\n        buf.append(\" of \").append(totals.getMax()).append(\"]\");\n        return buf.toString();\n    }\n\n}"
+            },
+            {
+              "step": 10,
+              "variableName": "ConnPoolSupport.formatStats(route, state, pool)",
+              "startLine": 324,
+              "startColumn": 80,
+              "endLine": 324,
+              "endColumn": 127,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "String",
+              "code": "            final Object state) {\n        Args.notNull(route, \"HTTP route\");\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        final Future<PoolEntry<HttpRoute, ManagedHttpClientConnection>> leaseFuture = this.pool.lease(route, state, requestTimeout, null);\n        return new LeaseRequest() {"
+            },
+            {
+              "step": 11,
+              "variableName": "LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool))",
+              "startLine": 324,
+              "startColumn": 13,
+              "endLine": 324,
+              "endColumn": 128,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "Object[] [[]] : String",
+              "code": "            final Object state) {\n        Args.notNull(route, \"HTTP route\");\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        final Future<PoolEntry<HttpRoute, ManagedHttpClientConnection>> leaseFuture = this.pool.lease(route, state, requestTimeout, null);\n        return new LeaseRequest() {"
+            },
+            {
+              "step": 12,
+              "variableName": "LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool))",
+              "startLine": 324,
+              "startColumn": 13,
+              "endLine": 324,
+              "endColumn": 128,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "",
+              "code": "            final Object state) {\n        Args.notNull(route, \"HTTP route\");\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        final Future<PoolEntry<HttpRoute, ManagedHttpClientConnection>> leaseFuture = this.pool.lease(route, state, requestTimeout, null);\n        return new LeaseRequest() {"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "PoolingAsyncClientConnectionManager.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "userToken",
+              "startLine": 151,
+              "startColumn": 40,
+              "endLine": 151,
+              "endColumn": 49,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/async/AsyncConnectExec.java",
+              "type": "Object",
+              "code": "                LOG.debug(\"{} acquiring connection with route {}\", exchangeId, route);\n            }\n            cancellableDependency.setDependency(execRuntime.acquireEndpoint(\n                    exchangeId, route, userToken, clientContext, new FutureCallback<AsyncExecRuntime>() {\n\n                        @Override\n                        public void completed(final AsyncExecRuntime execRuntime) {"
+            },
+            {
+              "step": 1,
+              "variableName": "final Object object",
+              "startLine": 106,
+              "startColumn": 13,
+              "endLine": 106,
+              "endColumn": 32,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/async/InternalHttpAsyncExecRuntime.java",
+              "type": "Object",
+              "code": "    public Cancellable acquireEndpoint(\n            final String id,\n            final HttpRoute route,\n            final Object object,\n            final HttpClientContext context,\n            final FutureCallback<AsyncExecRuntime> callback) {\n        if (endpointRef.get() == null) {"
+            },
+            {
+              "step": 2,
+              "variableName": "object",
+              "startLine": 118,
+              "startColumn": 21,
+              "endLine": 118,
+              "endColumn": 27,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/async/InternalHttpAsyncExecRuntime.java",
+              "type": "Object",
+              "code": "            return Operations.cancellable(manager.lease(\n                    id,\n                    route,\n                    object,\n                    connectionRequestTimeout,\n                    new FutureCallback<AsyncConnectionEndpoint>() {\n"
+            },
+            {
+              "step": 3,
+              "variableName": "final Object state",
+              "startLine": 268,
+              "startColumn": 13,
+              "endLine": 268,
+              "endColumn": 31,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/nio/PoolingAsyncClientConnectionManager.java",
+              "type": "Object",
+              "code": "    public Future<AsyncConnectionEndpoint> lease(\n            final String id,\n            final HttpRoute route,\n            final Object state,\n            final Timeout requestTimeout,\n            final FutureCallback<AsyncConnectionEndpoint> callback) {\n        if (LOG.isDebugEnabled()) {"
+            },
+            {
+              "step": 4,
+              "variableName": "state",
+              "startLine": 272,
+              "startColumn": 115,
+              "endLine": 272,
+              "endColumn": 120,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/nio/PoolingAsyncClientConnectionManager.java",
+              "type": "Object",
+              "code": "            final Timeout requestTimeout,\n            final FutureCallback<AsyncConnectionEndpoint> callback) {\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        return new Future<AsyncConnectionEndpoint>() {\n"
+            },
+            {
+              "step": 5,
+              "variableName": "final Object state",
+              "startLine": 55,
+              "startColumn": 13,
+              "endLine": 55,
+              "endColumn": 31,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "Object",
+              "code": "\n    public static String formatStats(\n            final HttpRoute route,\n            final Object state,\n            final ConnPoolControl<HttpRoute> connPool) {\n        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");"
+            },
+            {
+              "step": 6,
+              "variableName": "state",
+              "startLine": 60,
+              "startColumn": 43,
+              "endLine": 60,
+              "endColumn": 48,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "Object",
+              "code": "        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");\n        if (state != null) {\n            buf.append(\"[state: \").append(state).append(\"]\");\n        }\n        final PoolStats totals = connPool.getTotalStats();\n        final PoolStats stats = connPool.getStats(route);"
+            },
+            {
+              "step": 7,
+              "variableName": "buf.append(\"[state: \")",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 35,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "StringBuilder",
+              "code": "        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");\n        if (state != null) {\n            buf.append(\"[state: \").append(state).append(\"]\");\n        }\n        final PoolStats totals = connPool.getTotalStats();\n        final PoolStats stats = connPool.getStats(route);"
+            },
+            {
+              "step": 8,
+              "variableName": "buf",
+              "startLine": 69,
+              "startColumn": 16,
+              "endLine": 69,
+              "endColumn": 19,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "StringBuilder",
+              "code": "        buf.append(\" of \").append(stats.getMax()).append(\"; \");\n        buf.append(\"total allocated: \").append(totals.getLeased() + totals.getAvailable());\n        buf.append(\" of \").append(totals.getMax()).append(\"]\");\n        return buf.toString();\n    }\n\n}"
+            },
+            {
+              "step": 9,
+              "variableName": "buf.toString()",
+              "startLine": 69,
+              "startColumn": 16,
+              "endLine": 69,
+              "endColumn": 30,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "String",
+              "code": "        buf.append(\" of \").append(stats.getMax()).append(\"; \");\n        buf.append(\"total allocated: \").append(totals.getLeased() + totals.getAvailable());\n        buf.append(\" of \").append(totals.getMax()).append(\"]\");\n        return buf.toString();\n    }\n\n}"
+            },
+            {
+              "step": 10,
+              "variableName": "ConnPoolSupport.formatStats(route, state, pool)",
+              "startLine": 272,
+              "startColumn": 80,
+              "endLine": 272,
+              "endColumn": 127,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/nio/PoolingAsyncClientConnectionManager.java",
+              "type": "String",
+              "code": "            final Timeout requestTimeout,\n            final FutureCallback<AsyncConnectionEndpoint> callback) {\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        return new Future<AsyncConnectionEndpoint>() {\n"
+            },
+            {
+              "step": 11,
+              "variableName": "LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool))",
+              "startLine": 272,
+              "startColumn": 13,
+              "endLine": 272,
+              "endColumn": 128,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/nio/PoolingAsyncClientConnectionManager.java",
+              "type": "Object[] [[]] : String",
+              "code": "            final Timeout requestTimeout,\n            final FutureCallback<AsyncConnectionEndpoint> callback) {\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        return new Future<AsyncConnectionEndpoint>() {\n"
+            },
+            {
+              "step": 12,
+              "variableName": "LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool))",
+              "startLine": 272,
+              "startColumn": 13,
+              "endLine": 272,
+              "endColumn": 128,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/nio/PoolingAsyncClientConnectionManager.java",
+              "type": "",
+              "code": "            final Timeout requestTimeout,\n            final FutureCallback<AsyncConnectionEndpoint> callback) {\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        return new Future<AsyncConnectionEndpoint>() {\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "PoolingHttpClientConnectionManager.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "userToken",
+              "startLine": 127,
+              "startColumn": 60,
+              "endLine": 127,
+              "endColumn": 69,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/ConnectExec.java",
+              "type": "Object",
+              "code": "            if (LOG.isDebugEnabled()) {\n                LOG.debug(\"{} acquiring connection with route {}\", exchangeId, route);\n            }\n            execRuntime.acquireEndpoint(exchangeId, route, userToken, context);\n        }\n        try {\n            if (!execRuntime.isEndpointConnected()) {"
+            },
+            {
+              "step": 1,
+              "variableName": "final Object object",
+              "startLine": 97,
+              "startColumn": 53,
+              "endLine": 97,
+              "endColumn": 72,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/InternalExecRuntime.java",
+              "type": "Object",
+              "code": "\n    @Override\n    public void acquireEndpoint(\n            final String id, final HttpRoute route, final Object object, final HttpClientContext context) throws IOException {\n        Args.notNull(route, \"Route\");\n        if (endpointRef.get() == null) {\n            final RequestConfig requestConfig = context.getRequestConfigOrDefault();"
+            },
+            {
+              "step": 2,
+              "variableName": "object",
+              "startLine": 105,
+              "startColumn": 97,
+              "endLine": 105,
+              "endColumn": 103,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/InternalExecRuntime.java",
+              "type": "Object",
+              "code": "            if (log.isDebugEnabled()) {\n                log.debug(\"{} acquiring endpoint ({})\", id, connectionRequestTimeout);\n            }\n            final LeaseRequest connRequest = manager.lease(id, route, connectionRequestTimeout, object);\n            state = object;\n            if (cancellableDependency != null) {\n                cancellableDependency.setDependency(connRequest);"
+            },
+            {
+              "step": 3,
+              "variableName": "final Object state",
+              "startLine": 321,
+              "startColumn": 13,
+              "endLine": 321,
+              "endColumn": 31,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "Object",
+              "code": "            final String id,\n            final HttpRoute route,\n            final Timeout requestTimeout,\n            final Object state) {\n        Args.notNull(route, \"HTTP route\");\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));"
+            },
+            {
+              "step": 4,
+              "variableName": "state",
+              "startLine": 324,
+              "startColumn": 115,
+              "endLine": 324,
+              "endColumn": 120,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "Object",
+              "code": "            final Object state) {\n        Args.notNull(route, \"HTTP route\");\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        final Future<PoolEntry<HttpRoute, ManagedHttpClientConnection>> leaseFuture = this.pool.lease(route, state, requestTimeout, null);\n        return new LeaseRequest() {"
+            },
+            {
+              "step": 5,
+              "variableName": "final Object state",
+              "startLine": 55,
+              "startColumn": 13,
+              "endLine": 55,
+              "endColumn": 31,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "Object",
+              "code": "\n    public static String formatStats(\n            final HttpRoute route,\n            final Object state,\n            final ConnPoolControl<HttpRoute> connPool) {\n        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");"
+            },
+            {
+              "step": 6,
+              "variableName": "state",
+              "startLine": 60,
+              "startColumn": 43,
+              "endLine": 60,
+              "endColumn": 48,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "Object",
+              "code": "        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");\n        if (state != null) {\n            buf.append(\"[state: \").append(state).append(\"]\");\n        }\n        final PoolStats totals = connPool.getTotalStats();\n        final PoolStats stats = connPool.getStats(route);"
+            },
+            {
+              "step": 7,
+              "variableName": "buf.append(\"[state: \")",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 35,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "StringBuilder",
+              "code": "        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");\n        if (state != null) {\n            buf.append(\"[state: \").append(state).append(\"]\");\n        }\n        final PoolStats totals = connPool.getTotalStats();\n        final PoolStats stats = connPool.getStats(route);"
+            },
+            {
+              "step": 8,
+              "variableName": "buf",
+              "startLine": 69,
+              "startColumn": 16,
+              "endLine": 69,
+              "endColumn": 19,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "StringBuilder",
+              "code": "        buf.append(\" of \").append(stats.getMax()).append(\"; \");\n        buf.append(\"total allocated: \").append(totals.getLeased() + totals.getAvailable());\n        buf.append(\" of \").append(totals.getMax()).append(\"]\");\n        return buf.toString();\n    }\n\n}"
+            },
+            {
+              "step": 9,
+              "variableName": "buf.toString()",
+              "startLine": 69,
+              "startColumn": 16,
+              "endLine": 69,
+              "endColumn": 30,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "String",
+              "code": "        buf.append(\" of \").append(stats.getMax()).append(\"; \");\n        buf.append(\"total allocated: \").append(totals.getLeased() + totals.getAvailable());\n        buf.append(\" of \").append(totals.getMax()).append(\"]\");\n        return buf.toString();\n    }\n\n}"
+            },
+            {
+              "step": 10,
+              "variableName": "ConnPoolSupport.formatStats(route, state, pool)",
+              "startLine": 324,
+              "startColumn": 80,
+              "endLine": 324,
+              "endColumn": 127,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "",
+              "code": "            final Object state) {\n        Args.notNull(route, \"HTTP route\");\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        final Future<PoolEntry<HttpRoute, ManagedHttpClientConnection>> leaseFuture = this.pool.lease(route, state, requestTimeout, null);\n        return new LeaseRequest() {"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resultIndex": 3,
+      "fileName": "PoolingHttpClientConnectionManager.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "userToken",
+              "startLine": 127,
+              "startColumn": 60,
+              "endLine": 127,
+              "endColumn": 69,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/ConnectExec.java",
+              "type": "Object",
+              "code": "            if (LOG.isDebugEnabled()) {\n                LOG.debug(\"{} acquiring connection with route {}\", exchangeId, route);\n            }\n            execRuntime.acquireEndpoint(exchangeId, route, userToken, context);\n        }\n        try {\n            if (!execRuntime.isEndpointConnected()) {"
+            },
+            {
+              "step": 1,
+              "variableName": "final Object object",
+              "startLine": 97,
+              "startColumn": 53,
+              "endLine": 97,
+              "endColumn": 72,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/InternalExecRuntime.java",
+              "type": "Object",
+              "code": "\n    @Override\n    public void acquireEndpoint(\n            final String id, final HttpRoute route, final Object object, final HttpClientContext context) throws IOException {\n        Args.notNull(route, \"Route\");\n        if (endpointRef.get() == null) {\n            final RequestConfig requestConfig = context.getRequestConfigOrDefault();"
+            },
+            {
+              "step": 2,
+              "variableName": "object",
+              "startLine": 105,
+              "startColumn": 97,
+              "endLine": 105,
+              "endColumn": 103,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/InternalExecRuntime.java",
+              "type": "Object",
+              "code": "            if (log.isDebugEnabled()) {\n                log.debug(\"{} acquiring endpoint ({})\", id, connectionRequestTimeout);\n            }\n            final LeaseRequest connRequest = manager.lease(id, route, connectionRequestTimeout, object);\n            state = object;\n            if (cancellableDependency != null) {\n                cancellableDependency.setDependency(connRequest);"
+            },
+            {
+              "step": 3,
+              "variableName": "final Object state",
+              "startLine": 321,
+              "startColumn": 13,
+              "endLine": 321,
+              "endColumn": 31,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "Object",
+              "code": "            final String id,\n            final HttpRoute route,\n            final Timeout requestTimeout,\n            final Object state) {\n        Args.notNull(route, \"HTTP route\");\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));"
+            },
+            {
+              "step": 4,
+              "variableName": "state : Object",
+              "startLine": 327,
+              "startColumn": 16,
+              "endLine": 412,
+              "endColumn": 10,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "Object",
+              "code": "            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        final Future<PoolEntry<HttpRoute, ManagedHttpClientConnection>> leaseFuture = this.pool.lease(route, state, requestTimeout, null);\n        return new LeaseRequest() {\n            // Using a ReentrantLock specific to each LeaseRequest instance to maintain the original\n            // synchronization semantics. This ensures that each LeaseRequest has its own unique lock.\n            private final ReentrantLock lock = new ReentrantLock();"
+            },
+            {
+              "step": 5,
+              "variableName": "new (...) : new LeaseRequest(...) { ... } [state] : Object",
+              "startLine": 327,
+              "startColumn": 16,
+              "endLine": 412,
+              "endColumn": 10,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "new LeaseRequest(...) { ... } [state] : Object",
+              "code": "            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        final Future<PoolEntry<HttpRoute, ManagedHttpClientConnection>> leaseFuture = this.pool.lease(route, state, requestTimeout, null);\n        return new LeaseRequest() {\n            // Using a ReentrantLock specific to each LeaseRequest instance to maintain the original\n            // synchronization semantics. This ensures that each LeaseRequest has its own unique lock.\n            private final ReentrantLock lock = new ReentrantLock();"
+            },
+            {
+              "step": 6,
+              "variableName": "manager.lease(id, route, connectionRequestTimeout, object)",
+              "startLine": 105,
+              "startColumn": 46,
+              "endLine": 105,
+              "endColumn": 104,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/InternalExecRuntime.java",
+              "type": "new LeaseRequest(...) { ... } [state] : Object",
+              "code": "            if (log.isDebugEnabled()) {\n                log.debug(\"{} acquiring endpoint ({})\", id, connectionRequestTimeout);\n            }\n            final LeaseRequest connRequest = manager.lease(id, route, connectionRequestTimeout, object);\n            state = object;\n            if (cancellableDependency != null) {\n                cancellableDependency.setDependency(connRequest);"
+            },
+            {
+              "step": 7,
+              "variableName": "connRequest",
+              "startLine": 111,
+              "startColumn": 63,
+              "endLine": 111,
+              "endColumn": 74,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/classic/InternalExecRuntime.java",
+              "type": "new LeaseRequest(...) { ... } [state] : Object",
+              "code": "                cancellableDependency.setDependency(connRequest);\n            }\n            try {\n                final ConnectionEndpoint connectionEndpoint = connRequest.get(connectionRequestTimeout);\n                endpointRef.set(connectionEndpoint);\n                reusable = connectionEndpoint.isConnected();\n                if (cancellableDependency != null) {"
+            },
+            {
+              "step": 8,
+              "variableName": "get",
+              "startLine": 334,
+              "startColumn": 39,
+              "endLine": 334,
+              "endColumn": 42,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "new LeaseRequest(...) { ... } [state] : Object",
+              "code": "            private volatile ConnectionEndpoint endpoint;\n\n            @Override\n            public ConnectionEndpoint get(\n                    final Timeout timeout) throws InterruptedException, ExecutionException, TimeoutException {\n                lock.lock();\n                try {"
+            },
+            {
+              "step": 9,
+              "variableName": "state",
+              "startLine": 350,
+              "startColumn": 99,
+              "endLine": 350,
+              "endColumn": 104,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "new LeaseRequest(...) { ... } [state] : Object",
+              "code": "                        throw ex;\n                    }\n                    if (LOG.isDebugEnabled()) {\n                        LOG.debug(\"{} endpoint leased {}\", id, ConnPoolSupport.formatStats(route, state, pool));\n                    }\n                    final ConnectionConfig connectionConfig = resolveConnectionConfig(route);\n                    try {"
+            },
+            {
+              "step": 10,
+              "variableName": "state",
+              "startLine": 350,
+              "startColumn": 99,
+              "endLine": 350,
+              "endColumn": 104,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "Object",
+              "code": "                        throw ex;\n                    }\n                    if (LOG.isDebugEnabled()) {\n                        LOG.debug(\"{} endpoint leased {}\", id, ConnPoolSupport.formatStats(route, state, pool));\n                    }\n                    final ConnectionConfig connectionConfig = resolveConnectionConfig(route);\n                    try {"
+            },
+            {
+              "step": 11,
+              "variableName": "final Object state",
+              "startLine": 55,
+              "startColumn": 13,
+              "endLine": 55,
+              "endColumn": 31,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "Object",
+              "code": "\n    public static String formatStats(\n            final HttpRoute route,\n            final Object state,\n            final ConnPoolControl<HttpRoute> connPool) {\n        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");"
+            },
+            {
+              "step": 12,
+              "variableName": "state",
+              "startLine": 60,
+              "startColumn": 43,
+              "endLine": 60,
+              "endColumn": 48,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "Object",
+              "code": "        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");\n        if (state != null) {\n            buf.append(\"[state: \").append(state).append(\"]\");\n        }\n        final PoolStats totals = connPool.getTotalStats();\n        final PoolStats stats = connPool.getStats(route);"
+            },
+            {
+              "step": 13,
+              "variableName": "buf.append(\"[state: \")",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 35,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "StringBuilder",
+              "code": "        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");\n        if (state != null) {\n            buf.append(\"[state: \").append(state).append(\"]\");\n        }\n        final PoolStats totals = connPool.getTotalStats();\n        final PoolStats stats = connPool.getStats(route);"
+            },
+            {
+              "step": 14,
+              "variableName": "buf",
+              "startLine": 69,
+              "startColumn": 16,
+              "endLine": 69,
+              "endColumn": 19,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "StringBuilder",
+              "code": "        buf.append(\" of \").append(stats.getMax()).append(\"; \");\n        buf.append(\"total allocated: \").append(totals.getLeased() + totals.getAvailable());\n        buf.append(\" of \").append(totals.getMax()).append(\"]\");\n        return buf.toString();\n    }\n\n}"
+            },
+            {
+              "step": 15,
+              "variableName": "buf.toString()",
+              "startLine": 69,
+              "startColumn": 16,
+              "endLine": 69,
+              "endColumn": 30,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "String",
+              "code": "        buf.append(\" of \").append(stats.getMax()).append(\"; \");\n        buf.append(\"total allocated: \").append(totals.getLeased() + totals.getAvailable());\n        buf.append(\" of \").append(totals.getMax()).append(\"]\");\n        return buf.toString();\n    }\n\n}"
+            },
+            {
+              "step": 16,
+              "variableName": "ConnPoolSupport.formatStats(route, state, pool)",
+              "startLine": 350,
+              "startColumn": 64,
+              "endLine": 350,
+              "endColumn": 111,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java",
+              "type": "",
+              "code": "                        throw ex;\n                    }\n                    if (LOG.isDebugEnabled()) {\n                        LOG.debug(\"{} endpoint leased {}\", id, ConnPoolSupport.formatStats(route, state, pool));\n                    }\n                    final ConnectionConfig connectionConfig = resolveConnectionConfig(route);\n                    try {"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 4,
+      "fileName": "PoolingAsyncClientConnectionManager.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "userToken",
+              "startLine": 151,
+              "startColumn": 40,
+              "endLine": 151,
+              "endColumn": 49,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/async/AsyncConnectExec.java",
+              "type": "Object",
+              "code": "                LOG.debug(\"{} acquiring connection with route {}\", exchangeId, route);\n            }\n            cancellableDependency.setDependency(execRuntime.acquireEndpoint(\n                    exchangeId, route, userToken, clientContext, new FutureCallback<AsyncExecRuntime>() {\n\n                        @Override\n                        public void completed(final AsyncExecRuntime execRuntime) {"
+            },
+            {
+              "step": 1,
+              "variableName": "final Object object",
+              "startLine": 106,
+              "startColumn": 13,
+              "endLine": 106,
+              "endColumn": 32,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/async/InternalHttpAsyncExecRuntime.java",
+              "type": "Object",
+              "code": "    public Cancellable acquireEndpoint(\n            final String id,\n            final HttpRoute route,\n            final Object object,\n            final HttpClientContext context,\n            final FutureCallback<AsyncExecRuntime> callback) {\n        if (endpointRef.get() == null) {"
+            },
+            {
+              "step": 2,
+              "variableName": "object",
+              "startLine": 118,
+              "startColumn": 21,
+              "endLine": 118,
+              "endColumn": 27,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/async/InternalHttpAsyncExecRuntime.java",
+              "type": "Object",
+              "code": "            return Operations.cancellable(manager.lease(\n                    id,\n                    route,\n                    object,\n                    connectionRequestTimeout,\n                    new FutureCallback<AsyncConnectionEndpoint>() {\n"
+            },
+            {
+              "step": 3,
+              "variableName": "final Object state",
+              "startLine": 268,
+              "startColumn": 13,
+              "endLine": 268,
+              "endColumn": 31,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/nio/PoolingAsyncClientConnectionManager.java",
+              "type": "Object",
+              "code": "    public Future<AsyncConnectionEndpoint> lease(\n            final String id,\n            final HttpRoute route,\n            final Object state,\n            final Timeout requestTimeout,\n            final FutureCallback<AsyncConnectionEndpoint> callback) {\n        if (LOG.isDebugEnabled()) {"
+            },
+            {
+              "step": 4,
+              "variableName": "state",
+              "startLine": 272,
+              "startColumn": 115,
+              "endLine": 272,
+              "endColumn": 120,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/nio/PoolingAsyncClientConnectionManager.java",
+              "type": "Object",
+              "code": "            final Timeout requestTimeout,\n            final FutureCallback<AsyncConnectionEndpoint> callback) {\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        return new Future<AsyncConnectionEndpoint>() {\n"
+            },
+            {
+              "step": 5,
+              "variableName": "final Object state",
+              "startLine": 55,
+              "startColumn": 13,
+              "endLine": 55,
+              "endColumn": 31,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "Object",
+              "code": "\n    public static String formatStats(\n            final HttpRoute route,\n            final Object state,\n            final ConnPoolControl<HttpRoute> connPool) {\n        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");"
+            },
+            {
+              "step": 6,
+              "variableName": "state",
+              "startLine": 60,
+              "startColumn": 43,
+              "endLine": 60,
+              "endColumn": 48,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "Object",
+              "code": "        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");\n        if (state != null) {\n            buf.append(\"[state: \").append(state).append(\"]\");\n        }\n        final PoolStats totals = connPool.getTotalStats();\n        final PoolStats stats = connPool.getStats(route);"
+            },
+            {
+              "step": 7,
+              "variableName": "buf.append(\"[state: \")",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 35,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "StringBuilder",
+              "code": "        final StringBuilder buf = new StringBuilder();\n        buf.append(\"[route: \").append(route).append(\"]\");\n        if (state != null) {\n            buf.append(\"[state: \").append(state).append(\"]\");\n        }\n        final PoolStats totals = connPool.getTotalStats();\n        final PoolStats stats = connPool.getStats(route);"
+            },
+            {
+              "step": 8,
+              "variableName": "buf",
+              "startLine": 69,
+              "startColumn": 16,
+              "endLine": 69,
+              "endColumn": 19,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "StringBuilder",
+              "code": "        buf.append(\" of \").append(stats.getMax()).append(\"; \");\n        buf.append(\"total allocated: \").append(totals.getLeased() + totals.getAvailable());\n        buf.append(\" of \").append(totals.getMax()).append(\"]\");\n        return buf.toString();\n    }\n\n}"
+            },
+            {
+              "step": 9,
+              "variableName": "buf.toString()",
+              "startLine": 69,
+              "startColumn": 16,
+              "endLine": 69,
+              "endColumn": 30,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/ConnPoolSupport.java",
+              "type": "String",
+              "code": "        buf.append(\" of \").append(stats.getMax()).append(\"; \");\n        buf.append(\"total allocated: \").append(totals.getLeased() + totals.getAvailable());\n        buf.append(\" of \").append(totals.getMax()).append(\"]\");\n        return buf.toString();\n    }\n\n}"
+            },
+            {
+              "step": 10,
+              "variableName": "ConnPoolSupport.formatStats(route, state, pool)",
+              "startLine": 272,
+              "startColumn": 80,
+              "endLine": 272,
+              "endColumn": 127,
+              "uri": "httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/nio/PoolingAsyncClientConnectionManager.java",
+              "type": "",
+              "code": "            final Timeout requestTimeout,\n            final FutureCallback<AsyncConnectionEndpoint> callback) {\n        if (LOG.isDebugEnabled()) {\n            LOG.debug(\"{} endpoint lease request ({}) {}\", id, requestTimeout, ConnPoolSupport.formatStats(route, state, pool));\n        }\n        return new Future<AsyncConnectionEndpoint>() {\n"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

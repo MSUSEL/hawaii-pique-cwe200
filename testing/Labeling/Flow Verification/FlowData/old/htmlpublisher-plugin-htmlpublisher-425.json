@@ -1,0 +1,198 @@
+{
+  "209": [
+    {
+      "resultIndex": 0,
+      "fileName": "HtmlPublisher.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "outputFile",
+              "startLine": 355,
+              "startColumn": 62,
+              "endLine": 355,
+              "endColumn": 72,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "File",
+              "code": "            File outputFile = new File(targetDir.getRemote(), reportTarget.getWrapperName());\n            try {\n                if(archiveDir.exists()) {\n                    String checksum = writeFile(reportLines, outputFile);\n                    reportTarget.handleAction(build, checksum);\n                }\n            } catch (IOException e) {"
+            },
+            {
+              "step": 1,
+              "variableName": "outputFile",
+              "startLine": 359,
+              "startColumn": 85,
+              "endLine": 359,
+              "endColumn": 95,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "File",
+              "code": "                    reportTarget.handleAction(build, checksum);\n                }\n            } catch (IOException e) {\n                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());"
+            },
+            {
+              "step": 2,
+              "variableName": "outputFile.getAbsolutePath()",
+              "startLine": 359,
+              "startColumn": 85,
+              "endLine": 359,
+              "endColumn": 113,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "String",
+              "code": "                    reportTarget.handleAction(build, checksum);\n                }\n            } catch (IOException e) {\n                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());"
+            },
+            {
+              "step": 3,
+              "variableName": "\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage()",
+              "startLine": 359,
+              "startColumn": 32,
+              "endLine": 359,
+              "endColumn": 178,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "",
+              "code": "                    reportTarget.handleAction(build, checksum);\n                }\n            } catch (IOException e) {\n                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());"
+            }
+          ],
+          "label": "Yes",
+          "probability": 0.0015284219989553094
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "outputFile",
+              "startLine": 359,
+              "startColumn": 85,
+              "endLine": 359,
+              "endColumn": 95,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "File",
+              "code": "                    reportTarget.handleAction(build, checksum);\n                }\n            } catch (IOException e) {\n                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());"
+            },
+            {
+              "step": 1,
+              "variableName": "outputFile.getAbsolutePath()",
+              "startLine": 359,
+              "startColumn": 85,
+              "endLine": 359,
+              "endColumn": 113,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "String",
+              "code": "                    reportTarget.handleAction(build, checksum);\n                }\n            } catch (IOException e) {\n                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());"
+            },
+            {
+              "step": 2,
+              "variableName": "\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage()",
+              "startLine": 359,
+              "startColumn": 32,
+              "endLine": 359,
+              "endColumn": 178,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "",
+              "code": "                    reportTarget.handleAction(build, checksum);\n                }\n            } catch (IOException e) {\n                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());"
+            }
+          ],
+          "label": "Yes",
+          "probability": 0.000964690581895411
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "HtmlPublisher.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "outputFile",
+              "startLine": 355,
+              "startColumn": 62,
+              "endLine": 355,
+              "endColumn": 72,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "File",
+              "code": "            File outputFile = new File(targetDir.getRemote(), reportTarget.getWrapperName());\n            try {\n                if(archiveDir.exists()) {\n                    String checksum = writeFile(reportLines, outputFile);\n                    reportTarget.handleAction(build, checksum);\n                }\n            } catch (IOException e) {"
+            },
+            {
+              "step": 1,
+              "variableName": "outputFile",
+              "startLine": 362,
+              "startColumn": 98,
+              "endLine": 362,
+              "endColumn": 108,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "File",
+              "code": "                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            }\n        }\n        return true;"
+            },
+            {
+              "step": 2,
+              "variableName": "outputFile.getAbsolutePath()",
+              "startLine": 362,
+              "startColumn": 98,
+              "endLine": 362,
+              "endColumn": 126,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "String",
+              "code": "                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            }\n        }\n        return true;"
+            },
+            {
+              "step": 3,
+              "variableName": "\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage()",
+              "startLine": 362,
+              "startColumn": 32,
+              "endLine": 362,
+              "endColumn": 191,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "",
+              "code": "                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            }\n        }\n        return true;"
+            }
+          ],
+          "label": "No",
+          "probability": 0.0015284219989553094
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "outputFile",
+              "startLine": 362,
+              "startColumn": 98,
+              "endLine": 362,
+              "endColumn": 108,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "File",
+              "code": "                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            }\n        }\n        return true;"
+            },
+            {
+              "step": 1,
+              "variableName": "outputFile.getAbsolutePath()",
+              "startLine": 362,
+              "startColumn": 98,
+              "endLine": 362,
+              "endColumn": 126,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "String",
+              "code": "                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            }\n        }\n        return true;"
+            },
+            {
+              "step": 2,
+              "variableName": "\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage()",
+              "startLine": 362,
+              "startColumn": 32,
+              "endLine": 362,
+              "endColumn": 191,
+              "uri": "htmlpublisher-plugin-htmlpublisher-425/src/main/java/htmlpublisher/HtmlPublisher.java",
+              "type": "",
+              "code": "                logger.println(\"Error: IOException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            } catch (NoSuchAlgorithmException e) {\n                // cannot happen because SHA-1 is guaranteed to exist\n                logger.println(\"Error: NoSuchAlgorithmException occured writing report to file \"+outputFile.getAbsolutePath()+\" to archiveDir:\"+archiveDir.getName()+\", error:\"+e.getMessage());\n            }\n        }\n        return true;"
+            }
+          ],
+          "label": "No",
+          "probability": 0.0030612200498580933
+        }
+      ]
+    }
+  ]
+}

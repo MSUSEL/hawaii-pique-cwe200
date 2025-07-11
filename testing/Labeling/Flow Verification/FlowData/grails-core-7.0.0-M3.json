@@ -1,0 +1,1150 @@
+{
+  "537": [
+    {
+      "resultIndex": 0,
+      "fileName": "AbstractArtefactTypeAstTransformation.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "expected",
+              "startLine": 113,
+              "startColumn": 9,
+              "endLine": 113,
+              "endColumn": 17,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "        maxSize = expectedTokenSequences[i].length;\n      }\n      for (int j = 0; j < expectedTokenSequences[i].length; j++) {\n        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');\n      }\n      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");"
+            },
+            {
+              "step": 1,
+              "variableName": "expected",
+              "startLine": 141,
+              "startColumn": 19,
+              "endLine": 141,
+              "endColumn": 27,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 141,
+              "startColumn": 5,
+              "endLine": 141,
+              "endColumn": 11,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 53,
+              "startColumn": 91,
+              "endLine": 53,
+              "endColumn": 105,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/AbstractArtefactTypeAstTransformation.java",
+              "type": "String",
+              "code": "                }\n            }\n        } catch (RuntimeException e) {\n            System.err.println(\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage());\n            throw e;\n        }\n    }"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage()",
+              "startLine": 53,
+              "startColumn": 32,
+              "endLine": 53,
+              "endColumn": 105,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/AbstractArtefactTypeAstTransformation.java",
+              "type": "",
+              "code": "                }\n            }\n        } catch (RuntimeException e) {\n            System.err.println(\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage());\n            throw e;\n        }\n    }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "tokenImage",
+              "startLine": 113,
+              "startColumn": 25,
+              "endLine": 113,
+              "endColumn": 35,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String[]",
+              "code": "        maxSize = expectedTokenSequences[i].length;\n      }\n      for (int j = 0; j < expectedTokenSequences[i].length; j++) {\n        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');\n      }\n      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");"
+            },
+            {
+              "step": 1,
+              "variableName": "tokenImage[0]",
+              "startLine": 125,
+              "startColumn": 23,
+              "endLine": 125,
+              "endColumn": 36,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "    for (int i = 0; i < maxSize; i++) {\n      if (i != 0) retval.append(\" \");\n      if (tok.kind == 0) {\n        retval.append(tokenImage[0]);\n        break;\n      }\n      retval.append(\" \").append(tokenImage[tok.kind]);"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 125,
+              "startColumn": 9,
+              "endLine": 125,
+              "endColumn": 15,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    for (int i = 0; i < maxSize; i++) {\n      if (i != 0) retval.append(\" \");\n      if (tok.kind == 0) {\n        retval.append(tokenImage[0]);\n        break;\n      }\n      retval.append(\" \").append(tokenImage[tok.kind]);"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 53,
+              "startColumn": 91,
+              "endLine": 53,
+              "endColumn": 105,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/AbstractArtefactTypeAstTransformation.java",
+              "type": "String",
+              "code": "                }\n            }\n        } catch (RuntimeException e) {\n            System.err.println(\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage());\n            throw e;\n        }\n    }"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage()",
+              "startLine": 53,
+              "startColumn": 32,
+              "endLine": 53,
+              "endColumn": 105,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/AbstractArtefactTypeAstTransformation.java",
+              "type": "",
+              "code": "                }\n            }\n        } catch (RuntimeException e) {\n            System.err.println(\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage());\n            throw e;\n        }\n    }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "expected",
+              "startLine": 116,
+              "startColumn": 9,
+              "endLine": 116,
+              "endColumn": 17,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');\n      }\n      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");\n      }\n      expected.append(eol).append(\"    \");\n    }"
+            },
+            {
+              "step": 1,
+              "variableName": "expected",
+              "startLine": 141,
+              "startColumn": 19,
+              "endLine": 141,
+              "endColumn": 27,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 141,
+              "startColumn": 5,
+              "endLine": 141,
+              "endColumn": 11,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 53,
+              "startColumn": 91,
+              "endLine": 53,
+              "endColumn": 105,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/AbstractArtefactTypeAstTransformation.java",
+              "type": "String",
+              "code": "                }\n            }\n        } catch (RuntimeException e) {\n            System.err.println(\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage());\n            throw e;\n        }\n    }"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage()",
+              "startLine": 53,
+              "startColumn": 32,
+              "endLine": 53,
+              "endColumn": 105,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/AbstractArtefactTypeAstTransformation.java",
+              "type": "",
+              "code": "                }\n            }\n        } catch (RuntimeException e) {\n            System.err.println(\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage());\n            throw e;\n        }\n    }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "expected",
+              "startLine": 118,
+              "startColumn": 7,
+              "endLine": 118,
+              "endColumn": 15,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");\n      }\n      expected.append(eol).append(\"    \");\n    }\n    StringBuilder retval = new StringBuilder(\"Encountered \\\"\");\n    Token tok = currentToken.next;"
+            },
+            {
+              "step": 1,
+              "variableName": "expected",
+              "startLine": 141,
+              "startColumn": 19,
+              "endLine": 141,
+              "endColumn": 27,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 141,
+              "startColumn": 5,
+              "endLine": 141,
+              "endColumn": 11,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 53,
+              "startColumn": 91,
+              "endLine": 53,
+              "endColumn": 105,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/AbstractArtefactTypeAstTransformation.java",
+              "type": "String",
+              "code": "                }\n            }\n        } catch (RuntimeException e) {\n            System.err.println(\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage());\n            throw e;\n        }\n    }"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage()",
+              "startLine": 53,
+              "startColumn": 32,
+              "endLine": 53,
+              "endColumn": 105,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/AbstractArtefactTypeAstTransformation.java",
+              "type": "",
+              "code": "                }\n            }\n        } catch (RuntimeException e) {\n            System.err.println(\"Error occurred calling AST injector [\"+getClass()+\"]: \" + e.getMessage());\n            throw e;\n        }\n    }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "EntityASTTransformation.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "expected",
+              "startLine": 113,
+              "startColumn": 9,
+              "endLine": 113,
+              "endColumn": 17,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "        maxSize = expectedTokenSequences[i].length;\n      }\n      for (int j = 0; j < expectedTokenSequences[i].length; j++) {\n        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');\n      }\n      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");"
+            },
+            {
+              "step": 1,
+              "variableName": "expected",
+              "startLine": 141,
+              "startColumn": 19,
+              "endLine": 141,
+              "endColumn": 27,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 141,
+              "startColumn": 5,
+              "endLine": 141,
+              "endColumn": 11,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 85,
+              "startColumn": 118,
+              "endLine": 85,
+              "endColumn": 132,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/EntityASTTransformation.java",
+              "type": "String",
+              "code": "                injector.performInjection(sourceUnit, classNode);\n            } catch (RuntimeException e) {\n                try {\n                    System.err.println(\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage());\n                } catch (Throwable t) {\n                    // ignore\n                }"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage()",
+              "startLine": 85,
+              "startColumn": 40,
+              "endLine": 85,
+              "endColumn": 132,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/EntityASTTransformation.java",
+              "type": "",
+              "code": "                injector.performInjection(sourceUnit, classNode);\n            } catch (RuntimeException e) {\n                try {\n                    System.err.println(\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage());\n                } catch (Throwable t) {\n                    // ignore\n                }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "tokenImage",
+              "startLine": 113,
+              "startColumn": 25,
+              "endLine": 113,
+              "endColumn": 35,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String[]",
+              "code": "        maxSize = expectedTokenSequences[i].length;\n      }\n      for (int j = 0; j < expectedTokenSequences[i].length; j++) {\n        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');\n      }\n      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");"
+            },
+            {
+              "step": 1,
+              "variableName": "tokenImage[0]",
+              "startLine": 125,
+              "startColumn": 23,
+              "endLine": 125,
+              "endColumn": 36,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "    for (int i = 0; i < maxSize; i++) {\n      if (i != 0) retval.append(\" \");\n      if (tok.kind == 0) {\n        retval.append(tokenImage[0]);\n        break;\n      }\n      retval.append(\" \").append(tokenImage[tok.kind]);"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 125,
+              "startColumn": 9,
+              "endLine": 125,
+              "endColumn": 15,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    for (int i = 0; i < maxSize; i++) {\n      if (i != 0) retval.append(\" \");\n      if (tok.kind == 0) {\n        retval.append(tokenImage[0]);\n        break;\n      }\n      retval.append(\" \").append(tokenImage[tok.kind]);"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 85,
+              "startColumn": 118,
+              "endLine": 85,
+              "endColumn": 132,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/EntityASTTransformation.java",
+              "type": "String",
+              "code": "                injector.performInjection(sourceUnit, classNode);\n            } catch (RuntimeException e) {\n                try {\n                    System.err.println(\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage());\n                } catch (Throwable t) {\n                    // ignore\n                }"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage()",
+              "startLine": 85,
+              "startColumn": 40,
+              "endLine": 85,
+              "endColumn": 132,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/EntityASTTransformation.java",
+              "type": "",
+              "code": "                injector.performInjection(sourceUnit, classNode);\n            } catch (RuntimeException e) {\n                try {\n                    System.err.println(\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage());\n                } catch (Throwable t) {\n                    // ignore\n                }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "expected",
+              "startLine": 116,
+              "startColumn": 9,
+              "endLine": 116,
+              "endColumn": 17,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');\n      }\n      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");\n      }\n      expected.append(eol).append(\"    \");\n    }"
+            },
+            {
+              "step": 1,
+              "variableName": "expected",
+              "startLine": 141,
+              "startColumn": 19,
+              "endLine": 141,
+              "endColumn": 27,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 141,
+              "startColumn": 5,
+              "endLine": 141,
+              "endColumn": 11,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 85,
+              "startColumn": 118,
+              "endLine": 85,
+              "endColumn": 132,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/EntityASTTransformation.java",
+              "type": "String",
+              "code": "                injector.performInjection(sourceUnit, classNode);\n            } catch (RuntimeException e) {\n                try {\n                    System.err.println(\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage());\n                } catch (Throwable t) {\n                    // ignore\n                }"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage()",
+              "startLine": 85,
+              "startColumn": 40,
+              "endLine": 85,
+              "endColumn": 132,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/EntityASTTransformation.java",
+              "type": "",
+              "code": "                injector.performInjection(sourceUnit, classNode);\n            } catch (RuntimeException e) {\n                try {\n                    System.err.println(\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage());\n                } catch (Throwable t) {\n                    // ignore\n                }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "expected",
+              "startLine": 118,
+              "startColumn": 7,
+              "endLine": 118,
+              "endColumn": 15,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");\n      }\n      expected.append(eol).append(\"    \");\n    }\n    StringBuilder retval = new StringBuilder(\"Encountered \\\"\");\n    Token tok = currentToken.next;"
+            },
+            {
+              "step": 1,
+              "variableName": "expected",
+              "startLine": 141,
+              "startColumn": 19,
+              "endLine": 141,
+              "endColumn": 27,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 141,
+              "startColumn": 5,
+              "endLine": 141,
+              "endColumn": 11,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 85,
+              "startColumn": 118,
+              "endLine": 85,
+              "endColumn": 132,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/EntityASTTransformation.java",
+              "type": "String",
+              "code": "                injector.performInjection(sourceUnit, classNode);\n            } catch (RuntimeException e) {\n                try {\n                    System.err.println(\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage());\n                } catch (Throwable t) {\n                    // ignore\n                }"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage()",
+              "startLine": 85,
+              "startColumn": 40,
+              "endLine": 85,
+              "endColumn": 132,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/EntityASTTransformation.java",
+              "type": "",
+              "code": "                injector.performInjection(sourceUnit, classNode);\n            } catch (RuntimeException e) {\n                try {\n                    System.err.println(\"Error occurred calling AST injector [\"+injector.getClass().getName()+\"]: \" + e.getMessage());\n                } catch (Throwable t) {\n                    // ignore\n                }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "TraitInjectionUtils.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "expected",
+              "startLine": 113,
+              "startColumn": 9,
+              "endLine": 113,
+              "endColumn": 17,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "        maxSize = expectedTokenSequences[i].length;\n      }\n      for (int j = 0; j < expectedTokenSequences[i].length; j++) {\n        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');\n      }\n      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");"
+            },
+            {
+              "step": 1,
+              "variableName": "expected",
+              "startLine": 141,
+              "startColumn": 19,
+              "endLine": 141,
+              "endColumn": 27,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 141,
+              "startColumn": 5,
+              "endLine": 141,
+              "endColumn": 11,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 137,
+              "startColumn": 27,
+              "endLine": 137,
+              "endColumn": 41,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/TraitInjectionUtils.java",
+              "type": "String",
+              "code": "        } catch (RuntimeException e) {\n            try {\n                System.err.println(\"Error occurred calling Trait injector [\"+TraitInjectionUtils.class.getName()+\"]: \"\n                        + e.getMessage());\n                e.printStackTrace();\n            } catch (Throwable t) {\n                // ignore it"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Erro",
+              "startLine": 136,
+              "startColumn": 36,
+              "endLine": 137,
+              "endColumn": 41,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/TraitInjectionUtils.java",
+              "type": "",
+              "code": "            }\n        } catch (RuntimeException e) {\n            try {\n                System.err.println(\"Error occurred calling Trait injector [\"+TraitInjectionUtils.class.getName()+\"]: \"\n                        + e.getMessage());\n                e.printStackTrace();\n            } catch (Throwable t) {"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "tokenImage",
+              "startLine": 113,
+              "startColumn": 25,
+              "endLine": 113,
+              "endColumn": 35,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String[]",
+              "code": "        maxSize = expectedTokenSequences[i].length;\n      }\n      for (int j = 0; j < expectedTokenSequences[i].length; j++) {\n        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');\n      }\n      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");"
+            },
+            {
+              "step": 1,
+              "variableName": "tokenImage[0]",
+              "startLine": 125,
+              "startColumn": 23,
+              "endLine": 125,
+              "endColumn": 36,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "    for (int i = 0; i < maxSize; i++) {\n      if (i != 0) retval.append(\" \");\n      if (tok.kind == 0) {\n        retval.append(tokenImage[0]);\n        break;\n      }\n      retval.append(\" \").append(tokenImage[tok.kind]);"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 125,
+              "startColumn": 9,
+              "endLine": 125,
+              "endColumn": 15,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    for (int i = 0; i < maxSize; i++) {\n      if (i != 0) retval.append(\" \");\n      if (tok.kind == 0) {\n        retval.append(tokenImage[0]);\n        break;\n      }\n      retval.append(\" \").append(tokenImage[tok.kind]);"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 137,
+              "startColumn": 27,
+              "endLine": 137,
+              "endColumn": 41,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/TraitInjectionUtils.java",
+              "type": "String",
+              "code": "        } catch (RuntimeException e) {\n            try {\n                System.err.println(\"Error occurred calling Trait injector [\"+TraitInjectionUtils.class.getName()+\"]: \"\n                        + e.getMessage());\n                e.printStackTrace();\n            } catch (Throwable t) {\n                // ignore it"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Erro",
+              "startLine": 136,
+              "startColumn": 36,
+              "endLine": 137,
+              "endColumn": 41,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/TraitInjectionUtils.java",
+              "type": "",
+              "code": "            }\n        } catch (RuntimeException e) {\n            try {\n                System.err.println(\"Error occurred calling Trait injector [\"+TraitInjectionUtils.class.getName()+\"]: \"\n                        + e.getMessage());\n                e.printStackTrace();\n            } catch (Throwable t) {"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "expected",
+              "startLine": 116,
+              "startColumn": 9,
+              "endLine": 116,
+              "endColumn": 17,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "        expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');\n      }\n      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");\n      }\n      expected.append(eol).append(\"    \");\n    }"
+            },
+            {
+              "step": 1,
+              "variableName": "expected",
+              "startLine": 141,
+              "startColumn": 19,
+              "endLine": 141,
+              "endColumn": 27,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 141,
+              "startColumn": 5,
+              "endLine": 141,
+              "endColumn": 11,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 137,
+              "startColumn": 27,
+              "endLine": 137,
+              "endColumn": 41,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/TraitInjectionUtils.java",
+              "type": "String",
+              "code": "        } catch (RuntimeException e) {\n            try {\n                System.err.println(\"Error occurred calling Trait injector [\"+TraitInjectionUtils.class.getName()+\"]: \"\n                        + e.getMessage());\n                e.printStackTrace();\n            } catch (Throwable t) {\n                // ignore it"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Erro",
+              "startLine": 136,
+              "startColumn": 36,
+              "endLine": 137,
+              "endColumn": 41,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/TraitInjectionUtils.java",
+              "type": "",
+              "code": "            }\n        } catch (RuntimeException e) {\n            try {\n                System.err.println(\"Error occurred calling Trait injector [\"+TraitInjectionUtils.class.getName()+\"]: \"\n                        + e.getMessage());\n                e.printStackTrace();\n            } catch (Throwable t) {"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "expected",
+              "startLine": 118,
+              "startColumn": 7,
+              "endLine": 118,
+              "endColumn": 15,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {\n        expected.append(\"...\");\n      }\n      expected.append(eol).append(\"    \");\n    }\n    StringBuilder retval = new StringBuilder(\"Encountered \\\"\");\n    Token tok = currentToken.next;"
+            },
+            {
+              "step": 1,
+              "variableName": "expected",
+              "startLine": 141,
+              "startColumn": 19,
+              "endLine": 141,
+              "endColumn": 27,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "retval",
+              "startLine": 141,
+              "startColumn": 5,
+              "endLine": 141,
+              "endColumn": 11,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "    } else {\n      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "retval",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 18,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "StringBuilder",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 4,
+              "variableName": "retval.toString()",
+              "startLine": 142,
+              "startColumn": 12,
+              "endLine": 142,
+              "endColumn": 29,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/json/parser/ParseException.java",
+              "type": "String",
+              "code": "      retval.append(\"Was expecting one of:\").append(eol).append(\"    \");\n    }\n    retval.append(expected);\n    return retval.toString();\n  }\n\n  /**"
+            },
+            {
+              "step": 5,
+              "variableName": "cause.getMessage()",
+              "startLine": 308,
+              "startColumn": 16,
+              "endLine": 308,
+              "endColumn": 34,
+              "uri": "grails-core-7.0.0-M3/grails-web-common/src/main/groovy/org/grails/web/errors/GrailsWrappedRuntimeException.java",
+              "type": "String",
+              "code": "     */\n    @Override\n    public String getMessage() {\n        return cause.getMessage();\n    }\n}\n"
+            },
+            {
+              "step": 6,
+              "variableName": "e.getMessage()",
+              "startLine": 137,
+              "startColumn": 27,
+              "endLine": 137,
+              "endColumn": 41,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/TraitInjectionUtils.java",
+              "type": "String",
+              "code": "        } catch (RuntimeException e) {\n            try {\n                System.err.println(\"Error occurred calling Trait injector [\"+TraitInjectionUtils.class.getName()+\"]: \"\n                        + e.getMessage());\n                e.printStackTrace();\n            } catch (Throwable t) {\n                // ignore it"
+            },
+            {
+              "step": 7,
+              "variableName": "\"Erro",
+              "startLine": 136,
+              "startColumn": 36,
+              "endLine": 137,
+              "endColumn": 41,
+              "uri": "grails-core-7.0.0-M3/grails-core/src/main/groovy/org/grails/compiler/injection/TraitInjectionUtils.java",
+              "type": "",
+              "code": "            }\n        } catch (RuntimeException e) {\n            try {\n                System.err.println(\"Error occurred calling Trait injector [\"+TraitInjectionUtils.class.getName()+\"]: \"\n                        + e.getMessage());\n                e.printStackTrace();\n            } catch (Throwable t) {"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

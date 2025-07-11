@@ -1,0 +1,2719 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 60,
+              "startColumn": 45,
+              "endLine": 60,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage())",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 113,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage())",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 113,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 60,
+              "startColumn": 45,
+              "endLine": 60,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage())",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 113,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage())",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 113,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 60,
+              "startColumn": 45,
+              "endLine": 60,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage())",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 113,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage())",
+              "startLine": 60,
+              "startColumn": 13,
+              "endLine": 60,
+              "endColumn": 113,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 212,
+              "startColumn": 66,
+              "endLine": 212,
+              "endColumn": 84,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.error(\"[{}] {} er",
+              "startLine": 212,
+              "startColumn": 17,
+              "endLine": 213,
+              "endColumn": 41,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.error(\"[{}] {} er",
+              "startLine": 212,
+              "startColumn": 17,
+              "endLine": 213,
+              "endColumn": 41,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 212,
+              "startColumn": 66,
+              "endLine": 212,
+              "endColumn": 84,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.error(\"[{}] {} er",
+              "startLine": 212,
+              "startColumn": 17,
+              "endLine": 213,
+              "endColumn": 41,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.error(\"[{}] {} er",
+              "startLine": 212,
+              "startColumn": 17,
+              "endLine": 213,
+              "endColumn": 41,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 212,
+              "startColumn": 66,
+              "endLine": 212,
+              "endColumn": 84,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.error(\"[{}] {} er",
+              "startLine": 212,
+              "startColumn": 17,
+              "endLine": 213,
+              "endColumn": 41,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.error(\"[{}] {} er",
+              "startLine": 212,
+              "startColumn": 17,
+              "endLine": 213,
+              "endColumn": 41,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 288,
+              "startColumn": 84,
+              "endLine": 288,
+              "endColumn": 102,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",",
+              "startLine": 287,
+              "startColumn": 13,
+              "endLine": 289,
+              "endColumn": 69,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "        try {\n            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",",
+              "startLine": 287,
+              "startColumn": 13,
+              "endLine": 289,
+              "endColumn": 69,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        try {\n            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 288,
+              "startColumn": 84,
+              "endLine": 288,
+              "endColumn": 102,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",",
+              "startLine": 287,
+              "startColumn": 13,
+              "endLine": 289,
+              "endColumn": 69,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "        try {\n            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",",
+              "startLine": 287,
+              "startColumn": 13,
+              "endLine": 289,
+              "endColumn": 69,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        try {\n            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 288,
+              "startColumn": 84,
+              "endLine": 288,
+              "endColumn": 102,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",",
+              "startLine": 287,
+              "startColumn": 13,
+              "endLine": 289,
+              "endColumn": 69,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "        try {\n            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",",
+              "startLine": 287,
+              "startColumn": 13,
+              "endLine": 289,
+              "endColumn": 69,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        try {\n            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 3,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 377,
+              "startColumn": 68,
+              "endLine": 377,
+              "endColumn": 86,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(",
+              "startLine": 377,
+              "startColumn": 13,
+              "endLine": 378,
+              "endColumn": 85,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(",
+              "startLine": 377,
+              "startColumn": 13,
+              "endLine": 378,
+              "endColumn": 85,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 377,
+              "startColumn": 68,
+              "endLine": 377,
+              "endColumn": 86,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(",
+              "startLine": 377,
+              "startColumn": 13,
+              "endLine": 378,
+              "endColumn": 85,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(",
+              "startLine": 377,
+              "startColumn": 13,
+              "endLine": 378,
+              "endColumn": 85,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 377,
+              "startColumn": 68,
+              "endLine": 377,
+              "endColumn": 86,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            },
+            {
+              "step": 3,
+              "variableName": "LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(",
+              "startLine": 377,
+              "startColumn": 13,
+              "endLine": 378,
+              "endColumn": 85,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "Object[] [[]] : String",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            },
+            {
+              "step": 4,
+              "variableName": "LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(",
+              "startLine": 377,
+              "startColumn": 13,
+              "endLine": 378,
+              "endColumn": 85,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 4,
+      "fileName": "EventStreamRPCClient.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 133,
+              "startColumn": 35,
+              "endLine": 133,
+              "endColumn": 75,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "String",
+              "code": "                } else if (messageType == MessageType.PingResponse) {    //do nothing on ping response\n                } else if (messageType == MessageType.ServerError) {\n                    //TODO: exception should route to response handler here, also is or will be \"InternalError\" soon\n                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");"
+            },
+            {
+              "step": 2,
+              "variableName": "operationModelContext.getOperationName() + \" server error received\"",
+              "startLine": 133,
+              "startColumn": 35,
+              "endLine": 133,
+              "endColumn": 102,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "",
+              "code": "                } else if (messageType == MessageType.PingResponse) {    //do nothing on ping response\n                } else if (messageType == MessageType.ServerError) {\n                    //TODO: exception should route to response handler here, also is or will be \"InternalError\" soon\n                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 133,
+              "startColumn": 35,
+              "endLine": 133,
+              "endColumn": 75,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "String",
+              "code": "                } else if (messageType == MessageType.PingResponse) {    //do nothing on ping response\n                } else if (messageType == MessageType.ServerError) {\n                    //TODO: exception should route to response handler here, also is or will be \"InternalError\" soon\n                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");"
+            },
+            {
+              "step": 2,
+              "variableName": "operationModelContext.getOperationName() + \" server error received\"",
+              "startLine": 133,
+              "startColumn": 35,
+              "endLine": 133,
+              "endColumn": 102,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "",
+              "code": "                } else if (messageType == MessageType.PingResponse) {    //do nothing on ping response\n                } else if (messageType == MessageType.ServerError) {\n                    //TODO: exception should route to response handler here, also is or will be \"InternalError\" soon\n                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 133,
+              "startColumn": 35,
+              "endLine": 133,
+              "endColumn": 75,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "String",
+              "code": "                } else if (messageType == MessageType.PingResponse) {    //do nothing on ping response\n                } else if (messageType == MessageType.ServerError) {\n                    //TODO: exception should route to response handler here, also is or will be \"InternalError\" soon\n                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");"
+            },
+            {
+              "step": 2,
+              "variableName": "operationModelContext.getOperationName() + \" server error received\"",
+              "startLine": 133,
+              "startColumn": 35,
+              "endLine": 133,
+              "endColumn": 102,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "",
+              "code": "                } else if (messageType == MessageType.PingResponse) {    //do nothing on ping response\n                } else if (messageType == MessageType.ServerError) {\n                    //TODO: exception should route to response handler here, also is or will be \"InternalError\" soon\n                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 5,
+      "fileName": "EventStreamRPCClient.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 136,
+              "startColumn": 35,
+              "endLine": 136,
+              "endColumn": 75,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "String",
+              "code": "                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately but close continuation either way\n                } else {\n                    //unexpected message type received on stream"
+            },
+            {
+              "step": 2,
+              "variableName": "operationModelContext.getOperationName() + \" protocol error received\"",
+              "startLine": 136,
+              "startColumn": 35,
+              "endLine": 136,
+              "endColumn": 104,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "",
+              "code": "                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately but close continuation either way\n                } else {\n                    //unexpected message type received on stream"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 136,
+              "startColumn": 35,
+              "endLine": 136,
+              "endColumn": 75,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "String",
+              "code": "                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately but close continuation either way\n                } else {\n                    //unexpected message type received on stream"
+            },
+            {
+              "step": 2,
+              "variableName": "operationModelContext.getOperationName() + \" protocol error received\"",
+              "startLine": 136,
+              "startColumn": 35,
+              "endLine": 136,
+              "endColumn": 104,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "",
+              "code": "                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately but close continuation either way\n                } else {\n                    //unexpected message type received on stream"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 136,
+              "startColumn": 35,
+              "endLine": 136,
+              "endColumn": 75,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "String",
+              "code": "                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately but close continuation either way\n                } else {\n                    //unexpected message type received on stream"
+            },
+            {
+              "step": 2,
+              "variableName": "operationModelContext.getOperationName() + \" protocol error received\"",
+              "startLine": 136,
+              "startColumn": 35,
+              "endLine": 136,
+              "endColumn": 104,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/EventStreamRPCClient.java",
+              "type": "",
+              "code": "                    LOGGER.severe(operationModelContext.getOperationName() + \" server error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately\n                } else if (messageType == MessageType.ProtocolError) {    //do nothing on ping response\n                    LOGGER.severe(operationModelContext.getOperationName() + \" protocol error received\");\n                    this.close();   //underlying connection callbacks should handle things appropriately but close continuation either way\n                } else {\n                    //unexpected message type received on stream"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 6,
+      "fileName": "OperationResponse.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 105,
+              "startColumn": 37,
+              "endLine": 105,
+              "endColumn": 77,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "String",
+              "code": "                    .whenComplete((res, ex) -> {\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s caught %s while sending message the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                            closeStream();\n                        }"
+            },
+            {
+              "step": 2,
+              "variableName": "String.fo",
+              "startLine": 104,
+              "startColumn": 44,
+              "endLine": 106,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "Object[] [[]] : String",
+              "code": "                    MessageType.ApplicationMessage, 0)\n                    .whenComplete((res, ex) -> {\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s caught %s while sending message the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                            closeStream();"
+            },
+            {
+              "step": 3,
+              "variableName": "String.fo",
+              "startLine": 104,
+              "startColumn": 44,
+              "endLine": 106,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "",
+              "code": "                    MessageType.ApplicationMessage, 0)\n                    .whenComplete((res, ex) -> {\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s caught %s while sending message the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                            closeStream();"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 105,
+              "startColumn": 37,
+              "endLine": 105,
+              "endColumn": 77,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "String",
+              "code": "                    .whenComplete((res, ex) -> {\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s caught %s while sending message the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                            closeStream();\n                        }"
+            },
+            {
+              "step": 2,
+              "variableName": "String.fo",
+              "startLine": 104,
+              "startColumn": 44,
+              "endLine": 106,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "Object[] [[]] : String",
+              "code": "                    MessageType.ApplicationMessage, 0)\n                    .whenComplete((res, ex) -> {\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s caught %s while sending message the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                            closeStream();"
+            },
+            {
+              "step": 3,
+              "variableName": "String.fo",
+              "startLine": 104,
+              "startColumn": 44,
+              "endLine": 106,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "",
+              "code": "                    MessageType.ApplicationMessage, 0)\n                    .whenComplete((res, ex) -> {\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s caught %s while sending message the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                            closeStream();"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 105,
+              "startColumn": 37,
+              "endLine": 105,
+              "endColumn": 77,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "String",
+              "code": "                    .whenComplete((res, ex) -> {\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s caught %s while sending message the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                            closeStream();\n                        }"
+            },
+            {
+              "step": 2,
+              "variableName": "String.fo",
+              "startLine": 104,
+              "startColumn": 44,
+              "endLine": 106,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "Object[] [[]] : String",
+              "code": "                    MessageType.ApplicationMessage, 0)\n                    .whenComplete((res, ex) -> {\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s caught %s while sending message the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                            closeStream();"
+            },
+            {
+              "step": 3,
+              "variableName": "String.fo",
+              "startLine": 104,
+              "startColumn": 44,
+              "endLine": 106,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "",
+              "code": "                    MessageType.ApplicationMessage, 0)\n                    .whenComplete((res, ex) -> {\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s caught %s while sending message the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                            closeStream();"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 7,
+      "fileName": "OperationResponse.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 128,
+              "startColumn": 37,
+              "endLine": 128,
+              "endColumn": 77,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "String",
+              "code": "            return continuation.sendMessage(null, null,\n                    MessageType.ApplicationMessage, MessageFlags.TerminateStream.getByteValue())\n                    .whenComplete((res, ex) -> {\n                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\","
+            },
+            {
+              "step": 2,
+              "variableName": "operationModelContext.getOperationName() + \" operation stream closed\"",
+              "startLine": 128,
+              "startColumn": 37,
+              "endLine": 128,
+              "endColumn": 106,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "",
+              "code": "            return continuation.sendMessage(null, null,\n                    MessageType.ApplicationMessage, MessageFlags.TerminateStream.getByteValue())\n                    .whenComplete((res, ex) -> {\n                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\","
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 128,
+              "startColumn": 37,
+              "endLine": 128,
+              "endColumn": 77,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "String",
+              "code": "            return continuation.sendMessage(null, null,\n                    MessageType.ApplicationMessage, MessageFlags.TerminateStream.getByteValue())\n                    .whenComplete((res, ex) -> {\n                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\","
+            },
+            {
+              "step": 2,
+              "variableName": "operationModelContext.getOperationName() + \" operation stream closed\"",
+              "startLine": 128,
+              "startColumn": 37,
+              "endLine": 128,
+              "endColumn": 106,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "",
+              "code": "            return continuation.sendMessage(null, null,\n                    MessageType.ApplicationMessage, MessageFlags.TerminateStream.getByteValue())\n                    .whenComplete((res, ex) -> {\n                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\","
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 128,
+              "startColumn": 37,
+              "endLine": 128,
+              "endColumn": 77,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "String",
+              "code": "            return continuation.sendMessage(null, null,\n                    MessageType.ApplicationMessage, MessageFlags.TerminateStream.getByteValue())\n                    .whenComplete((res, ex) -> {\n                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\","
+            },
+            {
+              "step": 2,
+              "variableName": "operationModelContext.getOperationName() + \" operation stream closed\"",
+              "startLine": 128,
+              "startColumn": 37,
+              "endLine": 128,
+              "endColumn": 106,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "",
+              "code": "            return continuation.sendMessage(null, null,\n                    MessageType.ApplicationMessage, MessageFlags.TerminateStream.getByteValue())\n                    .whenComplete((res, ex) -> {\n                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\","
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 8,
+      "fileName": "OperationResponse.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 132,
+              "startColumn": 37,
+              "endLine": 132,
+              "endColumn": 77,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "String",
+              "code": "                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                        }\n                    });"
+            },
+            {
+              "step": 2,
+              "variableName": "String.fo",
+              "startLine": 131,
+              "startColumn": 44,
+              "endLine": 133,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "Object[] [[]] : String",
+              "code": "                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                        }"
+            },
+            {
+              "step": 3,
+              "variableName": "String.fo",
+              "startLine": 131,
+              "startColumn": 44,
+              "endLine": 133,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "",
+              "code": "                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                        }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 132,
+              "startColumn": 37,
+              "endLine": 132,
+              "endColumn": 77,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "String",
+              "code": "                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                        }\n                    });"
+            },
+            {
+              "step": 2,
+              "variableName": "String.fo",
+              "startLine": 131,
+              "startColumn": 44,
+              "endLine": 133,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "Object[] [[]] : String",
+              "code": "                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                        }"
+            },
+            {
+              "step": 3,
+              "variableName": "String.fo",
+              "startLine": 131,
+              "startColumn": 44,
+              "endLine": 133,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "",
+              "code": "                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                        }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 132,
+              "startColumn": 37,
+              "endLine": 132,
+              "endColumn": 77,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "String",
+              "code": "                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                        }\n                    });"
+            },
+            {
+              "step": 2,
+              "variableName": "String.fo",
+              "startLine": 131,
+              "startColumn": 44,
+              "endLine": 133,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "Object[] [[]] : String",
+              "code": "                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                        }"
+            },
+            {
+              "step": 3,
+              "variableName": "String.fo",
+              "startLine": 131,
+              "startColumn": 44,
+              "endLine": 133,
+              "endColumn": 53,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-client/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationResponse.java",
+              "type": "",
+              "code": "                        LOGGER.info(operationModelContext.getOperationName() + \" operation stream closed\");\n                        continuation.close();\n                        if (ex != null) {\n                            LOGGER.warning(String.format(\"%s threw %s while closing the event stream: %s\",\n                                    operationModelContext.getOperationName(), ex.getClass().getName(),\n                                    ex.getMessage()));\n                        }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 9,
+      "fileName": "DebugLoggingOperationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 40,
+              "startColumn": 54,
+              "endLine": 40,
+              "endColumn": 94,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/DebugLoggingOperationHandler.java",
+              "type": "",
+              "code": "     */\n    @Override\n    protected void onStreamClosed() {\n        LOGGER.info(\"{} operation onStreamClosed()\", operationModelContext.getOperationName());\n    }\n\n    @Override"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 40,
+              "startColumn": 54,
+              "endLine": 40,
+              "endColumn": 94,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/DebugLoggingOperationHandler.java",
+              "type": "",
+              "code": "     */\n    @Override\n    protected void onStreamClosed() {\n        LOGGER.info(\"{} operation onStreamClosed()\", operationModelContext.getOperationName());\n    }\n\n    @Override"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 40,
+              "startColumn": 54,
+              "endLine": 40,
+              "endColumn": 94,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/DebugLoggingOperationHandler.java",
+              "type": "",
+              "code": "     */\n    @Override\n    protected void onStreamClosed() {\n        LOGGER.info(\"{} operation onStreamClosed()\", operationModelContext.getOperationName());\n    }\n\n    @Override"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 10,
+      "fileName": "DebugLoggingOperationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 45,
+              "startColumn": 60,
+              "endLine": 45,
+              "endColumn": 100,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/DebugLoggingOperationHandler.java",
+              "type": "",
+              "code": "\n    @Override\n    public EventStreamJsonMessage handleRequest(EventStreamJsonMessage request) {\n        LOGGER.info(\"{} operation handleRequest() ::  {}\", operationModelContext.getOperationName(),\n                operationModelContext.getServiceModel().toJson(request));\n        return new EventStreamJsonMessage() {\n            @Override"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 45,
+              "startColumn": 60,
+              "endLine": 45,
+              "endColumn": 100,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/DebugLoggingOperationHandler.java",
+              "type": "",
+              "code": "\n    @Override\n    public EventStreamJsonMessage handleRequest(EventStreamJsonMessage request) {\n        LOGGER.info(\"{} operation handleRequest() ::  {}\", operationModelContext.getOperationName(),\n                operationModelContext.getServiceModel().toJson(request));\n        return new EventStreamJsonMessage() {\n            @Override"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 45,
+              "startColumn": 60,
+              "endLine": 45,
+              "endColumn": 100,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/DebugLoggingOperationHandler.java",
+              "type": "",
+              "code": "\n    @Override\n    public EventStreamJsonMessage handleRequest(EventStreamJsonMessage request) {\n        LOGGER.info(\"{} operation handleRequest() ::  {}\", operationModelContext.getOperationName(),\n                operationModelContext.getServiceModel().toJson(request));\n        return new EventStreamJsonMessage() {\n            @Override"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 11,
+      "fileName": "DebugLoggingOperationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 62,
+              "startColumn": 64,
+              "endLine": 62,
+              "endColumn": 104,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/DebugLoggingOperationHandler.java",
+              "type": "",
+              "code": "\n    @Override\n    public void handleStreamEvent(EventStreamJsonMessage streamRequestEvent) {\n        LOGGER.info(\"{} operation handleStreamEvent() ::  {}\", operationModelContext.getOperationName(),\n                operationModelContext.getServiceModel().toJson(streamRequestEvent));\n    }\n}"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 62,
+              "startColumn": 64,
+              "endLine": 62,
+              "endColumn": 104,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/DebugLoggingOperationHandler.java",
+              "type": "",
+              "code": "\n    @Override\n    public void handleStreamEvent(EventStreamJsonMessage streamRequestEvent) {\n        LOGGER.info(\"{} operation handleStreamEvent() ::  {}\", operationModelContext.getOperationName(),\n                operationModelContext.getServiceModel().toJson(streamRequestEvent));\n    }\n}"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "operationModelContext.getOperationName()",
+              "startLine": 62,
+              "startColumn": 64,
+              "endLine": 62,
+              "endColumn": 104,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/DebugLoggingOperationHandler.java",
+              "type": "",
+              "code": "\n    @Override\n    public void handleStreamEvent(EventStreamJsonMessage streamRequestEvent) {\n        LOGGER.info(\"{} operation handleStreamEvent() ::  {}\", operationModelContext.getOperationName(),\n                operationModelContext.getServiceModel().toJson(streamRequestEvent));\n    }\n}"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 12,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 55,
+              "startColumn": 56,
+              "endLine": 55,
+              "endColumn": 74,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "\n    @Override\n    final protected void onContinuationClosed() {\n        LOGGER.debug(\"{} stream continuation closed.\", getOperationName());\n        continuation.close();\n        try {\n            onStreamClosed();"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 55,
+              "startColumn": 56,
+              "endLine": 55,
+              "endColumn": 74,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "\n    @Override\n    final protected void onContinuationClosed() {\n        LOGGER.debug(\"{} stream continuation closed.\", getOperationName());\n        continuation.close();\n        try {\n            onStreamClosed();"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 55,
+              "startColumn": 56,
+              "endLine": 55,
+              "endColumn": 74,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "\n    @Override\n    final protected void onContinuationClosed() {\n        LOGGER.debug(\"{} stream continuation closed.\", getOperationName());\n        continuation.close();\n        try {\n            onStreamClosed();"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 13,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 60,
+              "startColumn": 45,
+              "endLine": 60,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            }
+          ]
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 60,
+              "startColumn": 45,
+              "endLine": 60,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            }
+          ]
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 60,
+              "startColumn": 45,
+              "endLine": 60,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        try {\n            onStreamClosed();\n        } catch (Exception e) {\n            LOGGER.error(\"{} threw {}: {}\", getOperationName(), e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resultIndex": 14,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 205,
+              "startColumn": 45,
+              "endLine": 205,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "     */\n    @Override\n    final public CompletableFuture<Void> closeStream() {\n        LOGGER.debug(\"[{}] closing stream\", getOperationName());\n        return continuation.sendMessage(null, null, MessageType.ApplicationMessage,\n                MessageFlags.TerminateStream.getByteValue()).whenComplete((res, ex) -> {\n            continuation.close();"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 205,
+              "startColumn": 45,
+              "endLine": 205,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "     */\n    @Override\n    final public CompletableFuture<Void> closeStream() {\n        LOGGER.debug(\"[{}] closing stream\", getOperationName());\n        return continuation.sendMessage(null, null, MessageType.ApplicationMessage,\n                MessageFlags.TerminateStream.getByteValue()).whenComplete((res, ex) -> {\n            continuation.close();"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 205,
+              "startColumn": 45,
+              "endLine": 205,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "     */\n    @Override\n    final public CompletableFuture<Void> closeStream() {\n        LOGGER.debug(\"[{}] closing stream\", getOperationName());\n        return continuation.sendMessage(null, null, MessageType.ApplicationMessage,\n                MessageFlags.TerminateStream.getByteValue()).whenComplete((res, ex) -> {\n            continuation.close();"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 15,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 210,
+              "startColumn": 52,
+              "endLine": 210,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "                MessageFlags.TerminateStream.getByteValue()).whenComplete((res, ex) -> {\n            continuation.close();\n            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 210,
+              "startColumn": 52,
+              "endLine": 210,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "                MessageFlags.TerminateStream.getByteValue()).whenComplete((res, ex) -> {\n            continuation.close();\n            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 210,
+              "startColumn": 52,
+              "endLine": 210,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "                MessageFlags.TerminateStream.getByteValue()).whenComplete((res, ex) -> {\n            continuation.close();\n            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 16,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 212,
+              "startColumn": 66,
+              "endLine": 212,
+              "endColumn": 84,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            }
+          ]
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 212,
+              "startColumn": 66,
+              "endLine": 212,
+              "endColumn": 84,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            }
+          ]
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 212,
+              "startColumn": 66,
+              "endLine": 212,
+              "endColumn": 84,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "            if (ex == null) {\n                LOGGER.debug(\"[{}] closed stream\", getOperationName());\n            } else {\n                LOGGER.error(\"[{}] {} error closing stream: {}\", getOperationName(), ex.getClass().getName(),\n                        ex.getMessage());\n            }\n        });"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resultIndex": 17,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 288,
+              "startColumn": 84,
+              "endLine": 288,
+              "endColumn": 102,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 288,
+              "startColumn": 84,
+              "endLine": 288,
+              "endColumn": 102,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 288,
+              "startColumn": 84,
+              "endLine": 288,
+              "endColumn": 102,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "            afterHandleRequest();\n        } catch (Exception e) {\n            LOGGER.warn(\"{}.{} afterHandleRequest() threw {}: {}\",\n                    getOperationModelContext().getServiceModel().getServiceName(), getOperationName(),\n                    e.getClass().getCanonicalName(), e.getMessage());\n        }\n    }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 18,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 301,
+              "startColumn": 44,
+              "endLine": 301,
+              "endColumn": 62,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "        //We can prevent a client from sending a request, and hanging up before receiving a response\n        //but doing so will prevent any work from being done\n        if (initialRequest == null && (messageFlags & MessageFlags.TerminateStream.getByteValue()) != 0) {\n            LOGGER.debug(\"Not invoking \" + getOperationName() + \" operation for client request received with a \"\n                    + \"terminate flag set to 1\");\n            return;\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "\"Not invoking \" + getO",
+              "startLine": 301,
+              "startColumn": 26,
+              "endLine": 302,
+              "endColumn": 48,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        //We can prevent a client from sending a request, and hanging up before receiving a response\n        //but doing so will prevent any work from being done\n        if (initialRequest == null && (messageFlags & MessageFlags.TerminateStream.getByteValue()) != 0) {\n            LOGGER.debug(\"Not invoking \" + getOperationName() + \" operation for client request received with a \"\n                    + \"terminate flag set to 1\");\n            return;\n        }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 301,
+              "startColumn": 44,
+              "endLine": 301,
+              "endColumn": 62,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "        //We can prevent a client from sending a request, and hanging up before receiving a response\n        //but doing so will prevent any work from being done\n        if (initialRequest == null && (messageFlags & MessageFlags.TerminateStream.getByteValue()) != 0) {\n            LOGGER.debug(\"Not invoking \" + getOperationName() + \" operation for client request received with a \"\n                    + \"terminate flag set to 1\");\n            return;\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "\"Not invoking \" + getO",
+              "startLine": 301,
+              "startColumn": 26,
+              "endLine": 302,
+              "endColumn": 48,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        //We can prevent a client from sending a request, and hanging up before receiving a response\n        //but doing so will prevent any work from being done\n        if (initialRequest == null && (messageFlags & MessageFlags.TerminateStream.getByteValue()) != 0) {\n            LOGGER.debug(\"Not invoking \" + getOperationName() + \" operation for client request received with a \"\n                    + \"terminate flag set to 1\");\n            return;\n        }"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 301,
+              "startColumn": 44,
+              "endLine": 301,
+              "endColumn": 62,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "        //We can prevent a client from sending a request, and hanging up before receiving a response\n        //but doing so will prevent any work from being done\n        if (initialRequest == null && (messageFlags & MessageFlags.TerminateStream.getByteValue()) != 0) {\n            LOGGER.debug(\"Not invoking \" + getOperationName() + \" operation for client request received with a \"\n                    + \"terminate flag set to 1\");\n            return;\n        }"
+            },
+            {
+              "step": 3,
+              "variableName": "\"Not invoking \" + getO",
+              "startLine": 301,
+              "startColumn": 26,
+              "endLine": 302,
+              "endColumn": 48,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "        //We can prevent a client from sending a request, and hanging up before receiving a response\n        //but doing so will prevent any work from being done\n        if (initialRequest == null && (messageFlags & MessageFlags.TerminateStream.getByteValue()) != 0) {\n            LOGGER.debug(\"Not invoking \" + getOperationName() + \" operation for client request received with a \"\n                    + \"terminate flag set to 1\");\n            return;\n        }"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 19,
+      "fileName": "OperationContinuationHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 63,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/CreateDebugPasswordOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.CREATE_DEBUG_PASSWORD;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 377,
+              "startColumn": 68,
+              "endLine": 377,
+              "endColumn": 86,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            }
+          ]
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 70,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetClientDeviceAuthTokenOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_CLIENT_DEVICE_AUTH_TOKEN;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 377,
+              "startColumn": 68,
+              "endLine": 377,
+              "endColumn": 86,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            }
+          ]
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "GreengrassCoreIPCServiceModel.GET_SECRET_VALUE",
+              "startLine": 31,
+              "startColumn": 12,
+              "endLine": 31,
+              "endColumn": 58,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/greengrass-client/src/event-stream-rpc-java/model/software/amazon/awssdk/aws/greengrass/GetSecretValueOperationContext.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String getOperationName() {\n    return GreengrassCoreIPCServiceModel.GET_SECRET_VALUE;\n  }\n\n  @Override"
+            },
+            {
+              "step": 1,
+              "variableName": "getOperationModelContext().getOperationName()",
+              "startLine": 102,
+              "startColumn": 16,
+              "endLine": 102,
+              "endColumn": 61,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "String",
+              "code": "     * @return the operation name implemented by the handler.\n     */\n    private String getOperationName() {\n        return getOperationModelContext().getOperationName();\n    }\n\n    /**"
+            },
+            {
+              "step": 2,
+              "variableName": "getOperationName()",
+              "startLine": 377,
+              "startColumn": 68,
+              "endLine": 377,
+              "endColumn": 86,
+              "uri": "aws-iot-device-sdk-java-v2-1.25.0/sdk/greengrass/event-stream-rpc-server/src/main/java/software/amazon/awssdk/eventstreamrpc/OperationContinuationHandler.java",
+              "type": "",
+              "code": "                    EventStreamRPCServiceModel.CONTENT_TYPE_APPLICATION_TEXT));\n            //are there any exceptions we wouldn't want to return a generic server fault?\n            //this is the kind of exception that should be logged with a request ID especially in a server-client context\n            LOGGER.error(\"[{}] operation threw unexpected {}: {}\", getOperationName(),\n                    throwable.getClass().getCanonicalName(), throwable.getMessage());\n\n            continuation.sendMessage(responseHeaders, outputPayload, MessageType.ApplicationError,"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

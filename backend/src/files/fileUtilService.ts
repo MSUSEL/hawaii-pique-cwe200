@@ -241,6 +241,9 @@ export class FileUtilService {
      * @param content content of file
      */
     async writeToFile(filePath: string, content: string) {
+        const dir = path.dirname(filePath);
+        
+        fs.mkdirSync(dir, { recursive: true }); // Will do nothing if dir exists
         fs.writeFileSync(filePath, content, 'utf-8');
     }
 

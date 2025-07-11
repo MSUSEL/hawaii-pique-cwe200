@@ -1,0 +1,210 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "VaultHelper.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "secretPath",
+              "startLine": 57,
+              "startColumn": 17,
+              "endLine": 57,
+              "endColumn": 27,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/credentials/common/VaultHelper.java",
+              "type": "String",
+              "code": "\n        String msg = String.format(\n                \"Retrieving vault secret path=%s engineVersion=%s\",\n                secretPath, engineVersion);\n        LOGGER.info(msg);\n\n        try {"
+            },
+            {
+              "step": 1,
+              "variableName": "String.format(",
+              "startLine": 55,
+              "startColumn": 22,
+              "endLine": 57,
+              "endColumn": 43,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/credentials/common/VaultHelper.java",
+              "type": "Object[] [[]] : String",
+              "code": "            engineVersion = configuration.getEngineVersion();\n        }\n\n        String msg = String.format(\n                \"Retrieving vault secret path=%s engineVersion=%s\",\n                secretPath, engineVersion);\n        LOGGER.info(msg);"
+            },
+            {
+              "step": 2,
+              "variableName": "String.format(",
+              "startLine": 55,
+              "startColumn": 22,
+              "endLine": 57,
+              "endColumn": 43,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/credentials/common/VaultHelper.java",
+              "type": "String",
+              "code": "            engineVersion = configuration.getEngineVersion();\n        }\n\n        String msg = String.format(\n                \"Retrieving vault secret path=%s engineVersion=%s\",\n                secretPath, engineVersion);\n        LOGGER.info(msg);"
+            },
+            {
+              "step": 3,
+              "variableName": "msg",
+              "startLine": 58,
+              "startColumn": 21,
+              "endLine": 58,
+              "endColumn": 24,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/credentials/common/VaultHelper.java",
+              "type": "",
+              "code": "        String msg = String.format(\n                \"Retrieving vault secret path=%s engineVersion=%s\",\n                secretPath, engineVersion);\n        LOGGER.info(msg);\n\n        try {\n            VaultConfig vaultConfig = configuration.getVaultConfig();"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "VaultSecretSource.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "nextSecrets",
+              "startLine": 196,
+              "startColumn": 39,
+              "endLine": 196,
+              "endColumn": 50,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "Map",
+              "code": "                    }\n                    // check if we overwrite an existing key from another path\n                    // TODO(casz) handle error response\n                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});"
+            },
+            {
+              "step": 1,
+              "variableName": "nextSecrets.keySet()",
+              "startLine": 196,
+              "startColumn": 39,
+              "endLine": 196,
+              "endColumn": 59,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "Set [<element>] : Object",
+              "code": "                    }\n                    // check if we overwrite an existing key from another path\n                    // TODO(casz) handle error response\n                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});"
+            },
+            {
+              "step": 2,
+              "variableName": "key",
+              "startLine": 197,
+              "startColumn": 49,
+              "endLine": 197,
+              "endColumn": 52,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "String",
+              "code": "                    // check if we overwrite an existing key from another path\n                    // TODO(casz) handle error response\n                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});\n                        }"
+            },
+            {
+              "step": 3,
+              "variableName": "key",
+              "startLine": 199,
+              "startColumn": 50,
+              "endLine": 199,
+              "endColumn": 53,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "String",
+              "code": "                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});\n                        }\n                    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "new Object[]{key, vaultPath + \"/\" + key}",
+              "startLine": 199,
+              "startColumn": 37,
+              "endLine": 199,
+              "endColumn": 77,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "Object[] [[]] : String",
+              "code": "                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});\n                        }\n                    }\n"
+            },
+            {
+              "step": 5,
+              "variableName": "new Object[]{key, vaultPath + \"/\" + key}",
+              "startLine": 199,
+              "startColumn": 37,
+              "endLine": 199,
+              "endColumn": 77,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "",
+              "code": "                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});\n                        }\n                    }\n"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "nextSecrets",
+              "startLine": 196,
+              "startColumn": 39,
+              "endLine": 196,
+              "endColumn": 50,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "Map",
+              "code": "                    }\n                    // check if we overwrite an existing key from another path\n                    // TODO(casz) handle error response\n                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});"
+            },
+            {
+              "step": 1,
+              "variableName": "nextSecrets.keySet()",
+              "startLine": 196,
+              "startColumn": 39,
+              "endLine": 196,
+              "endColumn": 59,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "Set [<element>] : Object",
+              "code": "                    }\n                    // check if we overwrite an existing key from another path\n                    // TODO(casz) handle error response\n                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});"
+            },
+            {
+              "step": 2,
+              "variableName": "key",
+              "startLine": 197,
+              "startColumn": 49,
+              "endLine": 197,
+              "endColumn": 52,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "String",
+              "code": "                    // check if we overwrite an existing key from another path\n                    // TODO(casz) handle error response\n                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});\n                        }"
+            },
+            {
+              "step": 3,
+              "variableName": "vaultPath + \"/\" + key",
+              "startLine": 199,
+              "startColumn": 55,
+              "endLine": 199,
+              "endColumn": 76,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "String",
+              "code": "                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});\n                        }\n                    }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "new Object[]{key, vaultPath + \"/\" + key}",
+              "startLine": 199,
+              "startColumn": 37,
+              "endLine": 199,
+              "endColumn": 77,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "Object[] [[]] : String",
+              "code": "                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});\n                        }\n                    }\n"
+            },
+            {
+              "step": 5,
+              "variableName": "new Object[]{key, vaultPath + \"/\" + key}",
+              "startLine": 199,
+              "startColumn": 37,
+              "endLine": 199,
+              "endColumn": 77,
+              "uri": "hashicorp-vault-plugin-371.v884a_4dd60fb_6/src/main/java/com/datapipe/jenkins/vault/jcasc/secrets/VaultSecretSource.java",
+              "type": "",
+              "code": "                    for (String key : nextSecrets.keySet()) {\n                        if (secrets.containsKey(key)) {\n                            LOGGER.log(Level.FINE, \"Key {0} exists in multiple vault paths. Use full path ({1}) to access value.\",\n                                    new Object[]{key, vaultPath + \"/\" + key});\n                        }\n                    }\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}

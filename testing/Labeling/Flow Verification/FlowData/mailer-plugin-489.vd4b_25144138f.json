@@ -1,0 +1,132 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "MimeMessageBuilder.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "addressToken",
+              "startLine": 176,
+              "startColumn": 67,
+              "endLine": 176,
+              "endColumn": 79,
+              "uri": "mailer-plugin-489.vd4b_25144138f/src/main/java/jenkins/plugins/mailer/tasks/MimeMessageBuilder.java",
+              "type": "String",
+              "code": "        StringTokenizer tokens = new StringTokenizer(recipients, \" \\t\\n\\r\\f,\");\n        while (tokens.hasMoreTokens()) {\n            String addressToken = tokens.nextToken();\n            InternetAddress internetAddress = toNormalizedAddress(addressToken);\n\n            if (internetAddress != null) {\n                if (recipientType == Message.RecipientType.TO) {"
+            },
+            {
+              "step": 1,
+              "variableName": "String address",
+              "startLine": 302,
+              "startColumn": 49,
+              "endLine": 302,
+              "endColumn": 63,
+              "uri": "mailer-plugin-489.vd4b_25144138f/src/main/java/jenkins/plugins/mailer/tasks/MimeMessageBuilder.java",
+              "type": "String",
+              "code": "        return list;\n    }\n\n    private InternetAddress toNormalizedAddress(String address) throws UnsupportedEncodingException {\n        if (address == null) {\n            return null;\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "\"Unable to send to address: \" + address",
+              "startLine": 320,
+              "startColumn": 22,
+              "endLine": 320,
+              "endColumn": 61,
+              "uri": "mailer-plugin-489.vd4b_25144138f/src/main/java/jenkins/plugins/mailer/tasks/MimeMessageBuilder.java",
+              "type": "String",
+              "code": "            return Mailer.stringToAddress(address, charset);\n        } catch (AddressException e) {\n            // report bad address, but try to send to other addresses\n            logError(\"Unable to send to address: \" + address, e);\n            return null;\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "String message",
+              "startLine": 325,
+              "startColumn": 27,
+              "endLine": 325,
+              "endColumn": 41,
+              "uri": "mailer-plugin-489.vd4b_25144138f/src/main/java/jenkins/plugins/mailer/tasks/MimeMessageBuilder.java",
+              "type": "String",
+              "code": "        }\n    }\n\n    private void logError(String message, Throwable t) {\n        if (listener != null) {\n            t.printStackTrace(listener.error(message));\n        } else {"
+            },
+            {
+              "step": 4,
+              "variableName": "message",
+              "startLine": 329,
+              "startColumn": 39,
+              "endLine": 329,
+              "endColumn": 46,
+              "uri": "mailer-plugin-489.vd4b_25144138f/src/main/java/jenkins/plugins/mailer/tasks/MimeMessageBuilder.java",
+              "type": "",
+              "code": "        if (listener != null) {\n            t.printStackTrace(listener.error(message));\n        } else {\n            LOGGER.log(Level.WARNING, message, t);\n        }\n    }\n}"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "addressToken",
+              "startLine": 293,
+              "startColumn": 71,
+              "endLine": 293,
+              "endColumn": 83,
+              "uri": "mailer-plugin-489.vd4b_25144138f/src/main/java/jenkins/plugins/mailer/tasks/MimeMessageBuilder.java",
+              "type": "String",
+              "code": "            StringTokenizer tokens = new StringTokenizer(addresses, \" \\t\\n\\r\\f,\");\n            while (tokens.hasMoreTokens()) {\n                String addressToken = tokens.nextToken();\n                InternetAddress internetAddress = toNormalizedAddress(addressToken);\n                if (internetAddress != null) {\n                    list.add(internetAddress);\n                }"
+            },
+            {
+              "step": 1,
+              "variableName": "String address",
+              "startLine": 302,
+              "startColumn": 49,
+              "endLine": 302,
+              "endColumn": 63,
+              "uri": "mailer-plugin-489.vd4b_25144138f/src/main/java/jenkins/plugins/mailer/tasks/MimeMessageBuilder.java",
+              "type": "String",
+              "code": "        return list;\n    }\n\n    private InternetAddress toNormalizedAddress(String address) throws UnsupportedEncodingException {\n        if (address == null) {\n            return null;\n        }"
+            },
+            {
+              "step": 2,
+              "variableName": "\"Unable to send to address: \" + address",
+              "startLine": 320,
+              "startColumn": 22,
+              "endLine": 320,
+              "endColumn": 61,
+              "uri": "mailer-plugin-489.vd4b_25144138f/src/main/java/jenkins/plugins/mailer/tasks/MimeMessageBuilder.java",
+              "type": "String",
+              "code": "            return Mailer.stringToAddress(address, charset);\n        } catch (AddressException e) {\n            // report bad address, but try to send to other addresses\n            logError(\"Unable to send to address: \" + address, e);\n            return null;\n        }\n    }"
+            },
+            {
+              "step": 3,
+              "variableName": "String message",
+              "startLine": 325,
+              "startColumn": 27,
+              "endLine": 325,
+              "endColumn": 41,
+              "uri": "mailer-plugin-489.vd4b_25144138f/src/main/java/jenkins/plugins/mailer/tasks/MimeMessageBuilder.java",
+              "type": "String",
+              "code": "        }\n    }\n\n    private void logError(String message, Throwable t) {\n        if (listener != null) {\n            t.printStackTrace(listener.error(message));\n        } else {"
+            },
+            {
+              "step": 4,
+              "variableName": "message",
+              "startLine": 329,
+              "startColumn": 39,
+              "endLine": 329,
+              "endColumn": 46,
+              "uri": "mailer-plugin-489.vd4b_25144138f/src/main/java/jenkins/plugins/mailer/tasks/MimeMessageBuilder.java",
+              "type": "",
+              "code": "        if (listener != null) {\n            t.printStackTrace(listener.error(message));\n        } else {\n            LOGGER.log(Level.WARNING, message, t);\n        }\n    }\n}"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}

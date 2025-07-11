@@ -1,0 +1,71 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "TokenStoreUserApprovalHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken",
+              "startLine": 147,
+              "startColumn": 44,
+              "endLine": 147,
+              "endColumn": 55,
+              "uri": "spring-security-oauth-2.5.2.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/TokenStoreUserApprovalHandler.java",
+              "type": "OAuth2AccessToken",
+              "code": "\n\t\tOAuth2AccessToken accessToken = tokenStore.getAccessToken(authentication);\n\t\tif (logger.isDebugEnabled()) {\n\t\t\tlogger.debug(\"Existing access token=\" + accessToken);\n\t\t}\n\t\tif (accessToken != null && !accessToken.isExpired()) {\n\t\t\tif (logger.isDebugEnabled()) {"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Existing access token=\" + accessToken",
+              "startLine": 147,
+              "startColumn": 17,
+              "endLine": 147,
+              "endColumn": 55,
+              "uri": "spring-security-oauth-2.5.2.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/TokenStoreUserApprovalHandler.java",
+              "type": "",
+              "code": "\n\t\tOAuth2AccessToken accessToken = tokenStore.getAccessToken(authentication);\n\t\tif (logger.isDebugEnabled()) {\n\t\t\tlogger.debug(\"Existing access token=\" + accessToken);\n\t\t}\n\t\tif (accessToken != null && !accessToken.isExpired()) {\n\t\t\tif (logger.isDebugEnabled()) {"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "TokenStoreUserApprovalHandler.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken",
+              "startLine": 151,
+              "startColumn": 56,
+              "endLine": 151,
+              "endColumn": 67,
+              "uri": "spring-security-oauth-2.5.2.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/TokenStoreUserApprovalHandler.java",
+              "type": "OAuth2AccessToken",
+              "code": "\t\t}\n\t\tif (accessToken != null && !accessToken.isExpired()) {\n\t\t\tif (logger.isDebugEnabled()) {\n\t\t\t\tlogger.debug(\"User already approved with token=\" + accessToken);\n\t\t\t}\n\t\t\t// A token was already granted and is still valid, so this is already approved\n\t\t\tapproved = true;"
+            },
+            {
+              "step": 1,
+              "variableName": "\"User already approved with token=\" + accessToken",
+              "startLine": 151,
+              "startColumn": 18,
+              "endLine": 151,
+              "endColumn": 67,
+              "uri": "spring-security-oauth-2.5.2.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/TokenStoreUserApprovalHandler.java",
+              "type": "",
+              "code": "\t\t}\n\t\tif (accessToken != null && !accessToken.isExpired()) {\n\t\t\tif (logger.isDebugEnabled()) {\n\t\t\t\tlogger.debug(\"User already approved with token=\" + accessToken);\n\t\t\t}\n\t\t\t// A token was already granted and is still valid, so this is already approved\n\t\t\tapproved = true;"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

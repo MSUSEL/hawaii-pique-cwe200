@@ -1,0 +1,418 @@
+{
+  "201": [
+    {
+      "resultIndex": 0,
+      "fileName": "HttpAdminClient.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "stubMapping",
+              "startLine": 150,
+              "startColumn": 45,
+              "endLine": 150,
+              "endColumn": 56,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/WireMock.java",
+              "type": "StubMapping",
+              "code": "  }\n\n  public static void removeStub(StubMapping stubMapping) {\n    defaultInstance.get().removeStubMapping(stubMapping);\n  }\n\n  public static void removeStub(UUID id) {"
+            },
+            {
+              "step": 1,
+              "variableName": "StubMapping stubMapping",
+              "startLine": 507,
+              "startColumn": 33,
+              "endLine": 507,
+              "endColumn": 56,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/WireMock.java",
+              "type": "StubMapping",
+              "code": "    admin.removeStubMapping(mappingBuilder.build());\n  }\n\n  public void removeStubMapping(StubMapping stubMapping) {\n    admin.removeStubMapping(stubMapping);\n  }\n"
+            },
+            {
+              "step": 2,
+              "variableName": "stubMapping",
+              "startLine": 508,
+              "startColumn": 29,
+              "endLine": 508,
+              "endColumn": 40,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/WireMock.java",
+              "type": "StubMapping",
+              "code": "  }\n\n  public void removeStubMapping(StubMapping stubMapping) {\n    admin.removeStubMapping(stubMapping);\n  }\n\n  public void removeStubMapping(UUID id) {"
+            },
+            {
+              "step": 3,
+              "variableName": "StubMapping stubbMapping",
+              "startLine": 188,
+              "startColumn": 33,
+              "endLine": 188,
+              "endColumn": 57,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "StubMapping",
+              "code": "  }\n\n  @Override\n  public void removeStubMapping(StubMapping stubbMapping) {\n    postJsonAssertOkAndReturnBody(\n        urlFor(RemoveMatchingStubMappingTask.class), Json.write(stubbMapping));\n  }"
+            },
+            {
+              "step": 4,
+              "variableName": "stubbMapping",
+              "startLine": 190,
+              "startColumn": 65,
+              "endLine": 190,
+              "endColumn": 77,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "StubMapping",
+              "code": "  @Override\n  public void removeStubMapping(StubMapping stubbMapping) {\n    postJsonAssertOkAndReturnBody(\n        urlFor(RemoveMatchingStubMappingTask.class), Json.write(stubbMapping));\n  }\n\n  @Override"
+            },
+            {
+              "step": 5,
+              "variableName": "T object",
+              "startLine": 89,
+              "startColumn": 34,
+              "endLine": 89,
+              "endColumn": 42,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/common/Json.java",
+              "type": "StubMapping",
+              "code": "    }\n  }\n\n  public static <T> String write(T object) {\n    return write(object, PublicView.class);\n  }\n"
+            },
+            {
+              "step": 6,
+              "variableName": "object",
+              "startLine": 90,
+              "startColumn": 18,
+              "endLine": 90,
+              "endColumn": 24,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/common/Json.java",
+              "type": "StubMapping",
+              "code": "  }\n\n  public static <T> String write(T object) {\n    return write(object, PublicView.class);\n  }\n\n  public static <T> String writePrivate(T object) {"
+            },
+            {
+              "step": 7,
+              "variableName": "T object",
+              "startLine": 97,
+              "startColumn": 34,
+              "endLine": 97,
+              "endColumn": 42,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/common/Json.java",
+              "type": "StubMapping",
+              "code": "    return write(object, PrivateView.class);\n  }\n\n  public static <T> String write(T object, Class<?> view) {\n    try {\n      ObjectMapper mapper = getObjectMapper();\n      ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();"
+            },
+            {
+              "step": 8,
+              "variableName": "objectWriter.writeValueAsString(object)",
+              "startLine": 104,
+              "startColumn": 14,
+              "endLine": 104,
+              "endColumn": 53,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/common/Json.java",
+              "type": "String",
+              "code": "      if (view != null) {\n        objectWriter = objectWriter.withView(view);\n      }\n      return objectWriter.writeValueAsString(object);\n    } catch (IOException ioe) {\n      return throwUnchecked(ioe, String.class);\n    }"
+            },
+            {
+              "step": 9,
+              "variableName": "write(object, PublicView.class)",
+              "startLine": 90,
+              "startColumn": 12,
+              "endLine": 90,
+              "endColumn": 43,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/common/Json.java",
+              "type": "String",
+              "code": "  }\n\n  public static <T> String write(T object) {\n    return write(object, PublicView.class);\n  }\n\n  public static <T> String writePrivate(T object) {"
+            },
+            {
+              "step": 10,
+              "variableName": "Json.write(stubbMapping)",
+              "startLine": 190,
+              "startColumn": 54,
+              "endLine": 190,
+              "endColumn": 78,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "  @Override\n  public void removeStubMapping(StubMapping stubbMapping) {\n    postJsonAssertOkAndReturnBody(\n        urlFor(RemoveMatchingStubMappingTask.class), Json.write(stubbMapping));\n  }\n\n  @Override"
+            },
+            {
+              "step": 11,
+              "variableName": "String json",
+              "startLine": 477,
+              "startColumn": 60,
+              "endLine": 477,
+              "endColumn": 71,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "    return ProxySettings.NO_PROXY;\n  }\n\n  private String postJsonAssertOkAndReturnBody(String url, String json) {\n    HttpPost post = new HttpPost(url);\n    post.addHeader(CONTENT_TYPE, \"application/json\");\n    post.setEntity(jsonStringEntity(Optional.ofNullable(json).orElse(\"\")));"
+            },
+            {
+              "step": 12,
+              "variableName": "json",
+              "startLine": 480,
+              "startColumn": 57,
+              "endLine": 480,
+              "endColumn": 61,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "  private String postJsonAssertOkAndReturnBody(String url, String json) {\n    HttpPost post = new HttpPost(url);\n    post.addHeader(CONTENT_TYPE, \"application/json\");\n    post.setEntity(jsonStringEntity(Optional.ofNullable(json).orElse(\"\")));\n    return safelyExecuteRequest(url, post);\n  }\n"
+            },
+            {
+              "step": 13,
+              "variableName": "Optional.ofNullable(json)",
+              "startLine": 480,
+              "startColumn": 37,
+              "endLine": 480,
+              "endColumn": 62,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "Optional [<element>] : String",
+              "code": "  private String postJsonAssertOkAndReturnBody(String url, String json) {\n    HttpPost post = new HttpPost(url);\n    post.addHeader(CONTENT_TYPE, \"application/json\");\n    post.setEntity(jsonStringEntity(Optional.ofNullable(json).orElse(\"\")));\n    return safelyExecuteRequest(url, post);\n  }\n"
+            },
+            {
+              "step": 14,
+              "variableName": "Optional.ofNullable(json).orElse(\"\")",
+              "startLine": 480,
+              "startColumn": 37,
+              "endLine": 480,
+              "endColumn": 73,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "  private String postJsonAssertOkAndReturnBody(String url, String json) {\n    HttpPost post = new HttpPost(url);\n    post.addHeader(CONTENT_TYPE, \"application/json\");\n    post.setEntity(jsonStringEntity(Optional.ofNullable(json).orElse(\"\")));\n    return safelyExecuteRequest(url, post);\n  }\n"
+            },
+            {
+              "step": 15,
+              "variableName": "String json",
+              "startLine": 161,
+              "startColumn": 48,
+              "endLine": 161,
+              "endColumn": 59,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "    this(host, port, \"\");\n  }\n\n  private static StringEntity jsonStringEntity(String json) {\n    return new StringEntity(json, StandardCharsets.UTF_8);\n  }\n"
+            },
+            {
+              "step": 16,
+              "variableName": "json",
+              "startLine": 162,
+              "startColumn": 29,
+              "endLine": 162,
+              "endColumn": 33,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "  }\n\n  private static StringEntity jsonStringEntity(String json) {\n    return new StringEntity(json, StandardCharsets.UTF_8);\n  }\n\n  @Override"
+            },
+            {
+              "step": 17,
+              "variableName": "new StringEntity(json, StandardCharsets.UTF_8)",
+              "startLine": 162,
+              "startColumn": 12,
+              "endLine": 162,
+              "endColumn": 58,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "StringEntity",
+              "code": "  }\n\n  private static StringEntity jsonStringEntity(String json) {\n    return new StringEntity(json, StandardCharsets.UTF_8);\n  }\n\n  @Override"
+            },
+            {
+              "step": 18,
+              "variableName": "jsonStringEntity(Optional.ofNullable(json).orElse(\"\"))",
+              "startLine": 480,
+              "startColumn": 20,
+              "endLine": 480,
+              "endColumn": 74,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "",
+              "code": "  private String postJsonAssertOkAndReturnBody(String url, String json) {\n    HttpPost post = new HttpPost(url);\n    post.addHeader(CONTENT_TYPE, \"application/json\");\n    post.setEntity(jsonStringEntity(Optional.ofNullable(json).orElse(\"\")));\n    return safelyExecuteRequest(url, post);\n  }\n"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "stubMapping",
+              "startLine": 508,
+              "startColumn": 29,
+              "endLine": 508,
+              "endColumn": 40,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/WireMock.java",
+              "type": "StubMapping",
+              "code": "  }\n\n  public void removeStubMapping(StubMapping stubMapping) {\n    admin.removeStubMapping(stubMapping);\n  }\n\n  public void removeStubMapping(UUID id) {"
+            },
+            {
+              "step": 1,
+              "variableName": "StubMapping stubbMapping",
+              "startLine": 188,
+              "startColumn": 33,
+              "endLine": 188,
+              "endColumn": 57,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "StubMapping",
+              "code": "  }\n\n  @Override\n  public void removeStubMapping(StubMapping stubbMapping) {\n    postJsonAssertOkAndReturnBody(\n        urlFor(RemoveMatchingStubMappingTask.class), Json.write(stubbMapping));\n  }"
+            },
+            {
+              "step": 2,
+              "variableName": "stubbMapping",
+              "startLine": 190,
+              "startColumn": 65,
+              "endLine": 190,
+              "endColumn": 77,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "StubMapping",
+              "code": "  @Override\n  public void removeStubMapping(StubMapping stubbMapping) {\n    postJsonAssertOkAndReturnBody(\n        urlFor(RemoveMatchingStubMappingTask.class), Json.write(stubbMapping));\n  }\n\n  @Override"
+            },
+            {
+              "step": 3,
+              "variableName": "T object",
+              "startLine": 89,
+              "startColumn": 34,
+              "endLine": 89,
+              "endColumn": 42,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/common/Json.java",
+              "type": "StubMapping",
+              "code": "    }\n  }\n\n  public static <T> String write(T object) {\n    return write(object, PublicView.class);\n  }\n"
+            },
+            {
+              "step": 4,
+              "variableName": "object",
+              "startLine": 90,
+              "startColumn": 18,
+              "endLine": 90,
+              "endColumn": 24,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/common/Json.java",
+              "type": "StubMapping",
+              "code": "  }\n\n  public static <T> String write(T object) {\n    return write(object, PublicView.class);\n  }\n\n  public static <T> String writePrivate(T object) {"
+            },
+            {
+              "step": 5,
+              "variableName": "T object",
+              "startLine": 97,
+              "startColumn": 34,
+              "endLine": 97,
+              "endColumn": 42,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/common/Json.java",
+              "type": "StubMapping",
+              "code": "    return write(object, PrivateView.class);\n  }\n\n  public static <T> String write(T object, Class<?> view) {\n    try {\n      ObjectMapper mapper = getObjectMapper();\n      ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();"
+            },
+            {
+              "step": 6,
+              "variableName": "objectWriter.writeValueAsString(object)",
+              "startLine": 104,
+              "startColumn": 14,
+              "endLine": 104,
+              "endColumn": 53,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/common/Json.java",
+              "type": "String",
+              "code": "      if (view != null) {\n        objectWriter = objectWriter.withView(view);\n      }\n      return objectWriter.writeValueAsString(object);\n    } catch (IOException ioe) {\n      return throwUnchecked(ioe, String.class);\n    }"
+            },
+            {
+              "step": 7,
+              "variableName": "write(object, PublicView.class)",
+              "startLine": 90,
+              "startColumn": 12,
+              "endLine": 90,
+              "endColumn": 43,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/common/Json.java",
+              "type": "String",
+              "code": "  }\n\n  public static <T> String write(T object) {\n    return write(object, PublicView.class);\n  }\n\n  public static <T> String writePrivate(T object) {"
+            },
+            {
+              "step": 8,
+              "variableName": "Json.write(stubbMapping)",
+              "startLine": 190,
+              "startColumn": 54,
+              "endLine": 190,
+              "endColumn": 78,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "  @Override\n  public void removeStubMapping(StubMapping stubbMapping) {\n    postJsonAssertOkAndReturnBody(\n        urlFor(RemoveMatchingStubMappingTask.class), Json.write(stubbMapping));\n  }\n\n  @Override"
+            },
+            {
+              "step": 9,
+              "variableName": "String json",
+              "startLine": 477,
+              "startColumn": 60,
+              "endLine": 477,
+              "endColumn": 71,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "    return ProxySettings.NO_PROXY;\n  }\n\n  private String postJsonAssertOkAndReturnBody(String url, String json) {\n    HttpPost post = new HttpPost(url);\n    post.addHeader(CONTENT_TYPE, \"application/json\");\n    post.setEntity(jsonStringEntity(Optional.ofNullable(json).orElse(\"\")));"
+            },
+            {
+              "step": 10,
+              "variableName": "json",
+              "startLine": 480,
+              "startColumn": 57,
+              "endLine": 480,
+              "endColumn": 61,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "  private String postJsonAssertOkAndReturnBody(String url, String json) {\n    HttpPost post = new HttpPost(url);\n    post.addHeader(CONTENT_TYPE, \"application/json\");\n    post.setEntity(jsonStringEntity(Optional.ofNullable(json).orElse(\"\")));\n    return safelyExecuteRequest(url, post);\n  }\n"
+            },
+            {
+              "step": 11,
+              "variableName": "Optional.ofNullable(json)",
+              "startLine": 480,
+              "startColumn": 37,
+              "endLine": 480,
+              "endColumn": 62,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "Optional [<element>] : String",
+              "code": "  private String postJsonAssertOkAndReturnBody(String url, String json) {\n    HttpPost post = new HttpPost(url);\n    post.addHeader(CONTENT_TYPE, \"application/json\");\n    post.setEntity(jsonStringEntity(Optional.ofNullable(json).orElse(\"\")));\n    return safelyExecuteRequest(url, post);\n  }\n"
+            },
+            {
+              "step": 12,
+              "variableName": "Optional.ofNullable(json).orElse(\"\")",
+              "startLine": 480,
+              "startColumn": 37,
+              "endLine": 480,
+              "endColumn": 73,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "  private String postJsonAssertOkAndReturnBody(String url, String json) {\n    HttpPost post = new HttpPost(url);\n    post.addHeader(CONTENT_TYPE, \"application/json\");\n    post.setEntity(jsonStringEntity(Optional.ofNullable(json).orElse(\"\")));\n    return safelyExecuteRequest(url, post);\n  }\n"
+            },
+            {
+              "step": 13,
+              "variableName": "String json",
+              "startLine": 161,
+              "startColumn": 48,
+              "endLine": 161,
+              "endColumn": 59,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "    this(host, port, \"\");\n  }\n\n  private static StringEntity jsonStringEntity(String json) {\n    return new StringEntity(json, StandardCharsets.UTF_8);\n  }\n"
+            },
+            {
+              "step": 14,
+              "variableName": "json",
+              "startLine": 162,
+              "startColumn": 29,
+              "endLine": 162,
+              "endColumn": 33,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "String",
+              "code": "  }\n\n  private static StringEntity jsonStringEntity(String json) {\n    return new StringEntity(json, StandardCharsets.UTF_8);\n  }\n\n  @Override"
+            },
+            {
+              "step": 15,
+              "variableName": "new StringEntity(json, StandardCharsets.UTF_8)",
+              "startLine": 162,
+              "startColumn": 12,
+              "endLine": 162,
+              "endColumn": 58,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "StringEntity",
+              "code": "  }\n\n  private static StringEntity jsonStringEntity(String json) {\n    return new StringEntity(json, StandardCharsets.UTF_8);\n  }\n\n  @Override"
+            },
+            {
+              "step": 16,
+              "variableName": "jsonStringEntity(Optional.ofNullable(json).orElse(\"\"))",
+              "startLine": 480,
+              "startColumn": 20,
+              "endLine": 480,
+              "endColumn": 74,
+              "uri": "wiremock-3.13.0/src/main/java/com/github/tomakehurst/wiremock/client/HttpAdminClient.java",
+              "type": "",
+              "code": "  private String postJsonAssertOkAndReturnBody(String url, String json) {\n    HttpPost post = new HttpPost(url);\n    post.addHeader(CONTENT_TYPE, \"application/json\");\n    post.setEntity(jsonStringEntity(Optional.ofNullable(json).orElse(\"\")));\n    return safelyExecuteRequest(url, post);\n  }\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}

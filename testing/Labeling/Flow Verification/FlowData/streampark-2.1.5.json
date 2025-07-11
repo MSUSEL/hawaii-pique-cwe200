@@ -30,8 +30,7 @@
               "code": "        for (port = start; port < 65535; port++) {\n          try (Socket ignored = new Socket(localhost, port)) {\n          } catch (Exception e) {\n            System.out.println(port);\n            break;\n          }\n        }"
             }
           ],
-          "label": "No",
-          "probability": 0.2094186246395111
+          "label": "No"
         },
         {
           "codeFlowIndex": 1,
@@ -59,8 +58,7 @@
               "code": "        for (port = start; port < 65535; port++) {\n          try (Socket ignored = new Socket(localhost, port)) {\n          } catch (Exception e) {\n            System.out.println(port);\n            break;\n          }\n        }"
             }
           ],
-          "label": "No",
-          "probability": 0.20427417755126953
+          "label": "No"
         }
       ]
     }

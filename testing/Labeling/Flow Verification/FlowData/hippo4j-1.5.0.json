@@ -1,0 +1,1344 @@
+{
+  "201": [
+    {
+      "resultIndex": 3,
+      "fileName": "JWTAuthenticationFilter.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "token",
+              "startLine": 97,
+              "startColumn": 69,
+              "endLine": 97,
+              "endColumn": 74,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/filter/JWTAuthenticationFilter.java",
+              "type": "String",
+              "code": "                role = authority.getAuthority();\n            }\n            String token = JwtTokenUtil.createToken(jwtUser.getId(), jwtUser.getUsername(), role, isRemember);\n            response.setHeader(\"token\", JwtTokenUtil.TOKEN_PREFIX + token);\n            response.setCharacterEncoding(\"UTF-8\");\n            Map<String, Object> maps = new HashMap<>(MAP_INITIAL_CAPACITY);\n            maps.put(\"data\", JwtTokenUtil.TOKEN_PREFIX + token);"
+            },
+            {
+              "step": 1,
+              "variableName": "JwtTokenUtil.TOKEN_PREFIX + token",
+              "startLine": 97,
+              "startColumn": 41,
+              "endLine": 97,
+              "endColumn": 74,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/filter/JWTAuthenticationFilter.java",
+              "type": "",
+              "code": "                role = authority.getAuthority();\n            }\n            String token = JwtTokenUtil.createToken(jwtUser.getId(), jwtUser.getUsername(), role, isRemember);\n            response.setHeader(\"token\", JwtTokenUtil.TOKEN_PREFIX + token);\n            response.setCharacterEncoding(\"UTF-8\");\n            Map<String, Object> maps = new HashMap<>(MAP_INITIAL_CAPACITY);\n            maps.put(\"data\", JwtTokenUtil.TOKEN_PREFIX + token);"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ],
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "HttpUtil.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "secretKey",
+              "startLine": 137,
+              "startColumn": 43,
+              "endLine": 137,
+              "endColumn": 52,
+              "uri": "hippo4j-1.5.0/hippo4j-message/src/main/java/cn/hippo4j/message/platform/LarkSendMessageHandler.java",
+              "type": "String",
+              "code": "    }\n\n    private void execute(String secretKey, String text) {\n        String serverUrl = LARK_BOT_URL + secretKey;\n        try {\n            String responseBody = HttpUtil.postJson(serverUrl, text);\n            LarkRobotResponse response = JSONUtil.parseObject(responseBody, LarkRobotResponse.class);"
+            },
+            {
+              "step": 1,
+              "variableName": "serverUrl",
+              "startLine": 139,
+              "startColumn": 53,
+              "endLine": 139,
+              "endColumn": 62,
+              "uri": "hippo4j-1.5.0/hippo4j-message/src/main/java/cn/hippo4j/message/platform/LarkSendMessageHandler.java",
+              "type": "String",
+              "code": "    private void execute(String secretKey, String text) {\n        String serverUrl = LARK_BOT_URL + secretKey;\n        try {\n            String responseBody = HttpUtil.postJson(serverUrl, text);\n            LarkRobotResponse response = JSONUtil.parseObject(responseBody, LarkRobotResponse.class);\n            Assert.isTrue(response != null, \"Response is null.\");\n            if (response.getCode() != 0) {"
+            },
+            {
+              "step": 2,
+              "variableName": "String url",
+              "startLine": 198,
+              "startColumn": 35,
+              "endLine": 198,
+              "endColumn": 45,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/http/HttpUtil.java",
+              "type": "String",
+              "code": "     * @param json json data\n     * @return\n     */\n    public static String postJson(String url, String json) {\n        return executeJson(url, HttpMethod.POST, json, null);\n    }\n"
+            },
+            {
+              "step": 3,
+              "variableName": "url",
+              "startLine": 199,
+              "startColumn": 28,
+              "endLine": 199,
+              "endColumn": 31,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/http/HttpUtil.java",
+              "type": "String",
+              "code": "     * @return\n     */\n    public static String postJson(String url, String json) {\n        return executeJson(url, HttpMethod.POST, json, null);\n    }\n\n    /**"
+            },
+            {
+              "step": 4,
+              "variableName": "String url",
+              "startLine": 258,
+              "startColumn": 39,
+              "endLine": 258,
+              "endColumn": 49,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/http/HttpUtil.java",
+              "type": "String",
+              "code": "        return builder.toString();\n    }\n\n    private static String executeJson(String url, String method, String json, Map<String, String> headers) {\n        if (!JSONUtil.isJson(json)) {\n            log.error(LogMessage.getInstance().setMsg(\"Http Call error.\")\n                    .kv(\"url\", url)"
+            },
+            {
+              "step": 5,
+              "variableName": "url",
+              "startLine": 261,
+              "startColumn": 32,
+              "endLine": 261,
+              "endColumn": 35,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/http/HttpUtil.java",
+              "type": "String",
+              "code": "    private static String executeJson(String url, String method, String json, Map<String, String> headers) {\n        if (!JSONUtil.isJson(json)) {\n            log.error(LogMessage.getInstance().setMsg(\"Http Call error.\")\n                    .kv(\"url\", url)\n                    .kv(\"method\", method)\n                    .kv(\"json\", json)\n                    .kv2String(\"headers\", JSONUtil.toJSONString(headers)));"
+            },
+            {
+              "step": 6,
+              "variableName": "Object v",
+              "startLine": 66,
+              "startColumn": 36,
+              "endLine": 66,
+              "endColumn": 44,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "String",
+              "code": "        return toString();\n    }\n\n    public LogMessage kv(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return this;\n    }"
+            },
+            {
+              "step": 7,
+              "variableName": "v == null ? \"\" : v",
+              "startLine": 67,
+              "startColumn": 25,
+              "endLine": 67,
+              "endColumn": 43,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "... : String",
+              "code": "    }\n\n    public LogMessage kv(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return this;\n    }\n"
+            },
+            {
+              "step": 8,
+              "variableName": "this.kvs",
+              "startLine": 67,
+              "startColumn": 9,
+              "endLine": 67,
+              "endColumn": 17,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "ConcurrentHashMap [<map.value>] : String",
+              "code": "    }\n\n    public LogMessage kv(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return this;\n    }\n"
+            },
+            {
+              "step": 9,
+              "variableName": "this",
+              "startLine": 67,
+              "startColumn": 9,
+              "endLine": 67,
+              "endColumn": 13,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "    }\n\n    public LogMessage kv(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return this;\n    }\n"
+            },
+            {
+              "step": 10,
+              "variableName": "this",
+              "startLine": 68,
+              "startColumn": 16,
+              "endLine": 68,
+              "endColumn": 20,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "\n    public LogMessage kv(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return this;\n    }\n\n    public String kv2String(String k, Object v) {"
+            },
+            {
+              "step": 11,
+              "variableName": "LogMessage.ge",
+              "startLine": 260,
+              "startColumn": 23,
+              "endLine": 261,
+              "endColumn": 36,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/http/HttpUtil.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "\n    private static String executeJson(String url, String method, String json, Map<String, String> headers) {\n        if (!JSONUtil.isJson(json)) {\n            log.error(LogMessage.getInstance().setMsg(\"Http Call error.\")\n                    .kv(\"url\", url)\n                    .kv(\"method\", method)\n                    .kv(\"json\", json)"
+            },
+            {
+              "step": 12,
+              "variableName": "kv",
+              "startLine": 66,
+              "startColumn": 23,
+              "endLine": 66,
+              "endColumn": 25,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "        return toString();\n    }\n\n    public LogMessage kv(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return this;\n    }"
+            },
+            {
+              "step": 13,
+              "variableName": "this",
+              "startLine": 68,
+              "startColumn": 16,
+              "endLine": 68,
+              "endColumn": 20,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "\n    public LogMessage kv(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return this;\n    }\n\n    public String kv2String(String k, Object v) {"
+            },
+            {
+              "step": 14,
+              "variableName": "LogMessage.getInsta",
+              "startLine": 260,
+              "startColumn": 23,
+              "endLine": 262,
+              "endColumn": 42,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/http/HttpUtil.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "\n    private static String executeJson(String url, String method, String json, Map<String, String> headers) {\n        if (!JSONUtil.isJson(json)) {\n            log.error(LogMessage.getInstance().setMsg(\"Http Call error.\")\n                    .kv(\"url\", url)\n                    .kv(\"method\", method)\n                    .kv(\"json\", json)"
+            },
+            {
+              "step": 15,
+              "variableName": "kv",
+              "startLine": 66,
+              "startColumn": 23,
+              "endLine": 66,
+              "endColumn": 25,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "        return toString();\n    }\n\n    public LogMessage kv(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return this;\n    }"
+            },
+            {
+              "step": 16,
+              "variableName": "this",
+              "startLine": 68,
+              "startColumn": 16,
+              "endLine": 68,
+              "endColumn": 20,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "\n    public LogMessage kv(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return this;\n    }\n\n    public String kv2String(String k, Object v) {"
+            },
+            {
+              "step": 17,
+              "variableName": "LogMessage.getI",
+              "startLine": 260,
+              "startColumn": 23,
+              "endLine": 263,
+              "endColumn": 38,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/http/HttpUtil.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "\n    private static String executeJson(String url, String method, String json, Map<String, String> headers) {\n        if (!JSONUtil.isJson(json)) {\n            log.error(LogMessage.getInstance().setMsg(\"Http Call error.\")\n                    .kv(\"url\", url)\n                    .kv(\"method\", method)\n                    .kv(\"json\", json)"
+            },
+            {
+              "step": 18,
+              "variableName": "kv2String",
+              "startLine": 71,
+              "startColumn": 19,
+              "endLine": 71,
+              "endColumn": 28,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "        return this;\n    }\n\n    public String kv2String(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return toString();\n    }"
+            },
+            {
+              "step": 19,
+              "variableName": "toString()",
+              "startLine": 73,
+              "startColumn": 16,
+              "endLine": 73,
+              "endColumn": 26,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "\n    public String kv2String(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 20,
+              "variableName": "toString",
+              "startLine": 77,
+              "startColumn": 19,
+              "endLine": 77,
+              "endColumn": 27,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "    }\n\n    @Override\n    public String toString() {\n        StringBuilder sb = new StringBuilder();\n        if (StringUtil.isNotEmpty(msg)) {\n            sb.append(msg);"
+            },
+            {
+              "step": 21,
+              "variableName": "kvs",
+              "startLine": 83,
+              "startColumn": 45,
+              "endLine": 83,
+              "endColumn": 48,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "LogMessage [kvs, <map.value>] : String",
+              "code": "            sb.append(msg);\n        }\n        int tempCount = 0;\n        for (Map.Entry<String, Object> kv : kvs.entrySet()) {\n            tempCount++;\n            Object value = kv.getValue();\n            if (value != null) {"
+            },
+            {
+              "step": 22,
+              "variableName": "kvs",
+              "startLine": 83,
+              "startColumn": 45,
+              "endLine": 83,
+              "endColumn": 48,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "ConcurrentHashMap [<map.value>] : String",
+              "code": "            sb.append(msg);\n        }\n        int tempCount = 0;\n        for (Map.Entry<String, Object> kv : kvs.entrySet()) {\n            tempCount++;\n            Object value = kv.getValue();\n            if (value != null) {"
+            },
+            {
+              "step": 23,
+              "variableName": "kvs.entrySet()",
+              "startLine": 83,
+              "startColumn": 45,
+              "endLine": 83,
+              "endColumn": 59,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "Set [<element>, <map.value>] : String",
+              "code": "            sb.append(msg);\n        }\n        int tempCount = 0;\n        for (Map.Entry<String, Object> kv : kvs.entrySet()) {\n            tempCount++;\n            Object value = kv.getValue();\n            if (value != null) {"
+            },
+            {
+              "step": 24,
+              "variableName": "kv",
+              "startLine": 85,
+              "startColumn": 28,
+              "endLine": 85,
+              "endColumn": 30,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "Entry [<map.value>] : String",
+              "code": "        int tempCount = 0;\n        for (Map.Entry<String, Object> kv : kvs.entrySet()) {\n            tempCount++;\n            Object value = kv.getValue();\n            if (value != null) {\n                if (value instanceof String && StringUtil.isEmpty((String) value)) {\n                    continue;"
+            },
+            {
+              "step": 25,
+              "variableName": "kv",
+              "startLine": 90,
+              "startColumn": 53,
+              "endLine": 90,
+              "endColumn": 55,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "Entry [<map.value>] : String",
+              "code": "                if (value instanceof String && StringUtil.isEmpty((String) value)) {\n                    continue;\n                }\n                sb.append(kv.getKey() + \"=\").append(kv.getValue());\n                if (tempCount != kvs.size()) {\n                    sb.append(\"||\");\n                }"
+            },
+            {
+              "step": 26,
+              "variableName": "kv.getValue()",
+              "startLine": 90,
+              "startColumn": 53,
+              "endLine": 90,
+              "endColumn": 66,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "String",
+              "code": "                if (value instanceof String && StringUtil.isEmpty((String) value)) {\n                    continue;\n                }\n                sb.append(kv.getKey() + \"=\").append(kv.getValue());\n                if (tempCount != kvs.size()) {\n                    sb.append(\"||\");\n                }"
+            },
+            {
+              "step": 27,
+              "variableName": "sb.append(kv.getKey() + \"=\")",
+              "startLine": 90,
+              "startColumn": 17,
+              "endLine": 90,
+              "endColumn": 45,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "StringBuilder",
+              "code": "                if (value instanceof String && StringUtil.isEmpty((String) value)) {\n                    continue;\n                }\n                sb.append(kv.getKey() + \"=\").append(kv.getValue());\n                if (tempCount != kvs.size()) {\n                    sb.append(\"||\");\n                }"
+            },
+            {
+              "step": 28,
+              "variableName": "sb",
+              "startLine": 96,
+              "startColumn": 16,
+              "endLine": 96,
+              "endColumn": 18,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "StringBuilder",
+              "code": "                }\n            }\n        }\n        return sb.toString();\n    }\n}\n"
+            },
+            {
+              "step": 29,
+              "variableName": "sb.toString()",
+              "startLine": 96,
+              "startColumn": 16,
+              "endLine": 96,
+              "endColumn": 29,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "String",
+              "code": "                }\n            }\n        }\n        return sb.toString();\n    }\n}\n"
+            },
+            {
+              "step": 30,
+              "variableName": "toString()",
+              "startLine": 73,
+              "startColumn": 16,
+              "endLine": 73,
+              "endColumn": 26,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/logtracing/LogMessage.java",
+              "type": "String",
+              "code": "\n    public String kv2String(String k, Object v) {\n        this.kvs.put(k, v == null ? \"\" : v);\n        return toString();\n    }\n\n    @Override"
+            },
+            {
+              "step": 31,
+              "variableName": "LogMessage.getInstance().setMsg(\"Http Call error.\")",
+              "startLine": 260,
+              "startColumn": 23,
+              "endLine": 264,
+              "endColumn": 74,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/http/HttpUtil.java",
+              "type": "",
+              "code": "\n    private static String executeJson(String url, String method, String json, Map<String, String> headers) {\n        if (!JSONUtil.isJson(json)) {\n            log.error(LogMessage.getInstance().setMsg(\"Http Call error.\")\n                    .kv(\"url\", url)\n                    .kv(\"method\", method)\n                    .kv(\"json\", json)"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "ClientWorker.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken;",
+              "startLine": 35,
+              "startColumn": 20,
+              "endLine": 35,
+              "endColumn": 32,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "    /**\n     * accessToken\n     */\n    private String accessToken;\n\n    /**\n     * tokenTtl"
+            },
+            {
+              "step": 1,
+              "variableName": "@Data",
+              "startLine": 27,
+              "startColumn": 0,
+              "endLine": 27,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "/**\n * Token info.\n */\n@Data\n@NoArgsConstructor\n@AllArgsConstructor\npublic class TokenInfo {"
+            },
+            {
+              "step": 2,
+              "variableName": "@Data",
+              "startLine": 27,
+              "startColumn": 0,
+              "endLine": 27,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "/**\n * Token info.\n */\n@Data\n@NoArgsConstructor\n@AllArgsConstructor\npublic class TokenInfo {"
+            },
+            {
+              "step": 3,
+              "variableName": "result.getData().toString()",
+              "startLine": 201,
+              "startColumn": 50,
+              "endLine": 201,
+              "endColumn": 77,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            long readTimeoutMs = timeout + Math.round(timeout >> 1);\n            Result result = agent.httpPostByConfig(LISTENER_PATH, headers, params, readTimeoutMs);\n            if (result != null && result.isSuccess()) {\n                return parseUpdateDataIdResponse(result.getData().toString());\n            }\n        } catch (Exception ex) {\n            setHealthServer(false);"
+            },
+            {
+              "step": 4,
+              "variableName": "String response",
+              "startLine": 224,
+              "startColumn": 51,
+              "endLine": 224,
+              "endColumn": 66,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        return NULL;\n    }\n\n    public List<String> parseUpdateDataIdResponse(String response) {\n        if (StringUtils.isEmpty(response)) {\n            return Collections.emptyList();\n        }"
+            },
+            {
+              "step": 5,
+              "variableName": "response",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 46,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 6,
+              "variableName": "response.split(LINE_SEPARATOR)",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 68,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 7,
+              "variableName": "dataIdAndGroup",
+              "startLine": 236,
+              "startColumn": 35,
+              "endLine": 236,
+              "endColumn": 49,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];\n                String group = keyArr[1];\n                if (keyArr.length == 3) {"
+            },
+            {
+              "step": 8,
+              "variableName": "dataIdAndGroup.split(WORD_SEPARATOR)",
+              "startLine": 236,
+              "startColumn": 35,
+              "endLine": 236,
+              "endColumn": 71,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];\n                String group = keyArr[1];\n                if (keyArr.length == 3) {"
+            },
+            {
+              "step": 9,
+              "variableName": "dataId",
+              "startLine": 242,
+              "startColumn": 67,
+              "endLine": 242,
+              "endColumn": 73,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "",
+              "code": "                if (keyArr.length == 3) {\n                    String tenant = keyArr[2];\n                    updateList.add(GroupKey.getKeyTenant(dataId, group, tenant));\n                    log.info(\"[{}] Refresh thread pool changed.\", dataId);\n                } else {\n                    log.error(\"[{}] Polling resp invalid dataIdAndGroup error.\", dataIdAndGroup);\n                }"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken;",
+              "startLine": 35,
+              "startColumn": 20,
+              "endLine": 35,
+              "endColumn": 32,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "    /**\n     * accessToken\n     */\n    private String accessToken;\n\n    /**\n     * tokenTtl"
+            },
+            {
+              "step": 1,
+              "variableName": "@Data",
+              "startLine": 27,
+              "startColumn": 0,
+              "endLine": 27,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "/**\n * Token info.\n */\n@Data\n@NoArgsConstructor\n@AllArgsConstructor\npublic class TokenInfo {"
+            },
+            {
+              "step": 2,
+              "variableName": "@Data",
+              "startLine": 27,
+              "startColumn": 0,
+              "endLine": 27,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "/**\n * Token info.\n */\n@Data\n@NoArgsConstructor\n@AllArgsConstructor\npublic class TokenInfo {"
+            },
+            {
+              "step": 3,
+              "variableName": "result.getData().toString()",
+              "startLine": 201,
+              "startColumn": 50,
+              "endLine": 201,
+              "endColumn": 77,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            long readTimeoutMs = timeout + Math.round(timeout >> 1);\n            Result result = agent.httpPostByConfig(LISTENER_PATH, headers, params, readTimeoutMs);\n            if (result != null && result.isSuccess()) {\n                return parseUpdateDataIdResponse(result.getData().toString());\n            }\n        } catch (Exception ex) {\n            setHealthServer(false);"
+            },
+            {
+              "step": 4,
+              "variableName": "String response",
+              "startLine": 224,
+              "startColumn": 51,
+              "endLine": 224,
+              "endColumn": 66,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        return NULL;\n    }\n\n    public List<String> parseUpdateDataIdResponse(String response) {\n        if (StringUtils.isEmpty(response)) {\n            return Collections.emptyList();\n        }"
+            },
+            {
+              "step": 5,
+              "variableName": "response",
+              "startLine": 229,
+              "startColumn": 42,
+              "endLine": 229,
+              "endColumn": 50,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            return Collections.emptyList();\n        }\n        try {\n            response = URLDecoder.decode(response, \"UTF-8\");\n        } catch (Exception e) {\n            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }"
+            },
+            {
+              "step": 6,
+              "variableName": "URLDecoder.decode(response, \"UTF-8\")",
+              "startLine": 229,
+              "startColumn": 24,
+              "endLine": 229,
+              "endColumn": 60,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            return Collections.emptyList();\n        }\n        try {\n            response = URLDecoder.decode(response, \"UTF-8\");\n        } catch (Exception e) {\n            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }"
+            },
+            {
+              "step": 7,
+              "variableName": "response",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 46,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 8,
+              "variableName": "response.split(LINE_SEPARATOR)",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 68,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 9,
+              "variableName": "dataIdAndGroup",
+              "startLine": 236,
+              "startColumn": 35,
+              "endLine": 236,
+              "endColumn": 49,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];\n                String group = keyArr[1];\n                if (keyArr.length == 3) {"
+            },
+            {
+              "step": 10,
+              "variableName": "dataIdAndGroup.split(WORD_SEPARATOR)",
+              "startLine": 236,
+              "startColumn": 35,
+              "endLine": 236,
+              "endColumn": 71,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];\n                String group = keyArr[1];\n                if (keyArr.length == 3) {"
+            },
+            {
+              "step": 11,
+              "variableName": "dataId",
+              "startLine": 242,
+              "startColumn": 67,
+              "endLine": 242,
+              "endColumn": 73,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "",
+              "code": "                if (keyArr.length == 3) {\n                    String tenant = keyArr[2];\n                    updateList.add(GroupKey.getKeyTenant(dataId, group, tenant));\n                    log.info(\"[{}] Refresh thread pool changed.\", dataId);\n                } else {\n                    log.error(\"[{}] Polling resp invalid dataIdAndGroup error.\", dataIdAndGroup);\n                }"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password;",
+              "startLine": 47,
+              "startColumn": 20,
+              "endLine": 47,
+              "endColumn": 29,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "     * Password\n     */\n    @Length(min = 6, message = \"密码最少为6个字符\")\n    private String password;\n\n    /**\n     * Role"
+            },
+            {
+              "step": 1,
+              "variableName": "@Data",
+              "startLine": 32,
+              "startColumn": 0,
+              "endLine": 32,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "/**\n * User req dto.\n */\n@Data\n@Accessors(chain = true)\n@EqualsAndHashCode(callSuper = true)\npublic class UserReqDTO extends Page {"
+            },
+            {
+              "step": 2,
+              "variableName": "@Data",
+              "startLine": 32,
+              "startColumn": 0,
+              "endLine": 32,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "/**\n * User req dto.\n */\n@Data\n@Accessors(chain = true)\n@EqualsAndHashCode(callSuper = true)\npublic class UserReqDTO extends Page {"
+            },
+            {
+              "step": 3,
+              "variableName": "result.getData().toString()",
+              "startLine": 201,
+              "startColumn": 50,
+              "endLine": 201,
+              "endColumn": 77,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            long readTimeoutMs = timeout + Math.round(timeout >> 1);\n            Result result = agent.httpPostByConfig(LISTENER_PATH, headers, params, readTimeoutMs);\n            if (result != null && result.isSuccess()) {\n                return parseUpdateDataIdResponse(result.getData().toString());\n            }\n        } catch (Exception ex) {\n            setHealthServer(false);"
+            },
+            {
+              "step": 4,
+              "variableName": "String response",
+              "startLine": 224,
+              "startColumn": 51,
+              "endLine": 224,
+              "endColumn": 66,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        return NULL;\n    }\n\n    public List<String> parseUpdateDataIdResponse(String response) {\n        if (StringUtils.isEmpty(response)) {\n            return Collections.emptyList();\n        }"
+            },
+            {
+              "step": 5,
+              "variableName": "response",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 46,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 6,
+              "variableName": "response.split(LINE_SEPARATOR)",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 68,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 7,
+              "variableName": "dataIdAndGroup",
+              "startLine": 236,
+              "startColumn": 35,
+              "endLine": 236,
+              "endColumn": 49,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];\n                String group = keyArr[1];\n                if (keyArr.length == 3) {"
+            },
+            {
+              "step": 8,
+              "variableName": "dataIdAndGroup.split(WORD_SEPARATOR)",
+              "startLine": 236,
+              "startColumn": 35,
+              "endLine": 236,
+              "endColumn": 71,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];\n                String group = keyArr[1];\n                if (keyArr.length == 3) {"
+            },
+            {
+              "step": 9,
+              "variableName": "dataId",
+              "startLine": 242,
+              "startColumn": 67,
+              "endLine": 242,
+              "endColumn": 73,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "",
+              "code": "                if (keyArr.length == 3) {\n                    String tenant = keyArr[2];\n                    updateList.add(GroupKey.getKeyTenant(dataId, group, tenant));\n                    log.info(\"[{}] Refresh thread pool changed.\", dataId);\n                } else {\n                    log.error(\"[{}] Polling resp invalid dataIdAndGroup error.\", dataIdAndGroup);\n                }"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password;",
+              "startLine": 47,
+              "startColumn": 20,
+              "endLine": 47,
+              "endColumn": 29,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "     * Password\n     */\n    @Length(min = 6, message = \"密码最少为6个字符\")\n    private String password;\n\n    /**\n     * Role"
+            },
+            {
+              "step": 1,
+              "variableName": "@Data",
+              "startLine": 32,
+              "startColumn": 0,
+              "endLine": 32,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "/**\n * User req dto.\n */\n@Data\n@Accessors(chain = true)\n@EqualsAndHashCode(callSuper = true)\npublic class UserReqDTO extends Page {"
+            },
+            {
+              "step": 2,
+              "variableName": "@Data",
+              "startLine": 32,
+              "startColumn": 0,
+              "endLine": 32,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "/**\n * User req dto.\n */\n@Data\n@Accessors(chain = true)\n@EqualsAndHashCode(callSuper = true)\npublic class UserReqDTO extends Page {"
+            },
+            {
+              "step": 3,
+              "variableName": "result.getData().toString()",
+              "startLine": 201,
+              "startColumn": 50,
+              "endLine": 201,
+              "endColumn": 77,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            long readTimeoutMs = timeout + Math.round(timeout >> 1);\n            Result result = agent.httpPostByConfig(LISTENER_PATH, headers, params, readTimeoutMs);\n            if (result != null && result.isSuccess()) {\n                return parseUpdateDataIdResponse(result.getData().toString());\n            }\n        } catch (Exception ex) {\n            setHealthServer(false);"
+            },
+            {
+              "step": 4,
+              "variableName": "String response",
+              "startLine": 224,
+              "startColumn": 51,
+              "endLine": 224,
+              "endColumn": 66,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        return NULL;\n    }\n\n    public List<String> parseUpdateDataIdResponse(String response) {\n        if (StringUtils.isEmpty(response)) {\n            return Collections.emptyList();\n        }"
+            },
+            {
+              "step": 5,
+              "variableName": "response",
+              "startLine": 229,
+              "startColumn": 42,
+              "endLine": 229,
+              "endColumn": 50,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            return Collections.emptyList();\n        }\n        try {\n            response = URLDecoder.decode(response, \"UTF-8\");\n        } catch (Exception e) {\n            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }"
+            },
+            {
+              "step": 6,
+              "variableName": "URLDecoder.decode(response, \"UTF-8\")",
+              "startLine": 229,
+              "startColumn": 24,
+              "endLine": 229,
+              "endColumn": 60,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            return Collections.emptyList();\n        }\n        try {\n            response = URLDecoder.decode(response, \"UTF-8\");\n        } catch (Exception e) {\n            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }"
+            },
+            {
+              "step": 7,
+              "variableName": "response",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 46,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 8,
+              "variableName": "response.split(LINE_SEPARATOR)",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 68,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 9,
+              "variableName": "dataIdAndGroup",
+              "startLine": 236,
+              "startColumn": 35,
+              "endLine": 236,
+              "endColumn": 49,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];\n                String group = keyArr[1];\n                if (keyArr.length == 3) {"
+            },
+            {
+              "step": 10,
+              "variableName": "dataIdAndGroup.split(WORD_SEPARATOR)",
+              "startLine": 236,
+              "startColumn": 35,
+              "endLine": 236,
+              "endColumn": 71,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];\n                String group = keyArr[1];\n                if (keyArr.length == 3) {"
+            },
+            {
+              "step": 11,
+              "variableName": "dataId",
+              "startLine": 242,
+              "startColumn": 67,
+              "endLine": 242,
+              "endColumn": 73,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "",
+              "code": "                if (keyArr.length == 3) {\n                    String tenant = keyArr[2];\n                    updateList.add(GroupKey.getKeyTenant(dataId, group, tenant));\n                    log.info(\"[{}] Refresh thread pool changed.\", dataId);\n                } else {\n                    log.error(\"[{}] Polling resp invalid dataIdAndGroup error.\", dataIdAndGroup);\n                }"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "ClientWorker.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken;",
+              "startLine": 35,
+              "startColumn": 20,
+              "endLine": 35,
+              "endColumn": 32,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "    /**\n     * accessToken\n     */\n    private String accessToken;\n\n    /**\n     * tokenTtl"
+            },
+            {
+              "step": 1,
+              "variableName": "@Data",
+              "startLine": 27,
+              "startColumn": 0,
+              "endLine": 27,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "/**\n * Token info.\n */\n@Data\n@NoArgsConstructor\n@AllArgsConstructor\npublic class TokenInfo {"
+            },
+            {
+              "step": 2,
+              "variableName": "@Data",
+              "startLine": 27,
+              "startColumn": 0,
+              "endLine": 27,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "/**\n * Token info.\n */\n@Data\n@NoArgsConstructor\n@AllArgsConstructor\npublic class TokenInfo {"
+            },
+            {
+              "step": 3,
+              "variableName": "result.getData().toString()",
+              "startLine": 201,
+              "startColumn": 50,
+              "endLine": 201,
+              "endColumn": 77,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            long readTimeoutMs = timeout + Math.round(timeout >> 1);\n            Result result = agent.httpPostByConfig(LISTENER_PATH, headers, params, readTimeoutMs);\n            if (result != null && result.isSuccess()) {\n                return parseUpdateDataIdResponse(result.getData().toString());\n            }\n        } catch (Exception ex) {\n            setHealthServer(false);"
+            },
+            {
+              "step": 4,
+              "variableName": "String response",
+              "startLine": 224,
+              "startColumn": 51,
+              "endLine": 224,
+              "endColumn": 66,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        return NULL;\n    }\n\n    public List<String> parseUpdateDataIdResponse(String response) {\n        if (StringUtils.isEmpty(response)) {\n            return Collections.emptyList();\n        }"
+            },
+            {
+              "step": 5,
+              "variableName": "response",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 46,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 6,
+              "variableName": "response.split(LINE_SEPARATOR)",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 68,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 7,
+              "variableName": "dataIdAndGroup",
+              "startLine": 244,
+              "startColumn": 82,
+              "endLine": 244,
+              "endColumn": 96,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "",
+              "code": "                    updateList.add(GroupKey.getKeyTenant(dataId, group, tenant));\n                    log.info(\"[{}] Refresh thread pool changed.\", dataId);\n                } else {\n                    log.error(\"[{}] Polling resp invalid dataIdAndGroup error.\", dataIdAndGroup);\n                }\n            }\n        }"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken;",
+              "startLine": 35,
+              "startColumn": 20,
+              "endLine": 35,
+              "endColumn": 32,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "    /**\n     * accessToken\n     */\n    private String accessToken;\n\n    /**\n     * tokenTtl"
+            },
+            {
+              "step": 1,
+              "variableName": "@Data",
+              "startLine": 27,
+              "startColumn": 0,
+              "endLine": 27,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "/**\n * Token info.\n */\n@Data\n@NoArgsConstructor\n@AllArgsConstructor\npublic class TokenInfo {"
+            },
+            {
+              "step": 2,
+              "variableName": "@Data",
+              "startLine": 27,
+              "startColumn": 0,
+              "endLine": 27,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/model/TokenInfo.java",
+              "type": "String",
+              "code": "/**\n * Token info.\n */\n@Data\n@NoArgsConstructor\n@AllArgsConstructor\npublic class TokenInfo {"
+            },
+            {
+              "step": 3,
+              "variableName": "result.getData().toString()",
+              "startLine": 201,
+              "startColumn": 50,
+              "endLine": 201,
+              "endColumn": 77,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            long readTimeoutMs = timeout + Math.round(timeout >> 1);\n            Result result = agent.httpPostByConfig(LISTENER_PATH, headers, params, readTimeoutMs);\n            if (result != null && result.isSuccess()) {\n                return parseUpdateDataIdResponse(result.getData().toString());\n            }\n        } catch (Exception ex) {\n            setHealthServer(false);"
+            },
+            {
+              "step": 4,
+              "variableName": "String response",
+              "startLine": 224,
+              "startColumn": 51,
+              "endLine": 224,
+              "endColumn": 66,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        return NULL;\n    }\n\n    public List<String> parseUpdateDataIdResponse(String response) {\n        if (StringUtils.isEmpty(response)) {\n            return Collections.emptyList();\n        }"
+            },
+            {
+              "step": 5,
+              "variableName": "response",
+              "startLine": 229,
+              "startColumn": 42,
+              "endLine": 229,
+              "endColumn": 50,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            return Collections.emptyList();\n        }\n        try {\n            response = URLDecoder.decode(response, \"UTF-8\");\n        } catch (Exception e) {\n            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }"
+            },
+            {
+              "step": 6,
+              "variableName": "URLDecoder.decode(response, \"UTF-8\")",
+              "startLine": 229,
+              "startColumn": 24,
+              "endLine": 229,
+              "endColumn": 60,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            return Collections.emptyList();\n        }\n        try {\n            response = URLDecoder.decode(response, \"UTF-8\");\n        } catch (Exception e) {\n            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }"
+            },
+            {
+              "step": 7,
+              "variableName": "response",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 46,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 8,
+              "variableName": "response.split(LINE_SEPARATOR)",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 68,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 9,
+              "variableName": "dataIdAndGroup",
+              "startLine": 244,
+              "startColumn": 82,
+              "endLine": 244,
+              "endColumn": 96,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "",
+              "code": "                    updateList.add(GroupKey.getKeyTenant(dataId, group, tenant));\n                    log.info(\"[{}] Refresh thread pool changed.\", dataId);\n                } else {\n                    log.error(\"[{}] Polling resp invalid dataIdAndGroup error.\", dataIdAndGroup);\n                }\n            }\n        }"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 2,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password;",
+              "startLine": 47,
+              "startColumn": 20,
+              "endLine": 47,
+              "endColumn": 29,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "     * Password\n     */\n    @Length(min = 6, message = \"密码最少为6个字符\")\n    private String password;\n\n    /**\n     * Role"
+            },
+            {
+              "step": 1,
+              "variableName": "@Data",
+              "startLine": 32,
+              "startColumn": 0,
+              "endLine": 32,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "/**\n * User req dto.\n */\n@Data\n@Accessors(chain = true)\n@EqualsAndHashCode(callSuper = true)\npublic class UserReqDTO extends Page {"
+            },
+            {
+              "step": 2,
+              "variableName": "@Data",
+              "startLine": 32,
+              "startColumn": 0,
+              "endLine": 32,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "/**\n * User req dto.\n */\n@Data\n@Accessors(chain = true)\n@EqualsAndHashCode(callSuper = true)\npublic class UserReqDTO extends Page {"
+            },
+            {
+              "step": 3,
+              "variableName": "result.getData().toString()",
+              "startLine": 201,
+              "startColumn": 50,
+              "endLine": 201,
+              "endColumn": 77,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            long readTimeoutMs = timeout + Math.round(timeout >> 1);\n            Result result = agent.httpPostByConfig(LISTENER_PATH, headers, params, readTimeoutMs);\n            if (result != null && result.isSuccess()) {\n                return parseUpdateDataIdResponse(result.getData().toString());\n            }\n        } catch (Exception ex) {\n            setHealthServer(false);"
+            },
+            {
+              "step": 4,
+              "variableName": "String response",
+              "startLine": 224,
+              "startColumn": 51,
+              "endLine": 224,
+              "endColumn": 66,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        return NULL;\n    }\n\n    public List<String> parseUpdateDataIdResponse(String response) {\n        if (StringUtils.isEmpty(response)) {\n            return Collections.emptyList();\n        }"
+            },
+            {
+              "step": 5,
+              "variableName": "response",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 46,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 6,
+              "variableName": "response.split(LINE_SEPARATOR)",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 68,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 7,
+              "variableName": "dataIdAndGroup",
+              "startLine": 244,
+              "startColumn": 82,
+              "endLine": 244,
+              "endColumn": 96,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "",
+              "code": "                    updateList.add(GroupKey.getKeyTenant(dataId, group, tenant));\n                    log.info(\"[{}] Refresh thread pool changed.\", dataId);\n                } else {\n                    log.error(\"[{}] Polling resp invalid dataIdAndGroup error.\", dataIdAndGroup);\n                }\n            }\n        }"
+            }
+          ],
+          "label": "Yes"
+        },
+        {
+          "codeFlowIndex": 3,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password;",
+              "startLine": 47,
+              "startColumn": 20,
+              "endLine": 47,
+              "endColumn": 29,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "     * Password\n     */\n    @Length(min = 6, message = \"密码最少为6个字符\")\n    private String password;\n\n    /**\n     * Role"
+            },
+            {
+              "step": 1,
+              "variableName": "@Data",
+              "startLine": 32,
+              "startColumn": 0,
+              "endLine": 32,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "/**\n * User req dto.\n */\n@Data\n@Accessors(chain = true)\n@EqualsAndHashCode(callSuper = true)\npublic class UserReqDTO extends Page {"
+            },
+            {
+              "step": 2,
+              "variableName": "@Data",
+              "startLine": 32,
+              "startColumn": 0,
+              "endLine": 32,
+              "endColumn": 6,
+              "uri": "hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/model/biz/user/UserReqDTO.java",
+              "type": "String",
+              "code": "/**\n * User req dto.\n */\n@Data\n@Accessors(chain = true)\n@EqualsAndHashCode(callSuper = true)\npublic class UserReqDTO extends Page {"
+            },
+            {
+              "step": 3,
+              "variableName": "result.getData().toString()",
+              "startLine": 201,
+              "startColumn": 50,
+              "endLine": 201,
+              "endColumn": 77,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            long readTimeoutMs = timeout + Math.round(timeout >> 1);\n            Result result = agent.httpPostByConfig(LISTENER_PATH, headers, params, readTimeoutMs);\n            if (result != null && result.isSuccess()) {\n                return parseUpdateDataIdResponse(result.getData().toString());\n            }\n        } catch (Exception ex) {\n            setHealthServer(false);"
+            },
+            {
+              "step": 4,
+              "variableName": "String response",
+              "startLine": 224,
+              "startColumn": 51,
+              "endLine": 224,
+              "endColumn": 66,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "        return NULL;\n    }\n\n    public List<String> parseUpdateDataIdResponse(String response) {\n        if (StringUtils.isEmpty(response)) {\n            return Collections.emptyList();\n        }"
+            },
+            {
+              "step": 5,
+              "variableName": "response",
+              "startLine": 229,
+              "startColumn": 42,
+              "endLine": 229,
+              "endColumn": 50,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            return Collections.emptyList();\n        }\n        try {\n            response = URLDecoder.decode(response, \"UTF-8\");\n        } catch (Exception e) {\n            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }"
+            },
+            {
+              "step": 6,
+              "variableName": "URLDecoder.decode(response, \"UTF-8\")",
+              "startLine": 229,
+              "startColumn": 24,
+              "endLine": 229,
+              "endColumn": 60,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            return Collections.emptyList();\n        }\n        try {\n            response = URLDecoder.decode(response, \"UTF-8\");\n        } catch (Exception e) {\n            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }"
+            },
+            {
+              "step": 7,
+              "variableName": "response",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 46,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 8,
+              "variableName": "response.split(LINE_SEPARATOR)",
+              "startLine": 234,
+              "startColumn": 38,
+              "endLine": 234,
+              "endColumn": 68,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "String[]",
+              "code": "            log.error(\"Polling resp decode modifiedDataIdsString error.\", e);\n        }\n        List<String> updateList = new LinkedList<>();\n        for (String dataIdAndGroup : response.split(LINE_SEPARATOR)) {\n            if (!StringUtils.isEmpty(dataIdAndGroup)) {\n                String[] keyArr = dataIdAndGroup.split(WORD_SEPARATOR);\n                String dataId = keyArr[0];"
+            },
+            {
+              "step": 9,
+              "variableName": "dataIdAndGroup",
+              "startLine": 244,
+              "startColumn": 82,
+              "endLine": 244,
+              "endColumn": 96,
+              "uri": "hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java",
+              "type": "",
+              "code": "                    updateList.add(GroupKey.getKeyTenant(dataId, group, tenant));\n                    log.info(\"[{}] Refresh thread pool changed.\", dataId);\n                } else {\n                    log.error(\"[{}] Polling resp invalid dataIdAndGroup error.\", dataIdAndGroup);\n                }\n            }\n        }"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}

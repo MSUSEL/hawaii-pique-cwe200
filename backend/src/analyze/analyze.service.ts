@@ -96,17 +96,17 @@ export class AnalyzeService {
             await this.parserService.saveDataFlowTree(sourcePath);
         });
 
-        const flows = await this.fileUtilService.readJsonFile(path.join(sourcePath, 'flowMapsByCWE.json'));
-        if (Object.keys(flows).length > 0) {
+        // const flows = await this.fileUtilService.readJsonFile(path.join(sourcePath, 'flowMapsByCWE.json'));
+        // if (Object.keys(flows).length > 0) {
 
-            await this.executeStep('Verifying Data Flows.', async () => {
-                await this.bertService.verifyFlows(sourcePath);
-            });
+        //     await this.executeStep('Verifying Data Flows.', async () => {
+        //         await this.bertService.verifyFlows(sourcePath);
+        //     });
 
-            await this.executeStep('Updating Sarif.', async () => {
-                await this.codeqlService.updateSarif(sourcePath);
-            });
-        }
+        //     await this.executeStep('Updating Sarif.', async () => {
+        //         await this.codeqlService.updateSarif(sourcePath);
+        //     });
+        // }
 
         // Print all the times at the end
         console.log("Time taken for each step:");

@@ -1,0 +1,38 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "SamlProfileWrapper.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "credentials",
+              "startLine": 69,
+              "startColumn": 81,
+              "endLine": 69,
+              "endColumn": 92,
+              "uri": "saml-plugin-4.525.v4f6a_7209447e/src/main/java/org/jenkinsci/plugins/saml/SamlProfileWrapper.java",
+              "type": "SAML2AuthenticationCredentials",
+              "code": "            throw new BadCredentialsException(e.getMessage(), e);\n        }\n        if (saml2Profile == null) {\n            String msg = \"Could not find user profile for SAML credentials: \" + credentials;\n            LOG.severe(msg);\n            throw new BadCredentialsException(msg);\n        }"
+            },
+            {
+              "step": 1,
+              "variableName": "msg",
+              "startLine": 70,
+              "startColumn": 24,
+              "endLine": 70,
+              "endColumn": 27,
+              "uri": "saml-plugin-4.525.v4f6a_7209447e/src/main/java/org/jenkinsci/plugins/saml/SamlProfileWrapper.java",
+              "type": "",
+              "code": "        }\n        if (saml2Profile == null) {\n            String msg = \"Could not find user profile for SAML credentials: \" + credentials;\n            LOG.severe(msg);\n            throw new BadCredentialsException(msg);\n        }\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}

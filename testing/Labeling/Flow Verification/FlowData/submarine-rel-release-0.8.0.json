@@ -1,0 +1,354 @@
+{
+  "201": [
+    {
+      "resultIndex": 6,
+      "fileName": "SubmarineServer.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "bufferedReader",
+              "startLine": 437,
+              "startColumn": 27,
+              "endLine": 437,
+              "endColumn": 41,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-core/src/main/java/org/apache/submarine/server/SubmarineServer.java",
+              "type": "BufferedReader",
+              "code": "               new InputStreamReader(new FileInputStream(indexFile), \"GBK\");\n           BufferedReader bufferedReader = new BufferedReader(reader);) {\n        String lineTxt = null;\n        while ((lineTxt = bufferedReader.readLine()) != null) {\n          sbIndexBuf.append(lineTxt);\n        }\n      } catch (IOException e) {"
+            },
+            {
+              "step": 1,
+              "variableName": "bufferedReader.readLine()",
+              "startLine": 437,
+              "startColumn": 27,
+              "endLine": 437,
+              "endColumn": 52,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-core/src/main/java/org/apache/submarine/server/SubmarineServer.java",
+              "type": "String",
+              "code": "               new InputStreamReader(new FileInputStream(indexFile), \"GBK\");\n           BufferedReader bufferedReader = new BufferedReader(reader);) {\n        String lineTxt = null;\n        while ((lineTxt = bufferedReader.readLine()) != null) {\n          sbIndexBuf.append(lineTxt);\n        }\n      } catch (IOException e) {"
+            },
+            {
+              "step": 2,
+              "variableName": "lineTxt",
+              "startLine": 438,
+              "startColumn": 29,
+              "endLine": 438,
+              "endColumn": 36,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-core/src/main/java/org/apache/submarine/server/SubmarineServer.java",
+              "type": "String",
+              "code": "           BufferedReader bufferedReader = new BufferedReader(reader);) {\n        String lineTxt = null;\n        while ((lineTxt = bufferedReader.readLine()) != null) {\n          sbIndexBuf.append(lineTxt);\n        }\n      } catch (IOException e) {\n        LOG.error(e.getMessage(), e);"
+            },
+            {
+              "step": 3,
+              "variableName": "sbIndexBuf",
+              "startLine": 438,
+              "startColumn": 11,
+              "endLine": 438,
+              "endColumn": 21,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-core/src/main/java/org/apache/submarine/server/SubmarineServer.java",
+              "type": "StringBuilder",
+              "code": "           BufferedReader bufferedReader = new BufferedReader(reader);) {\n        String lineTxt = null;\n        while ((lineTxt = bufferedReader.readLine()) != null) {\n          sbIndexBuf.append(lineTxt);\n        }\n      } catch (IOException e) {\n        LOG.error(e.getMessage(), e);"
+            },
+            {
+              "step": 4,
+              "variableName": "sbIndexBuf",
+              "startLine": 444,
+              "startColumn": 34,
+              "endLine": 444,
+              "endColumn": 44,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-core/src/main/java/org/apache/submarine/server/SubmarineServer.java",
+              "type": "StringBuilder",
+              "code": "        LOG.error(e.getMessage(), e);\n      }\n\n      response.getWriter().print(sbIndexBuf.toString());\n    }\n  }\n}"
+            },
+            {
+              "step": 5,
+              "variableName": "sbIndexBuf.toString()",
+              "startLine": 444,
+              "startColumn": 34,
+              "endLine": 444,
+              "endColumn": 55,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-core/src/main/java/org/apache/submarine/server/SubmarineServer.java",
+              "type": "",
+              "code": "        LOG.error(e.getMessage(), e);\n      }\n\n      response.getWriter().print(sbIndexBuf.toString());\n    }\n  }\n}"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ],
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "SysUserRestApi.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password",
+              "startLine": 169,
+              "startColumn": 30,
+              "endLine": 169,
+              "endColumn": 38,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +\n            \", avatar='\" + avatar + '\\'' +\n            \", sex='\" + sex + '\\'' +\n            \", status='\" + status + '\\'' +"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Sys",
+              "startLine": 166,
+              "startColumn": 12,
+              "endLine": 186,
+              "endColumn": 16,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String toString() {\n    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +"
+            },
+            {
+              "step": 2,
+              "variableName": "sysUser.toString()",
+              "startLine": 103,
+              "startColumn": 26,
+              "endLine": 103,
+              "endColumn": 44,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-core/src/main/java/org/apache/submarine/server/rest/workbench/SysUserRestApi.java",
+              "type": "",
+              "code": "  @Path(\"/edit\")\n  @SubmarineApi\n  public Response edit(SysUserEntity sysUser) {\n    LOG.info(\"edit({})\", sysUser.toString());\n\n    try {\n      userService.edit(sysUser);"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "SysUserRestApi.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password",
+              "startLine": 169,
+              "startColumn": 30,
+              "endLine": 169,
+              "endColumn": 38,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +\n            \", avatar='\" + avatar + '\\'' +\n            \", sex='\" + sex + '\\'' +\n            \", status='\" + status + '\\'' +"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Sys",
+              "startLine": 166,
+              "startColumn": 12,
+              "endLine": 186,
+              "endColumn": 16,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String toString() {\n    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +"
+            },
+            {
+              "step": 2,
+              "variableName": "sysUser.toString()",
+              "startLine": 122,
+              "startColumn": 25,
+              "endLine": 122,
+              "endColumn": 43,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-core/src/main/java/org/apache/submarine/server/rest/workbench/SysUserRestApi.java",
+              "type": "",
+              "code": "  /* This is temporarily marked as not requiring validation in the way that on the login page failed */\n  @NoneAuth\n  public Response add(SysUserEntity sysUser) {\n    LOG.info(\"add({})\", sysUser.toString());\n\n    try {\n      userService.add(sysUser);"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "SysUserRestApi.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password",
+              "startLine": 169,
+              "startColumn": 30,
+              "endLine": 169,
+              "endColumn": 38,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +\n            \", avatar='\" + avatar + '\\'' +\n            \", sex='\" + sex + '\\'' +\n            \", status='\" + status + '\\'' +"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Sys",
+              "startLine": 166,
+              "startColumn": 12,
+              "endLine": 186,
+              "endColumn": 16,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String toString() {\n    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +"
+            },
+            {
+              "step": 2,
+              "variableName": "sysUser.toString()",
+              "startLine": 157,
+              "startColumn": 36,
+              "endLine": 157,
+              "endColumn": 54,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-core/src/main/java/org/apache/submarine/server/rest/workbench/SysUserRestApi.java",
+              "type": "",
+              "code": "  @Path(\"/changePassword\")\n  @SubmarineApi\n  public Response changePassword(SysUserEntity sysUser) {\n    LOG.info(\"changePassword({})\", sysUser.toString());\n\n    try {\n      userService.changePassword(sysUser);"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 3,
+      "fileName": "SysUserService.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password",
+              "startLine": 169,
+              "startColumn": 30,
+              "endLine": 169,
+              "endColumn": 38,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +\n            \", avatar='\" + avatar + '\\'' +\n            \", sex='\" + sex + '\\'' +\n            \", status='\" + status + '\\'' +"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Sys",
+              "startLine": 166,
+              "startColumn": 12,
+              "endLine": 186,
+              "endColumn": 16,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String toString() {\n    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +"
+            },
+            {
+              "step": 2,
+              "variableName": "sysUser.toString()",
+              "startLine": 146,
+              "startColumn": 25,
+              "endLine": 146,
+              "endColumn": 43,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/service/SysUserService.java",
+              "type": "",
+              "code": "  }\n\n  public boolean add(SysUserEntity sysUser) throws Exception {\n    LOG.info(\"add({})\", sysUser.toString());\n\n    try (SqlSession sqlSession = MyBatisUtil.getSqlSession()) {\n      SysUserMapper userMapper = sqlSession.getMapper(SysUserMapper.class);"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 4,
+      "fileName": "SysUserService.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password",
+              "startLine": 169,
+              "startColumn": 30,
+              "endLine": 169,
+              "endColumn": 38,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +\n            \", avatar='\" + avatar + '\\'' +\n            \", sex='\" + sex + '\\'' +\n            \", status='\" + status + '\\'' +"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Sys",
+              "startLine": 166,
+              "startColumn": 12,
+              "endLine": 186,
+              "endColumn": 16,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String toString() {\n    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +"
+            },
+            {
+              "step": 2,
+              "variableName": "sysUser.toString()",
+              "startLine": 160,
+              "startColumn": 26,
+              "endLine": 160,
+              "endColumn": 44,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/service/SysUserService.java",
+              "type": "",
+              "code": "  }\n\n  public boolean edit(SysUserEntity sysUser) throws Exception {\n    LOG.info(\"edit({})\", sysUser.toString());\n    try (SqlSession sqlSession = MyBatisUtil.getSqlSession()) {\n      SysUserMapper userMapper = sqlSession.getMapper(SysUserMapper.class);\n      userMapper.updateBy(sysUser);"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 5,
+      "fileName": "SysUserService.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "password",
+              "startLine": 169,
+              "startColumn": 30,
+              "endLine": 169,
+              "endColumn": 38,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +\n            \", avatar='\" + avatar + '\\'' +\n            \", sex='\" + sex + '\\'' +\n            \", status='\" + status + '\\'' +"
+            },
+            {
+              "step": 1,
+              "variableName": "\"Sys",
+              "startLine": 166,
+              "startColumn": 12,
+              "endLine": 186,
+              "endColumn": 16,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/entity/SysUserEntity.java",
+              "type": "String",
+              "code": "\n  @Override\n  public String toString() {\n    return \"SysUserEntity{\" +\n            \"userName='\" + userName + '\\'' +\n            \", realName='\" + realName + '\\'' +\n            \", password='\" + password + '\\'' +"
+            },
+            {
+              "step": 2,
+              "variableName": "user.toString()",
+              "startLine": 186,
+              "startColumn": 36,
+              "endLine": 186,
+              "endColumn": 51,
+              "uri": "submarine-rel-release-0.8.0/submarine-server/server-database/src/main/java/org/apache/submarine/server/database/workbench/service/SysUserService.java",
+              "type": "",
+              "code": "  }\n\n  public boolean changePassword(SysUserEntity user) throws Exception {\n    LOG.info(\"changePassword({})\", user.toString());\n    try (SqlSession sqlSession = MyBatisUtil.getSqlSession()) {\n      SysUserMapper userMapper = sqlSession.getMapper(SysUserMapper.class);\n      userMapper.changePassword(user);"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}

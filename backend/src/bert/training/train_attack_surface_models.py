@@ -37,30 +37,6 @@ sink_type_mapping_rev = {
     "IPC Sink": 7
 }
 
-def camel_case_split(str_input):
-    """Split a camelCase or PascalCase string into separate words.
-    Helps normalize identifier names for better text processing.
-    
-    :param s: camelCase or PascalCase string
-    :returns: list of split words
-    """
-    words = [[str_input[0]]]
-    for c in str_input[1:]:
-        if words[-1][-1].islower() and c.isupper():
-            words.append([c])
-        else:
-            words[-1].append(c)
-    return [''.join(word) for word in words]
-
-def text_preprocess(feature_text):
-    """Preprocess a string by splitting camel case and converting to lowercase.
-    Prepares code tokens for consistent embedding and comparison.
-    
-    :param feature_text: raw text to preprocess
-    :returns: preprocessed string
-    """
-    words = camel_case_split(feature_text)
-    return ' '.join(words).lower()
 
 def read_json(file_path):
     with open(file_path, 'r', encoding='UTF-8') as file:
@@ -509,20 +485,20 @@ def get_context(labels, context, category):
             # Append to data in the correct format
             if category in ['variables', 'strings']:
                 data.append([
-                    text_preprocess(name),
-                    text_preprocess(aggregated_context),
+                    name,
+                    aggregated_context,
                     binary_label
                 ])
             elif category == 'comments':
                 data.append([
-                    text_preprocess(name),
+                    name,
                     None,
                     binary_label
                 ])
             elif category == 'sinks':
                 data.append([
-                    text_preprocess(name),
-                    text_preprocess(aggregated_context),
+                    name,
+                    aggregated_context,
                     binary_label
                 ])
     return data

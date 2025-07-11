@@ -1,0 +1,274 @@
+{
+  "532": [
+    {
+      "resultIndex": 0,
+      "fileName": "OauthBaidu.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken",
+              "startLine": 60,
+              "startColumn": 10,
+              "endLine": 60,
+              "endColumn": 21,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/util/TokenUtil.java",
+              "type": "String",
+              "code": "\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn accessToken;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 1,
+              "variableName": "TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params))",
+              "startLine": 102,
+              "startColumn": 18,
+              "endLine": 102,
+              "endColumn": 75,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthBaidu.java",
+              "type": "String",
+              "code": "\t\tparams.put(\"client_secret\", getClientSecret());\n\t\tparams.put(\"grant_type\", \"authorization_code\");\n\t\tparams.put(\"redirect_uri\", getRedirectUri());\n\t\tString token = TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params));\n\t\tLOGGER.debug(token);\n\t\treturn token;\n\t}"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 103,
+              "startColumn": 16,
+              "endLine": 103,
+              "endColumn": 21,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthBaidu.java",
+              "type": "",
+              "code": "\t\tparams.put(\"grant_type\", \"authorization_code\");\n\t\tparams.put(\"redirect_uri\", getRedirectUri());\n\t\tString token = TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params));\n\t\tLOGGER.debug(token);\n\t\treturn token;\n\t}\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "OauthDouban.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken",
+              "startLine": 60,
+              "startColumn": 10,
+              "endLine": 60,
+              "endColumn": 21,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/util/TokenUtil.java",
+              "type": "String",
+              "code": "\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn accessToken;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 1,
+              "variableName": "TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params))",
+              "startLine": 95,
+              "startColumn": 24,
+              "endLine": 95,
+              "endColumn": 81,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthDouban.java",
+              "type": "String",
+              "code": "        params.put(\"client_secret\", getClientSecret());\n        params.put(\"grant_type\", \"authorization_code\");\n        params.put(\"redirect_uri\", getRedirectUri());\n        String token = TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params));\n        logger.debug(token);\n        return token;\n    }"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 96,
+              "startColumn": 22,
+              "endLine": 96,
+              "endColumn": 27,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthDouban.java",
+              "type": "",
+              "code": "        params.put(\"grant_type\", \"authorization_code\");\n        params.put(\"redirect_uri\", getRedirectUri());\n        String token = TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params));\n        logger.debug(token);\n        return token;\n    }\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 2,
+      "fileName": "OauthGithub.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken",
+              "startLine": 60,
+              "startColumn": 10,
+              "endLine": 60,
+              "endColumn": 21,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/util/TokenUtil.java",
+              "type": "String",
+              "code": "\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn accessToken;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 1,
+              "variableName": "TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params))",
+              "startLine": 98,
+              "startColumn": 24,
+              "endLine": 98,
+              "endColumn": 81,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthGithub.java",
+              "type": "String",
+              "code": "        params.put(\"client_secret\", getClientSecret());\n        params.put(\"grant_type\", \"authorization_code\");\n        params.put(\"redirect_uri\", getRedirectUri());\n        String token = TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params));\n        LOGGER.debug(token);\n        return token;\n    }"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 99,
+              "startColumn": 22,
+              "endLine": 99,
+              "endColumn": 27,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthGithub.java",
+              "type": "",
+              "code": "        params.put(\"grant_type\", \"authorization_code\");\n        params.put(\"redirect_uri\", getRedirectUri());\n        String token = TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params));\n        LOGGER.debug(token);\n        return token;\n    }\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 3,
+      "fileName": "OauthOsc.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken",
+              "startLine": 60,
+              "startColumn": 10,
+              "endLine": 60,
+              "endColumn": 21,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/util/TokenUtil.java",
+              "type": "String",
+              "code": "\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn accessToken;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 1,
+              "variableName": "TokenUtil.getAccessToken(super.doGet(TOKEN_URL, params))",
+              "startLine": 99,
+              "startColumn": 24,
+              "endLine": 99,
+              "endColumn": 80,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthOsc.java",
+              "type": "String",
+              "code": "        params.put(\"client_secret\", getClientSecret());\n        params.put(\"grant_type\", \"authorization_code\");\n        params.put(\"redirect_uri\", getRedirectUri());\n        String token = TokenUtil.getAccessToken(super.doGet(TOKEN_URL, params));\n        LOGGER.debug(token);\n        return token;\n    }"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 100,
+              "startColumn": 22,
+              "endLine": 100,
+              "endColumn": 27,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthOsc.java",
+              "type": "",
+              "code": "        params.put(\"grant_type\", \"authorization_code\");\n        params.put(\"redirect_uri\", getRedirectUri());\n        String token = TokenUtil.getAccessToken(super.doGet(TOKEN_URL, params));\n        LOGGER.debug(token);\n        return token;\n    }\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 4,
+      "fileName": "OauthQQ.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken",
+              "startLine": 60,
+              "startColumn": 10,
+              "endLine": 60,
+              "endColumn": 21,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/util/TokenUtil.java",
+              "type": "String",
+              "code": "\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn accessToken;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 1,
+              "variableName": "TokenUtil.getAccessToken(super.doGet(TOKEN_URL, params))",
+              "startLine": 101,
+              "startColumn": 24,
+              "endLine": 101,
+              "endColumn": 80,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthQQ.java",
+              "type": "String",
+              "code": "        params.put(\"grant_type\", \"authorization_code\");\n        params.put(\"redirect_uri\", getRedirectUri());\n        // access_token=FE04************************CCE2&expires_in=7776000\n        String token = TokenUtil.getAccessToken(super.doGet(TOKEN_URL, params));\n        LOGGER.debug(token);\n        return token;\n    }"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 102,
+              "startColumn": 22,
+              "endLine": 102,
+              "endColumn": 27,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthQQ.java",
+              "type": "",
+              "code": "        params.put(\"redirect_uri\", getRedirectUri());\n        // access_token=FE04************************CCE2&expires_in=7776000\n        String token = TokenUtil.getAccessToken(super.doGet(TOKEN_URL, params));\n        LOGGER.debug(token);\n        return token;\n    }\n"
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    },
+    {
+      "resultIndex": 5,
+      "fileName": "OauthSina.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "accessToken",
+              "startLine": 60,
+              "startColumn": 10,
+              "endLine": 60,
+              "endColumn": 21,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/util/TokenUtil.java",
+              "type": "String",
+              "code": "\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn accessToken;\n\t}\n\n\t/**"
+            },
+            {
+              "step": 1,
+              "variableName": "TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params))",
+              "startLine": 100,
+              "startColumn": 24,
+              "endLine": 100,
+              "endColumn": 81,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthSina.java",
+              "type": "String",
+              "code": "        params.put(\"client_secret\", getClientSecret());\n        params.put(\"grant_type\", \"authorization_code\");\n        params.put(\"redirect_uri\", getRedirectUri());\n        String token = TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params));\n        LOGGER.debug(token);\n        return token;\n    }"
+            },
+            {
+              "step": 2,
+              "variableName": "token",
+              "startLine": 101,
+              "startColumn": 22,
+              "endLine": 101,
+              "endColumn": 27,
+              "uri": "jflyfox_jfinal-4.5.0/src/main/java/com/jflyfox/jfinal/component/oauth/OauthSina.java",
+              "type": "",
+              "code": "        params.put(\"grant_type\", \"authorization_code\");\n        params.put(\"redirect_uri\", getRedirectUri());\n        String token = TokenUtil.getAccessToken(super.doPost(TOKEN_URL, params));\n        LOGGER.debug(token);\n        return token;\n    }\n    "
+            }
+          ],
+          "label": "Yes"
+        }
+      ]
+    }
+  ]
+}

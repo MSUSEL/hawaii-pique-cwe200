@@ -1,0 +1,177 @@
+{
+  "201": [
+    {
+      "resultIndex": 0,
+      "fileName": "RequestMailSender.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "mail",
+              "startLine": 155,
+              "startColumn": 7,
+              "endLine": 155,
+              "endColumn": 11,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "MimeMessage",
+              "code": "\t\t\tmail = createMailError(itemName, userName, requestType, emailMessage);\n\t\t}\n\n\t\tif (mail != null) {\n\t\t\tTransport.send(mail);\n\t\t\tLOGGER.log(Level.INFO, \"[INFO] A Request email has been sent to \" + requestadminemail + \" from \" + userName);\n\t\t}"
+            },
+            {
+              "step": 1,
+              "variableName": "mail",
+              "startLine": 156,
+              "startColumn": 19,
+              "endLine": 156,
+              "endColumn": 23,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "",
+              "code": "\t\t}\n\n\t\tif (mail != null) {\n\t\t\tTransport.send(mail);\n\t\t\tLOGGER.log(Level.INFO, \"[INFO] A Request email has been sent to \" + requestadminemail + \" from \" + userName);\n\t\t}\n"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    },
+    {
+      "resultIndex": 1,
+      "fileName": "RequestMailSender.java",
+      "flows": [
+        {
+          "codeFlowIndex": 0,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "emailMessage",
+              "startLine": 152,
+              "startColumn": 60,
+              "endLine": 152,
+              "endColumn": 72,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "String",
+              "code": "\t\tif (emailType.equals(\"REQUEST\")) {\n\t\t\tmail = createMail(itemName, userName, requestType);\n\t\t} else {\n\t\t\tmail = createMailError(itemName, userName, requestType, emailMessage);\n\t\t}\n\n\t\tif (mail != null) {"
+            },
+            {
+              "step": 1,
+              "variableName": "String emailMessage",
+              "startLine": 259,
+              "startColumn": 92,
+              "endLine": 259,
+              "endColumn": 111,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "String",
+              "code": "\t}\n\n\t// Email for admins only:\n\tprivate MimeMessage createMailError(String itemName, String userName, String requestType, String emailMessage) throws MessagingException, UnknownHostException {\n\t\tString jenkinsURL = getProjectURL();\n\t\tMimeMessage msg = createEmptyMailError();\n\t\tStringBuffer buf = new StringBuffer();"
+            },
+            {
+              "step": 2,
+              "variableName": "emailMessage + \"\\n\"",
+              "startLine": 292,
+              "startColumn": 16,
+              "endLine": 292,
+              "endColumn": 35,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "String",
+              "code": "\n\t\t\t\t// Email page content:\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\\n\");\n\t\t\t\tbuf.append(emailMessage + \"\\n\");\n\t\t\t\tbuf.append(pendingRequestsLink + \"\\n\\n\\n\");\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\");\n\t\t\t\tmsg.setText(buf.toString());"
+            },
+            {
+              "step": 3,
+              "variableName": "buf",
+              "startLine": 292,
+              "startColumn": 5,
+              "endLine": 292,
+              "endColumn": 8,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "StringBuffer",
+              "code": "\n\t\t\t\t// Email page content:\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\\n\");\n\t\t\t\tbuf.append(emailMessage + \"\\n\");\n\t\t\t\tbuf.append(pendingRequestsLink + \"\\n\\n\\n\");\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\");\n\t\t\t\tmsg.setText(buf.toString());"
+            },
+            {
+              "step": 4,
+              "variableName": "buf",
+              "startLine": 295,
+              "startColumn": 17,
+              "endLine": 295,
+              "endColumn": 20,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "StringBuffer",
+              "code": "\t\t\t\tbuf.append(emailMessage + \"\\n\");\n\t\t\t\tbuf.append(pendingRequestsLink + \"\\n\\n\\n\");\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\");\n\t\t\t\tmsg.setText(buf.toString());\n\t\t\t}\n\n\t\t} catch (Exception e) {"
+            },
+            {
+              "step": 5,
+              "variableName": "buf.toString()",
+              "startLine": 295,
+              "startColumn": 17,
+              "endLine": 295,
+              "endColumn": 31,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "",
+              "code": "\t\t\t\tbuf.append(emailMessage + \"\\n\");\n\t\t\t\tbuf.append(pendingRequestsLink + \"\\n\\n\\n\");\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\");\n\t\t\t\tmsg.setText(buf.toString());\n\t\t\t}\n\n\t\t} catch (Exception e) {"
+            }
+          ],
+          "label": "No"
+        },
+        {
+          "codeFlowIndex": 1,
+          "flow": [
+            {
+              "step": 0,
+              "variableName": "emailMessage",
+              "startLine": 292,
+              "startColumn": 16,
+              "endLine": 292,
+              "endColumn": 28,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "String",
+              "code": "\n\t\t\t\t// Email page content:\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\\n\");\n\t\t\t\tbuf.append(emailMessage + \"\\n\");\n\t\t\t\tbuf.append(pendingRequestsLink + \"\\n\\n\\n\");\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\");\n\t\t\t\tmsg.setText(buf.toString());"
+            },
+            {
+              "step": 1,
+              "variableName": "emailMessage + \"\\n\"",
+              "startLine": 292,
+              "startColumn": 16,
+              "endLine": 292,
+              "endColumn": 35,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "String",
+              "code": "\n\t\t\t\t// Email page content:\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\\n\");\n\t\t\t\tbuf.append(emailMessage + \"\\n\");\n\t\t\t\tbuf.append(pendingRequestsLink + \"\\n\\n\\n\");\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\");\n\t\t\t\tmsg.setText(buf.toString());"
+            },
+            {
+              "step": 2,
+              "variableName": "buf",
+              "startLine": 292,
+              "startColumn": 5,
+              "endLine": 292,
+              "endColumn": 8,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "StringBuffer",
+              "code": "\n\t\t\t\t// Email page content:\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\\n\");\n\t\t\t\tbuf.append(emailMessage + \"\\n\");\n\t\t\t\tbuf.append(pendingRequestsLink + \"\\n\\n\\n\");\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\");\n\t\t\t\tmsg.setText(buf.toString());"
+            },
+            {
+              "step": 3,
+              "variableName": "buf",
+              "startLine": 295,
+              "startColumn": 17,
+              "endLine": 295,
+              "endColumn": 20,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "StringBuffer",
+              "code": "\t\t\t\tbuf.append(emailMessage + \"\\n\");\n\t\t\t\tbuf.append(pendingRequestsLink + \"\\n\\n\\n\");\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\");\n\t\t\t\tmsg.setText(buf.toString());\n\t\t\t}\n\n\t\t} catch (Exception e) {"
+            },
+            {
+              "step": 4,
+              "variableName": "buf.toString()",
+              "startLine": 295,
+              "startColumn": 17,
+              "endLine": 295,
+              "endColumn": 31,
+              "uri": "requests-plugin-requests-3.5/src/main/java/com/michelin/cio/jenkins/plugin/requests/action/RequestMailSender.java",
+              "type": "",
+              "code": "\t\t\t\tbuf.append(emailMessage + \"\\n\");\n\t\t\t\tbuf.append(pendingRequestsLink + \"\\n\\n\\n\");\n\t\t\t\tbuf.append(\".......................................................................................................................\\n\");\n\t\t\t\tmsg.setText(buf.toString());\n\t\t\t}\n\n\t\t} catch (Exception e) {"
+            }
+          ],
+          "label": "No"
+        }
+      ]
+    }
+  ]
+}
