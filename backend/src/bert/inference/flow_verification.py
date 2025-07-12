@@ -187,7 +187,7 @@ def predict_labels(model, embeddings):
     with torch.no_grad():
         outputs = model(batch_tensor)
     predicted_probs = outputs.cpu().numpy().flatten()
-    predicted_classes = (predicted_probs > 0.5).astype(int)
+    predicted_classes = (predicted_probs > 0.7).astype(int)
     predicted_labels = ["Yes" if pred == 1 else "No" for pred in predicted_classes]
     return predicted_labels, predicted_probs
 

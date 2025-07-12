@@ -413,7 +413,7 @@ if __name__ == "__main__":
     random_search = TqdmRandomizedSearchCV(
         estimator=net,
         param_distributions=param_grid,
-        n_iter=10,
+        n_iter=250,
         cv=kfold,
         scoring='f1',
         n_jobs=n_jobs,
