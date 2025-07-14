@@ -10,7 +10,7 @@ import { CodeQlModule } from './code-ql/code-ql.module';
 import { EventsGateway } from './events/events.gateway';
 import { EventsModule } from './events/events.module';
 import { LLMModule } from './llm/llm.module';
-import { JavaParserModule } from './java-parser/java-parser.module';
+import { ParserModule } from './parsers/parser.module';
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -23,7 +23,7 @@ import { JavaParserModule } from './java-parser/java-parser.module';
         CodeQlModule,
         BertModule,
         LLMModule,
-        JavaParserModule,
+        ParserModule,
         AnalyzeModule,
 
     ],

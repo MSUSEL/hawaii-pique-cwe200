@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { JavaParserService } from './implementations/java-parser.service';
-import { JavaParserController } from './java-parser.controller';
+import { JavaParserController } from './parser.controller';
 import { EventsModule } from 'src/events/events.module';
 @Global()
 @Module({
@@ -9,4 +9,4 @@ import { EventsModule } from 'src/events/events.module';
     providers: [JavaParserService],
     exports: [JavaParserService],
 })
-export class JavaParserModule {}
+export class ParserModule {}

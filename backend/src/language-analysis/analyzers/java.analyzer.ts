@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ILanguageAnalyzer } from '../interfaces/language-analyzer.interface';
 import { FileUtilService } from '../../files/fileUtilService';
-import { JavaParserService } from '../../java-parser/implementations/java-parser.service';
+import { JavaParserService } from '../../parsers/implementations/java-parser.service';
 import { CodeQlService } from '../../code-ql/code-ql.service';
 import * as path from 'path';
 

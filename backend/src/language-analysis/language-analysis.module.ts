@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { LanguageAnalyzerFactory } from './factories/language-analyzer.factory';
 import { JavaAnalyzer } from './analyzers/java.analyzer';
 import { FilesModule } from '../files/files.module';
-import { JavaParserModule } from '../java-parser/java-parser.module';
+import { ParserModule } from '../parsers/parser.module';
 import { CodeQlModule } from '../code-ql/code-ql.module';
 
 /**
@@ -12,7 +12,7 @@ import { CodeQlModule } from '../code-ql/code-ql.module';
 @Module({
   imports: [
     FilesModule,
-    JavaParserModule, 
+    ParserModule, 
     CodeQlModule,
   ],
   providers: [

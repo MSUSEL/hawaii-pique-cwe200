@@ -6,7 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { CodeQlService } from 'src/code-ql/code-ql.service';
 import { BertService } from 'src/bert/bert.service';
 import { LLMService } from 'src/llm/llm.service';
-import { JavaParserService } from 'src/java-parser/implementations/java-parser.service';
+import { JavaParserService } from 'src/parsers/implementations/java-parser.service';
 import { AnalyzeRequestDto } from 'src/types/analysis-config.type';
 import { LanguageAnalyzerFactory } from 'src/language-analysis/factories/language-analyzer.factory';
 
