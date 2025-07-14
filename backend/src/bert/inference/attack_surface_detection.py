@@ -173,7 +173,6 @@ def process_files(data, data_type):
                     for method in item_methods:
                         if method in data[file_name]['methodCodeMap']:
                             context += data[file_name]['methodCodeMap'][method]
-                    context = context
                 elif data_type == 'strings':
                     context = "Context: "
                     for method in item_methods:
@@ -186,7 +185,6 @@ def process_files(data, data_type):
                     for method in item_methods:
                         if method in data[file_name]['methodCodeMap']:
                             context += data[file_name]['methodCodeMap'][method]
-                    context = text_preprocess(context)
                     # output.append((file_name, preprocessed_item, context))
                 output.append({
                     "identifier": identifier,
