@@ -1,5 +1,5 @@
 import { Global, Module } from '@nestjs/common';
-import { JavaParserService } from './java-parser.service';
+import { JavaParserService } from './implementations/java-parser.service';
 import { JavaParserController } from './java-parser.controller';
 import { EventsModule } from 'src/events/events.module';
 @Global()

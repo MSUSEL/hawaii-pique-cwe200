@@ -2,7 +2,7 @@ import {
     Controller
 } 
 from '@nestjs/common';
-import { JavaParserService } from './java-parser.service';
+import { JavaParserService } from './implementations/java-parser.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 

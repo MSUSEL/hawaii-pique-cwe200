@@ -1,7 +1,6 @@
 import * as path from 'path';
-import * as fs from 'fs';
 import { exec } from 'child_process';
-import { EventsGateway } from 'dist/src/events/events.gateway';
+import { EventsGateway } from 'src/events/events.gateway';
 
 
 export abstract class ParserBase {

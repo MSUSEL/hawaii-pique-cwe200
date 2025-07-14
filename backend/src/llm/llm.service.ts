@@ -11,7 +11,7 @@ import { sinksPrompt } from './prompts/sinksPrompt';
 import { VariableParser, StringParser, CommentParser, SinkParser } from '../chat-gpt/JSON-parsers';
 import { Semaphore } from 'async-mutex'; // Import the Semaphore class
 import { shuffle } from 'lodash'; // Import lodash for shuffling
-import { JavaParserService } from 'src/java-parser/java-parser.service';
+import { JavaParserService } from 'src/java-parser/implementations/java-parser.service';
 
 @Injectable()
 export class LLMService {

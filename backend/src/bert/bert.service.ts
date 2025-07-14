@@ -5,7 +5,7 @@ import { FileUtilService } from 'src/files/fileUtilService';
 import { EventsGateway } from 'src/events/events.gateway';
 import * as path from 'path';
 import { spawn } from 'child_process';
-import { JavaParserService } from 'src/java-parser/java-parser.service';
+import { JavaParserService } from 'src/java-parser/implementations/java-parser.service';
 
 /**
  * Service responsible for handling BERT-related operations, including parsing,
