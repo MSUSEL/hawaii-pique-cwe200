@@ -9,7 +9,8 @@ This script downloads projects from the projects.json file and saves them in piq
 def download_projects(json_file):
     # Create the download directory if it doesn't exist.
     download_dir = os.path.join("pique", "input", "projects")
-    
+    os.makedirs(download_dir, exist_ok=True)
+
     # Load the JSON data.
     with open(json_file, 'r') as f:
         data = json.load(f)
