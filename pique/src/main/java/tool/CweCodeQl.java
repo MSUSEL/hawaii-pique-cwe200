@@ -125,9 +125,9 @@ public class CweCodeQl extends Tool implements ITool {
             System.out.println("Error creating directory to save CweCodeQl tool results");
         }
 
-        // return runCWE200Tool(workingDirectoryPrefix, projectLocation);
+        return runCWE200Tool(workingDirectoryPrefix, projectLocation);
 
-        return null;
+        // return null;
 
     }
 
@@ -143,13 +143,14 @@ public class CweCodeQl extends Tool implements ITool {
         // Just for testing, remove hardcoded path later
         toolResults = Paths.get(this.outputFilePath.toUri());
 
-        LOGGER.debug(this.getName() + " Parsing Analysis...");
+        LOGGER.info(this.getName() + " Parsing Analysis...");
 
         Map<String, Diagnostic> diagnostics = HelperFunctions.initializeDiagnostics(this.getName());
         List<String[]> results = null;
 
         try {
             results = HelperFunctions.readFileContent(toolResults);
+            LOGGER.info("Number of detections found: " + results.size());
             for (String[] record : results) {
                 String cweId = record[0];
                 String filePath = record[1];
@@ -174,7 +175,7 @@ public class CweCodeQl extends Tool implements ITool {
 
             }
 
-            LOGGER.info("Diagnostics parsed: " + diagnostics.size());
+            // LOGGER.info("Diagnostics parsed: " + diagnostics.size());
             diagnostics.forEach((k, v) -> LOGGER.info(k + ": " + v.getValue()));
 
         } catch (IOException e) {
@@ -246,7 +247,7 @@ public class CweCodeQl extends Tool implements ITool {
         }
         // Something went wrong
 
-        return Paths.get("output/tool-out/CWE-200/result.csv");
+        return Paths.get("output/tool-out/CWE-200/"+this.projectName+".csv");
 
     }
 
