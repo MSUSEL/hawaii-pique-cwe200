@@ -3,6 +3,7 @@ import semmle.python.dataflow.new.TaintTracking
 import semmle.python.dataflow.new.DataFlow
 
 
+
 // Define the extensible predicates
 extensible predicate sensitiveVariables(string fileName, string variableName);
 extensible predicate sensitiveStrings(string fileName, string variableName);
@@ -62,7 +63,7 @@ class SensitiveVariableExpr extends Expr {
 }
 
 
-class SensitiveStringLiteral extends StrConst {
+class SensitiveStringLiteral extends StringLiteral {
   SensitiveStringLiteral() {
       // Check for matches against the suspicious patterns
       exists(File f | 
@@ -88,7 +89,7 @@ class SensitiveStringLiteral extends StrConst {
 }
 
 
-class SensitiveComment extends StrConst {
+class SensitiveComment extends StringLiteral {
   SensitiveComment() {
     exists(File f, string pattern |
       f = this.getLocation().getFile() and
