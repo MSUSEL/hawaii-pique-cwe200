@@ -1,0 +1,10 @@
+
+extensions:
+  - addsTo:
+      pack: custom-codeql-queries-python
+      extensible: sensitiveVariables
+    data:
+    - ["fileName", "sensitiveVariable"]
+    - ["deepseek_agent.py", "total_tokens"]
+    - ["evaluator.py", "token_values"]
+

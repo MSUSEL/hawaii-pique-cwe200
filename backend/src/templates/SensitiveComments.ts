@@ -2,7 +2,7 @@
 export const SensitiveComments:string=`
 extensions:  
   - addsTo:
-      pack: custom-codeql-queries
+      pack: __PACK_NAME__
       extensible: sensitiveComments
     data:
     - ["fileName", "senstiveComment"]

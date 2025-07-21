@@ -2,7 +2,7 @@
 export const SensitiveStrings:string=`
 extensions:
   - addsTo:
-      pack: custom-codeql-queries
+      pack: __PACK_NAME__
       extensible: sensitiveStrings
     data:
     - ["fileName", "senstiveString"]

@@ -111,13 +111,13 @@ export class CodeQlService {
         const args = [
             'database', 'analyze',
             db,
-            'custom-codeql-queries',
+            'custom-codeql-queries-'+ createCodeQlDto.language,
             `--format=${format}`,
             '--rerun',
             `--output=${outputPath}`,
             `--threads=${threads}`,
             `--ram=${ramAllocationMB}`,
-            `--search-path=${path.resolve(queryPath, '..')}`
+            `--search-path=${path.resolve(queryPath)}`
         ];
 
         console.log(args);

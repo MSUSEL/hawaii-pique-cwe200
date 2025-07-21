@@ -1,0 +1,8 @@
+
+extensions:  
+  - addsTo:
+      pack: custom-codeql-queries-python
+      extensible: sensitiveComments
+    data:
+    - ["fileName", "senstiveComment"]
+

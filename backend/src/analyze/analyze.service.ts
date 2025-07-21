@@ -97,7 +97,7 @@ export class AnalyzeService {
         });
 
         await this.executeStep('Saving the sensitive info to .yml files.', async () => {
-            await this.saveSensitiveInfo(data);
+            await this.saveSensitiveInfo(data, languageAnalyzer.getSupportedLanguage());
         });
 
         // Create language-specific CodeQL database
@@ -221,32 +221,42 @@ export class AnalyzeService {
      * 
      * @param data - The data containing sensitive information mappings.
      */
-    async saveSensitiveInfo(data) {
+    async saveSensitiveInfo(data, language) {
+        const packName = `custom-codeql-queries-${language}`;
+
         const variablesMapping = this.bertService.formatMappings(data.sensitiveVariablesMapping, "variables");
         const stringsMapping = this.bertService.formatMappings(data.sensitiveStringsMapping, "strings");
         const commentsMapping = this.bertService.formatCommentsMapping(data.sensitiveCommentsMapping, "comments");
         const sinksMapping = this.bertService.formatSinkMappings(data.sinksMapping);
 
-        const codeQLQueriesPath = path.join("..", "codeql queries", "SensitiveInfo") // Path to codeql queries dir
-        const qlPath = path.join(this.queryPath, "SensitiveInfo") // Path to codeql dir
+        const codeQLQueriesPath = path.join("..", "codeql queries", language, "SensitiveInfo");
+        const qlPath = path.join(this.queryPath, "SensitiveInfo");
 
-        let variablesFile = SensitiveVariables.replace("----------", variablesMapping);
-        await this.fileUtilService.writeToFile(path.join(codeQLQueriesPath, "SensitiveVariables.yml"), variablesFile,)
-        await this.fileUtilService.writeToFile(path.join(qlPath, "SensitiveVariables.yml"), variablesFile)
+        let variablesFile = SensitiveVariables
+            .replace("__PACK_NAME__", packName)
+            .replace("----------", variablesMapping);
+        await this.fileUtilService.writeToFile(path.join(codeQLQueriesPath, "SensitiveVariables.yml"), variablesFile);
+        await this.fileUtilService.writeToFile(path.join(qlPath, "SensitiveVariables.yml"), variablesFile);
 
-        let stringsFile = SensitiveStrings.replace("++++++++++", stringsMapping);
-        await this.fileUtilService.writeToFile(path.join(codeQLQueriesPath, "SensitiveStrings.yml"), stringsFile)
-        await this.fileUtilService.writeToFile(path.join(qlPath, "SensitiveStrings.yml"), stringsFile)
+        let stringsFile = SensitiveStrings
+            .replace("__PACK_NAME__", packName)
+            .replace("++++++++++", stringsMapping);
+        await this.fileUtilService.writeToFile(path.join(codeQLQueriesPath, "SensitiveStrings.yml"), stringsFile);
+        await this.fileUtilService.writeToFile(path.join(qlPath, "SensitiveStrings.yml"), stringsFile);
 
-        let commentsFile = SensitiveComments.replace("**********", commentsMapping);
-        await this.fileUtilService.writeToFile(path.join(codeQLQueriesPath, "SensitiveComments.yml"), commentsFile)
-        await this.fileUtilService.writeToFile(path.join(qlPath, "SensitiveComments.yml"), commentsFile)
+        let commentsFile = SensitiveComments
+            .replace("__PACK_NAME__", packName)
+            .replace("**********", commentsMapping);
+        await this.fileUtilService.writeToFile(path.join(codeQLQueriesPath, "SensitiveComments.yml"), commentsFile);
+        await this.fileUtilService.writeToFile(path.join(qlPath, "SensitiveComments.yml"), commentsFile);
 
-        let sinksFile = Sinks.replace("----------", sinksMapping);
-        await this.fileUtilService.writeToFile(path.join(codeQLQueriesPath, "Sinks.yml"), sinksFile)
-        await this.fileUtilService.writeToFile(path.join(qlPath, "Sinks.yml"), sinksFile)
+        let sinksFile = Sinks
+            .replace("__PACK_NAME__", packName)
+            .replace("----------", sinksMapping);
+        await this.fileUtilService.writeToFile(path.join(codeQLQueriesPath, "Sinks.yml"), sinksFile);
+        await this.fileUtilService.writeToFile(path.join(qlPath, "Sinks.yml"), sinksFile);
+}
 
-    }
 
     /**
      * [Unused] Was used to update the variables when backslicing was used.

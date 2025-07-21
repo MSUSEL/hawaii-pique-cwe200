@@ -1,0 +1,13 @@
+
+extensions:
+  - addsTo:
+      pack: custom-codeql-queries-python
+      extensible: sinks
+    data:
+    - ["fileName", "sinkName", "type"]
+    - ["deepseek_agent.py", "print", "Print Sink"]
+    - ["evaluator.py", "write", "I/O Sink"]
+    - ["evaluator.py", "print", "Print Sink"]
+    - ["main.py", "print", "Print Sink"]
+    - ["text_to_json_format.py", "print", "Print Sink"]
+

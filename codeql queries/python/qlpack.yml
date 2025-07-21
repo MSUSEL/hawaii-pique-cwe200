@@ -1,0 +1,13 @@
+name: custom-codeql-queries-python
+version: 0.0.1
+library: false
+
+dependencies:
+  codeql/python-queries: 1.6.0
+
+libraries:
+  - name: SensitiveInfo
+    path: /SensitiveInfo
+
+dataExtensions:
+  - SensitiveInfo/*.yml

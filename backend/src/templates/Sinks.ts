@@ -2,7 +2,7 @@
 export const Sinks:string=`
 extensions:
   - addsTo:
-      pack: custom-codeql-queries
+      pack: __PACK_NAME__
       extensible: sinks
     data:
     - ["fileName", "sinkName", "type"]
