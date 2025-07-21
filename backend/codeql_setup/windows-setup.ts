@@ -9,8 +9,9 @@ console.log('Running CodeQL setup with platform-agnostic paths...');
 // Define the platform-agnostic paths
 const codeqlPath = path.join('codeql');
 const qlSubmodulePath = path.join('codeql', 'ql');
-const customQueriesPath = path.join('codeql', 'codeql-custom-queries-java');
+const customQueriesPath = path.join('codeql', 'codeql-custom-queries-');
 const sourceQueriesPath = path.join('codeql queries');
+const supportedLanguages = ['java', 'python'];
 
 // Clone the codeql starter workspace with the name codeql
 try {
@@ -27,7 +28,7 @@ try {
     // Update the ql submodule to its specific commit
     execSync(`cd ${qlSubmodulePath} && git fetch origin && git checkout e27d8c16729588259f8143c7ed4569d517b0de10`, { stdio: 'inherit' });
     console.log('Checked out to specific commit in ql submodule: e27d8c16729588259f8143c7ed4569d517b0de10.');
-    
+
     // Update submodules to reflect this change
     execSync(`cd ${codeqlPath} && git submodule update --init --recursive`, { stdio: 'inherit' });
     console.log('Submodules updated successfully.');
@@ -37,25 +38,32 @@ try {
 }
 
 // Remove the example.ql file before copying the queries
-try {
-    const exampleQueryPath = path.join(customQueriesPath, 'example.ql');
-    if (fs.existsSync(exampleQueryPath)) {
-        fs.unlinkSync(exampleQueryPath);
-        console.log('Removed example.ql file successfully.');
-    } else {
-        console.log('example.ql file not found, no need to remove.');
+
+for (const language of supportedLanguages) {
+    const thisCustomQueriesPath = customQueriesPath + language;
+    const thisSourceQueriesPath = path.join(sourceQueriesPath, language);
+
+    try {
+        const exampleQueryPath = path.join(thisCustomQueriesPath, 'example.ql');
+
+        if (fs.existsSync(exampleQueryPath)) {
+            fs.unlinkSync(exampleQueryPath);
+            console.log('Removed example.ql file successfully.');
+        } else {
+            console.log('example.ql file not found, no need to remove.');
+        }
+    } catch (error) {
+        console.error('Error while trying to remove example.ql:', error);
     }
-} catch (error) {
-    console.error('Error while trying to remove example.ql:', error);
+
+    // Copy over the queries from codeql queries into codeql\\codeql-custom-queries-java
+    try {
+        // Use platform-agnostic paths for copying queries
+        execSync(`xcopy /E /y "${thisSourceQueriesPath}" "${thisCustomQueriesPath}"`, { stdio: 'inherit' });
+        console.log('Queries copied successfully.');
+    } catch (error) {
+        console.error('Error occurred during platform-agnostic setup:', error);
+    }
 }
 
-// Copy over the queries from codeql queries into codeql\\codeql-custom-queries-java
-try {
-    // Use platform-agnostic paths for copying queries
-    execSync(`xcopy /E /y "${sourceQueriesPath}" "${customQueriesPath}"`, { stdio: 'inherit' });
-    console.log('Queries copied successfully.');
-} catch (error) {
-    console.error('Error occurred during platform-agnostic setup:', error);
-}
-
-console.log('Setup completed.');
+console.log('Codeql Setup completed.');
