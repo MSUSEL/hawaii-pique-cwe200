@@ -33,83 +33,63 @@ export class CodeQlService {
      *
      * @param codeQlCommand formatted codeql arguments
      */
-    runChildProcess(codeQlCommand: string): Promise<void> {
-        const commands = codeQlCommand.split(' ');
-        return new Promise((resolve, reject) => {
-            // create new codeql process
-            let childProcess = spawn('codeql', commands);
+    runChildProcess(args: string[]): Promise<void> {
+    return new Promise((resolve, reject) => {
+        const childProcess = spawn('codeql', args);
 
-            // report stdout
-            childProcess.stdout.on('data', (data) => {
-                console.log(data.toString());
-                this.eventsGateway.emitDataToClients('data', data.toString())
-            });
+        let stdout = '';
+        let stderr = '';
 
-            // report stderr
-            childProcess.stderr.on('data', (data) => {
-                console.log(data.toString());
-                this.eventsGateway.emitDataToClients('data', data.toString())
-            });
-
-            // report results after finishing
-            const self = this;
-            childProcess.on('exit', function (code, signal) {
-                const result = "process CodeQl exited with code " + code + " and signal " + signal;
-                // if (code !== 0) {
-                //     reject(result);
-                //     throw new Error(result);
-                // }
-                console.log(result);
-                self.eventsGateway.emitDataToClients('data', result.toString())
-                resolve();
-            });
-
-            // report errors
-            childProcess.on('error', (error) => {
-                console.log(error);
-                reject(error);
-            });
+        childProcess.stdout.on('data', (data) => {
+            const text = data.toString();
+            stdout += text;
+            console.log(text);
+            this.eventsGateway.emitDataToClients('data', text);
         });
-    }
+
+        childProcess.stderr.on('data', (data) => {
+            const text = data.toString();
+            stderr += text;
+            console.error(text);
+            this.eventsGateway.emitDataToClients('data', text);
+        });
+
+        childProcess.on('exit', (code, signal) => {
+            const result = `process CodeQL exited with code ${code} and signal ${signal}`;
+            console.log(result);
+            this.eventsGateway.emitDataToClients('data', result);
+
+            if (code !== 0) {
+                return reject(new Error(`CodeQL failed with code ${code}, stderr: ${stderr}`));
+            }
+            resolve();
+        });
+
+        childProcess.on('error', (error) => {
+            console.error('Failed to start CodeQL process:', error);
+            reject(error);
+        });
+    });
+}
+
 
     /**
      * Create a CodeQL database for the given project.
      * @param sourcePath The path to the source code directory.
      * @param createCodeQlDto The DTO containing project information.
+     * @param language The programming language of the project.
      */
-    async createDatabase(sourcePath: string, createCodeQlDto: any) {
+    async createDatabase(sourcePath: string, createCodeQlDto: any, language: string): Promise<void> {
         const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
         await this.fileUtilService.removeDir(db);
-        const createDbCommand = `database create ${db} --language=java --source-root=${sourcePath}`;
-        console.log(createDbCommand);
+
+        const createDbCommand = [
+        'database', 'create', db,
+        `--language=${language}`,
+        `--source-root=${sourcePath}`
+        ];
+
         await this.runChildProcess(createDbCommand);
-    }
-
-    /**
-     * [Unused] Perform backward slicing on the given project.
-     * @param sourcePath The path to the source code directory.
-     * @param createCodeQlDto The DTO containing project information.
-     */
-    async performBackwardSlicing(sourcePath: string, createCodeQlDto: any) {
-        const db = path.join(sourcePath, createCodeQlDto.project + 'db');   // path to codeql database
-        const extension = 'sarif';
-        const format = 'sarifv2.1.0';
-        const outputFileName = 'backwardslice';
-        const outputPath = path.join(sourcePath, `${outputFileName}.${extension}`);
-        const threads = 12;
-        const totalMemoryMB = os.totalmem() / (1024 * 1024);  // Total system memory in MB
-        const ramAllocationMB = Math.floor(totalMemoryMB * 0.8);  // 80% of total memory
-        const queryPath = path.join(this.queryPath, 'ProgramSlicing', 'Variables');
-
-        // Command to run backward slicing
-        const analyzeDbCommand =
-            `database analyze ${db} ` +
-            `--format=${format} --rerun ` +
-            `--output=${outputPath} ${queryPath} ` +
-            `--max-paths=1 --sarif-add-snippets=true ` +
-            `--threads=${threads} --ram=${ramAllocationMB}`;
-        await this.runChildProcess(analyzeDbCommand);
-
     }
 
     /**
@@ -126,19 +106,22 @@ export class CodeQlService {
         const threads = 12;
         const totalMemoryMB = os.totalmem() / (1024 * 1024);
         const ramAllocationMB = Math.floor(totalMemoryMB * 0.8);
-        const queryPath = this.queryPath; // e.g., codeql/codeql-custom-queries-java
-    
-        const analyzeDbCommand =
-            `database analyze ${db} custom-codeql-queries ` +
-            `--format=${format} ` +
-            `--rerun ` +
-            `--output=${outputPath} ` +
-            `--threads=${threads} ` +
-            `--ram=${ramAllocationMB} ` +
-            `--search-path=${path.resolve(queryPath, '..')}`;
-    
-        console.log(analyzeDbCommand);
-        await this.runChildProcess(analyzeDbCommand);
+        const queryPath = this.queryPath + createCodeQlDto.language; // e.g., codeql/codeql-custom-queries-java
+
+        const args = [
+            'database', 'analyze',
+            db,
+            'custom-codeql-queries',
+            `--format=${format}`,
+            '--rerun',
+            `--output=${outputPath}`,
+            `--threads=${threads}`,
+            `--ram=${ramAllocationMB}`,
+            `--search-path=${path.resolve(queryPath, '..')}`
+        ];
+
+        console.log(args);
+        await this.runChildProcess(args);
     }
     
 
@@ -286,46 +269,4 @@ export class CodeQlService {
         await this.fileUtilService.writeToFile(sarifPath, JSON.stringify(sarifdata, null, 2));
     }
 
-    /**
-     * Create a language-agnostic CodeQL database
-     * This method demonstrates how to make database creation language-aware
-     * @param sourcePath - Path to source directory
-     * @param language - Programming language
-     * @param projectName - Name of the project
-     * @param config - Additional configuration
-     */
-    async createLanguageDatabase(sourcePath: string, language: string, projectName: string, config: any = {}) {
-        const db = path.join(sourcePath, projectName + 'db');
-        await this.fileUtilService.removeDir(db);
-        
-        // Map programming languages to CodeQL language identifiers
-        const codeqlLanguageMap: Record<string, string> = {
-            'java': 'java',
-            'python': 'python',
-            'javascript': 'javascript',
-            'typescript': 'javascript', // TypeScript is analyzed as JavaScript in CodeQL
-            'csharp': 'csharp',
-            'cpp': 'cpp',
-            'c': 'cpp', // C is analyzed as C++ in CodeQL
-            'go': 'go',
-            'ruby': 'ruby',
-            'swift': 'swift',
-        };
-
-        const codeqlLanguage = codeqlLanguageMap[language.toLowerCase()];
-        if (!codeqlLanguage) {
-            throw new Error(`CodeQL does not support language: ${language}`);
-        }
-
-        const createDbCommand = `database create ${db} --language=${codeqlLanguage} --source-root=${sourcePath}`;
-        console.log(`Creating CodeQL database for ${language}:`, createDbCommand);
-        await this.runChildProcess(createDbCommand);
-    }
-
-    /**
-     * Get supported languages for CodeQL analysis
-     */
-    getSupportedCodeQLLanguages(): string[] {
-        return ['java', 'python', 'javascript', 'typescript', 'csharp', 'cpp', 'c', 'go', 'ruby', 'swift'];
-    }
 }

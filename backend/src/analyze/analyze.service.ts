@@ -37,7 +37,6 @@ export class AnalyzeService {
         private languageAnalyzerFactory: LanguageAnalyzerFactory,
     ) {
         this.projectsPath = this.configService.get<string>('CODEQL_PROJECTS_DIR');
-        this.queryPath = this.configService.get<string>('QUERY_DIR');
     }
 
     /**
@@ -62,11 +61,16 @@ export class AnalyzeService {
      */
     async runAnalysis(analyzeDto: AnalyzeRequestDto) {
         const sourcePath = path.join(this.projectsPath, analyzeDto.project);
+        this.queryPath = this.configService.get<string>('QUERY_DIR') + analyzeDto.language;
+
         
         // Get the appropriate language analyzer from the factory
         let languageAnalyzer;
         try {
             languageAnalyzer = this.languageAnalyzerFactory.getAnalyzer(analyzeDto.language);
+            if (analyzeDto.javaVersion) {
+                languageAnalyzer.setVersion(analyzeDto.javaVersion);
+            }
         } catch (error) {
             throw new BadRequestException(error.message);
         }
@@ -101,8 +105,7 @@ export class AnalyzeService {
             await languageAnalyzer.createCodeQLDatabase(sourcePath, {
                 project: analyzeDto.project,
                 language: analyzeDto.language,
-                extension: analyzeDto.extension,
-                languageVersion: analyzeDto.javaVersion || analyzeDto.pythonVersion || analyzeDto.nodeVersion,
+                extension: analyzeDto.extension
             });
         });
 
@@ -111,8 +114,7 @@ export class AnalyzeService {
             await languageAnalyzer.runCWEQueries(sourcePath, {
                 project: analyzeDto.project,
                 language: analyzeDto.language,
-                extension: analyzeDto.extension,
-                languageVersion: analyzeDto.javaVersion || analyzeDto.pythonVersion || analyzeDto.nodeVersion,
+                extension: analyzeDto.extension
             });
         });
 

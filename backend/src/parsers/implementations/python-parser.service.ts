@@ -9,14 +9,15 @@ import { FileUtilService } from 'src/files/fileUtilService';
 import { ParserBase, ParseResult } from '../base/parser-base';
 
 /**
- * JavaParserService is a service that provides functionality to parse Java files and extract relevant information.
+ * PythonParserService is a service that provides functionality to parse Python files and extract relevant information.
  */
 @Global()
 @Injectable()
-export class JavaParserService extends ParserBase {
+export class PythonParserService extends ParserBase {
     projectsPath: string;
     parsedResults: { [key: string]: ParseResult };
     projectPath: string;
+    command: string;
 
     constructor(
         private configService: ConfigService,
@@ -35,46 +36,23 @@ export class JavaParserService extends ParserBase {
      **/
     async wrapper(filePaths: string[], sourcePath: string) {
         this.projectPath = sourcePath;
-        await this.buildJarIfNeeded();
         this.parsedResults = await this.getParsedResults(filePaths);
         await this.fileUtilService.writeToFile(path.join(this.projectPath, 'parsedResults.json'), JSON.stringify(this.parsedResults, null, 2));
     }
+    
 
     /**
-     * Builds the "ParseJava" JAR file if it doesn't exist.
-     * @returns A promise that resolves when the JAR file is built.
-     **/
-    async buildJarIfNeeded() {
-        const cwd = process.cwd();
-        const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
-
-        if (!fs.existsSync(jarPath)) {
-            // Build the JAR file
-            console.log("Building JAR for Java Parser")
-            await new Promise<void>((resolve, reject) => {
-                exec('mvn clean package', { cwd: path.resolve(cwd, 'ParseJava') }, (error, stdout, stderr) => {
-                    if (error) {
-                        reject(`Error building JAR: ${stderr}`);
-                        return;
-                    }
-                    resolve();
-                });
-            });
-        }
-    }
-
-    /**
-     * Wrapper for calling the JAR in "backend/ParseJava/target/ParseJava-1.0-jar-with-dependencies.jar".
-     * @param filePath - The path to the Java file to be parsed.
+     * Wrapper for calling the Python script in "backend/ParsePython".
+     * @param filePath - The path to the Python file to be parsed.
      * @returns A promise that resolves to an object containing the parsed results.
      **/
     async parseSourceFile(filePath: string): Promise<ParseResult> {
         const cwd = process.cwd();
-        const jarPath = path.resolve(cwd, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
+        const pythonParserPath = path.resolve(cwd, 'ParsePython', 'parse_python.py');
         filePath = path.resolve(cwd, filePath);
 
-        // Run the Java program
-        const command = `java -jar ${jarPath} ${filePath}`;
+        // Run the Python program
+        const command = `python ${pythonParserPath} "${filePath}"`;
         const result = await this.runExternalParser(command, filePath);
         return result;
     }

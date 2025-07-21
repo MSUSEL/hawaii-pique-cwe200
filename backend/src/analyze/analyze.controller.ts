@@ -29,7 +29,10 @@ export class AnalyzeController {
    */
   @Post()
   async runAnalysis(@Body() analyzeDto: AnalyzeRequestDto) {
-    analyzeDto.language = 'java';
+    // if no language is specified, default to Java
+    if (!analyzeDto.language) {
+      analyzeDto.language = 'java';
+    } 
     try {
       // Validate required fields
       if (!analyzeDto.project) {

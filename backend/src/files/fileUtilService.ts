@@ -43,13 +43,13 @@ export class FileUtilService {
     }
 
     /**
-     * Recursively find all files with a .java extension in a given directory
+     * Recursively find all files with a given extension in a given directory
      * @param directoryPath Path to root directory to search for files
      */
-    async getJavaFilesInDirectory(directoryPath) {
+    async getSourceFilesInDirectory(directoryPath, fileExtension) {
         // Get all files/dir in pwd
         const files = fs.readdirSync(directoryPath);
-        let javaFiles = [];
+        let sourceFiles = [];
 
         // Iterate through directory contents
         for (const file of files) {
@@ -60,15 +60,15 @@ export class FileUtilService {
 
             // If directory, open
             if (fileStats.isDirectory()) {
-                const newFiles = await this.getJavaFilesInDirectory(filePath);
-                javaFiles = javaFiles.concat(newFiles);
+                const newFiles = await this.getSourceFilesInDirectory(filePath, fileExtension);
+                sourceFiles = sourceFiles.concat(newFiles);
             // else get file information
-            } else if (fileStats.isFile() && file.endsWith('.java')) {
-                javaFiles.push(filePath);
+            } else if (fileStats.isFile() && file.endsWith(fileExtension)) {
+                sourceFiles.push(filePath);
             }
         }
-        // Return list of java files
-        return javaFiles;
+        // Return list of source files
+        return sourceFiles;
     }
 
 

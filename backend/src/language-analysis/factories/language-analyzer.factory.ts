@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ILanguageAnalyzer } from '../interfaces/language-analyzer.interface';
 import { JavaAnalyzer } from '../analyzers/java.analyzer';
+import { PythonAnalyzer } from '../analyzers/python.analyzer';
 
 /**
  * Factory for creating language-specific analyzers.
@@ -13,8 +14,8 @@ export class LanguageAnalyzerFactory {
 
   constructor(
     private javaAnalyzer: JavaAnalyzer,
+    private pythonAnalyzer: PythonAnalyzer,
     // Will inject other language analyzers here as they're implemented
-    // private pythonAnalyzer: PythonAnalyzer,
     // private javascriptAnalyzer: JavaScriptAnalyzer,
   ) {
     this.registerAnalyzers();
@@ -25,8 +26,9 @@ export class LanguageAnalyzerFactory {
    */
   private registerAnalyzers(): void {
     this.analyzers.set('java', this.javaAnalyzer);
+    this.analyzers.set('python', this.pythonAnalyzer);
+
     // Add other languages here:
-    // this.analyzers.set('python', this.pythonAnalyzer);
     // this.analyzers.set('javascript', this.javascriptAnalyzer);
     // this.analyzers.set('typescript', this.typescriptAnalyzer);
   }

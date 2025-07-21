@@ -42,7 +42,6 @@ export abstract class ParserBase {
             const concurrencyLimit = 8; // Adjust based on your system's capabilities
             const queue = filePaths.slice(); // Create a copy of the file paths
             const results: { [key: string]: ParseResult } = {};
-            const parserProgramPath = path.join(this.projectsPath, 'ParseJava', 'target', 'ParseJava-1.0-jar-with-dependencies.jar');
         
             const workers = Array.from({ length: concurrencyLimit }, async () => {
                 while (queue.length > 0) {

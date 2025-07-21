@@ -9,6 +9,12 @@ export interface ILanguageAnalyzer {
   getSupportedLanguage(): string;
 
   /**
+   * Set the version of the language if applicable (e.g., Java, Python)
+   * @param version - The version string to set
+   */
+  setVersion(version: string): void;
+
+  /**
    * Discover source files for the specific language in a directory
    * @param sourcePath - Path to the source directory
    * @returns Array of file paths for the specific language
@@ -37,10 +43,6 @@ export interface ILanguageAnalyzer {
    */
   runCWEQueries(sourcePath: string, config: any): Promise<void>;
 
-  /**
-   * Get the CodeQL language identifier for database creation
-   */
-  getCodeQLLanguage(): string;
 
   /**
    * Get file extensions for the specific language

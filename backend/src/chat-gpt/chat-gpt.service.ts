@@ -393,7 +393,7 @@ export class ChatGptService {
 
         // Get the source path and Java files
         // const sourcePath = path.join(this.projectsPath, projectPath);
-        const javaFiles: string[] = await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+        const javaFiles: string[] = await this.fileUtilService.getSourceFilesInDirectory(sourcePath, ['.java']);
 
         // Parse the Java files to get the variables, strings, and comments
         await this.getParsedResults(javaFiles);

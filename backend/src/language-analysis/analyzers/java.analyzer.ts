@@ -11,7 +11,9 @@ import * as path from 'path';
  */
 @Injectable()
 export class JavaAnalyzer implements ILanguageAnalyzer {
-  
+
+  private javaVersion: number | null = null;
+
   constructor(
     private fileUtilService: FileUtilService,
     private javaParserService: JavaParserService,
@@ -22,8 +24,12 @@ export class JavaAnalyzer implements ILanguageAnalyzer {
     return 'java';
   }
 
-  getCodeQLLanguage(): string {
-    return 'java';
+  setVersion(version: string): void {
+    try{
+      this.javaVersion = parseInt(version, 10);
+    } catch (error) {
+      console.error(`Failed to set Java version ${version}:`, error);
+    }
   }
 
   getFileExtensions(): string[] {
@@ -31,7 +37,7 @@ export class JavaAnalyzer implements ILanguageAnalyzer {
   }
 
   async discoverSourceFiles(sourcePath: string): Promise<string[]> {
-    return await this.fileUtilService.getJavaFilesInDirectory(sourcePath);
+    return await this.fileUtilService.getSourceFilesInDirectory(sourcePath, '.java');
   }
 
   async parseSourceFiles(filePaths: string[], sourcePath: string): Promise<any> {
@@ -40,17 +46,16 @@ export class JavaAnalyzer implements ILanguageAnalyzer {
 
   async createCodeQLDatabase(sourcePath: string, config: any): Promise<void> {
     // Set Java version if specified
-    if (config.languageVersion || config.javaVersion) {
-      const javaVersion = config.languageVersion || config.javaVersion;
-      try {
-        this.fileUtilService.setJavaVersion(javaVersion);
-      } catch (error) {
-        console.error(`Failed to set Java version ${javaVersion}:`, error);
-      }
+    
+      // try {
+      //   this.fileUtilService.setJavaVersion(this.javaVersion);
+      // } catch (error) {
+      //   console.error(`Failed to set Java version ${this.javaVersion}:`, error);
+      // }
 
     // Use the existing CodeQL service for Java database creation
-    await this.codeqlService.createDatabase(sourcePath, config);
-    }
+    await this.codeqlService.createDatabase(sourcePath, config, this.getSupportedLanguage());
+    
   }
 
   async runCWEQueries(sourcePath: string, config: any): Promise<void> {
