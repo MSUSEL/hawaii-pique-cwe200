@@ -1,5 +1,6 @@
 import python
-import semmle.code.java.dataflow.TaintTracking
+import semmle.python.dataflow.new.TaintTracking
+import semmle.python.dataflow.new.DataFlow
 
 
 // Define the extensible predicates
@@ -10,176 +11,156 @@ extensible predicate sinks(string fileName, string sinkName, string sinkType);
   
 class SensitiveVariableExpr extends Expr {
   SensitiveVariableExpr() {
-    exists(Variable v, File file |
+    exists(Name name, File file |
       (
-        (
-          // Handle local variables
-        this = v.getAnAccess() and
-        file = v.getCompilationUnit().getFile() and
-        sensitiveVariables(file.getBaseName(), v.getName()) 
-        )
+        // Handle variable name references
+        this = name and
+        file = name.getLocation().getFile() and
+        sensitiveVariables(file.getBaseName(), name.getId()) 
       ) and
       (
         // Exclude variables or fields with generic, non-sensitive names
-        v.getName().toLowerCase() != "message" and
-        v.getName().toLowerCase() != "messages" and
-        v.getName().toLowerCase() != "msg" and
-        v.getName().toLowerCase() != "msgs" and
-        v.getName().toLowerCase() != "text" and
-        v.getName().toLowerCase() != "texts" and
-        v.getName().toLowerCase() != "data" and
-        v.getName().toLowerCase() != "body" and
-        v.getName().toLowerCase() != "request" and
-        v.getName().toLowerCase() != "req" and
-        v.getName().toLowerCase() != "context" and
-        v.getName().toLowerCase() != "contents" and
-        v.getName().toLowerCase() != "content" and
-        v.getName().toLowerCase() != "id" and
-        v.getName().toLowerCase() != "operation" and
-        v.getName().toLowerCase() != "op" and
-        v.getName().toLowerCase() != "value" and
-        v.getName().toLowerCase() != "val" and
-        v.getName().toLowerCase() != "parent" and
-        v.getName().toLowerCase() != "parents" and
-        v.getName().toLowerCase() != "child" and
-        v.getName().toLowerCase() != "children" and
-        v.getName().toLowerCase() != "xml" and
-        v.getName().toLowerCase() != "json" and
-        v.getName().toLowerCase() != "html" and
-        v.getName().toLowerCase() != "entity" and
-        v.getName().toLowerCase() != "entities" and
-        not v.toString().toLowerCase().matches("%name%") and
-        not v.toString().toLowerCase().matches("%project%") and
-        not v.toString().toLowerCase().matches("%id%") and
-        not v.toString().toLowerCase().matches("%location%") and
-        not v.toString().toLowerCase().matches("%node%") and
-        not v.toString().toLowerCase().matches("%subject%") and
-        not v.toString().toLowerCase().matches("%object%") and 
-        not v.toString().toLowerCase().matches("%script%") 
-        // not v.toString().toLowerCase().matches("%path%") and
+        name.getId().toLowerCase() != "message" and
+        name.getId().toLowerCase() != "messages" and
+        name.getId().toLowerCase() != "msg" and
+        name.getId().toLowerCase() != "msgs" and
+        name.getId().toLowerCase() != "text" and
+        name.getId().toLowerCase() != "texts" and
+        name.getId().toLowerCase() != "data" and
+        name.getId().toLowerCase() != "body" and
+        name.getId().toLowerCase() != "request" and
+        name.getId().toLowerCase() != "req" and
+        name.getId().toLowerCase() != "context" and
+        name.getId().toLowerCase() != "contents" and
+        name.getId().toLowerCase() != "content" and
+        name.getId().toLowerCase() != "id" and
+        name.getId().toLowerCase() != "operation" and
+        name.getId().toLowerCase() != "op" and
+        name.getId().toLowerCase() != "value" and
+        name.getId().toLowerCase() != "val" and
+        name.getId().toLowerCase() != "parent" and
+        name.getId().toLowerCase() != "parents" and
+        name.getId().toLowerCase() != "child" and
+        name.getId().toLowerCase() != "children" and
+        name.getId().toLowerCase() != "xml" and
+        name.getId().toLowerCase() != "json" and
+        name.getId().toLowerCase() != "html" and
+        name.getId().toLowerCase() != "entity" and
+        name.getId().toLowerCase() != "entities" and
+        not name.getId().toLowerCase().matches("%name%") and
+        not name.getId().toLowerCase().matches("%project%") and
+        not name.getId().toLowerCase().matches("%id%") and
+        not name.getId().toLowerCase().matches("%location%") and
+        not name.getId().toLowerCase().matches("%node%") and
+        not name.getId().toLowerCase().matches("%subject%") and
+        not name.getId().toLowerCase().matches("%object%") and 
+        not name.getId().toLowerCase().matches("%script%") 
+        // not name.getId().toLowerCase().matches("%path%") and
       ) 
     )
   }
 }
 
 
-  class SensitiveStringLiteral extends StringLiteral {
-    SensitiveStringLiteral() {
-        // Check for matches against the suspicious patterns
-        exists(File f | 
-            f = this.getCompilationUnit().getFile() and
-            sensitiveStrings(f.getBaseName(), this.getValue())) and
-        not (
-            // Exclude specific method calls
-            exists(MethodCall mc |
-                mc.getAnArgument() = this and
-                (
-                    mc.getMethod().hasName("getenv") or
-                    mc.getMethod().hasName("getParameter") or
-                    mc.getMethod().hasName("getProperty") or
-                    mc.getMethod().hasName("getInitParameter") or
-                    mc.getMethod().hasName("getHeader") or
-                    mc.getMethod().hasName("getCookie") or
-                    mc.getMethod().hasName("getAttribute") or
-                    mc.getMethod().hasName("getAuthType") or
-                    mc.getMethod().hasName("getRemoteUser") or
-                    mc.getMethod().hasName("getResource") or
-                    mc.getMethod().hasName("getResourceAsStream") or
-                    (mc.getMethod().hasName("addRequestProperty") and mc.getAnArgument() = this)
-                )
-            ) or
-            // Exclude common non-sensitive patterns
-            this.getValue().regexpMatch(".*example.*") or
-            this.getValue().regexpMatch(".*test.*") or
-            this.getValue().regexpMatch(".*demo.*") or
-            this.getValue().regexpMatch(".*foo.*") or 
-            this.getValue().regexpMatch(".*bar.*") or
-            this.getValue().regexpMatch(".*baz.*") or
-            this.getValue().regexpMatch(".*secret.*") or
-            // Exclude empty strings
-            this.getValue() = "" or
-            // Exclude whitespace-only strings
-            this.getValue().regexpMatch("^\\s*$") or
-            // Exclude strings with exactly one dot followed by a digit
-            this.getValue().regexpMatch("^[^.]*\\.[0-9]+$") 
-        ) and
-        not exists(Annotation ann |
-            ann = this.getParent() 
-            // and
-            // ann.getType().hasQualifiedName(_, "Issue")
-        )
-    }
+class SensitiveStringLiteral extends StrConst {
+  SensitiveStringLiteral() {
+      // Check for matches against the suspicious patterns
+      exists(File f | 
+          f = this.getLocation().getFile() and
+          sensitiveStrings(f.getBaseName(), this.getText())) and
+      not (
+          // Exclude common non-sensitive patterns
+          this.getText().regexpMatch(".*example.*") or
+          this.getText().regexpMatch(".*test.*") or
+          this.getText().regexpMatch(".*demo.*") or
+          this.getText().regexpMatch(".*foo.*") or 
+          this.getText().regexpMatch(".*bar.*") or
+          this.getText().regexpMatch(".*baz.*") or
+          this.getText().regexpMatch(".*secret.*") or
+          // Exclude empty strings
+          this.getText() = "" or
+          // Exclude whitespace-only strings
+          this.getText().regexpMatch("^\\s*$") or
+          // Exclude strings with exactly one dot followed by a digit
+          this.getText().regexpMatch("^[^.]*\\.[0-9]+$") 
+      )
+  }
 }
 
 
-  // class SensitiveComment extends StringLiteral {
-  //   SensitiveComment() {
-  //     exists(File f, string pattern |
-  //       f = this.getCompilationUnit().getFile() and
-  //       sensitiveComments(f.getBaseName(), pattern) and
-  //       this.getValue().regexpMatch(pattern)
-  //     )
-  //   }   
-  // }
+class SensitiveComment extends StrConst {
+  SensitiveComment() {
+    exists(File f, string pattern |
+      f = this.getLocation().getFile() and
+      sensitiveComments(f.getBaseName(), pattern) and
+      this.getText().regexpMatch(pattern)
+    )
+  }   
+}
 
   
     predicate getSink(DataFlow::Node sink, string sinkType) { 
-      exists(File f, MethodCall mc | 
-        f = mc.getFile() and
-        sinks(f.getBaseName(), mc.getMethod().getName(), sinkType) and
-        sink.asExpr() = mc.getAnArgument()
-        )
+      exists(File f, Call call, string sinkName | 
+        f = call.getLocation().getFile() and
+        (
+          call.getFunc().(Name).getId() = sinkName or
+          call.getFunc().(Attribute).getName() = sinkName
+        ) and
+        sinks(f.getBaseName(), sinkName, sinkType) and
+        sink.asExpr() = call.getAnArg()
+      )
     }
 
     predicate getSinkAny(DataFlow::Node sink) { 
-      exists(File f, MethodCall mc | 
-        f = mc.getFile() and
-        (sinks(f.getBaseName(), mc.getMethod().getName(), _) and
-        not sinks(f.getBaseName(), mc.getMethod().getName(), "Log Sink"))
-        and
-        sink.asExpr() = mc.getAnArgument()
-        )
+      exists(File f, Call call, string sinkName | 
+        f = call.getLocation().getFile() and
+        (
+          call.getFunc().(Name).getId() = sinkName or
+          call.getFunc().(Attribute).getName() = sinkName
+        ) and
+        (sinks(f.getBaseName(), sinkName, _) and
+        not sinks(f.getBaseName(), sinkName, "Log Sink")) and
+        sink.asExpr() = call.getAnArg()
+      )
     }
 
-    class DetectedMethodCall extends MethodCall {
-      DetectedMethodCall() {
-        // Check for matches against the sinks
-        exists(File f |
-          // this.getEnclosingCallable().getFile() = f and
-          sinks(f.getBaseName(), this.getMethod().getName(), _)
-        )
-      }
-    }
-
-    class DetectedMethod extends Method {
-      DetectedMethod() {
-        // Match methods based on their simple name and the base name of the file where they are called
-        exists(MethodCall mc, File f |
-          mc.getMethod() = this and
-          mc.getLocation().getFile().getBaseName() = f.getLocation().getFile().getBaseName() and
-          sinks(f.getBaseName(), this.getName(), _)
-        )
-      }
-    }
     
+class DetectedCall extends Call {
+  DetectedCall() {
+    // Check for matches against the sinks
+    exists(File f, string funcName |
+      f = this.getLocation().getFile() and
+      (
+        this.getFunc().(Name).getId() = funcName or
+        this.getFunc().(Attribute).getName() = funcName
+      ) and
+      sinks(f.getBaseName(), funcName, _)
+    )
+  }
+}
+
 
 string getSinkName() { 
-  exists(File f, MethodCall mc | 
-    f = mc.getFile() and
-    (sinks(f.getBaseName(), mc.getMethod().getName(), "I/O Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "Print Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "Network Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "Log Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "Database Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "Email Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "IPC Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "Clipboard Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "GUI Display Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "RPC Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "Environment Variable Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "Command Execution Sink") or
-    sinks(f.getBaseName(), mc.getMethod().getName(), "Configuration File Sink"))
-    // Bind the result to the method name
-    and result = mc.getMethod().getName()
+  exists(File f, Call call, string funcName | 
+    f = call.getLocation().getFile() and
+    (
+      call.getFunc().(Name).getId() = funcName or
+      call.getFunc().(Attribute).getName() = funcName
+    ) and
+    (sinks(f.getBaseName(), funcName, "I/O Sink") or
+    sinks(f.getBaseName(), funcName, "Print Sink") or
+    sinks(f.getBaseName(), funcName, "Network Sink") or
+    sinks(f.getBaseName(), funcName, "Log Sink") or
+    sinks(f.getBaseName(), funcName, "Database Sink") or
+    sinks(f.getBaseName(), funcName, "Email Sink") or
+    sinks(f.getBaseName(), funcName, "IPC Sink") or
+    sinks(f.getBaseName(), funcName, "Clipboard Sink") or
+    sinks(f.getBaseName(), funcName, "GUI Display Sink") or
+    sinks(f.getBaseName(), funcName, "RPC Sink") or
+    sinks(f.getBaseName(), funcName, "Environment Variable Sink") or
+    sinks(f.getBaseName(), funcName, "Command Execution Sink") or
+    sinks(f.getBaseName(), funcName, "Configuration File Sink"))
+    // Bind the result to the function name
+    and result = funcName
   )
 }

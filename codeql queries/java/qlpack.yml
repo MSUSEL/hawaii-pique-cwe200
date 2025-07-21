@@ -1,5 +1,5 @@
 
-name: custom-codeql-queries
+name: custom-codeql-queries-java
 version: 0.0.1
 library: false
 warnOnImplicitThis: false

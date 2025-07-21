@@ -6,41 +6,38 @@
  * @problem.severity warning
  * @security-severity 7.5
  * @precision medium
- * @id java/log-sensitive-information/532
+ * @id python/log-sensitive-information/532
  * @tags security
  *       external/cwe/cwe-532
  * @cwe CWE-532
  */
 
  import python
- private import semmle.code.python.dataflow.ExternalFlow
- import semmle.code.python.dataflow.TaintTracking
- import semmle.code.python.security.SensitiveActions
- import semmle.code.python.frameworks.android.Compose
- private import semmle.code.java.security.Sanitizers
+ private import semmle.python.dataflow.new.DataFlow
+ import semmle.python.dataflow.new.TaintTracking
  import SensitiveInfo.SensitiveInfo
- import java.Barrier.Barrier
  
  module PermissionBarrier {
-   predicate isPermissionCheck(MethodCall ma) {
-     ma.getMethod().getName().matches("%Permission%") or
-     ma.getMethod().getName().matches("%authorize%") or
-     ma.getMethod().getName().matches("%canAccess%") or
-     ma.getMethod().getName().matches("%isAuthorized%")
+   predicate isPermissionCheck(Call call) {
+     exists(string funcName |
+       (
+         call.getFunc().(Name).getId() = funcName or
+         call.getFunc().(Attribute).getName() = funcName
+       ) and
+       (
+         funcName.matches("%permission%") or
+         funcName.matches("%authorize%") or
+         funcName.matches("%can_access%") or
+         funcName.matches("%is_authorized%")
+       )
+     )
    }
  
    predicate isPermissionBarrier(DataFlow::Node node) {
-     exists(MethodCall ma |
-       isPermissionCheck(ma) and
-       node.asExpr() = ma.getQualifier()
+     exists(Call call |
+       isPermissionCheck(call) and
+       node.asExpr() = call.getFunc()
      )
-   }
- }
- 
- private class TypeType extends RefType {
-   pragma[nomagic]
-   TypeType() {
-     this.getSourceDeclaration().getASourceSupertype*().hasQualifiedName("java.lang.reflect", "Type")
    }
  }
  
@@ -51,48 +48,49 @@
    // Convert path to lowercase for case-insensitive matching
    exists(string path | path = f.getAbsolutePath().toLowerCase() |
      // Check for common test-related directory or file name patterns
-     path.regexpMatch(".*(test|tests|testing|test-suite|testcase|unittest|integration-test|spec).*")
+     path.regexpMatch(".*(test|tests|testing|test_suite|testcase|unittest|integration_test|spec).*")
    )
  }
  
  module SensitiveLoggerConfig implements DataFlow::ConfigSig {
    predicate isSource(DataFlow::Node source) { 
-     exists(Variable v | 
+     exists(Name name | 
        (
-         (v.getName().toLowerCase().regexpMatch(".*secret.*") or
-          v.getName().toLowerCase().regexpMatch(".*credential.*") or
-          v.getName().toLowerCase().regexpMatch(".*passw.*") or
-          v.getName().toLowerCase().regexpMatch(".*pwd.*") or
-          v.getName().toLowerCase().regexpMatch("pin") or
-          v.getName().toLowerCase().regexpMatch(".*apikey.*") or
-          v.getName().toLowerCase().regexpMatch("ssn") or
-          v.getName().toLowerCase().regexpMatch("decryptionkey") or
-          v.getName().toLowerCase().regexpMatch("privatekey") or
-          v.getName().toLowerCase().regexpMatch("creditcardnumber") or
-          v.getName().toLowerCase().regexpMatch("cvv*") or
-          v.getName().toLowerCase().regexpMatch(".+token$")         )
+         (name.getId().toLowerCase().regexpMatch(".*secret.*") or
+          name.getId().toLowerCase().regexpMatch(".*credential.*") or
+          name.getId().toLowerCase().regexpMatch(".*passw.*") or
+          name.getId().toLowerCase().regexpMatch(".*pwd.*") or
+          name.getId().toLowerCase().regexpMatch("pin") or
+          name.getId().toLowerCase().regexpMatch(".*apikey.*") or
+          name.getId().toLowerCase().regexpMatch("ssn") or
+          name.getId().toLowerCase().regexpMatch("decryptionkey") or
+          name.getId().toLowerCase().regexpMatch("privatekey") or
+          name.getId().toLowerCase().regexpMatch("creditcardnumber") or
+          name.getId().toLowerCase().regexpMatch("cvv*") or
+          name.getId().toLowerCase().regexpMatch(".+token$")         )
          and
-         not v.getName().toLowerCase().regexpMatch(".*id.*")
+         not name.getId().toLowerCase().regexpMatch(".*id.*")
        )
 
       and  
-      source.asExpr() = v.getAnAccess() and
-      not source.asExpr().getParent() instanceof Annotation // Exclude expressions in annotations
-    
+      source.asExpr() = name
      )
    }
    
    predicate isSink(DataFlow::Node sink) { 
-     sinkNode(sink, "log-injection")  or
-     getSink(sink, "Log Sink")
+     getSink(sink, "Log Sink") or
+     // Common Python logging functions
+     exists(Call call |
+       (
+         call.getFunc().(Name).getId() in ["print", "log", "debug", "info", "warning", "error", "critical"] or
+         call.getFunc().(Attribute).getName() in ["print", "log", "debug", "info", "warning", "error", "critical", "write"]
+       ) and
+       sink.asExpr() = call.getAnArg()
+     )
    }
  
    predicate isBarrier(DataFlow::Node sanitizer) {
-     sanitizer.asExpr() instanceof LiveLiteral or
-     sanitizer instanceof SimpleTypeSanitizer or
-     sanitizer.getType() instanceof TypeType or
-     PermissionBarrier::isPermissionBarrier(sanitizer) or
-     Barrier::barrier(sanitizer)
+     PermissionBarrier::isPermissionBarrier(sanitizer)
    }
  
    predicate isBarrierIn(DataFlow::Node node) { 
@@ -105,9 +103,9 @@
  
  from SensitiveLoggerFlow::PathNode source, SensitiveLoggerFlow::PathNode sink
  where SensitiveLoggerFlow::flowPath(source, sink) 
-   and not exists(MethodCall ma |
-     PermissionBarrier::isPermissionCheck(ma) and
-     ma.getEnclosingCallable() = sink.getNode().getEnclosingCallable()
+   and not exists(Call call |
+     PermissionBarrier::isPermissionCheck(call) and
+     call.getScope() = sink.getNode().getScope()
    )
    // Exclude test files based on the full path of the sink
    and not isTestFile(sink.getNode().getLocation().getFile())
