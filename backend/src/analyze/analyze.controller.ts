@@ -40,7 +40,7 @@ export class AnalyzeController {
       }
       
       if (!analyzeDto.language) {
-        throw new BadRequestException('Language is required. Supported languages: java');
+        throw new BadRequestException('Language is required. Supported languages: java, python');
       }
 
       return await this.analyzeService.runAnalysis(analyzeDto);

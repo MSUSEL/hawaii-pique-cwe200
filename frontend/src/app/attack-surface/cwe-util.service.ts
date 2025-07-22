@@ -15,6 +15,7 @@ export class CVEUtilService {
     directoryFilesTree:any[]=[];
     isUploaded:boolean=false;
     public selectedJavaVersion: number = 11;
+    public selectedLanguage: string = 'java';
 
     constructor(
 
@@ -40,6 +41,7 @@ export class CVEUtilService {
         this.isSubmitted=false;
         this.isUploaded=false;
         this.view="main"
+        this.selectedLanguage = 'java';
        
     }
     isValidProject(){

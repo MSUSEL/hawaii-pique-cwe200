@@ -169,7 +169,17 @@ export class PageHeaderComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.analyzeService.analyze({ project: this.utilService.ProjectName, javaVersion: this.utilService.selectedJavaVersion}).subscribe(
+    const analyzeRequest: any = { 
+      project: this.utilService.ProjectName, 
+      language: this.utilService.selectedLanguage 
+    };
+
+    // Add Java version only if language is Java
+    if (this.utilService.selectedLanguage === 'java') {
+      analyzeRequest.javaVersion = this.utilService.selectedJavaVersion;
+    }
+
+    this.analyzeService.analyze(analyzeRequest).subscribe(
       (response) => {
         this.editorService.rulesTree = response.rulesTree;
         this.editorService.locationsTree = response.locationsTree;

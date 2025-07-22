@@ -25,6 +25,20 @@
           </button>
         </li>
         <li class="nav-item d-flex align-items-center">
+          <label for="language"
+                 class="mb-0 mr-2"
+                 style="font-family:'Times New Roman', Times, serif; font-size:16px;">
+            Language:
+          </label>
+          <select id="language"
+                  class="form-control form-control-sm mr-3"
+                  style="width:auto; display:inline-block; background:#212529; color:#d3d3d3; border:none; height:25px"
+                  [(ngModel)]="utilService.selectedLanguage">
+            <option value="java">Java</option>
+            <option value="python">Python</option>
+          </select>
+        </li>
+        <li class="nav-item d-flex align-items-center" *ngIf="utilService.selectedLanguage === 'java'">
           <label for="javaVersion"
                  class="mb-0 mr-2"
                  style="font-family:'Times New Roman', Times, serif; font-size:16px;">
