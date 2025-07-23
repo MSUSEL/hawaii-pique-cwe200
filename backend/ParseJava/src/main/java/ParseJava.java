@@ -251,9 +251,9 @@ public class ParseJava {
 
                     System.out.println(jsonOutput.toString(2));
                 } else {
-                    System.out.println("Parsing failed");
+                    // System.out.println("Parsing failed");
 
-                    result.getProblems().forEach(problem -> System.out.println(problem.getMessage()));
+                    // result.getProblems().forEach(problem -> System.out.println(problem.getMessage()));
                 }
             }
         } catch (Exception e) {
