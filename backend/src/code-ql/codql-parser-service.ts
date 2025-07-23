@@ -90,7 +90,7 @@ export class CodeQlParserService {
      * @param index - The index of the flow node to get
      * @returns - The flow nodes for the specified vulnerability
      */
-async getDataFlowTree(filePath: string, project: string, index: string) {
+async getDataFlowTree(project: string, index: string) {
     const result = this.results[index];
     try {
         const flowMaps = [];
@@ -257,7 +257,7 @@ async getDataFlowTree(filePath: string, project: string, index: string) {
 
 
                 // Normalize the file path for the current OS
-                const normalizedUri = path.normalize(uri);
+                const normalizedUri = path.normalize(decodeURIComponent(uri));
                 const fullPath = path.join(project, normalizedUri);
 
                 let message = locationObj.message?.text ?? '';  // Default message from SARIF file
@@ -292,7 +292,7 @@ async getDataFlowTree(filePath: string, project: string, index: string) {
                     // Store this in the flow map
                     flowMap[flowIndex] = {
                         message: message,  // Use the updated message (either from SARIF or extracted from the file)
-                        uri: uri,  // Keep the original URI for reference
+                        uri: decodeURIComponent(uri),  // Keep the original URI for reference
                         startLine: startLine,
                         startColumn: startColumn,
                         endColumn: endColumn,

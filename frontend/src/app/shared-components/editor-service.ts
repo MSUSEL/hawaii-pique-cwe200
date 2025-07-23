@@ -104,6 +104,7 @@ export class EditorService {
     // Correct the path to maintain consistency
     correctPath(filePath: string): string {
         // Replace backslashes with forward slashes
+        filePath = decodeURIComponent(filePath); // Decode URI components
         filePath = filePath.replace(/\\/g, '/');
 
         // Extract project name dynamically using the first component of the path

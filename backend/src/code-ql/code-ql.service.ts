@@ -149,29 +149,11 @@ export class CodeQlService {
      * @returns The data flow tree for the specified vulnerability.
      */
     async getDataFlowTree(vulnerabilityId: string, project: string, index: string) {
-        {
+    // Decode the whole vulnerabilityId upfront
+        const sourcePath = path.join(this.projectsPath, project);
+        return await this.parserService.getDataFlowTree(sourcePath, index);
+}
 
-            // Find the first occurrence of the project in the vulnerabilityId
-            let projectIndex = vulnerabilityId.indexOf(project);
-
-            // If the project is found, slice after the first occurrence of the project
-            if (projectIndex !== -1) {
-                // Slice from the first occurrence of the project
-                vulnerabilityId = vulnerabilityId.slice(projectIndex);
-
-                // If there is a second occurrence of the project, remove everything before it
-                let secondProjectIndex = vulnerabilityId.indexOf(project, project.length);
-                if (secondProjectIndex !== -1) {
-                    vulnerabilityId = vulnerabilityId.slice(0, secondProjectIndex - 1) + vulnerabilityId.slice(secondProjectIndex + project.length);
-                }
-            }
-
-            // console.log(vulnerabilityId, project, index);
-
-            const sourcePath = path.join(this.projectsPath, project);
-            return await this.parserService.getDataFlowTree(vulnerabilityId, sourcePath, index);
-        }
-    }
 
     /**
      * This function applies the labels from the labeling data to the codeFlows 

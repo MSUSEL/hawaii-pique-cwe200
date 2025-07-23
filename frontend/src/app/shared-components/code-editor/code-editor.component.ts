@@ -37,7 +37,7 @@ export class CodeEditorComponent implements OnInit {
     ) {
         this.editorService.activeFileChange.subscribe((file: SourceFile) => {
             if (file) {
-                this.filePath = file.fullPath.replace('Files\\', '');
+                this.filePath = this.getDisplayPath(file.fullPath);
                 this.view = 'code';
                 this.chatGptResponse = '';
 
@@ -136,6 +136,31 @@ export class CodeEditorComponent implements OnInit {
             .subscribe((response) => {
                 this.chatGptResponse = response.value;
             });
+    }
+
+    // Helper to clean up the file path for display purposes
+    getDisplayPath(fullPath: string): string {
+        // Remove the Files/ prefix if it exists
+        let displayPath = fullPath;
+        if (displayPath.startsWith('Files/') || displayPath.startsWith('Files\\')) {
+            displayPath = displayPath.replace(/^Files[/\\]/, '');
+        }
+        
+        // Split the path to handle duplicate project names
+        const pathComponents = displayPath.split(/[/\\]+/);
+        
+        if (pathComponents.length > 1) {
+            const projectName = pathComponents[0];
+            
+            // Check if the second component is the same as the project name (duplicate)
+            if (pathComponents[1] === projectName) {
+                // Remove the duplicate project name
+                pathComponents.splice(1, 1);
+                displayPath = pathComponents.join('/');
+            }
+        }
+        
+        return displayPath;
     }
 }
 

@@ -111,13 +111,42 @@ export class DataFlowTreeComponent implements OnInit {
 
   // Helper to correct file path format
   correctPath(uri: string): string {
+    // The URI is already decoded from the backend, so we just need to construct the correct path
     const pathComponents = uri.split(/[/\\]+/);
     const projectName = pathComponents[0];
     let fullPath = uri;
+    
+    // Ensure the path starts with Files/ prefix if it doesn't already
     if (!fullPath.startsWith('Files/')) {
       fullPath = `Files/${projectName}/${fullPath}`;
     }
+    
     return fullPath;
+  }
+
+  // Helper to clean up the URI for display purposes
+  getDisplayPath(uri: string): string {
+    // Remove the Files/ prefix if it exists
+    let displayPath = uri;
+    if (displayPath.startsWith('Files/')) {
+      displayPath = displayPath.substring(6); // Remove "Files/"
+    }
+    
+    // Split the path to handle duplicate project names
+    const pathComponents = displayPath.split(/[/\\]+/);
+    
+    if (pathComponents.length > 1) {
+      const projectName = pathComponents[0];
+      
+      // Check if the second component is the same as the project name (duplicate)
+      if (pathComponents[1] === projectName) {
+        // Remove the duplicate project name
+        pathComponents.splice(1, 1);
+        displayPath = pathComponents.join('/');
+      }
+    }
+    
+    return displayPath;
   }
   
  // Label a flow as vulnerable (Yes) or not (No)

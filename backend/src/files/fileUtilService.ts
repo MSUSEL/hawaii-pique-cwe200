@@ -118,9 +118,12 @@ export class FileUtilService {
                 const code = fs.readFileSync(filePath, 'utf8');
                 return code;
             } catch (error) {
-                console.error(error);
+                console.error('FileUtilService - Error reading file:', filePath, error);
                 return '';
             }
+        } else {
+            console.warn('FileUtilService - File does not exist:', filePath);
+            return '';
         }
     }
 
