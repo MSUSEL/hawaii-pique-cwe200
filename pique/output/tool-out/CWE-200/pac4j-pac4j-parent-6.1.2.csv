@@ -1,0 +1,13 @@
+532,pac4j-pac4j-parent-6.1.2/pac4j-core/src/main/java/org/pac4j/core/authorization/authorizer/CsrfAuthorizer.java,73,45
+532,pac4j-pac4j-parent-6.1.2/pac4j-core/src/main/java/org/pac4j/core/authorization/authorizer/CsrfAuthorizer.java,84,48
+532,pac4j-pac4j-parent-6.1.2/pac4j-core/src/main/java/org/pac4j/core/client/BaseClient.java,136,42
+532,pac4j-pac4j-parent-6.1.2/pac4j-http/src/main/java/org/pac4j/http/client/indirect/FormClient.java,121,61
+532,pac4j-pac4j-parent-6.1.2/pac4j-http/src/main/java/org/pac4j/http/client/indirect/IndirectBasicAuthClient.java,100,46
+532,pac4j-pac4j-parent-6.1.2/pac4j-kerberos/src/main/java/org/pac4j/kerberos/client/indirect/IndirectKerberosClient.java,75,55
+532,pac4j-pac4j-parent-6.1.2/pac4j-oauth/src/main/java/org/pac4j/oauth/credentials/authenticator/OAuth10Authenticator.java,42,42
+532,pac4j-pac4j-parent-6.1.2/pac4j-oauth/src/main/java/org/pac4j/oauth/credentials/authenticator/OAuth10Authenticator.java,61,41
+532,pac4j-pac4j-parent-6.1.2/pac4j-oauth/src/main/java/org/pac4j/oauth/credentials/authenticator/OAuth20Authenticator.java,47,41
+532,pac4j-pac4j-parent-6.1.2/pac4j-oauth/src/main/java/org/pac4j/oauth/profile/creator/OAuth20ProfileCreator.java,56,61
+532,pac4j-pac4j-parent-6.1.2/pac4j-oauth/src/main/java/org/pac4j/oauth/profile/facebook/FacebookProfileCreator.java,71,26
+532,pac4j-pac4j-parent-6.1.2/pac4j-oauth/src/main/java/org/pac4j/oauth/profile/facebook/FacebookProfileCreator.java,81,52
+532,pac4j-pac4j-parent-6.1.2/pac4j-oauth/src/main/java/org/pac4j/oauth/redirect/OAuth10RedirectionActionBuilder.java,62,46
