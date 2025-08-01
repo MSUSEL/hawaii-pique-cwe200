@@ -1,0 +1,4 @@
+532,hippo4j-1.5.0/hippo4j-common/src/main/java/cn/hippo4j/common/toolkit/http/HttpUtil.java,260,23
+532,hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java,242,67
+532,hippo4j-1.5.0/hippo4j-spring-boot/hippo4j-spring-boot-starter/src/main/java/cn/hippo4j/springboot/starter/core/ClientWorker.java,244,82
+201,hippo4j-1.5.0/hippo4j-server/hippo4j-auth/src/main/java/cn/hippo4j/auth/filter/JWTAuthenticationFilter.java,97,41

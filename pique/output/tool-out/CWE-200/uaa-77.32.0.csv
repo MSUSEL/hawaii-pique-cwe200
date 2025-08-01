@@ -1,0 +1,4 @@
+532,uaa-77.32.0/server/src/main/java/org/cloudfoundry/identity/uaa/authentication/ClientBasicAuthenticationFilter.java,115,32
+532,uaa-77.32.0/server/src/main/java/org/cloudfoundry/identity/uaa/provider/ldap/PasswordComparisonAuthenticator.java,136,26
+532,uaa-77.32.0/server/src/main/java/org/cloudfoundry/identity/uaa/provider/ldap/PasswordComparisonAuthenticator.java,136,79
+532,uaa-77.32.0/server/src/main/java/org/cloudfoundry/identity/uaa/user/UaaUserApprovalHandler.java,117,22

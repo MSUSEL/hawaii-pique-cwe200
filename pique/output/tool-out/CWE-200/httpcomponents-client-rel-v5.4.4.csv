@@ -1,0 +1,5 @@
+532,httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java,324,13
+532,httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/nio/PoolingAsyncClientConnectionManager.java,272,13
+532,httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java,324,80
+532,httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/io/PoolingHttpClientConnectionManager.java,350,64
+532,httpcomponents-client-rel-v5.4.4/httpclient5/src/main/java/org/apache/hc/client5/http/impl/nio/PoolingAsyncClientConnectionManager.java,272,80

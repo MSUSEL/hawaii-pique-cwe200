@@ -1,0 +1,16 @@
+532,jena-jena-5.4.0/jena-arq/src/main/java/org/apache/jena/sparql/core/mem/PMapQuadTable.java,101,64
+532,jena-jena-5.4.0/jena-arq/src/main/java/org/apache/jena/sparql/core/mem/PMapQuadTable.java,101,71
+532,jena-jena-5.4.0/jena-arq/src/main/java/org/apache/jena/sparql/core/mem/PMapQuadTable.java,101,79
+532,jena-jena-5.4.0/jena-arq/src/main/java/org/apache/jena/sparql/core/mem/PMapQuadTable.java,101,86
+532,jena-jena-5.4.0/jena-arq/src/main/java/org/apache/jena/sparql/core/mem/PMapTripleTable.java,100,62
+532,jena-jena-5.4.0/jena-arq/src/main/java/org/apache/jena/sparql/core/mem/PMapTripleTable.java,100,69
+532,jena-jena-5.4.0/jena-arq/src/main/java/org/apache/jena/sparql/core/mem/PMapTripleTable.java,100,77
+532,jena-jena-5.4.0/jena-arq/src/main/java/org/apache/jena/sparql/core/mem/PMapTupleTable.java,85,49
+532,jena-jena-5.4.0/jena-base/src/main/java/org/apache/jena/atlas/logging/FmtLog.java,85,22
+532,jena-jena-5.4.0/jena-base/src/main/java/org/apache/jena/atlas/logging/FmtLog.java,96,29
+532,jena-jena-5.4.0/jena-base/src/main/java/org/apache/jena/atlas/logging/Log.java,54,26
+532,jena-jena-5.4.0/jena-fuseki2/jena-fuseki-main/src/main/java/org/apache/jena/fuseki/main/JettySecurityLib.java,98,92
+532,jena-jena-5.4.0/jena-tdb1/src/main/java/org/apache/jena/tdb1/store/nodetable/NodeTableLogger.java,58,14
+532,jena-jena-5.4.0/jena-tdb1/src/main/java/org/apache/jena/tdb1/store/nodetable/NodeTableLogger.java,129,18
+532,jena-jena-5.4.0/jena-tdb2/src/main/java/org/apache/jena/tdb2/store/NodeIdInline.java,118,36
+532,jena-jena-5.4.0/jena-tdb2/src/main/java/org/apache/jena/tdb2/store/NodeIdInline.java,133,36

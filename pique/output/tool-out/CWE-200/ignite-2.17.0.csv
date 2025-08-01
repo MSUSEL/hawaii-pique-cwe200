@@ -1,0 +1,10 @@
+550,ignite-2.17.0/modules/control-utility/src/main/java/org/apache/ignite/internal/commandline/indexreader/IgniteIndexReader.java,319,32
+550,ignite-2.17.0/modules/core/src/main/java/org/apache/ignite/internal/management/cache/VerifyBackupPartitionsDumpTask.java,235,32
+550,ignite-2.17.0/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/persistence/wal/reader/IgniteWalIteratorFactory.java,748,25
+550,ignite-2.17.0/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/persistence/wal/reader/IgniteWalIteratorFactory.java,753,25
+550,ignite-2.17.0/modules/core/src/main/java/org/apache/ignite/internal/processors/cache/persistence/wal/reader/IgniteWalIteratorFactory.java,761,25
+550,ignite-2.17.0/modules/core/src/main/java/org/apache/ignite/internal/util/typedef/X.java,138,28
+550,ignite-2.17.0/modules/core/src/main/java/org/apache/ignite/internal/util/typedef/X.java,142,36
+550,ignite-2.17.0/modules/core/src/test/java/org/apache/ignite/loadtests/cache/GridCacheAbstractLoadTest.java,263,28
+550,ignite-2.17.0/modules/dev-utils/src/main/java/org/apache/ignite/development/utils/IgniteWalConverter.java,130,37
+550,ignite-2.17.0/modules/web/ignite-websphere-test/src/main/java/org/apache/ignite/webtest/TestJtaTxServlet.java,89,32
