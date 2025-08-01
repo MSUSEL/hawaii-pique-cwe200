@@ -1,6 +1,8 @@
 {
   "name": "CWE-200_quality_model",
-  "additionalData": {},
+  "additionalData": {
+    "projectName": "CWE-200"
+  },
   "global_config": {
     "benchmark_strategy": "calibration.CWE200Benchmarker",
     "weights_strategy": "calibration.FixedWeighter"
@@ -9,19 +11,19 @@
     "product_factors": {
       "Pillar CWE-200": {
         "name": "Pillar CWE-200",
-        "value": 0.0,
+        "value": 0.1675,
         "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
         "children": {
           "CWE-203": {
             "positive": false,
             "name": "CWE-203",
-            "value": 0.0,
+            "value": 1.0,
             "description": "The product behaves differently or sends different responses under different circumstances in a way that is observable to an unauthorized actor, which exposes security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
             "children": {
               "CWE-204": {
                 "positive": false,
                 "name": "CWE-204",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
                 "children": {
                   "CWE-204 Diagnostic CweCodeQl": {
@@ -56,7 +58,7 @@
               "CWE-208": {
                 "positive": false,
                 "name": "CWE-208",
-                "value": 0.0,
+                "value": 1.0,
                 "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
                 "children": {
                   "CWE-208 Diagnostic CweCodeQl": {
@@ -107,7 +109,7 @@
           "CWE-215": {
             "positive": false,
             "name": "CWE-215",
-            "value": 0.0,
+            "value": 0.001,
             "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
             "children": {
               "CWE-215 Diagnostic CweCodeQl": {
@@ -142,21 +144,35 @@
           "CWE-538": {
             "positive": false,
             "name": "CWE-538",
-            "value": 0.0,
+            "value": 0.001,
             "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
             "children": {
               "CWE-532": {
                 "positive": false,
                 "name": "CWE-532",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
                 "children": {
                   "CWE-532 Diagnostic CweCodeQl": {
                     "toolName": "CweCodeQl",
                     "name": "CWE-532 Diagnostic CweCodeQl",
-                    "value": 0.0,
+                    "value": 3.0,
                     "description": "Sum of findings of type CWE-532",
-                    "children": {},
+                    "children": {
+                      "532": {
+                        "name": "532",
+                        "value": 3,
+                        "description": "",
+                        "children": {},
+                        "weights": {},
+                        "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
+                        "normalizer": "pique.evaluation.DefaultNormalizer",
+                        "utility_function": {
+                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                          "description": "A Probability Density Function to model the distribution of findings"
+                        }
+                      }
+                    },
                     "weights": {},
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -197,13 +213,13 @@
               "CWE-540": {
                 "positive": false,
                 "name": "CWE-540",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
                 "children": {
                   "CWE-615": {
                     "positive": false,
                     "name": "CWE-615",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
                     "children": {
                       "CWE-615 Diagnostic CweCodeQl": {
@@ -270,7 +286,7 @@
           "CWE-209": {
             "positive": false,
             "name": "CWE-209",
-            "value": 0.0,
+            "value": 0.001,
             "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
             "children": {
               "CWE-209 Diagnostic CweCodeQl": {
@@ -290,13 +306,13 @@
               "CWE-211": {
                 "positive": false,
                 "name": "CWE-211",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The product performs an operation that triggers an external diagnostic or error message that is not directly generated or controlled by the product, such as an error generated by the programming language interpreter that a software application uses. The error can contain sensitive system information.",
                 "children": {
                   "CWE-535": {
                     "positive": false,
                     "name": "CWE-535",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
                     "children": {
                       "CWE-535 Diagnostic CweCodeQl": {
@@ -331,7 +347,7 @@
                   "CWE-536": {
                     "positive": false,
                     "name": "CWE-536",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
                     "children": {
                       "CWE-536 Diagnostic CweCodeQl": {
@@ -366,7 +382,7 @@
                   "CWE-537": {
                     "positive": false,
                     "name": "CWE-537",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
                     "children": {
                       "CWE-537 Diagnostic CweCodeQl": {
@@ -401,7 +417,7 @@
                   "CWE-550": {
                     "positive": false,
                     "name": "CWE-550",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
                     "children": {
                       "CWE-550 Diagnostic CweCodeQl": {
@@ -470,13 +486,13 @@
           "CWE-497": {
             "positive": false,
             "name": "CWE-497",
-            "value": 0.0,
+            "value": 0.001,
             "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
             "children": {
               "CWE-214": {
                 "positive": false,
                 "name": "CWE-214",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
                 "children": {
                   "CWE-214 Diagnostic CweCodeQl": {
@@ -526,7 +542,7 @@
           "CWE-201": {
             "positive": false,
             "name": "CWE-201",
-            "value": 0.0,
+            "value": 0.001,
             "description": "The code transmits data to another actor, but a portion of the data includes sensitive information that should not be accessible to that actor.",
             "children": {
               "CWE-201 Diagnostic CweCodeQl": {
@@ -546,7 +562,7 @@
               "CWE-598": {
                 "positive": false,
                 "name": "CWE-598",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
                 "children": {
                   "CWE-598 Diagnostic CweCodeQl": {
@@ -614,24 +630,24 @@
     "quality_aspects": {
       "Security": {
         "name": "Security",
-        "value": 0.00,
+        "value": 0.16750,
         "description": "Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization",
         "children": {
           "Pillar CWE-200": {
             "name": "Pillar CWE-200",
-            "value": 0.0,
+            "value": 0.1675,
             "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
             "children": {
               "CWE-203": {
                 "positive": false,
                 "name": "CWE-203",
-                "value": 0.0,
+                "value": 1.0,
                 "description": "The product behaves differently or sends different responses under different circumstances in a way that is observable to an unauthorized actor, which exposes security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
                 "children": {
                   "CWE-204": {
                     "positive": false,
                     "name": "CWE-204",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
                     "children": {
                       "CWE-204 Diagnostic CweCodeQl": {
@@ -666,7 +682,7 @@
                   "CWE-208": {
                     "positive": false,
                     "name": "CWE-208",
-                    "value": 0.0,
+                    "value": 1.0,
                     "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
                     "children": {
                       "CWE-208 Diagnostic CweCodeQl": {
@@ -717,7 +733,7 @@
               "CWE-215": {
                 "positive": false,
                 "name": "CWE-215",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
                 "children": {
                   "CWE-215 Diagnostic CweCodeQl": {
@@ -752,21 +768,35 @@
               "CWE-538": {
                 "positive": false,
                 "name": "CWE-538",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
                 "children": {
                   "CWE-532": {
                     "positive": false,
                     "name": "CWE-532",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
                     "children": {
                       "CWE-532 Diagnostic CweCodeQl": {
                         "toolName": "CweCodeQl",
                         "name": "CWE-532 Diagnostic CweCodeQl",
-                        "value": 0.0,
+                        "value": 3.0,
                         "description": "Sum of findings of type CWE-532",
-                        "children": {},
+                        "children": {
+                          "532": {
+                            "name": "532",
+                            "value": 3,
+                            "description": "",
+                            "children": {},
+                            "weights": {},
+                            "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
+                            "normalizer": "pique.evaluation.DefaultNormalizer",
+                            "utility_function": {
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
+                            }
+                          }
+                        },
                         "weights": {},
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -807,13 +837,13 @@
                   "CWE-540": {
                     "positive": false,
                     "name": "CWE-540",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
                     "children": {
                       "CWE-615": {
                         "positive": false,
                         "name": "CWE-615",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
                         "children": {
                           "CWE-615 Diagnostic CweCodeQl": {
@@ -880,7 +910,7 @@
               "CWE-209": {
                 "positive": false,
                 "name": "CWE-209",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
                 "children": {
                   "CWE-209 Diagnostic CweCodeQl": {
@@ -900,13 +930,13 @@
                   "CWE-211": {
                     "positive": false,
                     "name": "CWE-211",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product performs an operation that triggers an external diagnostic or error message that is not directly generated or controlled by the product, such as an error generated by the programming language interpreter that a software application uses. The error can contain sensitive system information.",
                     "children": {
                       "CWE-535": {
                         "positive": false,
                         "name": "CWE-535",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
                         "children": {
                           "CWE-535 Diagnostic CweCodeQl": {
@@ -941,7 +971,7 @@
                       "CWE-536": {
                         "positive": false,
                         "name": "CWE-536",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
                         "children": {
                           "CWE-536 Diagnostic CweCodeQl": {
@@ -976,7 +1006,7 @@
                       "CWE-537": {
                         "positive": false,
                         "name": "CWE-537",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
                         "children": {
                           "CWE-537 Diagnostic CweCodeQl": {
@@ -1011,7 +1041,7 @@
                       "CWE-550": {
                         "positive": false,
                         "name": "CWE-550",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
                         "children": {
                           "CWE-550 Diagnostic CweCodeQl": {
@@ -1080,13 +1110,13 @@
               "CWE-497": {
                 "positive": false,
                 "name": "CWE-497",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
                 "children": {
                   "CWE-214": {
                     "positive": false,
                     "name": "CWE-214",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
                     "children": {
                       "CWE-214 Diagnostic CweCodeQl": {
@@ -1136,7 +1166,7 @@
               "CWE-201": {
                 "positive": false,
                 "name": "CWE-201",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The code transmits data to another actor, but a portion of the data includes sensitive information that should not be accessible to that actor.",
                 "children": {
                   "CWE-201 Diagnostic CweCodeQl": {
@@ -1156,7 +1186,7 @@
                   "CWE-598": {
                     "positive": false,
                     "name": "CWE-598",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
                     "children": {
                       "CWE-598 Diagnostic CweCodeQl": {
@@ -1233,24 +1263,24 @@
       },
       "Maintainability": {
         "name": "Maintainability",
-        "value": 0.00,
+        "value": 0.16750,
         "description": "Degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers",
         "children": {
           "Pillar CWE-200": {
             "name": "Pillar CWE-200",
-            "value": 0.0,
+            "value": 0.1675,
             "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
             "children": {
               "CWE-203": {
                 "positive": false,
                 "name": "CWE-203",
-                "value": 0.0,
+                "value": 1.0,
                 "description": "The product behaves differently or sends different responses under different circumstances in a way that is observable to an unauthorized actor, which exposes security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
                 "children": {
                   "CWE-204": {
                     "positive": false,
                     "name": "CWE-204",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
                     "children": {
                       "CWE-204 Diagnostic CweCodeQl": {
@@ -1285,7 +1315,7 @@
                   "CWE-208": {
                     "positive": false,
                     "name": "CWE-208",
-                    "value": 0.0,
+                    "value": 1.0,
                     "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
                     "children": {
                       "CWE-208 Diagnostic CweCodeQl": {
@@ -1336,7 +1366,7 @@
               "CWE-215": {
                 "positive": false,
                 "name": "CWE-215",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
                 "children": {
                   "CWE-215 Diagnostic CweCodeQl": {
@@ -1371,21 +1401,35 @@
               "CWE-538": {
                 "positive": false,
                 "name": "CWE-538",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
                 "children": {
                   "CWE-532": {
                     "positive": false,
                     "name": "CWE-532",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
                     "children": {
                       "CWE-532 Diagnostic CweCodeQl": {
                         "toolName": "CweCodeQl",
                         "name": "CWE-532 Diagnostic CweCodeQl",
-                        "value": 0.0,
+                        "value": 3.0,
                         "description": "Sum of findings of type CWE-532",
-                        "children": {},
+                        "children": {
+                          "532": {
+                            "name": "532",
+                            "value": 3,
+                            "description": "",
+                            "children": {},
+                            "weights": {},
+                            "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
+                            "normalizer": "pique.evaluation.DefaultNormalizer",
+                            "utility_function": {
+                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                              "description": "A Probability Density Function to model the distribution of findings"
+                            }
+                          }
+                        },
                         "weights": {},
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1426,13 +1470,13 @@
                   "CWE-540": {
                     "positive": false,
                     "name": "CWE-540",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
                     "children": {
                       "CWE-615": {
                         "positive": false,
                         "name": "CWE-615",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
                         "children": {
                           "CWE-615 Diagnostic CweCodeQl": {
@@ -1499,7 +1543,7 @@
               "CWE-209": {
                 "positive": false,
                 "name": "CWE-209",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
                 "children": {
                   "CWE-209 Diagnostic CweCodeQl": {
@@ -1519,13 +1563,13 @@
                   "CWE-211": {
                     "positive": false,
                     "name": "CWE-211",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product performs an operation that triggers an external diagnostic or error message that is not directly generated or controlled by the product, such as an error generated by the programming language interpreter that a software application uses. The error can contain sensitive system information.",
                     "children": {
                       "CWE-535": {
                         "positive": false,
                         "name": "CWE-535",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
                         "children": {
                           "CWE-535 Diagnostic CweCodeQl": {
@@ -1560,7 +1604,7 @@
                       "CWE-536": {
                         "positive": false,
                         "name": "CWE-536",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
                         "children": {
                           "CWE-536 Diagnostic CweCodeQl": {
@@ -1595,7 +1639,7 @@
                       "CWE-537": {
                         "positive": false,
                         "name": "CWE-537",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
                         "children": {
                           "CWE-537 Diagnostic CweCodeQl": {
@@ -1630,7 +1674,7 @@
                       "CWE-550": {
                         "positive": false,
                         "name": "CWE-550",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
                         "children": {
                           "CWE-550 Diagnostic CweCodeQl": {
@@ -1699,13 +1743,13 @@
               "CWE-497": {
                 "positive": false,
                 "name": "CWE-497",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
                 "children": {
                   "CWE-214": {
                     "positive": false,
                     "name": "CWE-214",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
                     "children": {
                       "CWE-214 Diagnostic CweCodeQl": {
@@ -1755,7 +1799,7 @@
               "CWE-201": {
                 "positive": false,
                 "name": "CWE-201",
-                "value": 0.0,
+                "value": 0.001,
                 "description": "The code transmits data to another actor, but a portion of the data includes sensitive information that should not be accessible to that actor.",
                 "children": {
                   "CWE-201 Diagnostic CweCodeQl": {
@@ -1775,7 +1819,7 @@
                   "CWE-598": {
                     "positive": false,
                     "name": "CWE-598",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
                     "children": {
                       "CWE-598 Diagnostic CweCodeQl": {
@@ -1854,29 +1898,29 @@
     "tqi": {
       "PIQUE-CWE200 quality model": {
         "name": "PIQUE-CWE200 quality model",
-        "value": 0.000,
+        "value": 0.335000,
         "description": "Model description, replace with a description of your model",
         "children": {
           "Maintainability": {
             "name": "Maintainability",
-            "value": 0.00,
+            "value": 0.16750,
             "description": "Degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers",
             "children": {
               "Pillar CWE-200": {
                 "name": "Pillar CWE-200",
-                "value": 0.0,
+                "value": 0.1675,
                 "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
                 "children": {
                   "CWE-203": {
                     "positive": false,
                     "name": "CWE-203",
-                    "value": 0.0,
+                    "value": 1.0,
                     "description": "The product behaves differently or sends different responses under different circumstances in a way that is observable to an unauthorized actor, which exposes security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
                     "children": {
                       "CWE-204": {
                         "positive": false,
                         "name": "CWE-204",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
                         "children": {
                           "CWE-204 Diagnostic CweCodeQl": {
@@ -1911,7 +1955,7 @@
                       "CWE-208": {
                         "positive": false,
                         "name": "CWE-208",
-                        "value": 0.0,
+                        "value": 1.0,
                         "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
                         "children": {
                           "CWE-208 Diagnostic CweCodeQl": {
@@ -1962,7 +2006,7 @@
                   "CWE-215": {
                     "positive": false,
                     "name": "CWE-215",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
                     "children": {
                       "CWE-215 Diagnostic CweCodeQl": {
@@ -1997,21 +2041,35 @@
                   "CWE-538": {
                     "positive": false,
                     "name": "CWE-538",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
                     "children": {
                       "CWE-532": {
                         "positive": false,
                         "name": "CWE-532",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
                         "children": {
                           "CWE-532 Diagnostic CweCodeQl": {
                             "toolName": "CweCodeQl",
                             "name": "CWE-532 Diagnostic CweCodeQl",
-                            "value": 0.0,
+                            "value": 3.0,
                             "description": "Sum of findings of type CWE-532",
-                            "children": {},
+                            "children": {
+                              "532": {
+                                "name": "532",
+                                "value": 3,
+                                "description": "",
+                                "children": {},
+                                "weights": {},
+                                "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
+                                "normalizer": "pique.evaluation.DefaultNormalizer",
+                                "utility_function": {
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
+                                }
+                              }
+                            },
                             "weights": {},
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2052,13 +2110,13 @@
                       "CWE-540": {
                         "positive": false,
                         "name": "CWE-540",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
                         "children": {
                           "CWE-615": {
                             "positive": false,
                             "name": "CWE-615",
-                            "value": 0.0,
+                            "value": 0.001,
                             "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
                             "children": {
                               "CWE-615 Diagnostic CweCodeQl": {
@@ -2125,7 +2183,7 @@
                   "CWE-209": {
                     "positive": false,
                     "name": "CWE-209",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
                     "children": {
                       "CWE-209 Diagnostic CweCodeQl": {
@@ -2145,13 +2203,13 @@
                       "CWE-211": {
                         "positive": false,
                         "name": "CWE-211",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "The product performs an operation that triggers an external diagnostic or error message that is not directly generated or controlled by the product, such as an error generated by the programming language interpreter that a software application uses. The error can contain sensitive system information.",
                         "children": {
                           "CWE-535": {
                             "positive": false,
                             "name": "CWE-535",
-                            "value": 0.0,
+                            "value": 0.001,
                             "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
                             "children": {
                               "CWE-535 Diagnostic CweCodeQl": {
@@ -2186,7 +2244,7 @@
                           "CWE-536": {
                             "positive": false,
                             "name": "CWE-536",
-                            "value": 0.0,
+                            "value": 0.001,
                             "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
                             "children": {
                               "CWE-536 Diagnostic CweCodeQl": {
@@ -2221,7 +2279,7 @@
                           "CWE-537": {
                             "positive": false,
                             "name": "CWE-537",
-                            "value": 0.0,
+                            "value": 0.001,
                             "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
                             "children": {
                               "CWE-537 Diagnostic CweCodeQl": {
@@ -2256,7 +2314,7 @@
                           "CWE-550": {
                             "positive": false,
                             "name": "CWE-550",
-                            "value": 0.0,
+                            "value": 0.001,
                             "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
                             "children": {
                               "CWE-550 Diagnostic CweCodeQl": {
@@ -2325,13 +2383,13 @@
                   "CWE-497": {
                     "positive": false,
                     "name": "CWE-497",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
                     "children": {
                       "CWE-214": {
                         "positive": false,
                         "name": "CWE-214",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
                         "children": {
                           "CWE-214 Diagnostic CweCodeQl": {
@@ -2381,7 +2439,7 @@
                   "CWE-201": {
                     "positive": false,
                     "name": "CWE-201",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The code transmits data to another actor, but a portion of the data includes sensitive information that should not be accessible to that actor.",
                     "children": {
                       "CWE-201 Diagnostic CweCodeQl": {
@@ -2401,7 +2459,7 @@
                       "CWE-598": {
                         "positive": false,
                         "name": "CWE-598",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
                         "children": {
                           "CWE-598 Diagnostic CweCodeQl": {
@@ -2478,24 +2536,24 @@
           },
           "Security": {
             "name": "Security",
-            "value": 0.00,
+            "value": 0.16750,
             "description": "Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization",
             "children": {
               "Pillar CWE-200": {
                 "name": "Pillar CWE-200",
-                "value": 0.0,
+                "value": 0.1675,
                 "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
                 "children": {
                   "CWE-203": {
                     "positive": false,
                     "name": "CWE-203",
-                    "value": 0.0,
+                    "value": 1.0,
                     "description": "The product behaves differently or sends different responses under different circumstances in a way that is observable to an unauthorized actor, which exposes security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
                     "children": {
                       "CWE-204": {
                         "positive": false,
                         "name": "CWE-204",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
                         "children": {
                           "CWE-204 Diagnostic CweCodeQl": {
@@ -2530,7 +2588,7 @@
                       "CWE-208": {
                         "positive": false,
                         "name": "CWE-208",
-                        "value": 0.0,
+                        "value": 1.0,
                         "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
                         "children": {
                           "CWE-208 Diagnostic CweCodeQl": {
@@ -2581,7 +2639,7 @@
                   "CWE-215": {
                     "positive": false,
                     "name": "CWE-215",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
                     "children": {
                       "CWE-215 Diagnostic CweCodeQl": {
@@ -2616,21 +2674,35 @@
                   "CWE-538": {
                     "positive": false,
                     "name": "CWE-538",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
                     "children": {
                       "CWE-532": {
                         "positive": false,
                         "name": "CWE-532",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
                         "children": {
                           "CWE-532 Diagnostic CweCodeQl": {
                             "toolName": "CweCodeQl",
                             "name": "CWE-532 Diagnostic CweCodeQl",
-                            "value": 0.0,
+                            "value": 3.0,
                             "description": "Sum of findings of type CWE-532",
-                            "children": {},
+                            "children": {
+                              "532": {
+                                "name": "532",
+                                "value": 3,
+                                "description": "",
+                                "children": {},
+                                "weights": {},
+                                "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
+                                "normalizer": "pique.evaluation.DefaultNormalizer",
+                                "utility_function": {
+                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                                  "description": "A Probability Density Function to model the distribution of findings"
+                                }
+                              }
+                            },
                             "weights": {},
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2671,13 +2743,13 @@
                       "CWE-540": {
                         "positive": false,
                         "name": "CWE-540",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
                         "children": {
                           "CWE-615": {
                             "positive": false,
                             "name": "CWE-615",
-                            "value": 0.0,
+                            "value": 0.001,
                             "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
                             "children": {
                               "CWE-615 Diagnostic CweCodeQl": {
@@ -2744,7 +2816,7 @@
                   "CWE-209": {
                     "positive": false,
                     "name": "CWE-209",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
                     "children": {
                       "CWE-209 Diagnostic CweCodeQl": {
@@ -2764,13 +2836,13 @@
                       "CWE-211": {
                         "positive": false,
                         "name": "CWE-211",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "The product performs an operation that triggers an external diagnostic or error message that is not directly generated or controlled by the product, such as an error generated by the programming language interpreter that a software application uses. The error can contain sensitive system information.",
                         "children": {
                           "CWE-535": {
                             "positive": false,
                             "name": "CWE-535",
-                            "value": 0.0,
+                            "value": 0.001,
                             "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
                             "children": {
                               "CWE-535 Diagnostic CweCodeQl": {
@@ -2805,7 +2877,7 @@
                           "CWE-536": {
                             "positive": false,
                             "name": "CWE-536",
-                            "value": 0.0,
+                            "value": 0.001,
                             "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
                             "children": {
                               "CWE-536 Diagnostic CweCodeQl": {
@@ -2840,7 +2912,7 @@
                           "CWE-537": {
                             "positive": false,
                             "name": "CWE-537",
-                            "value": 0.0,
+                            "value": 0.001,
                             "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
                             "children": {
                               "CWE-537 Diagnostic CweCodeQl": {
@@ -2875,7 +2947,7 @@
                           "CWE-550": {
                             "positive": false,
                             "name": "CWE-550",
-                            "value": 0.0,
+                            "value": 0.001,
                             "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
                             "children": {
                               "CWE-550 Diagnostic CweCodeQl": {
@@ -2944,13 +3016,13 @@
                   "CWE-497": {
                     "positive": false,
                     "name": "CWE-497",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
                     "children": {
                       "CWE-214": {
                         "positive": false,
                         "name": "CWE-214",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
                         "children": {
                           "CWE-214 Diagnostic CweCodeQl": {
@@ -3000,7 +3072,7 @@
                   "CWE-201": {
                     "positive": false,
                     "name": "CWE-201",
-                    "value": 0.0,
+                    "value": 0.001,
                     "description": "The code transmits data to another actor, but a portion of the data includes sensitive information that should not be accessible to that actor.",
                     "children": {
                       "CWE-201 Diagnostic CweCodeQl": {
@@ -3020,7 +3092,7 @@
                       "CWE-598": {
                         "positive": false,
                         "name": "CWE-598",
-                        "value": 0.0,
+                        "value": 0.001,
                         "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
                         "children": {
                           "CWE-598 Diagnostic CweCodeQl": {
@@ -3113,15 +3185,29 @@
     "CWE-532": {
       "positive": false,
       "name": "CWE-532",
-      "value": 0.0,
+      "value": 0.001,
       "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
       "children": {
         "CWE-532 Diagnostic CweCodeQl": {
           "toolName": "CweCodeQl",
           "name": "CWE-532 Diagnostic CweCodeQl",
-          "value": 0.0,
+          "value": 3.0,
           "description": "Sum of findings of type CWE-532",
-          "children": {},
+          "children": {
+            "532": {
+              "name": "532",
+              "value": 3,
+              "description": "",
+              "children": {},
+              "weights": {},
+              "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
+              "normalizer": "pique.evaluation.DefaultNormalizer",
+              "utility_function": {
+                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                "description": "A Probability Density Function to model the distribution of findings"
+              }
+            }
+          },
           "weights": {},
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3148,7 +3234,7 @@
     "CWE-598": {
       "positive": false,
       "name": "CWE-598",
-      "value": 0.0,
+      "value": 0.001,
       "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
       "children": {
         "CWE-598 Diagnostic CweCodeQl": {
@@ -3183,13 +3269,13 @@
     "CWE-203": {
       "positive": false,
       "name": "CWE-203",
-      "value": 0.0,
+      "value": 1.0,
       "description": "The product behaves differently or sends different responses under different circumstances in a way that is observable to an unauthorized actor, which exposes security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
       "children": {
         "CWE-204": {
           "positive": false,
           "name": "CWE-204",
-          "value": 0.0,
+          "value": 0.001,
           "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
           "children": {
             "CWE-204 Diagnostic CweCodeQl": {
@@ -3224,7 +3310,7 @@
         "CWE-208": {
           "positive": false,
           "name": "CWE-208",
-          "value": 0.0,
+          "value": 1.0,
           "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
           "children": {
             "CWE-208 Diagnostic CweCodeQl": {
@@ -3275,7 +3361,7 @@
     "CWE-214": {
       "positive": false,
       "name": "CWE-214",
-      "value": 0.0,
+      "value": 0.001,
       "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
       "children": {
         "CWE-214 Diagnostic CweCodeQl": {
@@ -3310,7 +3396,7 @@
     "CWE-215": {
       "positive": false,
       "name": "CWE-215",
-      "value": 0.0,
+      "value": 0.001,
       "description": "The product inserts sensitive information into debugging code, which could expose this information if the debugging code is not disabled in production.",
       "children": {
         "CWE-215 Diagnostic CweCodeQl": {
@@ -3345,7 +3431,7 @@
     "CWE-204": {
       "positive": false,
       "name": "CWE-204",
-      "value": 0.0,
+      "value": 0.001,
       "description": "The product provides different responses to incoming requests in a way that reveals internal state information to an unauthorized actor outside of the intended control sphere.",
       "children": {
         "CWE-204 Diagnostic CweCodeQl": {
@@ -3380,7 +3466,7 @@
     "CWE-535": {
       "positive": false,
       "name": "CWE-535",
-      "value": 0.0,
+      "value": 0.001,
       "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
       "children": {
         "CWE-535 Diagnostic CweCodeQl": {
@@ -3415,7 +3501,7 @@
     "CWE-536": {
       "positive": false,
       "name": "CWE-536",
-      "value": 0.0,
+      "value": 0.001,
       "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
       "children": {
         "CWE-536 Diagnostic CweCodeQl": {
@@ -3450,7 +3536,7 @@
     "CWE-537": {
       "positive": false,
       "name": "CWE-537",
-      "value": 0.0,
+      "value": 0.001,
       "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
       "children": {
         "CWE-537 Diagnostic CweCodeQl": {
@@ -3485,21 +3571,35 @@
     "CWE-538": {
       "positive": false,
       "name": "CWE-538",
-      "value": 0.0,
+      "value": 0.001,
       "description": "The product places sensitive information into files or directories that are accessible to actors who are allowed to have access to the files, but not to the sensitive information.",
       "children": {
         "CWE-532": {
           "positive": false,
           "name": "CWE-532",
-          "value": 0.0,
+          "value": 0.001,
           "description": "Logging sensitive user data, full path names, or system information often provides attackers with an additional, less-protected path to acquiring the information.",
           "children": {
             "CWE-532 Diagnostic CweCodeQl": {
               "toolName": "CweCodeQl",
               "name": "CWE-532 Diagnostic CweCodeQl",
-              "value": 0.0,
+              "value": 3.0,
               "description": "Sum of findings of type CWE-532",
-              "children": {},
+              "children": {
+                "532": {
+                  "name": "532",
+                  "value": 3,
+                  "description": "",
+                  "children": {},
+                  "weights": {},
+                  "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
+                  "normalizer": "pique.evaluation.DefaultNormalizer",
+                  "utility_function": {
+                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+                    "description": "A Probability Density Function to model the distribution of findings"
+                  }
+                }
+              },
               "weights": {},
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3540,13 +3640,13 @@
         "CWE-540": {
           "positive": false,
           "name": "CWE-540",
-          "value": 0.0,
+          "value": 0.001,
           "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
           "children": {
             "CWE-615": {
               "positive": false,
               "name": "CWE-615",
-              "value": 0.0,
+              "value": 0.001,
               "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
               "children": {
                 "CWE-615 Diagnostic CweCodeQl": {
@@ -3613,7 +3713,7 @@
     "CWE-208": {
       "positive": false,
       "name": "CWE-208",
-      "value": 0.0,
+      "value": 1.0,
       "description": "Two separate operations in a product require different amounts of time to complete, in a way that is observable to an actor and reveals security-relevant information about the state of the product, such as whether a particular operation was successful or not.",
       "children": {
         "CWE-208 Diagnostic CweCodeQl": {
@@ -3648,7 +3748,7 @@
     "CWE-615": {
       "positive": false,
       "name": "CWE-615",
-      "value": 0.0,
+      "value": 0.001,
       "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
       "children": {
         "CWE-615 Diagnostic CweCodeQl": {
@@ -3683,7 +3783,7 @@
     "CWE-209": {
       "positive": false,
       "name": "CWE-209",
-      "value": 0.0,
+      "value": 0.001,
       "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
       "children": {
         "CWE-209 Diagnostic CweCodeQl": {
@@ -3703,13 +3803,13 @@
         "CWE-211": {
           "positive": false,
           "name": "CWE-211",
-          "value": 0.0,
+          "value": 0.001,
           "description": "The product performs an operation that triggers an external diagnostic or error message that is not directly generated or controlled by the product, such as an error generated by the programming language interpreter that a software application uses. The error can contain sensitive system information.",
           "children": {
             "CWE-535": {
               "positive": false,
               "name": "CWE-535",
-              "value": 0.0,
+              "value": 0.001,
               "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
               "children": {
                 "CWE-535 Diagnostic CweCodeQl": {
@@ -3744,7 +3844,7 @@
             "CWE-536": {
               "positive": false,
               "name": "CWE-536",
-              "value": 0.0,
+              "value": 0.001,
               "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
               "children": {
                 "CWE-536 Diagnostic CweCodeQl": {
@@ -3779,7 +3879,7 @@
             "CWE-537": {
               "positive": false,
               "name": "CWE-537",
-              "value": 0.0,
+              "value": 0.001,
               "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
               "children": {
                 "CWE-537 Diagnostic CweCodeQl": {
@@ -3814,7 +3914,7 @@
             "CWE-550": {
               "positive": false,
               "name": "CWE-550",
-              "value": 0.0,
+              "value": 0.001,
               "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
               "children": {
                 "CWE-550 Diagnostic CweCodeQl": {
@@ -3883,7 +3983,7 @@
     "CWE-550": {
       "positive": false,
       "name": "CWE-550",
-      "value": 0.0,
+      "value": 0.001,
       "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
       "children": {
         "CWE-550 Diagnostic CweCodeQl": {
@@ -3918,13 +4018,13 @@
     "CWE-540": {
       "positive": false,
       "name": "CWE-540",
-      "value": 0.0,
+      "value": 0.001,
       "description": "Source code on a web server or repository often contains sensitive information and should generally not be accessible to users.",
       "children": {
         "CWE-615": {
           "positive": false,
           "name": "CWE-615",
-          "value": 0.0,
+          "value": 0.001,
           "description": "While adding general comments is very useful, some programmers tend to leave important data, such as: filenames related to the web application, old links or links which were not meant to be browsed by users, old code fragments, etc.",
           "children": {
             "CWE-615 Diagnostic CweCodeQl": {
@@ -3974,13 +4074,13 @@
     "CWE-497": {
       "positive": false,
       "name": "CWE-497",
-      "value": 0.0,
+      "value": 0.001,
       "description": "The product does not properly prevent sensitive system-level information from being accessed by unauthorized actors who do not have the same level of access to the underlying system as the product does.",
       "children": {
         "CWE-214": {
           "positive": false,
           "name": "CWE-214",
-          "value": 0.0,
+          "value": 0.001,
           "description": "A process is invoked with sensitive command-line arguments, environment variables, or other elements that can be seen by other processes on the operating system.",
           "children": {
             "CWE-214 Diagnostic CweCodeQl": {
@@ -4030,13 +4130,13 @@
     "CWE-211": {
       "positive": false,
       "name": "CWE-211",
-      "value": 0.0,
+      "value": 0.001,
       "description": "The product performs an operation that triggers an external diagnostic or error message that is not directly generated or controlled by the product, such as an error generated by the programming language interpreter that a software application uses. The error can contain sensitive system information.",
       "children": {
         "CWE-535": {
           "positive": false,
           "name": "CWE-535",
-          "value": 0.0,
+          "value": 0.001,
           "description": "A command shell error message indicates that there exists an unhandled exception in the web application code. In many cases, an attacker can leverage the conditions that cause these errors in order to gain unauthorized access to the system.",
           "children": {
             "CWE-535 Diagnostic CweCodeQl": {
@@ -4071,7 +4171,7 @@
         "CWE-536": {
           "positive": false,
           "name": "CWE-536",
-          "value": 0.0,
+          "value": 0.001,
           "description": "A servlet error message indicates that there exists an unhandled exception in your web application code and may provide useful information to an attacker.",
           "children": {
             "CWE-536 Diagnostic CweCodeQl": {
@@ -4106,7 +4206,7 @@
         "CWE-537": {
           "positive": false,
           "name": "CWE-537",
-          "value": 0.0,
+          "value": 0.001,
           "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
           "children": {
             "CWE-537 Diagnostic CweCodeQl": {
@@ -4141,7 +4241,7 @@
         "CWE-550": {
           "positive": false,
           "name": "CWE-550",
-          "value": 0.0,
+          "value": 0.001,
           "description": "Certain conditions, such as network failure, will cause a server error message to be displayed.",
           "children": {
             "CWE-550 Diagnostic CweCodeQl": {
@@ -4194,7 +4294,7 @@
     "CWE-201": {
       "positive": false,
       "name": "CWE-201",
-      "value": 0.0,
+      "value": 0.001,
       "description": "The code transmits data to another actor, but a portion of the data includes sensitive information that should not be accessible to that actor.",
       "children": {
         "CWE-201 Diagnostic CweCodeQl": {
@@ -4214,7 +4314,7 @@
         "CWE-598": {
           "positive": false,
           "name": "CWE-598",
-          "value": 0.0,
+          "value": 0.001,
           "description": "The web application uses the HTTP GET method to process a request and includes sensitive information in the query string of that request.",
           "children": {
             "CWE-598 Diagnostic CweCodeQl": {
@@ -4393,9 +4493,23 @@
     "CWE-532 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "name": "CWE-532 Diagnostic CweCodeQl",
-      "value": 0.0,
+      "value": 3.0,
       "description": "Sum of findings of type CWE-532",
-      "children": {},
+      "children": {
+        "532": {
+          "name": "532",
+          "value": 3,
+          "description": "",
+          "children": {},
+          "weights": {},
+          "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
+          "normalizer": "pique.evaluation.DefaultNormalizer",
+          "utility_function": {
+            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
+            "description": "A Probability Density Function to model the distribution of findings"
+          }
+        }
+      },
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
