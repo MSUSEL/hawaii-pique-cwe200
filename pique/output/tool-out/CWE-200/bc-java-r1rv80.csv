@@ -4,9 +4,7 @@
 208,bc-java-r1rv80/core/src/main/java/org/bouncycastle/pqc/legacy/crypto/qtesla/QTesla3p.java,857,21
 208,bc-java-r1rv80/core/src/main/java/org/bouncycastle/util/Arrays.java,33,40
 208,bc-java-r1rv80/core/src/main/java/org/bouncycastle/util/Arrays.java,33,43
+208,bc-java-r1rv80/prov/src/test/java/org/bouncycastle/jce/provider/test/DoFinalTest.java,42,17
+208,bc-java-r1rv80/prov/src/test/java/org/bouncycastle/jce/provider/test/DoFinalTest.java,42,32
 208,bc-java-r1rv80/prov/src/test/java/org/bouncycastle/jce/provider/test/HMacTest.java,327,109
-209,bc-java-r1rv80/core/src/main/java/org/bouncycastle/crypto/examples/DESExample.java,224,36
-215,bc-java-r1rv80/core/src/main/java/org/bouncycastle/crypto/engines/NaccacheSternEngine.java,75,40
-215,bc-java-r1rv80/core/src/main/java/org/bouncycastle/crypto/generators/NaccacheSternKeyPairGenerator.java,216,44
-215,bc-java-r1rv80/core/src/main/java/org/bouncycastle/crypto/generators/NaccacheSternKeyPairGenerator.java,285,32
-532,bc-java-r1rv80/pg/build/generated-src/org/bouncycastle/openpgp/operator/bc/RFC6637KDFCalculator.java,44,33
+208,bc-java-r1rv80/prov/src/test/java/org/bouncycastle/jce/provider/test/PSSTest.java,61,25

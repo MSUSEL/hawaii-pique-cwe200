@@ -1,5 +1,0 @@
-209,DSpace-dspace-8.1/dspace-api/src/main/java/org/dspace/statistics/SolrLoggerServiceImpl.java,498,42
-214,DSpace-dspace-8.1/dspace-api/src/main/java/org/dspace/storage/rdbms/DatabaseUtils.java,405,70
-214,DSpace-dspace-8.1/dspace-api/src/main/java/org/dspace/storage/rdbms/DatabaseUtils.java,1250,26
-532,DSpace-dspace-8.1/dspace-sword/src/main/java/org/purl/sword/client/Client.java,148,19
-532,DSpace-dspace-8.1/dspace-sword/src/main/java/org/purl/sword/client/CmdClient.java,400,22

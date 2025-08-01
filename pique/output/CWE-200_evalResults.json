@@ -11,7 +11,7 @@
     "product_factors": {
       "Pillar CWE-200": {
         "name": "Pillar CWE-200",
-        "value": 0.4595101452127261944086084,
+        "value": 0.5003333333333333333333333,
         "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
         "children": {
           "CWE-203": {
@@ -271,29 +271,15 @@
           "CWE-209": {
             "positive": false,
             "name": "CWE-209",
-            "value": 0.7550608712763571664516503,
+            "value": 1.0,
             "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
             "children": {
               "CWE-209 Diagnostic CweCodeQl": {
                 "toolName": "CweCodeQl",
                 "name": "CWE-209 Diagnostic CweCodeQl",
-                "value": 3.0,
+                "value": 0.0,
                 "description": "Sum of findings of type CWE-209",
-                "children": {
-                  "209": {
-                    "name": "209",
-                    "value": 3,
-                    "description": "",
-                    "children": {},
-                    "weights": {},
-                    "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                    "normalizer": "pique.evaluation.DefaultNormalizer",
-                    "utility_function": {
-                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                      "description": "A Probability Density Function to model the distribution of findings"
-                    }
-                  }
-                },
+                "children": {},
                 "weights": {},
                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -381,29 +367,15 @@
                   "CWE-537": {
                     "positive": false,
                     "name": "CWE-537",
-                    "value": 0.7550608712763571460843462,
+                    "value": 1.0,
                     "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
                     "children": {
                       "CWE-537 Diagnostic CweCodeQl": {
                         "toolName": "CweCodeQl",
                         "name": "CWE-537 Diagnostic CweCodeQl",
-                        "value": 5.0,
+                        "value": 0.0,
                         "description": "Sum of findings of type CWE-537",
-                        "children": {
-                          "537": {
-                            "name": "537",
-                            "value": 5,
-                            "description": "",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          }
-                        },
+                        "children": {},
                         "weights": {},
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -643,12 +615,12 @@
     "quality_aspects": {
       "Security": {
         "name": "Security",
-        "value": 0.4595101452127261944086084,
+        "value": 0.5003333333333333333333333,
         "description": "Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization",
         "children": {
           "Pillar CWE-200": {
             "name": "Pillar CWE-200",
-            "value": 0.4595101452127261944086084,
+            "value": 0.5003333333333333333333333,
             "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
             "children": {
               "CWE-203": {
@@ -908,29 +880,15 @@
               "CWE-209": {
                 "positive": false,
                 "name": "CWE-209",
-                "value": 0.7550608712763571664516503,
+                "value": 1.0,
                 "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
                 "children": {
                   "CWE-209 Diagnostic CweCodeQl": {
                     "toolName": "CweCodeQl",
                     "name": "CWE-209 Diagnostic CweCodeQl",
-                    "value": 3.0,
+                    "value": 0.0,
                     "description": "Sum of findings of type CWE-209",
-                    "children": {
-                      "209": {
-                        "name": "209",
-                        "value": 3,
-                        "description": "",
-                        "children": {},
-                        "weights": {},
-                        "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      }
-                    },
+                    "children": {},
                     "weights": {},
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1018,29 +976,15 @@
                       "CWE-537": {
                         "positive": false,
                         "name": "CWE-537",
-                        "value": 0.7550608712763571460843462,
+                        "value": 1.0,
                         "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
                         "children": {
                           "CWE-537 Diagnostic CweCodeQl": {
                             "toolName": "CweCodeQl",
                             "name": "CWE-537 Diagnostic CweCodeQl",
-                            "value": 5.0,
+                            "value": 0.0,
                             "description": "Sum of findings of type CWE-537",
-                            "children": {
-                              "537": {
-                                "name": "537",
-                                "value": 5,
-                                "description": "",
-                                "children": {},
-                                "weights": {},
-                                "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                                "normalizer": "pique.evaluation.DefaultNormalizer",
-                                "utility_function": {
-                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                                  "description": "A Probability Density Function to model the distribution of findings"
-                                }
-                              }
-                            },
+                            "children": {},
                             "weights": {},
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1289,12 +1233,12 @@
       },
       "Maintainability": {
         "name": "Maintainability",
-        "value": 0.4595101452127261944086084,
+        "value": 0.5003333333333333333333333,
         "description": "Degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers",
         "children": {
           "Pillar CWE-200": {
             "name": "Pillar CWE-200",
-            "value": 0.4595101452127261944086084,
+            "value": 0.5003333333333333333333333,
             "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
             "children": {
               "CWE-203": {
@@ -1554,29 +1498,15 @@
               "CWE-209": {
                 "positive": false,
                 "name": "CWE-209",
-                "value": 0.7550608712763571664516503,
+                "value": 1.0,
                 "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
                 "children": {
                   "CWE-209 Diagnostic CweCodeQl": {
                     "toolName": "CweCodeQl",
                     "name": "CWE-209 Diagnostic CweCodeQl",
-                    "value": 3.0,
+                    "value": 0.0,
                     "description": "Sum of findings of type CWE-209",
-                    "children": {
-                      "209": {
-                        "name": "209",
-                        "value": 3,
-                        "description": "",
-                        "children": {},
-                        "weights": {},
-                        "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                        "normalizer": "pique.evaluation.DefaultNormalizer",
-                        "utility_function": {
-                          "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                          "description": "A Probability Density Function to model the distribution of findings"
-                        }
-                      }
-                    },
+                    "children": {},
                     "weights": {},
                     "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                     "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1664,29 +1594,15 @@
                       "CWE-537": {
                         "positive": false,
                         "name": "CWE-537",
-                        "value": 0.7550608712763571460843462,
+                        "value": 1.0,
                         "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
                         "children": {
                           "CWE-537 Diagnostic CweCodeQl": {
                             "toolName": "CweCodeQl",
                             "name": "CWE-537 Diagnostic CweCodeQl",
-                            "value": 5.0,
+                            "value": 0.0,
                             "description": "Sum of findings of type CWE-537",
-                            "children": {
-                              "537": {
-                                "name": "537",
-                                "value": 5,
-                                "description": "",
-                                "children": {},
-                                "weights": {},
-                                "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                                "normalizer": "pique.evaluation.DefaultNormalizer",
-                                "utility_function": {
-                                  "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                                  "description": "A Probability Density Function to model the distribution of findings"
-                                }
-                              }
-                            },
+                            "children": {},
                             "weights": {},
                             "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                             "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -1937,17 +1853,17 @@
     "tqi": {
       "PIQUE-CWE200 quality model": {
         "name": "PIQUE-CWE200 quality model",
-        "value": 0.4595101452127261944086084,
+        "value": 0.5003333333333333333333334,
         "description": "Model description, replace with a description of your model",
         "children": {
           "Maintainability": {
             "name": "Maintainability",
-            "value": 0.4595101452127261944086084,
+            "value": 0.5003333333333333333333333,
             "description": "Degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers",
             "children": {
               "Pillar CWE-200": {
                 "name": "Pillar CWE-200",
-                "value": 0.4595101452127261944086084,
+                "value": 0.5003333333333333333333333,
                 "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
                 "children": {
                   "CWE-203": {
@@ -2207,29 +2123,15 @@
                   "CWE-209": {
                     "positive": false,
                     "name": "CWE-209",
-                    "value": 0.7550608712763571664516503,
+                    "value": 1.0,
                     "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
                     "children": {
                       "CWE-209 Diagnostic CweCodeQl": {
                         "toolName": "CweCodeQl",
                         "name": "CWE-209 Diagnostic CweCodeQl",
-                        "value": 3.0,
+                        "value": 0.0,
                         "description": "Sum of findings of type CWE-209",
-                        "children": {
-                          "209": {
-                            "name": "209",
-                            "value": 3,
-                            "description": "",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          }
-                        },
+                        "children": {},
                         "weights": {},
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2317,29 +2219,15 @@
                           "CWE-537": {
                             "positive": false,
                             "name": "CWE-537",
-                            "value": 0.7550608712763571460843462,
+                            "value": 1.0,
                             "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
                             "children": {
                               "CWE-537 Diagnostic CweCodeQl": {
                                 "toolName": "CweCodeQl",
                                 "name": "CWE-537 Diagnostic CweCodeQl",
-                                "value": 5.0,
+                                "value": 0.0,
                                 "description": "Sum of findings of type CWE-537",
-                                "children": {
-                                  "537": {
-                                    "name": "537",
-                                    "value": 5,
-                                    "description": "",
-                                    "children": {},
-                                    "weights": {},
-                                    "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                                    "normalizer": "pique.evaluation.DefaultNormalizer",
-                                    "utility_function": {
-                                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                                      "description": "A Probability Density Function to model the distribution of findings"
-                                    }
-                                  }
-                                },
+                                "children": {},
                                 "weights": {},
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2588,12 +2476,12 @@
           },
           "Security": {
             "name": "Security",
-            "value": 0.4595101452127261944086084,
+            "value": 0.5003333333333333333333333,
             "description": "Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization",
             "children": {
               "Pillar CWE-200": {
                 "name": "Pillar CWE-200",
-                "value": 0.4595101452127261944086084,
+                "value": 0.5003333333333333333333333,
                 "description": "The product exposes sensitive information to an actor that is not explicitly authorized to have access to that information.",
                 "children": {
                   "CWE-203": {
@@ -2853,29 +2741,15 @@
                   "CWE-209": {
                     "positive": false,
                     "name": "CWE-209",
-                    "value": 0.7550608712763571664516503,
+                    "value": 1.0,
                     "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
                     "children": {
                       "CWE-209 Diagnostic CweCodeQl": {
                         "toolName": "CweCodeQl",
                         "name": "CWE-209 Diagnostic CweCodeQl",
-                        "value": 3.0,
+                        "value": 0.0,
                         "description": "Sum of findings of type CWE-209",
-                        "children": {
-                          "209": {
-                            "name": "209",
-                            "value": 3,
-                            "description": "",
-                            "children": {},
-                            "weights": {},
-                            "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                            "normalizer": "pique.evaluation.DefaultNormalizer",
-                            "utility_function": {
-                              "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                              "description": "A Probability Density Function to model the distribution of findings"
-                            }
-                          }
-                        },
+                        "children": {},
                         "weights": {},
                         "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                         "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -2963,29 +2837,15 @@
                           "CWE-537": {
                             "positive": false,
                             "name": "CWE-537",
-                            "value": 0.7550608712763571460843462,
+                            "value": 1.0,
                             "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
                             "children": {
                               "CWE-537 Diagnostic CweCodeQl": {
                                 "toolName": "CweCodeQl",
                                 "name": "CWE-537 Diagnostic CweCodeQl",
-                                "value": 5.0,
+                                "value": 0.0,
                                 "description": "Sum of findings of type CWE-537",
-                                "children": {
-                                  "537": {
-                                    "name": "537",
-                                    "value": 5,
-                                    "description": "",
-                                    "children": {},
-                                    "weights": {},
-                                    "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                                    "normalizer": "pique.evaluation.DefaultNormalizer",
-                                    "utility_function": {
-                                      "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                                      "description": "A Probability Density Function to model the distribution of findings"
-                                    }
-                                  }
-                                },
+                                "children": {},
                                 "weights": {},
                                 "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                                 "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3601,29 +3461,15 @@
     "CWE-537": {
       "positive": false,
       "name": "CWE-537",
-      "value": 0.7550608712763571460843462,
+      "value": 1.0,
       "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
       "children": {
         "CWE-537 Diagnostic CweCodeQl": {
           "toolName": "CweCodeQl",
           "name": "CWE-537 Diagnostic CweCodeQl",
-          "value": 5.0,
+          "value": 0.0,
           "description": "Sum of findings of type CWE-537",
-          "children": {
-            "537": {
-              "name": "537",
-              "value": 5,
-              "description": "",
-              "children": {},
-              "weights": {},
-              "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-              "normalizer": "pique.evaluation.DefaultNormalizer",
-              "utility_function": {
-                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                "description": "A Probability Density Function to model the distribution of findings"
-              }
-            }
-          },
+          "children": {},
           "weights": {},
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3847,29 +3693,15 @@
     "CWE-209": {
       "positive": false,
       "name": "CWE-209",
-      "value": 0.7550608712763571664516503,
+      "value": 1.0,
       "description": "The product generates an error message that includes sensitive information about its environment, users, or associated data.",
       "children": {
         "CWE-209 Diagnostic CweCodeQl": {
           "toolName": "CweCodeQl",
           "name": "CWE-209 Diagnostic CweCodeQl",
-          "value": 3.0,
+          "value": 0.0,
           "description": "Sum of findings of type CWE-209",
-          "children": {
-            "209": {
-              "name": "209",
-              "value": 3,
-              "description": "",
-              "children": {},
-              "weights": {},
-              "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-              "normalizer": "pique.evaluation.DefaultNormalizer",
-              "utility_function": {
-                "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                "description": "A Probability Density Function to model the distribution of findings"
-              }
-            }
-          },
+          "children": {},
           "weights": {},
           "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
           "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -3957,29 +3789,15 @@
             "CWE-537": {
               "positive": false,
               "name": "CWE-537",
-              "value": 0.7550608712763571460843462,
+              "value": 1.0,
               "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
               "children": {
                 "CWE-537 Diagnostic CweCodeQl": {
                   "toolName": "CweCodeQl",
                   "name": "CWE-537 Diagnostic CweCodeQl",
-                  "value": 5.0,
+                  "value": 0.0,
                   "description": "Sum of findings of type CWE-537",
-                  "children": {
-                    "537": {
-                      "name": "537",
-                      "value": 5,
-                      "description": "",
-                      "children": {},
-                      "weights": {},
-                      "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                      "normalizer": "pique.evaluation.DefaultNormalizer",
-                      "utility_function": {
-                        "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                        "description": "A Probability Density Function to model the distribution of findings"
-                      }
-                    }
-                  },
+                  "children": {},
                   "weights": {},
                   "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
                   "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4298,29 +4116,15 @@
         "CWE-537": {
           "positive": false,
           "name": "CWE-537",
-          "value": 0.7550608712763571460843462,
+          "value": 1.0,
           "description": "In many cases, an attacker can leverage the conditions that cause unhandled exception errors in order to gain unauthorized access to the system.",
           "children": {
             "CWE-537 Diagnostic CweCodeQl": {
               "toolName": "CweCodeQl",
               "name": "CWE-537 Diagnostic CweCodeQl",
-              "value": 5.0,
+              "value": 0.0,
               "description": "Sum of findings of type CWE-537",
-              "children": {
-                "537": {
-                  "name": "537",
-                  "value": 5,
-                  "description": "",
-                  "children": {},
-                  "weights": {},
-                  "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-                  "normalizer": "pique.evaluation.DefaultNormalizer",
-                  "utility_function": {
-                    "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-                    "description": "A Probability Density Function to model the distribution of findings"
-                  }
-                }
-              },
+              "children": {},
               "weights": {},
               "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
               "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4501,23 +4305,9 @@
     "CWE-209 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "name": "CWE-209 Diagnostic CweCodeQl",
-      "value": 3.0,
+      "value": 0.0,
       "description": "Sum of findings of type CWE-209",
-      "children": {
-        "209": {
-          "name": "209",
-          "value": 3,
-          "description": "",
-          "children": {},
-          "weights": {},
-          "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-          "normalizer": "pique.evaluation.DefaultNormalizer",
-          "utility_function": {
-            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-            "description": "A Probability Density Function to model the distribution of findings"
-          }
-        }
-      },
+      "children": {},
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",
@@ -4641,23 +4431,9 @@
     "CWE-537 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "name": "CWE-537 Diagnostic CweCodeQl",
-      "value": 5.0,
+      "value": 0.0,
       "description": "Sum of findings of type CWE-537",
-      "children": {
-        "537": {
-          "name": "537",
-          "value": 5,
-          "description": "",
-          "children": {},
-          "weights": {},
-          "eval_strategy": "pique.evaluation.DefaultFindingEvaluator",
-          "normalizer": "pique.evaluation.DefaultNormalizer",
-          "utility_function": {
-            "name": "pique.evaluation.ProbabilityDensityFunctionUtilityFunction",
-            "description": "A Probability Density Function to model the distribution of findings"
-          }
-        }
-      },
+      "children": {},
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
       "normalizer": "pique.evaluation.DefaultNormalizer",

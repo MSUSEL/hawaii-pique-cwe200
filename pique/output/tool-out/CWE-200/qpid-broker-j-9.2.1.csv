@@ -1,0 +1,9 @@
+532,qpid-broker-j-9.2.1/broker-core/src/main/java/org/apache/qpid/server/model/AbstractConfiguredObject.java,3583,13
+532,qpid-broker-j-9.2.1/broker-core/src/main/java/org/apache/qpid/server/model/AbstractConfiguredObject.java,3588,25
+532,qpid-broker-j-9.2.1/broker-core/src/main/java/org/apache/qpid/server/security/auth/database/AbstractPasswordFilePrincipalDatabase.java,72,59
+532,qpid-broker-j-9.2.1/broker-core/src/main/java/org/apache/qpid/server/security/auth/database/AbstractPasswordFilePrincipalDatabase.java,232,79
+532,qpid-broker-j-9.2.1/broker-core/src/main/java/org/apache/qpid/server/util/ServerScopedRuntimeException.java,40,22
+532,qpid-broker-j-9.2.1/broker-plugins/jdbc-provider-hikari/src/main/java/org/apache/qpid/server/store/jdbc/hikaricp/HikariCPConnectionProvider.java,118,62
+532,qpid-broker-j-9.2.1/broker-plugins/jdbc-provider-hikari/src/main/java/org/apache/qpid/server/store/jdbc/hikaricp/HikariCPConnectionProvider.java,118,92
+532,qpid-broker-j-9.2.1/broker-plugins/jdbc-provider-hikari/src/main/java/org/apache/qpid/server/store/jdbc/hikaricp/HikariCPConnectionProvider.java,133,62
+532,qpid-broker-j-9.2.1/broker-plugins/jdbc-provider-hikari/src/main/java/org/apache/qpid/server/store/jdbc/hikaricp/HikariCPConnectionProvider.java,133,94

@@ -1,6 +1,0 @@
-532,PowerJob-5.1.1/powerjob-server/powerjob-server-persistence/src/main/java/tech/powerjob/server/persistence/storage/impl/MinioOssService.java,172,9
-532,PowerJob-5.1.1/powerjob-server/powerjob-server-auth/src/main/java/tech/powerjob/server/auth/login/impl/PwjbAccountLoginService.java,63,106
-532,PowerJob-5.1.1/powerjob-server/powerjob-server-core/src/main/java/tech/powerjob/server/core/alarm/impl/DingTalkAlarmService.java,98,96
-532,PowerJob-5.1.1/powerjob-server/powerjob-server-persistence/src/main/java/tech/powerjob/server/persistence/storage/impl/MinioOssService.java,172,137
-532,PowerJob-5.1.1/powerjob-server/powerjob-server-starter/src/main/java/tech/powerjob/server/initializer/SystemInitializeServiceImpl.java,90,205
-532,PowerJob-5.1.1/powerjob-worker/src/main/java/tech/powerjob/worker/background/discovery/PowerJobServerDiscoveryService.java,200,65

@@ -1,5 +1,0 @@
-201,uaa-77.28.0/server/src/main/java/org/cloudfoundry/identity/uaa/scim/endpoints/ChangeEmailEndpoints.java,73,20
-532,uaa-77.28.0/server/src/main/java/org/cloudfoundry/identity/uaa/provider/ldap/PasswordComparisonAuthenticator.java,89,26
-532,uaa-77.28.0/server/src/main/java/org/cloudfoundry/identity/uaa/provider/ldap/PasswordComparisonAuthenticator.java,89,79
-532,uaa-77.28.0/server/src/main/java/org/cloudfoundry/identity/uaa/provider/ldap/PasswordComparisonAuthenticator.java,136,26
-532,uaa-77.28.0/server/src/main/java/org/cloudfoundry/identity/uaa/provider/ldap/PasswordComparisonAuthenticator.java,136,79
