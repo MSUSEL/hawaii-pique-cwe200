@@ -536,7 +536,7 @@
     "CWE-201 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "name": "CWE-201 Diagnostic CweCodeQl",
-      "value": 4.0,
+      "value": 5.0,
       "description": "Sum of findings of type CWE-201",
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
@@ -549,7 +549,7 @@
     "CWE-532 Diagnostic CweCodeQl": {
       "toolName": "CweCodeQl",
       "name": "CWE-532 Diagnostic CweCodeQl",
-      "value": 5.0,
+      "value": 3.0,
       "description": "Sum of findings of type CWE-532",
       "weights": {},
       "eval_strategy": "pique.evaluation.DefaultDiagnosticEvaluator",
