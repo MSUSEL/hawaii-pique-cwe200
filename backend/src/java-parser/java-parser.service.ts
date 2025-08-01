@@ -161,7 +161,7 @@ export class JavaParserService {
                     const result: JavaParseResult = JSON.parse(stdout);
                     resolve(result);
                 } catch (e) {
-                    console.error(`Failed to parse JSON for file ${filePath}: ${e}`);
+                    // console.error(`Failed to parse JSON for file ${filePath}: ${e}`);
                     resolve({
                         filename: path.basename(filePath),
                         variables: [],

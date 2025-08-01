@@ -257,6 +257,8 @@ public class CweCodeQl extends Tool implements ITool {
                 return getRandomSeverity(8, 10); // Critical range
             case "CWE-208":
                 return getRandomSeverity(6, 8); // High range
+            case "CWE-209":
+                return getRandomSeverity(5, 7); // Medium range
             case "CWE-214":
                 return getRandomSeverity(8, 10); // Critical range
             case "CWE-215":
